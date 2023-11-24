@@ -1,103 +1,122 @@
-import { Container, Form, Nav, NavDropdown, Navbar } from "react-bootstrap";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { Box, AppBar, Typography } from "@mui/material";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Draw, FgLogo } from "../../../assets/index";
+import { memo } from "react";
+import StyledImage from "../../../components/Common/StyledImages";
+import BoxProfile from "./BoxProfile";
+import AdminEventListing from "./AdminEventListing";
+import "./index.css";
 
-interface ItemProps {
-  name: string;
-  options: Array<any>;
-}
+const Header = ({}) => {
+  const navigate = useNavigate();
+  const [selected, setSelected] = useState("Client list");
+  const [anchor, setAnchor] = useState(null);
+  const [anchor1, setAnchor1] = useState(null);
 
-const TopbarDropdown = ({ name, options }: ItemProps) => {
+  const RenderLogo = useCallback(() => {
+    return (
+      <StyledImage
+        onClick={(e: any) => {
+          e.stopPropagation();
+          navigate("/admin/list_of_clients");
+        }}
+        src={FgLogo}
+        sx={{
+          height: { lg: "45px", xs: "40px" },
+          width: "auto",
+          marginLeft: { lg: "20px", xs: "10px" },
+        }}
+      />
+    );
+  }, []);
   return (
-    <NavDropdown title={name} id="basic-nav-dropdown">
-      {options?.map((option, index) => (
-        <NavDropdown.Item key={index}>
-          <NavLink to={option.link}>{option.name}</NavLink>
-        </NavDropdown.Item>
-      ))}
-    </NavDropdown>
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          height: "196px",
+        }}
+      >
+        <Box
+          sx={[
+            {
+              width: "100%",
+              minHeight: { lg: 60, md: 60, xs: 60 },
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-center",
+              justifyContent: "space-between",
+              paddingX: { lg: "26px", xs: "5px" },
+              paddingY: 0,
+            },
+            (theme: any) => ({
+              backgroundImage: `${theme.palette.secondary.light}`,
+            }),
+          ]}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              marginRight: "12px",
+            }}
+          >
+            <StyledImage
+              src={Draw}
+              sx={{
+                height: { lg: "24px", xs: "24px" },
+                width: "auto",
+              }}
+            />
+            <RenderLogo />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <BoxProfile
+              image={"https://picsum.photos/200/300"}
+              value={"Admin"}
+              balance={"90000"}
+            />
+          </Box>
+        </Box>
+
+        {/* marquee start */}
+        <Box
+          sx={{
+            height: "32px",
+            display: "flex",
+            background: "#202020",
+            alignItems: "center",
+          }}
+        >
+          <div className="marquee-container nav-marquee text-white">
+            <div className="marquee-content">Welcome to Fairgame</div>
+          </div>
+        </Box>
+        <Box
+          sx={[
+            { flex: 1, padding: "1%" },
+            (theme) => ({
+              backgroundImage: `${theme.palette.secondary.dark}`,
+            }),
+          ]}
+        >
+          <AdminEventListing
+            selected={selected}
+            setAnchor={(e: any) => setAnchor(e.currentTarget)}
+            setAnchor1={(e: any) => setAnchor1(e.currentTarget)}
+          />
+        </Box>
+      </AppBar>
+    </>
   );
 };
 
-const Topbar = (props: any) => {
-  return (
-    <Navbar expand="lg" className="bg-primary" data-bs-theme="light">
-      <Container fluid>
-        <Navbar.Brand href="#home"></Navbar.Brand>
-        <div onClick={props.onClick}>
-          <GiHamburgerMenu className="text-white" />
-        </div>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/admin/listClients">List of clients</Nav.Link>
-            <Nav.Link href="/admin/market-analysis">Market Analysis</Nav.Link>
-            <TopbarDropdown
-              name="Live Market"
-              options={[
-                { name: "Race 20-20", link: "#1" },
-                { name: "Queen", link: "#2" },
-                { name: "Baccarat", link: "#3" },
-                { name: "Sports Casino", link: "#4" },
-                { name: "Casino War", link: "#5" },
-                { name: "Worli", link: "#6" },
-                { name: "3 Cards Judgement", link: "#7" },
-                { name: "32 Cards Casino", link: "#8" },
-                { name: "Live TeenPatti", link: "#9" },
-                { name: "TeenPatti 2.0", link: "#10" },
-                { name: "Live Poker", link: "#11" },
-                { name: "Andar Bahar", link: "#12" },
-                { name: "Lucky 7", link: "#13" },
-                { name: "Dragon Tiger", link: "#14" },
-                { name: "Bollywood Casino", link: "#15" },
-                { name: "Cricket Casino", link: "#16" },
-              ]}
-            />
-            <TopbarDropdown
-              name="Reports"
-              options={[
-                {
-                  name: "Account's Statement",
-                  link: "/admin/account-statement",
-                },
-                { name: "Current Bets", link: "/admin/current-bets" },
-                { name: "General Report", link: "/admin/general-report" },
-                { name: "Game Report", link: "/admin/game-report" },
-                { name: "Casino Report", link: "/admin/casino-report" },
-                { name: "Profit And Loss", link: "/admin/profit-loss" },
-                { name: "Casino Result Report", link: "/admin/casinoresult" },
-              ]}
-            />
-          </Nav>
-        </Navbar.Collapse>
-        <div className="d-flex algin-items-center">
-          <Navbar.Collapse id="navbar-dark-example">
-            <Nav>
-              <NavDropdown
-                id="nav-dropdown-dark-example"
-                title="User Name"
-                menuVariant="dark"
-              >
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Secure Auth Verification
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/admin/change-password">
-                  Change Password
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-          <Form>
-            <Form.Group className="" controlId="exampleForm.ControlInput1">
-              <Form.Control type="text" placeholder="All Clients" />
-            </Form.Group>
-          </Form>
-        </div>
-      </Container>
-    </Navbar>
-  );
-};
-
-export default Topbar;
+export default memo(Header);

@@ -1,20 +1,30 @@
 import { useState } from "react";
-import { Button, Box, Input, useTheme } from "@mui/material";
-import { FgLogo, LoginBg } from "../../../assets";
-import StyledImage from "../../../components/StyledImages";
+import { Button, Box, TextField, useTheme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { FgLogo, mail, eye, eyeLock } from "../../../assets";
+import StyledImage from "../../../components/Common/StyledImages";
+import AuthBackground from "../AuthBackground";
+import Input from "../../../components/login/Input";
+import { useNavigate } from "react-router-dom";
+
+const useStyles = makeStyles((theme: any) => ({
+  customButton: {
+    color: theme.palette.primary.main,
+  },
+}));
 
 const Login = () => {
   const theme = useTheme();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
+  const handleLogin = (e: any) => {
+    e.preventDefault();
+    navigate("/admin/list_of_clients");
   };
 
   return (
-    <Box style={{ position: "relative", backgroundImage: LoginBg }}>
+    <Box style={{ position: "relative" }}>
+      <AuthBackground />
       <Box
         style={{
           height: "100vh",
@@ -45,47 +55,51 @@ const Login = () => {
           />
           <form
             onSubmit={handleLogin}
-            style={{ width: "90%", justifyContent: "center" }}
+            style={{
+              width: "90%",
+              justifyContent: "center",
+            }}
           >
             <Box sx={{ width: "100%", opacity: 1 }}>
               <Input
-                required={true}
-                autoFocus
                 placeholder={"Enter Username"}
                 title={"Username"}
+                img={mail}
+                img1={mail}
               />
               <Input
-                required={true}
-                placeholder={"Enter Password"}
-                inputProps={{ type: "password" }}
                 title={"Password"}
+                placeholder={"Enter Password"}
+                containerStyle={{ marginTop: "10px" }}
+                img={eye}
+                img1={eyeLock}
               />
-              <Box
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginY: "1vh",
+                marginTop: "4vh",
+              }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginY: "1vh",
-                  marginTop: "4vh",
+                  width: "62%",
+                  cursor: "pointer",
+                  height: { xs: "50px", lg: "43px" },
+                  borderRadius: "10px",
+                  fontWeight: "500",
+                  textTransform: "none",
+                  fontSize: { lg: "14px", xs: "14px" },
+                  background: `${theme.palette.secondary}`,
                 }}
               >
-                <Button
-                  // onClick={onClick}
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  sx={{
-                    width: "62%",
-                    cursor: "pointer",
-                    height: { mobile: "50px", laptop: "43px" },
-                    borderRadius: "10px",
-                    fontWeight: "500",
-                    textTransform: "none",
-                    fontSize: { laptop: "14px", mobile: "14px" },
-                  }}
-                >
-                  Login
-                </Button>
-              </Box>
+                Login
+              </Button>
             </Box>
           </form>
         </Box>
