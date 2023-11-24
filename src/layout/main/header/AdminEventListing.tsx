@@ -46,7 +46,11 @@ const AdminEventListing = (props: any) => {
     >
       {data?.map((i: any, idx: any) => {
         return (
-          <NavLink key={idx} to={`/admin/${i.url}`}>
+          <NavLink
+            key={idx}
+            to={`/admin/${i.url}`}
+            style={{ textDecoration: "none" }}
+          >
             <AdminEventComponent
               data={i}
               selected={selected}

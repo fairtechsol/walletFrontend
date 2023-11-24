@@ -13,19 +13,23 @@ const MainRoutes = {
       element: <ListOfClients />,
     },
     {
-      path: "list_of_clients",
+      path: "live_market",
       element: <ListOfClients />,
     },
     {
-      path: "list_of_clients",
+      path: "add_account",
       element: <ListOfClients />,
     },
     {
-      path: "list_of_clients",
+      path: "market_analysis",
       element: <ListOfClients />,
     },
     {
-      path: "list_of_clients",
+      path: "reports",
+      element: <ListOfClients />,
+    },
+    {
+      path: "my-account",
       element: <ListOfClients />,
     },
   ],
