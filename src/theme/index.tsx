@@ -39,7 +39,7 @@ let theme = createTheme({
       main: "#FDF21A",
       light: `linear-gradient(90deg,#004A25 5%,#FDCB52 100% )`,
       dark: `linear-gradient(1deg,rgba(0, 74, 37,0.8) 5%, rgba(0,0,0,0.8) 100%)`,
-      contrastText: "#fff",
+      contrastText: "#000",
     },
     error: {
       main: "#FF0000",

@@ -1,0 +1,227 @@
+import { useState } from "react";
+import { Box, Typography, TextField } from "@mui/material";
+import BoxButton from "./BoxButton";
+import StyledImage from "../../Common/StyledImages";
+import { EyeIcon, EyeSlash } from "../../../assets";
+
+const SetCreditComponent = (props: any) => {
+  const {
+    handleKeyDown,
+    backgroundColor,
+    userModal,
+    elementToUDM,
+    setElementToUDM,
+    setSelected,
+  } = props;
+  const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault;
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          display: "flex",
+          borderRadius: "5px",
+          paddingRight: "10px",
+          flexDirection: { xs: "column", md: "row", lg: "row" },
+          gap: 2,
+        }}
+      >
+        <Box sx={{ width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              flexDirection: { xs: "column", md: "row", lg: "row" },
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
+                width: { xs: "100%", lg: "40%", md: "40%" },
+                fontWeight: "600",
+                marginRight: { xs: 0, lg: "20px", md: "20px" },
+              }}
+            >
+              New Credit Limit
+            </Typography>
+            <Box
+              sx={{
+                background: "#004A25",
+                width: { xs: "100%", lg: "60%", md: "60%" },
+                height: "45px",
+                borderRadius: "5px",
+                paddingX: "20px",
+              }}
+            >
+              <TextField
+                required={true}
+                value={"200"}
+                onKeyDown={handleKeyDown}
+                variant="standard"
+                InputProps={{
+                  placeholder: "Type Amount...",
+                  autoFocus: true,
+                  autoComplete: "new-password",
+                  disableUnderline: true,
+                  inputProps: { min: "0" },
+                  style: {
+                    fontSize: "15px",
+                    height: "45px",
+                    fontWeight: "600",
+                    color: "white",
+                  },
+                }}
+                type={"Number"}
+              />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              overflow: "hidden",
+              justifyContent: "flex-end",
+              marginTop: "10px",
+              flexDirection: { xs: "column", md: "row", lg: "row" },
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
+                width: { xs: "100%", lg: "40%", md: "40%" },
+                fontWeight: "600",
+                marginRight: { xs: 0, lg: "20px", md: "20px" },
+              }}
+            >
+              Transaction Password
+            </Typography>
+            <Box
+              sx={{
+                width: { xs: "100%", lg: "60%", md: "60%" },
+                height: "45px",
+                background: "white",
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "5px",
+                border: "2px solid #26262633",
+                paddingX: "20px",
+              }}
+            >
+              <TextField
+                required={true}
+                sx={{ width: "100%", height: "45px" }}
+                variant="standard"
+                InputProps={{
+                  placeholder: "",
+                  disableUnderline: true,
+                  autoComplete: "new-password",
+                  type: !showPass ? "password" : "text",
+                  style: {
+                    fontSize: "13px",
+                    height: "45px",
+                    fontWeight: "600",
+                  },
+                }}
+              />
+              <Box
+                onClick={() => {
+                  setShowPass(!showPass);
+                }}
+              >
+                <StyledImage
+                  src={showPass ? EyeIcon : EyeSlash}
+                  sx={{ height: "14px", width: "20px" }}
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", overflow: "hidden", width: "100%" }}>
+          <Box
+            sx={{
+              flex: 1,
+              background: backgroundColor == "#ECECEC" ? "white" : "#FFECBC",
+              display: "flex",
+              alignItems: "center",
+              borderRadius: "5px",
+              border: "2px solid #26262633",
+              minHeight: "80px",
+              maxHeight: "115px",
+              paddingX: "10px",
+            }}
+          >
+            <TextField
+              rows={4}
+              sx={{ width: "100%", minHeight: "40px" }}
+              multiline={true}
+              variant="standard"
+              InputProps={{
+                placeholder: "Remark (Optional)",
+                disableUnderline: true,
+                style: {
+                  fontSize: "13px",
+                  minHeight: "45px",
+                  fontWeight: "600",
+                },
+              }}
+            />
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xs: "row",
+              md: "column",
+              lg: "column",
+            },
+            justifyContent: "center",
+            gap: 1,
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ display: "flex", width: "150px" }}>
+            <BoxButton
+              color={"#0B4F26"}
+              loading={loading}
+              containerStyle={{ width: "150px", height: "35px" }}
+              isSelected={true}
+              type="submit"
+              title={"Submit"}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              width: "150px",
+              marginTop: { xs: 0, md: "10px", lg: "10px" },
+            }}
+          >
+            <BoxButton
+              color={"#E32A2A"}
+              containerStyle={{
+                width: "150px",
+                background: "#E32A2A",
+                border: "0px",
+                height: "35px",
+              }}
+              isSelected={true}
+              onClick={() => {
+                setSelected();
+              }}
+              title={"Cancel"}
+            />
+          </Box>
+        </Box>
+      </Box>
+    </form>
+  );
+};
+
+export default SetCreditComponent;

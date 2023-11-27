@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
 import ModalMUI from "@mui/material/Modal";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StyledImage from "../Common/StyledImages";
+import UserDetailModal from "./RowModalComponents/UserDetailModal";
 
 const AccountListRow = (props: any) => {
   const {
@@ -18,6 +20,13 @@ const AccountListRow = (props: any) => {
     showUserDetails,
     show,
   } = props;
+
+  const [userModal, setUserModal] = useState({});
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showModalMessage, setShowModalMessage] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [selected, setSelected] = useState(null);
+
   return (
     <>
       <Box
@@ -94,16 +103,10 @@ const AccountListRow = (props: any) => {
           )}
           {showOptions && element?.role !== "expert" && (
             <StyledImage
-              //   onClick={() => {
-              //     if (!showUserModal) {
-              //       setUserModal(element);
-              //     } else {
-              //       setSelected(null);
-              //       setUserModal();
-              //       handleSetUDM(prevElement);
-              //     }
-              //     setShowUserModal(!showUserModal);
-              //   }}
+              onClick={() => {
+                setShowUserModal((prev) => !prev);
+                setSelected(null)
+              }}
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
               }
@@ -338,7 +341,7 @@ const AccountListRow = (props: any) => {
         </Box>
       </Box>
 
-      {false && element?.role !== "expert" && (
+      {showUserModal && element?.role !== "expert" && (
         <Box
           sx={[
             {
@@ -518,7 +521,7 @@ const AccountListRow = (props: any) => {
                     alignItems: "center",
                     cursor: "pointer",
                     marginRight: { lg: "0", xs: "5px" },
-                    width: { desktop: "100%", xs: "33%" },
+                    width: { lg: "100%", xs: "33%" },
                   }}
                   onClick={() => {
                     if (element?.totalCommissions !== null) {
@@ -539,7 +542,7 @@ const AccountListRow = (props: any) => {
                         color: "white",
                         textAlign: "center",
                         alignItems: "center",
-                        marginRight: { desktop: "0", xs: "3px" },
+                        marginRight: { lg: "0", xs: "3px" },
                       },
                       fTextStyle,
                     ]}
@@ -563,12 +566,11 @@ const AccountListRow = (props: any) => {
             </Box>
           </Box>
 
-          {/* <Box
+          <Box
             sx={{
               width: "100%",
               display: "flex",
-              visibility: !showUserDetails && "hidden",
-              // paddingX: "10px",
+              visibility: showUserDetails ? "visible" : "hidden",
               alignItems: "center",
               height: "100%",
             }}
@@ -577,90 +579,19 @@ const AccountListRow = (props: any) => {
               selected={selected}
               element={element}
               setSelected={setSelected}
-              updatedUserProfile={updatedUserProfile}
               getListOfUser={getListOfUser}
               setShowUserModal={setShowUserModal}
               backgroundColor={containerStyle?.background}
               userModal={userModal}
-              setShowSuccessModal={handleChangeShowModalSuccess}
               setShowModalMessage={setShowModalMessage}
-              element={element}
-              setElementToUDM={handleSetUDM}
-              prevElement={prevElement}
-            />
-          </Box> */}
-        </Box>
-      )}
-
-      {/* {showUserModal && element?.role !== "user" && (
-        <Box
-          sx={[
-            {
-              width: "100%",
-              display: "flex",
-              height: "100%",
-              background: "#0B4F26",
-              alignItems: "center",
-              overflow: "hidden",
-              flexDirection: { xs: "column", lg: "row" },
-            },
-            containerStyle,
-          ]}
-        >
-          <Box
-            sx={[
-              {
-                width: {
-                  lg: "11vw",
-                  md: "25vw",
-                  xs: "96vw",
-                },
-                visibility: "hidden",
-                // display: "flex",
-                alignSelf: "stretch",
-                // height: "auto",
-                justifyContent: "space-between",
-                // alignItems: "center" ,
-                borderRight: "2px solid white",
-              },
-              // fContainerStyle,
-            ]}
-          ></Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              // paddingX: "10px",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <UserDetailModal
-              selected={selected}
-              setSelected={setSelected}
-              element={element}
-              updatedUserProfile={updatedUserProfile}
-              getListOfUser={getListOfUser}
-              setShowUserModal={setShowUserModal}
-              backgroundColor={containerStyle?.background}
-              userModal={userModal}
-              setShowSuccessModal={handleChangeShowModalSuccess}
-              setShowModalMessage={setShowModalMessage}
-              element={element}
-              setElementToUDM={handleSetUDM}
-              prevElement={prevElement}
             />
           </Box>
         </Box>
-      )} */}
+      )}
 
       <ModalMUI
         open={false}
-        onClose={() => {
-          //   setSubSusers({ value: false, id: "", title: "" });
-          //   dispatch(setSubUserData([]));
-          //   dispatch(setSubPage(1));
-        }}
+        onClose={() => {}}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -673,15 +604,7 @@ const AccountListRow = (props: any) => {
             flexDirection: "column",
             alignItems: "center",
           }}
-        >
-          {/* <AccountListModal
-            id={showSubUsers?.id}
-            show={showSubUsers?.value}
-            setShow={setSubSusers}
-            title={showSubUsers?.title}
-            handleExport={handleExport}
-          /> */}
-        </Box>
+        ></Box>
       </ModalMUI>
 
       <ModalMUI
@@ -701,24 +624,8 @@ const AccountListRow = (props: any) => {
             flexDirection: "column",
             alignItems: "center",
           }}
-        >
-          {/* <CommissionReportTable
-            title={element?.userName}
-            id={showCommissionReport?.id}
-            show={showCommissionReport?.value}
-            setShow={setShowCommissionReport}
-          /> */}
-        </Box>
+        ></Box>
       </ModalMUI>
-      {/* {showSuccessModal && (
-        <Modal
-          message={showModalMessage}
-          setShowSuccessModal={handleChangeShowModalSuccess}
-          showSuccessModal={showSuccessModal}
-          buttonMessage={"OK"}
-          navigateTo={"list_of_clients"}
-        />
-      )} */}
     </>
   );
 };

@@ -52,7 +52,7 @@ const SearchInput = (props: any) => {
             width: {
               xs: width ? width : "36%",
               lg: "17vw",
-              tablet: "17vw",
+              md: "17vw",
             },
             display: "flex",
             justifyContent: "flex-end",

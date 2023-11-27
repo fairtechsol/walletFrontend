@@ -1,8 +1,15 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
+import { Navigate } from "react-router-dom";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const ListOfClients = Loadable(lazy(() => import("../pages/listOfClients")));
+const ChangePassword = Loadable(lazy(() => import("../pages/changePassword")));
+const MyAccount = Loadable(lazy(() => import("../pages/myAccount")));
+const Inplay = Loadable(lazy(() => import("../pages/inplay")));
+const AddAccount = Loadable(lazy(() => import("../pages/addAccount")));
+const Analysis = Loadable(lazy(() => import("../pages/analysis")));
+const Reports = Loadable(lazy(() => import("../pages/reports")));
 
 const MainRoutes = {
   path: "/admin",
@@ -14,23 +21,31 @@ const MainRoutes = {
     },
     {
       path: "live_market",
-      element: <ListOfClients />,
+      element: <Inplay />,
     },
     {
       path: "add_account",
-      element: <ListOfClients />,
+      element: <AddAccount />,
     },
     {
       path: "market_analysis",
-      element: <ListOfClients />,
+      element: <Analysis />,
     },
     {
       path: "reports",
-      element: <ListOfClients />,
+      element: <Reports />,
     },
     {
       path: "my-account",
-      element: <ListOfClients />,
+      element: <MyAccount />,
+    },
+    {
+      path: "change_password",
+      element: <ChangePassword />,
+    },
+    {
+      path: "*",
+      element: <Navigate to={"/"} />,
     },
   ],
 };

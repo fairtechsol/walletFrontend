@@ -61,7 +61,7 @@ const BoxDropDownMenu = (props: any) => {
       ))}
       <Box
         onClick={() => {
-          // logoutProcess();
+          navigate("/");
         }}
         sx={{
           borderRadius: "5px",

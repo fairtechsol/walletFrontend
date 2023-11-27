@@ -74,7 +74,7 @@ const AccountList = () => {
               <Box
                 sx={{
                   display: matchesBreakPoint ? "inline-block" : "block",
-                  position: { mobile: "relative", laptop: "static" },
+                  position: { xs: "relative", lg: "static" },
                 }}
               >
                 <Box sx={{}}>
@@ -94,9 +94,6 @@ const AccountList = () => {
                           fContainerStyle={{ background: "#0B4F26" }}
                           fTextStyle={{ color: "white" }}
                           element={element}
-                          // getListOfUser={getListOfUser}
-                          // currentPage={currentPageNo}
-                          // handleExport={handleExport}
                         />
                       );
                     } else {
@@ -112,9 +109,6 @@ const AccountList = () => {
                           fContainerStyle={{ background: "#F8C851" }}
                           fTextStyle={{ color: "#0B4F26" }}
                           element={element}
-                          // getListOfUser={getListOfUser}
-                          // currentPage={currentPageNo}
-                          // handleExport={handleExport}
                         />
                       );
                     }

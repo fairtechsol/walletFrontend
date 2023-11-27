@@ -2,10 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 
 const AdminEventComponent = (props: any) => {
-  const { data, selected } = props;
+  const { data, selected, setSelected } = props;
 
   return (
     <Box
+      onClick={() => setSelected(data.title)}
       sx={[
         {
           width: "60px",
@@ -39,8 +40,8 @@ const AdminEventComponent = (props: any) => {
           marginTop: { xs: "5px", lg: ".8vh" },
           textTransform: "uppercase",
           fontSize: { lg: "10px", xs: "10px" },
-          fontWeight: { xs: "500", tablet: "500" },
-          color: "#000"
+          fontWeight: { xs: "500", md: "500" },
+          color: "#000",
         }}
       >
         {data.title}

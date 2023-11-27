@@ -1,17 +1,10 @@
-import { useState } from "react";
-import { Button, Box, TextField, useTheme } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Button, Box, useTheme } from "@mui/material";
 import { FgLogo, mail, eye, eyeLock } from "../../../assets";
 import StyledImage from "../../../components/Common/StyledImages";
 import AuthBackground from "../AuthBackground";
 import Input from "../../../components/login/Input";
 import { useNavigate } from "react-router-dom";
-
-const useStyles = makeStyles((theme: any) => ({
-  customButton: {
-    color: theme.palette.primary.main,
-  },
-}));
+import ChangePassword from "../../changePassword";
 
 const Login = () => {
   const theme = useTheme();
@@ -53,55 +46,59 @@ const Login = () => {
             alt="Fairgame"
             sx={{ height: "8%", width: "300px" }}
           />
-          <form
-            onSubmit={handleLogin}
-            style={{
-              width: "90%",
-              justifyContent: "center",
-            }}
-          >
-            <Box sx={{ width: "100%", opacity: 1 }}>
-              <Input
-                placeholder={"Enter Username"}
-                title={"Username"}
-                img={mail}
-                img1={mail}
-              />
-              <Input
-                title={"Password"}
-                placeholder={"Enter Password"}
-                containerStyle={{ marginTop: "10px" }}
-                img={eye}
-                img1={eyeLock}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
+          {true ? (
+            <form
+              onSubmit={handleLogin}
+              style={{
+                width: "90%",
                 justifyContent: "center",
-                marginY: "1vh",
-                marginTop: "4vh",
               }}
             >
-              <Button
-                type="submit"
-                variant="contained"
-                color="secondary"
+              <Box sx={{ width: "100%", opacity: 1 }}>
+                <Input
+                  placeholder={"Enter Username"}
+                  title={"Username"}
+                  img={mail}
+                  img1={mail}
+                />
+                <Input
+                  title={"Password"}
+                  placeholder={"Enter Password"}
+                  containerStyle={{ marginTop: "10px" }}
+                  img={eye}
+                  img1={eyeLock}
+                />
+              </Box>
+              <Box
                 sx={{
-                  width: "62%",
-                  cursor: "pointer",
-                  height: { xs: "50px", lg: "43px" },
-                  borderRadius: "10px",
-                  fontWeight: "500",
-                  textTransform: "none",
-                  fontSize: { lg: "14px", xs: "14px" },
-                  background: `${theme.palette.secondary}`,
+                  display: "flex",
+                  justifyContent: "center",
+                  marginY: "1vh",
+                  marginTop: "4vh",
                 }}
               >
-                Login
-              </Button>
-            </Box>
-          </form>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    width: "62%",
+                    cursor: "pointer",
+                    height: { xs: "50px", lg: "43px" },
+                    borderRadius: "10px",
+                    fontWeight: "500",
+                    textTransform: "none",
+                    fontSize: { lg: "14px", xs: "14px" },
+                    background: `${theme.palette.secondary}`,
+                  }}
+                >
+                  Login
+                </Button>
+              </Box>
+            </form>
+          ) : (
+            <ChangePassword />
+          )}
         </Box>
       </Box>
     </Box>

@@ -51,7 +51,7 @@ const Input = (props: any) => {
             backgroundColor: "white",
             display: "flex",
             alignItems: "center",
-            height: { lg: "45px", xs: "45px", tablet: "45px" },
+            height: { lg: "45px", xs: "45px", md: "45px" },
             overflow: "hidden",
             paddingX: "10px",
             marginTop: "1px",

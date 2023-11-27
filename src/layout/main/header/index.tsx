@@ -110,6 +110,7 @@ const Header = ({}) => {
         >
           <AdminEventListing
             selected={selected}
+            setSelected={setSelected}
             setAnchor={(e: any) => setAnchor(e.currentTarget)}
             setAnchor1={(e: any) => setAnchor1(e.currentTarget)}
           />
