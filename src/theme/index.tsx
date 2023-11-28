@@ -38,24 +38,25 @@ let theme = createTheme({
     secondary: {
       main: "#FDF21A",
       light: `linear-gradient(90deg,#004A25 5%,#FDCB52 100% )`,
-      dark: `linear-gradient(1deg,rgba(0, 74, 37,0.8) 5%, rgba(0,0,0,0.8) 100%)`,
+      dark: `linear-gradient(180deg,#004A25 5%,#1D1D1D 100% )`,
       contrastText: "#000",
     },
     error: {
-      main: "#FF0000",
+      main: "#fa1e1e",
     },
   },
   typography: {
     fontFamily: `Poppins, sans-serif`,
-    h1: {
-      fontWeight: "bold",
+    h5: {
+      fontSize: "12px",
+      fontWeight: "600",
     },
   },
   breakpoints: {
     values: {
       xs: 0,
       sm: 640,
-      md: 1024, 
+      md: 1024,
       lg: 1200,
       xl: 1400,
     },

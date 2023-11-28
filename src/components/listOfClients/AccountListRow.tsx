@@ -4,7 +4,8 @@ import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
 import ModalMUI from "@mui/material/Modal";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StyledImage from "../Common/StyledImages";
-import UserDetailModal from "./RowModalComponents/UserDetailModal";
+import RowModalComponents from "./RowModalComponents";
+import { useNavigate } from "react-router-dom";
 
 const AccountListRow = (props: any) => {
   const {
@@ -15,16 +16,16 @@ const AccountListRow = (props: any) => {
     element,
     getListOfUser,
     showOptions,
-    handleExport,
     showCReport,
     showUserDetails,
     show,
   } = props;
 
+  const navigate = useNavigate();
+
   const [userModal, setUserModal] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
   const [showModalMessage, setShowModalMessage] = useState("");
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
   return (
@@ -58,6 +59,7 @@ const AccountListRow = (props: any) => {
           ]}
         >
           <Typography
+            variant="h5"
             onClick={() => {
               if (!["user", "expert"].includes(element?.role)) {
                 // setSubSusers({
@@ -71,8 +73,6 @@ const AccountListRow = (props: any) => {
             }}
             sx={[
               {
-                fontSize: "12px",
-                fontWeight: "600",
                 cursor: "pointer",
                 textTransform: "capitalize",
                 wordBreak: "break-all",
@@ -86,6 +86,11 @@ const AccountListRow = (props: any) => {
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
+                navigate("/admin/edit_account", {
+                  state: {
+                    id: "1",
+                  },
+                });
                 // navigate(`/${pathname.split("/")[1]}/edit_account`, {
                 //   state: {
                 //     id: element?.id,
@@ -105,7 +110,7 @@ const AccountListRow = (props: any) => {
             <StyledImage
               onClick={() => {
                 setShowUserModal((prev) => !prev);
-                setSelected(null)
+                setSelected(null);
               }}
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
@@ -124,9 +129,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-            {element?.credit_refer}
-          </Typography>
+          <Typography variant="h5">{element?.credit_refer}</Typography>
         </Box>
         <Box
           sx={{
@@ -138,7 +141,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
+          <Typography variant="h5">
             {Number(element?.balance) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
@@ -162,9 +165,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography
-            sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
-          >
+          <Typography variant="h5" sx={{ color: "white" }}>
             {Number(element?.profit_loss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
@@ -201,9 +202,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography
-            sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
-          >
+          <Typography variant="h5" sx={{ color: "white" }}>
             {Number(element?.percent_profit_loss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
@@ -239,9 +238,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-            {element?.totalCommissions}
-          </Typography>
+          <Typography variant="h5">{element?.totalCommissions}</Typography>
         </Box>
         <Box
           sx={{
@@ -253,9 +250,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-            {element?.exposure}
-          </Typography>
+          <Typography variant="h5">{element?.exposure}</Typography>
         </Box>
         <Box
           sx={{
@@ -267,7 +262,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
+          <Typography variant="h5">
             {Number(element?.available_balance) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
@@ -321,9 +316,7 @@ const AccountListRow = (props: any) => {
             paddingX: "10px",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-            {element?.exposure_limit}
-          </Typography>
+          <Typography variant="h5">{element?.exposure_limit}</Typography>
         </Box>
         <Box
           sx={{
@@ -335,9 +328,7 @@ const AccountListRow = (props: any) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-            {element.role}
-          </Typography>{" "}
+          <Typography variant="h5">{element.role}</Typography>{" "}
         </Box>
       </Box>
 
@@ -398,10 +389,9 @@ const AccountListRow = (props: any) => {
                   {element?.matchTypeComission ? (
                     <>
                       <Typography
+                        variant="h5"
                         sx={[
                           {
-                            fontSize: "12px",
-                            fontWeight: "600",
                             color: "white",
                             textAlign: { lg: "left", xs: "left" },
                             width: { lg: "100px", xs: "100px" },
@@ -412,10 +402,9 @@ const AccountListRow = (props: any) => {
                         {element?.matchTypeComission} Com
                       </Typography>
                       <Typography
+                        variant="h5"
                         sx={[
                           {
-                            fontSize: "12px",
-                            fontWeight: "600",
                             color: "white",
                             textAlign: "center",
                             marginRight: "1px",
@@ -430,11 +419,9 @@ const AccountListRow = (props: any) => {
                   ) : (
                     <>
                       <Typography
+                        variant="h5"
                         sx={[
                           {
-                            fontSize: "12px",
-
-                            fontWeight: "600",
                             color: "white",
                             textAlign: { lg: "left", xs: "left" },
                             width: { lg: "100px", xs: "100px" },
@@ -445,11 +432,9 @@ const AccountListRow = (props: any) => {
                         Match Com
                       </Typography>
                       <Typography
+                        variant="h5"
                         sx={[
                           {
-                            fontSize: "12px",
-
-                            fontWeight: "600",
                             color: "white",
                             textAlign: "left",
                           },
@@ -465,11 +450,9 @@ const AccountListRow = (props: any) => {
                 <Box sx={{ display: "flex" }}>
                   <Box sx={{ display: "flex" }}>
                     <Typography
+                      variant="h5"
                       sx={[
                         {
-                          fontSize: "12px",
-
-                          fontWeight: "600",
                           color: "white",
                           textAlign: { lg: "left", xs: "left" },
                           width: { lg: "100px", xs: "100px" },
@@ -480,10 +463,9 @@ const AccountListRow = (props: any) => {
                       Session Com
                     </Typography>
                     <Typography
+                      variant="h5"
                       sx={[
                         {
-                          fontSize: "12px",
-                          fontWeight: "600",
                           color: "white",
                           textAlign: "center",
                           marginRight: "1px",
@@ -495,10 +477,9 @@ const AccountListRow = (props: any) => {
                     </Typography>
                   </Box>
                   <Typography
+                    variant="h5"
                     sx={[
                       {
-                        fontSize: "12px",
-                        fontWeight: "600",
                         color: "white",
                         textAlign: "left",
                         marginLeft: "3px",
@@ -535,10 +516,9 @@ const AccountListRow = (props: any) => {
                   }}
                 >
                   <Typography
+                    variant="h5"
                     sx={[
                       {
-                        fontSize: "12px",
-                        fontWeight: "600",
                         color: "white",
                         textAlign: "center",
                         alignItems: "center",
@@ -575,7 +555,7 @@ const AccountListRow = (props: any) => {
               height: "100%",
             }}
           >
-            <UserDetailModal
+            <RowModalComponents
               selected={selected}
               element={element}
               setSelected={setSelected}

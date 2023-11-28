@@ -1,4 +1,4 @@
-import { Box, AppBar, Typography } from "@mui/material";
+import { Box, AppBar, useMediaQuery, useTheme } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Draw, FgLogo } from "../../../assets/index";
@@ -9,10 +9,12 @@ import AdminEventListing from "./AdminEventListing";
 import "./index.css";
 
 const Header = ({}) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [selected, setSelected] = useState("Client list");
   const [anchor, setAnchor] = useState(null);
   const [anchor1, setAnchor1] = useState(null);
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const RenderLogo = useCallback(() => {
     return (
@@ -45,11 +47,12 @@ const Header = ({}) => {
               width: "100%",
               minHeight: { lg: 60, md: 60, xs: 60 },
               display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-center",
+              flexDirection: matchesMobile ? "column" : "row",
+              alignItems: !matchesMobile ? "center" : "flex-start",
               justifyContent: "space-between",
-              paddingX: { lg: "26px", xs: "5px" },
-              paddingY: 0,
+              paddingX: { lg: "0.5%", xs: "1%" },
+              paddingY: matchesMobile ? "15px" : "0px",
+              paddingBottom: matchesMobile ? "10px" : "0px",
             },
             (theme: any) => ({
               backgroundImage: `${theme.palette.secondary.light}`,

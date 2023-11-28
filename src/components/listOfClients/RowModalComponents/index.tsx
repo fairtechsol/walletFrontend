@@ -10,10 +10,8 @@ import ChangePasswordComponent from "./ChangePasswordComponent";
 import LockUnlockComponent from "./LockUnlockComponent";
 import SetExposureLimit from "./SetExposureLimit";
 
-const UserDetailModal = (props: any) => {
+const RowModalComponents = (props: any) => {
   const { selected, setSelected, backgroundColor } = props;
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [settlementModal, setSettlementModal] = useState(false);
 
   const classes = {
@@ -173,25 +171,6 @@ const UserDetailModal = (props: any) => {
             title={"Withdraw"}
             labelStyle={{}}
           />
-          {/* {elementToUDM?.role?.roleName !== "expert" && ( */}
-          <BoxButton
-            color={"#0B4F26"}
-            onClick={(e: any) => {
-              e?.preventDefault();
-              setSettlementModal(true);
-            }}
-            title={"C_Settlement"}
-            containerStyle={{
-              marginLeft: { lg: "10px", xs: "0" },
-              flex: 1,
-              borderColor: "white",
-            }}
-            titleStyle={{
-              fontSize: { xs: "12px" },
-            }}
-            labelStyle={{}}
-          />
-          {/* )} */}
           <BoxButton
             color={"#0B4F26"}
             onClick={() => {
@@ -258,105 +237,10 @@ const UserDetailModal = (props: any) => {
             labelStyle={{}}
             isSelected={selected == 5}
           />
-          <BoxButton
-            color={"#E32A2A"}
-            deleteBtn={true}
-            onClick={() => {
-              setDeleteModal((prev) => !prev);
-            }}
-            title={"Delete User"}
-            titleStyle={{
-              fontSize: { xs: "12px" },
-            }}
-            icon={
-              <StyledImage src={DeleteIcon} sx={classes.BoxButtonStyledImage} />
-            }
-            containerStyle={classes.BoxButtonContStyle}
-          />
-
-          <Dialog
-            open={settlementModal}
-            onClose={() => setSettlementModal((prev) => !prev)}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Are you sure want to settle this commission ?"}
-            </DialogTitle>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  setSettlementModal((prev) => !prev);
-                }}
-              >
-                No
-              </Button>
-              <Button
-                sx={{ color: "#E32A2A" }}
-                onClick={() => {
-                  // handleSettlement(elementToUDM?.userId);
-                  setSettlementModal((prev) => !prev);
-                }}
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog>
-
-          <Dialog
-            open={deleteModal}
-            onClose={() => setDeleteModal((prev) => !prev)}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Are you sure want to delete this user?"}
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={() => setDeleteModal((prev) => !prev)}>
-                Cancel
-              </Button>
-              <Button
-                sx={{ color: "#E32A2A" }}
-                onClick={() => setDeleteModal((prev) => !prev)}
-              >
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
-          <Dialog
-            open={confirmDeleteModal}
-            onClose={() => setConfirmDeleteModal((prev) => !prev)}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {
-                "Your available balance is not zero. Are you sure want to delete this user?"
-              }
-            </DialogTitle>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  setConfirmDeleteModal((prev) => !prev);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                sx={{ color: "#E32A2A" }}
-                onClick={() => {
-                  setConfirmDeleteModal((prev) => !prev);
-                }}
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog>
         </Box>
       )}
     </Box>
   );
 };
 
-export default UserDetailModal;
+export default RowModalComponents;

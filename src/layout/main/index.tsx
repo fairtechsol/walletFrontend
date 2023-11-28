@@ -12,7 +12,7 @@ const MainLayout = () => {
         <Box
           sx={{
             background: `url(${Background}) no-repeat center center/cover`,
-            height: "calc(100vh - 198px)",
+            height: "calc(100vh - 199.31px)",
             marginTop: "198px",
           }}
         >
