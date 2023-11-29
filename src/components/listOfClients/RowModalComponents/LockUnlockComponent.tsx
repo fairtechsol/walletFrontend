@@ -73,6 +73,8 @@ const LockUnlockComponent = (props: any) => {
                 <BoxButtonWithSwitch
                   title={"User"}
                   val={lockUnlockObj.all_blocked}
+                  name={"all_blocked"}
+                  showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
                 />
@@ -88,6 +90,8 @@ const LockUnlockComponent = (props: any) => {
                 <BoxButtonWithSwitch
                   title={"Bet"}
                   val={lockUnlockObj.bet_blocked}
+                  name={"bet_blocked"}
+                  showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
                 />

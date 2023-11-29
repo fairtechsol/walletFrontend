@@ -15,7 +15,6 @@ import MobileViewUserDetails from "./MobileViewUserDetails";
 const WithdrawComponent = (props: any) => {
   const {
     handleKeyDown,
-    setShowUserModal,
     backgroundColor,
     elementToUDM,
     selected,
@@ -24,11 +23,11 @@ const WithdrawComponent = (props: any) => {
   } = props;
 
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const [initialBalance, setInitialBalance] = useState("100");
+  const [initialBalance] = useState("100");
   const defaultWithDrawObj = {
     amount: "",
     trans_type: "withdraw",

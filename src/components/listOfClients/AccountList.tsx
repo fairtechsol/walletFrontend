@@ -7,7 +7,7 @@ import SubHeaderListRow from "./SubHeaderListRow";
 import AccountListRow from "./AccountListRow";
 
 const AccountList = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
 
   const data = {

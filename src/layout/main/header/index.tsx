@@ -1,6 +1,5 @@
 import { Box, AppBar, useMediaQuery, useTheme } from "@mui/material";
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Draw, FgLogo } from "../../../assets/index";
 import { memo } from "react";
 import StyledImage from "../../../components/Common/StyledImages";
@@ -11,30 +10,30 @@ import MobileSideBar from "./MobileSideBar";
 
 const Header = ({}) => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const [selected, setSelected] = useState("Client list");
   const [anchor, setAnchor] = useState(null);
   const [anchor1, setAnchor1] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const currentSelected = 1;
+  console.log(anchor, anchor1);
 
-  const RenderLogo = useCallback(() => {
-    return (
-      <StyledImage
-        onClick={(e: any) => {
-          e.stopPropagation();
-          navigate("/admin/list_of_clients");
-        }}
-        src={FgLogo}
-        sx={{
-          height: { lg: "45px", xs: "40px" },
-          width: "auto",
-          marginLeft: { lg: "20px", xs: "10px" },
-        }}
-      />
-    );
-  }, []);
+  // const RenderLogo = useCallback(() => {
+  //   return (
+  //     <StyledImage
+  //       onClick={(e: any) => {
+  //         e.stopPropagation();
+  //         navigate("/wallet/list_of_clients");
+  //       }}
+  //       src={FgLogo}
+  //       sx={{
+  //         height: { lg: "45px", xs: "40px" },
+  //         width: "auto",
+  //         marginLeft: { lg: "20px", xs: "10px" },
+  //       }}
+  //     />
+  //   );
+  // }, []);
 
   const classes = {
     AppBarVal: { zIndex: (theme: any) => theme.zIndex.drawer + 1 },
@@ -152,7 +151,7 @@ const Header = ({}) => {
               <BoxProfile
                 containerStyle={classes.BoxCont1sub2BoxProfileContStyle}
                 image={"https://picsum.photos/200/300"}
-                value={"Admin"}
+                value={"User"}
                 balance={"90000"}
               />
             </Box>

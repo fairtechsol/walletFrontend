@@ -12,7 +12,7 @@ const Login = () => {
 
   const handleLogin = (e: any) => {
     e.preventDefault();
-    navigate("/admin/list_of_clients");
+    navigate("/wallet/list_of_clients");
   };
 
   return (

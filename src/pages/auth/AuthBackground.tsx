@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { LoginBg } from "../../assets";
 
 const AuthBackground = () => {

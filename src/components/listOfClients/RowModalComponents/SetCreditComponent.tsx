@@ -5,16 +5,9 @@ import StyledImage from "../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../assets";
 
 const SetCreditComponent = (props: any) => {
-  const {
-    handleKeyDown,
-    backgroundColor,
-    userModal,
-    elementToUDM,
-    setElementToUDM,
-    setSelected,
-  } = props;
+  const { handleKeyDown, backgroundColor, setSelected } = props;
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const handleSubmit = (e: any) => {
     e.preventDefault;

@@ -4,7 +4,7 @@ import StyledImage from "../Common/StyledImages";
 import { Box } from "@mui/material";
 
 const HeaderRow = (props: any) => {
-  const { getListOfUser, setPageCount, handleExport } = props;
+  const { handleExport } = props;
   return (
     <Box
       display={"flex"}

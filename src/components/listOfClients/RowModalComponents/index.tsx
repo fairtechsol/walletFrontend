@@ -1,8 +1,5 @@
-import { useState } from "react";
-import { Box, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import BoxButton from "./BoxButton";
-import StyledImage from "../../Common/StyledImages";
-import { DeleteIcon } from "../../../assets";
 import DepositComponent from "./DepositComponets";
 import WithdrawComponent from "./WithdrawComponent";
 import SetCreditComponent from "./SetCreditComponent";
@@ -12,7 +9,6 @@ import SetExposureLimit from "./SetExposureLimit";
 
 const RowModalComponents = (props: any) => {
   const { selected, setSelected, backgroundColor } = props;
-  const [settlementModal, setSettlementModal] = useState(false);
 
   const classes = {
     mainBox: {

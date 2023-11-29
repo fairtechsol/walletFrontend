@@ -5,11 +5,13 @@ import {
   Button,
   useMediaQuery,
   useTheme,
+  Grid,
 } from "@mui/material";
 import Input from "../../components/login/Input";
 import { EyeIcon, EyeSlash } from "../../assets";
 import { useLocation } from "react-router-dom";
 import DropDown from "../../components/Common/DropDown";
+import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 
 const typeToShow = [
   "Select account type",
@@ -30,6 +32,7 @@ const formDataSchema = {
   fullName: "",
   city: "",
   number: "",
+  domain: "",
   accountType: "",
   creditReference: "",
   uplinePartnership: "",
@@ -40,6 +43,9 @@ const formDataSchema = {
   sessionCommission: "",
   remarks: "",
   adminTransPassword: "",
+  //expert access
+  session: false,
+  bookmaker: false,
 };
 
 const AddAccount = () => {
@@ -48,6 +54,7 @@ const AddAccount = () => {
   const [formData, setFormData] = useState(formDataSchema);
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [showMatchCommision] = useState(false);
+  const role = "fairGameAdmin";
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -71,10 +78,23 @@ const AddAccount = () => {
 
   const matchComissionTypes = ["0.00", "Total Loss", "Entry Wise"];
 
-  const matchComissionArray = ["0.00", "0.25"];
+  let matchComissionArray = [];
+
+  for (let i = 0.25; i <= 2.0; i += 0.25) {
+    if (formData.matchCommissionType === "0.00") {
+      matchComissionArray = [];
+      break;
+    } else if (formData.matchCommissionType === "Total Loss") {
+      matchComissionArray.push(i?.toFixed(2));
+    } else {
+      if (i <= 1.5) {
+        matchComissionArray.push(i?.toFixed(2));
+      } else break;
+    }
+  }
 
   const sessionComissionArray = [];
-  for (let i = 0; i <= 3.5; i += 0.25) {
+  for (let i = 0.25; i <= 3.5; i += 0.25) {
     sessionComissionArray.push(i?.toFixed(2));
   }
 
@@ -127,7 +147,9 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <div style={{ order: 1 }}>
+                <div
+                //  style={{ order: 1 }}
+                >
                   <Input
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
@@ -144,7 +166,9 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div style={{ order: 3 }}>
+                <div
+                // style={{ order: 3 }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -164,7 +188,9 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />{" "}
                 </div>
-                <div style={{ order: 5 }}>
+                <div
+                // style={{ order: 5 }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -183,7 +209,9 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div style={{ order: 2 }}>
+                <div
+                // style={{ order: 2 }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -199,7 +227,9 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div style={{ order: 4 }}>
+                <div
+                // style={{ order: 4 }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -215,7 +245,9 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div style={{ order: 6 }}>
+                <div
+                // style={{ order: 6 }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -231,17 +263,39 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
+                {role === "fairGameAdmin" && (
+                  <div
+                  // style={{ order: 6 }}
+                  >
+                    <Input
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
+                      inputStyle={inputStyle}
+                      placeholder={"Domain"}
+                      inputContainerStyle={{
+                        ...inputContainerStyle,
+                        height: { lg: "45px", xs: "36px" },
+                      }}
+                      title={"Domain"}
+                      name={"domain"}
+                      type={"text"}
+                      onChange={handleChange}
+                    />
+                  </div>
+                )}
               </Box>
             </Box>
             <Box sx={{ flex: 2 }}>
               <Box
                 sx={{
-                  display: { lg: "block", md: "grid", xs: "grid" },
+                  display: { lg: "block", md: "grid", xs: "block" },
                   gridTemplateColumns: "50% 47%",
                   gridColumnGap: "10px",
                 }}
               >
-                <div style={{ order: 2 }}>
+                <div
+                // style={{ order: 2 }}
+                >
                   <DropDown
                     dropStyle={{
                       filter:
@@ -274,8 +328,37 @@ const AddAccount = () => {
                     dropDownTextStyle={inputStyle}
                   />
                 </div>
+                {formData?.accountType === "Expert" && (
+                  <>
+                    <Box m={2}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <BoxButtonWithSwitch
+                            title="Session"
+                            name={"session"}
+                            showLockUnlock={false}
+                            val={formData.session}
+                            setLockUnlockObj={setFormData}
+                            lockUnlockObj={formData}
+                          />
+                        </Grid>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <BoxButtonWithSwitch
+                            title="Bookmaker"
+                            name={"bookmaker"}
+                            val={formData.bookmaker}
+                            setLockUnlockObj={setFormData}
+                            lockUnlockObj={formData}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </>
+                )}
                 {formData?.accountType !== "Expert" && (
-                  <div style={{ order: 1 }}>
+                  <div
+                  // style={{ order: 1 }}
+                  >
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}

@@ -15,7 +15,6 @@ import MobileViewUserDetails from "./MobileViewUserDetails";
 const DepositComponent = (props: any) => {
   const {
     handleKeyDown,
-    setShowUserModal,
     backgroundColor,
     elementToUDM,
     setSelected,
@@ -26,14 +25,14 @@ const DepositComponent = (props: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const [initialBalance, setInitialBalance] = useState("100");
+  const [initialBalance] = useState("100");
   const defaultDepositObj = {
     amount: "",
     trans_type: "add",
     adminTransPassword: "",
     remark: "",
   };
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [depositObj, setDepositObj] = useState(defaultDepositObj);
 
   const handleDepositeSubmit = (e: any) => {

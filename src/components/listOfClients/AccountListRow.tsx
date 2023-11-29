@@ -23,9 +23,8 @@ const AccountListRow = (props: any) => {
 
   const navigate = useNavigate();
 
-  const [userModal, setUserModal] = useState({});
+  const [userModal, ] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
-  const [showModalMessage, setShowModalMessage] = useState("");
   const [selected, setSelected] = useState(null);
 
   return (
@@ -86,7 +85,7 @@ const AccountListRow = (props: any) => {
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate("/admin/edit_account", {
+                navigate("/wallet/edit_account", {
                   state: {
                     id: "1",
                   },
@@ -563,7 +562,6 @@ const AccountListRow = (props: any) => {
               setShowUserModal={setShowUserModal}
               backgroundColor={containerStyle?.background}
               userModal={userModal}
-              setShowModalMessage={setShowModalMessage}
             />
           </Box>
         </Box>

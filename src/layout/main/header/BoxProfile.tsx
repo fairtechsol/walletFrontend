@@ -1,20 +1,15 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import StyledImage from "../../../components/Common/StyledImages";
 import { useEffect, useState } from "react";
 import { ArrowDown } from "../../../assets";
 import BoxDropDownMenu from "./BoxDropDownMenu";
 
 const BoxProfile = (props: any) => {
-  const { image, value, containerStyle, balance } = props;
-  const theme = useTheme();
+  const { value, containerStyle, balance } = props;
   const [open, setOpen] = useState(false);
 
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const [anchorEl] = useState(null);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
   useEffect(() => {}, [anchorEl]);
   const handleClose = () => {
     setOpen(false);

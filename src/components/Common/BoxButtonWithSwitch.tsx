@@ -3,7 +3,8 @@ import { Box, Typography } from "@mui/material";
 import MaterialUISwitch from "./MaterialUISwitch";
 
 const BoxButtonWithSwitch = (props: any) => {
-  const { title, val, setLockUnlockObj, lockUnlockObj } = props;
+  const { title, val, name, setLockUnlockObj, lockUnlockObj, showLockUnlock } =
+    props;
   const [checked, setChecked] = useState(false);
   const classes = {
     mainBox: [
@@ -24,7 +25,7 @@ const BoxButtonWithSwitch = (props: any) => {
         textAlign: "right",
         color: "white",
         marginRight: "10px",
-        minWidth: "80px",
+        minWidth: { lg: "80px", xs: "0px", md: "0px" },
       },
     ],
   };
@@ -33,22 +34,15 @@ const BoxButtonWithSwitch = (props: any) => {
       <MaterialUISwitch
         checked={!val}
         onChange={() => {
-          if (title === "User") {
-            setLockUnlockObj({
-              ...lockUnlockObj,
-              all_blocked: !val === true ? 1 : 0,
-            });
-          } else {
-            setLockUnlockObj({
-              ...lockUnlockObj,
-              bet_blocked: !val === true ? 1 : 0,
-            });
-          }
+          setLockUnlockObj({
+            ...lockUnlockObj,
+            [name]: !val === true ? 1 : 0,
+          });
           setChecked(!checked);
         }}
       />
       <Typography sx={classes.mainBoxTypography}>
-        {title} {!val ? "Unlocked" : "Locked"}
+        {title} {showLockUnlock && (!val ? "Unlocked" : "Locked")}
       </Typography>
     </Box>
   );

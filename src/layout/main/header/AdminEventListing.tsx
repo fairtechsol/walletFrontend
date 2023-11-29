@@ -48,7 +48,7 @@ const AdminEventListing = (props: any) => {
         return (
           <NavLink
             key={idx}
-            to={`/admin/${i.url}`}
+            to={`/wallet/${i.url}`}
             style={{ textDecoration: "none" }}
           >
             <AdminEventComponent

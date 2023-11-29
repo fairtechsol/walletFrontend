@@ -18,7 +18,7 @@ const MyAccount = () => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const [userBalanceDetails, setUserBalanceDetails] = useState<BalanceDetails>({
+  const [userBalanceDetails] = useState<BalanceDetails>({
     ul_credit_refer: "0",
     master_balance: "0",
     available_balance: "0",

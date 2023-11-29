@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const menutItems = [
   { title: "Secure Auth Verification" },
-  { title: "Change Password", link: "/admin/change_password" },
+  { title: "Change Password", link: "/wallet/change_password" },
 ];
 const BoxDropDownMenu = (props: any) => {
-  const { anchorEl, open, handleClose } = props;
+  const { handleClose } = props;
   const navigate = useNavigate();
   // const innerRef = useOuterClick((ev: any) => {
   //   handleClose();

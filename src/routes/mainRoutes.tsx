@@ -12,7 +12,7 @@ const Analysis = Loadable(lazy(() => import("../pages/analysis")));
 const Reports = Loadable(lazy(() => import("../pages/reports")));
 
 const MainRoutes = {
-  path: "/admin",
+  path: "/wallet",
   element: <MainLayout />,
   children: [
     {

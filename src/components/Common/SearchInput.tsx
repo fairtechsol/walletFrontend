@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { TextField, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import StyledImage from "./StyledImages";
@@ -20,11 +19,10 @@ const SearchInput = (props: any) => {
 
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const [searchValue, setSearchValue] = useState("");
 
   const handleInputChange = async (event: any) => {
     const value = event.target.value;
-    setSearchValue(value);
+    // setSearchValue(value);
     if (onChange && typeof onChange === "function") {
       onChange(value);
     }
