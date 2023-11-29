@@ -19,7 +19,6 @@ const Input = (props: any) => {
     inputContainerStyle,
     inputProps,
     type,
-    autoMaticFillValue,
     disabled,
     autoFocus,
     img,
@@ -62,61 +61,34 @@ const Input = (props: any) => {
           inputContainerStyle,
         ]}
       >
-        {autoMaticFillValue ? (
-          <TextField
-            variant="standard"
-            placeholder={placeholder}
-            value={autoMaticFillValue}
-            required={required}
-            onChange={onChange}
-            name={name}
-            type={type === "password" && showPass ? "text" : type}
-            InputProps={{
-              disableUnderline: true,
-              justifyContent: "center",
-              ...inputProps,
-              placeholder: placeholder,
-              sx: [{ fontSize: { lg: "12px", xs: "14px" } }, inputStyle],
-            }}
-            sx={{
-              borderColor: "white",
-              display: "flex",
+        <TextField
+          autoFocus={autoFocus}
+          variant="standard"
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          type={type === "password" && showPass ? "text" : type}
+          required={required}
+          name={name}
+          InputProps={{
+            autoComplete: "new-password",
+            inputProps: {
+              min: type === "Number" ? "0" : undefined,
+            },
+            disabled: disabled,
+            placeholder: placeholder,
+            disableUnderline: true,
+            ...inputProps,
 
-              flex: 1,
-              fontSize: { lg: "1px", xs: "5px" },
-            }}
-            disabled
-          />
-        ) : (
-          <TextField
-            autoFocus={autoFocus}
-            variant="standard"
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            type={type === "password" && showPass ? "text" : type}
-            required={required}
-            name={name}
-            InputProps={{
-              autoComplete: "new-password",
-              inputProps: {
-                min: type === "Number" ? "0" : undefined,
-              },
-              disabled: disabled,
-              placeholder: placeholder,
-              disableUnderline: true,
-              ...inputProps,
-
-              sx: [{ fontSize: { lg: "12px", xs: "14px" } }, inputStyle],
-            }}
-            sx={{
-              borderColor: "white",
-              display: "flex",
-              flex: 1,
-              fontSize: { lg: "1px", xs: "5px" },
-            }}
-          />
-        )}
+            sx: [{ fontSize: { lg: "12px", xs: "14px" } }, inputStyle],
+          }}
+          sx={{
+            borderColor: "white",
+            display: "flex",
+            flex: 1,
+            fontSize: { lg: "1px", xs: "5px" },
+          }}
+        />
         {img && (
           <img
             src={showPass ? img : img1}
