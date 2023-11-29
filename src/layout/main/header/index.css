@@ -95,6 +95,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
   .marquee-content {
     display: inline-block;
+    color: #fff;
   }
   @keyframes marqueeAnimation {
     0% {

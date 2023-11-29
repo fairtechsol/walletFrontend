@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
 
 const DropDownItem = (props: any) => {
@@ -10,14 +9,18 @@ const DropDownItem = (props: any) => {
     setOpen,
     dropDownTextStyle,
     setSelected,
+    name,
   } = props;
   return (
     <Box
       onClick={() => {
         if (!disable) {
           setValue(i);
-          setSelected(i);
           setOpen(false);
+          setSelected((prev: any) => ({
+            ...prev,
+            [name]: i,
+          }));
         }
       }}
       sx={[
@@ -31,7 +34,6 @@ const DropDownItem = (props: any) => {
             cursor: "pointer",
             background: "#3498ff33",
           },
-          // background: "#DEDEDE",
         },
         dropDownTextStyle,
       ]}

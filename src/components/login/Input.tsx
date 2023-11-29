@@ -25,10 +25,12 @@ const Input = (props: any) => {
     img,
     img1,
     imgstyle,
+    onChange,
+    name,
   } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
-  const [showPass, setShowPass] = useState(true);
+  const [showPass, setShowPass] = useState(false);
 
   return (
     <Box sx={[{}, containerStyle]}>
@@ -66,12 +68,14 @@ const Input = (props: any) => {
             placeholder={placeholder}
             value={autoMaticFillValue}
             required={required}
+            onChange={onChange}
+            name={name}
+            type={type === "password" && showPass ? "text" : type}
             InputProps={{
               disableUnderline: true,
               justifyContent: "center",
               ...inputProps,
               placeholder: placeholder,
-              type: "text",
               sx: [{ fontSize: { lg: "12px", xs: "14px" } }, inputStyle],
             }}
             sx={{
@@ -89,13 +93,13 @@ const Input = (props: any) => {
             variant="standard"
             placeholder={placeholder}
             value={value}
-            type="text"
-            // onKeyDown={onKeyDown}
+            onChange={onChange}
+            type={type === "password" && showPass ? "text" : type}
             required={required}
+            name={name}
             InputProps={{
               autoComplete: "new-password",
               inputProps: {
-                type: !showPass ? "text" : "password",
                 min: type === "Number" ? "0" : undefined,
               },
               disabled: disabled,

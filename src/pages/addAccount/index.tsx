@@ -1,29 +1,54 @@
 import { useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Input from "../../components/login/Input";
 import { EyeIcon, EyeSlash } from "../../assets";
 import { useLocation } from "react-router-dom";
 import DropDown from "../../components/Common/DropDown";
 
-const AddAccount = () => {
-  const { state } = useLocation();
-  const [showMatchCommision] = useState(false);
-  const typeToShow = [
-    "Select account type",
-    "Fairgame Admin",
-    "Super Admin",
-    "Admin",
-    "Super Master",
-    "Expert",
-    "Master",
-    "User",
-  ];
+const typeToShow = [
+  "Select account type",
+  "Fairgame Admin",
+  "URL Super Admin",
+  "Super Admin",
+  "Admin",
+  "Super Master",
+  "Master",
+  "Expert",
+  "User",
+];
 
-  const defaultDropDownValues = {
-    
-  }
-  const [selected, setSelected] = useState(typeToShow[0]);
-  const [selectedDropdown, setSelectedDropdown] = useState(defaultDropDownValues)
+const formDataSchema = {
+  userName: "",
+  password: "",
+  confirmPassword: "",
+  fullName: "",
+  city: "",
+  number: "",
+  accountType: "",
+  creditReference: "",
+  uplinePartnership: "",
+  myPartnership: "",
+  downlinePartnership: "",
+  matchCommissionType: "",
+  matchCommission: "",
+  sessionCommission: "",
+  remarks: "",
+  adminTransPassword: "",
+};
+
+const AddAccount = () => {
+  const theme = useTheme();
+  const { state } = useLocation();
+  const [formData, setFormData] = useState(formDataSchema);
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [showMatchCommision] = useState(false);
+
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
   };
@@ -46,12 +71,25 @@ const AddAccount = () => {
 
   const matchComissionTypes = ["0.00", "Total Loss", "Entry Wise"];
 
-  const matchComissionArray = ["0.25"];
+  const matchComissionArray = ["0.00", "0.25"];
 
   const sessionComissionArray = [];
   for (let i = 0; i <= 3.5; i += 0.25) {
     sessionComissionArray.push(i?.toFixed(2));
   }
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    alert(JSON.stringify(formData));
+  };
 
   return (
     <>
@@ -66,13 +104,7 @@ const AddAccount = () => {
         >
           {state?.id ? "Edit" : "Add"} Account
         </Typography>
-        <form
-          //   ref={formRef}
-          style={{ marginTop: "1%" }}
-          onSubmit={(e: any) => {
-            e?.preventDefault();
-          }}
-        >
+        <form style={{ marginTop: "1%" }} onSubmit={handleSubmit}>
           <Box
             sx={{
               background: "#F8C851",
@@ -85,14 +117,12 @@ const AddAccount = () => {
               flexDirection: { xs: "column", lg: "row", md: "row" },
               width: "100%",
               gap: { xs: 0, lg: 5, md: 4 },
-              // flexWrap:"wrap",
             }}
           >
             <Box sx={{ flex: 2 }}>
               <Box
                 sx={{
                   display: { lg: "block", md: "grid", xs: "grid" },
-                  // grid-template-columns: auto auto auto;
                   gridTemplateColumns: "auto auto",
                   gridColumnGap: "10px",
                 }}
@@ -107,9 +137,11 @@ const AddAccount = () => {
                     }}
                     placeholder={"Username (Required)"}
                     title={"Username*"}
-                    place={1}
+                    name={"userName"}
+                    type={"text"}
                     required={true}
                     toFoucs={true}
+                    onChange={handleChange}
                   />
                 </div>
                 <div style={{ order: 3 }}>
@@ -124,10 +156,12 @@ const AddAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"User Password*"}
+                    name={"password"}
+                    type={"password"}
                     placeholder={"Ex : Abc@12"}
                     required={true}
-                    place={2}
                     toFoucs={true}
+                    onChange={handleChange}
                   />{" "}
                 </div>
                 <div style={{ order: 5 }}>
@@ -142,9 +176,11 @@ const AddAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"Confirm User Password*"}
+                    name={"confirmPassword"}
+                    type={"password"}
                     placeholder={"Ex : Abc@12"}
                     required={true}
-                    place={3}
+                    onChange={handleChange}
                   />
                 </div>
                 <div style={{ order: 2 }}>
@@ -158,7 +194,9 @@ const AddAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"Fullname"}
-                    place={4}
+                    name={"fullName"}
+                    type={"text"}
+                    onChange={handleChange}
                   />
                 </div>
                 <div style={{ order: 4 }}>
@@ -172,7 +210,9 @@ const AddAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"City"}
-                    place={5}
+                    name={"city"}
+                    type={"text"}
+                    onChange={handleChange}
                   />
                 </div>
                 <div style={{ order: 6 }}>
@@ -186,8 +226,9 @@ const AddAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"Mobile Number"}
-                    place={6}
+                    name={"number"}
                     type={"Number"}
+                    onChange={handleChange}
                   />
                 </div>
               </Box>
@@ -208,6 +249,7 @@ const AddAccount = () => {
                     }}
                     valueStyle={{ ...inputStyle, color: "white" }}
                     title={"Account Type*"}
+                    name={"accountType"}
                     valueContainerStyle={{
                       marginX: "0px",
                       background: "#0B4F26",
@@ -227,13 +269,12 @@ const AddAccount = () => {
                       marginTop: "0px",
                       position: "absolute",
                     }}
-                    setSelected={setSelected}
+                    setSelected={setFormData}
                     data={typeToShow}
                     dropDownTextStyle={inputStyle}
-                    place={9}
                   />
                 </div>
-                {selected !== "Expert" && (
+                {formData?.accountType !== "Expert" && (
                   <div style={{ order: 1 }}>
                     <Input
                       containerStyle={containerStyles}
@@ -244,40 +285,17 @@ const AddAccount = () => {
                         height: { lg: "45px", xs: "36px" },
                       }}
                       title={"Credit Reference*"}
-                      //   setDetail={setDetail}
-                      required={true}
-                      //   Detail={Detail}
-                      //   setError={setError}
-                      //   error={error}
-                      place={8}
-                      //   onKeyDown={(event) => {
-                      //     if (
-                      //       event.code === "Space" ||
-                      //       (!(event.key >= "0" && event.key <= "9") &&
-                      //         event.key !== "Backspace" &&
-                      //         event.code !== "ArrowUp" &&
-                      //         event.code !== "ArrowDown" &&
-                      //         event.code !== "Enter" &&
-                      //         event.code !== "Tab" && // Allow Tab key
-                      //         event.code !== "ArrowRight" && // Allow Right Arrow key
-                      //         event.code !== "ArrowLeft" &&
-                      //         event.code !== "Delete")
-                      //     ) {
-                      //       event.preventDefault();
-                      //     }
-                      //   }}
+                      name={"creditReference"}
+                      // required={true}
                       type={"Number"}
+                      onChange={handleChange}
                     />
-                    {/* {error[8]?.val && (
-                      <p style={{ color: "#fa1e1e" }}>{error[8]?.val}</p>
-                    )} */}
                   </div>
                 )}
               </Box>
               <Box
                 sx={{
                   display: { lg: "block", md: "grid", xs: "grid" },
-                  // grid-template-columns: auto auto auto;
                   gridTemplateColumns: "50% 47%",
                   gridColumnGap: "10px",
                 }}
@@ -285,7 +303,8 @@ const AddAccount = () => {
                 <Input
                   containerStyle={{
                     ...containerStyles,
-                    display: selected === "User" ? "none" : "block",
+                    display:
+                      formData?.accountType === "User" ? "none" : "block",
                   }}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
@@ -295,33 +314,38 @@ const AddAccount = () => {
                     height: { lg: "45px", xs: "36px" },
                   }}
                   title={"Upline Partnership"}
+                  name={"uplinePartnership"}
+                  type={"text"}
                   disabled={true}
-                  place={10}
+                  onChange={handleChange}
                 />
                 <Input
                   inputContainerStyle={{
                     ...inputContainerStyle,
-                    backgroundColor: selected === "User" && "#DEDEDE",
+                    backgroundColor:
+                      formData?.accountType === "User" && "#DEDEDE",
                     height: { lg: "45px", xs: "36px" },
                   }}
                   containerStyle={{
                     ...containerStyles,
-                    display: selected === "User" ? "none" : "block",
+                    display:
+                      formData?.accountType === "User" ? "none" : "block",
                   }}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
                   title={"My Partnership"}
+                  name={"myPartnership"}
                   toFoucs={true}
                   max={100}
-                  required={true}
-                  place={11}
+                  // required={true}
                   type={"Number"}
+                  onChange={handleChange}
                 />
               </Box>
               <Input
                 containerStyle={{
                   ...containerStyles,
-                  display: selected === "User" ? "none" : "block",
+                  display: formData?.accountType === "User" ? "none" : "block",
                 }}
                 titleStyle={titleStyles}
                 inputStyle={inputStyle}
@@ -332,11 +356,12 @@ const AddAccount = () => {
                   height: { lg: "45px", xs: "36px" },
                 }}
                 title={"Downline partnership"}
-                place={12}
+                name={"downlinePartnership"}
                 type={"Number"}
+                onChange={handleChange}
               />
 
-              {selected !== "Expert" && (
+              {formData?.accountType !== "Expert" && (
                 <>
                   <Box
                     sx={{
@@ -357,6 +382,7 @@ const AddAccount = () => {
                       }}
                       valueStyle={{ ...inputStyle, color: "white" }}
                       title={"Match Commission Type"}
+                      name={"matchCommissionType"}
                       valueContainerStyle={{
                         marginX: "0px",
                         background: "#0B4F26",
@@ -371,6 +397,7 @@ const AddAccount = () => {
                       }}
                       titleStyle={{ marginLeft: "0px" }}
                       data={matchComissionTypes}
+                      setSelected={setFormData}
                       dropDownStyle={{
                         width: "100%",
                         marginLeft: "0px",
@@ -378,45 +405,46 @@ const AddAccount = () => {
                         position: "absolute",
                       }}
                       dropDownTextStyle={{ ...inputStyle, lineHeight: 1 }}
-                      place={17}
                     />
-                    {false && (
-                      <>
-                        <DropDown
-                          openDrop={showMatchCommision}
-                          defaultValue={"0.00"}
-                          dropStyle={{
-                            filter:
-                              "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
-                          }}
-                          valueStyle={{ ...inputStyle, color: "white" }}
-                          title={"Match Commission (%)*"}
-                          valueContainerStyle={{
-                            marginX: "0px",
-                            background: "#0B4F26",
-                            border: "1px solid #DEDEDE",
-                            borderRadius: "5px",
-                            height: { lg: "45px", xs: "36px" },
-                          }}
-                          containerStyle={{
-                            width: "100%",
-                            position: "relative",
-                            marginTop: "10px",
-                          }}
-                          titleStyle={{ marginLeft: "0px" }}
-                          data={matchComissionArray}
-                          dropDownStyle={{
-                            width: "100%",
-                            marginLeft: "0px",
-                            marginTop: "0px",
-                            position: "absolute",
-                            maxHeight: "210px",
-                            overflow: "scroll",
-                          }}
-                          place={18}
-                        />
-                      </>
-                    )}
+                    {formData.matchCommissionType !== "" &&
+                      formData.matchCommissionType !== "0.00" && (
+                        <>
+                          <DropDown
+                            openDrop={showMatchCommision}
+                            defaultValue={"0.00"}
+                            dropStyle={{
+                              filter:
+                                "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
+                            }}
+                            valueStyle={{ ...inputStyle, color: "white" }}
+                            title={"Match Commission (%)*"}
+                            name={"matchCommission"}
+                            valueContainerStyle={{
+                              marginX: "0px",
+                              background: "#0B4F26",
+                              border: "1px solid #DEDEDE",
+                              borderRadius: "5px",
+                              height: { lg: "45px", xs: "36px" },
+                            }}
+                            containerStyle={{
+                              width: "100%",
+                              position: "relative",
+                              marginTop: "10px",
+                            }}
+                            titleStyle={{ marginLeft: "0px" }}
+                            data={matchComissionArray}
+                            setSelected={setFormData}
+                            dropDownStyle={{
+                              width: "100%",
+                              marginLeft: "0px",
+                              marginTop: "0px",
+                              position: "absolute",
+                              maxHeight: "210px",
+                              overflow: "scroll",
+                            }}
+                          />
+                        </>
+                      )}
 
                     <DropDown
                       dropStyle={{
@@ -425,6 +453,7 @@ const AddAccount = () => {
                       }}
                       valueStyle={{ ...inputStyle, color: "white" }}
                       title={"Session Commission (%)"}
+                      name={"sessionCommission"}
                       valueContainerStyle={{
                         marginX: "0px",
                         background: "#0B4F26",
@@ -439,6 +468,7 @@ const AddAccount = () => {
                       }}
                       titleStyle={{ marginLeft: "0px" }}
                       data={sessionComissionArray}
+                      setSelected={setFormData}
                       dropDownStyle={{
                         width: "100%",
                         marginLeft: "0px",
@@ -448,7 +478,6 @@ const AddAccount = () => {
                         overflow: "scroll",
                       }}
                       dropDownTextStyle={{ ...inputStyle }}
-                      place={16}
                       selectValueStyle={{
                         selectValueStyle,
                       }}
@@ -471,7 +500,7 @@ const AddAccount = () => {
                   inputStyle={inputStyle}
                   inputProps={{
                     multiline: true,
-                    rows: { lg: 10, xs: 2 },
+                    rows: matches ? 2 : 10,
                   }}
                   placeholder={"Remark (Optional)"}
                   inputContainerStyle={{
@@ -480,7 +509,9 @@ const AddAccount = () => {
                     width: "100%",
                   }}
                   title={"Remark"}
-                  place={13}
+                  name={"remarks"}
+                  type={"text"}
+                  onChange={handleChange}
                 />
                 <div>
                   <Input
@@ -491,10 +522,12 @@ const AddAccount = () => {
                     inputStyle={inputStyle}
                     inputContainerStyle={{ ...inputContainerStyle }}
                     title={"Admin Transaction Password*"}
+                    name={"adminTransPassword"}
+                    type={"password"}
                     placeholder={"Ex : 12345"}
                     required={true}
-                    place={14}
                     toFoucs={true}
+                    onChange={handleChange}
                   />
                 </div>
               </Box>
@@ -520,7 +553,7 @@ const AddAccount = () => {
                 }}
                 type="submit"
               >
-                Create
+                {state?.id ? "Update" : "Create"}
               </Button>
             </Box>
           </Box>

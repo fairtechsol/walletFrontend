@@ -1,9 +1,14 @@
-import React from 'react'
+import Loader from "../../components/Loader";
+import { Box } from "@mui/material";
 
 const Analysis = () => {
   return (
-    <div>Analysis</div>
-  )
-}
+    <>
+      <Box sx={{ margin: "200px" }}>
+        <Loader text={"Upcoming"} />;
+      </Box>
+    </>
+  );
+};
 
-export default Analysis
+export default Analysis;

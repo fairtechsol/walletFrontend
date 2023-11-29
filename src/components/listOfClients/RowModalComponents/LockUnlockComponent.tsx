@@ -5,12 +5,18 @@ import BoxButton from "./BoxButton";
 import StyledImage from "../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../assets";
 
+const defaultLockUnlockObj = {
+  all_blocked: false,
+  bet_blocked: false,
+};
+
 const LockUnlockComponent = (props: any) => {
   const { setSelected } = props;
+  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [showPass, setShowPass] = useState(false);
 
   const handleLockSubmit = (e: any) => {
-    e.preventDefault;
+    e.preventDefault();
   };
   return (
     <form onSubmit={handleLockSubmit}>
@@ -66,11 +72,9 @@ const LockUnlockComponent = (props: any) => {
               <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>
                 <BoxButtonWithSwitch
                   title={"User"}
-                  //   val={lockUnlockObj.all_blocked}
-                  //   setLockUnlockObj={setLockUnlockObj}
-                  //   lockUnlockObj={lockUnlockObj}
-                  //   elementToUDM={elementToUDM}
-                  //   setElementToUDM={setElementToUDM}
+                  val={lockUnlockObj.all_blocked}
+                  setLockUnlockObj={setLockUnlockObj}
+                  lockUnlockObj={lockUnlockObj}
                 />
               </Box>
               <Box
@@ -83,11 +87,9 @@ const LockUnlockComponent = (props: any) => {
               >
                 <BoxButtonWithSwitch
                   title={"Bet"}
-                  //   val={lockUnlockObj.bet_blocked}
-                  //   setLockUnlockObj={setLockUnlockObj}
-                  //   lockUnlockObj={lockUnlockObj}
-                  //   elementToUDM={elementToUDM}
-                  //   setElementToUDM={setElementToUDM}
+                  val={lockUnlockObj.bet_blocked}
+                  setLockUnlockObj={setLockUnlockObj}
+                  lockUnlockObj={lockUnlockObj}
                 />
               </Box>
             </Box>

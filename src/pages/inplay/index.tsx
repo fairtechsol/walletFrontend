@@ -1,9 +1,12 @@
-import React from 'react'
+import { Box } from "@mui/material";
+import Loader from "../../components/Loader";
 
 const Inplay = () => {
   return (
-    <div>Inplay</div>
-  )
-}
+    <Box sx={{ margin: "200px" }}>
+      <Loader text={"Upcoming"} />;
+    </Box>
+  );
+};
 
-export default Inplay
+export default Inplay;

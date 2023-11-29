@@ -7,13 +7,12 @@ import { Background } from "../../assets";
 const MainLayout = () => {
   return (
     <>
-      <Box>
-        <Header />
+      <Header />
+      <div>
         <Box
           sx={{
             background: `url(${Background}) no-repeat center center/cover`,
-            height: "calc(100vh - 199.31px)",
-            marginTop: "198px",
+            height: "calc(100vh - 210.03px)",
           }}
         >
           <Box
@@ -24,7 +23,7 @@ const MainLayout = () => {
             <Outlet />
           </Box>
         </Box>
-      </Box>
+      </div>
     </>
   );
 };

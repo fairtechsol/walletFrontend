@@ -19,7 +19,8 @@ const DropDown = (props: any) => {
     type,
     matchesSelect,
     disable,
-    setSelected
+    setSelected,
+    name,
   } = props;
 
   const [value, setValue] = useState(data[0]);
@@ -43,7 +44,7 @@ const DropDown = (props: any) => {
       <Box
         onClick={() => {
           if (!disable) {
-            setOpen(!open);
+            setOpen((prev) => !prev);
           }
         }}
         sx={[
@@ -135,6 +136,7 @@ const DropDown = (props: any) => {
                     setSelected={setSelected}
                     setOpen={setOpen}
                     dropDownTextStyle={dropDownTextStyle}
+                    name={name}
                   />
                 );
               })
@@ -148,6 +150,7 @@ const DropDown = (props: any) => {
                     setSelected={setSelected}
                     setOpen={setOpen}
                     dropDownTextStyle={dropDownTextStyle}
+                    name={name}
                   />
                 );
               })}

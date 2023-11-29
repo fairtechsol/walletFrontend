@@ -43,6 +43,7 @@ let theme = createTheme({
     },
     error: {
       main: "#fa1e1e",
+      light: `linear-gradient(1deg,rgba(0, 74, 37,0.8) 5%, rgba(0,0,0,0.8) 100%)`,
     },
   },
   typography: {
