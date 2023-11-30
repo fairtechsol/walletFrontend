@@ -49,7 +49,7 @@ const MainRoutes = {
     },
     {
       path: "*",
-      element: <Navigate to={"/"} />,
+      element: <Navigate to={"/wallet/list_of_clients"} replace />,
     },
   ],
 };

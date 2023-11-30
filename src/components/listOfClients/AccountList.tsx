@@ -1,5 +1,4 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { useState } from "react";
 import Loader from "../Loader";
 import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
@@ -12,9 +11,9 @@ import {
 import Pagination from "../Common/Pagination";
 
 const AccountList = () => {
-  const [loading] = useState(false);
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
-  const [pageCount, setPageCount] = useState("10");
+  const loading = false;
+  const pageCount = "10";
 
   const data: AccountListInterface = {
     creditsum: "1000000",

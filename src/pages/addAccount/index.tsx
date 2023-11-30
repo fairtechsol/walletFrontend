@@ -60,9 +60,6 @@ const AddAccount = () => {
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
   };
-  const selectValueStyle = {
-    fontSize: { xs: "2px", lg: "10px" },
-  };
   const titleStyles = {
     color: "#202020",
     fontSize: { xs: "10px", lg: "12px" },
