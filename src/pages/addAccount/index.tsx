@@ -80,7 +80,7 @@ const AddAccount = () => {
 
   let matchComissionArray = [];
 
-  for (let i = 0.25; i <= 2.0; i += 0.25) {
+  for (let i = 0.0; i <= 2.0; i += 0.25) {
     if (formData.matchCommissionType === "0.00") {
       matchComissionArray = [];
       break;
@@ -94,7 +94,7 @@ const AddAccount = () => {
   }
 
   const sessionComissionArray = [];
-  for (let i = 0.25; i <= 3.5; i += 0.25) {
+  for (let i = 0.0; i <= 3.5; i += 0.25) {
     sessionComissionArray.push(i?.toFixed(2));
   }
 
