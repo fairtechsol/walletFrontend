@@ -54,13 +54,7 @@ const ChangePassword = (props: any) => {
             containerStyle={{}}
             img={eye}
             img1={eyeLock}
-            // setDetail={setPasswordDetail}
-            // Detail={passwordDetail}
-            // setError={setError}
-            // error={error}
             place={2}
-            // onFocusOut={doSendErrorForPassword}
-            toFoucs={true}
           />
           <Input
             required={true}
@@ -76,13 +70,7 @@ const ChangePassword = (props: any) => {
             containerStyle={{ marginTop: "30px" }}
             img={eye}
             img1={eyeLock}
-            // setDetail={setPasswordDetail}
-            // Detail={passwordDetail}
-            // setError={setError}
-            // error={error}
             place={3}
-            // onFocusOut={doSendErrorForPassword}
-            toFoucs={true}
           />
           {/* {error[3].val && <p style={{ color: "#fa1e1e" }}>{error[3].val}</p>} */}
           <Input
@@ -99,21 +87,13 @@ const ChangePassword = (props: any) => {
             containerStyle={{ marginTop: "30px" }}
             img={eye}
             img1={eyeLock}
-            // setDetail={setPasswordDetail}
-            // Detail={passwordDetail}
-            // setError={setError}
-            // error={error}
             place={4}
-            // onFocusOut={doSendErrorForPassword}
-            toFoucs={true}
             okButtonRef={"okButtonRef"}
-            // onKeyDown={handleEnterKeyPress}
           />
           {/* {passwordDetail[3].val !== passwordDetail[4].val && (
             <p style={{ color: "#fa1e1e" }}>Password Doesn't match</p>
           )} */}
           <Button
-            // onClick={handleChange}
             type="submit"
             sx={{
               height: "50px",

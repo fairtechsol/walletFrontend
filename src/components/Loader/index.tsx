@@ -1,14 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import "./styles.css";
 import { memo } from "react";
+import { LoaderInterface } from "../../interface/common";
 
-interface Loader {
-  text?: string;
-  height?: string;
-  width?: string;
-}
-
-const Loader = ({ text, height, width }: Loader) => {
+const Loader = ({ text, height, width }: LoaderInterface) => {
   return (
     <Box
       style={{

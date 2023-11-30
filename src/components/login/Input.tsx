@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
@@ -6,8 +6,9 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { InputInterface } from "../../interface/common";
 
-const Input = (props: any) => {
+const Input: React.FC<InputInterface> = (props) => {
   const {
     title,
     value,

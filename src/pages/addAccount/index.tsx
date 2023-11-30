@@ -12,6 +12,7 @@ import { EyeIcon, EyeSlash } from "../../assets";
 import { useLocation } from "react-router-dom";
 import DropDown from "../../components/Common/DropDown";
 import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
+import { AddAccountInterface } from "../../interface/addAccount";
 
 const typeToShow = [
   "Select account type",
@@ -51,7 +52,7 @@ const formDataSchema = {
 const AddAccount = () => {
   const theme = useTheme();
   const { state } = useLocation();
-  const [formData, setFormData] = useState(formDataSchema);
+  const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [showMatchCommision] = useState(false);
   const role = "fairGameAdmin";
@@ -147,9 +148,7 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <div
-                //  style={{ order: 1 }}
-                >
+                <div>
                   <Input
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
@@ -162,13 +161,10 @@ const AddAccount = () => {
                     name={"userName"}
                     type={"text"}
                     required={true}
-                    toFoucs={true}
                     onChange={handleChange}
                   />
                 </div>
-                <div
-                // style={{ order: 3 }}
-                >
+                <div>
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -184,13 +180,10 @@ const AddAccount = () => {
                     type={"password"}
                     placeholder={"Ex : Abc@12"}
                     required={true}
-                    toFoucs={true}
                     onChange={handleChange}
                   />{" "}
                 </div>
-                <div
-                // style={{ order: 5 }}
-                >
+                <div>
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -209,9 +202,7 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div
-                // style={{ order: 2 }}
-                >
+                <div>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -227,9 +218,7 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div
-                // style={{ order: 4 }}
-                >
+                <div>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -245,9 +234,7 @@ const AddAccount = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div
-                // style={{ order: 6 }}
-                >
+                <div>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -264,9 +251,7 @@ const AddAccount = () => {
                   />
                 </div>
                 {role === "fairGameAdmin" && (
-                  <div
-                  // style={{ order: 6 }}
-                  >
+                  <div>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -293,15 +278,12 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <div
-                // style={{ order: 2 }}
-                >
+                <div>
                   <DropDown
                     dropStyle={{
                       filter:
                         "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
                     }}
-                    valueStyle={{ ...inputStyle, color: "white" }}
                     title={"Account Type*"}
                     name={"accountType"}
                     valueContainerStyle={{
@@ -356,9 +338,7 @@ const AddAccount = () => {
                   </>
                 )}
                 {formData?.accountType !== "Expert" && (
-                  <div
-                  // style={{ order: 1 }}
-                  >
+                  <div>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -369,7 +349,6 @@ const AddAccount = () => {
                       }}
                       title={"Credit Reference*"}
                       name={"creditReference"}
-                      // required={true}
                       type={"Number"}
                       onChange={handleChange}
                     />
@@ -418,9 +397,6 @@ const AddAccount = () => {
                   inputStyle={inputStyle}
                   title={"My Partnership"}
                   name={"myPartnership"}
-                  toFoucs={true}
-                  max={100}
-                  // required={true}
                   type={"Number"}
                   onChange={handleChange}
                 />
@@ -453,7 +429,6 @@ const AddAccount = () => {
                         md: "grid",
                         xs: "grid",
                       },
-                      // grid-template-columns: auto auto auto;
                       gridTemplateColumns: "50% 47%",
                       gridColumnGap: "10px",
                     }}
@@ -463,7 +438,6 @@ const AddAccount = () => {
                         filter:
                           "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
                       }}
-                      valueStyle={{ ...inputStyle, color: "white" }}
                       title={"Match Commission Type"}
                       name={"matchCommissionType"}
                       valueContainerStyle={{
@@ -499,7 +473,6 @@ const AddAccount = () => {
                               filter:
                                 "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
                             }}
-                            valueStyle={{ ...inputStyle, color: "white" }}
                             title={"Match Commission (%)*"}
                             name={"matchCommission"}
                             valueContainerStyle={{
@@ -534,7 +507,6 @@ const AddAccount = () => {
                         filter:
                           "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
                       }}
-                      valueStyle={{ ...inputStyle, color: "white" }}
                       title={"Session Commission (%)"}
                       name={"sessionCommission"}
                       valueContainerStyle={{
@@ -561,9 +533,6 @@ const AddAccount = () => {
                         overflow: "scroll",
                       }}
                       dropDownTextStyle={{ ...inputStyle }}
-                      selectValueStyle={{
-                        selectValueStyle,
-                      }}
                     />
                   </Box>
                 </>
@@ -573,7 +542,6 @@ const AddAccount = () => {
               <Box
                 sx={{
                   display: { lg: "block", md: "grid", xs: "grid" },
-                  // grid-template-columns: auto auto auto;
                   gridTemplateColumns: "50% 47%",
                   gridColumnGap: "10px",
                 }}
@@ -609,7 +577,6 @@ const AddAccount = () => {
                     type={"password"}
                     placeholder={"Ex : 12345"}
                     required={true}
-                    toFoucs={true}
                     onChange={handleChange}
                   />
                 </div>
@@ -641,57 +608,7 @@ const AddAccount = () => {
             </Box>
           </Box>
         </form>
-        {/* {errorShow ===
-          "User need to first create the transaction password." && (
-          <Button
-            className="cursor-pointer"
-            sx={{
-              background: "#0B4F26",
-              width: "50%",
-              display: "flex",
-              justifyContent: "center",
-              border: "2px solid black",
-              alignItems: "center",
-              borderRadius: "5px",
-              height: "45px",
-              marginTop: "35px",
-              color: "white",
-              fontSize: "18px",
-            }}
-            onClick={(e) => {
-              navigate(
-                `/${window.location.pathname.split("/")[1]}/createTransPassword`
-              );
-            }}
-          >
-            Create Trans Password
-          </Button>
-        )} */}
       </Box>
-      {/* {showSuccessModal && (
-        <Modal
-          message={successShow}
-          setShowSuccessModal={handleChangeShowModalSuccess}
-          showSuccessModal={showSuccessModal}
-          buttonMessage={"OK"}
-          activeTab={"Client list"}
-          navigateTo={"list_of_clients"}
-        />
-      )} */}
-
-      {/* <style jsx="true" scoped>
-        {`
-          @media only screen and (max-width: 575px) {
-            .addAccountRemark textarea {
-              height: 60px !important;
-            }
-            .validCommon {
-              font-size: 12px;
-              line-height: 16px;
-            }
-          }
-        `}
-      </style> */}
     </>
   );
 };

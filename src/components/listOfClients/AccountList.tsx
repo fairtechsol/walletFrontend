@@ -5,12 +5,18 @@ import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 import AccountListRow from "./AccountListRow";
+import {
+  AccountListDataInterface,
+  AccountListInterface,
+} from "../../interface/listOfClients";
+import Pagination from "../Common/Pagination";
 
 const AccountList = () => {
   const [loading] = useState(false);
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
+  const [pageCount, setPageCount] = useState("10");
 
-  const data = {
+  const data: AccountListInterface = {
     creditsum: "1000000",
     balancesum: "1000000",
     profitsum: "1000000",
@@ -80,7 +86,7 @@ const AccountList = () => {
                 <Box sx={{}}>
                   <ListHeaderRow />
                   <SubHeaderListRow data={data} />
-                  {data1.map((element: any, i: any) => {
+                  {data1.map((element: AccountListDataInterface, i: any) => {
                     if (i % 2 === 0) {
                       return (
                         <AccountListRow
@@ -90,7 +96,7 @@ const AccountList = () => {
                           showUserDetails={true}
                           showCReport={true}
                           containerStyle={{ background: "#FFE094" }}
-                          profit={element.profit_loss >= 0}
+                          profit={+element.profit_loss >= 0}
                           fContainerStyle={{ background: "#0B4F26" }}
                           fTextStyle={{ color: "white" }}
                           element={element}
@@ -105,7 +111,7 @@ const AccountList = () => {
                           showUserDetails={true}
                           showOptions={true}
                           containerStyle={{ background: "#ECECEC" }}
-                          profit={element.profit_loss >= 0}
+                          profit={+element.profit_loss >= 0}
                           fContainerStyle={{ background: "#F8C851" }}
                           fTextStyle={{ color: "#0B4F26" }}
                           element={element}
@@ -117,6 +123,7 @@ const AccountList = () => {
               </Box>
             </Box>
           </Box>
+          <Pagination currentPage={"1"} pages={pageCount} callPage={() => {}} />
         </>
       )}
     </>

@@ -6,8 +6,9 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
 import { useNavigate } from "react-router-dom";
+import { AccountListRowInterface } from "../../interface/listOfClients";
 
-const AccountListRow = (props: any) => {
+const AccountListRow = (props: AccountListRowInterface) => {
   const {
     containerStyle,
     fContainerStyle,

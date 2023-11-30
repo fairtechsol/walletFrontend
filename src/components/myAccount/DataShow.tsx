@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
+import { DataShowInterface } from "../../interface/myAccount";
 
-const DataShow = (props: any) => {
+const DataShow = (props: DataShowInterface) => {
   const { title, value, containerStyle, valueContainerStyle } = props;
   return (
     <Box

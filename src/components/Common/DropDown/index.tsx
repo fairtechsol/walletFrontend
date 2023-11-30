@@ -3,8 +3,9 @@ import { Box, Typography } from "@mui/material";
 import StyledImage from "../StyledImages";
 import { ARROWDROPDOWN } from "../../../assets";
 import DropDownItem from "./DropDownItem";
+import { DropdownInterface } from "../../../interface/addAccount";
 
-const DropDown = (props: any) => {
+const DropDown = (props: DropdownInterface) => {
   const {
     title,
     data,
@@ -140,7 +141,7 @@ const DropDown = (props: any) => {
                   />
                 );
               })
-            : data?.map((i: any, idx: any) => {
+            : data?.map((i: string, idx: any) => {
                 return (
                   <DropDownItem
                     key={idx}
