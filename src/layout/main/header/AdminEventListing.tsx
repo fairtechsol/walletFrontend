@@ -11,7 +11,7 @@ import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
 
 const AdminEventListing = (props: any) => {
-  const { selected, setAnchor, setAnchor1, setSelected } = props;
+  const { setAnchor, setAnchor1 } = props;
 
   const data = [
     { id: 3, title: "INPLAY", image: Play, url: "live_market" },
@@ -49,12 +49,13 @@ const AdminEventListing = (props: any) => {
           <NavLink
             key={idx}
             to={`/wallet/${i.url}`}
+            className={({ isActive }) =>
+              [isActive ? "activeEventTab" : ""].join(" ")
+            }
             style={{ textDecoration: "none" }}
           >
             <AdminEventComponent
               data={i}
-              selected={selected}
-              setSelected={setSelected}
               setAnchor={setAnchor}
               setAnchor1={setAnchor1}
             />

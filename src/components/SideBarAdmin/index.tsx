@@ -302,8 +302,8 @@ const SideBarAdmin = (props: any) => {
             borderBottomRightRadius: ".5vh",
             borderTopRightRadius: ".5vh",
           },
-          (theme) => ({
-            backgroundImage: `${theme.palette.error.light}`,
+          (theme: any) => ({
+            backgroundImage: `${theme.palette.primary.headerGradient}`,
           }),
         ]}
       >
@@ -327,6 +327,7 @@ const SideBarAdmin = (props: any) => {
           >
             <Typography
               sx={{
+                color: "#fff",
                 fontSize: "14px",
                 marginLeft: "1.8%",
                 fontWeight: { xs: "500", lg: "600" },

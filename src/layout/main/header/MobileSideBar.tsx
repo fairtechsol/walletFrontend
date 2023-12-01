@@ -12,7 +12,7 @@ const MobileSideBar = (props: any) => {
     window !== undefined ? () => window.document.body : undefined;
   const classes = {
     Drawersx: {
-      display: { xs: "block"},
+      display: { xs: "block" },
       "& .MuiDrawer-paper": { boxSizing: "border-box", width: "300px" },
     },
     DrawerBox1sx: {
@@ -35,9 +35,9 @@ const MobileSideBar = (props: any) => {
       <Box
         sx={
           (classes.DrawerBox2sx,
-          (theme) => ({
+          (theme: any) => ({
             height: "100%",
-            backgroundImage: `${theme.palette.error.light}`,
+            backgroundImage: `${theme.palette.primary.mainGradient}`,
           }))
         }
       >

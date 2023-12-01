@@ -38,7 +38,7 @@ const MyAccount = () => {
             color: "white",
             fontSize: "18px",
             fontWeight: "600",
-            marginLeft: { laptop: "0.5%", mobile: "0.5%" },
+            marginLeft: { lg: "0.5%", xs: "0.5%" },
           }}
         >
           My Account
@@ -58,7 +58,7 @@ const MyAccount = () => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { laptop: "row", mobile: "column" },
+              flexDirection: { lg: "row", xs: "column" },
               justifyContent: "space-between",
             }}
           >
@@ -110,7 +110,7 @@ const MyAccount = () => {
             sx={{
               display: "flex",
               marginTop: "10px",
-              flexDirection: { laptop: "row", mobile: "column" },
+              flexDirection: { lg: "row", xs: "column" },
               justifyContent: "space-between",
             }}
           >
@@ -162,7 +162,7 @@ const MyAccount = () => {
             sx={{
               display: "flex",
               marginTop: "10px",
-              flexDirection: { laptop: "row", mobile: "column" },
+              flexDirection: { lg: "row", xs: "column" },
               justifyContent: "space-between",
               marginBottom: "15px",
             }}

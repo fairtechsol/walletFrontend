@@ -10,7 +10,6 @@ import MobileSideBar from "./MobileSideBar";
 
 const Header = ({}) => {
   const theme = useTheme();
-  const [selected, setSelected] = useState("Client list");
   const [anchor, setAnchor] = useState(null);
   const [anchor1, setAnchor1] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -177,14 +176,12 @@ const Header = ({}) => {
       <Box
         sx={[
           { flex: 1, padding: "1%" },
-          (theme) => ({
-            backgroundImage: `${theme.palette.secondary.dark}`,
+          (theme: any) => ({
+            backgroundImage: `${theme.palette.primary.homeBodyGradient}`,
           }),
         ]}
       >
         <AdminEventListing
-          selected={selected}
-          setSelected={setSelected}
           setAnchor={(e: any) => setAnchor(e.currentTarget)}
           setAnchor1={(e: any) => setAnchor1(e.currentTarget)}
         />

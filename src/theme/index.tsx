@@ -37,8 +37,6 @@ let theme = createTheme({
     } as CustomPaletteColorOptions,
     secondary: {
       main: "#FDF21A",
-      light: `linear-gradient(90deg,#004A25 5%,#FDCB52 100% )`,
-      dark: `linear-gradient(180deg,#004A25 5%,#1D1D1D 100% )`,
       contrastText: "#000",
     },
     error: {

@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 
 const AdminEventComponent = (props: any) => {
-  const { data, selected, setSelected } = props;
+  const { data } = props;
 
   return (
     <Box
-      onClick={() => setSelected(data.title)}
+      className="eventTab"
       sx={[
         {
           width: "60px",
@@ -22,12 +22,7 @@ const AdminEventComponent = (props: any) => {
           background: "white",
           cursor: "pointer",
         },
-        selected === data.title
-          ? { background: "#F8C851" }
-          : { background: "white" },
-        selected === data.title
-          ? { border: "2px solid white" }
-          : { border: "2px solid white" },
+        { border: "2px solid white" },
       ]}
     >
       <img

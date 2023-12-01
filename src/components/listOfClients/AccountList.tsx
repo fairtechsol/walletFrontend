@@ -69,8 +69,8 @@ const AccountList = () => {
                 overflow: "hidden",
                 border: "2px solid white",
               },
-              (theme) => ({
-                backgroundImage: `${theme.palette.secondary.light}`,
+              (theme: any) => ({
+                backgroundImage: `${theme.palette.primary.headerGradient}`,
               }),
             ]}
           >
