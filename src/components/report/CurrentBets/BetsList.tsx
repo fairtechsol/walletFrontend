@@ -1,6 +1,5 @@
-import SmallDropDown from "../AccountStatement/SmallDropDown";
-import Pagination from "../../Common/Pagination";
 import { Box } from "@mui/material";
+import Pagination from "../../Common/Pagination";
 import EmptyRow from "./EmptyRow";
 import TableHeaderList from "./TableHeaderList";
 import TableDataRow from "./TableDataRow";

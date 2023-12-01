@@ -1,5 +1,4 @@
-import { Box, Typography } from "@mui/material";
-import SmallDropDown from "../AccountStatement/SmallDropDown";
+import { Box } from "@mui/material";
 import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 
@@ -21,7 +20,7 @@ const ListHeaderRow = ({ getLimitEntries }: any) => {
         py: "6px",
       }}
     >
-      <NumberDropDown getLimitEntries={getLimitEntries} textColor={"000"}/>
+      <NumberDropDown getLimitEntries={getLimitEntries} textColor={"000"} />
       <SearchInput show={true} width={"100%"} placeholder={"Search..."} />
     </Box>
   );

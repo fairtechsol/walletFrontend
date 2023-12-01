@@ -1,5 +1,4 @@
-import { Box, Typography } from "@mui/material";
-import SmallDropDown from "../AccountStatement/SmallDropDown";
+import { Box } from "@mui/material";
 import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 
