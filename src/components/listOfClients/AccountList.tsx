@@ -82,7 +82,7 @@ const AccountList = () => {
                   position: { xs: "relative", lg: "static" },
                 }}
               >
-                <Box sx={{}}>
+                <Box>
                   <ListHeaderRow />
                   <SubHeaderListRow data={data} />
                   {data1.map((element: AccountListDataInterface, i: any) => {

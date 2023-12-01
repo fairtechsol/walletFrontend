@@ -32,3 +32,4 @@ export { default as LockOpen } from "./images/lock-open.svg";
 export { default as LockClosed } from "./images/lock-closed.svg";
 export { default as ARROWDROPDOWN } from "./images/arrowDropDown.png";
 export { default as Lock } from "./images/lock.png";
+export { default as CalendarImage } from "./images/calendar.png";

@@ -27,6 +27,7 @@ export interface LoaderInterface {
 }
 
 export interface PaginationInterface {
+  currentLimit?: any;
   currentPage: string;
   pages: string | number;
   callPage: (value: any) => void;
