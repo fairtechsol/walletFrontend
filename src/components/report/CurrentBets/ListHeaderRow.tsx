@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import SmallDropDown from "../AccountStatement/SmallDropDown";
 import SearchInput from "../../Common/SearchInput";
+import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 
 const ListHeaderRow = ({ getLimitEntries }: any) => {
   return (
@@ -20,19 +21,7 @@ const ListHeaderRow = ({ getLimitEntries }: any) => {
         py: "6px",
       }}
     >
-      <Box display={"flex"} alignItems="center" sx={{ width: "100%" }}>
-        <Typography
-          sx={{ fontSize: "10px", color: "#000", fontWeight: "500" }}
-        >
-          Show
-        </Typography>
-        <SmallDropDown getLimitEntries={getLimitEntries} />
-        <Typography
-          sx={{ fontSize: "10px", color: "#000", fontWeight: "500" }}
-        >
-          Entries
-        </Typography>
-      </Box>
+      <NumberDropDown getLimitEntries={getLimitEntries} textColor={"000"}/>
       <SearchInput show={true} width={"100%"} placeholder={"Search..."} />
     </Box>
   );
