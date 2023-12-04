@@ -1,9 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import StockBox from "./StockBox";
 import { CHECK } from "../../assets";
+import { useNavigate } from "react-router-dom";
 
 const MatchListComponent = (props: any) => {
   const { team, team_2, selected, mode, data } = props;
+
+  const navigate = useNavigate();
 
   const timeLeft = {
     days: "00",
@@ -17,16 +20,19 @@ const MatchListComponent = (props: any) => {
     Number(timeLeft.minutes) <= 59;
   return (
     <Box
-      //   onClick={() => {
-      //     if (mode == "0") {
-      //       sessionStorage.setItem("matchId", data?.id);
-      //       navigate(`/${pathname.split("/")[1]}/matches`, {
-      //         state: { submit: true, matchId: data?.id, activeTab: "Analysis" },
-      //       });
-      //     }
-      //     sessionStorage.removeItem("matchId");
-      //     setSelected();
-      //   }}
+      onClick={() => {
+        if (mode == "0") {
+          // sessionStorage.setItem("matchId", data?.id);
+          navigate(
+            `/wallet/${window.location.pathname.split("/")[2]}/matches`,
+            {
+              state: { submit: true, matchId: data?.id, activeTab: "Analysis" },
+            }
+          );
+        }
+        // sessionStorage.removeItem("matchId");
+        // setSelected();
+      }}
       sx={{
         cursor: "pointer",
         width: "99%",

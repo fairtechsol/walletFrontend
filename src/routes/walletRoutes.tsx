@@ -2,9 +2,9 @@ import { lazy } from "react";
 import Loadable from "../utils/loadable";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
-const ListOfClients = Loadable(lazy(() => import("../pages/listOfClients")));
-const Inplay = Loadable(lazy(() => import("../pages/inplay")));
-const MatchDetail = Loadable(lazy(() => import("../pages/matchDetail")));
+const DepositAndWithdrawBox = Loadable(
+  lazy(() => import("../components/walletSettings/DepositAndWithdrawBox"))
+);
 
 const WalletRoutes = {
   path: "/wallet/walletSettings",
@@ -12,15 +12,15 @@ const WalletRoutes = {
   children: [
     {
       path: "deposit",
-      element: <ListOfClients />,
+      element: <DepositAndWithdrawBox />,
     },
     {
       path: "withdraw",
-      element: <Inplay />,
+      element: <DepositAndWithdrawBox />,
     },
     {
       path: "credit_reference",
-      element: <MatchDetail />,
+      element: <DepositAndWithdrawBox />,
     },
   ],
 };

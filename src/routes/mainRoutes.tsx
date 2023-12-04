@@ -38,6 +38,10 @@ const MainRoutes = {
       element: <AddAccount />,
     },
     {
+      path: "market_analysis/matches",
+      element: <MatchDetail />,
+    },
+    {
       path: "market_analysis",
       element: <Analysis />,
     },
