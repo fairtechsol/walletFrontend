@@ -727,11 +727,11 @@ const MultipleMatch = ({}) => {
         </>
       )}
 
-      {(location?.state?.match === 4 || location?.state?.match === 2) && (
+      {true && (
         <>
           <Box
             sx={{
-              display: "flex",
+              display: "flex", 
               flexDirection: { matchesMobile: "column", lg: "row" },
               flex: 1,
               height: "100%",
