@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
 import { Navigate } from "react-router-dom";
+import MultipleMatch from "../pages/analysis/multipleMatch";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const ListOfClients = Loadable(lazy(() => import("../pages/listOfClients")));
@@ -38,12 +39,16 @@ const MainRoutes = {
       element: <AddAccount />,
     },
     {
+      path: "market_analysis",
+      element: <Analysis />,
+    },
+    {
       path: "market_analysis/matches",
       element: <MatchDetail />,
     },
     {
-      path: "market_analysis",
-      element: <Analysis />,
+      path: "market_analysis/multipleMatch",
+      element: <MultipleMatch />,
     },
     {
       path: "reports",

@@ -12,7 +12,7 @@ import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import SessionMarket from "../../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
 import { useLocation } from "react-router-dom";
-const MatchSubmit = ({}) => {
+const MultipleMatch = ({}) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const location = useLocation();
@@ -930,4 +930,4 @@ const MatchSubmit = ({}) => {
   );
 };
 
-export default MatchSubmit;
+export default MultipleMatch;

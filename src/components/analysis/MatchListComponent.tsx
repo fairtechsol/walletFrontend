@@ -22,7 +22,6 @@ const MatchListComponent = (props: any) => {
     <Box
       onClick={() => {
         if (mode == "0") {
-          // sessionStorage.setItem("matchId", data?.id);
           navigate(
             `/wallet/${window.location.pathname.split("/")[2]}/matches`,
             {
@@ -30,8 +29,6 @@ const MatchListComponent = (props: any) => {
             }
           );
         }
-        // sessionStorage.removeItem("matchId");
-        // setSelected();
       }}
       sx={{
         cursor: "pointer",
