@@ -6,6 +6,7 @@ import {
   Play,
   TEAM,
   TREND,
+  WALLET,
 } from "../../../assets";
 import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
@@ -24,6 +25,12 @@ const AdminEventListing = (props: any) => {
       title: "Reports",
       image: CHECKLIST,
       url: "reports",
+    },
+    {
+      id: 5,
+      title: "Wallet",
+      image: WALLET,
+      url: "walletSettings",
     },
 
     { id: 6, title: "My Account", image: MYACCOUNT, url: "my-account" },

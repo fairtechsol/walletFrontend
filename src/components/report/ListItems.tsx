@@ -1,7 +1,7 @@
 import { Box, MenuItem, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const ListItmes = (props: any) => {
+const ListItems = (props: any) => {
   const { menutItems1, title } = props;
   const navigate = useNavigate();
   const classes = {
@@ -91,4 +91,4 @@ const ListItmes = (props: any) => {
   );
 };
 
-export default ListItmes;
+export default ListItems;

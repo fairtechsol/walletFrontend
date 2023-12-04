@@ -169,7 +169,9 @@ const Header = ({}) => {
         }}
       >
         <div className="marquee-container nav-marquee text-white">
-          <div className="marquee-content">Welcome to Fairgame</div>
+          <div className="marquee-content">
+            Add The New Match And Enjoy The Game
+          </div>
         </div>
       </Box>
 

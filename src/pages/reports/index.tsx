@@ -1,4 +1,4 @@
-import ListItmes from "../../components/report/ListItmes";
+import ListItems from "../../components/report/ListItems";
 
 const Reports = () => {
   const menutItems1 = [
@@ -8,7 +8,7 @@ const Reports = () => {
     { title: "General Report", link: `/wallet/reports/general_report` },
   ];
 
-  return <ListItmes title={"Report"} menutItems1={menutItems1} />;
+  return <ListItems title={"Report"} menutItems1={menutItems1} />;
 };
 
 export default Reports;

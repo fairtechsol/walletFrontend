@@ -10,6 +10,8 @@ const Inplay = Loadable(lazy(() => import("../pages/inplay")));
 const AddAccount = Loadable(lazy(() => import("../pages/addAccount")));
 const Analysis = Loadable(lazy(() => import("../pages/analysis")));
 const Reports = Loadable(lazy(() => import("../pages/reports")));
+const MatchDetail = Loadable(lazy(() => import("../pages/matchDetail")));
+const WalletSettings = Loadable(lazy(() => import("../pages/walletSettings")));
 
 const MainRoutes = {
   path: "/wallet",
@@ -22,6 +24,10 @@ const MainRoutes = {
     {
       path: "live_market",
       element: <Inplay />,
+    },
+    {
+      path: "live_market/matches",
+      element: <MatchDetail />,
     },
     {
       path: "add_account",
@@ -38,6 +44,10 @@ const MainRoutes = {
     {
       path: "reports",
       element: <Reports />,
+    },
+    {
+      path: "walletSettings",
+      element: <WalletSettings />,
     },
     {
       path: "my-account",
