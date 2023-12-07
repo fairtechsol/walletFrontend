@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import AuthBackground from "../../pages/auth/AuthBackground";
+import AuthBackground from "./AuthBackground";
 import StyledImage from "../../components/Common/StyledImages";
 import { FgLogo } from "../../assets";
-const AuthLayout = () => {
+
+const Auth = () => {
   return (
     <Box style={{ position: "relative" }}>
       <AuthBackground />
@@ -42,4 +43,4 @@ const AuthLayout = () => {
   );
 };
 
-export default AuthLayout;
+export default Auth;

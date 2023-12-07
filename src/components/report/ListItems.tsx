@@ -10,6 +10,7 @@ const ListItems = (props: any) => {
       marginLeft: { xs: "5px", lg: "0", md: "0" },
       paddingY: "0px",
       padding: "0px",
+      fontFamily: "Poppins, sans-serif",
       width: { xs: "105%", lg: "100%", md: "100%" },
     },
     MenuListProps: { "aria-labelledby": "basic-button" },
@@ -53,7 +54,7 @@ const ListItems = (props: any) => {
               {
                 fontSize: { lg: "18px", xs: "16px" },
                 fontWeight: "600",
-                fontFamily: "Montserrat",
+                fontFamily: "Poppins, sans-serif",
                 padding: { lg: "10px 37px", xs: "10px 20px" },
                 paddingBottom: "15px",
                 color: "#fff",

@@ -1,6 +1,74 @@
+import { Box } from "@mui/material";
+import RowHeaderMatches from "./RowHeaderMatches";
+import Pagination from "../../Common/Pagination";
+
 const ProfitLossTableComponent = (props: any) => {
-  const {} = props;
-  return <div>ProfitLossTableComponent</div>;
+  const {
+    eventData,
+    reportData,
+    betData,
+    sessionBetData,
+    handleReport,
+    handleBet,
+    currentPage,
+    pageCount,
+    getUserProfitLoss,
+    setCurrentPage,
+    visible,
+    setVisible,
+    sessionBets,
+    user,
+    userProfitLoss,
+  } = props;
+  return (
+    <Box>
+      {eventData.map((item: any, index: any) => {
+        return (
+          <>
+            <RowHeaderMatches
+              key={index}
+              item={item}
+              index={index}
+              // getHandleReport={getHandleReport}
+              show={visible}
+              setCurrentPage={setCurrentPage}
+              // setSelectedEventType={setSelectedEventType}
+              // selectedEventType={selectedEventType}
+            />
+            {/* <Box>
+              {visible &&
+                selectedEventType === item?.eventType &&
+                reportData.map((item: any, index: any) => {
+                  return (
+                    <RowComponentMatches
+                      key={index}
+                      item={item}
+                      index={index + 1}
+                      selectedId={selectedId}
+                      betData={betData}
+                      sessionBetData={sessionBetData}
+                      sessionBets={sessionBets}
+                      getBetReport={getBetReport}
+                      getUserProfitLoss={getUserProfitLoss}
+                      user={user}
+                      userProfitLoss={userProfitLoss}
+                    />
+                  );
+                })}
+            </Box> */}
+          </>
+        );
+      })}
+      {visible && (
+        <Pagination
+          getListOfUser={(event: any) => handleReport(event)}
+          currentPage={currentPage}
+          pages={pageCount}
+          callPage={() => {}}
+        />
+      )}
+    </Box>
+  );
 };
 
 export default ProfitLossTableComponent;

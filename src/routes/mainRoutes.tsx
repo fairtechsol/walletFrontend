@@ -23,6 +23,10 @@ const MainRoutes = {
       element: <ListOfClients />,
     },
     {
+      path: "match",
+      element: <MatchDetail />,
+    },
+    {
       path: "live_market",
       element: <Inplay />,
     },

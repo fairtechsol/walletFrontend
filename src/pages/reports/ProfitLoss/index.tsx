@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ProfitLossHeader from "../../../components/report/ProfitLossReport/ProfitLossHeader";
 import Loader from "../../../components/Loader";
+import ProfitLossTableComponent from "../../../components/report/ProfitLossReport/ProfitLossTableComponent";
 
 const ProfitLossReport = () => {
   return (
@@ -30,25 +31,25 @@ const ProfitLossReport = () => {
       </Typography>
 
       <Box sx={{ width: "99%", marginY: "10%" }}>
-        <Loader text="upcoming" />
-        {/* <ProfitLossTableComponent
+        {/* <Loader text="upcoming" /> */}
+        <ProfitLossTableComponent
           loading
-          visible={visible}
-          getUserProfitLoss={getUserProfitLoss}
-          userProfitLoss={userProfitLoss}
-          setVisible={setVisible}
-          eventData={eventData}
-          reportData={reportData}
-          betData={betData}
-          sessionBetData={sessionBetData}
-          sessionBets={sessionBets}
-          handleReport={handleReport}
-          handleBet={handleBet}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          setCurrentPage={setCurrentPage}
+          // visible={visible}
+          // getUserProfitLoss={getUserProfitLoss}
+          // userProfitLoss={userProfitLoss}
+          // setVisible={setVisible}
+          eventData={[]}
+          // reportData={reportData}
+          // betData={betData}
+          // sessionBetData={sessionBetData}
+          // sessionBets={sessionBets}
+          // handleReport={handleReport}
+          // handleBet={handleBet}
+          // currentPage={currentPage}
+          // pageCount={pageCount}
+          // setCurrentPage={setCurrentPage}
           user={"admin"}
-        /> */}
+        />
       </Box>
     </>
   );

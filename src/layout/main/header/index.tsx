@@ -15,7 +15,6 @@ const Header = ({}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const currentSelected = 1;
-  console.log(anchor, anchor1);
 
   // const RenderLogo = useCallback(() => {
   //   return (

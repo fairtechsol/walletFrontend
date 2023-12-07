@@ -41,5 +41,9 @@ export { default as LockSolid } from "./images/lock-solid.svg";
 export { default as BallStart } from "./images/ballStart.png";
 export { default as UD } from "./images/UD.png";
 export { default as Refresh } from "./images/refresh.png";
-export { default as NOT } from './images/not.png'
-export { default as BETPLACED } from './images/betplaced.png'
+export { default as NOT } from "./images/not.png";
+export { default as BETPLACED } from "./images/betplaced.png";
+export { default as ARROWDOWN } from "./images/arrowDown.png";
+export { default as Football } from "./images/football.png";
+export { default as Cricket } from "./images/cricket.png";
+export { default as Tennis } from "./images/tennis.png";

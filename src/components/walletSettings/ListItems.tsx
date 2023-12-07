@@ -71,7 +71,6 @@ const ListItems = (props: any) => {
               {
                 fontSize: { lg: "18px", xs: "16px" },
                 fontWeight: "600",
-                fontFamily: "Montserrat",
                 padding: { lg: "10px 37px", xs: "10px 20px" },
                 paddingBottom: "15px",
                 color: "#fff",

@@ -6,7 +6,7 @@ import SideBarAdmin from "../../../components/SideBarAdmin";
 const MobileSideBar = (props: any) => {
   const { mobileOpen, setMobileOpen } = props;
   const handleDrawerToggle = () => {
-    setMobileOpen((prev: any) => prev);
+    setMobileOpen(false);
   };
   const container =
     window !== undefined ? () => window.document.body : undefined;

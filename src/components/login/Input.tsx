@@ -68,7 +68,7 @@ const Input: React.FC<InputInterface> = (props) => {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          type={type === "password" && showPass ? "text" : type}
+          type={type === "password" && showPass === true ? "text" : type}
           required={required}
           name={name}
           InputProps={{

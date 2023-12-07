@@ -242,10 +242,11 @@ const MatchDetail = () => {
             maxBet={currentMatch?.betfair_match_max_bet}
           />
         )}
-        {bookmakerHttp?.map((bookmaker) => {
+        {bookmakerHttp?.map((bookmaker: any, index: any) => {
           if (bookmaker.betStatus === 1) {
             return (
               <MatchOdds
+                key={index}
                 currentMatch={currentMatch}
                 session={"manualBookMaker"}
                 data={bookmaker}

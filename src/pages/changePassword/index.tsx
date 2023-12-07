@@ -1,9 +1,26 @@
+import { useState, useEffect } from "react";
 import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import Input from "../../components/login/Input";
 import { eye, eyeLock } from "../../assets";
 
 const ChangePassword = (props: any) => {
   const { passLoader, width } = props;
+
+  const [formState, setFormState] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormState((prev: any) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -54,13 +71,19 @@ const ChangePassword = (props: any) => {
             containerStyle={{}}
             img={eye}
             img1={eyeLock}
-            place={2}
+            name={"oldPassword"}
+            type="password"
+            value={formState.oldPassword}
+            onChange={handleChange}
           />
+          {/* {errors.oldPassword && (
+            <p style={{ color: "#fa1e1e" }}>{errors.oldPassword}</p>
+          )} */}
           <Input
             required={true}
             placeholder={"Enter New Password"}
-            inputProps={{ type: "password" }}
             title={"New Password"}
+            name={"newPassword"}
             titleStyle={{
               color: "#222222",
               marginLeft: "0px",
@@ -70,14 +93,18 @@ const ChangePassword = (props: any) => {
             containerStyle={{ marginTop: "30px" }}
             img={eye}
             img1={eyeLock}
-            place={3}
+            type="password"
+            value={formState.newPassword}
+            onChange={handleChange}
           />
-          {/* {error[3].val && <p style={{ color: "#fa1e1e" }}>{error[3].val}</p>} */}
+          {/* {errors.newPassword && (
+            <p style={{ color: "#fa1e1e" }}>{errors.newPassword}</p>
+          )} */}
           <Input
             required={true}
             placeholder={"Enter Confirm Password"}
-            inputProps={{ type: "password" }}
             title={"Confirm New Password"}
+            name={"confirmPassword"}
             titleStyle={{
               color: "#222222",
               marginLeft: "0px",
@@ -87,10 +114,11 @@ const ChangePassword = (props: any) => {
             containerStyle={{ marginTop: "30px" }}
             img={eye}
             img1={eyeLock}
-            place={4}
-            okButtonRef={"okButtonRef"}
+            type="password"
+            value={formState.confirmPassword}
+            onChange={handleChange}
           />
-          {/* {passwordDetail[3].val !== passwordDetail[4].val && (
+          {/* {errors.confirmPassword && (
             <p style={{ color: "#fa1e1e" }}>Password Doesn't match</p>
           )} */}
           <Button
