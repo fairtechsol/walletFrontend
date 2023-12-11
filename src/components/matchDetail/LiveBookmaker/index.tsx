@@ -12,8 +12,6 @@ const LiveBookmaker = (props: any) => {
     blockMatch,
     showUnlock,
     locked,
-    handleBlock,
-    handleHide,
     handleShowLock,
     selft,
   } = props;
@@ -34,10 +32,6 @@ const LiveBookmaker = (props: any) => {
 
   const handleLock = (data: any) => {
     return data?.ex?.availableToLay?.length > 0 ? false : true;
-  };
-
-  const onSubmit = (value: any) => {
-    handleBlock(value, !locked, "BOOKMAKER");
   };
   return (
     <Box

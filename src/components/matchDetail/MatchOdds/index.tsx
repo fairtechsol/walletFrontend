@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Divider from "../../Inplay/Divider";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
@@ -13,12 +12,8 @@ const MatchOdds = (props: any) => {
     minBet,
     maxBet,
     typeOfBet,
-    showUnlock,
-    mShowUnlock,
     locked,
     blockMatch,
-    handleBlock,
-    handleHide,
     handleShowLock,
     selft,
     session,

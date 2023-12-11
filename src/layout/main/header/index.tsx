@@ -10,8 +10,6 @@ import MobileSideBar from "./MobileSideBar";
 
 const Header = ({}) => {
   const theme = useTheme();
-  const [anchor, setAnchor] = useState(null);
-  const [anchor1, setAnchor1] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const currentSelected = 1;
@@ -182,10 +180,7 @@ const Header = ({}) => {
           }),
         ]}
       >
-        <AdminEventListing
-          setAnchor={(e: any) => setAnchor(e.currentTarget)}
-          setAnchor1={(e: any) => setAnchor1(e.currentTarget)}
-        />
+        <AdminEventListing />
       </Box>
     </>
   );

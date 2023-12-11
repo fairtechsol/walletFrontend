@@ -1,30 +1,48 @@
-import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import Input from "../../components/login/Input";
 import { eye, eyeLock } from "../../assets";
+import { changePasswordSchema } from "../../utils/Validations";
+import { useFormik } from "formik";
+import {
+  changePassword,
+  changePasswordReset,
+} from "../../store/actions/user/userAction";
+import { AppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+
+const initialValues: any = {
+  oldPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+};
 
 const ChangePassword = (props: any) => {
   const { passLoader, width } = props;
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [formState, setFormState] = useState({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: changePasswordSchema,
+    onSubmit: (values: any) => {
+      dispatch(changePassword(values));
+      navigate("/wallet/list_of_clients");
+      dispatch(changePasswordReset());
+    },
   });
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormState((prev: any) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
+  const { handleSubmit, touched, errors } = formik;
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-  };
+  // useEffect(() => {
+  //   if (!localStorage.getItem("userToken")) {
+  //     if (success) {
+  //       dispatch(changePasswordReset());
+  //       navigate("/login");
+  //     }
+  //   }
+  // }, [success]);
+
   return (
     <form onSubmit={handleSubmit}>
       <Box
@@ -71,19 +89,21 @@ const ChangePassword = (props: any) => {
             containerStyle={{}}
             img={eye}
             img1={eyeLock}
+            id="oldPassword"
             name={"oldPassword"}
             type="password"
-            value={formState.oldPassword}
-            onChange={handleChange}
+            value={formik.values.oldPassword}
+            onChange={formik.handleChange}
           />
-          {/* {errors.oldPassword && (
-            <p style={{ color: "#fa1e1e" }}>{errors.oldPassword}</p>
-          )} */}
+          {touched.oldPassword && errors.oldPassword && (
+            <p style={{ color: "#fa1e1e" }}>{errors.oldPassword as string}</p>
+          )}
           <Input
             required={true}
             placeholder={"Enter New Password"}
             title={"New Password"}
             name={"newPassword"}
+            id="newPassword"
             titleStyle={{
               color: "#222222",
               marginLeft: "0px",
@@ -94,17 +114,18 @@ const ChangePassword = (props: any) => {
             img={eye}
             img1={eyeLock}
             type="password"
-            value={formState.newPassword}
-            onChange={handleChange}
+            value={formik.values.newPassword}
+            onChange={formik.handleChange}
           />
-          {/* {errors.newPassword && (
-            <p style={{ color: "#fa1e1e" }}>{errors.newPassword}</p>
-          )} */}
+          {touched.newPassword && errors.newPassword && (
+            <p style={{ color: "#fa1e1e" }}>{errors.newPassword as string}</p>
+          )}
           <Input
             required={true}
             placeholder={"Enter Confirm Password"}
             title={"Confirm New Password"}
             name={"confirmPassword"}
+            id="confirmPassword"
             titleStyle={{
               color: "#222222",
               marginLeft: "0px",
@@ -115,12 +136,14 @@ const ChangePassword = (props: any) => {
             img={eye}
             img1={eyeLock}
             type="password"
-            value={formState.confirmPassword}
-            onChange={handleChange}
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
           />
-          {/* {errors.confirmPassword && (
-            <p style={{ color: "#fa1e1e" }}>Password Doesn't match</p>
-          )} */}
+          {touched.confirmPassword && errors.confirmPassword && (
+            <p style={{ color: "#fa1e1e" }}>
+              {errors.confirmPassword as string}
+            </p>
+          )}
           <Button
             type="submit"
             sx={{

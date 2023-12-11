@@ -10,7 +10,7 @@ const DailogModal = ({}) => {
         display: "flex",
         outline: "none",
       }}
-      //   open={dailogModal?.isModalOpen}
+      open={false}
       disableAutoFocus={true}
     >
       <Box

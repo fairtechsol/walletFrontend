@@ -1,4 +1,5 @@
 export interface InputInterface {
+  id?: string;
   title?: string;
   value?: any;
   containerStyle?: any;

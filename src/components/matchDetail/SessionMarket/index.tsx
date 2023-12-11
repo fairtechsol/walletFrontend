@@ -10,17 +10,12 @@ const SessionMarket = (props: any) => {
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const {
     currentMatch,
-    sessionOffline,
     sessionBets,
-    currentOdds,
     blockMatch,
     showUnlock,
     locked,
-    handleBlock,
-    handleHide,
     handleShowLock,
     selft,
-    popData,
     title,
     min,
     max,

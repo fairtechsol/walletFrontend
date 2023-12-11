@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { authReset, login } from "../actions/authAction";
+import { authReset, login } from "../../actions/auth/authAction";
 
 const initialState = {
   success: false,

@@ -11,9 +11,7 @@ import {
 import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
 
-const AdminEventListing = (props: any) => {
-  const { setAnchor, setAnchor1 } = props;
-
+const AdminEventListing = () => {
   const data = [
     { id: 3, title: "INPLAY", image: Play, url: "live_market" },
     { id: 1, title: "Add Account", image: ADDACCOUNT, url: "add_account" },
@@ -61,11 +59,7 @@ const AdminEventListing = (props: any) => {
             }
             style={{ textDecoration: "none" }}
           >
-            <AdminEventComponent
-              data={i}
-              setAnchor={setAnchor}
-              setAnchor1={setAnchor1}
-            />
+            <AdminEventComponent data={i} />
           </NavLink>
         );
       })}

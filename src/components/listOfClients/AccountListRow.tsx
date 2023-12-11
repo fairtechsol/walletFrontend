@@ -61,7 +61,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           <Typography
             variant="h5"
             onClick={() => {
-              if (!["user", "expert"].includes(element?.role)) {
+              if (!["user", "expert"].includes(element?.roleName)) {
                 // setSubSusers({
                 //   value: true,
                 //   id: element?.id,
@@ -106,7 +106,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
               }}
             />
           )}
-          {showOptions && element?.role !== "expert" && (
+          {showOptions && element?.roleName !== "expert" && (
             <StyledImage
               onClick={() => {
                 setShowUserModal((prev) => !prev);
@@ -129,7 +129,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element?.credit_refer}</Typography>
+          <Typography variant="h5">{element?.creditRefrence}</Typography>
         </Box>
         <Box
           sx={{
@@ -159,20 +159,20 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.profit_loss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(element?.profitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.profit_loss) >= 0 ? (
+            {Number(element?.profitLoss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.profit_loss}
+                {element?.profitLoss}
               </>
             ) : (
-              element?.profit_loss
+              element?.profitLoss
             )}
           </Typography>
           <StyledImage
@@ -196,20 +196,20 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.profit_loss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(element?.myProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.percent_profit_loss) >= 0 ? (
+            {Number(element?.myProfitLoss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.percent_profit_loss}
+                {element?.myProfitLoss}
               </>
             ) : (
-              element?.percent_profit_loss
+              element?.myProfitLoss
             )}
           </Typography>
           <StyledImage
@@ -238,7 +238,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element?.totalCommissions}</Typography>
+          <Typography variant="h5">{element?.totalComission}</Typography>
         </Box>
         <Box
           sx={{
@@ -263,13 +263,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {Number(element?.available_balance) >= 0 ? (
+            {Number(element?.availableBalance) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(element?.available_balance)}
+                {Number(element?.availableBalance)}
               </>
             ) : (
-              Number(element?.available_balance)
+              Number(element?.availableBalance)
             )}
           </Typography>
         </Box>
@@ -285,7 +285,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <StyledImage
-            src={element?.bet_blocked == 0 ? UnLockIcon : LockIcon}
+            src={element?.betBlock == 0 ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -301,7 +301,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <StyledImage
-            src={element?.all_blocked == 0 ? UnLockIcon : LockIcon}
+            src={element?.userBlock == 0 ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -316,7 +316,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
           }}
         >
-          <Typography variant="h5">{element?.exposure_limit}</Typography>
+          <Typography variant="h5">{element?.exposureLimit}</Typography>
         </Box>
         <Box
           sx={{
@@ -328,11 +328,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element.role}</Typography>{" "}
+          <Typography variant="h5">{element.roleName}</Typography>{" "}
         </Box>
       </Box>
 
-      {showUserModal && element?.role !== "expert" && (
+      {showUserModal && element?.roleName !== "expert" && (
         <Box
           sx={[
             {
@@ -386,7 +386,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                     },
                   }}
                 >
-                  {element?.matchTypeComission ? (
+                  {element?.matchComissionType ? (
                     <>
                       <Typography
                         variant="h5"
@@ -399,7 +399,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           fTextStyle,
                         ]}
                       >
-                        {element?.matchTypeComission} Com
+                        {element?.matchComissionType} Com
                       </Typography>
                       <Typography
                         variant="h5"
@@ -413,7 +413,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                         ]}
                       >
                         {":"}{" "}
-                        {element?.matchComission ? element?.matchComission : 0}
+                        {element?.matchCommission ? element?.matchCommission : 0}
                       </Typography>
                     </>
                   ) : (
@@ -487,8 +487,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                       fTextStyle,
                     ]}
                   >
-                    {element?.sessionComisssion
-                      ? element?.sessionComisssion
+                    {element?.sessionCommission
+                      ? element?.sessionCommission
                       : 0}
                   </Typography>
                 </Box>
@@ -505,7 +505,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                     width: { lg: "100%", xs: "33%" },
                   }}
                   onClick={() => {
-                    if (element?.totalCommissions !== null) {
+                    if (element?.totalComission !== null) {
                       //   setShowCommissionReport({
                       //     value: true,
                       //     id: element?.userId,

@@ -1,55 +1,47 @@
 import { Button, Box, useTheme } from "@mui/material";
-import { FgLogo, mail, eye, eyeLock } from "../../../assets";
-import { useState, useEffect } from "react";
+import { mail, eye, eyeLock } from "../../../assets";
+import { useEffect } from "react";
 import Input from "../../../components/login/Input";
 import { useNavigate } from "react-router-dom";
-import { authReset, login } from "../../../store/actions/authAction";
+import { authReset, login } from "../../../store/actions/auth/authAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { loginValidationSchema } from "../../../utils/Validations";
+
+const initialValues: any = {
+  userName: "",
+  password: "",
+  loginType: "wallet",
+};
 
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
 
-  const [loginState, setLoginState] = useState({
-    userName: "",
-    password: "",
-    loginType: "wallet",
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: loginValidationSchema,
+    onSubmit: (values: any) => {
+      dispatch(login(values));
+    },
   });
 
-  const { success, forceChangePassword, loading } = useSelector(
+  const { handleSubmit, touched, errors } = formik;
+
+  const { success, forceChangePassword } = useSelector(
     (state: RootState) => state.auth
   );
 
-  const dispatch: AppDispatch = useDispatch();
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setLoginState((prev: any) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    dispatch(login(loginState));
-  };
-
   useEffect(() => {
-    if (localStorage.getItem("userToken")) {
-      if (localStorage.getItem("forceChangePassword") === "true") {
-        navigate("/change_password");
-      } else {
-        navigate("/wallet/list_of_clients");
-      }
-    }
     if (success) {
       if (forceChangePassword) {
-        localStorage.setItem("forceChangePassword", "true");
+        localStorage.setItem(
+          "forceChangePassword",
+          JSON.stringify(forceChangePassword)
+        );
         navigate("/change_password");
       } else {
         navigate("/wallet/list_of_clients");
@@ -68,28 +60,34 @@ const Login = () => {
     >
       <Box sx={{ width: "100%", opacity: 1 }}>
         <Input
+          id={"userName"}
           placeholder={"Enter Username"}
           title={"Username"}
-          name={"userName"}
-          value={loginState.userName}
           type="text"
+          name="userName"
           img={mail}
           img1={mail}
-          onChange={handleChange}
-          required={true}
+          onChange={formik.handleChange}
+          value={formik.values.userName}
         />
+        {touched.userName && errors.userName && (
+          <p style={{ color: "#fa1e1e" }}>{errors.userName as string}</p>
+        )}
         <Input
+          id={"password"}
           title={"Password"}
-          name="password"
-          value={loginState.password}
           type="password"
           placeholder={"Enter Password"}
           containerStyle={{ marginTop: "10px" }}
           img={eye}
           img1={eyeLock}
-          onChange={handleChange}
-          required={true}
+          name="password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
         />
+        {touched.password && errors.password && (
+          <p style={{ color: "#fa1e1e" }}>{errors.password as string}</p>
+        )}
       </Box>
       <Box
         sx={{

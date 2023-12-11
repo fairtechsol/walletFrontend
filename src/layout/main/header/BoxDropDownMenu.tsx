@@ -2,6 +2,9 @@ import { Box, MenuItem } from "@mui/material";
 import { Logout } from "../../../assets";
 import StyledImage from "../../../components/Common/StyledImages";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../store/actions/auth/authAction";
+import { AppDispatch } from "../../../store/store";
 
 const menutItems = [
   { title: "Secure Auth Verification" },
@@ -10,6 +13,8 @@ const menutItems = [
 const BoxDropDownMenu = (props: any) => {
   const { handleClose } = props;
   const navigate = useNavigate();
+
+  const dispatch: AppDispatch = useDispatch();
   // const innerRef = useOuterClick((ev: any) => {
   //   handleClose();
   // });
@@ -61,7 +66,7 @@ const BoxDropDownMenu = (props: any) => {
       ))}
       <Box
         onClick={() => {
-          navigate("/");
+          dispatch(logout());
         }}
         sx={{
           borderRadius: "5px",

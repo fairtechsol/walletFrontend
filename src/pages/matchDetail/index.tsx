@@ -4,7 +4,6 @@ import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
-import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 
 const MatchDetail = () => {
   const theme = useTheme();

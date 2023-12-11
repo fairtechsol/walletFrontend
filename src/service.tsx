@@ -23,7 +23,12 @@ service.interceptors.request.use(
 );
 
 service.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    if (response.data?.message) {
+      toast.success(response.data?.message);
+    }
+    return response.data;
+  },
   (error) => {
     if (error.response.status === 500) {
       toast.error(error.response.data.message);

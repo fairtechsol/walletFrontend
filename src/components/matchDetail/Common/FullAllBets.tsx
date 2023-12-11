@@ -1,15 +1,13 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
-import { ARROWUP, CHECK } from "../../../assets";
+import { ARROWUP } from "../../../assets";
 const FullAllBets = (props: any) => {
-  const { tag, mode, IObets, setSelectedBetData, selectedBetData } = props;
-  const [selectedData, setSelectedData] = useState([]);
+  const { tag, mode, IObets, setSelectedBetData } = props;
+  // const [selectedData, setSelectedData] = useState([]);
 
   const [visible, setVisible] = useState(true);
 
-  const [newData, setNewBets] = useState([]);
+  const [newData] = useState([]);
   //   useEffect(() => {
   //     if (IObets) {
   //       const uniqueData = {};
@@ -106,12 +104,11 @@ const FullAllBets = (props: any) => {
   //   }, [IObets]);
 
   useEffect(() => {
-    setSelectedData([]);
+    // setSelectedData([]);
     if (setSelectedBetData !== undefined) {
       setSelectedBetData([]);
     }
   }, [mode]);
-  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -228,7 +225,7 @@ const FullAllBets = (props: any) => {
             className="myScroll"
             style={{ maxHeight: "80vh", overflowY: "auto" }}
           >
-            {newData?.map((i, k) => {
+            {newData?.map((k) => {
               const num = newData.length - k;
               const formattedNum = num < 10 ? "0" + num : num.toString();
               return (
@@ -272,9 +269,7 @@ const FullAllBets = (props: any) => {
                     {!mode && (
                       <Typography
                         sx={{
-                          fontSize: !tag
-                            ? { xs: "8px", lg: "11px" }
-                            : "13px",
+                          fontSize: !tag ? { xs: "8px", lg: "11px" } : "13px",
                           fontWeight: tag ? "bold" : "600",
                           color: "white",
                         }}
@@ -547,105 +542,6 @@ const HeaderRow = ({ tag, mode }: any) => {
           Time
         </Typography>
       </Box>
-    </Box>
-  );
-};
-const SmallBox = ({ item, k }: any) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  // alert(JSON.stringify(item))
-  return (
-    <Box
-      key={k}
-      sx={{
-        width: "10%",
-        border: "1px solid white",
-        background: item?.background,
-        height: "35px",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-        textTransform: "capitalize",
-      }}
-    >
-      <Typography
-        sx={{
-          fontSize: matchesMobile ? "10px" : ".7vw",
-          fontWeight: "600",
-          lineHeight: 1,
-          color: item?.color,
-        }}
-      >
-        {item?.name}
-      </Typography>
-      <Typography
-        sx={{ fontSize: "9px", fontWeight: "600", color: item?.color }}
-      >
-        {item?.rate && item?.rate}
-      </Typography>
-    </Box>
-  );
-};
-const LargeBox = ({ item, k }: any) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  return (
-    <Box
-      key={k}
-      sx={{
-        width: k == 1 ? "20%" : "15%",
-        border: "1px solid white",
-        background: item?.background,
-        height: "35px",
-        justifyContent: "center",
-        alignItems: k == 1 || k == 0 ? "center" : "center",
-        paddingLeft:
-          k == 1 || k == 0 ? { xs: "0", md: "5px", lg: "5px" } : 0,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <Typography
-        sx={{
-          fontSize: matchesMobile ? "8px" : ".6vw",
-          fontWeight: "600",
-          color: item?.color,
-          textTransform: "capitalize",
-          wordWrap: "break-word",
-          textAlign: "center",
-          lineHeight: 1,
-          whiteSpace: { xs: "nowrap", lg: "inherit" },
-          textOverflow: "ellipsis",
-          maxWidth: { xs: "43px", lg: "initial" },
-        }}
-      >
-        {item?.name}
-      </Typography>
-      {item?.time && (
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".6vw",
-            fontWeight: "600",
-            color: item?.color,
-          }}
-        >
-          {item?.date}
-        </Typography>
-      )}
-    </Box>
-  );
-};
-const Row = ({ values, index }: any) => {
-  return (
-    <Box key={index} sx={{ width: "100%", display: "flex" }}>
-      {values.map((item: any, k: any) => {
-        if (!item?.small) {
-          return <LargeBox k={k} key={k} item={item} />;
-        } else {
-          return <SmallBox k={k} key={k} item={item} />;
-        }
-      })}
     </Box>
   );
 };

@@ -14,10 +14,11 @@ const Analysis = () => {
   const [selected, setSelected] = useState([]);
 
   const handleClick = (value: string) => {
+    console.log(value);
     setMode("1");
   };
 
-  const matchData: any = [
+  const matchData: any[] = [
     {
       id: "d5fba619-029c-4493-9d63-dc61d608f9cd",
       isActive: true,
@@ -328,9 +329,9 @@ const Analysis = () => {
                   <MatchListComponent
                     key={i?.id}
                     data={i}
-                    setSelected={() => changeSelected(k, i)}
+                    setSelected={() => changeSelected(i)}
                     mode={mode}
-                    selected={!selected.includes(i?.id)}
+                    selected={!selected.includes(i.id as never)}
                     team={i?.teamA}
                     team_2={i?.teamB}
                   />

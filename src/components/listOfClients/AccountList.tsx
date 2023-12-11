@@ -9,11 +9,18 @@ import {
   AccountListInterface,
 } from "../../interface/listOfClients";
 import Pagination from "../Common/Pagination";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../store/store";
 
 const AccountList = () => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
+  const dispatch: AppDispatch = useDispatch();
   const loading = false;
   const pageCount = "10";
+
+  const { userList } = useSelector((state: RootState) => state.user);
 
   const data: AccountListInterface = {
     creditsum: "1000000",
@@ -26,23 +33,9 @@ const AccountList = () => {
     exposurelimit: "1000000",
   };
 
-  const data1 = [
-    {
-      id: 1,
-      userName: "SUser",
-      credit_refer: "10000",
-      balance: "10000",
-      profit_loss: "10000",
-      percent_profit_loss: "10000",
-      totalCommissions: "10000",
-      exposure: "10000",
-      available_balance: "10000",
-      bet_blocked: true,
-      all_blocked: false,
-      exposure_limit: "100",
-      role: "user",
-    },
-  ];
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   return (
     <>
@@ -85,39 +78,42 @@ const AccountList = () => {
                 <Box>
                   <ListHeaderRow />
                   <SubHeaderListRow data={data} />
-                  {data1.map((element: AccountListDataInterface, i: any) => {
-                    if (i % 2 === 0) {
-                      return (
-                        <AccountListRow
-                          key={element?.id}
-                          callProfile={true}
-                          showOptions={true}
-                          showUserDetails={true}
-                          showCReport={true}
-                          containerStyle={{ background: "#FFE094" }}
-                          profit={+element.profit_loss >= 0}
-                          fContainerStyle={{ background: "#0B4F26" }}
-                          fTextStyle={{ color: "white" }}
-                          element={element}
-                        />
-                      );
-                    } else {
-                      return (
-                        <AccountListRow
-                          key={element?.id}
-                          showCReport={true}
-                          callProfile={true}
-                          showUserDetails={true}
-                          showOptions={true}
-                          containerStyle={{ background: "#ECECEC" }}
-                          profit={+element.profit_loss >= 0}
-                          fContainerStyle={{ background: "#F8C851" }}
-                          fTextStyle={{ color: "#0B4F26" }}
-                          element={element}
-                        />
-                      );
-                    }
-                  })}
+                  {userList &&
+                    userList?.list?.map(
+                      (element: AccountListDataInterface, i: any) => {
+                        if (i % 2 === 0) {
+                          return (
+                            <AccountListRow
+                              key={element?.id}
+                              callProfile={true}
+                              showOptions={true}
+                              showUserDetails={true}
+                              showCReport={true}
+                              containerStyle={{ background: "#FFE094" }}
+                              profit={+element.profit_loss >= 0}
+                              fContainerStyle={{ background: "#0B4F26" }}
+                              fTextStyle={{ color: "white" }}
+                              element={element}
+                            />
+                          );
+                        } else {
+                          return (
+                            <AccountListRow
+                              key={element?.id}
+                              showCReport={true}
+                              callProfile={true}
+                              showUserDetails={true}
+                              showOptions={true}
+                              containerStyle={{ background: "#ECECEC" }}
+                              profit={+element.profit_loss >= 0}
+                              fContainerStyle={{ background: "#F8C851" }}
+                              fTextStyle={{ color: "#0B4F26" }}
+                              element={element}
+                            />
+                          );
+                        }
+                      }
+                    )}
                 </Box>
               </Box>
             </Box>

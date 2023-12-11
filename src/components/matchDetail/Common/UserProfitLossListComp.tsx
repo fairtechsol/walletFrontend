@@ -1,4 +1,3 @@
-import React from "react";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { Box, Typography } from "@mui/material";
 import Divider from "../../Inplay/Divider";

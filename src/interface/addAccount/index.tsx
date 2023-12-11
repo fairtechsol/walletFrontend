@@ -6,7 +6,10 @@ export interface AddAccountInterface {
   city?: string;
   number?: string;
   domain?: string;
-  accountType?: string;
+  roleName: {
+    label: string;
+    value: string;
+  };
   creditReference?: string;
   uplinePartnership?: string;
   myPartnership?: string;
@@ -21,6 +24,7 @@ export interface AddAccountInterface {
 }
 
 export interface DropdownInterface {
+  id?: string;
   title?: string;
   data?: any;
   containerStyle?: any;

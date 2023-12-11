@@ -747,21 +747,20 @@ const MultipleMatch = ({}) => {
               }}
             >
               {matchData?.length > 0 &&
-                matchData?.map((item: any, index: any) => {
+                matchData?.map((item: any) => {
                   let manualSessionHttp: any = {};
                   if (manualRateHttp.hasOwnProperty(item?.id)) {
                     manualSessionHttp = manualRateHttp[item?.id];
                   }
-                  let matchOddsDataTemp = item?.bettings?.filter(
-                    (element: any) => element?.sessionBet === false
-                  );
+                  // let matchOddsDataTemp = item?.bettings?.filter(
+                  //   (element: any) => element?.sessionBet === false
+                  // );
                   let IObetsData = IObets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
                   let sessionBetsData = sessionBets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
-                  console.log("sdsdfsf", item, index);
                   return (
                     <>
                       <Box

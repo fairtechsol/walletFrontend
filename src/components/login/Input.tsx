@@ -10,6 +10,7 @@ import { InputInterface } from "../../interface/common";
 
 const Input: React.FC<InputInterface> = (props) => {
   const {
+    id,
     title,
     value,
     containerStyle,
@@ -63,6 +64,7 @@ const Input: React.FC<InputInterface> = (props) => {
         ]}
       >
         <TextField
+          id={id}
           autoFocus={autoFocus}
           variant="standard"
           placeholder={placeholder}

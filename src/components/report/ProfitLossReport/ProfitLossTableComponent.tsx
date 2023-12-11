@@ -5,20 +5,11 @@ import Pagination from "../../Common/Pagination";
 const ProfitLossTableComponent = (props: any) => {
   const {
     eventData,
-    reportData,
-    betData,
-    sessionBetData,
     handleReport,
-    handleBet,
     currentPage,
     pageCount,
-    getUserProfitLoss,
     setCurrentPage,
     visible,
-    setVisible,
-    sessionBets,
-    user,
-    userProfitLoss,
   } = props;
   return (
     <Box>

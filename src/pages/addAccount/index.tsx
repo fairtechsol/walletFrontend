@@ -9,10 +9,17 @@ import {
 } from "@mui/material";
 import Input from "../../components/login/Input";
 import { EyeIcon, EyeSlash } from "../../assets";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DropDown from "../../components/Common/DropDown";
 import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import { AddAccountInterface } from "../../interface/addAccount";
+import { useFormik } from "formik";
+import { useSelector } from "react-redux";
+import { addUserValidation } from "../../utils/Validations";
+import { AppDispatch, RootState } from "../../store/store";
+import { addUser } from "../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
+import Loader from "../../components/Loader";
 
 const typeToShow = [
   "Select account type",
@@ -22,9 +29,18 @@ const typeToShow = [
   "Admin",
   "Super Master",
   "Master",
-  "Expert",
+  // "Expert",
   "User",
 ];
+
+// const roles = [
+//   { role: "fairGameAdmin", val: "Fairgame Admin", level: 1 },
+//   { role: "superAdmin", val: "Super Admin", level: 2 },
+//   { role: "admin", val: "Admin", level: 3 },
+//   { role: "superMaster", val: "Super Master", level: 4 },
+//   { role: "master", val: "Master", level: 5 },
+//   { role: "user", val: "User", level: 7 },
+// ];
 
 const formDataSchema = {
   userName: "",
@@ -32,9 +48,12 @@ const formDataSchema = {
   confirmPassword: "",
   fullName: "",
   city: "",
-  number: "",
+  phoneNumber: "",
   domain: "",
-  accountType: "",
+  roleName: {
+    label: "",
+    value: "",
+  },
   creditReference: "",
   uplinePartnership: "",
   myPartnership: "",
@@ -52,10 +71,12 @@ const formDataSchema = {
 const AddAccount = () => {
   const theme = useTheme();
   const { state } = useLocation();
-  const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
   const [showMatchCommision] = useState(false);
-  const role = "fairGameAdmin";
+  const [role] = useState("fairGameWallet");
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -96,21 +117,40 @@ const AddAccount = () => {
     sessionComissionArray.push(i?.toFixed(2));
   }
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const { success, loading } = useSelector((state: RootState) => state.user);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    alert(JSON.stringify(formData));
-  };
+  const formik = useFormik({
+    initialValues: formDataSchema,
+    validationSchema: addUserValidation,
+    onSubmit: (values: any) => {
+      // if (values.roleName.value == "fairGameAdmin") {
+      let payload: any = {
+        userName: values.userName,
+        fullName: values.fullName,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+        phoneNumber: JSON.stringify(values.phoneNumber),
+        city: values.city,
+        roleName: "fairGameAdmin",
+        myPartnership: values.myPartnership,
+        creditRefrence: values.creditRefrence,
+        exposureLimit: values.exposureLimit,
+        maxBetLimit: values.maxBetLimit,
+        minBetLimit: values.minBetLimit,
+      };
+      dispatch(addUser(payload));
+      // }
+      if (success) {
+        navigate("/wallet/list_of_clients");
+      }
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
 
   return (
     <>
+      {loading && <Loader />}
       <Box sx={{ margin: "1%" }}>
         <Typography
           sx={{
@@ -147,6 +187,7 @@ const AddAccount = () => {
               >
                 <div>
                   <Input
+                    id={"userName"}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
                     inputContainerStyle={{
@@ -158,9 +199,15 @@ const AddAccount = () => {
                     name={"userName"}
                     type={"text"}
                     required={true}
-                    onChange={handleChange}
+                    value={formik.values.userName}
+                    onChange={formik.handleChange}
                   />
                 </div>
+                {touched.userName && errors.userName && (
+                  <p style={{ color: "#fa1e1e" }}>
+                    {errors.userName as string}
+                  </p>
+                )}
                 <div>
                   <Input
                     containerStyle={containerStyles}
@@ -174,12 +221,19 @@ const AddAccount = () => {
                     }}
                     title={"User Password*"}
                     name={"password"}
+                    id={"password"}
                     type={"password"}
                     placeholder={"Ex : Abc@12"}
                     required={true}
-                    onChange={handleChange}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
                   />{" "}
                 </div>
+                {touched.password && errors.password && (
+                  <p style={{ color: "#fa1e1e" }}>
+                    {errors.password as string}
+                  </p>
+                )}
                 <div>
                   <Input
                     containerStyle={containerStyles}
@@ -193,26 +247,35 @@ const AddAccount = () => {
                     }}
                     title={"Confirm User Password*"}
                     name={"confirmPassword"}
+                    id={"confirmPassword"}
                     type={"password"}
                     placeholder={"Ex : Abc@12"}
                     required={true}
-                    onChange={handleChange}
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
                   />
                 </div>
+                {touched.confirmPassword && errors.confirmPassword && (
+                  <p style={{ color: "#fa1e1e" }}>
+                    {errors.confirmPassword as string}
+                  </p>
+                )}
                 <div>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"Fullname (Optional)"}
+                    placeholder={"Fullname"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"Fullname"}
                     name={"fullName"}
+                    id="fullName"
                     type={"text"}
-                    onChange={handleChange}
+                    value={formik.values.fullName}
+                    onChange={formik.handleChange}
                   />
                 </div>
                 <div>
@@ -220,15 +283,17 @@ const AddAccount = () => {
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"City (Optional)"}
+                    placeholder={"City"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"City"}
                     name={"city"}
+                    id="city"
                     type={"text"}
-                    onChange={handleChange}
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
                   />
                 </div>
                 <div>
@@ -236,18 +301,20 @@ const AddAccount = () => {
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"Mobile (Optional)"}
+                    placeholder={"Mobile"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
                     title={"Mobile Number"}
-                    name={"number"}
-                    type={"Number"}
-                    onChange={handleChange}
+                    name={"phoneNumber"}
+                    id="phoneNumber"
+                    type={"text"}
+                    value={formik.values.phoneNumber}
+                    onChange={formik.handleChange}
                   />
                 </div>
-                {role === "fairGameAdmin" && (
+                {role === "superUrlAdmin" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}
@@ -261,7 +328,9 @@ const AddAccount = () => {
                       title={"Domain"}
                       name={"domain"}
                       type={"text"}
-                      onChange={handleChange}
+                      id="domain"
+                      value={formik.values.domain}
+                      onChange={formik.handleChange}
                     />
                   </div>
                 )}
@@ -282,7 +351,8 @@ const AddAccount = () => {
                         "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
                     }}
                     title={"Account Type*"}
-                    name={"accountType"}
+                    name={"roleName"}
+                    id="roleName"
                     valueContainerStyle={{
                       marginX: "0px",
                       background: "#0B4F26",
@@ -307,7 +377,7 @@ const AddAccount = () => {
                     dropDownTextStyle={inputStyle}
                   />
                 </div>
-                {formData?.accountType === "Expert" && (
+                {formData?.roleName.label === "Expert" && (
                   <>
                     <Box m={2}>
                       <Grid container spacing={2}>
@@ -334,7 +404,7 @@ const AddAccount = () => {
                     </Box>
                   </>
                 )}
-                {formData?.accountType !== "Expert" && (
+                {formData?.roleName?.label !== "Expert" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}
@@ -347,7 +417,9 @@ const AddAccount = () => {
                       title={"Credit Reference*"}
                       name={"creditReference"}
                       type={"Number"}
-                      onChange={handleChange}
+                      id="creditReference"
+                      value={formik.values.creditReference}
+                      onChange={formik.handleChange}
                     />
                   </div>
                 )}
@@ -363,7 +435,7 @@ const AddAccount = () => {
                   containerStyle={{
                     ...containerStyles,
                     display:
-                      formData?.accountType === "User" ? "none" : "block",
+                      formData?.roleName?.label === "User" ? "none" : "block",
                   }}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
@@ -374,34 +446,39 @@ const AddAccount = () => {
                   }}
                   title={"Upline Partnership"}
                   name={"uplinePartnership"}
+                  id={"uplinePartnership"}
                   type={"text"}
                   disabled={true}
-                  onChange={handleChange}
+                  value={formik.values.uplinePartnership}
+                  onChange={formik.handleChange}
                 />
                 <Input
                   inputContainerStyle={{
                     ...inputContainerStyle,
                     backgroundColor:
-                      formData?.accountType === "User" && "#DEDEDE",
+                      formData?.roleName?.label === "User" && "#DEDEDE",
                     height: { lg: "45px", xs: "36px" },
                   }}
                   containerStyle={{
                     ...containerStyles,
                     display:
-                      formData?.accountType === "User" ? "none" : "block",
+                      formData?.roleName?.label === "User" ? "none" : "block",
                   }}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
                   title={"My Partnership"}
                   name={"myPartnership"}
+                  id={"myPartnership"}
                   type={"Number"}
-                  onChange={handleChange}
+                  value={formik.values.myPartnership}
+                  onChange={formik.handleChange}
                 />
               </Box>
               <Input
                 containerStyle={{
                   ...containerStyles,
-                  display: formData?.accountType === "User" ? "none" : "block",
+                  display:
+                    formData?.roleName?.label === "User" ? "none" : "block",
                 }}
                 titleStyle={titleStyles}
                 inputStyle={inputStyle}
@@ -413,11 +490,13 @@ const AddAccount = () => {
                 }}
                 title={"Downline partnership"}
                 name={"downlinePartnership"}
+                id={"downlinePartnership"}
                 type={"Number"}
-                onChange={handleChange}
+                value={formik.values.downlinePartnership}
+                onChange={formik.handleChange}
               />
 
-              {formData?.accountType !== "Expert" && (
+              {formData?.roleName?.label !== "Expert" && (
                 <>
                   <Box
                     sx={{
@@ -558,8 +637,10 @@ const AddAccount = () => {
                   }}
                   title={"Remark"}
                   name={"remarks"}
+                  id={"remarks"}
                   type={"text"}
-                  onChange={handleChange}
+                  value={formik.values.remarks}
+                  onChange={formik.handleChange}
                 />
                 <div>
                   <Input
@@ -571,10 +652,12 @@ const AddAccount = () => {
                     inputContainerStyle={{ ...inputContainerStyle }}
                     title={"Admin Transaction Password*"}
                     name={"adminTransPassword"}
+                    id={"adminTransPassword"}
                     type={"password"}
                     placeholder={"Ex : 12345"}
                     required={true}
-                    onChange={handleChange}
+                    value={formik.values.adminTransPassword}
+                    onChange={formik.handleChange}
                   />
                 </div>
               </Box>

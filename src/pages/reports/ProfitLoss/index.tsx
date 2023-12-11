@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import ProfitLossHeader from "../../../components/report/ProfitLossReport/ProfitLossHeader";
-import Loader from "../../../components/Loader";
 import ProfitLossTableComponent from "../../../components/report/ProfitLossReport/ProfitLossTableComponent";
 
 const ProfitLossReport = () => {

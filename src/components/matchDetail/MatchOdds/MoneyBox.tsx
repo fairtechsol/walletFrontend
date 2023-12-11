@@ -1,5 +1,4 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
 
 const MoneyBox = (props: any) => {
   const { color, rates } = props;

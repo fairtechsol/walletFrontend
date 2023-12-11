@@ -1,9 +1,22 @@
+import { useEffect } from "react";
 import { Box } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import AuthBackground from "../../pages/auth/AuthBackground";
 import StyledImage from "../../components/Common/StyledImages";
 import { FgLogo } from "../../assets";
 const AuthLayout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("userToken")) {
+      navigate(-1);
+    } else {
+      if (!localStorage.getItem("forceChangePassword")) {
+        navigate("/login");
+      }
+    }
+  }, []);
+
   return (
     <Box style={{ position: "relative" }}>
       <AuthBackground />
