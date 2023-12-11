@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -10,7 +10,6 @@ import {
 import Input from "../../components/login/Input";
 import { EyeIcon, EyeSlash } from "../../assets";
 import { useLocation, useNavigate } from "react-router-dom";
-import DropDown from "../../components/Common/DropDown";
 import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import { AddAccountInterface } from "../../interface/addAccount";
 import { useFormik } from "formik";
@@ -20,27 +19,24 @@ import { AppDispatch, RootState } from "../../store/store";
 import { addUser } from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
+import SelectField from "../../components/Common/DropDown/SelectField";
 
-const typeToShow = [
-  "Select account type",
-  "Fairgame Admin",
-  "URL Super Admin",
-  "Super Admin",
-  "Admin",
-  "Super Master",
-  "Master",
-  // "Expert",
-  "User",
+const AccountTypes = [
+  { value: "fairGameAdmin", label: "Fairgame Admin" },
+  { value: "superUrlAdmin", label: "URL Super Admin" },
+  { value: "superAdmin", label: "Super Admin" },
+  { value: "admin", label: "Admin" },
+  { value: "superMaster", label: "Super Master" },
+  { value: "master", label: "Master" },
+  { value: "expert", label: "Expert" },
+  { value: "user", label: "User" },
 ];
 
-// const roles = [
-//   { role: "fairGameAdmin", val: "Fairgame Admin", level: 1 },
-//   { role: "superAdmin", val: "Super Admin", level: 2 },
-//   { role: "admin", val: "Admin", level: 3 },
-//   { role: "superMaster", val: "Super Master", level: 4 },
-//   { role: "master", val: "Master", level: 5 },
-//   { role: "user", val: "User", level: 7 },
-// ];
+const MatchCommissionTypes = [
+  { value: "0.00", label: "0.00" },
+  { value: "totalLoss", label: "Total Loss" },
+  { value: "betLoss", label: "Entry Wise" },
+];
 
 const formDataSchema = {
   userName: "",
@@ -55,12 +51,21 @@ const formDataSchema = {
     value: "",
   },
   creditReference: "",
-  uplinePartnership: "",
-  myPartnership: "",
-  downlinePartnership: "",
-  matchCommissionType: "",
-  matchCommission: "",
-  sessionCommission: "",
+  uplinePartnership: 10,
+  myPartnership: 0,
+  downlinePartnership: 90,
+  matchCommissionType: {
+    label: "",
+    value: "",
+  },
+  matchCommission: {
+    label: "",
+    value: "",
+  },
+  sessionCommission: {
+    label: "",
+    value: "",
+  },
   remarks: "",
   adminTransPassword: "",
   //expert access
@@ -76,7 +81,7 @@ const AddAccount = () => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
   const [showMatchCommision] = useState(false);
-  const [role] = useState("fairGameWallet");
+  const { userRole } = useSelector((state: RootState) => state.auth);
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -95,58 +100,74 @@ const AddAccount = () => {
     border: "1px solid #DEDEDE",
   };
 
-  const matchComissionTypes = ["0.00", "Total Loss", "Entry Wise"];
-
-  let matchComissionArray = [];
-
-  for (let i = 0.0; i <= 2.0; i += 0.25) {
-    if (formData.matchCommissionType === "0.00") {
-      matchComissionArray = [];
-      break;
-    } else if (formData.matchCommissionType === "Total Loss") {
-      matchComissionArray.push(i?.toFixed(2));
-    } else {
-      if (i <= 1.5) {
-        matchComissionArray.push(i?.toFixed(2));
-      } else break;
-    }
-  }
-
-  const sessionComissionArray = [];
-  for (let i = 0.0; i <= 3.5; i += 0.25) {
-    sessionComissionArray.push(i?.toFixed(2));
-  }
-
   const { success, loading } = useSelector((state: RootState) => state.user);
 
   const formik = useFormik({
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
     onSubmit: (values: any) => {
-      // if (values.roleName.value == "fairGameAdmin") {
-      let payload: any = {
-        userName: values.userName,
-        fullName: values.fullName,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        phoneNumber: JSON.stringify(values.phoneNumber),
-        city: values.city,
-        roleName: "fairGameAdmin",
-        myPartnership: values.myPartnership,
-        creditRefrence: values.creditRefrence,
-        exposureLimit: values.exposureLimit,
-        maxBetLimit: values.maxBetLimit,
-        minBetLimit: values.minBetLimit,
-      };
-      dispatch(addUser(payload));
-      // }
-      if (success) {
-        navigate("/wallet/list_of_clients");
+      console.log(values, "values");
+      if (values.roleName.value == "fairGameAdmin") {
+        // let payload: any = {
+        //   userName: values.userName,
+        //   fullName: values.fullName,
+        //   password: values.password,
+        //   confirmPassword: values.confirmPassword,
+        //   phoneNumber: JSON.stringify(values.phoneNumber),
+        //   city: values.city,
+        //   roleName: values.roleName.value,
+        //   myPartnership: values.myPartnership,
+        //   creditRefrence: values.creditRefrence,
+        //   exposureLimit: values.exposureLimit,
+        //   maxBetLimit: values.maxBetLimit,
+        //   minBetLimit: values.minBetLimit,
+        // };
+        // dispatch(addUser(payload));
       }
     },
   });
 
   const { handleSubmit, touched, errors } = formik;
+
+  const handlePartnershipChange = (event: any) => {
+    const newValue = parseInt(event.target.value, 10);
+    const remainingDownline = 90 - newValue;
+
+    formik.setValues({
+      ...formik.values,
+      myPartnership: newValue,
+      downlinePartnership: remainingDownline,
+    });
+  };
+
+  let matchComissionArray = [];
+
+  for (let i = 0.0; i <= 2.0; i += 0.25) {
+    if (formik.values.matchCommissionType.label === "0.00") {
+      matchComissionArray = [];
+      break;
+    } else if (formik.values.matchCommissionType.label === "Total Loss") {
+      matchComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
+    } else {
+      if (i <= 1.5) {
+        matchComissionArray.push({
+          label: i?.toFixed(2),
+          value: i?.toFixed(2),
+        });
+      } else break;
+    }
+  }
+
+  const sessionComissionArray = [];
+  for (let i = 0.0; i <= 3.5; i += 0.25) {
+    sessionComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
+  }
+
+  useEffect(() => {
+    if (success) {
+      navigate("/wallet/list_of_clients");
+    }
+  }, [success]);
 
   return (
     <>
@@ -314,7 +335,7 @@ const AddAccount = () => {
                     onChange={formik.handleChange}
                   />
                 </div>
-                {role === "superUrlAdmin" && (
+                {userRole === "superUrlAdmin" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}
@@ -345,39 +366,24 @@ const AddAccount = () => {
                 }}
               >
                 <div>
-                  <DropDown
-                    dropStyle={{
-                      filter:
-                        "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
-                    }}
-                    title={"Account Type*"}
-                    name={"roleName"}
+                  <SelectField
                     id="roleName"
-                    valueContainerStyle={{
-                      marginX: "0px",
-                      background: "#0B4F26",
-                      border: "1px solid #DEDEDE",
-                      borderRadius: "5px",
-                      height: { lg: "45px", xs: "36px" },
+                    name="roleName"
+                    label={"Account Type*"}
+                    options={AccountTypes}
+                    onChange={(AccountTypes: any) => {
+                      formik.setFieldValue("roleName", AccountTypes);
                     }}
-                    containerStyle={{
-                      width: "100%",
-                      position: "relative",
-                      marginTop: "5px",
-                    }}
-                    titleStyle={{ marginLeft: "0px" }}
-                    dropDownStyle={{
-                      width: "100%",
-                      marginLeft: "0px",
-                      marginTop: "0px",
-                      position: "absolute",
-                    }}
-                    setSelected={setFormData}
-                    data={typeToShow}
-                    dropDownTextStyle={inputStyle}
+                    onBlur={formik.handleBlur}
+                    value={AccountTypes.find(
+                      (option: any) =>
+                        option.value === formik.values.roleName.value
+                    )}
+                    touched={touched.roleName}
+                    error={errors.roleName}
                   />
                 </div>
-                {formData?.roleName.label === "Expert" && (
+                {formik.values.roleName.label === "Expert" && (
                   <>
                     <Box m={2}>
                       <Grid container spacing={2}>
@@ -404,7 +410,7 @@ const AddAccount = () => {
                     </Box>
                   </>
                 )}
-                {formData?.roleName?.label !== "Expert" && (
+                {formik?.values?.roleName?.label !== "Expert" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}
@@ -435,7 +441,9 @@ const AddAccount = () => {
                   containerStyle={{
                     ...containerStyles,
                     display:
-                      formData?.roleName?.label === "User" ? "none" : "block",
+                      formik.values?.roleName?.label === "User"
+                        ? "none"
+                        : "block",
                   }}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
@@ -456,13 +464,15 @@ const AddAccount = () => {
                   inputContainerStyle={{
                     ...inputContainerStyle,
                     backgroundColor:
-                      formData?.roleName?.label === "User" && "#DEDEDE",
+                      formik.values?.roleName?.label === "User" && "#DEDEDE",
                     height: { lg: "45px", xs: "36px" },
                   }}
                   containerStyle={{
                     ...containerStyles,
                     display:
-                      formData?.roleName?.label === "User" ? "none" : "block",
+                      formik.values?.roleName?.label === "User"
+                        ? "none"
+                        : "block",
                   }}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
@@ -471,14 +481,16 @@ const AddAccount = () => {
                   id={"myPartnership"}
                   type={"Number"}
                   value={formik.values.myPartnership}
-                  onChange={formik.handleChange}
+                  onChange={handlePartnershipChange}
                 />
               </Box>
               <Input
                 containerStyle={{
                   ...containerStyles,
                   display:
-                    formData?.roleName?.label === "User" ? "none" : "block",
+                    formik.values?.roleName?.label === "User"
+                      ? "none"
+                      : "block",
                 }}
                 titleStyle={titleStyles}
                 inputStyle={inputStyle}
@@ -496,7 +508,7 @@ const AddAccount = () => {
                 onChange={formik.handleChange}
               />
 
-              {formData?.roleName?.label !== "Expert" && (
+              {formik?.values?.roleName?.label !== "Expert" && (
                 <>
                   <Box
                     sx={{
@@ -509,106 +521,68 @@ const AddAccount = () => {
                       gridColumnGap: "10px",
                     }}
                   >
-                    <DropDown
-                      dropStyle={{
-                        filter:
-                          "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
+                    <SelectField
+                      id="matchCommissionType"
+                      name="matchCommissionType"
+                      label={"Match Commission Type"}
+                      options={MatchCommissionTypes}
+                      onChange={(MatchCommissionTypes: any) => {
+                        formik.setFieldValue(
+                          "matchCommissionType",
+                          MatchCommissionTypes
+                        );
                       }}
-                      title={"Match Commission Type"}
-                      name={"matchCommissionType"}
-                      valueContainerStyle={{
-                        marginX: "0px",
-                        background: "#0B4F26",
-                        border: "1px solid #DEDEDE",
-                        borderRadius: "5px",
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      containerStyle={{
-                        width: "100%",
-                        position: "relative",
-                        marginTop: "10px",
-                      }}
-                      titleStyle={{ marginLeft: "0px" }}
-                      data={matchComissionTypes}
-                      setSelected={setFormData}
-                      dropDownStyle={{
-                        width: "100%",
-                        marginLeft: "0px",
-                        marginTop: "0px",
-                        position: "absolute",
-                      }}
-                      dropDownTextStyle={{ ...inputStyle, lineHeight: 1 }}
+                      onBlur={formik.handleBlur}
+                      value={MatchCommissionTypes.find(
+                        (option: any) =>
+                          option.value ===
+                          formik.values.matchCommissionType.value
+                      )}
+                      touched={touched.matchCommissionType}
+                      error={errors.matchCommissionType}
                     />
-                    {formData.matchCommissionType !== "" &&
-                      formData.matchCommissionType !== "0.00" && (
+                    {formik.values.matchCommissionType.label !== "" &&
+                      formik.values.matchCommissionType.label !== "0.00" && (
                         <>
-                          <DropDown
-                            openDrop={showMatchCommision}
-                            defaultValue={"0.00"}
-                            dropStyle={{
-                              filter:
-                                "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
-                            }}
-                            title={"Match Commission (%)*"}
+                          <SelectField
+                            id={"matchCommission"}
                             name={"matchCommission"}
-                            valueContainerStyle={{
-                              marginX: "0px",
-                              background: "#0B4F26",
-                              border: "1px solid #DEDEDE",
-                              borderRadius: "5px",
-                              height: { lg: "45px", xs: "36px" },
+                            label={"Match Commission (%)*"}
+                            options={matchComissionArray}
+                            value={matchComissionArray.find((option: any) => {
+                              option.value ===
+                                formik.values.matchCommission.value;
+                            })}
+                            onChange={(matchComissionArray: any) => {
+                              formik.setFieldValue(
+                                "matchCommission",
+                                matchComissionArray
+                              );
                             }}
-                            containerStyle={{
-                              width: "100%",
-                              position: "relative",
-                              marginTop: "10px",
-                            }}
-                            titleStyle={{ marginLeft: "0px" }}
-                            data={matchComissionArray}
-                            setSelected={setFormData}
-                            dropDownStyle={{
-                              width: "100%",
-                              marginLeft: "0px",
-                              marginTop: "0px",
-                              position: "absolute",
-                              maxHeight: "210px",
-                              overflow: "scroll",
-                            }}
+                            onBlur={formik.handleBlur}
+                            touched={touched.matchCommission}
+                            error={errors.matchCommission}
                           />
                         </>
                       )}
 
-                    <DropDown
-                      dropStyle={{
-                        filter:
-                          "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
-                      }}
-                      title={"Session Commission (%)"}
+                    <SelectField
+                      id={"sessionCommission"}
                       name={"sessionCommission"}
-                      valueContainerStyle={{
-                        marginX: "0px",
-                        background: "#0B4F26",
-                        border: "1px solid #DEDEDE",
-                        borderRadius: "5px",
-                        height: { lg: "45px", xs: "36px" },
+                      label={"Session Commission (%)*"}
+                      options={sessionComissionArray}
+                      value={sessionComissionArray.find((option: any) => {
+                        option.value === formik.values.sessionCommission.value;
+                      })}
+                      onChange={(sessionComissionArray: any) => {
+                        formik.setFieldValue(
+                          "sessionCommission",
+                          sessionComissionArray
+                        );
                       }}
-                      containerStyle={{
-                        width: "100%",
-                        position: "relative",
-                        marginTop: "10px",
-                      }}
-                      titleStyle={{ marginLeft: "0px" }}
-                      data={sessionComissionArray}
-                      setSelected={setFormData}
-                      dropDownStyle={{
-                        width: "100%",
-                        marginLeft: "0px",
-                        marginTop: "0px",
-                        position: "absolute",
-                        maxHeight: "210px",
-                        overflow: "scroll",
-                      }}
-                      dropDownTextStyle={{ ...inputStyle }}
+                      onBlur={formik.handleBlur}
+                      touched={touched.sessionCommission}
+                      error={errors.sessionCommission}
                     />
                   </Box>
                 </>
