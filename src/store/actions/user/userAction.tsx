@@ -81,4 +81,70 @@ export const changeAmmountUser = createAsyncThunk<any, any>(
   }
 );
 
+// export const userChangePassword = createAsyncThunk<any, any>(
+//   "user/changePassword",
+//   async (requestData) => {
+//     try {
+//       const resp = await service.post("/user/changePassword", requestData);
+//       if (resp) {
+//         return resp?.data;
+//       }
+//     } catch (error: any) {
+//       const err = error as AxiosError;
+//       throw err;
+//     }
+//   }
+// );
+
+export const setCreditRefference = createAsyncThunk<any, any>(
+  "user/update/creditreferrence",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        "/user/update/creditreferrence",
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
+export const setExposureLimit = createAsyncThunk<any, any>(
+  "user/update/exposurelimit",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        "/user/update/exposurelimit",
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
+export const setLockUnlockUser = createAsyncThunk<any, any>(
+  "/user/lockUnlockUser",
+  async (requestData) => {
+    try {
+      const resp = await service.post("/user/lockUnlockUser", requestData);
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
 export const changePasswordReset = createAction("changePassword/reset");

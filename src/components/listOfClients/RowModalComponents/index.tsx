@@ -86,6 +86,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 2 && (
             <SetCreditComponent
+              element={element}
               selected={selected == 2}
               setSelected={() => {
                 setSelected(null);
@@ -95,6 +96,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 3 && (
             <ChangePasswordComponent
+              element={element}
               selected={selected == 3}
               setSelected={() => {
                 setSelected(null);
@@ -104,6 +106,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 5 && (
             <SetExposureLimit
+              element={element}
               selected={selected == 5}
               setSelected={() => {
                 setSelected(null);
@@ -113,6 +116,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 4 && (
             <LockUnlockComponent
+              element={element}
               selected={selected == 4}
               setSelected={() => {
                 setSelected(null);

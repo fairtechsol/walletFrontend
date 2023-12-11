@@ -14,7 +14,7 @@ service.interceptors.request.use(
     config.headers["Content-Type"] = "application/json";
 
     const authToken = localStorage.getItem("userToken");
-    config.headers.token = authToken;
+    config.headers.Authorization = `Bearer ${authToken}`;
     return config;
   },
   (error) => {

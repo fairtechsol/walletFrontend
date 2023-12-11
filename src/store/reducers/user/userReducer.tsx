@@ -5,6 +5,9 @@ import {
   changePassword,
   changePasswordReset,
   getUsers,
+  setCreditRefference,
+  setExposureLimit,
+  setLockUnlockUser,
 } from "../../actions/user/userAction";
 
 interface InitialState {
@@ -60,8 +63,6 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action?.error?.message;
     })
-
-    // changeAmmountUser
     .addCase(changeAmmountUser.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -70,6 +71,40 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
     })
     .addCase(changeAmmountUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.error?.message;
+    })
+    .addCase(setCreditRefference.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(setCreditRefference.fulfilled, (state) => {
+      state.loading = false;
+    })
+    .addCase(setCreditRefference.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.error?.message;
+    })
+    .addCase(setExposureLimit.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(setExposureLimit.fulfilled, (state) => {
+      state.loading = false;
+    })
+    .addCase(setExposureLimit.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.error?.message;
+    })
+
+    .addCase(setLockUnlockUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(setLockUnlockUser.fulfilled, (state) => {
+      state.loading = false;
+    })
+    .addCase(setLockUnlockUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.error?.message;
     })

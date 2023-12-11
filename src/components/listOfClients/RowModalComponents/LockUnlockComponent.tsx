@@ -1,9 +1,20 @@
+import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
-import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
-import BoxButton from "./BoxButton";
-import StyledImage from "../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../assets";
+import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
+
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { setLockUnlockUser } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+
+const initialValues: any = {
+  betBlock: false,
+  userBlock: false,
+  transactionPassword: "",
+};
 
 const defaultLockUnlockObj = {
   all_blocked: false,
@@ -11,15 +22,35 @@ const defaultLockUnlockObj = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected } = props;
+  const { setSelected, element } = props;
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [showPass, setShowPass] = useState(false);
 
-  const handleLockSubmit = (e: any) => {
-    e.preventDefault();
-  };
+  const dispatch: AppDispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    // validationSchema: depositAmountValidations,
+    onSubmit: (values: any) => {
+      const payload = {
+        userId: element.userId,
+        betBlock: lockUnlockObj.bet_blocked,
+        userBlock: lockUnlockObj.all_blocked,
+        transPassword: values.transactionPassword,
+      };
+      dispatch(setLockUnlockUser(payload));
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
+
+  const { loading } = useSelector((state: RootState) => state.user);
+
+  // const handleLockSubmit = (e: any) => {
+  //   e.preventDefault();
+  // };
   return (
-    <form onSubmit={handleLockSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
@@ -72,8 +103,8 @@ const LockUnlockComponent = (props: any) => {
               <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>
                 <BoxButtonWithSwitch
                   title={"User"}
-                  val={lockUnlockObj.all_blocked}
                   name={"all_blocked"}
+                  val={lockUnlockObj?.all_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
@@ -89,8 +120,8 @@ const LockUnlockComponent = (props: any) => {
               >
                 <BoxButtonWithSwitch
                   title={"Bet"}
-                  val={lockUnlockObj.bet_blocked}
                   name={"bet_blocked"}
+                  val={lockUnlockObj?.bet_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
@@ -133,6 +164,10 @@ const LockUnlockComponent = (props: any) => {
             >
               <TextField
                 required={true}
+                id="transactionPassword"
+                name="transactionPassword"
+                value={formik.values.transactionPassword}
+                onChange={formik.handleChange}
                 sx={{ width: "100%", height: "45px" }}
                 variant="standard"
                 InputProps={{
