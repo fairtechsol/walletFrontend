@@ -5,6 +5,7 @@ const initialState = {
   success: false,
   loading: false,
   forceChangePassword: false,
+  userRole: "",
 };
 
 export const authReducer = createReducer(initialState, (builder) => {
@@ -15,6 +16,7 @@ export const authReducer = createReducer(initialState, (builder) => {
     .addCase(login.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+      state.userRole = action.payload.roleName;
       state.forceChangePassword = action?.payload?.forceChangePassword;
     })
     .addCase(login.rejected, (state, action) => {

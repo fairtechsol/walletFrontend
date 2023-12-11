@@ -31,12 +31,13 @@ const Login = () => {
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { success, forceChangePassword } = useSelector(
+  const { success, forceChangePassword, userRole } = useSelector(
     (state: RootState) => state.auth
   );
 
   useEffect(() => {
     if (success) {
+      localStorage.setItem("userRole", userRole);
       if (forceChangePassword) {
         localStorage.setItem(
           "forceChangePassword",

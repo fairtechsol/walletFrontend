@@ -11,12 +11,21 @@ export interface AddAccountInterface {
     value: string;
   };
   creditReference?: string;
-  uplinePartnership?: string;
-  myPartnership?: string;
-  downlinePartnership?: string;
-  matchCommissionType?: string;
-  matchCommission?: string;
-  sessionCommission?: string;
+  uplinePartnership?: number;
+  myPartnership?: number;
+  downlinePartnership?: number;
+  matchCommissionType?: {
+    label: string;
+    value: string;
+  };
+  matchCommission?: {
+    label: string;
+    value: string;
+  };
+  sessionCommission?: {
+    label: string;
+    value: string;
+  };
   remarks?: string;
   adminTransPassword?: string;
   session?: boolean;
