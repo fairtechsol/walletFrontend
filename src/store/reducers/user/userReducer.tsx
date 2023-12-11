@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
   addUser,
+  changeAmmountUser,
   changePassword,
   changePasswordReset,
   getUsers,
@@ -40,6 +41,7 @@ export const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(addUser.fulfilled, (state) => {
       state.loading = false;
+      state.success = true;
       // state.data = action.payload;
     })
     .addCase(addUser.rejected, (state, action) => {
@@ -55,6 +57,19 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.userList = action.payload;
     })
     .addCase(getUsers.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.error?.message;
+    })
+
+    // changeAmmountUser
+    .addCase(changeAmmountUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(changeAmmountUser.fulfilled, (state) => {
+      state.loading = false;
+    })
+    .addCase(changeAmmountUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.error?.message;
     })

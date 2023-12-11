@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
 import BoxButton from "./BoxButton";
-import DepositComponent from "./DepositComponets";
-import WithdrawComponent from "./WithdrawComponent";
-import SetCreditComponent from "./SetCreditComponent";
 import ChangePasswordComponent from "./ChangePasswordComponent";
+import DepositComponent from "./DepositComponets";
 import LockUnlockComponent from "./LockUnlockComponent";
+import SetCreditComponent from "./SetCreditComponent";
 import SetExposureLimit from "./SetExposureLimit";
+import WithdrawComponent from "./WithdrawComponent";
 
 const RowModalComponents = (props: any) => {
-  const { selected, setSelected, backgroundColor } = props;
+  const { element, selected, setSelected, backgroundColor } = props;
 
   const classes = {
     mainBox: {
@@ -65,6 +65,7 @@ const RowModalComponents = (props: any) => {
         >
           {selected == 0 && (
             <DepositComponent
+              element={element}
               backgroundColor={backgroundColor}
               selected={selected == 0}
               setSelected={() => {
@@ -75,6 +76,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 1 && (
             <WithdrawComponent
+              element={element}
               selected={selected == 1}
               setSelected={() => {
                 setSelected(null);

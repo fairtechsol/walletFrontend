@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
-import ModalMUI from "@mui/material/Modal";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Box, Typography } from "@mui/material";
+import ModalMUI from "@mui/material/Modal";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
+import { AccountListRowInterface } from "../../interface/listOfClients";
 import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
-import { useNavigate } from "react-router-dom";
-import { AccountListRowInterface } from "../../interface/listOfClients";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -24,7 +24,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
 
   const navigate = useNavigate();
 
-  const [userModal, ] = useState({});
+  const [userModal] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
@@ -413,7 +413,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
                         ]}
                       >
                         {":"}{" "}
-                        {element?.matchCommission ? element?.matchCommission : 0}
+                        {element?.matchCommission
+                          ? element?.matchCommission
+                          : 0}
                       </Typography>
                     </>
                   ) : (

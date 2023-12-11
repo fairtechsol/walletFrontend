@@ -5,15 +5,30 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import ModalMUI from "@mui/material/Modal";
 import { useState } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
-import ModalMUI from "@mui/material/Modal";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 import MobileViewUserDetails from "./MobileViewUserDetails";
 
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { changeAmmountUser } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { depositAmountValidations } from "../../../utils/Validations";
+
+const initialValues: any = {
+  userId: "",
+  amount: "",
+  transactionPassword: "",
+  remark: "",
+  transactionType: "add",
+};
+
 const WithdrawComponent = (props: any) => {
   const {
+    element,
     handleKeyDown,
     backgroundColor,
     elementToUDM,
@@ -23,7 +38,6 @@ const WithdrawComponent = (props: any) => {
   } = props;
 
   const [showPass, setShowPass] = useState(false);
-  const [loading] = useState(false);
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
@@ -35,6 +49,34 @@ const WithdrawComponent = (props: any) => {
     remark: "",
   };
   const [withDrawObj, setWithDrawObj] = useState(defaultWithDrawObj);
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: depositAmountValidations,
+    onSubmit: (values: any) => {
+      const payload = {
+        userId: element.userId,
+        amount: values.amount,
+        transactionPassword: values.transactionPassword,
+        remark: values.remark,
+        transactionType: "add",
+      };
+      dispatch(changeAmmountUser(payload));
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
+
+  const { loading } = useSelector((state: RootState) => state.user);
+
+  const defaultDepositObj = {
+    amount: "",
+    trans_type: "add",
+    adminTransPassword: "",
+    remark: "",
+  };
 
   const handleWithdrawAmount = (e: any) => {
     e.preventDefault();
@@ -88,7 +130,7 @@ const WithdrawComponent = (props: any) => {
           </form>
         </ModalMUI>
       ) : (
-        <form onSubmit={handleWithdrawAmount}>
+        <form onSubmit={handleSubmit}>
           <Box
             sx={{
               display: "flex",
@@ -168,8 +210,11 @@ const WithdrawComponent = (props: any) => {
                 >
                   <TextField
                     required={true}
+                    id="amount"
+                    name="amount"
                     onKeyDown={handleKeyDown}
-                    value={withDrawObj.amount}
+                    // value={withDrawObj.amount}
+                    value={formik.values.amount}
                     variant="standard"
                     InputProps={{
                       placeholder: "Type Amount...",
@@ -185,6 +230,7 @@ const WithdrawComponent = (props: any) => {
                       },
                     }}
                     type={"Number"}
+                    onChange={formik.handleChange}
                   />
                 </Box>
               </Box>
@@ -312,12 +358,10 @@ const WithdrawComponent = (props: any) => {
                 >
                   <TextField
                     required={true}
-                    onChange={(e) => {
-                      setWithDrawObj({
-                        ...withDrawObj,
-                        adminTransPassword: e.target.value,
-                      });
-                    }}
+                    id="transactionPassword"
+                    name="transactionPassword"
+                    value={formik.values.transactionPassword}
+                    onChange={formik.handleChange}
                     sx={{ width: "100%", height: "45px" }}
                     variant="standard"
                     InputProps={{
@@ -332,6 +376,12 @@ const WithdrawComponent = (props: any) => {
                       },
                     }}
                   />
+                  {touched.transactionPassword &&
+                    errors.transactionPassword && (
+                      <p style={{ color: "#fa1e1e" }}>
+                        {errors.transactionPassword as string}
+                      </p>
+                    )}
                   <Box
                     onClick={() => {
                       setShowPass(!showPass);
@@ -375,9 +425,10 @@ const WithdrawComponent = (props: any) => {
                 }}
               >
                 <TextField
-                  onChange={(e) => {
-                    setWithDrawObj({ ...withDrawObj, remark: e.target.value });
-                  }}
+                  name={"remark"}
+                  id={"remark"}
+                  value={formik.values.remark}
+                  onChange={formik.handleChange}
                   rows={4}
                   sx={{ width: "100%", minHeight: "40px" }}
                   multiline={true}

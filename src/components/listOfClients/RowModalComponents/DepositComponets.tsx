@@ -12,8 +12,23 @@ import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 import MobileViewUserDetails from "./MobileViewUserDetails";
 
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { changeAmmountUser } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { depositAmountValidations } from "../../../utils/Validations";
+
+const initialValues: any = {
+  userId: "",
+  amount: "",
+  transactionPassword: "",
+  remark: "",
+  transactionType: "add",
+};
+
 const DepositComponent = (props: any) => {
   const {
+    element,
     handleKeyDown,
     backgroundColor,
     elementToUDM,
@@ -26,18 +41,36 @@ const DepositComponent = (props: any) => {
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [initialBalance] = useState("100");
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: depositAmountValidations,
+    onSubmit: (values: any) => {
+      const payload = {
+        userId: element.userId,
+        amount: values.amount,
+        transactionPassword: values.transactionPassword,
+        remark: values.remark,
+        transactionType: "add",
+      };
+      dispatch(changeAmmountUser(payload));
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
+
+  const { loading } = useSelector((state: RootState) => state.user);
+
   const defaultDepositObj = {
     amount: "",
     trans_type: "add",
     adminTransPassword: "",
     remark: "",
   };
-  const [loading] = useState(false);
+  // const [loading] = useState(false);
   const [depositObj, setDepositObj] = useState(defaultDepositObj);
-
-  const handleDepositeSubmit = (e: any) => {
-    e.preventDefault();
-  };
 
   return (
     <>
@@ -87,7 +120,7 @@ const DepositComponent = (props: any) => {
           </form>
         </ModalMUI>
       ) : (
-        <form onSubmit={handleDepositeSubmit}>
+        <form onSubmit={handleSubmit}>
           <Box
             sx={{
               display: "flex",
@@ -164,8 +197,11 @@ const DepositComponent = (props: any) => {
                 >
                   <TextField
                     required={true}
+                    id="amount"
+                    name="amount"
                     onKeyDown={handleKeyDown}
-                    value={depositObj.amount}
+                    // value={depositObj.amount}
+                    value={formik.values.amount}
                     variant="standard"
                     InputProps={{
                       placeholder: "Type Amount...",
@@ -181,6 +217,7 @@ const DepositComponent = (props: any) => {
                       },
                     }}
                     type={"Number"}
+                    onChange={formik.handleChange}
                   />
                 </Box>
               </Box>
@@ -305,12 +342,10 @@ const DepositComponent = (props: any) => {
                 >
                   <TextField
                     required={true}
-                    onChange={(e) => {
-                      setDepositObj({
-                        ...depositObj,
-                        adminTransPassword: e.target.value,
-                      });
-                    }}
+                    id="transactionPassword"
+                    name="transactionPassword"
+                    value={formik.values.transactionPassword}
+                    onChange={formik.handleChange}
                     sx={{ width: "100%", height: "45px" }}
                     variant="standard"
                     InputProps={{
@@ -325,6 +360,7 @@ const DepositComponent = (props: any) => {
                       },
                     }}
                   />
+
                   <Box
                     onClick={() => {
                       setShowPass(!showPass);
@@ -336,6 +372,11 @@ const DepositComponent = (props: any) => {
                     />
                   </Box>
                 </Box>
+                {touched.transactionPassword && errors.transactionPassword && (
+                  <p style={{ color: "#fa1e1e" }}>
+                    {errors.transactionPassword as string}
+                  </p>
+                )}
               </Box>
             </Box>
 
@@ -368,9 +409,10 @@ const DepositComponent = (props: any) => {
                 }}
               >
                 <TextField
-                  onChange={(e) => {
-                    setDepositObj({ ...depositObj, remark: e.target.value });
-                  }}
+                  name={"remark"}
+                  id={"remark"}
+                  value={formik.values.remark}
+                  onChange={formik.handleChange}
                   rows={4}
                   sx={{ width: "100%", minHeight: "40px" }}
                   multiline={true}
