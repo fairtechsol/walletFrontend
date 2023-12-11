@@ -5,6 +5,19 @@ export const loginValidationSchema = Yup.object({
   password: Yup.string().required("Password is required"),
 });
 
+export const depositAmountValidations = Yup.object({
+  amount: Yup.string().required("Amount is required"),
+  transactionPassword: Yup.string().required(
+    "Transaction Password is required"
+  ),
+});
+export const userChangePasswordValidations = Yup.object({
+  newPassword: Yup.string().required("Amount is required"),
+  transactionPassword: Yup.string().required(
+    "Transaction Password is required"
+  ),
+});
+
 export const changePasswordSchema = Yup.object({
   oldPassword: Yup.string().required("Old Password is required"),
   newPassword: Yup.string()

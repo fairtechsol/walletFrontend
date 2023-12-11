@@ -1,15 +1,15 @@
 import { Box, useMediaQuery } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AccountListDataInterface } from "../../interface/listOfClients";
+import { getUsers } from "../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../store/store";
+import Pagination from "../Common/Pagination";
 import Loader from "../Loader";
+import AccountListRow from "./AccountListRow";
 import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
-import AccountListRow from "./AccountListRow";
-import { AccountListDataInterface } from "../../interface/listOfClients";
-import Pagination from "../Common/Pagination";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../store/store";
 
 const AccountList = () => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");

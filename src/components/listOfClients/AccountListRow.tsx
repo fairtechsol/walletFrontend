@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
-import ModalMUI from "@mui/material/Modal";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Box, Typography } from "@mui/material";
+import ModalMUI from "@mui/material/Modal";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
+import { AccountListRowInterface } from "../../interface/listOfClients";
 import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
-import { useNavigate } from "react-router-dom";
-import { AccountListRowInterface } from "../../interface/listOfClients";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {

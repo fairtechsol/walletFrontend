@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 import MaterialUISwitch from "./MaterialUISwitch";
 
 const BoxButtonWithSwitch = (props: any) => {
@@ -36,7 +36,7 @@ const BoxButtonWithSwitch = (props: any) => {
         onChange={() => {
           setLockUnlockObj({
             ...lockUnlockObj,
-            [name]: !val === true ? 1 : 0,
+            [name]: !val,
           });
           setChecked(!checked);
         }}

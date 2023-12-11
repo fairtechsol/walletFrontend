@@ -1,7 +1,14 @@
+import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
+
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { changePassword } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { userChangePasswordValidations } from "../../../utils/Validations";
+
 import {
   EyeIcon,
   EyeIconWhite,
@@ -9,14 +16,40 @@ import {
   EyeSlashWhite,
 } from "../../../assets";
 
+const initialValues: any = {
+  userId: "",
+  newPassword: "",
+  transactionPassword: "",
+};
+
 const ChangePasswordComponent = (props: any) => {
-  const { setSelected } = props;
+  const { setSelected, element } = props;
   const [showPass, setShowPass] = useState(false);
-  const handleChangePassword = (e: any) => {
-    e.preventDefault();
-  };
+  // const handleChangePassword = (e: any) => {
+  //   e.preventDefault();
+  // };
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: userChangePasswordValidations,
+    onSubmit: (values: any) => {
+      let payload: any = {
+        userId: element.userId,
+        newPassword: values.newPassword,
+        transactionPassword: values.transactionPassword,
+      };
+      dispatch(changePassword(payload));
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
+
+  const { loading } = useSelector((state: RootState) => state.user);
+
   return (
-    <form onSubmit={handleChangePassword}>
+    <form onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
@@ -68,6 +101,10 @@ const ChangePasswordComponent = (props: any) => {
               >
                 <TextField
                   required={true}
+                  id="newPassword"
+                  name="newPassword"
+                  value={formik.values.newPassword}
+                  onChange={formik.handleChange}
                   //   onChange={(e) => {
                   //     setChangePasswordObj({
                   //       ...changePasswordObj,
@@ -102,6 +139,11 @@ const ChangePasswordComponent = (props: any) => {
                   />
                 </Box>
               </Box>
+              {touched.transactionPassword && errors.transactionPassword && (
+                <p style={{ color: "#fa1e1e" }}>
+                  {errors.transactionPassword as string}
+                </p>
+              )}
             </Box>
             <Box
               sx={{
@@ -112,6 +154,7 @@ const ChangePasswordComponent = (props: any) => {
             >
               <BoxButton
                 color={"#E32A2A"}
+                loading={loading}
                 containerStyle={{
                   width: "100%",
                   background: "#E32A2A",
@@ -183,6 +226,10 @@ const ChangePasswordComponent = (props: any) => {
               >
                 <TextField
                   required={true}
+                  id="transactionPassword"
+                  name="transactionPassword"
+                  value={formik.values.transactionPassword}
+                  onChange={formik.handleChange}
                   //   onChange={(e) => {
                   //     setChangePasswordObj({
                   //       ...changePasswordObj,

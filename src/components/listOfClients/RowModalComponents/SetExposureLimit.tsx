@@ -1,18 +1,50 @@
+import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../assets";
+import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { setExposureLimit } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { depositAmountValidations } from "../../../utils/Validations";
+
+const initialValues: any = {
+  userId: "",
+  amount: "",
+  transactionPassword: "",
+  transactionType: "add",
+};
+
 const SetExposureLimit = (props: any) => {
-  const { backgroundColor, setSelected } = props;
+  const { backgroundColor, setSelected, element } = props;
   const [showPass, setShowPass] = useState(false);
 
-  const handleExposerSubmit = (e: any) => {
-    e.preventDefault();
-  };
+  const dispatch: AppDispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: depositAmountValidations,
+    onSubmit: (values: any) => {
+      const payload = {
+        userId: element.userId,
+        amount: values.amount,
+        transactionPassword: values.transactionPassword,
+      };
+      dispatch(setExposureLimit(payload));
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
+
+  const { loading } = useSelector((state: RootState) => state.user);
+
+  // const handleExposerSubmit = (e: any) => {
+  //   e.preventDefault();
+  // };
   return (
-    <form onSubmit={handleExposerSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
@@ -53,6 +85,10 @@ const SetExposureLimit = (props: any) => {
               <TextField
                 // onKeyDown={handleKeyDown}
                 required={true}
+                id="amount"
+                name="amount"
+                value={formik.values.amount}
+                onChange={formik.handleChange}
                 variant="standard"
                 InputProps={{
                   placeholder: "Type Amount...",
@@ -105,7 +141,10 @@ const SetExposureLimit = (props: any) => {
             >
               <TextField
                 required={true}
-                onChange={() => {}}
+                id="transactionPassword"
+                name="transactionPassword"
+                value={formik.values.transactionPassword}
+                onChange={formik.handleChange}
                 sx={{ width: "100%", height: "45px" }}
                 variant="standard"
                 InputProps={{

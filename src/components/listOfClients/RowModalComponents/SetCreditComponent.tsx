@@ -1,17 +1,51 @@
+import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
-import BoxButton from "./BoxButton";
-import StyledImage from "../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../assets";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
+
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { setCreditRefference } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { depositAmountValidations } from "../../../utils/Validations";
+
+const initialValues: any = {
+  userId: "",
+  amount: "",
+  transactionPassword: "",
+  remark: "",
+};
 
 const SetCreditComponent = (props: any) => {
-  const { handleKeyDown, backgroundColor, setSelected } = props;
+  const { handleKeyDown, backgroundColor, setSelected, element } = props;
   const [showPass, setShowPass] = useState(false);
-  const [loading] = useState(false);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault;
-  };
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault;
+  // };
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: depositAmountValidations,
+    onSubmit: (values: any) => {
+      const payload = {
+        userId: element.userId,
+        amount: values.amount,
+        transactionPassword: values.transactionPassword,
+        remark: values.remark,
+      };
+      console.log(values, "aaaaa");
+      dispatch(setCreditRefference(payload));
+    },
+  });
+
+  const { handleSubmit, touched, errors } = formik;
+
+  const { loading } = useSelector((state: RootState) => state.user);
+
   return (
     <form onSubmit={handleSubmit}>
       <Box
@@ -53,7 +87,11 @@ const SetCreditComponent = (props: any) => {
             >
               <TextField
                 required={true}
-                value={"200"}
+                name={"amount"}
+                id={"amount"}
+                // value={"200"}
+                value={formik.values.amount}
+                onChange={formik.handleChange}
                 onKeyDown={handleKeyDown}
                 variant="standard"
                 InputProps={{
@@ -107,6 +145,10 @@ const SetCreditComponent = (props: any) => {
             >
               <TextField
                 required={true}
+                name={"transactionPassword"}
+                id={"transactionPassword"}
+                value={formik.values.transactionPassword}
+                onChange={formik.handleChange}
                 sx={{ width: "100%", height: "45px" }}
                 variant="standard"
                 InputProps={{
