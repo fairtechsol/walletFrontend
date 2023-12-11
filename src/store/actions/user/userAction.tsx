@@ -55,6 +55,21 @@ export const addUser = createAsyncThunk<any, AddUser>(
   }
 );
 
+export const updateUser = createAsyncThunk<any, any>(
+  "user/updateUser",
+  async (requestData) => {
+    try {
+      const resp = await service.post("/user/updateUser", requestData);
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
 export const getUsers = createAsyncThunk("user/list", async () => {
   try {
     const resp = await service.get("/user/list");
@@ -67,5 +82,17 @@ export const getUsers = createAsyncThunk("user/list", async () => {
     throw err;
   }
 });
+export const getUsersDetail = createAsyncThunk("user/profile", async () => {
+  try {
+    const resp = await service.get(`/user/profile`);
+    if (resp) {
+      return resp?.data[0][0];
+    }
+  } catch (error: any) {
+    const err = error as AxiosError;
+    throw err;
+  }
+});
 
 export const changePasswordReset = createAction("changePassword/reset");
+export const userDetailReset = createAction("userDetail/reset");

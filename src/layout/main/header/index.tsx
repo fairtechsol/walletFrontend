@@ -8,28 +8,12 @@ import AdminEventListing from "./AdminEventListing";
 import "./index.css";
 import MobileSideBar from "./MobileSideBar";
 
-const Header = ({}) => {
+const Header = ({ userDetail }: any) => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const currentSelected = 1;
 
-  // const RenderLogo = useCallback(() => {
-  //   return (
-  //     <StyledImage
-  //       onClick={(e: any) => {
-  //         e.stopPropagation();
-  //         navigate("/wallet/list_of_clients");
-  //       }}
-  //       src={FgLogo}
-  //       sx={{
-  //         height: { lg: "45px", xs: "40px" },
-  //         width: "auto",
-  //         marginLeft: { lg: "20px", xs: "10px" },
-  //       }}
-  //     />
-  //   );
-  // }, []);
+  const currentSelected = 1;
 
   const classes = {
     AppBarVal: { zIndex: (theme: any) => theme.zIndex.drawer + 1 },
@@ -147,8 +131,8 @@ const Header = ({}) => {
               <BoxProfile
                 containerStyle={classes.BoxCont1sub2BoxProfileContStyle}
                 image={"https://picsum.photos/200/300"}
-                value={"User"}
-                balance={"90000"}
+                value={userDetail && userDetail?.userName}
+                balance={userDetail && userDetail?.userBal?.currentBalance}
               />
             </Box>
           </Box>

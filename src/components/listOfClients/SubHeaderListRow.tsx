@@ -40,7 +40,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.creditsum}
+          {data?.creditRefrence}
         </Typography>
       </Box>
       <Box
@@ -56,14 +56,13 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {/* {data?.balancesum} */}
-          {Number(data?.balancesum) >= 0 ? (
+          {Number(data?.userBal.currentBalance) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(data?.balancesum)}
+              {Number(data?.userBal.currentBalance)}
             </>
           ) : (
-            Number(data?.balancesum)
+            Number(data?.userBal.currentBalance)
           )}
         </Typography>
       </Box>
@@ -72,7 +71,9 @@ const SubHeaderListRow = (props: any) => {
           width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
-          background: `${Number(data?.profitsum) >= 0 ? "#27AC1E" : "#E32A2A"}`,
+          background: `${
+            Number(data?.userBal?.profitLoss) >= 0 ? "#27AC1E" : "#E32A2A"
+          }`,
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
@@ -84,14 +85,14 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {/* {data?.profitsum} */}
-          {Number(data?.profitsum) >= 0 ? (
+          {/* {data?userBal?.profitLoss} */}
+          {Number(data?.userBal?.profitLoss) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {data?.profitsum}
+              {data?.userBal?.profitLoss}
             </>
           ) : (
-            data?.profitsum
+            data?.userBal?.profitLoss
           )}
         </Typography>
         <StyledImage
@@ -109,7 +110,9 @@ const SubHeaderListRow = (props: any) => {
           width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
-          background: `${Number(data?.profitsum) >= 0 ? "#27AC1E" : "#E32A2A"}`,
+          background: `${
+            Number(data?.userBal?.myProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A"
+          }`,
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
@@ -122,13 +125,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?.percent_profit_loss} */}
-          {Number(data?.percent_profit_loss) >= 0 ? (
+          {Number(data?.userBal?.myProfitLoss) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {data?.percent_profit_loss}
+              {data?.userBal?.myProfitLoss}
             </>
           ) : (
-            data?.percent_profit_loss
+            data?.userBal?.myProfitLoss
           )}
         </Typography>
         <StyledImage
@@ -170,7 +173,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.exposuresum}
+          {data?.exposureLimit}
         </Typography>
       </Box>
       <Box
@@ -187,13 +190,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?.availablebalancesum} */}
-          {Number(data?.availablebalancesum) >= 0 ? (
+          {Number(data?.userBal.currentBalance) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(data?.availablebalancesum)}
+              {Number(data?.userBal.currentBalance)}
             </>
           ) : (
-            Number(data?.availablebalancesum)
+            Number(data?.userBal.currentBalance)
           )}
         </Typography>
       </Box>

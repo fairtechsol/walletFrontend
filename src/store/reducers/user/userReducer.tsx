@@ -3,11 +3,14 @@ import {
   addUser,
   changePassword,
   changePasswordReset,
+  updateUser,
   getUsers,
+  getUsersDetail,
 } from "../../actions/user/userAction";
 
 interface InitialState {
-  data: any;
+  userDetail: any;
+  childUserDetail: any;
   success: boolean;
   loading: boolean;
   error: any;
@@ -15,7 +18,8 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  data: null,
+  userDetail: null,
+  childUserDetail: null,
   success: false,
   loading: false,
   error: null,
@@ -39,10 +43,23 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(addUser.fulfilled, (state) => {
+      state.success = true;
       state.loading = false;
-      // state.data = action.payload;
     })
     .addCase(addUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.error?.message;
+    })
+    .addCase(updateUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(updateUser.fulfilled, (state, action) => {
+      state.success = true;
+      state.loading = false;
+      state.userDetail = action.payload;
+    })
+    .addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.error?.message;
     })
@@ -51,10 +68,24 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(getUsers.fulfilled, (state, action) => {
+      state.success = true;
       state.loading = false;
       state.userList = action.payload;
     })
     .addCase(getUsers.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.error?.message;
+    })
+    .addCase(getUsersDetail.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(getUsersDetail.fulfilled, (state, action) => {
+      state.success = true;
+      state.loading = false;
+      state.userDetail = action.payload;
+    })
+    .addCase(getUsersDetail.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.error?.message;
     })

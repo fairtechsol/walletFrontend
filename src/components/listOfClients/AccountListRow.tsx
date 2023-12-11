@@ -24,7 +24,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
 
   const navigate = useNavigate();
 
-  const [userModal, ] = useState({});
+  const [userModal] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
@@ -86,16 +86,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate("/wallet/edit_account", {
+                navigate(`/wallet/edit_account`, {
                   state: {
-                    id: "1",
+                    id: element?.userId,
                   },
                 });
-                // navigate(`/${pathname.split("/")[1]}/edit_account`, {
-                //   state: {
-                //     id: element?.id,
-                //   },
-                // });
               }}
               sx={{
                 color:
@@ -413,7 +408,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
                         ]}
                       >
                         {":"}{" "}
-                        {element?.matchCommission ? element?.matchCommission : 0}
+                        {element?.matchCommission
+                          ? element?.matchCommission
+                          : 0}
                       </Typography>
                     </>
                   ) : (
