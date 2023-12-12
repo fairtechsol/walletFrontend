@@ -1,10 +1,7 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AccountListDataInterface,
-  AccountListInterface,
-} from "../../interface/listOfClients";
+import { AccountListDataInterface } from "../../interface/listOfClients";
 import { getUsers } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import Pagination from "../Common/Pagination";
@@ -20,18 +17,9 @@ const AccountList = () => {
   const loading = false;
   const pageCount = "10";
 
-  const { userList } = useSelector((state: RootState) => state.user);
-
-  const data: AccountListInterface = {
-    creditsum: "1000000",
-    balancesum: "1000000",
-    profitsum: "1000000",
-    percent_profit_loss: "1000000",
-    totalcomission: "1000000",
-    exposuresum: "1000000",
-    availablebalancesum: "1000000",
-    exposurelimit: "1000000",
-  };
+  const { userList, userDetail } = useSelector(
+    (state: RootState) => state.user
+  );
 
   useEffect(() => {
     dispatch(getUsers());
@@ -77,7 +65,7 @@ const AccountList = () => {
               >
                 <Box>
                   <ListHeaderRow />
-                  <SubHeaderListRow data={data} />
+                  <SubHeaderListRow data={userDetail} />
                   {userList &&
                     userList?.list?.map(
                       (element: AccountListDataInterface, i: any) => {

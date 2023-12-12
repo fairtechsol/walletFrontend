@@ -7,15 +7,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { EyeIcon, EyeSlash } from "../../assets";
-import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
-import Input from "../../components/login/Input";
-import { AddAccountInterface } from "../../interface/addAccount";
+import service from "../../service";
+import { addUser, updateUser } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
 
@@ -78,7 +74,6 @@ const AddAccount = () => {
   const dispatch: AppDispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
-  const [showMatchCommision] = useState(false);
   const { userRole } = useSelector((state: RootState) => state.auth);
 
   const containerStyles = {
@@ -98,29 +93,56 @@ const AddAccount = () => {
     border: "1px solid #DEDEDE",
   };
 
-  const { success, loading } = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.user);
 
   const formik = useFormik({
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
     onSubmit: (values: any) => {
-      console.log(values, "values");
-      if (values.roleName.value == "fairGameAdmin") {
-        // let payload: any = {
-        //   userName: values.userName,
-        //   fullName: values.fullName,
-        //   password: values.password,
-        //   confirmPassword: values.confirmPassword,
-        //   phoneNumber: JSON.stringify(values.phoneNumber),
-        //   city: values.city,
-        //   roleName: values.roleName.value,
-        //   myPartnership: values.myPartnership,
-        //   creditRefrence: values.creditRefrence,
-        //   exposureLimit: values.exposureLimit,
-        //   maxBetLimit: values.maxBetLimit,
-        //   minBetLimit: values.minBetLimit,
-        // };
-        // dispatch(addUser(payload));
+      navigate("/wallet/list_of_clients");
+      if (state?.id) {
+        dispatch(
+          updateUser({
+            sessionCommission: formik.values.sessionCommission.value,
+            matchComissionType: formik.values.matchComissionType.value,
+            matchCommission: formik.values.matchCommission.value,
+            id: state?.id,
+          })
+        );
+        navigate("/wallet/list_of_clients");
+      } else {
+        let payload: any;
+        if (values.roleName.value == "fairGameAdmin") {
+          payload = {
+            userName: values.userName,
+            fullName: values.fullName,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            phoneNumber: JSON.stringify(values.phoneNumber),
+            city: values.city,
+            roleName: values.roleName.value,
+            myPartnership: values.myPartnership,
+            creditRefrence: values.creditRefrence,
+            exposureLimit: values.exposureLimit,
+            maxBetLimit: values.maxBetLimit,
+            minBetLimit: values.minBetLimit,
+          };
+        } else if (values.roleName.value == "expert") {
+          payload = {
+            userName: values.userName,
+            fullName: values.fullName,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            phoneNumber: JSON.stringify(values.phoneNumber),
+            city: values.city,
+            roleName: values.roleName.value,
+            myPartnership: values.myPartnership,
+            creditRefrence: values.creditRefrence,
+            exposureLimit: values.exposureLimit,
+          };
+        }
+        dispatch(addUser(payload));
+        navigate("/wallet/list_of_clients");
       }
     },
   });
@@ -128,14 +150,18 @@ const AddAccount = () => {
   const { handleSubmit, touched, errors } = formik;
 
   const handlePartnershipChange = (event: any) => {
-    const newValue = parseInt(event.target.value, 10);
-    const remainingDownline = 90 - newValue;
+    try {
+      const newValue = parseInt(event.target.value, 10);
+      const remainingDownline = 90 - newValue;
 
-    formik.setValues({
-      ...formik.values,
-      myPartnership: newValue,
-      downlinePartnership: remainingDownline,
-    });
+      formik.setValues({
+        ...formik.values,
+        myPartnership: newValue,
+        downlinePartnership: remainingDownline,
+      });
+    } catch (e: any) {
+      console.log(e);
+    }
   };
 
   let matchComissionArray = [];
@@ -161,11 +187,59 @@ const AddAccount = () => {
     sessionComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
   }
 
-  useEffect(() => {
-    if (success) {
-      navigate("/wallet/list_of_clients");
+  const getUsersDetailById = async (id: string) => {
+    try {
+      const resp = await service.get(`/user/profile?userId=${id}`);
+      if (resp) {
+        const childUserDetail = resp?.data[0][0];
+        if (childUserDetail) {
+          formik.setValues({
+            ...formik.values,
+            userName: childUserDetail?.userName,
+            fullName: childUserDetail?.fullName,
+            city: childUserDetail?.city,
+            phoneNumber: JSON.parse(childUserDetail?.phoneNumber),
+            roleName: {
+              label: childUserDetail?.roleName,
+              value: childUserDetail?.roleName,
+            },
+            creditReference: childUserDetail?.creditRefrence,
+            uplinePartnership: childUserDetail?.fwPartnership,
+            myPartnership: 0,
+            downlinePartnership: childUserDetail?.faPartnership,
+            matchCommissionType: {
+              label: childUserDetail?.matchComissionType,
+              value: childUserDetail?.matchComissionType,
+            },
+            matchCommission: {
+              label: childUserDetail?.matchCommission,
+              value: childUserDetail?.matchCommission,
+            },
+            sessionCommission: {
+              label: childUserDetail?.sessionCommission,
+              value: childUserDetail?.sessionCommission,
+            },
+            remarks: "",
+            adminTransPassword: "",
+            session: false,
+            bookmaker: false,
+          });
+        }
+      }
+    } catch (error: any) {
+      console.log(error);
     }
-  }, [success]);
+  };
+
+  useEffect(() => {
+    try {
+      if (state?.id) {
+        getUsersDetailById(state?.id);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [state?.id]);
 
   return (
     <>
@@ -213,6 +287,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
+                    disabled={state?.id}
                     placeholder={"Username (Required)"}
                     title={"Username*"}
                     name={"userName"}
@@ -238,6 +313,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
+                    disabled={state?.id}
                     title={"User Password*"}
                     name={"password"}
                     id={"password"}
@@ -264,6 +340,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
+                    disabled={state?.id}
                     title={"Confirm User Password*"}
                     name={"confirmPassword"}
                     id={"confirmPassword"}
@@ -289,6 +366,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
+                    disabled={state?.id}
                     title={"Fullname"}
                     name={"fullName"}
                     id="fullName"
@@ -307,6 +385,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
+                    disabled={state?.id}
                     title={"City"}
                     name={"city"}
                     id="city"
@@ -325,6 +404,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
+                    disabled={state?.id}
                     title={"Mobile Number"}
                     name={"phoneNumber"}
                     id="phoneNumber"
@@ -344,6 +424,7 @@ const AddAccount = () => {
                         ...inputContainerStyle,
                         height: { lg: "45px", xs: "36px" },
                       }}
+                      disabled={state?.id}
                       title={"Domain"}
                       name={"domain"}
                       type={"text"}
@@ -374,6 +455,7 @@ const AddAccount = () => {
                     onChange={(AccountTypes: any) => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}
+                    isDisabled={state?.id}
                     onBlur={formik.handleBlur}
                     value={AccountTypes.find(
                       (option: any) =>
@@ -383,7 +465,7 @@ const AddAccount = () => {
                     error={errors.roleName}
                   />
                 </Box>
-                {formik.values.roleName.label === "Expert" && (
+                {formik.values.roleName.value === "expert" && (
                   <>
                     <Box m={2}>
                       <Grid container spacing={2}>
@@ -410,7 +492,7 @@ const AddAccount = () => {
                     </Box>
                   </>
                 )}
-                {formik?.values?.roleName?.label !== "Expert" && (
+                {formik?.values?.roleName?.value !== "expert" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}
@@ -420,6 +502,7 @@ const AddAccount = () => {
                         ...inputContainerStyle,
                         height: { lg: "45px", xs: "36px" },
                       }}
+                      disabled={state?.id}
                       title={"Credit Reference*"}
                       name={"creditReference"}
                       type={"Number"}
@@ -441,7 +524,7 @@ const AddAccount = () => {
                   containerStyle={{
                     ...containerStyles,
                     display:
-                      formik.values?.roleName?.label === "User"
+                      formik.values?.roleName?.value === "user"
                         ? "none"
                         : "block",
                   }}
@@ -464,16 +547,17 @@ const AddAccount = () => {
                   inputContainerStyle={{
                     ...inputContainerStyle,
                     backgroundColor:
-                      formik.values?.roleName?.label === "User" && "#DEDEDE",
+                      formik.values?.roleName?.value === "user" && "#DEDEDE",
                     height: { lg: "45px", xs: "36px" },
                   }}
                   containerStyle={{
                     ...containerStyles,
                     display:
-                      formik.values?.roleName?.label === "User"
+                      formik.values?.roleName?.value === "user"
                         ? "none"
                         : "block",
                   }}
+                  disabled={state?.id}
                   titleStyle={titleStyles}
                   inputStyle={inputStyle}
                   title={"My Partnership"}
@@ -488,7 +572,7 @@ const AddAccount = () => {
                 containerStyle={{
                   ...containerStyles,
                   display:
-                    formik.values?.roleName?.label === "User"
+                    formik.values?.roleName?.value === "user"
                       ? "none"
                       : "block",
                 }}
@@ -508,7 +592,7 @@ const AddAccount = () => {
                 onChange={formik.handleChange}
               />
 
-              {formik?.values?.roleName?.label !== "Expert" && (
+              {formik?.values?.roleName?.value !== "expert" && (
                 <>
                   <Box
                     sx={{
@@ -615,6 +699,7 @@ const AddAccount = () => {
                     height: { lg: "205px", xs: "70px" },
                     width: "100%",
                   }}
+                  disabled={state?.id}
                   title={"Remark"}
                   name={"remarks"}
                   id={"remarks"}

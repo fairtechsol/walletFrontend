@@ -86,16 +86,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate("/wallet/edit_account", {
+                navigate(`/wallet/edit_account`, {
                   state: {
-                    id: "1",
+                    id: element?.userId,
                   },
                 });
-                // navigate(`/${pathname.split("/")[1]}/edit_account`, {
-                //   state: {
-                //     id: element?.id,
-                //   },
-                // });
               }}
               sx={{
                 color:
