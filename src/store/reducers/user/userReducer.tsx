@@ -6,6 +6,10 @@ import {
   changePasswordReset,
   updateUser,
   getUsers,
+  getUsersDetail,
+  setCreditRefference,
+  setExposureLimit,
+  setLockUnlockUser,
 } from "../../actions/user/userAction";
 
 interface InitialState {
