@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
 import {
   Box,
-  Typography,
   Button,
+  Grid,
+  Typography,
   useMediaQuery,
   useTheme,
-  Grid,
 } from "@mui/material";
-import Input from "../../components/login/Input";
-import { EyeIcon, EyeSlash } from "../../assets";
-import { useLocation, useNavigate } from "react-router-dom";
-import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
-import { AddAccountInterface } from "../../interface/addAccount";
 import { useFormik } from "formik";
-import { useSelector } from "react-redux";
-import { addUserValidation } from "../../utils/Validations";
-import { AppDispatch, RootState } from "../../store/store";
-import { addUser } from "../../store/actions/user/userAction";
-import { useDispatch } from "react-redux";
-import Loader from "../../components/Loader";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { EyeIcon, EyeSlash } from "../../assets";
+import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
+import Loader from "../../components/Loader";
+import Input from "../../components/login/Input";
+import { AddAccountInterface } from "../../interface/addAccount";
+import { AppDispatch, RootState } from "../../store/store";
+import { addUserValidation } from "../../utils/Validations";
 
 const AccountTypes = [
   { value: "fairGameAdmin", label: "Fairgame Admin" },
@@ -365,8 +363,10 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <div>
+                <Box sx={{ mt: -1 }}>
                   <SelectField
+                    containerStyle={containerStyles}
+                    titleStyle={titleStyles}
                     id="roleName"
                     name="roleName"
                     label={"Account Type*"}
@@ -382,7 +382,7 @@ const AddAccount = () => {
                     touched={touched.roleName}
                     error={errors.roleName}
                   />
-                </div>
+                </Box>
                 {formik.values.roleName.label === "Expert" && (
                   <>
                     <Box m={2}>
@@ -522,6 +522,8 @@ const AddAccount = () => {
                     }}
                   >
                     <SelectField
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
                       id="matchCommissionType"
                       name="matchCommissionType"
                       label={"Match Commission Type"}
@@ -545,6 +547,8 @@ const AddAccount = () => {
                       formik.values.matchCommissionType.label !== "0.00" && (
                         <>
                           <SelectField
+                            containerStyle={containerStyles}
+                            titleStyle={titleStyles}
                             id={"matchCommission"}
                             name={"matchCommission"}
                             label={"Match Commission (%)*"}
@@ -567,6 +571,8 @@ const AddAccount = () => {
                       )}
 
                     <SelectField
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
                       id={"sessionCommission"}
                       name={"sessionCommission"}
                       label={"Session Commission (%)*"}
