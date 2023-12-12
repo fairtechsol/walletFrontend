@@ -28,7 +28,6 @@ const AccountTypes = [
   { value: "admin", label: "Admin" },
   { value: "superMaster", label: "Super Master" },
   { value: "master", label: "Master" },
-  { value: "expert", label: "Expert" },
   { value: "user", label: "User" },
 ];
 
@@ -75,10 +74,11 @@ const formDataSchema = {
 
 const AddAccount = () => {
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
   const { userRole } = useSelector((state: RootState) => state.auth);
 
@@ -98,8 +98,6 @@ const AddAccount = () => {
     borderRadius: "5px",
     border: "1px solid #DEDEDE",
   };
-
-  const { loading } = useSelector((state: RootState) => state.user);
 
   const formik = useFormik({
     initialValues: formDataSchema,
@@ -195,6 +193,7 @@ const AddAccount = () => {
 
   const getUsersDetailById = async (id: string) => {
     try {
+      setLoading(true);
       const resp = await service.get(`/user/profile?userId=${id}`);
       if (resp) {
         const childUserDetail = resp?.data[0][0];
@@ -232,10 +231,18 @@ const AddAccount = () => {
           });
         }
       }
+      setLoading(false);
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (userRole === "fairGameAdmin") {
+      AccountTypes.push({ value: "expert", label: "Expert" });
+    }
+  }, [userRole]);
 
   useEffect(() => {
     try {
@@ -419,7 +426,7 @@ const AddAccount = () => {
                     onChange={formik.handleChange}
                   />
                 </div>
-                {userRole === "superUrlAdmin" && (
+                {userRole === "fairGameAdmin" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}

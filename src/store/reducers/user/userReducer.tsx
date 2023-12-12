@@ -126,7 +126,6 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action?.error?.message;
     })
-
     .addCase(setLockUnlockUser.pending, (state) => {
       state.loading = true;
       state.error = null;
