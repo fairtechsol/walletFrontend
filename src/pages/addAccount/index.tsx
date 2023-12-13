@@ -22,13 +22,13 @@ import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
 
 const AccountTypes = [
-  { value: "fairGameAdmin", label: "Fairgame Admin" },
-  { value: "superUrlAdmin", label: "URL Super Admin" },
-  { value: "superAdmin", label: "Super Admin" },
-  { value: "admin", label: "Admin" },
-  { value: "superMaster", label: "Super Master" },
-  { value: "master", label: "Master" },
-  { value: "user", label: "User" },
+  { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
+  { value: "superUrlAdmin", label: "URL Super Admin", level: 2 },
+  { value: "superAdmin", label: "Super Admin", level: 3 },
+  { value: "admin", label: "Admin", level: 4 },
+  { value: "superMaster", label: "Super Master", level: 5 },
+  { value: "master", label: "Master", level: 6 },
+  { value: "user", label: "User", level: 8 },
 ];
 
 const MatchCommissionTypes = [
@@ -82,6 +82,16 @@ const AddAccount = () => {
   const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
   const { userRole } = useSelector((state: RootState) => state.auth);
 
+  const [typeToShow, setTypeToShow] = useState([
+    "Select account type",
+    "Fairgame Admin",
+    "Super Admin",
+    "Admin",
+    "Super Master",
+    "Master",
+    "User",
+  ]);
+
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
   };
@@ -116,7 +126,20 @@ const AddAccount = () => {
         navigate("/wallet/list_of_clients");
       } else {
         let payload: any;
-        if (values.roleName.value == "fairGameAdmin") {
+        if (values.roleName.value == "expert") {
+          payload = {
+            userName: values.userName,
+            fullName: values.fullName,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            phoneNumber: JSON.stringify(values.phoneNumber),
+            city: values.city,
+            roleName: values.roleName.value,
+            myPartnership: values.myPartnership,
+            creditRefrence: values.creditRefrence,
+            exposureLimit: values.exposureLimit,
+          };
+        } else {
           payload = {
             userName: values.userName,
             fullName: values.fullName,
@@ -131,22 +154,9 @@ const AddAccount = () => {
             maxBetLimit: values.maxBetLimit,
             minBetLimit: values.minBetLimit,
           };
-        } else if (values.roleName.value == "expert") {
-          payload = {
-            userName: values.userName,
-            fullName: values.fullName,
-            password: values.password,
-            confirmPassword: values.confirmPassword,
-            phoneNumber: JSON.stringify(values.phoneNumber),
-            city: values.city,
-            roleName: values.roleName.value,
-            myPartnership: values.myPartnership,
-            creditRefrence: values.creditRefrence,
-            exposureLimit: values.exposureLimit,
-          };
+          dispatch(addUser(payload));
+          navigate("/wallet/list_of_clients");
         }
-        dispatch(addUser(payload));
-        navigate("/wallet/list_of_clients");
       }
     },
   });
@@ -238,10 +248,26 @@ const AddAccount = () => {
     }
   };
 
-  useEffect(() => {
+  const setTypeForAccountType = () => {
+    const typo =
+      userRole === "fairGameWallet"
+        ? AccountTypes
+        : AccountTypes?.filter((type: any) => {
+            const roleLevel = AccountTypes?.find(
+              (t: any) => t?.role === userRole
+            )?.level;
+            return roleLevel && type?.level > roleLevel;
+          });
+
     if (userRole === "fairGameAdmin") {
-      AccountTypes.push({ value: "expert", label: "Expert" });
+      typo.push({ value: "expert", label: "Expert", level: 7 });
     }
+
+    setTypeToShow(typo?.map((v: any) => v.role));
+  };
+
+  useEffect(() => {
+    setTypeForAccountType();
   }, [userRole]);
 
   useEffect(() => {
@@ -464,7 +490,7 @@ const AddAccount = () => {
                     id="roleName"
                     name="roleName"
                     label={"Account Type*"}
-                    options={AccountTypes}
+                    options={typeToShow}
                     onChange={(AccountTypes: any) => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}

@@ -32,6 +32,6 @@ export interface PaginationInterface {
   currentLimit?: any;
   currentPage: string;
   pages: string | number;
-  callPage: (value: any) => void;
+  setCurrentPage: (value: any) => void;
   className?: any;
 }

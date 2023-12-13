@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { PaginationInterface } from "../../interface/common";
 
 const Pagination = (props: PaginationInterface) => {
-  const { currentPage, pages, callPage } = props;
+  const { currentPage, pages, setCurrentPage } = props;
   return (
     <Box
       sx={{
@@ -18,7 +18,7 @@ const Pagination = (props: PaginationInterface) => {
       <Typography
         sx={{ fontSize: { xs: "12px", lg: "14px" }, fontWeight: "600" }}
       >
-        Showing 1 to {pages}
+        Showing {currentPage} to {pages}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
@@ -33,7 +33,7 @@ const Pagination = (props: PaginationInterface) => {
             borderRadius: "5px",
           }}
           onClick={() => {
-            callPage(
+            setCurrentPage(
               parseInt(currentPage) - 1 === 0 ? 1 : parseInt(currentPage) - 1
             );
           }}
@@ -80,7 +80,7 @@ const Pagination = (props: PaginationInterface) => {
             alignItems: "center",
           }}
           onClick={() => {
-            callPage(
+            setCurrentPage(
               parseInt(currentPage) === pages
                 ? pages
                 : parseInt(currentPage) + 1

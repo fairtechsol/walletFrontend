@@ -4,7 +4,7 @@ import StyledImage from "../Common/StyledImages";
 import { Box } from "@mui/material";
 
 const HeaderRow = (props: any) => {
-  const { handleExport } = props;
+  const { handleExport, getUserList } = props;
   return (
     <Box
       display={"flex"}
@@ -31,7 +31,7 @@ const HeaderRow = (props: any) => {
           <StyledImage
             src={Excel}
             sx={{ height: "25px" }}
-            onClick={() => handleExport("xlsx")}
+            onClick={() => handleExport("excel")}
           />
         </Box>
         <Box
@@ -57,7 +57,7 @@ const HeaderRow = (props: any) => {
         placeholder={"Search User..."}
         show={true}
         // setPageCount={setPageCount}
-        // getListOfUser={getListOfUser}
+        getUserList={getUserList}
       />
     </Box>
   );

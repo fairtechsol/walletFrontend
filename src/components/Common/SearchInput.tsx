@@ -2,6 +2,7 @@ import { TextField, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import StyledImage from "./StyledImages";
 import { SEARCH, Search } from "../../assets";
+import { debounce } from "lodash";
 
 const SearchInput = (props: any) => {
   const {
@@ -14,24 +15,23 @@ const SearchInput = (props: any) => {
     width,
     searchContainerStyle,
     onChange,
-    getListOfUser,
+    getUserList,
   } = props;
 
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const handleInputChange = async (event: any) => {
+  const handleInputChange = debounce(async (event: any) => {
     const value = event.target.value;
-    // setSearchValue(value);
     if (onChange && typeof onChange === "function") {
       onChange(value);
     }
     try {
-      getListOfUser(value);
+      getUserList(value);
     } catch (e) {
       console.log(e);
     }
-  };
+  }, 500);
 
   return (
     <>
@@ -68,7 +68,6 @@ const SearchInput = (props: any) => {
           <TextField
             variant="standard"
             placeholder={placeholder}
-            // value={searchValue}
             onChange={handleInputChange}
             InputProps={{
               disableUnderline: true,
@@ -93,7 +92,6 @@ const SearchInput = (props: any) => {
           <TextField
             variant="standard"
             placeholder={placeholder}
-            // value={searchValue}
             onChange={handleInputChange}
             InputProps={{
               disableUnderline: true,
