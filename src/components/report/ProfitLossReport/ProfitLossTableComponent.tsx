@@ -55,7 +55,7 @@ const ProfitLossTableComponent = (props: any) => {
           getListOfUser={(event: any) => handleReport(event)}
           currentPage={currentPage}
           pages={pageCount}
-          callPage={() => {}}
+          setCurrentPage={() => {}}
         />
       )}
     </Box>

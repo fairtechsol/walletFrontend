@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import service from "../../../service";
+import { ApiConstants } from "../../../utils/Constants";
 
 interface ChangePassword {
   oldPassword: string;
@@ -28,7 +29,10 @@ export const changePassword = createAsyncThunk<any, ChangePassword>(
   "user/changePassword",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post("/user/changePassword", requestData);
+      const resp = await service.post(
+        `/${ApiConstants.CHANGEPASSWORD}`,
+        requestData
+      );
       if (resp) {
         console.log(resp.data, "data");
       }

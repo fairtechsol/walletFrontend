@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import service from "../../../service";
+import { ApiConstants } from "../../../utils/Constants";
 
 interface LoginData {
   userName: string;
@@ -12,7 +13,10 @@ export const login = createAsyncThunk<any, LoginData>(
   "auth/login",
   async (requestData, thunkApi) => {
     try {
-      const { data } = await service.post("/auth/login", requestData);
+      const { data } = await service.post(
+        `/${ApiConstants.LOGIN}`,
+        requestData
+      );
       const { token } = data;
       localStorage.setItem("userToken", token);
       return data;
@@ -25,7 +29,7 @@ export const login = createAsyncThunk<any, LoginData>(
 
 export const logout = createAsyncThunk<any>("auth/logout", async () => {
   try {
-    const response = await service.post("/auth/logout");
+    const response = await service.post(`/${ApiConstants.LOGOUT}`);
     localStorage.clear();
     window.location.replace("/login");
     return response;

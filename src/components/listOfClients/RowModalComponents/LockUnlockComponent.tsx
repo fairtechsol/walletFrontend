@@ -6,9 +6,9 @@ import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLockUnlockUser } from "../../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../../store/store";
+import { AppDispatch } from "../../../store/store";
 
 const initialValues: any = {
   betBlock: false,
@@ -16,13 +16,14 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
-const defaultLockUnlockObj = {
-  all_blocked: false,
-  bet_blocked: false,
-};
-
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element } = props;
+  const { setSelected, element, walletAccountDetail } = props;
+
+  const defaultLockUnlockObj = {
+    all_blocked: element?.userBlock ?? walletAccountDetail?.userBlock,
+    bet_blocked: element?.betBlock ?? walletAccountDetail?.betBlock,
+  };
+
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [showPass, setShowPass] = useState(false);
 
@@ -32,8 +33,13 @@ const LockUnlockComponent = (props: any) => {
     initialValues: initialValues,
     // validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
+      const id = element?.userId
+        ? element?.userId
+        : walletAccountDetail?.id
+        ? walletAccountDetail?.id
+        : "";
       const payload = {
-        userId: element.userId,
+        userId: id,
         betBlock: lockUnlockObj.bet_blocked,
         userBlock: lockUnlockObj.all_blocked,
         transPassword: values.transactionPassword,
@@ -42,9 +48,7 @@ const LockUnlockComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
-
-  const { loading } = useSelector((state: RootState) => state.user);
+  const { handleSubmit } = formik;
 
   // const handleLockSubmit = (e: any) => {
   //   e.preventDefault();

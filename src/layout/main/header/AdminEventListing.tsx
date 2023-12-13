@@ -10,29 +10,47 @@ import {
 } from "../../../assets";
 import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+
+const data = [
+  { id: 1, title: "INPLAY", image: Play, url: "live_market" },
+  { id: 2, title: "Add Account", image: ADDACCOUNT, url: "add_account" },
+  { id: 3, title: "Client list", image: TEAM, url: "list_of_clients" },
+
+  { id: 4, title: "Analysis", image: TREND, url: "market_analysis" },
+  {
+    id: 5,
+    title: "Reports",
+    image: CHECKLIST,
+    url: "reports",
+  },
+  { id: 6, title: "My Account", image: MYACCOUNT, url: "my-account" },
+];
 
 const AdminEventListing = () => {
-  const data = [
-    { id: 3, title: "INPLAY", image: Play, url: "live_market" },
-    { id: 1, title: "Add Account", image: ADDACCOUNT, url: "add_account" },
-    { id: 2, title: "Client list", image: TEAM, url: "list_of_clients" },
+  const { userDetail } = useSelector((state: RootState) => state.user);
+  const [newData, setNewData] = useState<any>(data);
 
-    { id: 4, title: "Analysis", image: TREND, url: "market_analysis" },
-    {
-      id: 5,
-      title: "Reports",
-      image: CHECKLIST,
-      url: "reports",
-    },
-    {
-      id: 5,
-      title: "Wallet",
-      image: WALLET,
-      url: "walletSettings",
-    },
-
-    { id: 6, title: "My Account", image: MYACCOUNT, url: "my-account" },
-  ];
+  useEffect(() => {
+    if (userDetail?.roleName === "fairGameWallet") {
+      setNewData((prev: any) => {
+        const secondLastIndex = prev.length - 1;
+        const newData = [...prev];
+        const body = {
+          id: 7,
+          title: "wallet",
+          image: WALLET,
+          url: "walletsettings",
+        };
+        if (prev?.id !== body?.id) {
+          newData.splice(secondLastIndex, 0, body);
+        }
+        return newData;
+      });
+    }
+  }, [userDetail]);
 
   return (
     <Box
@@ -49,7 +67,7 @@ const AdminEventListing = () => {
         },
       ]}
     >
-      {data?.map((i: any, idx: any) => {
+      {newData?.map((i: any, idx: any) => {
         return (
           <NavLink
             key={idx}

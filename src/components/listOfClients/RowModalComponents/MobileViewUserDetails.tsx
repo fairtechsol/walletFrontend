@@ -5,10 +5,8 @@ import BoxButton from "./BoxButton";
 
 const MobileViewUserDetails = (props: any) => {
   const {
-    handleAdminPass,
-    handleChange,
-    handleReview,
-    amount,
+    value,
+    onChange,
     profit_loss,
     setShowPass,
     showPass,
@@ -439,9 +437,10 @@ const MobileViewUserDetails = (props: any) => {
           >
             <TextField
               required={true}
-              value={amount}
-              //   onKeyDown={handleKeyDown}
-              onChange={handleChange}
+              id="amount"
+              name="amount"
+              value={value.amount}
+              onChange={onChange}
               variant="standard"
               InputProps={{
                 placeholder: "Type Amount...",
@@ -510,7 +509,10 @@ const MobileViewUserDetails = (props: any) => {
             }}
           >
             <TextField
-              onChange={handleReview}
+              id="remark"
+              name="remark"
+              value={value.remark}
+              onChange={onChange}
               rows={4}
               sx={{ width: "100%", minHeight: "40px" }}
               multiline={true}
@@ -580,7 +582,10 @@ const MobileViewUserDetails = (props: any) => {
           >
             <TextField
               required={true}
-              onChange={handleAdminPass}
+              id="transactionPassword"
+              name="transactionPassword"
+              value={value.transactionPassword}
+              onChange={onChange}
               sx={{ width: "100%", height: "45px" }}
               variant="standard"
               InputProps={{

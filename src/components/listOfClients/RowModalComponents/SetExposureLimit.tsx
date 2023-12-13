@@ -5,9 +5,9 @@ import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setExposureLimit } from "../../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../../store/store";
+import { AppDispatch } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 
 const initialValues: any = {
@@ -36,13 +36,8 @@ const SetExposureLimit = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit } = formik;
 
-  const { loading } = useSelector((state: RootState) => state.user);
-
-  // const handleExposerSubmit = (e: any) => {
-  //   e.preventDefault();
-  // };
   return (
     <form onSubmit={handleSubmit}>
       <Box
