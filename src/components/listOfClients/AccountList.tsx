@@ -1,29 +1,61 @@
-import { Box, useMediaQuery } from "@mui/material";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Box, TextField, Typography, useMediaQuery } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { AccountListDataInterface } from "../../interface/listOfClients";
-import { getUsers } from "../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../store/store";
+import { RootState } from "../../store/store";
 import Pagination from "../Common/Pagination";
 import Loader from "../Loader";
 import AccountListRow from "./AccountListRow";
 import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
+import service from "../../service";
+import { saveAs } from "file-saver";
 
 const AccountList = () => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
-  const dispatch: AppDispatch = useDispatch();
+  const [userList, setUserList] = useState<any>([]);
   const loading = false;
-  const pageCount = "10";
+  const [currentPage, setCurrentPage] = useState("1");
+  const [pageCount, setPageCount] = useState(1);
 
-  const { userList, userDetail } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { userDetail } = useSelector((state: RootState) => state.user);
+
+  const getUserList = async (username?: any) => {
+    try {
+      const resp = await service.get(
+        `/user/list?${`userName=${
+          username ? username : ""
+        }`}&offset=${currentPage}&limit=${"15"}`
+      );
+      if (resp) {
+        console.log(resp?.data);
+        setUserList(resp?.data?.list);
+        setPageCount(
+          Math.ceil(parseInt(resp?.data?.count ? resp.data?.count : 1) / 15)
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleExport = async (type: string) => {
+    let url = `/user/list?type=${type}`;
+    try {
+      const response = await service.get(url);
+      saveAs(
+        response.data,
+        userDetail?.userName ? userDetail?.userName : "file"
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    getUserList();
+  }, [currentPage]);
 
   return (
     <>
@@ -55,7 +87,7 @@ const AccountList = () => {
               }),
             ]}
           >
-            <HeaderRow />
+            <HeaderRow handleExport={handleExport} getUserList={getUserList} />
             <Box sx={{ overflowX: "auto" }}>
               <Box
                 sx={{
@@ -66,8 +98,23 @@ const AccountList = () => {
                 <Box>
                   <ListHeaderRow />
                   <SubHeaderListRow data={userDetail} />
-                  {userList &&
-                    userList?.list?.map(
+                  {userList.length === 0 && (
+                    <Box>
+                      <Typography
+                        sx={{
+                          color: "#000",
+                          textAlign: "center",
+                          fontSize: { lg: "16px", xs: "10px" },
+                          fontWeight: "600",
+                          margin: "1rem",
+                        }}
+                      >
+                        No Matching Records Found
+                      </Typography>
+                    </Box>
+                  )}
+                  {userList.length > 0 &&
+                    userList?.map(
                       (element: AccountListDataInterface, i: any) => {
                         if (i % 2 === 0) {
                           return (
@@ -106,7 +153,11 @@ const AccountList = () => {
               </Box>
             </Box>
           </Box>
-          <Pagination currentPage={"1"} pages={pageCount} callPage={() => {}} />
+          <Pagination
+            currentPage={currentPage}
+            pages={pageCount}
+            setCurrentPage={setCurrentPage}
+          />
         </>
       )}
     </>

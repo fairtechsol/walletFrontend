@@ -5,7 +5,6 @@ import {
   changePassword,
   changePasswordReset,
   updateUser,
-  getUsers,
   getUsersDetail,
   setCreditRefference,
   setExposureLimit,
@@ -18,7 +17,6 @@ interface InitialState {
   success: boolean;
   loading: boolean;
   error: any;
-  userList: any;
 }
 
 const initialState: InitialState = {
@@ -27,7 +25,6 @@ const initialState: InitialState = {
   success: false,
   loading: false,
   error: null,
-  userList: null,
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -64,19 +61,6 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.userDetail = action.payload;
     })
     .addCase(updateUser.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action?.error?.message;
-    })
-    .addCase(getUsers.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    })
-    .addCase(getUsers.fulfilled, (state, action) => {
-      state.success = true;
-      state.loading = false;
-      state.userList = action.payload;
-    })
-    .addCase(getUsers.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.error?.message;
     })

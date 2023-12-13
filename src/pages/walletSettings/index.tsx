@@ -1,14 +1,14 @@
 import ListItems from "../../components/walletSettings/ListItems";
 
 const Reports = () => {
-  const menutItems = [
-    { title: "Deposit", link: "/wallet/walletSettings/deposit" },
-    { title: "Withdraw", link: "/wallet/walletSettings/withdraw" },
-    {
-      title: "Change Credit Reference",
-      link: "/wallet/walletSettings/credit_reference",
-    },
-  ];
+  // const menutItems = [
+  //   { title: "Deposit", link: "/wallet/walletSettings/deposit" },
+  //   { title: "Withdraw", link: "/wallet/walletSettings/withdraw" },
+  //   {
+  //     title: "Change Credit Reference",
+  //     link: "/wallet/walletSettings/credit_reference",
+  //   },
+  // ];
 
   const walletAccountDetail: any = {
     id: "0fcef171-3e9c-4b97-bba2-7c2e7bca112f",
@@ -52,7 +52,7 @@ const Reports = () => {
   return (
     <ListItems
       title={"Wallet"}
-      menutItems1={menutItems}
+      // menutItems1={menutItems}
       walletAccountDetail={walletAccountDetail}
     />
   );

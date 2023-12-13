@@ -23,7 +23,7 @@ const initialValues: any = {
   amount: "",
   transactionPassword: "",
   remark: "",
-  transactionType: "add",
+  transactionType: "withDraw",
 };
 
 const WithdrawComponent = (props: any) => {
@@ -44,7 +44,7 @@ const WithdrawComponent = (props: any) => {
   const [initialBalance] = useState("100");
   const defaultWithDrawObj = {
     amount: "",
-    trans_type: "withdraw",
+    trans_type: "withDraw",
     adminTransPassword: "",
     remark: "",
   };
@@ -61,7 +61,7 @@ const WithdrawComponent = (props: any) => {
         amount: values.amount,
         transactionPassword: values.transactionPassword,
         remark: values.remark,
-        transactionType: "add",
+        transactionType: "withDraw",
       };
       dispatch(changeAmmountUser(payload));
     },
@@ -70,13 +70,6 @@ const WithdrawComponent = (props: any) => {
   const { handleSubmit, touched, errors } = formik;
 
   const { loading } = useSelector((state: RootState) => state.user);
-
-  const defaultDepositObj = {
-    amount: "",
-    trans_type: "add",
-    adminTransPassword: "",
-    remark: "",
-  };
 
   const handleWithdrawAmount = (e: any) => {
     e.preventDefault();

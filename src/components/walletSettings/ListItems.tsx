@@ -18,7 +18,7 @@ import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockC
 import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
 
 const ListItems = (props: any) => {
-  const { menutItems1, title, walletAccountDetail } = props;
+  const { title, walletAccountDetail } = props;
   const navigate = useNavigate();
   const [selected, setSelected] = useState<any>(null);
   const [settlementUserModal, setSettlementUserModal] = useState(false);
@@ -90,7 +90,7 @@ const ListItems = (props: any) => {
             borderRadius: "5px",
           }}
         >
-          {menutItems1.map((x: any, index: any) => (
+          {/* {menutItems1.map((x: any, index: any) => (
             <MenuItem
               key={index}
               dense={true}
@@ -101,7 +101,7 @@ const ListItems = (props: any) => {
             >
               {x.title}
             </MenuItem>
-          ))}
+          ))} */}
           <Box
             sx={{
               background: "#F8C851",
