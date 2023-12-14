@@ -25,15 +25,15 @@ import {
   updateUser,
 } from "../../store/actions/user/userAction";
 
-const AccountTypes = [
-  { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
-  { value: "superUrlAdmin", label: "URL Super Admin", level: 2 },
-  { value: "superAdmin", label: "Super Admin", level: 3 },
-  { value: "admin", label: "Admin", level: 4 },
-  { value: "superMaster", label: "Super Master", level: 5 },
-  { value: "master", label: "Master", level: 6 },
-  { value: "user", label: "User", level: 8 },
-];
+// const AccountTypes = [
+//   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
+//   { value: "superUrlAdmin", label: "URL Super Admin", level: 2 },
+//   { value: "superAdmin", label: "Super Admin", level: 3 },
+//   { value: "admin", label: "Admin", level: 4 },
+//   { value: "superMaster", label: "Super Master", level: 5 },
+//   { value: "master", label: "Master", level: 6 },
+//   { value: "user", label: "User", level: 8 },
+// ];
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -84,19 +84,11 @@ const AddAccount = () => {
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
-  const { userRole } = useSelector((state: RootState) => state.auth);
+  const { userDetail } = useSelector((state: RootState) => state.user.profile);
 
   const { success } = useSelector((state: RootState) => state.user.userUpdate);
 
-  const [typeToShow, setTypeToShow] = useState([
-    "Select account type",
-    "Fairgame Admin",
-    "Super Admin",
-    "Admin",
-    "Super Master",
-    "Master",
-    "User",
-  ]);
+  const [AccountTypes, setAccountTypes] = useState([{ value: "", label: "" }]);
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -252,26 +244,21 @@ const AddAccount = () => {
   };
 
   const setTypeForAccountType = () => {
-    const typo =
-      userRole === "fairGameWallet"
-        ? AccountTypes
-        : AccountTypes?.filter((type: any) => {
-            const roleLevel = AccountTypes?.find(
-              (t: any) => t?.role === userRole
-            )?.level;
-            return roleLevel && type?.level > roleLevel;
-          });
-
-    if (userRole === "fairGameAdmin") {
-      typo.push({ value: "expert", label: "Expert", level: 7 });
+    if (userDetail?.roleName === "fairGameWallet") {
+      setAccountTypes([{ value: "fairGameAdmin", label: "Fairgame Admin" }]);
     }
 
-    setTypeToShow(typo?.map((v: any) => v.role));
+    if (userDetail?.roleName === "fairGameAdmin") {
+      setAccountTypes([
+        { value: "superUrlAdmin", label: "URL Super Admin" },
+        { value: "expert", label: "Expert" },
+      ]);
+    }
   };
 
   useEffect(() => {
     setTypeForAccountType();
-  }, [userRole]);
+  }, [userDetail, state?.id, success]);
 
   useEffect(() => {
     try {
@@ -459,7 +446,7 @@ const AddAccount = () => {
                     onChange={formik.handleChange}
                   />
                 </div>
-                {userRole === "fairGameAdmin" && (
+                {formik?.values?.roleName?.value === "superUrlAdmin" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}

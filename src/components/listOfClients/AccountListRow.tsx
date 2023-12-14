@@ -154,20 +154,20 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.profitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(element?.userBal?.myProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.profitLoss) >= 0 ? (
+            {Number(element?.userBal?.myProfitLoss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.profitLoss}
+                {element?.userBal?.myProfitLoss}
               </>
             ) : (
-              element?.profitLoss
+              element?.userBal?.myProfitLoss
             )}
           </Typography>
           <StyledImage
@@ -191,20 +191,20 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.myProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(element?.percentProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.myProfitLoss) >= 0 ? (
+            {Number(element?.percentProfitLoss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.myProfitLoss}
+                {element?.percentProfitLoss}
               </>
             ) : (
-              element?.myProfitLoss
+              element?.percentProfitLoss
             )}
           </Typography>
           <StyledImage
@@ -245,7 +245,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element?.exposure}</Typography>
+          <Typography variant="h5">{element?.userBal?.exposure}</Typography>
         </Box>
         <Box
           sx={{
