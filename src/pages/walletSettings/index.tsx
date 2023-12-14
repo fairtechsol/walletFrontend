@@ -4,7 +4,7 @@ import { RootState } from "../../store/store";
 
 const WalletSettings = () => {
 
-  const { userDetail } = useSelector((state: RootState) => state.user);
+  const { userDetail } = useSelector((state: RootState) => state.user.profile);
 
   return (
     <ListItems

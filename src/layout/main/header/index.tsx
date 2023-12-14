@@ -1,5 +1,5 @@
 import { Box, AppBar, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Draw, FgLogo } from "../../../assets/index";
 import { memo } from "react";
 import StyledImage from "../../../components/Common/StyledImages";
@@ -7,11 +7,20 @@ import BoxProfile from "./BoxProfile";
 import AdminEventListing from "./AdminEventListing";
 import "./index.css";
 import MobileSideBar from "./MobileSideBar";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { profileReset } from "../../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
 
-const Header = ({ userDetail }: any) => {
+const Header = () => {
   const theme = useTheme();
+  const dispatch: AppDispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+
+  const { userDetail, success } = useSelector(
+    (state: RootState) => state.user.profile
+  );
 
   const currentSelected = 1;
 
@@ -114,6 +123,13 @@ const Header = ({ userDetail }: any) => {
       },
     },
   };
+
+  useEffect(() => {
+    if (success) {
+      dispatch(profileReset());
+    }
+  }, [success]);
+
   return (
     <>
       <AppBar position="fixed" sx={classes.AppBarVal}>

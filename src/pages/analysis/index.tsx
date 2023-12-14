@@ -14,7 +14,6 @@ const Analysis = () => {
   const [selected, setSelected] = useState([]);
 
   const handleClick = (value: string) => {
-    console.log(value);
     setMode("1");
   };
 

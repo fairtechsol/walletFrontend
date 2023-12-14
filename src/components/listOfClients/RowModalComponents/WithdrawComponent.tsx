@@ -70,7 +70,7 @@ const WithdrawComponent = (props: any) => {
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { loading } = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.user.userList);
 
   return (
     <>

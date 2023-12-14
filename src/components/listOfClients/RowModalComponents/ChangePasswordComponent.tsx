@@ -25,9 +25,6 @@ const initialValues: any = {
 const ChangePasswordComponent = (props: any) => {
   const { setSelected, element } = props;
   const [showPass, setShowPass] = useState(false);
-  // const handleChangePassword = (e: any) => {
-  //   e.preventDefault();
-  // };
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -46,7 +43,7 @@ const ChangePasswordComponent = (props: any) => {
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { loading } = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.user.userList);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -105,13 +102,6 @@ const ChangePasswordComponent = (props: any) => {
                   name="newPassword"
                   value={formik.values.newPassword}
                   onChange={formik.handleChange}
-                  //   onChange={(e) => {
-                  //     setChangePasswordObj({
-                  //       ...changePasswordObj,
-                  //       password: e.target.value,
-                  //       userId: userModal.id,
-                  //     });
-                  //   }}
                   sx={{ width: "100%", height: "45px", color: "white" }}
                   variant="standard"
                   InputProps={{
@@ -178,11 +168,6 @@ const ChangePasswordComponent = (props: any) => {
               />
             </Box>
           </Box>
-          <p style={{ color: "#fa1e1e" }}>
-            {/* {changePasswordObj.password &&
-              onChangeKeyCheck(changePasswordObj.password) !== false &&
-              onChangeKeyCheck(changePasswordObj.password)} */}
-          </p>
           <Box
             sx={{
               display: "flex",
@@ -230,12 +215,6 @@ const ChangePasswordComponent = (props: any) => {
                   name="transactionPassword"
                   value={formik.values.transactionPassword}
                   onChange={formik.handleChange}
-                  //   onChange={(e) => {
-                  //     setChangePasswordObj({
-                  //       ...changePasswordObj,
-                  //       adminTransPassword: e.target.value,
-                  //     });
-                  //   }}
                   sx={{ width: "100%", height: "45px" }}
                   variant="standard"
                   InputProps={{
@@ -291,8 +270,6 @@ const ChangePasswordComponent = (props: any) => {
               />
             </Box>
           </Box>
-
-          {/* cancel submit buttons  */}
 
           <Box
             sx={{

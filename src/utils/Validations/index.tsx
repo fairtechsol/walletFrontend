@@ -34,16 +34,16 @@ export const changePasswordSchema = Yup.object({
 
 export const addUserValidation = Yup.object({
   userName: Yup.string().required("Username is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters long")
-    .matches(
-      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).*$/,
-      "Password must contain at least one uppercase letter, one number, and one special character (@ $ ! % * ? &)"
-    ),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), ""], "Passwords must match")
-    .required("Confirm Password is required"),
+  // password: Yup.string()
+  //   .required("Password is required")
+  //   .min(8, "Password must be at least 8 characters long")
+  //   .matches(
+  //     /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).*$/,
+  //     "Password must contain at least one uppercase letter, one number, and one special character (@ $ ! % * ? &)"
+  //   ),
+  // confirmPassword: Yup.string()
+  //   .oneOf([Yup.ref("password"), ""], "Passwords must match")
+  //   .required("Confirm Password is required"),
   // fullName: Yup.string().required("Full Name is required"),
   // city: Yup.string().required("City is required"),
   // number: Yup.string().required("Number is required"),

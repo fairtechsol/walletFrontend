@@ -20,7 +20,7 @@ const AccountList = () => {
   const [currentPage, setCurrentPage] = useState("1");
   const [pageCount, setPageCount] = useState(1);
 
-  const { userDetail } = useSelector((state: RootState) => state.user);
+  const { userDetail } = useSelector((state: RootState) => state.user.profile);
 
   const getUserList = async (username?: any) => {
     try {
@@ -30,7 +30,6 @@ const AccountList = () => {
         }`}&offset=${currentPage}&limit=${Constants.pageLimit}`
       );
       if (resp) {
-        console.log(resp?.data);
         setUserList(resp?.data?.list);
         setPageCount(
           Math.ceil(
@@ -47,7 +46,7 @@ const AccountList = () => {
   const handleExport = async (type: string) => {
     let url = `/user/list?type=${type}`;
     try {
-      const response = await service.get(url);
+      const response = await service.get(url, { responseType: "blob" });
       saveAs(
         response.data,
         userDetail?.userName ? userDetail?.userName : "file"
@@ -102,7 +101,7 @@ const AccountList = () => {
                 <Box>
                   <ListHeaderRow />
                   <SubHeaderListRow data={userDetail} />
-                  {userList.length === 0 && (
+                  {userList?.length === 0 && (
                     <Box>
                       <Typography
                         sx={{
@@ -117,7 +116,7 @@ const AccountList = () => {
                       </Typography>
                     </Box>
                   )}
-                  {userList.length > 0 &&
+                  {userList?.length > 0 &&
                     userList?.map(
                       (element: AccountListDataInterface, i: any) => {
                         if (i % 2 === 0) {

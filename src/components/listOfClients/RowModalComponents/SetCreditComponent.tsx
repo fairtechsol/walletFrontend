@@ -48,14 +48,13 @@ const SetCreditComponent = (props: any) => {
         transactionPassword: values.transactionPassword,
         remark: values.remark,
       };
-      console.log(values, "aaaaa");
       dispatch(setCreditRefference(payload));
     },
   });
 
   const { handleSubmit } = formik;
 
-  const { loading } = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.user.userList);
 
   return (
     <form onSubmit={handleSubmit}>

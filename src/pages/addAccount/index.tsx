@@ -17,9 +17,13 @@ import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
 import { AddAccountInterface } from "../../interface/addAccount";
 import service from "../../service";
-import { addUser, updateUser } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
+import {
+  addUser,
+  updateReset,
+  updateUser,
+} from "../../store/actions/user/userAction";
 
 const AccountTypes = [
   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -82,6 +86,8 @@ const AddAccount = () => {
   const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
   const { userRole } = useSelector((state: RootState) => state.auth);
 
+  const { success } = useSelector((state: RootState) => state.user.userUpdate);
+
   const [typeToShow, setTypeToShow] = useState([
     "Select account type",
     "Fairgame Admin",
@@ -113,7 +119,6 @@ const AddAccount = () => {
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
     onSubmit: (values: any) => {
-      navigate("/wallet/list_of_clients");
       if (state?.id) {
         dispatch(
           updateUser({
@@ -123,7 +128,6 @@ const AddAccount = () => {
             id: state?.id,
           })
         );
-        navigate("/wallet/list_of_clients");
       } else {
         let payload: any;
         if (values.roleName.value == "expert") {
@@ -155,7 +159,6 @@ const AddAccount = () => {
             minBetLimit: values.minBetLimit,
           };
           dispatch(addUser(payload));
-          navigate("/wallet/list_of_clients");
         }
       }
     },
@@ -275,10 +278,14 @@ const AddAccount = () => {
       if (state?.id) {
         getUsersDetailById(state?.id);
       }
+      if (success) {
+        dispatch(updateReset());
+        navigate("/wallet/list_of_clients");
+      }
     } catch (e) {
       console.log(e);
     }
-  }, [state?.id]);
+  }, [state?.id, success]);
 
   return (
     <>
@@ -490,7 +497,7 @@ const AddAccount = () => {
                     id="roleName"
                     name="roleName"
                     label={"Account Type*"}
-                    options={typeToShow}
+                    options={AccountTypes}
                     onChange={(AccountTypes: any) => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}

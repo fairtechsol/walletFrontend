@@ -31,9 +31,8 @@ const Login = () => {
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { success, forceChangePassword, userRole } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { success, forceChangePassword, userRole, isTransPasswordCreated } =
+    useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (success) {
@@ -44,7 +43,7 @@ const Login = () => {
           JSON.stringify(forceChangePassword)
         );
         navigate("/change_password");
-      } else {
+      } else if (isTransPasswordCreated) {
         navigate("/wallet/list_of_clients");
       }
       dispatch(authReset());

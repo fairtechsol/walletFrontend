@@ -30,7 +30,7 @@ const data = [
 ];
 
 const AdminEventListing = () => {
-  const { userDetail } = useSelector((state: RootState) => state.user);
+  const { userDetail } = useSelector((state: RootState) => state.user.profile);
   const [newData, setNewData] = useState<any>(data);
 
   useEffect(() => {

@@ -70,10 +70,6 @@ const MainRoutes = {
       path: "change_password",
       element: <ChangePassword />,
     },
-    {
-      path: "*",
-      element: <Navigate to={"/wallet/list_of_clients"} replace />,
-    },
   ],
 };
 export default MainRoutes;

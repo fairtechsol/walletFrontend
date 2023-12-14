@@ -73,7 +73,7 @@ export const updateUser = createAsyncThunk<any, any>(
   }
 );
 
-export const getUsersDetail = createAsyncThunk("user/profile", async () => {
+export const getUsersProfile = createAsyncThunk("user/profile", async () => {
   try {
     const resp = await service.get(`/user/profile`);
     if (resp) {
@@ -167,4 +167,5 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
 );
 
 export const changePasswordReset = createAction("changePassword/reset");
-export const userDetailReset = createAction("userDetail/reset");
+export const profileReset = createAction("profile/reset");
+export const updateReset = createAction("update/reset");

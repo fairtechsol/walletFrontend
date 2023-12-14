@@ -5,6 +5,7 @@ const initialState = {
   success: false,
   loading: false,
   forceChangePassword: false,
+  isTransPasswordCreated: false,
   userRole: "",
 };
 
@@ -18,13 +19,12 @@ export const authReducer = createReducer(initialState, (builder) => {
       state.success = true;
       state.userRole = action.payload.roleName;
       state.forceChangePassword = action?.payload?.forceChangePassword;
+      state.isTransPasswordCreated = action?.payload?.isTransPasswordCreated;
     })
-    .addCase(login.rejected, (state, action) => {
-      console.log(action);
+    .addCase(login.rejected, (state) => {
       state.loading = false;
     })
     .addCase(authReset, (state) => {
-      // Reset the state to initial state
       return { ...state, success: false, forceChangePassword: false };
     });
 });

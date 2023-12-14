@@ -10,7 +10,7 @@ const MyAccount = () => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const { userDetail } = useSelector((state: RootState) => state.user);
+  const { userDetail } = useSelector((state: RootState) => state.user.profile);
 
   const [userBalanceDetails, setUserBalanceDetails] = useState<BalanceDetails>({
     userCreditReference: "0",

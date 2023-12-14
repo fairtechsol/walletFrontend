@@ -1,15 +1,12 @@
-import { useDispatch } from "react-redux";
 import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import Input from "../../components/login/Input";
 import { eye, eyeLock } from "../../assets";
 import { changePasswordSchema } from "../../utils/Validations";
 import { useFormik } from "formik";
-import {
-  changePassword,
-  changePasswordReset,
-} from "../../store/actions/user/userAction";
-import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
+import service from "../../service";
+import { ApiConstants } from "../../utils/Constants";
+import { toast } from "react-toastify";
 
 const initialValues: any = {
   oldPassword: "",
@@ -17,31 +14,37 @@ const initialValues: any = {
   confirmPassword: "",
 };
 
+const toastOptions = {
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+};
+
 const ChangePassword = (props: any) => {
   const { passLoader, width } = props;
-  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: changePasswordSchema,
-    onSubmit: (values: any) => {
-      dispatch(changePassword(values));
-      navigate("/wallet/list_of_clients");
-      dispatch(changePasswordReset());
+    onSubmit: async (values: any) => {
+      try {
+        const resp = await service.post(ApiConstants.CHANGEPASSWORD, values);
+        if (resp) {
+          if (resp?.data) {
+            toast.success(resp?.data?.transactionPassword, toastOptions);
+          }
+          navigate("/login");
+          localStorage.clear();
+        }
+      } catch (e: any) {
+        toast.error(e?.response?.data?.message);
+      }
     },
   });
 
   const { handleSubmit, touched, errors } = formik;
-
-  // useEffect(() => {
-  //   if (!localStorage.getItem("userToken")) {
-  //     if (success) {
-  //       dispatch(changePasswordReset());
-  //       navigate("/login");
-  //     }
-  //   }
-  // }, [success]);
 
   return (
     <form onSubmit={handleSubmit}>
