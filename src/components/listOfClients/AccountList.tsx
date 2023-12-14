@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AccountListDataInterface } from "../../interface/listOfClients";
@@ -11,6 +11,7 @@ import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 import service from "../../service";
 import { saveAs } from "file-saver";
+import { Constants } from "../../utils/Constants";
 
 const AccountList = () => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
@@ -26,13 +27,16 @@ const AccountList = () => {
       const resp = await service.get(
         `/user/list?${`userName=${
           username ? username : ""
-        }`}&offset=${currentPage}&limit=${"15"}`
+        }`}&offset=${currentPage}&limit=${Constants.pageLimit}`
       );
       if (resp) {
         console.log(resp?.data);
         setUserList(resp?.data?.list);
         setPageCount(
-          Math.ceil(parseInt(resp?.data?.count ? resp.data?.count : 1) / 15)
+          Math.ceil(
+            parseInt(resp?.data?.count ? resp.data?.count : 1) /
+              Constants.pageLimit
+          )
         );
       }
     } catch (e) {

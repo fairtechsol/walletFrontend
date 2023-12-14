@@ -18,7 +18,13 @@ const initialValues: any = {
 };
 
 const SetCreditComponent = (props: any) => {
-  const { handleKeyDown, backgroundColor, setSelected, element } = props;
+  const {
+    handleKeyDown,
+    backgroundColor,
+    setSelected,
+    element,
+    walletAccountDetail,
+  } = props;
   const [showPass, setShowPass] = useState(false);
 
   // const handleSubmit = (e: any) => {
@@ -31,8 +37,13 @@ const SetCreditComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
+      const id = element?.userId
+        ? element?.userId
+        : walletAccountDetail?.id
+        ? walletAccountDetail?.id
+        : "";
       const payload = {
-        userId: element.userId,
+        userId: id,
         amount: values.amount,
         transactionPassword: values.transactionPassword,
         remark: values.remark,
@@ -42,7 +53,7 @@ const SetCreditComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit } = formik;
 
   const { loading } = useSelector((state: RootState) => state.user);
 
@@ -192,9 +203,13 @@ const SetCreditComponent = (props: any) => {
           >
             <TextField
               rows={4}
+              name="remark"
+              id="remark"
               sx={{ width: "100%", minHeight: "40px" }}
               multiline={true}
               variant="standard"
+              value={formik.values.remark}
+              onChange={formik.handleChange}
               InputProps={{
                 placeholder: "Remark (Optional)",
                 disableUnderline: true,

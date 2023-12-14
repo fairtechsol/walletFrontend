@@ -1,10 +1,5 @@
 import {
   Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  MenuItem,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +16,6 @@ const ListItems = (props: any) => {
   const { title, walletAccountDetail } = props;
   const navigate = useNavigate();
   const [selected, setSelected] = useState<any>(null);
-  const [settlementUserModal, setSettlementUserModal] = useState(false);
   const classes = {
     Menusx: {
       marginTop: { xs: "15px", lg: "30px", md: "18px" },
@@ -90,18 +84,6 @@ const ListItems = (props: any) => {
             borderRadius: "5px",
           }}
         >
-          {/* {menutItems1.map((x: any, index: any) => (
-            <MenuItem
-              key={index}
-              dense={true}
-              sx={classes.MenuItemsx}
-              onClick={() => {
-                navigate(x.link);
-              }}
-            >
-              {x.title}
-            </MenuItem>
-          ))} */}
           <Box
             sx={{
               background: "#F8C851",
@@ -127,6 +109,7 @@ const ListItems = (props: any) => {
             >
               {selected == 0 && (
                 <DepositComponent
+                  walletAccountDetail={walletAccountDetail}
                   selected={selected == 0}
                   setSelected={() => {
                     setSelected(null);
@@ -137,6 +120,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 1 && (
                 <WithdrawComponent
+                  walletAccountDetail={walletAccountDetail}
                   selected={selected == 1}
                   setSelected={() => {
                     setSelected(null);
@@ -146,6 +130,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 2 && (
                 <SetCreditComponent
+                  walletAccountDetail={walletAccountDetail}
                   selected={selected == 2}
                   setSelected={() => {
                     setSelected(null);
@@ -215,7 +200,7 @@ const ListItems = (props: any) => {
                 title={"Withdraw"}
                 labelStyle={{}}
               />
-              <BoxButton
+              {/* <BoxButton
                 color={"#0B4F26"}
                 onClick={(e: any) => {
                   e?.preventDefault();
@@ -231,7 +216,7 @@ const ListItems = (props: any) => {
                   fontSize: { xs: "12px" },
                 }}
                 labelStyle={{}}
-              />
+              /> */}
               {/* <BoxButton
                   color={"#0B4F26"}
                   onClick={() => {
@@ -280,7 +265,7 @@ const ListItems = (props: any) => {
                   fontSize: { xs: "12px" },
                 }}
               />
-              <Dialog
+              {/* <Dialog
                 open={settlementUserModal}
                 onClose={() => setSettlementUserModal((prev) => !prev)}
                 aria-labelledby="alert-dialog-title"
@@ -299,7 +284,7 @@ const ListItems = (props: any) => {
                     Yes
                   </Button>
                 </DialogActions>
-              </Dialog>
+              </Dialog> */}
             </Box>
           )}
         </Box>

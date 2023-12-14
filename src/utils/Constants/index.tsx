@@ -1,4 +1,9 @@
+export const ApiConstants = {
+  LOGIN: "auth/login",
+  LOGOUT: "auth/logout",
+  CHANGEPASSWORD: "user/changePassword"
+};
+
 export const Constants = {
-    LOGIN: "auth/login",
-    
+  pageLimit: 15,
 };

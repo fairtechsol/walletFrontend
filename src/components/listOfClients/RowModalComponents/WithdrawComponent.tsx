@@ -28,6 +28,7 @@ const initialValues: any = {
 
 const WithdrawComponent = (props: any) => {
   const {
+    walletAccountDetail,
     element,
     handleKeyDown,
     backgroundColor,
@@ -41,14 +42,9 @@ const WithdrawComponent = (props: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const [initialBalance] = useState("100");
-  const defaultWithDrawObj = {
-    amount: "",
-    trans_type: "withDraw",
-    adminTransPassword: "",
-    remark: "",
-  };
-  const [withDrawObj, setWithDrawObj] = useState(defaultWithDrawObj);
+  const [initialBalance] = useState(
+    walletAccountDetail?.userBal?.currentBalance
+  );
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -56,8 +52,13 @@ const WithdrawComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
+      const id = element?.userId
+        ? element?.userId
+        : walletAccountDetail?.id
+        ? walletAccountDetail?.id
+        : "";
       const payload = {
-        userId: element.userId,
+        userId: id,
         amount: values.amount,
         transactionPassword: values.transactionPassword,
         remark: values.remark,
@@ -70,10 +71,6 @@ const WithdrawComponent = (props: any) => {
   const { handleSubmit, touched, errors } = formik;
 
   const { loading } = useSelector((state: RootState) => state.user);
-
-  const handleWithdrawAmount = (e: any) => {
-    e.preventDefault();
-  };
 
   return (
     <>
@@ -89,32 +86,20 @@ const WithdrawComponent = (props: any) => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <form onSubmit={handleWithdrawAmount}>
+          <form onSubmit={handleSubmit}>
             <MobileViewUserDetails
               elementToUDM={elementToUDM}
               userName={elementToUDM?.userName}
               title={"Withdraw Amount"}
               setSelected={setSelected}
               selected={selected}
-              handleAdminPass={(e: any) => {
-                setWithDrawObj({
-                  ...withDrawObj,
-                  adminTransPassword: e.target.value,
-                });
-              }}
-              // handleChange={handleChange}
-              handleReview={(e: any) => {
-                setWithDrawObj({ ...withDrawObj, remark: e.target.value });
-              }}
-              amount={withDrawObj.amount}
+              value={formik.values}
+              onChange={formik.handleChange}
               setShowPass={setShowPass}
               showPass={showPass}
               onCancel={() => {
-                // setWithDrawObj(defaultWithDrawObj);
                 setSelected();
-                // setShowUserModal(false);
               }}
-              // onSubmit={}
               initialBalance={initialBalance}
               backgroundColor={backgroundColor}
               loading={loading}

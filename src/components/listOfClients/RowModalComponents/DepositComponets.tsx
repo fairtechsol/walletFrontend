@@ -28,6 +28,7 @@ const initialValues: any = {
 
 const DepositComponent = (props: any) => {
   const {
+    walletAccountDetail,
     element,
     handleKeyDown,
     backgroundColor,
@@ -36,11 +37,14 @@ const DepositComponent = (props: any) => {
     selected,
     titleBackgroundColor,
   } = props;
+
   const [showPass, setShowPass] = useState(false);
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const [initialBalance] = useState("100");
+  const [initialBalance] = useState(
+    walletAccountDetail?.userBal?.currentBalance
+  );
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -48,8 +52,13 @@ const DepositComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
+      const id = element?.userId
+        ? element?.userId
+        : walletAccountDetail?.id
+        ? walletAccountDetail?.id
+        : "";
       const payload = {
-        userId: element.userId,
+        userId: id,
         amount: values.amount,
         transactionPassword: values.transactionPassword,
         remark: values.remark,
@@ -62,15 +71,6 @@ const DepositComponent = (props: any) => {
   const { handleSubmit, touched, errors } = formik;
 
   const { loading } = useSelector((state: RootState) => state.user);
-
-  const defaultDepositObj = {
-    amount: "",
-    trans_type: "add",
-    adminTransPassword: "",
-    remark: "",
-  };
-  // const [loading] = useState(false);
-  const [depositObj, setDepositObj] = useState(defaultDepositObj);
 
   return (
     <>
@@ -86,32 +86,20 @@ const DepositComponent = (props: any) => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <form>
+          <form onSubmit={handleSubmit}>
             <MobileViewUserDetails
               elementToUDM={elementToUDM}
               userName={elementToUDM?.userName}
               title={"Deposit Amount"}
               setSelected={setSelected}
               selected={selected}
-              handleAdminPass={(e: any) => {
-                setDepositObj({
-                  ...depositObj,
-                  adminTransPassword: e.target.value,
-                });
-              }}
-              //   handleChange={handleChange}
-              //   handleReview={(e) => {
-              //     setDepositObj({ ...depositObj, remark: e.target.value });
-              //   }}
-              amount={depositObj.amount}
+              value={formik.values}
+              onChange={formik.handleChange}
               setShowPass={setShowPass}
               showPass={showPass}
               onCancel={() => {
-                // setDepositObj(defaultDepositObj);
                 setSelected();
-                // setShowUserModal(false);
               }}
-              // onSubmit={handle}
               initialBalance={initialBalance}
               backgroundColor={backgroundColor}
               loading={loading}
@@ -460,7 +448,6 @@ const DepositComponent = (props: any) => {
                   }}
                   isSelected={true}
                   onClick={() => {
-                    setDepositObj(defaultDepositObj);
                     setSelected();
                   }}
                   title={"Cancel"}

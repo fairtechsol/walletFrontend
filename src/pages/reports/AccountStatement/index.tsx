@@ -121,7 +121,7 @@ const AccountStatement = () => {
               <Pagination
                 currentPage={"1"}
                 pages={pageCount}
-                callPage={() => {}}
+                setCurrentPage={() => {}}
               />
             </>
           )}
