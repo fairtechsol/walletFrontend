@@ -88,7 +88,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
               onClick={() => {
                 navigate(`/wallet/edit_account`, {
                   state: {
-                    id: element?.userId,
+                    id: element?.id,
                   },
                 });
               }}
@@ -154,7 +154,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.userBal?.myProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(element?.userBal?.myProfitLoss) >= 0
+                ? "#27AC1E"
+                : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",

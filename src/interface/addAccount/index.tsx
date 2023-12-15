@@ -28,8 +28,11 @@ export interface AddAccountInterface {
   };
   remarks?: string;
   adminTransPassword?: string;
-  session?: boolean;
-  bookmaker?: boolean;
+  allPrivilege?: boolean;
+  addMatchPrivilege?: boolean;
+  betFairMatchPrivilege?: boolean;
+  bookmakerMatchPrivilege?: boolean;
+  sessionMatchPrivilege?: boolean;
 }
 
 export interface DropdownInterface {

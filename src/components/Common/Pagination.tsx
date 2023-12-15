@@ -33,9 +33,7 @@ const Pagination = (props: PaginationInterface) => {
             borderRadius: "5px",
           }}
           onClick={() => {
-            setCurrentPage(
-              parseInt(currentPage) - 1 === 0 ? 1 : parseInt(currentPage) - 1
-            );
+            setCurrentPage(+currentPage - 1 === 0 ? 1 : +currentPage - 1);
           }}
         >
           <Typography
@@ -80,11 +78,7 @@ const Pagination = (props: PaginationInterface) => {
             alignItems: "center",
           }}
           onClick={() => {
-            setCurrentPage(
-              parseInt(currentPage) === pages
-                ? pages
-                : parseInt(currentPage) + 1
-            );
+            setCurrentPage(+currentPage === pages ? pages : +currentPage + 1);
           }}
         >
           <Typography

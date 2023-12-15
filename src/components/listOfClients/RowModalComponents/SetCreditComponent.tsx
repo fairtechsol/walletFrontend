@@ -27,18 +27,14 @@ const SetCreditComponent = (props: any) => {
   } = props;
   const [showPass, setShowPass] = useState(false);
 
-  // const handleSubmit = (e: any) => {
-  //   e.preventDefault;
-  // };
-
   const dispatch: AppDispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const id = element?.userId
-        ? element?.userId
+      const id = element?.id
+        ? element?.id
         : walletAccountDetail?.id
         ? walletAccountDetail?.id
         : "";

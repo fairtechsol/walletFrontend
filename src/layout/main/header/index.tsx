@@ -18,7 +18,7 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const { userDetail, success } = useSelector(
+  const { profileDetail, success } = useSelector(
     (state: RootState) => state.user.profile
   );
 
@@ -147,8 +147,8 @@ const Header = () => {
               <BoxProfile
                 containerStyle={classes.BoxCont1sub2BoxProfileContStyle}
                 image={"https://picsum.photos/200/300"}
-                value={userDetail && userDetail?.userName}
-                balance={userDetail && userDetail?.userBal?.currentBalance}
+                value={profileDetail && profileDetail?.userName}
+                balance={profileDetail && profileDetail?.userBal?.currentBalance}
               />
             </Box>
           </Box>

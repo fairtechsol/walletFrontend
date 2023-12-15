@@ -1,17 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addUser,
+  getUsersDetail,
   updateReset,
   updateUser,
 } from "../../actions/user/userAction";
 
 interface InitialState {
+  userDetail: any;
   success: boolean;
   loading: boolean;
   error: any;
 }
 
 const initialState: InitialState = {
+  userDetail: null,
   loading: false,
   success: false,
   error: null,
@@ -47,8 +50,26 @@ const userUpdateSlice = createSlice({
         state.loading = false;
         state.error = action?.error?.message;
       })
-      .addCase(updateReset, (state) => {
-        return { ...state, success: false };
+      .addCase(getUsersDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUsersDetail.fulfilled, (state, action) => {
+        state.success = true;
+        state.loading = false;
+        state.userDetail = action.payload;
+      })
+      .addCase(getUsersDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(updateReset, () => {
+        return {
+          userDetail: null,
+          loading: false,
+          success: false,
+          error: null,
+        };
       });
   },
 });

@@ -1,10 +1,13 @@
+import { useDispatch } from "react-redux";
 import { Excel, Pdf } from "../../assets";
 import SearchInput from "../Common/SearchInput";
 import StyledImage from "../Common/StyledImages";
 import { Box } from "@mui/material";
+import { AppDispatch } from "../../store/store";
+import { handleExport } from "../../store/actions/user/userAction";
 
-const HeaderRow = (props: any) => {
-  const { handleExport, getUserList } = props;
+const HeaderRow = () => {
+  const dispatch: AppDispatch = useDispatch();
   return (
     <Box
       display={"flex"}
@@ -31,7 +34,7 @@ const HeaderRow = (props: any) => {
           <StyledImage
             src={Excel}
             sx={{ height: "25px" }}
-            onClick={() => handleExport("excel")}
+            onClick={() => dispatch(handleExport("excel"))}
           />
         </Box>
         <Box
@@ -49,16 +52,11 @@ const HeaderRow = (props: any) => {
           <StyledImage
             src={Pdf}
             sx={{ height: "25px" }}
-            onClick={() => handleExport("pdf")}
+            onClick={() => dispatch(handleExport("pdf"))}
           />
         </Box>
       </Box>
-      <SearchInput
-        placeholder={"Search User..."}
-        show={true}
-        // setPageCount={setPageCount}
-        getUserList={getUserList}
-      />
+      <SearchInput placeholder={"Search User..."} show={true} />
     </Box>
   );
 };

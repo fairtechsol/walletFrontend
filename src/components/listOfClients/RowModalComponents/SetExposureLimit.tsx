@@ -28,7 +28,7 @@ const SetExposureLimit = (props: any) => {
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
       const payload = {
-        userId: element.userId,
+        userId: element.id,
         amount: values.amount,
         transactionPassword: values.transactionPassword,
       };

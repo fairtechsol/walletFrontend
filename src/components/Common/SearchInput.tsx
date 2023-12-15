@@ -3,6 +3,9 @@ import { Box } from "@mui/system";
 import StyledImage from "./StyledImages";
 import { SEARCH, Search } from "../../assets";
 import { debounce } from "lodash";
+import { getUserList } from "../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 
 const SearchInput = (props: any) => {
   const {
@@ -15,11 +18,11 @@ const SearchInput = (props: any) => {
     width,
     searchContainerStyle,
     onChange,
-    getUserList,
   } = props;
 
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const dispatch: AppDispatch = useDispatch();
 
   const handleInputChange = debounce(async (event: any) => {
     const value = event.target.value;
@@ -27,7 +30,7 @@ const SearchInput = (props: any) => {
       onChange(value);
     }
     try {
-      getUserList(value);
+      dispatch(getUserList({ userName: value, currentPage: 1 }));
     } catch (e) {
       console.log(e);
     }

@@ -10,7 +10,9 @@ const MyAccount = () => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const { userDetail } = useSelector((state: RootState) => state.user.profile);
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
 
   const [userBalanceDetails, setUserBalanceDetails] = useState<BalanceDetails>({
     userCreditReference: "0",
@@ -55,10 +57,10 @@ const MyAccount = () => {
   };
 
   useEffect(() => {
-    if (userDetail) {
-      getMyAccountDetails(userDetail.id);
+    if (profileDetail) {
+      getMyAccountDetails(profileDetail.id);
     }
-  }, [userDetail]);
+  }, [profileDetail]);
 
   return (
     <>

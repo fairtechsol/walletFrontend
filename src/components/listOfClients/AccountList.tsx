@@ -2,62 +2,27 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AccountListDataInterface } from "../../interface/listOfClients";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import Pagination from "../Common/Pagination";
 import Loader from "../Loader";
 import AccountListRow from "./AccountListRow";
 import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
-import service from "../../service";
-import { saveAs } from "file-saver";
+import { useDispatch } from "react-redux";
+import { getUserList } from "../../store/actions/user/userAction";
 import { Constants } from "../../utils/Constants";
 
 const AccountList = () => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
-  const [userList, setUserList] = useState<any>([]);
+  const dispatch: AppDispatch = useDispatch();
   const loading = false;
-  const [currentPage, setCurrentPage] = useState("1");
-  const [pageCount, setPageCount] = useState(1);
-
-  const { userDetail } = useSelector((state: RootState) => state.user.profile);
-
-  const getUserList = async (username?: any) => {
-    try {
-      const resp = await service.get(
-        `/user/list?${`userName=${
-          username ? username : ""
-        }`}&offset=${currentPage}&limit=${Constants.pageLimit}`
-      );
-      if (resp) {
-        setUserList(resp?.data?.list);
-        setPageCount(
-          Math.ceil(
-            parseInt(resp?.data?.count ? resp.data?.count : 1) /
-              Constants.pageLimit
-          )
-        );
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleExport = async (type: string) => {
-    let url = `/user/list?type=${type}`;
-    try {
-      const response = await service.get(url, { responseType: "blob" });
-      saveAs(
-        response.data,
-        userDetail?.userName ? userDetail?.userName : "file"
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { profileDetail } = useSelector((state: RootState) => state.user.profile);
+  const { userList } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {
-    getUserList();
+    dispatch(getUserList({ currentPage: currentPage }));
   }, [currentPage]);
 
   return (
@@ -90,7 +55,7 @@ const AccountList = () => {
               }),
             ]}
           >
-            <HeaderRow handleExport={handleExport} getUserList={getUserList} />
+            <HeaderRow />
             <Box sx={{ overflowX: "auto" }}>
               <Box
                 sx={{
@@ -100,8 +65,8 @@ const AccountList = () => {
               >
                 <Box>
                   <ListHeaderRow />
-                  <SubHeaderListRow data={userDetail} />
-                  {userList?.length === 0 && (
+                  <SubHeaderListRow data={profileDetail} />
+                  {userList?.list?.length === 0 && (
                     <Box>
                       <Typography
                         sx={{
@@ -116,8 +81,8 @@ const AccountList = () => {
                       </Typography>
                     </Box>
                   )}
-                  {userList?.length > 0 &&
-                    userList?.map(
+                  {userList?.list?.length > 0 &&
+                    userList?.list?.map(
                       (element: AccountListDataInterface, i: any) => {
                         if (i % 2 === 0) {
                           return (
@@ -158,7 +123,10 @@ const AccountList = () => {
           </Box>
           <Pagination
             currentPage={currentPage}
-            pages={pageCount}
+            pages={Math.ceil(
+              parseInt(userList?.count ? userList?.count : 1) /
+                Constants.pageLimit
+            )}
             setCurrentPage={setCurrentPage}
           />
         </>

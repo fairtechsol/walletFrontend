@@ -1,8 +1,8 @@
-import { createReducer, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
-  addUser,
   changeAmmountUser,
-  updateUser,
+  getUserList,
+  handleExport,
   setCreditRefference,
   setExposureLimit,
   setLockUnlockUser,
@@ -10,6 +10,7 @@ import {
 
 interface InitialState {
   userDetail: any;
+  userList: any;
   success: boolean;
   loading: boolean;
   error: any;
@@ -17,6 +18,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   userDetail: null,
+  userList: null,
   success: false,
   loading: false,
   error: null,
@@ -28,6 +30,29 @@ export const userList = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(handleExport.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(handleExport.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(handleExport.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(getUserList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserList.fulfilled, (state, action) => {
+        state.userList = action.payload;
+        state.loading = false;
+      })
+      .addCase(getUserList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
       .addCase(changeAmmountUser.pending, (state) => {
         state.loading = true;
         state.error = null;

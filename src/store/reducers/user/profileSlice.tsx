@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getUsersProfile, profileReset } from "../../actions/user/userAction";
 
 interface InitialState {
-  userDetail: any;
+  profileDetail: any;
   success: boolean;
   loading: boolean;
   error: any;
 }
 
 const initialState: InitialState = {
-  userDetail: null,
+  profileDetail: null,
   loading: false,
   success: false,
   error: null,
@@ -29,7 +29,7 @@ const profileSlice = createSlice({
       .addCase(getUsersProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.userDetail = action.payload;
+        state.profileDetail = action.payload;
       })
       .addCase(getUsersProfile.rejected, (state, action) => {
         state.loading = false;

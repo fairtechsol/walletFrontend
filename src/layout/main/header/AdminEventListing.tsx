@@ -30,11 +30,11 @@ const data = [
 ];
 
 const AdminEventListing = () => {
-  const { userDetail } = useSelector((state: RootState) => state.user.profile);
+  const { profileDetail } = useSelector((state: RootState) => state.user.profile);
   const [newData, setNewData] = useState<any>(data);
 
   useEffect(() => {
-    if (userDetail?.roleName === "fairGameWallet") {
+    if (profileDetail?.roleName === "fairGameWallet") {
       setNewData((prev: any) => {
         const secondLastIndex = prev.length - 1;
         const newData = [...prev];
@@ -50,7 +50,7 @@ const AdminEventListing = () => {
         return newData;
       });
     }
-  }, [userDetail]);
+  }, [profileDetail]);
 
   return (
     <Box

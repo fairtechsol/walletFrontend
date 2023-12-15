@@ -52,8 +52,8 @@ const WithdrawComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const id = element?.userId
-        ? element?.userId
+      const id = element?.id
+        ? element?.id
         : walletAccountDetail?.id
         ? walletAccountDetail?.id
         : "";

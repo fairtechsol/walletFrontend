@@ -33,7 +33,7 @@ const ChangePasswordComponent = (props: any) => {
     validationSchema: userChangePasswordValidations,
     onSubmit: (values: any) => {
       let payload: any = {
-        userId: element.userId,
+        userId: element.id,
         newPassword: values.newPassword,
         transactionPassword: values.transactionPassword,
       };

@@ -4,7 +4,10 @@ import Header from "./header";
 import BackgroundLayout from "../../components/Common/BackgroundLayout";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-import { getUsersProfile } from "../../store/actions/user/userAction";
+import {
+  getUsersProfile,
+  updateReset,
+} from "../../store/actions/user/userAction";
 
 const MainLayout = () => {
   const navigate = useNavigate();
