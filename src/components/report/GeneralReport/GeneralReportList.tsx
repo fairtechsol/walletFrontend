@@ -30,7 +30,7 @@ const GeneralReportList = () => {
       <TableDataRow style={{ background: "#FFE094" }} profit={true} />
       <TableDataRow style={{ background: "#ECECEC" }} profit={false} />
       <RowLast />
-      <Pagination currentPage={"1"} pages={10} setCurrentPage={() => {}} />
+      <Pagination currentPage={1} pages={10} setCurrentPage={() => {}} />
     </Box>
   );
 };

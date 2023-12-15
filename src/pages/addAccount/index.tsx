@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Grid,
+  InputLabel,
   Typography,
   useMediaQuery,
   useTheme,
@@ -15,10 +16,11 @@ import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
-import { AddAccountInterface } from "../../interface/addAccount";
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
 import {
+  addExpert,
+  addUrlAdmin,
   addUser,
   getUsersDetail,
   updateReset,
@@ -71,7 +73,13 @@ const formDataSchema = {
   },
   remarks: "",
   adminTransPassword: "",
-  //expert access
+  logo: "",
+  sidebarColor: "",
+  headerColor: "",
+  footerColor: "",
+};
+
+const defaultLockUnlockObj = {
   allPrivilege: false,
   addMatchPrivilege: false,
   betFairMatchPrivilege: false,
@@ -84,8 +92,9 @@ const AddAccount = () => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state, pathname } = useLocation();
   const dispatch: AppDispatch = useDispatch();
-  // const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<AddAccountInterface>(formDataSchema);
+
+  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
+  const [AccountTypes, setAccountTypes] = useState<any>([]);
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -93,8 +102,6 @@ const AddAccount = () => {
   const { success, loading, userDetail } = useSelector(
     (state: RootState) => state.user.userUpdate
   );
-
-  const [AccountTypes, setAccountTypes] = useState([{ value: "", label: "" }]);
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -117,59 +124,62 @@ const AddAccount = () => {
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
     onSubmit: (values: any) => {
+      const commonPayload = {
+        userName: values.userName,
+        fullName: values.fullName,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+        phoneNumber: values.phoneNumber,
+        city: values.city,
+        myPartnership: values.myPartnership,
+      };
+
+      let payload;
+      if (values.roleName.value === "expert") {
+        payload = {
+          ...commonPayload,
+          roleName: values.roleName.value,
+          transactionPassword: values.adminTransPassword,
+          allPrivilege: lockUnlockObj.allPrivilege,
+          addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
+          betFairMatchPrivilege: lockUnlockObj.betFairMatchPrivilege,
+          bookmakerMatchPrivilege: lockUnlockObj.bookmakerMatchPrivilege,
+          sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
+        };
+        dispatch(addExpert(payload));
+      } else if (values.roleName.value === "superUrlAdmin") {
+        payload = {
+          ...commonPayload,
+          roleName: values.roleName.value,
+          domain: values.domain,
+          logo: values.logo,
+          sidebarColor: values.sidebarColor,
+          headerColor: values.headerColor,
+          footerColor: values.footerColor,
+          transactionPassword: values.adminTransPassword,
+        };
+        dispatch(addUrlAdmin(payload));
+      } else {
+        payload = {
+          ...commonPayload,
+          roleName: values.roleName.value,
+          creditRefrence: values.creditRefrence,
+          exposureLimit: values.exposureLimit,
+          maxBetLimit: values.maxBetLimit,
+          minBetLimit: values.minBetLimit,
+        };
+        dispatch(addUser(payload));
+      }
+
       if (state?.id) {
         dispatch(
           updateUser({
-            sessionCommission: formik.values.sessionCommission.value,
-            matchComissionType: formik.values.matchComissionType.value,
-            matchCommission: formik.values.matchCommission.value,
+            sessionCommission: values.sessionCommission.value,
+            matchComissionType: values.matchComissionType.value,
+            matchCommission: values.matchCommission.value,
             id: state?.id,
           })
         );
-      } else {
-        let payload: any;
-        if (values.roleName.value == "expert") {
-          payload = {
-            // userName: values.userName,
-            // fullName: values.fullName,
-            // password: values.password,
-            // confirmPassword: values.confirmPassword,
-            // phoneNumber: values.phoneNumber,
-            // city: values.city,
-            // roleName: values.roleName.value,
-            // myPartnership: values.myPartnership,
-            // creditRefrence: values.creditRefrence,
-            // exposureLimit: values.exposureLimit,
-            transactionPassword: "758361",
-            userName: "expertfour",
-            fullName: "expert four",
-            password: "Expert@123",
-            phoneNumber: "9874563210",
-            city: "expert@123",
-            allPrivilege: true,
-            addMatchPrivilege: true,
-            betFairMatchPrivilege: true,
-            bookmakerMatchPrivilege: true,
-            sessionMatchPrivilege: true,
-            confirmPassword: "Expert@123",
-          };
-        } else {
-          payload = {
-            userName: values.userName,
-            fullName: values.fullName,
-            password: values.password,
-            confirmPassword: values.confirmPassword,
-            phoneNumber: values.phoneNumber,
-            city: values.city,
-            roleName: values.roleName.value,
-            myPartnership: values.myPartnership,
-            creditRefrence: values.creditRefrence,
-            exposureLimit: values.exposureLimit,
-            maxBetLimit: values.maxBetLimit,
-            minBetLimit: values.minBetLimit,
-          };
-          dispatch(addUser(payload));
-        }
       }
       dispatch(updateReset());
     },
@@ -217,18 +227,19 @@ const AddAccount = () => {
 
   const setTypeForAccountType = () => {
     try {
-      if (profileDetail?.roleName === "fairGameWallet") {
-        setAccountTypes([{ value: "fairGameAdmin", label: "Fairgame Admin" }]);
-      }
+      const roleName = profileDetail?.roleName;
 
-      if (profileDetail?.roleName === "fairGameAdmin") {
-        setAccountTypes([
+      const accountTypeMap: any = {
+        fairGameWallet: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
+        fairGameAdmin: [
           { value: "superUrlAdmin", label: "URL Super Admin" },
           { value: "expert", label: "Expert" },
-        ]);
-      }
+        ],
+      };
+
+      setAccountTypes(accountTypeMap[roleName] || []);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -247,9 +258,9 @@ const AddAccount = () => {
   }, [state?.id]);
 
   useEffect(() => {
-    console.log(pathname.includes("add_account"));
     if (pathname.includes("add_account")) {
       formik.resetForm();
+      setLockUnlockObj(defaultLockUnlockObj);
     } else if (success) {
       formik.setValues({
         ...formik.values,
@@ -279,6 +290,8 @@ const AddAccount = () => {
         },
         remarks: "",
         adminTransPassword: "",
+      });
+      setLockUnlockObj({
         allPrivilege: userDetail?.allPrivilege,
         addMatchPrivilege: userDetail?.addMatchPrivilege,
         betFairMatchPrivilege: userDetail?.betFairMatchPrivilege,
@@ -490,63 +503,56 @@ const AddAccount = () => {
                       }}
                       disabled={state?.id ? true : false}
                       title={"Logo"}
-                      name={"logo"}
+                      name="logo"
                       type={"text"}
                       id="logo"
                       value={formik.values.logo}
                       onChange={formik.handleChange}
                     />
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      placeholder={"Sidebar Color"}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      disabled={state?.id ? true : false}
-                      title={"Sidebar Color"}
-                      name={"sidebarColor"}
-                      type={"color"}
-                      id="sidebarColor"
-                      value={formik.values.sidebarColor}
-                      onChange={formik.handleChange}
-                    />
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      placeholder={"Header Color"}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      disabled={state?.id ? true : false}
-                      title={"Header Color"}
-                      name={"headerColor"}
-                      type={"color"}
-                      id="headerColor"
-                      value={formik.values.headerColor}
-                      onChange={formik.handleChange}
-                    />
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      placeholder={"Footer Color"}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      disabled={state?.id ? true : false}
-                      title={"Footer Color"}
-                      name={"footerColor"}
-                      type={"color"}
-                      id="footerColor"
-                      value={formik.values.footerColor}
-                      onChange={formik.handleChange}
-                    />
+                    <Box m={2}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <InputLabel htmlFor="sidebarColor">
+                            Sidebar Color:{" "}
+                          </InputLabel>
+                          <input
+                            type="color"
+                            id="sidebarColor"
+                            name={"sidebarColor"}
+                            value={formik.values.sidebarColor}
+                            onChange={formik.handleChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <InputLabel htmlFor="headerColor">
+                            Header Color:{" "}
+                          </InputLabel>
+                          <input
+                            type="color"
+                            id="headerColor"
+                            name={"headerColor"}
+                            value={formik.values.headerColor}
+                            onChange={formik.handleChange}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Box m={2}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <InputLabel htmlFor="footerColor">
+                            Footer Color:{" "}
+                          </InputLabel>
+                          <input
+                            type="color"
+                            id="footerColor"
+                            name={"footerColor"}
+                            value={formik.values.footerColor}
+                            onChange={formik.handleChange}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Box>
                   </div>
                 )}
               </Box>
@@ -565,8 +571,10 @@ const AddAccount = () => {
                     titleStyle={titleStyles}
                     id="roleName"
                     name="roleName"
+                    isSearchable={false}
                     label={"Account Type*"}
                     options={AccountTypes}
+                    defaultValue={"Select..."}
                     onChange={(AccountTypes: any) => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}
@@ -587,20 +595,20 @@ const AddAccount = () => {
                         <Grid item xs={6} md={12} lg={6}>
                           <BoxButtonWithSwitch
                             title="All Privilege"
-                            name={"allPrivilege"}
+                            name="allPrivilege"
                             showLockUnlock={false}
-                            val={formData.allPrivilege}
-                            setLockUnlockObj={setFormData}
-                            lockUnlockObj={formData}
+                            val={lockUnlockObj?.allPrivilege}
+                            setLockUnlockObj={setLockUnlockObj}
+                            lockUnlockObj={lockUnlockObj}
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
                           <BoxButtonWithSwitch
                             title="Add Match Privilege"
-                            name={"addMatchPrivilege"}
-                            val={formData.addMatchPrivilege}
-                            setLockUnlockObj={setFormData}
-                            lockUnlockObj={formData}
+                            name="addMatchPrivilege"
+                            val={lockUnlockObj?.addMatchPrivilege}
+                            setLockUnlockObj={setLockUnlockObj}
+                            lockUnlockObj={lockUnlockObj}
                           />
                         </Grid>
                       </Grid>
@@ -610,20 +618,20 @@ const AddAccount = () => {
                         <Grid item xs={6} md={12} lg={6}>
                           <BoxButtonWithSwitch
                             title="BetFair Match Privilege"
-                            name={"betFairMatchPrivilege"}
+                            name="betFairMatchPrivilege"
                             showLockUnlock={false}
-                            val={formData.betFairMatchPrivilege}
-                            setLockUnlockObj={setFormData}
-                            lockUnlockObj={formData}
+                            val={lockUnlockObj?.betFairMatchPrivilege}
+                            setLockUnlockObj={setLockUnlockObj}
+                            lockUnlockObj={lockUnlockObj}
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
                           <BoxButtonWithSwitch
                             title="Bookmaker Match Privilege"
-                            name={"bookmakerMatchPrivilege"}
-                            val={formData.bookmakerMatchPrivilege}
-                            setLockUnlockObj={setFormData}
-                            lockUnlockObj={formData}
+                            name="bookmakerMatchPrivilege"
+                            val={lockUnlockObj?.bookmakerMatchPrivilege}
+                            setLockUnlockObj={setLockUnlockObj}
+                            lockUnlockObj={lockUnlockObj}
                           />
                         </Grid>
                       </Grid>
@@ -633,11 +641,11 @@ const AddAccount = () => {
                         <Grid item xs={6} md={12} lg={6}>
                           <BoxButtonWithSwitch
                             title="Session Match Privilege"
-                            name={"sessionMatchPrivilege"}
+                            name="sessionMatchPrivilege"
                             showLockUnlock={false}
-                            val={formData.sessionMatchPrivilege}
-                            setLockUnlockObj={setFormData}
-                            lockUnlockObj={formData}
+                            val={lockUnlockObj?.sessionMatchPrivilege}
+                            setLockUnlockObj={setLockUnlockObj}
+                            lockUnlockObj={lockUnlockObj}
                           />
                         </Grid>
                       </Grid>

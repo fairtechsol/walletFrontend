@@ -1,6 +1,5 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
-import { Navigate } from "react-router-dom";
 import MultipleMatch from "../pages/analysis/multipleMatch";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));

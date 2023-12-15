@@ -30,7 +30,7 @@ const ChangePassword = (props: any) => {
     validationSchema: changePasswordSchema,
     onSubmit: async (values: any) => {
       try {
-        const resp = await service.post(ApiConstants.CHANGEPASSWORD, values);
+        const resp = await service.post(ApiConstants.USER.CHANGEPASSWORD, values);
         if (resp) {
           if (resp?.data) {
             toast.success(resp?.data?.transactionPassword, toastOptions);

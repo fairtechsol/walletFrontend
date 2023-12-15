@@ -60,7 +60,7 @@ const BetsList = (props: any) => {
           position: "absolute",
         }}
       >
-        <Pagination currentPage={"1"} pages={10} setCurrentPage={() => {}} />
+        <Pagination currentPage={1} pages={10} setCurrentPage={() => {}} />
       </Box>
     </Box>
   );

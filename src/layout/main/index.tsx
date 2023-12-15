@@ -6,7 +6,6 @@ import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import {
   getUsersProfile,
-  updateReset,
 } from "../../store/actions/user/userAction";
 
 const MainLayout = () => {

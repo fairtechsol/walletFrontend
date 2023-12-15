@@ -9,21 +9,21 @@ interface ChangePassword {
   confirmPassword: string;
 }
 
-interface AddUser {
-  userName: string;
-  fullName: string;
-  password: string;
-  confirmPassword: string;
-  phoneNumber: string;
-  city: string;
-  roleName: string;
-  myPartnership: string;
-  createdBy: string;
-  creditRefrence: string;
-  exposureLimit: string;
-  maxBetLimit: string;
-  minBetLimit: string;
-}
+// interface AddUser {
+//   userName: string;
+//   fullName: string;
+//   password: string;
+//   confirmPassword: string;
+//   phoneNumber: string;
+//   city: string;
+//   roleName: string;
+//   myPartnership: string;
+//   createdBy: string;
+//   creditRefrence: string;
+//   exposureLimit: string;
+//   maxBetLimit: string;
+//   minBetLimit: string;
+// }
 
 interface RequestData {
   userName?: string;
@@ -67,11 +67,50 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   }
 );
 
-export const addUser = createAsyncThunk<any, AddUser>(
+export const addUser = createAsyncThunk<any, any>(
   "user/add",
   async (requestData) => {
     try {
-      const resp = await service.post(`${ApiConstants.USER.ADD}`, requestData);
+      const resp = await service.post(
+        `${ApiConstants.USER.ADDFGADMIN}`,
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
+export const addExpert = createAsyncThunk<any, any>(
+  "user/addExpert",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        `${ApiConstants.USER.ADDEXPERT}`,
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
+export const addUrlAdmin = createAsyncThunk<any, any>(
+  "user/addUrlAdmin",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        `${ApiConstants.USER.ADDURLADMIN}`,
+        requestData
+      );
       if (resp) {
         return resp?.data;
       }

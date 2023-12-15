@@ -5,11 +5,11 @@ import MaterialUISwitch from "./MaterialUISwitch";
 const BoxButtonWithSwitch = (props: any) => {
   const { title, val, name, setLockUnlockObj, lockUnlockObj, showLockUnlock } =
     props;
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(val);
   const classes = {
     mainBox: [
       {
-        background: !val ? "#0B4F26" : "#E32A2A",
+        background: val ? "#0B4F26" : "#E32A2A",
         display: "flex",
         flex: 1,
         justifyContent: "center",
@@ -32,7 +32,7 @@ const BoxButtonWithSwitch = (props: any) => {
   return (
     <Box sx={classes.mainBox}>
       <MaterialUISwitch
-        checked={!val}
+        checked={checked}
         onChange={() => {
           setLockUnlockObj({
             ...lockUnlockObj,
@@ -42,7 +42,7 @@ const BoxButtonWithSwitch = (props: any) => {
         }}
       />
       <Typography sx={classes.mainBoxTypography}>
-        {title} {showLockUnlock && (!val ? "Unlocked" : "Locked")}
+        {title} {showLockUnlock && (val ? "Unlocked" : "Locked")}
       </Typography>
     </Box>
   );

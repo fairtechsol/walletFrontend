@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  addExpert,
+  addUrlAdmin,
   addUser,
   getUsersDetail,
   updateReset,
@@ -35,6 +37,30 @@ const userUpdateSlice = createSlice({
         state.loading = false;
       })
       .addCase(addUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(addExpert.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addExpert.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(addExpert.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(addUrlAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addUrlAdmin.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(addUrlAdmin.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
