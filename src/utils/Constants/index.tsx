@@ -16,6 +16,11 @@ export const ApiConstants = {
     CREDITREFERRENCE: "/user/update/creditreferrence",
     EXPOSURELIMIT: "/user/update/exposurelimit",
   },
+  WALLET: {
+    BALANCEUPDATE: "wallet/update/balance",
+    CREDITREFERRENCE: "wallet/update/creditreference",
+    EXPOSURELIMIT: "wallet/update/exposurelimit",
+  },
 };
 
 export const Constants = {

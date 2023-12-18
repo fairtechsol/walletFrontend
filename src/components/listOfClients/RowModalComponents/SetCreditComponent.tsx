@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCreditRefference } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
+import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
   userId: "",
@@ -33,18 +34,29 @@ const SetCreditComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const id = element?.id
-        ? element?.id
-        : walletAccountDetail?.id
-        ? walletAccountDetail?.id
-        : "";
-      const payload = {
-        userId: id,
-        amount: values.amount,
-        transactionPassword: values.transactionPassword,
-        remark: values.remark,
-      };
-      dispatch(setCreditRefference(payload));
+      let payload;
+      if (walletAccountDetail) {
+        payload = {
+          amount: values.amount,
+          transactionPassword: values.transactionPassword,
+          remark: values.remark,
+        };
+      } else {
+        payload = {
+          userId: element?.id,
+          amount: values.amount,
+          transactionPassword: values.transactionPassword,
+          remark: values.remark,
+        };
+      }
+      dispatch(
+        setCreditRefference({
+          url: walletAccountDetail
+            ? ApiConstants.WALLET.CREDITREFERRENCE
+            : ApiConstants.USER.CREDITREFERRENCE,
+          payload: payload,
+        })
+      );
     },
   });
 
@@ -95,7 +107,6 @@ const SetCreditComponent = (props: any) => {
                 required={true}
                 name={"amount"}
                 id={"amount"}
-                // value={"200"}
                 value={formik.values.amount}
                 onChange={formik.handleChange}
                 onKeyDown={handleKeyDown}

@@ -33,13 +33,17 @@ interface RequestData {
 export const changePassword = createAsyncThunk<any, ChangePassword>(
   "user/changePassword",
   async (requestData, thunkApi) => {
+    debugger;
     try {
       const resp = await service.post(
         `${ApiConstants.USER.CHANGEPASSWORD}`,
         requestData
       );
       if (resp) {
-        console.log(resp.data, "data");
+        if (resp?.data) {
+          return resp?.data?.transactionPassword;
+        }
+        localStorage.clear();
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -172,8 +176,8 @@ export const changeAmmountUser = createAsyncThunk<any, any>(
   async (requestData) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.BALANCEUPDATE}`,
-        requestData
+        `${requestData.url}`,
+        requestData.payload
       );
       if (resp) {
         return resp?.data;
@@ -205,8 +209,8 @@ export const setCreditRefference = createAsyncThunk<any, any>(
   async (requestData) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.CREDITREFERRENCE}`,
-        requestData
+        `${requestData.url}`,
+        requestData.payload
       );
       if (resp) {
         return resp?.data;
@@ -223,8 +227,8 @@ export const setExposureLimit = createAsyncThunk<any, any>(
   async (requestData) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.EXPOSURELIMIT}`,
-        requestData
+        `${requestData.url}`,
+        requestData.payload
       );
       if (resp) {
         return resp?.data;

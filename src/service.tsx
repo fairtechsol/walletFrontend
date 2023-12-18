@@ -11,7 +11,7 @@ const toastOptions = {
 // PRODUCTION:
 // DEVELOPMENT: http://localhost:5000
 const service = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "http://localhost:5050/",
 });
 
 service.defaults.timeout = 100000;

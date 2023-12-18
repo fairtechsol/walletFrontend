@@ -1,7 +1,4 @@
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ListHeader from "./ListHeader";
@@ -11,10 +8,16 @@ import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawCompo
 import SetCreditComponent from "../listOfClients/RowModalComponents/SetCreditComponent";
 import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockComponent";
 import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
+import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const ListItems = (props: any) => {
-  const { title, walletAccountDetail } = props;
+  const { title } = props;
   const navigate = useNavigate();
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   const [selected, setSelected] = useState<any>(null);
   const classes = {
     Menusx: {
@@ -92,7 +95,7 @@ const ListItems = (props: any) => {
             }}
           >
             <ListHeader userName={"User Name"} />
-            <ListBody walletAccountDetail={walletAccountDetail} />
+            <ListBody walletAccountDetail={profileDetail} />
           </Box>
           {selected != null && (
             <Box
@@ -109,7 +112,7 @@ const ListItems = (props: any) => {
             >
               {selected == 0 && (
                 <DepositComponent
-                  walletAccountDetail={walletAccountDetail}
+                  walletAccountDetail={profileDetail}
                   selected={selected == 0}
                   setSelected={() => {
                     setSelected(null);
@@ -120,7 +123,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 1 && (
                 <WithdrawComponent
-                  walletAccountDetail={walletAccountDetail}
+                  walletAccountDetail={profileDetail}
                   selected={selected == 1}
                   setSelected={() => {
                     setSelected(null);
@@ -130,7 +133,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 2 && (
                 <SetCreditComponent
-                  walletAccountDetail={walletAccountDetail}
+                  walletAccountDetail={profileDetail}
                   selected={selected == 2}
                   setSelected={() => {
                     setSelected(null);
@@ -143,7 +146,16 @@ const ListItems = (props: any) => {
                   setSelected={() => {
                     setSelected(null);
                   }}
-                  walletAccountDetail={walletAccountDetail}
+                  walletAccountDetail={profileDetail}
+                />
+              )}
+              {selected == 5 && (
+                <SetExposureLimit
+                  walletAccountDetail={profileDetail}
+                  selected={selected == 5}
+                  setSelected={() => {
+                    setSelected(null);
+                  }}
                 />
               )}
             </Box>
@@ -264,6 +276,23 @@ const ListItems = (props: any) => {
                 titleStyle={{
                   fontSize: { xs: "12px" },
                 }}
+              />
+              <BoxButton
+                color={"#0B4F26"}
+                onClick={() => {
+                  setSelected(5);
+                }}
+                containerStyle={{
+                  marginLeft: { lg: "10px", xs: "0" },
+                  flex: 1,
+                  borderColor: "white",
+                }}
+                titleStyle={{
+                  fontSize: { xs: "12px" },
+                }}
+                title={"Set Exposure Limit"}
+                labelStyle={{}}
+                isSelected={selected == 5}
               />
               {/* <Dialog
                 open={settlementUserModal}

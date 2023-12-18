@@ -9,16 +9,18 @@ import { useDispatch } from "react-redux";
 import { setExposureLimit } from "../../../store/actions/user/userAction";
 import { AppDispatch } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
+import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
   userId: "",
   amount: "",
+  remark: "",
   transactionPassword: "",
   transactionType: "add",
 };
 
 const SetExposureLimit = (props: any) => {
-  const { backgroundColor, setSelected, element } = props;
+  const { backgroundColor, setSelected, element, walletAccountDetail } = props;
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -27,12 +29,29 @@ const SetExposureLimit = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const payload = {
-        userId: element.id,
-        amount: values.amount,
-        transactionPassword: values.transactionPassword,
-      };
-      dispatch(setExposureLimit(payload));
+      let payload;
+      if (walletAccountDetail) {
+        payload = {
+          amount: values.amount,
+          transactionPassword: values.transactionPassword,
+          remark: values.remark,
+        };
+      } else {
+        payload = {
+          userId: element?.id,
+          amount: values.amount,
+          transactionPassword: values.transactionPassword,
+          remark: values.remark,
+        };
+      }
+      dispatch(
+        setExposureLimit({
+          url: walletAccountDetail
+            ? ApiConstants.WALLET.EXPOSURELIMIT
+            : ApiConstants.USER.EXPOSURELIMIT,
+          payload: payload,
+        })
+      );
     },
   });
 
@@ -182,7 +201,10 @@ const SetExposureLimit = (props: any) => {
             }}
           >
             <TextField
-              onChange={() => {}}
+              id="remark"
+              name="remark"
+              value={formik.values.remark}
+              onChange={formik.handleChange}
               rows={4}
               sx={{ width: "100%", minHeight: "40px" }}
               multiline={true}

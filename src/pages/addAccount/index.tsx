@@ -40,7 +40,7 @@ import {
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
   { value: "totalLoss", label: "Total Loss" },
-  { value: "betLoss", label: "Entry Wise" },
+  { value: "entryWise", label: "Entry Wise" },
 ];
 
 const formDataSchema = {
@@ -55,7 +55,7 @@ const formDataSchema = {
     label: "",
     value: "",
   },
-  creditReference: "",
+  creditRefrence: "",
   uplinePartnership: 10,
   myPartnership: 0,
   downlinePartnership: 90,
@@ -92,7 +92,9 @@ const AddAccount = () => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state, pathname } = useLocation();
   const dispatch: AppDispatch = useDispatch();
+  console.log(state, "state");
 
+  const [mode, setMode] = useState("");
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [AccountTypes, setAccountTypes] = useState<any>([]);
   const { profileDetail } = useSelector(
@@ -131,55 +133,56 @@ const AddAccount = () => {
         confirmPassword: values.confirmPassword,
         phoneNumber: values.phoneNumber,
         city: values.city,
-        myPartnership: values.myPartnership,
       };
 
       let payload;
-      if (values.roleName.value === "expert") {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          transactionPassword: values.adminTransPassword,
-          allPrivilege: lockUnlockObj.allPrivilege,
-          addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
-          betFairMatchPrivilege: lockUnlockObj.betFairMatchPrivilege,
-          bookmakerMatchPrivilege: lockUnlockObj.bookmakerMatchPrivilege,
-          sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
-        };
-        dispatch(addExpert(payload));
-      } else if (values.roleName.value === "superUrlAdmin") {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          domain: values.domain,
-          logo: values.logo,
-          sidebarColor: values.sidebarColor,
-          headerColor: values.headerColor,
-          footerColor: values.footerColor,
-          transactionPassword: values.adminTransPassword,
-        };
-        dispatch(addUrlAdmin(payload));
-      } else {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          creditRefrence: values.creditRefrence,
-          exposureLimit: values.exposureLimit,
-          maxBetLimit: values.maxBetLimit,
-          minBetLimit: values.minBetLimit,
-        };
-        dispatch(addUser(payload));
-      }
 
-      if (state?.id) {
-        dispatch(
-          updateUser({
-            sessionCommission: values.sessionCommission.value,
-            matchComissionType: values.matchComissionType.value,
-            matchCommission: values.matchCommission.value,
-            id: state?.id,
-          })
-        );
+      if (mode === "edit") {
+        payload = {
+          id: state?.id,
+          sessionCommission: values.sessionCommission.value,
+          matchComissionType: values.matchCommissionType.value,
+          matchCommission: values.matchCommission.value,
+        };
+        dispatch(updateUser(payload));
+      } else if (mode === "add") {
+        if (values.roleName.value === "expert") {
+          payload = {
+            ...commonPayload,
+            // roleName: values.roleName.value,
+            transactionPassword: values.adminTransPassword,
+            allPrivilege: lockUnlockObj.allPrivilege,
+            addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
+            betFairMatchPrivilege: lockUnlockObj.betFairMatchPrivilege,
+            bookmakerMatchPrivilege: lockUnlockObj.bookmakerMatchPrivilege,
+            sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
+          };
+          dispatch(addExpert(payload));
+        } else if (values.roleName.value === "superUrlAdmin") {
+          payload = {
+            ...commonPayload,
+            roleName: values.roleName.value,
+            domain: values.domain,
+            logo: values.logo,
+            sidebarColor: values.sidebarColor,
+            headerColor: values.headerColor,
+            footerColor: values.footerColor,
+            transactionPassword: values.adminTransPassword,
+            myPartnership: values.myPartnership,
+          };
+          dispatch(addUrlAdmin(payload));
+        } else {
+          payload = {
+            ...commonPayload,
+            roleName: values.roleName.value,
+            creditRefrence: values.creditRefrence,
+            exposureLimit: values.exposureLimit,
+            maxBetLimit: values.maxBetLimit,
+            minBetLimit: values.minBetLimit,
+            myPartnership: values.myPartnership,
+          };
+          dispatch(addUser(payload));
+        }
       }
       dispatch(updateReset());
     },
@@ -250,7 +253,10 @@ const AddAccount = () => {
   useEffect(() => {
     try {
       if (state?.id) {
+        setMode("edit");
         dispatch(getUsersDetail(state?.id));
+      } else {
+        setMode("add");
       }
     } catch (e) {
       console.log(e);
@@ -272,7 +278,7 @@ const AddAccount = () => {
           label: userDetail?.roleName,
           value: userDetail?.roleName,
         },
-        creditReference: userDetail?.creditRefrence,
+        creditRefrence: userDetail?.creditRefrence,
         uplinePartnership: userDetail?.fwPartnership,
         myPartnership: 0,
         downlinePartnership: userDetail?.faPartnership,
@@ -664,93 +670,98 @@ const AddAccount = () => {
                       }}
                       disabled={state?.id ? true : false}
                       title={"Credit Reference*"}
-                      name={"creditReference"}
+                      name={"creditRefrence"}
                       type={"Number"}
-                      id="creditReference"
-                      value={formik.values.creditReference}
+                      id="creditRefrence"
+                      value={formik.values.creditRefrence}
                       onChange={formik.handleChange}
                     />
                   </div>
                 )}
               </Box>
-              <Box
-                sx={{
-                  display: { lg: "block", md: "grid", xs: "grid" },
-                  gridTemplateColumns: "50% 47%",
-                  gridColumnGap: "10px",
-                }}
-              >
-                <Input
-                  containerStyle={{
-                    ...containerStyles,
-                    display:
-                      formik.values?.roleName?.value === "user"
-                        ? "none"
-                        : "block",
-                  }}
-                  titleStyle={titleStyles}
-                  inputStyle={inputStyle}
-                  inputContainerStyle={{
-                    ...inputContainerStyle,
-                    backgroundColor: "#DEDEDE",
-                    height: { lg: "45px", xs: "36px" },
-                  }}
-                  title={"Upline Partnership"}
-                  name={"uplinePartnership"}
-                  id={"uplinePartnership"}
-                  type={"text"}
-                  disabled={true}
-                  value={formik.values.uplinePartnership}
-                  onChange={formik.handleChange}
-                />
-                <Input
-                  inputContainerStyle={{
-                    ...inputContainerStyle,
-                    backgroundColor:
-                      formik.values?.roleName?.value === "user" && "#DEDEDE",
-                    height: { lg: "45px", xs: "36px" },
-                  }}
-                  containerStyle={{
-                    ...containerStyles,
-                    display:
-                      formik.values?.roleName?.value === "user"
-                        ? "none"
-                        : "block",
-                  }}
-                  disabled={state?.id ? true : false}
-                  titleStyle={titleStyles}
-                  inputStyle={inputStyle}
-                  title={"My Partnership"}
-                  name={"myPartnership"}
-                  id={"myPartnership"}
-                  type={"Number"}
-                  value={formik.values.myPartnership}
-                  onChange={handlePartnershipChange}
-                />
-              </Box>
-              <Input
-                containerStyle={{
-                  ...containerStyles,
-                  display:
-                    formik.values?.roleName?.value === "user"
-                      ? "none"
-                      : "block",
-                }}
-                titleStyle={titleStyles}
-                inputStyle={inputStyle}
-                disabled={true}
-                inputContainerStyle={{
-                  backgroundColor: "#DEDEDE",
-                  ...inputContainerStyle,
-                  height: { lg: "45px", xs: "36px" },
-                }}
-                title={"Downline partnership"}
-                name={"downlinePartnership"}
-                id={"downlinePartnership"}
-                type={"Number"}
-                value={formik.values.downlinePartnership}
-                onChange={formik.handleChange}
-              />
+              {formik.values.roleName.value !== "expert" && (
+                <>
+                  <Box
+                    sx={{
+                      display: { lg: "block", md: "grid", xs: "grid" },
+                      gridTemplateColumns: "50% 47%",
+                      gridColumnGap: "10px",
+                    }}
+                  >
+                    <Input
+                      containerStyle={{
+                        ...containerStyles,
+                        display:
+                          formik.values?.roleName?.value === "user"
+                            ? "none"
+                            : "block",
+                      }}
+                      titleStyle={titleStyles}
+                      inputStyle={inputStyle}
+                      inputContainerStyle={{
+                        ...inputContainerStyle,
+                        backgroundColor: "#DEDEDE",
+                        height: { lg: "45px", xs: "36px" },
+                      }}
+                      title={"Upline Partnership"}
+                      name={"uplinePartnership"}
+                      id={"uplinePartnership"}
+                      type={"text"}
+                      disabled={true}
+                      value={formik.values.uplinePartnership}
+                      onChange={formik.handleChange}
+                    />
+                    <Input
+                      inputContainerStyle={{
+                        ...inputContainerStyle,
+                        backgroundColor:
+                          formik.values?.roleName?.value === "user" &&
+                          "#DEDEDE",
+                        height: { lg: "45px", xs: "36px" },
+                      }}
+                      containerStyle={{
+                        ...containerStyles,
+                        display:
+                          formik.values?.roleName?.value === "user"
+                            ? "none"
+                            : "block",
+                      }}
+                      disabled={state?.id ? true : false}
+                      titleStyle={titleStyles}
+                      inputStyle={inputStyle}
+                      title={"My Partnership"}
+                      name={"myPartnership"}
+                      id={"myPartnership"}
+                      type={"Number"}
+                      value={formik.values.myPartnership}
+                      onChange={handlePartnershipChange}
+                    />
+                  </Box>
+                  <Input
+                    containerStyle={{
+                      ...containerStyles,
+                      display:
+                        formik.values?.roleName?.value === "user"
+                          ? "none"
+                          : "block",
+                    }}
+                    titleStyle={titleStyles}
+                    inputStyle={inputStyle}
+                    disabled={true}
+                    inputContainerStyle={{
+                      backgroundColor: "#DEDEDE",
+                      ...inputContainerStyle,
+                      height: { lg: "45px", xs: "36px" },
+                    }}
+                    title={"Downline partnership"}
+                    name={"downlinePartnership"}
+                    id={"downlinePartnership"}
+                    type={"Number"}
+                    value={formik.values.downlinePartnership}
+                    onChange={formik.handleChange}
+                  />
+                </>
+              )}
 
               {formik?.values?.roleName?.value !== "expert" &&
                 formik?.values?.roleName?.value === "fairGameAdmin" && (
