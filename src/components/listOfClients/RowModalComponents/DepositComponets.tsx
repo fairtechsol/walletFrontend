@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeAmmountUser } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
+import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
   userId: "",
@@ -52,19 +53,31 @@ const DepositComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const id = element?.id
-        ? element?.id
-        : walletAccountDetail?.id
-        ? walletAccountDetail?.id
-        : "";
-      const payload = {
-        userId: id,
-        amount: values.amount,
-        transactionPassword: values.transactionPassword,
-        remark: values.remark,
-        transactionType: "add",
-      };
-      dispatch(changeAmmountUser(payload));
+      let payload;
+      if (walletAccountDetail) {
+        payload = {
+          amount: values.amount,
+          transactionPassword: values.transactionPassword,
+          remark: values.remark,
+          transactionType: "add",
+        };
+      } else {
+        payload = {
+          userId: element?.id,
+          amount: values.amount,
+          transactionPassword: values.transactionPassword,
+          remark: values.remark,
+          transactionType: "add",
+        };
+      }
+      dispatch(
+        changeAmmountUser({
+          url: walletAccountDetail
+            ? ApiConstants.WALLET.BALANCEUPDATE
+            : ApiConstants.USER.BALANCEUPDATE,
+          payload: payload,
+        })
+      );
     },
   });
 

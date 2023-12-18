@@ -28,7 +28,7 @@ const RowHeaderMatches = ({
       }}
       sx={{
         width: "100%",
-        height: { laptop: "60px", mobile: "50px" },
+        height: { lg: "60px", xs: "50px" },
         background: "white",
         display: "flex",
         padding: 0.1,
@@ -36,7 +36,7 @@ const RowHeaderMatches = ({
     >
       <Box
         sx={{
-          width: { mobile: "10%", laptop: "5%" },
+          width: { xs: "10%", lg: "5%" },
           height: "100%",
           justifyContent: "center",
           alignItems: "center",
@@ -54,12 +54,12 @@ const RowHeaderMatches = ({
               ? Tennis
               : Cricket
           }
-          sx={{ width: { laptop: "35px", mobile: "25px" } }}
+          sx={{ width: { lg: "35px", xs: "25px" } }}
         />
       </Box>
       <Box
         sx={{
-          width: { mobile: "40%", laptop: "60%" },
+          width: { xs: "40%", lg: "60%" },
           height: "100%",
           alignItems: "center",
           display: "flex",
@@ -77,12 +77,12 @@ const RowHeaderMatches = ({
         <StyledImage
           src={ArrowDown}
           sx={{
-            width: { laptop: "20px", mobile: "10px" },
+            width: { lg: "20px", xs: "10px" },
             transform:
               visible && selectedEventType === item?.eventType
                 ? "rotate(180deg)"
                 : "rotate(0deg)",
-            height: { laptop: "10px", mobile: "6px" },
+            height: { lg: "10px", xs: "6px" },
           }}
         />
       </Box>
@@ -90,7 +90,7 @@ const RowHeaderMatches = ({
         sx={{
           background: item?.totalLoss > 0 ? "#27AC1E" : "#E32A2A",
           paddingX: "2px",
-          width: { mobile: "25%", laptop: "30%" },
+          width: { xs: "25%", lg: "30%" },
           height: "100%",
           marginLeft: 0.1,
           justifyContent: "center",
@@ -109,7 +109,7 @@ const RowHeaderMatches = ({
         >
           <Typography
             sx={{
-              fontSize: { laptop: "14px", mobile: "12px" },
+              fontSize: { lg: "14px", xs: "12px" },
               fontWeight: "700",
               color: "white",
             }}
@@ -119,15 +119,15 @@ const RowHeaderMatches = ({
           <StyledImage
             src={item?.totalLoss > 0 ? ARROWUP : ARROWDOWN}
             sx={{
-              width: { laptop: "25px", mobile: "15px" },
-              height: { laptop: "12px", mobile: "8px" },
+              width: { lg: "25px", xs: "15px" },
+              height: { lg: "12px", xs: "8px" },
             }}
           />
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography
             sx={{
-              fontSize: { laptop: "14px", mobile: "10px" },
+              fontSize: { lg: "14px", xs: "10px" },
               fontWeight: "700",
               color: "white",
             }}
@@ -147,7 +147,7 @@ const RowHeaderMatches = ({
         sx={{
           background: "#0B4F26",
           paddingX: "2px",
-          width: { mobile: "25%", laptop: "30%" },
+          width: { xs: "25%", lg: "30%" },
           height: "100%",
           marginLeft: 0.1,
           justifyContent: "center",
@@ -158,7 +158,7 @@ const RowHeaderMatches = ({
       >
         <Typography
           sx={{
-            fontSize: { laptop: "14px", mobile: "12px" },
+            fontSize: { lg: "14px", xs: "12px" },
             fontWeight: "700",
             color: "white",
           }}
@@ -168,7 +168,7 @@ const RowHeaderMatches = ({
         <Box sx={{ display: "flex" }}>
           <Typography
             sx={{
-              fontSize: { laptop: "14px", mobile: "10px" },
+              fontSize: { lg: "14px", xs: "10px" },
               fontWeight: "700",
               color: "white",
               textAlign: "center",
