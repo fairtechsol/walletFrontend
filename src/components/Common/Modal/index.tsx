@@ -1,9 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { changePasswordReset } from "../../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
 
 const Modal = ({ message, buttonMessage, setShowModal }: any) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   return (
     <>
       <Box
@@ -67,7 +70,7 @@ const Modal = ({ message, buttonMessage, setShowModal }: any) => {
                   justifyContent: "center",
                 }}
                 onClick={() => {
-                  changePasswordReset();
+                  dispatch(changePasswordReset());
                   setShowModal(false);
                   navigate("/login");
                 }}
