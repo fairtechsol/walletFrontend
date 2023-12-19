@@ -1,8 +1,32 @@
 import { Box, Button, Typography } from "@mui/material";
+import { IoCloseCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { changePasswordReset } from "../../../store/actions/user/userAction";
 
-const Modal = ({ message, buttonMessage, setShowModal }: any) => {
+{
+  /* <Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style}>
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      Text in a modal
+    </Typography>
+    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+    </Typography>
+  </Box>
+</Modal> */
+}
+const Modal = ({
+  transactionMessage,
+  modalTitle,
+  buttonMessage,
+  setShowModal,
+  closeBtn,
+}: any) => {
   const navigate = useNavigate();
   return (
     <>
@@ -43,6 +67,24 @@ const Modal = ({ message, buttonMessage, setShowModal }: any) => {
               minWidth: { lg: "250px", md: "200px", xs: "0px" },
             }}
           >
+            {/* clode button  start*/}
+            {closeBtn ? (
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: "-10px",
+                  top: "-15px",
+                  zIndex: 99999,
+                  color: "#fff",
+                  fontSize: "28px",
+                }}
+              >
+                <IoCloseCircle />
+              </Box>
+            ) : (
+              ""
+            )}
+            {/* clode button end */}
             <Box
               sx={{
                 maxHeight: "300px",
@@ -57,11 +99,14 @@ const Modal = ({ message, buttonMessage, setShowModal }: any) => {
               }}
             >
               <Typography mb={2} color={"#000"}>
-                {message ? `Your Transaction Password is : ${message}` : ""}
+                {transactionMessage
+                  ? `Your Transaction Password is : ${transactionMessage}`
+                  : modalTitle}
               </Typography>
               <Button
                 sx={{
-                  backgroundColor: "#fff",
+                  backgroundColor: "#004a25",
+                  color: "#fff",
                   ":hover": { backgroundColor: "#43ff5f" },
                   display: "flex",
                   justifyContent: "center",
@@ -69,7 +114,7 @@ const Modal = ({ message, buttonMessage, setShowModal }: any) => {
                 onClick={() => {
                   changePasswordReset();
                   setShowModal(false);
-                  navigate("/login");
+                  // navigate("/login");
                 }}
               >
                 {buttonMessage}
