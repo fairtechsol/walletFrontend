@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { IoCloseCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { changePasswordReset } from "../../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
 
 {
   /* <Modal
@@ -28,6 +29,8 @@ const Modal = ({
   closeBtn,
 }: any) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   return (
     <>
       <Box
@@ -112,7 +115,7 @@ const Modal = ({
                   justifyContent: "center",
                 }}
                 onClick={() => {
-                  changePasswordReset();
+                  dispatch(changePasswordReset());
                   setShowModal(false);
                   // navigate("/login");
                 }}
