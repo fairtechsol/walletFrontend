@@ -184,7 +184,8 @@ const ChangePassword = (props: any) => {
       </form>
       {showModal && (
         <Modal
-          modalTitle="Your password has been change sucessfully"
+          transactionMessage={transactionPassword}
+          modalTitle="Your password has been changed sucessfully"
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Navigate To Login"}
