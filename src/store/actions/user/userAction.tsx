@@ -33,7 +33,6 @@ interface RequestData {
 export const changePassword = createAsyncThunk<any, ChangePassword>(
   "user/changePassword",
   async (requestData, thunkApi) => {
-    debugger;
     try {
       const resp = await service.post(
         `${ApiConstants.USER.CHANGEPASSWORD}`,

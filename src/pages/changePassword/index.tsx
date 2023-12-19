@@ -1,14 +1,13 @@
-import { Box, Button, Typography, CircularProgress } from "@mui/material";
-import Input from "../../components/login/Input";
-import { eye, eyeLock } from "../../assets";
-import { changePasswordSchema } from "../../utils/Validations";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { eye, eyeLock } from "../../assets";
+import Modal from "../../components/Common/Modal";
+import Input from "../../components/login/Input";
 import { changePassword } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import Modal from "../../components/Common/Modal";
+import { changePasswordSchema } from "../../utils/Validations";
 
 const initialValues: any = {
   oldPassword: "",
@@ -185,7 +184,7 @@ const ChangePassword = (props: any) => {
       </form>
       {showModal && (
         <Modal
-          message={transactionPassword}
+          modalTitle="Your password has been change sucessfully"
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Navigate To Login"}
