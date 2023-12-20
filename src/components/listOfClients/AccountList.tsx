@@ -12,7 +12,7 @@ import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 
-const AccountList = () => {
+const AccountList = (endpoint: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const dispatch: AppDispatch = useDispatch();
   const loading = false;
@@ -23,8 +23,8 @@ const AccountList = () => {
   const { userList } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {
-    dispatch(getUserList({ currentPage: currentPage }));
-  }, [currentPage]);
+    dispatch(getUserList({ currentPage: currentPage, url: endpoint }));
+  }, [currentPage, endpoint]);
 
   return (
     <>

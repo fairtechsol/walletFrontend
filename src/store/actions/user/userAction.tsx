@@ -28,6 +28,7 @@ interface ChangePassword {
 interface RequestData {
   userName?: string;
   currentPage?: number;
+  url?: any;
 }
 
 export const changePassword = createAsyncThunk<any, ChangePassword>(
@@ -56,7 +57,11 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.LIST}?${`userName=${
+        `${
+          requestData?.url === true
+            ? ApiConstants.USER.EXPERTLIST
+            : ApiConstants.USER.LIST
+        }?${`userName=${
           requestData?.userName ? requestData?.userName : ""
         }`}&offset=${requestData?.currentPage}&limit=${Constants.pageLimit}`
       );

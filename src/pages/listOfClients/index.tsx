@@ -69,7 +69,7 @@ const ListOfClients = () => {
           <Typography variant="h3" sx={{ color: "#fff", m: 2 }}>
             Expert....
           </Typography>
-          <AccountList />
+          <AccountList endpoint={true} />
         </TabPanel>
         {/* <AccountList /> */}
       </Box>
