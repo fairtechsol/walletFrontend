@@ -13,6 +13,7 @@ export const ApiConstants = {
     ADDEXPERT: "/expert/add",
     UPDATE: "/user/updateUser",
     PROFILE: "/user/profile",
+    MARQUEE: "/expert/notification",
     LOCKUNLOCK: "/user/lockUnlockUser",
     CREDITREFERRENCE: "/user/update/creditreferrence",
     EXPOSURELIMIT: "/user/update/exposurelimit",

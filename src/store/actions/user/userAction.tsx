@@ -193,6 +193,21 @@ export const changeAmmountUser = createAsyncThunk<any, any>(
   }
 );
 
+export const marqueeNotification = createAsyncThunk<any>(
+  "expert/notification",
+  async () => {
+    try {
+      const resp = await service.get(`${ApiConstants.USER.MARQUEE}`);
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
 // export const userChangePassword = createAsyncThunk<any, any>(
 //   "user/changePassword",
 //   async (requestData) => {

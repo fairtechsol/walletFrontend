@@ -3,6 +3,7 @@ import {
   changePassword,
   changePasswordReset,
   getUsersProfile,
+  marqueeNotification,
   profileReset,
 } from "../../actions/user/userAction";
 
@@ -12,9 +13,11 @@ interface InitialState {
   success: boolean;
   loading: boolean;
   error: any;
+  marqueeNotification: any;
 }
 
 const initialState: InitialState = {
+  marqueeNotification: null,
   transactionPassword: "",
   profileDetail: null,
   loading: false,
@@ -53,6 +56,20 @@ const profileSlice = createSlice({
         state.profileDetail = action.payload;
       })
       .addCase(getUsersProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(marqueeNotification.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(marqueeNotification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.profileDetail = action.payload;
+      })
+      .addCase(marqueeNotification.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })

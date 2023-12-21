@@ -1,12 +1,13 @@
 import { memo, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import Header from "./header";
-import BackgroundLayout from "../../components/Common/BackgroundLayout";
-import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
+import BackgroundLayout from "../../components/Common/BackgroundLayout";
 import {
   getUsersProfile,
+  marqueeNotification,
 } from "../../store/actions/user/userAction";
+import { AppDispatch } from "../../store/store";
+import Header from "./header";
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const MainLayout = () => {
       navigate("/");
     }
     dispatch(getUsersProfile());
+    dispatch(marqueeNotification());
   }, []);
 
   return (
