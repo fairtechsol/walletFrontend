@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import AccountList from "../../components/listOfClients/AccountList";
+import AccountListExpert from "../../components/listOfClients/AccountListExpert";
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 
@@ -80,7 +81,7 @@ const ListOfClients = () => {
               <AccountList endpoint={ApiConstants.USER.LIST} />
             </TabPanel>
             <TabPanel value={value} index="two">
-              <AccountList endpoint={ApiConstants.USER.EXPERTLIST} />
+              <AccountListExpert endpoint={ApiConstants.USER.EXPERTLIST} />
             </TabPanel>
           </>
         ) : (
