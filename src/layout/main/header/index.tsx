@@ -171,8 +171,9 @@ const Header = () => {
       >
         <div className="marquee-container nav-marquee text-white">
           <div className="marquee-content">
-            {marqueeNotification?.value}
-            Add The New Match And Enjoy The Game
+            {marqueeNotification?.value
+              ? marqueeNotification?.value
+              : "Add The New Match And Enjoy The Game"}
           </div>
         </div>
       </Box>

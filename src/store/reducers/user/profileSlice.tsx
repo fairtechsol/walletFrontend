@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   changePassword,
   changePasswordReset,
+  getMyAccountDetails,
   getUsersProfile,
   marqueeNotification,
   profileReset,
@@ -9,6 +10,7 @@ import {
 
 interface InitialState {
   transactionPassword: string;
+  myAccountDetails: any;
   profileDetail: any;
   success: boolean;
   loading: boolean;
@@ -18,6 +20,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   marqueeNotification: null,
+  myAccountDetails: null,
   transactionPassword: "",
   profileDetail: null,
   loading: false,
@@ -56,6 +59,20 @@ const profileSlice = createSlice({
         state.profileDetail = action.payload;
       })
       .addCase(getUsersProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(getMyAccountDetails.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(getMyAccountDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.myAccountDetails = action.payload;
+      })
+      .addCase(getMyAccountDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
