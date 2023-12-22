@@ -84,7 +84,7 @@ const profileSlice = createSlice({
       .addCase(marqueeNotification.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.profileDetail = action.payload;
+        state.marqueeNotification = action.payload;
       })
       .addCase(marqueeNotification.rejected, (state, action) => {
         state.loading = false;

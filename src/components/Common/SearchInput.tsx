@@ -6,6 +6,7 @@ import { debounce } from "lodash";
 import { getUserList } from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
+import { ApiConstants } from "../../utils/Constants";
 
 const SearchInput = (props: any) => {
   const {
@@ -30,7 +31,13 @@ const SearchInput = (props: any) => {
       onChange(value);
     }
     try {
-      dispatch(getUserList({ userName: value, currentPage: 1 }));
+      dispatch(
+        getUserList({
+          userName: value,
+          currentPage: 1,
+          url: { endpoint: ApiConstants.USER.LIST },
+        })
+      );
     } catch (e) {
       console.log(e);
     }

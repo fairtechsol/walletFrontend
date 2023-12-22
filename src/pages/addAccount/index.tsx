@@ -29,7 +29,7 @@ import { addUserValidation } from "../../utils/Validations";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
-//   { value: "superUrlAdmin", label: "URL Super Admin", level: 2 },
+//   { value: "superAdmin", label: "URL Super Admin", level: 2 },
 //   { value: "superAdmin", label: "Super Admin", level: 3 },
 //   { value: "admin", label: "Admin", level: 4 },
 //   { value: "superMaster", label: "Super Master", level: 5 },
@@ -305,7 +305,7 @@ const AddAccount = () => {
         sessionMatchPrivilege: userDetail?.sessionMatchPrivilege,
       });
     }
-  }, [loading, pathname]);
+  }, [loading, pathname, success]);
 
   return (
     <>
@@ -479,7 +479,7 @@ const AddAccount = () => {
                     onChange={formik.handleChange}
                   />
                 </div>
-                {formik?.values?.roleName?.value === "superUrlAdmin" && (
+                {formik?.values?.roleName?.value === "superAdmin" && (
                   <div>
                     <Input
                       containerStyle={containerStyles}
