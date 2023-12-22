@@ -9,7 +9,7 @@ export const ApiConstants = {
     LIST: "/user/list",
     EXPERTLIST: "/expert/list",
     ADDFGADMIN: "/user/add",
-    ADDURLADMIN: "/superadmin/create",
+    ADDURLADMIN: "/superadmin/add",
     ADDEXPERT: "/expert/add",
     UPDATE: "/user/updateUser",
     PROFILE: "/user/profile",

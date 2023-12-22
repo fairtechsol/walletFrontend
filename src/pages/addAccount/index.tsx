@@ -16,8 +16,6 @@ import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
-import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation } from "../../utils/Validations";
 import {
   addExpert,
   addUrlAdmin,
@@ -26,6 +24,8 @@ import {
   updateReset,
   updateUser,
 } from "../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../store/store";
+import { addUserValidation } from "../../utils/Validations";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -158,7 +158,7 @@ const AddAccount = () => {
             sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
           };
           dispatch(addExpert(payload));
-        } else if (values.roleName.value === "superUrlAdmin") {
+        } else if (values.roleName.value === "superAdmin") {
           payload = {
             ...commonPayload,
             roleName: values.roleName.value,
@@ -235,7 +235,7 @@ const AddAccount = () => {
       const accountTypeMap: any = {
         fairGameWallet: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
         fairGameAdmin: [
-          { value: "superUrlAdmin", label: "URL Super Admin" },
+          { value: "superAdmin", label: "URL Super Admin" },
           { value: "expert", label: "Expert" },
         ],
       };

@@ -57,13 +57,9 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${
-          requestData?.url === true
-            ? ApiConstants.USER.EXPERTLIST
-            : ApiConstants.USER.LIST
-        }?${`userName=${
+        `${requestData?.url?.endpoint}?${`user.userName=${
           requestData?.userName ? requestData?.userName : ""
-        }`}&offset=${requestData?.currentPage}&limit=${Constants.pageLimit}`
+        }`}&page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
       );
       if (resp) {
         return resp?.data;

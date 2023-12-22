@@ -1,6 +1,9 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import * as React from "react";
+import { useSelector } from "react-redux";
 import AccountList from "../../components/listOfClients/AccountList";
+import { RootState } from "../../store/store";
+import { ApiConstants } from "../../utils/Constants";
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -24,6 +27,10 @@ function TabPanel(props: any) {
 
 const ListOfClients = () => {
   const [value, setValue] = React.useState("one");
+
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -51,26 +58,34 @@ const ListOfClients = () => {
           </Typography>
         </Box>
 
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="secondary"
-          indicatorColor="secondary"
-          aria-label="secondary tabs example"
-        >
-          <Tab sx={{ color: "white" }} value="one" label="Super Url Admin" />
-          <Tab sx={{ color: "white" }} value="two" label="Expert" />
-        </Tabs>
+        {profileDetail?.roleName === "fairGameAdmin" ? (
+          <>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="secondary tabs example"
+            >
+              <Tab
+                sx={{ color: "white" }}
+                value="one"
+                label="Super Url Admin"
+              />
+              <Tab sx={{ color: "white" }} value="two" label="Expert" />
+            </Tabs>
 
-        <TabPanel value={value} index="one">
-          <AccountList />
-        </TabPanel>
-        <TabPanel value={value} index="two">
-          <Typography variant="h3" sx={{ color: "#fff", m: 2 }}>
-            Expert....
-          </Typography>
-          <AccountList endpoint={true} />
-        </TabPanel>
+            <TabPanel value={value} index="one">
+              <AccountList endpoint={ApiConstants.USER.LIST} />
+            </TabPanel>
+            <TabPanel value={value} index="two">
+              <AccountList endpoint={ApiConstants.USER.EXPERTLIST} />
+            </TabPanel>
+          </>
+        ) : (
+          <AccountList endpoint={ApiConstants.USER.LIST} />
+        )}
+
         {/* <AccountList /> */}
       </Box>
     </>

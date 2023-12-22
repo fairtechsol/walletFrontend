@@ -24,7 +24,7 @@ const AccountList = (endpoint: any) => {
 
   useEffect(() => {
     dispatch(getUserList({ currentPage: currentPage, url: endpoint }));
-  }, [currentPage, endpoint]);
+  }, [currentPage]);
 
   return (
     <>
