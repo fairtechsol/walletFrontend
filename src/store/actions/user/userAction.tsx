@@ -52,6 +52,32 @@ export const changePassword = createAsyncThunk<any, ChangePassword>(
   }
 );
 
+export const getMyAccountDetails = createAsyncThunk<any>(
+  "user/getMyAccountDetails",
+  async () => {
+    try {
+      const resp = await service.post(`${ApiConstants.USER.BALANCE}`);
+      if (resp) {
+        const data = resp?.data?.response;
+        return {
+          userCreditReference: data?.userCreditReference,
+          totalMasterBalance: data?.totalMasterBalance,
+          availableBalance: data?.availableBalance,
+          downLevelOccupyBalance: data?.downLevelOccupyBalance,
+          upperLevelBalance: data?.upperLevelBalance,
+          availableBalanceWithProfitLoss: data?.availableBalanceWithProfitLoss,
+          downLevelCreditReference: data?.downLevelCreditReference,
+          downLevelProfitLoss: data?.downLevelProfitLoss,
+          profitLoss: data?.profitLoss,
+        };
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
 export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   "user/list",
   async (requestData, thunkApi) => {

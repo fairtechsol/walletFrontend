@@ -30,7 +30,7 @@ const Modal = ({
 }: any) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   return (
     <>
       <Box

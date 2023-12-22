@@ -1,66 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DataShow from "../../components/myAccount/DataShow";
-import { BalanceDetails } from "../../interface/myAccount";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import service from "../../service";
+import { AppDispatch, RootState } from "../../store/store";
+import { getMyAccountDetails } from "../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
 
 const MyAccount = () => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const dispatch: AppDispatch = useDispatch();
 
-  const { profileDetail } = useSelector(
+  const { myAccountDetails } = useSelector(
     (state: RootState) => state.user.profile
   );
-
-  const [userBalanceDetails, setUserBalanceDetails] = useState<BalanceDetails>({
-    userCreditReference: "0",
-    totalMasterBalance: "0",
-    availableBalance: "0",
-    downLevelOccupyBalance: "0",
-    upperLevelBalance: "0",
-    availableBalanceWithProfitLoss: "0",
-    downLevelCreditReference: "0",
-    downLevelProfitLoss: "0",
-    profitLoss: "0",
-  });
-
   const classes = {
     mainBoxSX: { position: "relative", margin: "1%" },
   };
 
-  const getMyAccountDetails = async (id: string) => {
-    try {
-      const resp = await service.get(`/user/balance?id=${id}`);
-      if (resp) {
-        const data = resp?.data?.response;
-        setUserBalanceDetails((prev: any) => {
-          return {
-            ...prev,
-            userCreditReference: data?.userCreditReference,
-            totalMasterBalance: data?.totalMasterBalance,
-            availableBalance: data?.availableBalance,
-            downLevelOccupyBalance: data?.downLevelOccupyBalance,
-            upperLevelBalance: data?.upperLevelBalance,
-            availableBalanceWithProfitLoss:
-              data?.availableBalanceWithProfitLoss,
-            downLevelCreditReference: data?.downLevelCreditReference,
-            downLevelProfitLoss: data?.downLevelProfitLoss,
-            profitLoss: data?.profitLoss,
-          };
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
-    if (profileDetail) {
-      getMyAccountDetails(profileDetail.id);
-    }
-  }, [profileDetail]);
+    dispatch(getMyAccountDetails());
+  }, []);
 
   return (
     <>
@@ -103,11 +63,11 @@ const MyAccount = () => {
           >
             <DataShow
               title={"Upper Level Credit Referance"}
-              value={userBalanceDetails?.userCreditReference}
+              value={myAccountDetails?.userCreditReference ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.userCreditReference) >= 0
+                  parseInt(myAccountDetails?.userCreditReference ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -115,7 +75,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Down level Occupy Balance"}
-              value={userBalanceDetails?.downLevelOccupyBalance}
+              value={myAccountDetails?.downLevelOccupyBalance ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -123,7 +83,7 @@ const MyAccount = () => {
               }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.downLevelOccupyBalance) >= 0
+                  parseInt(myAccountDetails?.downLevelOccupyBalance ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -131,14 +91,14 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Down Level Credit Referance"}
-              value={userBalanceDetails?.downLevelCreditReference}
+              value={myAccountDetails?.downLevelCreditReference ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
               }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.downLevelCreditReference) >= 0
+                  parseInt(myAccountDetails?.downLevelCreditReference ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -155,11 +115,11 @@ const MyAccount = () => {
           >
             <DataShow
               title={"Total Master Balance"}
-              value={userBalanceDetails?.totalMasterBalance}
+              value={myAccountDetails?.totalMasterBalance ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.totalMasterBalance) >= 0
+                  parseInt(myAccountDetails?.totalMasterBalance ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -167,7 +127,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Upper Level"}
-              value={userBalanceDetails?.upperLevelBalance}
+              value={myAccountDetails?.upperLevelBalance ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -175,7 +135,7 @@ const MyAccount = () => {
               }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.upperLevelBalance) >= 0
+                  parseInt(myAccountDetails?.upperLevelBalance ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -183,14 +143,14 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Down Level Profit/Loss"}
-              value={userBalanceDetails?.downLevelProfitLoss}
+              value={myAccountDetails?.downLevelProfitLoss ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
               }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.downLevelProfitLoss) >= 0
+                  parseInt(myAccountDetails?.downLevelProfitLoss ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -208,11 +168,11 @@ const MyAccount = () => {
           >
             <DataShow
               title={"Available Balance"}
-              value={userBalanceDetails?.availableBalance}
+              value={myAccountDetails?.availableBalance ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.availableBalance) >= 0
+                  parseInt(myAccountDetails?.availableBalance ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
@@ -220,7 +180,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Available Balance With Profit/Loss"}
-              value={userBalanceDetails?.availableBalanceWithProfitLoss}
+              value={myAccountDetails?.availableBalanceWithProfitLoss ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -229,7 +189,7 @@ const MyAccount = () => {
               valueContainerStyle={{
                 background: `${
                   parseInt(
-                    userBalanceDetails?.availableBalanceWithProfitLoss
+                    myAccountDetails?.availableBalanceWithProfitLoss ?? 0
                   ) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
@@ -238,14 +198,14 @@ const MyAccount = () => {
             />
             <DataShow
               title={"My Profit/Loss"}
-              value={userBalanceDetails?.profitLoss}
+              value={myAccountDetails?.profitLoss ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
               }}
               valueContainerStyle={{
                 background: `${
-                  parseInt(userBalanceDetails?.profitLoss) >= 0
+                  parseInt(myAccountDetails?.profitLoss ?? 0) >= 0
                     ? "#0B4F26"
                     : "#FF4848"
                 }`,
