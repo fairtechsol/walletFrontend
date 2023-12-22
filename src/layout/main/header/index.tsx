@@ -1,16 +1,14 @@
-import { Box, AppBar, useMediaQuery, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { AppBar, Box, useMediaQuery, useTheme } from "@mui/material";
+import { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Draw, FgLogo } from "../../../assets/index";
-import { memo } from "react";
 import StyledImage from "../../../components/Common/StyledImages";
-import BoxProfile from "./BoxProfile";
-import AdminEventListing from "./AdminEventListing";
-import "./index.css";
-import MobileSideBar from "./MobileSideBar";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
 import { profileReset } from "../../../store/actions/user/userAction";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import AdminEventListing from "./AdminEventListing";
+import BoxProfile from "./BoxProfile";
+import MobileSideBar from "./MobileSideBar";
+import "./index.css";
 
 const Header = () => {
   const theme = useTheme();
@@ -18,9 +16,13 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const { profileDetail, success } = useSelector(
+  const { profileDetail, success, marqueeNotification } = useSelector(
     (state: RootState) => state.user.profile
   );
+
+  // const initialValues: any = {
+  //   value: "",
+  // };
 
   const currentSelected = 1;
 
@@ -148,7 +150,9 @@ const Header = () => {
                 containerStyle={classes.BoxCont1sub2BoxProfileContStyle}
                 image={"https://picsum.photos/200/300"}
                 value={profileDetail && profileDetail?.userName}
-                balance={profileDetail && profileDetail?.userBal?.currentBalance}
+                balance={
+                  profileDetail && profileDetail?.userBal?.currentBalance
+                }
               />
             </Box>
           </Box>
@@ -167,6 +171,7 @@ const Header = () => {
       >
         <div className="marquee-container nav-marquee text-white">
           <div className="marquee-content">
+            {marqueeNotification?.value}
             Add The New Match And Enjoy The Game
           </div>
         </div>

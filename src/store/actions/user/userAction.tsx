@@ -28,6 +28,7 @@ interface ChangePassword {
 interface RequestData {
   userName?: string;
   currentPage?: number;
+  url?: any;
 }
 
 export const changePassword = createAsyncThunk<any, ChangePassword>(
@@ -56,9 +57,9 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.LIST}?${`userName=${
+        `${requestData?.url?.endpoint}?${`user.userName=${
           requestData?.userName ? requestData?.userName : ""
-        }`}&offset=${requestData?.currentPage}&limit=${Constants.pageLimit}`
+        }`}&page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
       );
       if (resp) {
         return resp?.data;
@@ -178,6 +179,21 @@ export const changeAmmountUser = createAsyncThunk<any, any>(
         `${requestData.url}`,
         requestData.payload
       );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
+export const marqueeNotification = createAsyncThunk<any>(
+  "expert/notification",
+  async () => {
+    try {
+      const resp = await service.get(`${ApiConstants.USER.MARQUEE}`);
       if (resp) {
         return resp?.data;
       }
