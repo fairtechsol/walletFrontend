@@ -18,6 +18,7 @@ const SearchInput = (props: any) => {
     width,
     searchContainerStyle,
     onChange,
+    endpoint,
   } = props;
 
   const theme = useTheme();
@@ -30,7 +31,13 @@ const SearchInput = (props: any) => {
       onChange(value);
     }
     try {
-      dispatch(getUserList({ userName: value, currentPage: 1 }));
+      dispatch(
+        getUserList({
+          userName: value,
+          currentPage: 1,
+          url: { endpoint: endpoint },
+        })
+      );
     } catch (e) {
       console.log(e);
     }

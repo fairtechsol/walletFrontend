@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
+import { ApiConstants } from "../../../utils/Constants";
 
 const ListHeaderRow = (props: any) => {
   const { getLimitEntries, getAccountStatement } = props;
@@ -22,6 +23,7 @@ const ListHeaderRow = (props: any) => {
       <NumberDropDown getLimitEntries={getLimitEntries} textColor={"000"} />
       <SearchInput
         show={true}
+        endpoint={ApiConstants.USER.LIST}
         getListOfUser={getAccountStatement}
         width={"100%"}
         placeholder={"Search..."}

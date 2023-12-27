@@ -6,7 +6,7 @@ import { AppDispatch } from "../../store/store";
 import SearchInput from "../Common/SearchInput";
 import StyledImage from "../Common/StyledImages";
 
-const HeaderExpertRow = () => {
+const HeaderExpertRow = ({ endpoint }: any) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box
@@ -56,7 +56,11 @@ const HeaderExpertRow = () => {
           />
         </Box>
       </Box>
-      <SearchInput placeholder={"Search User..."} show={true} />
+      <SearchInput
+        placeholder={"Search User..."}
+        show={true}
+        endpoint={endpoint}
+      />
     </Box>
   );
 };
