@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AccountListDataInterface } from "../../interface/listOfClients";
 import { getUserList } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { Constants } from "../../utils/Constants";
+import { ApiConstants, Constants } from "../../utils/Constants";
 import Pagination from "../Common/Pagination";
 import Loader from "../Loader";
 import AccountListExpertRow from "./AccountListExpertRow";
@@ -16,9 +16,9 @@ const AccountListExpert = (endpoint: any) => {
   const dispatch: AppDispatch = useDispatch();
   const loading = false;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { profileDetail } = useSelector(
-    (state: RootState) => state.user.profile
-  );
+  // const { profileDetail } = useSelector(
+  //   (state: RootState) => state.user.profile
+  // );
   const { userList } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const AccountListExpert = (endpoint: any) => {
               }),
             ]}
           >
-            <HeaderRow />
+            <HeaderRow endpoint={ApiConstants.USER.EXPERTLIST} />
             <Box sx={{ overflowX: "auto" }}>
               <Box
                 sx={{
