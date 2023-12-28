@@ -3,11 +3,11 @@ import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants, Constants } from "../../../utils/Constants";
 
-interface ChangePassword {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
+// interface ChangePassword {
+//   oldPassword: string;
+//   newPassword: string;
+//   confirmPassword: string;
+// }
 
 // interface AddUser {
 //   userName: string;
@@ -102,7 +102,7 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
     try {
       const resp = await service.get(
         `${requestData?.url?.endpoint}?searchBy=user.userName&keyword=${
-          requestData?.userName ? requestData?.userName : null
+          requestData?.userName ? requestData?.userName : ""
         }&page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
       );
       if (resp) {

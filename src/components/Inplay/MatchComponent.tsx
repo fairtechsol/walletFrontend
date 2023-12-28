@@ -3,15 +3,57 @@ import { MatchComponentInterface } from "../../interface/inplay";
 import HeaderRow from "./HeaderRow";
 import TeamDetailRow from "./TeamDetailRow";
 import Divider from "./Divider";
+import { useEffect, useState } from "react";
+import moment from "moment-timezone";
 
 const MatchComponent = (props: MatchComponentInterface) => {
   const { onClick, top, blur, match } = props;
+  const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
 
-  const timeLeft = {
-    days: "00",
-    hours: "00",
-    minutes: "10",
-  };
+  function calculateTimeLeft() {
+    try {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const targetDate = moment(match?.startAt).tz(timezone);
+      const difference = targetDate.diff(moment().tz(timezone), "milliseconds");
+      let timeLeft = {};
+      if (difference > 0) {
+        timeLeft = {
+          days:
+            ("0" + Math.floor(difference / (1000 * 60 * 60 * 24))).slice(-2) ||
+            0,
+          hours:
+            ("0" + Math.floor((difference / (1000 * 60 * 60)) % 24)).slice(
+              -2
+            ) || 0,
+          minutes:
+            ("0" + Math.floor((difference / 1000 / 60) % 60)).slice(-2) || 0,
+          seconds: ("0" + Math.floor((difference / 1000) % 60)).slice(-2) || 0,
+        };
+      } else {
+        timeLeft = {
+          days: "00",
+          hours: "00",
+          minutes: "00",
+        };
+      }
+
+      return timeLeft;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const upcoming: any =
+    Number(timeLeft?.days) === 0 &&
+    Number(timeLeft?.hours) === 0 &&
+    Number(timeLeft?.minutes) <= 30;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <>
@@ -46,7 +88,7 @@ const MatchComponent = (props: MatchComponentInterface) => {
             cursor: "pointer",
           }}
         >
-          <HeaderRow match={match} timeLeft={timeLeft} />
+          <HeaderRow match={match} timeLeft={upcoming} />
           <Box
             sx={{
               display: "flex",
@@ -72,8 +114,8 @@ const MatchComponent = (props: MatchComponentInterface) => {
                   marginLeft: "7px",
                 }}
               >
-                MIN: {match.betfair_match_min_bet} MAX:{" "}
-                {match.betfair_match_max_bet}
+                MIN: {Math.floor(match?.matchOdds[0]?.minBet)} MAX:{" "}
+                {Math.floor(match?.matchOdds[0]?.maxBet)}
               </Typography>
             </Box>
             <Box
@@ -123,14 +165,12 @@ const MatchComponent = (props: MatchComponentInterface) => {
           </Box>
           <TeamDetailRow
             teamName={match.teamA}
-            image={match?.teamA_Image}
             runnerNumber={0}
             apiBasePath={"abc"}
           />
           <Divider />
           <TeamDetailRow
             teamName={match.teamB}
-            image={match?.teamB_Image}
             runnerNumber={1}
             apiBasePath={"abc"}
           />
@@ -139,7 +179,6 @@ const MatchComponent = (props: MatchComponentInterface) => {
               <Divider />
               <TeamDetailRow
                 teamName={match.teamC}
-                image={match?.teamC_Image}
                 runnerNumber={2}
                 apiBasePath={"abc"}
               />
