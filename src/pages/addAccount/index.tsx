@@ -180,6 +180,7 @@ const AddAccount = () => {
             maxBetLimit: values.maxBetLimit,
             minBetLimit: values.minBetLimit,
             myPartnership: values.myPartnership,
+            transactionPassword: values.adminTransPassword,
           };
           dispatch(addUser(payload));
         }

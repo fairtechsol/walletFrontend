@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
 import MultipleMatch from "../pages/analysis/multipleMatch";
+import { Navigate } from "react-router-dom";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const ListOfClients = Loadable(lazy(() => import("../pages/listOfClients")));
@@ -68,6 +69,10 @@ const MainRoutes = {
     {
       path: "change_password",
       element: <ChangePassword />,
+    },
+    {
+      path: "*",
+      element: <Navigate to={"/expert/match"} replace />,
     },
   ],
 };

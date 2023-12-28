@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
+import { Navigate } from "react-router-dom";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const ProfitLossReport = Loadable(
@@ -34,6 +35,10 @@ const ReportRoutes = {
     {
       path: "general_report",
       element: <GeneralReport />,
+    },
+    {
+      path: "*",
+      element: <Navigate to={"/expert/match"} replace />,
     },
   ],
 };

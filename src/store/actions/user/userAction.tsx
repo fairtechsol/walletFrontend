@@ -56,7 +56,7 @@ export const getMyAccountDetails = createAsyncThunk<any>(
   "user/getMyAccountDetails",
   async () => {
     try {
-      const resp = await service.post(`${ApiConstants.USER.BALANCE}`);
+      const resp = await service.get(`${ApiConstants.USER.BALANCE}`);
       if (resp) {
         const data = resp?.data?.response;
         return {
