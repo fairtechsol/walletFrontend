@@ -19,10 +19,21 @@ export const ApiConstants = {
     CREDITREFERRENCE: "/user/update/creditreferrence",
     EXPOSURELIMIT: "/user/update/exposurelimit",
   },
+  SUPERADMIN: {
+    ADD: "/superadmin/add",
+    UPDATE_USER: "/superadmin/updateUser",
+    CHANGE_PASSWORD: "/superadmin/changePassword",
+    LOCK_UNLOCK_USER: "/superadmin/lockUnlockUser",
+    EXPOSURE_LIMIT: "/superadmin/update/exposurelimit",
+    CREDIT_REFERRENCE: "/superadmin/update/creditreferrence",
+    UPDATE_BALANCE: "/superadmin/update/balance",
+  },
   WALLET: {
     BALANCEUPDATE: "wallet/update/balance",
     CREDITREFERRENCE: "wallet/update/creditreference",
     EXPOSURELIMIT: "wallet/update/exposurelimit",
+    LOCKUNLOCK: "/user/lockUnlockUser",
+    CHANGEPASSWORD: "/user/changePassword",
   },
 };
 
