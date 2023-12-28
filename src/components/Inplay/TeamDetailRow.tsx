@@ -3,7 +3,7 @@ import { formatNumber } from "../../helper";
 import SeparateBox from "./SeparateBox";
 
 const TeamDetailRow = (props: any) => {
-  const { teamName, image, runnerNumber, apiBasePath, matchOddsLive } = props;
+  const { teamName, runnerNumber, matchOddsLive } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (
@@ -26,13 +26,13 @@ const TeamDetailRow = (props: any) => {
             alignItems: "center",
           }}
         >
-          {image !== null && (
+          {/* {image !== null && (
             <img
               src={`${apiBasePath}/${image}`}
               style={{ width: "25px", height: "25px", marginLeft: "10px" }}
               alt={image}
             />
-          )}
+          )} */}
           <Typography
             sx={{
               color: "black",
