@@ -16,11 +16,10 @@ const initialValues: any = {
   amount: "",
   remark: "",
   transactionPassword: "",
-  transactionType: "add",
 };
 
 const SetExposureLimit = (props: any) => {
-  const { backgroundColor, setSelected, element, walletAccountDetail } = props;
+  const { backgroundColor, setSelected, element, walletAccountDetail, endpoint } = props;
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -34,21 +33,21 @@ const SetExposureLimit = (props: any) => {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
-          remark: values.remark,
+          // remark: values.remark,
         };
       } else {
         payload = {
           userId: element?.id,
           amount: values.amount,
           transactionPassword: values.transactionPassword,
-          remark: values.remark,
+          // remark: values.remark,
         };
       }
       dispatch(
         setExposureLimit({
           url: walletAccountDetail
             ? ApiConstants.WALLET.EXPOSURELIMIT
-            : ApiConstants.USER.EXPOSURELIMIT,
+            : endpoint,
           payload: payload,
         })
       );

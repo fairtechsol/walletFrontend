@@ -29,6 +29,7 @@ const initialValues: any = {
 
 const DepositComponent = (props: any) => {
   const {
+    endpoint,
     walletAccountDetail,
     element,
     handleKeyDown,
@@ -74,7 +75,7 @@ const DepositComponent = (props: any) => {
         changeAmmountUser({
           url: walletAccountDetail
             ? ApiConstants.WALLET.BALANCEUPDATE
-            : ApiConstants.USER.BALANCEUPDATE,
+            : endpoint,
           payload: payload,
         })
       );

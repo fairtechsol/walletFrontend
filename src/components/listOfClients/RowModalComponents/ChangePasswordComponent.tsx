@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { changePassword } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
+import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
 
 import {
@@ -23,7 +24,7 @@ const initialValues: any = {
 };
 
 const ChangePasswordComponent = (props: any) => {
-  const { setSelected, element } = props;
+  const { setSelected, element,  walletAccountDetail, endpoint } = props;
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -32,12 +33,32 @@ const ChangePasswordComponent = (props: any) => {
     initialValues: initialValues,
     validationSchema: userChangePasswordValidations,
     onSubmit: (values: any) => {
-      let payload: any = {
-        userId: element.id,
-        newPassword: values.newPassword,
-        transactionPassword: values.transactionPassword,
-      };
-      dispatch(changePassword(payload));
+      let payload;
+      // let payload: any = {
+      //   userId: element.id,
+      //   newPassword: values.newPassword,
+      //   transactionPassword: values.transactionPassword,
+      // };
+      if (walletAccountDetail) {
+        payload = {
+          newPassword: values.newPassword,
+          transactionPassword: values.transactionPassword,
+          // remark: values.remark,
+        };
+      } else {
+        payload = {
+          userId: element?.id,
+          newPassword: values.newPassword,
+          transactionPassword: values.transactionPassword,
+          // remark: values.remark,
+        };
+      }
+      dispatch(changePassword({
+        url: walletAccountDetail
+        ? ApiConstants.WALLET.CHANGEPASSWORD
+        : endpoint,
+      payload: payload,
+      }));
     },
   });
 

@@ -15,6 +15,7 @@ const initialValues: any = {
   userId: "",
   amount: "",
   transactionPassword: "",
+  transactionType: "",
   remark: "",
 };
 
@@ -25,6 +26,7 @@ const SetCreditComponent = (props: any) => {
     setSelected,
     element,
     walletAccountDetail,
+    endpoint,
   } = props;
   const [showPass, setShowPass] = useState(false);
 
@@ -39,6 +41,8 @@ const SetCreditComponent = (props: any) => {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
+          transactionType: values.transactionType,
+          
           remark: values.remark,
         };
       } else {
@@ -53,7 +57,7 @@ const SetCreditComponent = (props: any) => {
         setCreditRefference({
           url: walletAccountDetail
             ? ApiConstants.WALLET.CREDITREFERRENCE
-            : ApiConstants.USER.CREDITREFERRENCE,
+            : endpoint,
           payload: payload,
         })
       );
