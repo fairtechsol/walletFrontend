@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { setLockUnlockUser } from "../../../store/actions/user/userAction";
 import { AppDispatch } from "../../../store/store";
+import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
   betBlock: false,
@@ -17,7 +18,7 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail } = props;
+  const { setSelected, element, walletAccountDetail, endpoint } = props;
 
   const defaultLockUnlockObj = {
     all_blocked: element?.userBlock ?? walletAccountDetail?.userBlock,
@@ -44,7 +45,12 @@ const LockUnlockComponent = (props: any) => {
         userBlock: lockUnlockObj.all_blocked,
         transPassword: values.transactionPassword,
       };
-      dispatch(setLockUnlockUser(payload));
+      dispatch(setLockUnlockUser({
+        url: walletAccountDetail
+        ? ApiConstants.WALLET.LOCKUNLOCK
+        : endpoint,
+        payload: payload,
+      }));
     },
   });
 

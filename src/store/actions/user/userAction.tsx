@@ -31,23 +31,41 @@ interface RequestData {
   url?: any;
 }
 
-export const changePassword = createAsyncThunk<any, ChangePassword>(
+// export const changePassword = createAsyncThunk<any, ChangePassword>(
+//   "user/changePassword",
+//   async (requestData, thunkApi) => {
+//     try {
+//       const resp = await service.post(
+//         `${ApiConstants.USER.CHANGEPASSWORD}`,
+//         requestData
+//       );
+//       if (resp) {
+//         if (resp?.data) {
+//           return resp?.data?.transactionPassword;
+//         }
+//         localStorage.clear();
+//       }
+//     } catch (error: any) {
+//       const err = error as AxiosError;
+//       return thunkApi.rejectWithValue(err.response?.status);
+//     }
+//   }
+// );
+
+export const changePassword = createAsyncThunk<any, any>(
   "user/changePassword",
-  async (requestData, thunkApi) => {
+  async (requestData) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.CHANGEPASSWORD}`,
-        requestData
+        `${requestData.url}`,
+        requestData.payload
       );
       if (resp) {
-        if (resp?.data) {
-          return resp?.data?.transactionPassword;
-        }
-        localStorage.clear();
+        return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
+      throw err;
     }
   }
 );
