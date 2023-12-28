@@ -15,7 +15,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("userToken")) {
-      navigate("/");
+      navigate("/wallet/login");
     }
     dispatch(getUsersProfile());
     dispatch(marqueeNotification());

@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
+import { Navigate } from "react-router-dom";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const DepositAndWithdrawBox = Loadable(
@@ -21,6 +22,10 @@ const WalletRoutes = {
     {
       path: "credit_reference",
       element: <DepositAndWithdrawBox />,
+    },
+    {
+      path: "*",
+      element: <Navigate to={"/expert/match"} replace />,
     },
   ],
 };

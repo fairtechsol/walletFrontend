@@ -42,7 +42,7 @@ const Login = () => {
           "forceChangePassword",
           JSON.stringify(forceChangePassword)
         );
-        navigate("/change_password");
+        navigate("/wallet/change_password");
       } else if (isTransPasswordCreated) {
         navigate("/wallet/list_of_clients");
       }

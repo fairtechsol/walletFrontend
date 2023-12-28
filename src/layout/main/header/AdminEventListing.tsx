@@ -30,13 +30,14 @@ const data = [
 ];
 
 const AdminEventListing = () => {
-  const { profileDetail } = useSelector((state: RootState) => state.user.profile);
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   const [newData, setNewData] = useState<any>(data);
 
   useEffect(() => {
     if (profileDetail?.roleName === "fairGameWallet") {
       setNewData((prev: any) => {
-        const secondLastIndex = prev.length - 1;
         const newData = [...prev];
         const body = {
           id: 7,
@@ -44,7 +45,9 @@ const AdminEventListing = () => {
           image: WALLET,
           url: "walletsettings",
         };
-        if (prev?.id !== body?.id) {
+        const objectExists = prev.some((item: any) => item?.id === body?.id);
+        if (!objectExists) {
+          const secondLastIndex = prev.length - 1;
           newData.splice(secondLastIndex, 0, body);
         }
         return newData;

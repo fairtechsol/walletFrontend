@@ -12,7 +12,7 @@ const AuthLayout = () => {
       navigate(-1);
     } else {
       if (!localStorage.getItem("forceChangePassword")) {
-        navigate("/login");
+        navigate("/wallet/login");
       }
     }
   }, []);
