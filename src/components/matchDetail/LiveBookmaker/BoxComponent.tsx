@@ -6,7 +6,7 @@ import { formatNumber } from "../../../helper";
 import { LockSolid } from "../../../assets";
 
 const BoxComponent = (props: any) => {
-  const { name, color, align, teamImage, rates, data } = props;
+  const { name, color, align, rates, data } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status } = data ?? {};
@@ -39,7 +39,7 @@ const BoxComponent = (props: any) => {
             alignItems: "center",
           }}
         >
-          {teamImage !== null && (
+          {/* {teamImage !== null && (
             <>
               <img
                 src={`${"wallet"}/${teamImage}`}
@@ -52,14 +52,14 @@ const BoxComponent = (props: any) => {
                 alt={name}
               />
             </>
-          )}
+          )} */}
           <Typography
             sx={{
               color: "black",
               fontSize: { lg: "14px", xs: "13px" },
               fontWeight: "600",
               marginLeft: "10px",
-              overflow: "hidden",
+              // overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
               maxWidth: "88px",
