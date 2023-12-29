@@ -66,7 +66,7 @@ const AccountList = (endpoint: any) => {
               >
                 <Box>
                   <ListHeaderRow />
-                  <SubHeaderListRow data={profileDetail} />
+                  <SubHeaderListRow data={profileDetail} /> 
                   {userList?.list?.length === 0 && (
                     <Box>
                       <Typography

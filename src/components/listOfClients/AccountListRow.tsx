@@ -282,7 +282,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <StyledImage
-            src={element?.betBlock == 0 ? UnLockIcon : LockIcon}
+            src={!element?.betBlock ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -298,7 +298,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <StyledImage
-            src={element?.userBlock == 0 ? UnLockIcon : LockIcon}
+            src={!element?.userBlock ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
