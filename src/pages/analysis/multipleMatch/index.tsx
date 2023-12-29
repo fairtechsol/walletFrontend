@@ -26,7 +26,7 @@ const MultipleMatch = ({}) => {
   const { state } = useLocation();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
-  const { multipleMatchDetail, success, loading } = useSelector(
+  const { multipleMatchDetail, success } = useSelector(
     (state: RootState) => state.match.analysisList
   );
 

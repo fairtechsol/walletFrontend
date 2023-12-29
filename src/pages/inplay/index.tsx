@@ -63,6 +63,7 @@ const Inplay = () => {
           color="primary"
           onChange={(e: any, value: number) => {
             setCurrentPage(value);
+            console.log(e)
           }}
         />
       )}

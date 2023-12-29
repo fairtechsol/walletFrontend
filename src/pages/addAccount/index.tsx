@@ -26,6 +26,7 @@ import {
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
+import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -345,7 +346,7 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <div>
+                <Box sx={{pb: errors.userName && touched.userName ? 2 : 0 }}>
                   <Input
                     id={"userName"}
                     titleStyle={titleStyles}
@@ -362,14 +363,17 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.userName}
                     onChange={formik.handleChange}
+                    error={touched.userName && Boolean(errors.userName)}
+                    onBlur={formik.handleBlur}
                   />
-                </div>
-                {touched.userName && errors.userName && (
+                <CustomErrorMessage touched={touched.userName} errors={errors.userName} />
+                </Box>
+                {/* {touched.userName && errors.userName && (
                   <p style={{ color: "#fa1e1e" }}>
                     {errors.userName as string}
                   </p>
-                )}
-                <div>
+                )} */}
+                <Box sx={{pb: errors.password && touched.password ? 2 : 0 }}>
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -388,15 +392,14 @@ const AddAccount = () => {
                     placeholder={"Ex : Abc@12"}
                     required={true}
                     value={formik.values.password}
+                    error={touched.password && Boolean(errors.password)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />{" "}
-                </div>
-                {touched.password && errors.password && (
-                  <p style={{ color: "#fa1e1e" }}>
-                    {errors.password as string}
-                  </p>
-                )}
-                <div>
+                  <CustomErrorMessage touched={touched.password} errors={errors.password} />
+                </Box>
+                
+                <Box sx={{pb: errors.confirmPassword && touched.confirmPassword ? 2 : 0 }}>
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -416,33 +419,34 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
+                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                    onBlur={formik.handleBlur}
                   />
-                </div>
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <p style={{ color: "#fa1e1e" }}>
-                    {errors.confirmPassword as string}
-                  </p>
-                )}
+                <CustomErrorMessage touched={touched.confirmPassword} errors={errors.confirmPassword} />
+                </Box>
                 <div>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"Fullname"}
+                    placeholder={"Full Name"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
                     disabled={state?.id ? true : false}
-                    title={"Fullname"}
+                    title={"Full Name"}
                     name={"fullName"}
                     id="fullName"
                     type={"text"}
                     value={formik.values.fullName}
+                    // error={touched.fullName && Boolean(errors.fullName)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
+                   {/* <CustomErrorMessage touched={touched.fullName} errors={errors.fullName} /> */}
                 </div>
-                <div>
+                <Box sx={{pb: touched.city && errors.city ? 2 : 0}} >
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -458,9 +462,12 @@ const AddAccount = () => {
                     id="city"
                     type={"text"}
                     value={formik.values.city}
+                    error={touched.city && Boolean(errors.city)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                </div>
+                  <CustomErrorMessage touched={touched.city} errors={errors.city} />
+                </Box>
                 <div>
                   <Input
                     containerStyle={containerStyles}
@@ -477,8 +484,11 @@ const AddAccount = () => {
                     id="phoneNumber"
                     type={"text"}
                     value={formik.values.phoneNumber}
+                    error={touched.phoneNumber && Boolean(errors.phoneNumber)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
+                  <CustomErrorMessage touched={touched.phoneNumber} errors={errors.phoneNumber} />
                 </div>
                 {formik?.values?.roleName?.value === "superAdmin" && (
                   <div>
@@ -497,8 +507,11 @@ const AddAccount = () => {
                       type={"text"}
                       id="domain"
                       value={formik.values.domain}
+                      error={touched.domain && Boolean(errors.domain)}
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
+                    <CustomErrorMessage touched={touched.domain} errors={errors.domain} />
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -513,7 +526,7 @@ const AddAccount = () => {
                       name="logo"
                       type={"text"}
                       id="logo"
-                      value={formik.values.logo}
+                      value={formik.values.logo}                     
                       onChange={formik.handleChange}
                     />
                     <Box m={2}>
@@ -591,9 +604,12 @@ const AddAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    touched={touched.roleName}
-                    error={errors.roleName}
+                    // touched={touched.roleName}
+                    // error={errors.roleName}
+                    error={touched.roleName && Boolean(errors.roleName)}
+                    onBlur={formik.handleBlur}
                   />
+                  <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} />
                 </Box>
                 {formik.values.roleName.value === "expert" && (
                   <>
@@ -675,8 +691,11 @@ const AddAccount = () => {
                       type={"Number"}
                       id="creditRefrence"
                       value={formik.values.creditRefrence}
+                      error={touched.creditRefrence && Boolean(errors.creditRefrence)}
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
+                    <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} />
                   </div>
                 )}
               </Box>
@@ -735,8 +754,11 @@ const AddAccount = () => {
                       id={"myPartnership"}
                       type={"Number"}
                       value={formik.values.myPartnership}
+                      error={touched.myPartnership && Boolean(errors.myPartnership)}
+                      onBlur={formik.handleBlur}
                       onChange={handlePartnershipChange}
                     />
+                    <CustomErrorMessage touched={touched.myPartnership} errors={errors.myPartnership} />
                   </Box>
                   <Input
                     containerStyle={{
@@ -761,6 +783,7 @@ const AddAccount = () => {
                     value={formik.values.downlinePartnership}
                     onChange={formik.handleChange}
                   />
+                  
                 </>
               )}
 
@@ -895,8 +918,11 @@ const AddAccount = () => {
                     placeholder={"Ex : 12345"}
                     required={true}
                     value={formik.values.adminTransPassword}
+                    error={touched.adminTransPassword && Boolean(errors.adminTransPassword)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
+                  <CustomErrorMessage touched={touched.adminTransPassword} errors={errors.adminTransPassword} />
                 </div>
               </Box>
               <Button
