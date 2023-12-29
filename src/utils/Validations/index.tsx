@@ -59,7 +59,7 @@ export const addUserValidation = Yup.object({
 
 
   
-  number: Yup.string().required("Number is required"),
+  number: Yup.string().matches(/^[0-9]*$/, 'Number must only contain numeric characters').required("Number is required"),
   domain: Yup.string().required("Domain is required"),
   roleName: Yup.string().required("Account Type is required"),
   creditReference: Yup.string().required("Credit Reference is required"),

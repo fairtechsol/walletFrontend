@@ -363,8 +363,8 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.userName}
                     onChange={formik.handleChange}
-                    error={touched.userName && Boolean(errors.userName)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.userName && Boolean(errors.userName)}
+                    // onBlur={formik.handleBlur}
                   />
                 <CustomErrorMessage touched={touched.userName} errors={errors.userName} />
                 </Box>
@@ -392,8 +392,8 @@ const AddAccount = () => {
                     placeholder={"Ex : Abc@12"}
                     required={true}
                     value={formik.values.password}
-                    error={touched.password && Boolean(errors.password)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.password && Boolean(errors.password)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />{" "}
                   <CustomErrorMessage touched={touched.password} errors={errors.password} />
@@ -419,8 +419,8 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
-                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                    // onBlur={formik.handleBlur}
                   />
                 <CustomErrorMessage touched={touched.confirmPassword} errors={errors.confirmPassword} />
                 </Box>
@@ -462,8 +462,8 @@ const AddAccount = () => {
                     id="city"
                     type={"text"}
                     value={formik.values.city}
-                    error={touched.city && Boolean(errors.city)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.city && Boolean(errors.city)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                   <CustomErrorMessage touched={touched.city} errors={errors.city} />
@@ -484,8 +484,8 @@ const AddAccount = () => {
                     id="phoneNumber"
                     type={"text"}
                     value={formik.values.phoneNumber}
-                    error={touched.phoneNumber && Boolean(errors.phoneNumber)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.phoneNumber && Boolean(errors.phoneNumber)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                   <CustomErrorMessage touched={touched.phoneNumber} errors={errors.phoneNumber} />
@@ -507,8 +507,8 @@ const AddAccount = () => {
                       type={"text"}
                       id="domain"
                       value={formik.values.domain}
-                      error={touched.domain && Boolean(errors.domain)}
-                      onBlur={formik.handleBlur}
+                      // error={touched.domain && Boolean(errors.domain)}
+                      // onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
                     <CustomErrorMessage touched={touched.domain} errors={errors.domain} />
@@ -606,8 +606,8 @@ const AddAccount = () => {
                     )}
                     // touched={touched.roleName}
                     // error={errors.roleName}
-                    error={touched.roleName && Boolean(errors.roleName)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.roleName && Boolean(errors.roleName)}
+                    // onBlur={formik.handleBlur}
                   />
                   <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} />
                 </Box>
@@ -691,8 +691,8 @@ const AddAccount = () => {
                       type={"Number"}
                       id="creditRefrence"
                       value={formik.values.creditRefrence}
-                      error={touched.creditRefrence && Boolean(errors.creditRefrence)}
-                      onBlur={formik.handleBlur}
+                      // error={touched.creditRefrence && Boolean(errors.creditRefrence)}
+                      // onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
                     <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} />
@@ -754,8 +754,8 @@ const AddAccount = () => {
                       id={"myPartnership"}
                       type={"Number"}
                       value={formik.values.myPartnership}
-                      error={touched.myPartnership && Boolean(errors.myPartnership)}
-                      onBlur={formik.handleBlur}
+                      // error={touched.myPartnership && Boolean(errors.myPartnership)}
+                      // onBlur={formik.handleBlur}
                       onChange={handlePartnershipChange}
                     />
                     <CustomErrorMessage touched={touched.myPartnership} errors={errors.myPartnership} />
@@ -918,11 +918,11 @@ const AddAccount = () => {
                     placeholder={"Ex : 12345"}
                     required={true}
                     value={formik.values.adminTransPassword}
-                    error={touched.adminTransPassword && Boolean(errors.adminTransPassword)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.adminTransPassword && Boolean(errors.adminTransPassword)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  <CustomErrorMessage touched={touched.adminTransPassword} errors={errors.adminTransPassword} />
+                  {/* <CustomErrorMessage touched={touched.adminTransPassword} errors={errors.adminTransPassword} /> */}
                 </div>
               </Box>
               <Button
