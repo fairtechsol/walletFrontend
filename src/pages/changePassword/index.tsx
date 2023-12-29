@@ -8,6 +8,7 @@ import Input from "../../components/login/Input";
 import { changePassword } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { changePasswordSchema } from "../../utils/Validations";
+import { ApiConstants } from "../../utils/Constants";
 
 const initialValues: any = {
   oldPassword: "",
@@ -28,7 +29,12 @@ const ChangePassword = (props: any) => {
     initialValues: initialValues,
     validationSchema: changePasswordSchema,
     onSubmit: (values: any) => {
-      dispatch(changePassword(values));
+      dispatch(
+        changePassword({
+          url: ApiConstants.USER.CHANGEPASSWORD,
+          payload: values,
+        })
+      );
     },
   });
 
@@ -184,7 +190,7 @@ const ChangePassword = (props: any) => {
       </form>
       {showModal && (
         <Modal
-          transactionMessage={transactionPassword}
+          transactionMessage={transactionPassword?.transactionPassword}
           modalTitle="Your password has been changed sucessfully"
           setShowModal={setShowModal}
           showModal={showModal}
