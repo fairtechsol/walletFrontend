@@ -2,17 +2,55 @@ import { Box, Typography } from "@mui/material";
 import StockBox from "./StockBox";
 import { CHECK } from "../../assets";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import moment from "moment-timezone";
 
 const MatchListComponent = (props: any) => {
-  const { team, team_2, selected, mode, data } = props;
+  const { team, team2, selected, mode, data, setSelected } = props;
 
   const navigate = useNavigate();
 
-  const timeLeft = {
-    days: "00",
-    hours: "00",
-    minutes: "00",
-  };
+  const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
+
+  function calculateTimeLeft() {
+    try {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const targetDate = moment(data?.startAt).tz(timezone);
+      const difference = targetDate.diff(moment().tz(timezone), "milliseconds");
+      let timeLeft = {};
+      if (difference > 0) {
+        timeLeft = {
+          days:
+            ("0" + Math.floor(difference / (1000 * 60 * 60 * 24))).slice(-2) ||
+            0,
+          hours:
+            ("0" + Math.floor((difference / (1000 * 60 * 60)) % 24)).slice(
+              -2
+            ) || 0,
+          minutes:
+            ("0" + Math.floor((difference / 1000 / 60) % 60)).slice(-2) || 0,
+          seconds: ("0" + Math.floor((difference / 1000) % 60)).slice(-2) || 0,
+        };
+      } else {
+        timeLeft = {
+          days: "00",
+          hours: "00",
+          minutes: "00",
+        };
+      }
+
+      return timeLeft;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
 
   const upcoming =
     Number(timeLeft.days) === 0 &&
@@ -23,12 +61,13 @@ const MatchListComponent = (props: any) => {
       onClick={() => {
         if (mode == "0") {
           navigate(
-            `/wallet/${window.location.pathname.split("/")[2]}/matches`,
+            `/wallet/market_analysis/matches`,
             {
-              state: { submit: true, matchId: data?.id, activeTab: "Analysis" },
+              state: { submit: true, matchId: data?.id },
             }
           );
         }
+        setSelected();
       }}
       sx={{
         cursor: "pointer",
@@ -85,7 +124,7 @@ const MatchListComponent = (props: any) => {
               WebkitBoxOrient: "vertical",
             }}
           >
-            {team} Vs {team_2}
+            {team} Vs {team2}
           </Typography>
           {upcoming && (
             <Box
@@ -185,7 +224,7 @@ const MatchListComponent = (props: any) => {
             <StockBox
               value={data?.teamB_rate ? data?.teamB_rate : 0}
               up={data?.teamB_rate >= 0 ? true : false}
-              team={team_2}
+              team={team2}
               mode={mode}
             />
           </Box>

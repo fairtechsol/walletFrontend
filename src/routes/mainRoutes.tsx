@@ -51,7 +51,7 @@ const MainRoutes = {
       element: <MatchDetail />,
     },
     {
-      path: "market_analysis/multipleMatch",
+      path: "market_analysis/multiple_Match",
       element: <MultipleMatch />,
     },
     {

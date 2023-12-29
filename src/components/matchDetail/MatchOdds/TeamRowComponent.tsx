@@ -10,7 +10,6 @@ const TeamRowComponent = (props: any) => {
     color,
     align,
     lock,
-    teamImage,
     rates,
     matchOddsData,
     ballStatus,
@@ -122,7 +121,7 @@ const TeamRowComponent = (props: any) => {
               >
                 <Typography
                   style={{
-                    fontSize: matchesMobile ? "12px" : "22px",
+                    fontSize: matchesMobile ? "12px" : "18px",
                     textTransform: "uppercase",
                     width: "100%",
                     textAlign: "center",
@@ -160,7 +159,7 @@ const TeamRowComponent = (props: any) => {
                     height: "94%",
                     background: "#FDF21A",
                     border: "1px solid #2626264D",
-                    width: "5vw",
+                    width: { xs: "30%", lg: "5vw" },
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
@@ -189,7 +188,7 @@ const TeamRowComponent = (props: any) => {
                     height: "94%",
                     background: "#FDF21A",
                     border: "1px solid #2626264D",
-                    width: "5vw",
+                    width: { xs: "30%", lg: "5vw" },
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
