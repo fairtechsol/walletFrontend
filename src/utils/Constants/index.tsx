@@ -44,5 +44,5 @@ export const ApiConstants = {
 };
 
 export const Constants = {
-  pageLimit: 15,
+  pageLimit: 10,
 };

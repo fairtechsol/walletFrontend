@@ -92,7 +92,6 @@ const AddAccount = () => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state, pathname } = useLocation();
   const dispatch: AppDispatch = useDispatch();
-  console.log(state, "state");
 
   const [mode, setMode] = useState("");
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
