@@ -6,6 +6,7 @@ import {
   setCreditRefference,
   setExposureLimit,
   setLockUnlockUser,
+  userListSuccessReset,
 } from "../../actions/user/userAction";
 
 interface InitialState {
@@ -58,6 +59,7 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(changeAmmountUser.fulfilled, (state) => {
+        state.success = true;
         state.loading = false;
       })
       .addCase(changeAmmountUser.rejected, (state, action) => {
@@ -69,6 +71,7 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(setCreditRefference.fulfilled, (state) => {
+        state.success = true;
         state.loading = false;
       })
       .addCase(setCreditRefference.rejected, (state, action) => {
@@ -80,6 +83,7 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(setExposureLimit.fulfilled, (state) => {
+        state.success = true;
         state.loading = false;
       })
       .addCase(setExposureLimit.rejected, (state, action) => {
@@ -91,13 +95,18 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(setLockUnlockUser.fulfilled, (state) => {
+        state.success = true;
         state.loading = false;
       })
       .addCase(setLockUnlockUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
-      });
+      })
+      .addCase(userListSuccessReset, (state) => {
+        return { ...state, success: false }
+      })
   },
-});
+  },
+);
 
 export const userListReducers = userList.reducer;
