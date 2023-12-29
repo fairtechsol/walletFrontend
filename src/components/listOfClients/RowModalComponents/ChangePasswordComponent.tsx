@@ -11,9 +11,7 @@ import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
 
 import {
-  EyeIcon,
   EyeIconWhite,
-  EyeSlash,
   EyeSlashWhite,
 } from "../../../assets";
 import CustomErrorMessage from "../../Common/CustomErrorMessage";

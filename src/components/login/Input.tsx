@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import { InputInterface } from "../../interface/common";
 
-const Input: React.FC<InputInterface> = (props) => {
+const Input: React.FC<InputInterface> = (props: any) => {
   const {
     id,
     title,
