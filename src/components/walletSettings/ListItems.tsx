@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListHeader from "./ListHeader";
 import ListBody from "./ListBody";
 import DepositComponent from "../listOfClients/RowModalComponents/DepositComponets";
@@ -18,6 +18,26 @@ const ListItems = (props: any) => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
+
+  const [isSliderVisible, setIsSliderVisible] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isSmallOrMediumScreen = window.matchMedia('(max-width: 960px)').matches;
+      setIsSliderVisible(isSmallOrMediumScreen);
+    };
+
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
   const [selected, setSelected] = useState<any>(null);
   const classes = {
     Menusx: {
@@ -87,16 +107,27 @@ const ListItems = (props: any) => {
             borderRadius: "5px",
           }}
         >
-          <Box
-            sx={{
-              background: "#F8C851",
-              marginLeft: "6px",
-              padding: "10px",
+          <div
+            style={{
+              overflowX: "auto",
+              maxWidth: "100%",
+              boxShadow: "inset 0 -3px 10px 0px #000000",
+              position: "relative",
+              borderRadius: "10px",
             }}
           >
-            <ListHeader userName={"User Name"} />
-            <ListBody walletAccountDetail={profileDetail} />
-          </Box>
+            <Box
+              sx={{
+                background: isSliderVisible ? '#F8C851' : 'transparent',
+                marginLeft: '6px',
+                padding: '10px',
+                width: isSliderVisible ? 'calc(100% + 400px)' : '100%',
+              }}
+            >
+              <ListHeader userName={"User Name"} />
+              <ListBody walletAccountDetail={profileDetail} />
+            </Box>
+          </div>
           {selected != null && (
             <Box
               sx={{

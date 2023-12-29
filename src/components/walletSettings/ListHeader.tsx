@@ -6,7 +6,7 @@ const ListHeader = ({ userName }: any) => {
       sx={{
         width: "100%",
         display: "flex",
-        height: "30px",
+        height: "45px",
         background: "#262626",
         alignItems: "center",
         borderTop: "2px solid white",
@@ -15,17 +15,17 @@ const ListHeader = ({ userName }: any) => {
     >
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
+          width: { lg: "11.5vw", md: "20.5vw", xs: "18.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
-          height: "35px",
+          height: "45px",
           borderRight: "2px solid white",
           lineHeight: "1.1",
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: { lg: "12px", xs: "9px" } }}
+          sx={{ color: "white", fontSize: { lg: "12px", xs: "7px" } }}
         >
           {userName ?? "User Details"}
         </Typography>
@@ -44,7 +44,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
+            fontSize: { lg: "12px", xs: "11px" },
             lineHeight: "1.1",
           }}
         >
@@ -65,7 +65,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
+            fontSize: { lg: "12px", xs: "11px" },
             lineHeight: "1.1",
           }}
         >
@@ -74,7 +74,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
+          width: { lg: "11.5vw", md: "11.5vw", xs: "27.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -116,7 +116,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+          width: { lg: "9.5vw", md: "9.5vw", xs: "18.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -128,7 +128,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
+            fontSize: { lg: "12px", xs: "7px" },
             lineHeight: "1.1",
           }}
         >
@@ -137,7 +137,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+          width: { lg: "9.5vw", md: "9.5vw", xs: "18.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -149,7 +149,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
+            fontSize: { lg: "12px", xs: "6px" },
             lineHeight: "1.1",
           }}
         >
@@ -222,7 +222,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
+          width: { lg: "8vw", md: "8vw", xs: "18.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -234,7 +234,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
+            fontSize: { lg: "12px", xs: "11px" },
             lineHeight: "1.1",
           }}
         >

@@ -1,13 +1,13 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import { setExposureLimit } from "../../../store/actions/user/userAction";
-import { AppDispatch } from "../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setExposureLimit, userListSuccessReset } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
 
@@ -51,10 +51,21 @@ const SetExposureLimit = (props: any) => {
           payload: payload,
         })
       );
+      
     },
   });
 
   const { handleSubmit } = formik;
+
+  const { loading, success } = useSelector((state: RootState) => state.user.userList);
+
+  useEffect(() => {
+    if (success) {
+      formik.resetForm();
+      setSelected(false)
+      dispatch(userListSuccessReset())
+    }
+  }, [success]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -236,7 +247,7 @@ const SetExposureLimit = (props: any) => {
           <Box sx={{ display: "flex", width: "150px" }}>
             <BoxButton
               color={"#0B4F26"}
-              //   loading={loading}
+                loading={loading}
               containerStyle={{ width: "150px", height: "35px" }}
               isSelected={true}
               type="submit"

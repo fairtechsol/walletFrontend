@@ -1,12 +1,11 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
-
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreditRefference } from "../../../store/actions/user/userAction";
+import { setCreditRefference, userListSuccessReset } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
@@ -41,8 +40,7 @@ const SetCreditComponent = (props: any) => {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
-          transactionType: values.transactionType,
-          
+          // transactionType: values.transactionType,
           remark: values.remark,
         };
       } else {
@@ -61,12 +59,21 @@ const SetCreditComponent = (props: any) => {
           payload: payload,
         })
       );
+      formik.resetForm();
     },
   });
 
   const { handleSubmit } = formik;
 
-  const { loading } = useSelector((state: RootState) => state.user.userList);
+  const { loading, success } = useSelector((state: RootState) => state.user.userList);
+
+  useEffect(() => {
+    if (success) {
+      formik.resetForm();
+      setSelected(false)
+      dispatch(userListSuccessReset())
+    }
+  }, [success]);
 
   return (
     <form onSubmit={handleSubmit}>
