@@ -35,6 +35,12 @@ export const ApiConstants = {
     LOCKUNLOCK: "/user/lockUnlockUser",
     CHANGEPASSWORD: "/user/changePassword",
   },
+  INPLAY: {
+    MATCHLIST: "match/list"
+  },
+  MATCH: {
+    GET: "match"
+  }
 };
 
 export const Constants = {

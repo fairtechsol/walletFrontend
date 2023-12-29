@@ -4,10 +4,24 @@ import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import {
+  getMatchDetail,
+  matchListReset,
+} from "../../store/actions/match/matchAction";
+import { useSelector } from "react-redux";
 
 const MatchDetail = () => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const { state } = useLocation();
+  const dispatch: AppDispatch = useDispatch();
+  const { success, matchDetail } = useSelector(
+    (state: RootState) => state.match.matchList
+  );
   const currentMatch = {
     id: "d5fba619-029c-4493-9d63-dc61d608f9cd",
     isActive: true,
@@ -201,6 +215,19 @@ const MatchDetail = () => {
       teamC: null,
     },
   ];
+
+  useEffect(() => {
+    if (state?.matchId) {
+      dispatch(getMatchDetail(state?.matchId));
+    }
+  }, [state?.matchId]);
+
+  useEffect(() => {
+    if (success) {
+      dispatch(matchListReset());
+    }
+  }, [success]);
+
   return (
     <Box
       sx={{
@@ -227,18 +254,18 @@ const MatchDetail = () => {
             alignSelf: "start",
           }}
         >
-          {currentMatch?.teamA} V/S {currentMatch?.teamB}
+          {matchDetail?.teamA} V/S {matchDetail?.teamB}
         </Typography>
         {currentMatch?.apiMatchActive && (
           <MatchOdds
-            currentMatch={currentMatch}
+            currentMatch={matchDetail}
             // matchOddsLive={matchOddsLive}
             // data={
             //   matchOddsLive?.runners?.length > 0 ? matchOddsLive?.runners : []
             // }
             typeOfBet={"Match Odds"}
-            minBet={currentMatch?.betfair_match_min_bet}
-            maxBet={currentMatch?.betfair_match_max_bet}
+            minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
+            maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
           />
         )}
         {bookmakerHttp?.map((bookmaker: any, index: any) => {
@@ -260,7 +287,7 @@ const MatchDetail = () => {
 
         {currentMatch?.apiBookMakerActive && (
           <LiveBookmaker
-            currentMatch={currentMatch}
+            currentMatch={matchDetail}
             data={
               bookmakerLive?.runners?.length > 0 ? bookmakerLive?.runners : []
             }
@@ -271,7 +298,7 @@ const MatchDetail = () => {
           <SessionMarket
             title={"Quick Session Market"}
             // sessionExposer={sessionExposerHttp}
-            currentMatch={currentMatch}
+            currentMatch={matchDetail}
             // sessionBets={sessionBets?.length}
             sessionData={sessionExposerHttp}
             // sessionOffline={sessionOff}
