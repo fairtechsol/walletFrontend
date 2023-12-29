@@ -19,5 +19,21 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
     }
   }
 );
+export const getMatchDetail = createAsyncThunk<any, any>(
+  "match/detail",
+  async (requestData) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.GET}/${requestData}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
 
 export const matchListReset = createAction("matchList/reset");

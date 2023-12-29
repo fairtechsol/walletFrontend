@@ -21,7 +21,7 @@ const Inplay = () => {
   );
 
   useEffect(() => {
-    dispatch(getMatchListInplay({currentPage: currentPage}));
+    dispatch(getMatchListInplay({ currentPage: currentPage }));
   }, [currentPage]);
 
   useEffect(() => {

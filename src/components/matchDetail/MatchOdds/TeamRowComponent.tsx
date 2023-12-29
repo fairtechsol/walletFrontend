@@ -48,7 +48,7 @@ const TeamRowComponent = (props: any) => {
             alignItems: "center",
           }}
         >
-          {teamImage !== null && (
+          {/* {teamImage !== null && (
             <>
               <img
                 src={`${"wallet"}/${teamImage}`}
@@ -61,7 +61,7 @@ const TeamRowComponent = (props: any) => {
                 alt={name}
               />
             </>
-          )}
+          )} */}
           <Typography
             sx={{
               color: "black",

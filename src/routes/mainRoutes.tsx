@@ -67,7 +67,7 @@ const MainRoutes = {
       element: <MyAccount />,
     },
     {
-      path: "change_password",
+      path: "change-password",
       element: <ChangePassword />,
     },
     {

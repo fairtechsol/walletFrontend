@@ -143,6 +143,7 @@ const AddAccount = () => {
           sessionCommission: values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
           matchCommission: values.matchCommission.value,
+          transactionPassword: values.adminTransPassword,
         };
         dispatch(updateUser(payload));
       } else if (mode === "add") {
