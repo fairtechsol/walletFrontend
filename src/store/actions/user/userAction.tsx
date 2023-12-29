@@ -305,7 +305,7 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
     try {
       const resp = await service.post(
         `${ApiConstants.USER.LOCKUNLOCK}`,
-        requestData
+        requestData.payload
       );
       if (resp) {
         return resp?.data;
@@ -366,3 +366,4 @@ export const handleExport = createAsyncThunk<any, string>(
 export const changePasswordReset = createAction("changePassword/reset");
 export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");
+export const userListSuccessReset = createAction("userList/reset")
