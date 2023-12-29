@@ -37,6 +37,9 @@ export const ApiConstants = {
   },
   INPLAY: {
     MATCHLIST: "match/list"
+  },
+  MATCH: {
+    GET: "match"
   }
 };
 
