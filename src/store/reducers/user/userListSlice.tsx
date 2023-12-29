@@ -106,7 +106,7 @@ export const userList = createSlice({
         return { ...state, success: false }
       })
   },
-  },
+},
 );
 
 export const userListReducers = userList.reducer;

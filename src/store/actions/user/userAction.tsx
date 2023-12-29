@@ -3,11 +3,11 @@ import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants, Constants } from "../../../utils/Constants";
 
-interface ChangePassword {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
+// interface ChangePassword {
+//   oldPassword: string;
+//   newPassword: string;
+//   confirmPassword: string;
+// }
 
 // interface AddUser {
 //   userName: string;
@@ -305,7 +305,7 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
     try {
       const resp = await service.post(
         `${ApiConstants.USER.LOCKUNLOCK}`,
-        requestData
+        requestData.payload
       );
       if (resp) {
         return resp?.data;

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
-
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreditRefference, userListSuccessReset } from "../../../store/actions/user/userAction";
@@ -41,8 +40,7 @@ const SetCreditComponent = (props: any) => {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
-          transactionType: values.transactionType,
-          
+          // transactionType: values.transactionType,
           remark: values.remark,
         };
       } else {
@@ -71,6 +69,7 @@ const SetCreditComponent = (props: any) => {
 
   useEffect(() => {
     if (success) {
+      formik.resetForm();
       setSelected(false)
       dispatch(userListSuccessReset())
     }

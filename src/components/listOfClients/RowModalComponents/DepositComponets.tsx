@@ -79,7 +79,7 @@ const DepositComponent = (props: any) => {
           payload: payload,
         })
       );
-      formik.resetForm();
+   
     },
   });
 
@@ -89,6 +89,7 @@ const DepositComponent = (props: any) => {
 
   useEffect(() => {
     if (success) {
+      formik.resetForm();
       setSelected(false)
       dispatch(userListSuccessReset())
     }

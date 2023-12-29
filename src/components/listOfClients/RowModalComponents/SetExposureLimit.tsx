@@ -51,16 +51,17 @@ const SetExposureLimit = (props: any) => {
           payload: payload,
         })
       );
-      formik.resetForm();
+      
     },
   });
 
   const { handleSubmit } = formik;
 
-  const { success } = useSelector((state: RootState) => state.user.userList);
+  const { loading, success } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {
     if (success) {
+      formik.resetForm();
       setSelected(false)
       dispatch(userListSuccessReset())
     }
@@ -246,7 +247,7 @@ const SetExposureLimit = (props: any) => {
           <Box sx={{ display: "flex", width: "150px" }}>
             <BoxButton
               color={"#0B4F26"}
-                // loading={loading}
+                loading={loading}
               containerStyle={{ width: "150px", height: "35px" }}
               isSelected={true}
               type="submit"

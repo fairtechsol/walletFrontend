@@ -1,14 +1,14 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
-
+import { userListSuccessReset } from "../../../store/actions/user/userAction";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLockUnlockUser } from "../../../store/actions/user/userAction";
-import { AppDispatch } from "../../../store/store";
+import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
@@ -43,7 +43,7 @@ const LockUnlockComponent = (props: any) => {
         userId: id,
         betBlock: lockUnlockObj.bet_blocked,
         userBlock: lockUnlockObj.all_blocked,
-        transPassword: values.transactionPassword,
+        transactionPassword: values.transactionPassword,
       };
       dispatch(setLockUnlockUser({
         url: walletAccountDetail
@@ -56,6 +56,16 @@ const LockUnlockComponent = (props: any) => {
 
   const { handleSubmit } = formik;
 
+  const { success } = useSelector((state: RootState) => state.user.userList);
+
+  useEffect(() => {
+    if (success) {
+      formik.resetForm();
+      setSelected(false)
+      dispatch(userListSuccessReset())
+    }
+  }, [success]);
+
   // const handleLockSubmit = (e: any) => {
   //   e.preventDefault();
   // };
@@ -65,10 +75,10 @@ const LockUnlockComponent = (props: any) => {
         sx={{
           display: "flex",
           borderRadius: "5px",
-          paddingRight: { xs: "0", lg: "10px" },
+          // paddingRight: { xs: "0", lg: "10px" },
           flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 2,
-          width: { xs: "92vw", md: "80%", lg: "80%" },
+          // width: { xs: "92vw", md: "80%", lg: "80%" },
         }}
       >
         <Box sx={{ width: "100%" }}>

@@ -89,6 +89,7 @@ const WithdrawComponent = (props: any) => {
 
   useEffect(() => {
     if (success) {
+      formik.resetForm();
       setSelected(false)
       dispatch(userListSuccessReset())
     }
