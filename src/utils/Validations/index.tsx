@@ -12,13 +12,20 @@ export const depositAmountValidations = Yup.object({
   ),
 });
 export const userChangePasswordValidations = Yup.object({
-  newPassword: Yup.string().required("Amount is required"),
+  // newPassword: Yup.string().required("Amount is required"),
+  newPassword: Yup.string()
+  .required("New Password is required")
+  .min(8, "Password must be at least 8 characters long")
+  .matches(
+    /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).*$/,
+    "Password must contain at least one uppercase letter, one number, and one special character (@ $ ! % * ? &)"
+  ),
   transactionPassword: Yup.string().required(
     "Transaction Password is required"
   ),
 });
 
-export const changePasswordSchema = Yup.object({
+export const changePasswordSchema = Yup.object({ 
   oldPassword: Yup.string().required("Old Password is required"),
   newPassword: Yup.string()
     .required("New Password is required")
