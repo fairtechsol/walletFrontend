@@ -53,7 +53,7 @@ export const addUserValidation = Yup.object({
     .required("Confirm Password is required"),
   fullName: Yup.string().required("Full Name is required"),
   city: Yup.string().max(15, 'City must be at most 15 characters').matches(/^[a-zA-Z\s]*$/, 'City must only contain letters and spaces').required('City is required'),
-  phoneNumber: Yup.string().required("Number is required"),
+  phoneNumber: Yup.string().matches(/^[6-9]\d{9}$/, 'Invalid phone number').required("Number is required"),
   // domain: Yup.string().required("Domain is required"),
   // roleName: Yup.string().required("Account Type is required"),
   // creditRefrence: Yup.string().required("Credit Reference is required"),

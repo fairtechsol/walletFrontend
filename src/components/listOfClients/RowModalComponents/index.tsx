@@ -1,15 +1,21 @@
 import { Box } from "@mui/material";
 import BoxButton from "./BoxButton";
 import ChangePasswordComponent from "./ChangePasswordComponent";
-import DepositComponent from "./DepositComponets";
+import DepositComponent from "./DepositComponent";
 import LockUnlockComponent from "./LockUnlockComponent";
 import SetCreditComponent from "./SetCreditComponent";
 import SetExposureLimit from "./SetExposureLimit";
 import WithdrawComponent from "./WithdrawComponent";
 import { ApiConstants } from "../../../utils/Constants";
+import { RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
 
 const RowModalComponents = (props: any) => {
   const { element, selected, setSelected, backgroundColor } = props;
+
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
 
   const classes = {
     mainBox: {
@@ -66,7 +72,12 @@ const RowModalComponents = (props: any) => {
         >
           {selected == 0 && (
             <DepositComponent
-              endpoint={element?.roleName === "superAdmin" ? ApiConstants.SUPERADMIN.UPDATE_BALANCE : ApiConstants.USER.BALANCEUPDATE}
+              walletAccountDetail={profileDetail}
+              endpoint={
+                element?.roleName === "superAdmin"
+                  ? ApiConstants.SUPERADMIN.UPDATE_BALANCE
+                  : ApiConstants.USER.BALANCEUPDATE
+              }
               element={element}
               backgroundColor={backgroundColor}
               selected={selected == 0}
@@ -78,7 +89,12 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 1 && (
             <WithdrawComponent
-              endpoint={element?.roleName === "superAdmin" ? ApiConstants.SUPERADMIN.UPDATE_BALANCE : ApiConstants.USER.BALANCEUPDATE}
+              walletAccountDetail={profileDetail}
+              endpoint={
+                element?.roleName === "superAdmin"
+                  ? ApiConstants.SUPERADMIN.UPDATE_BALANCE
+                  : ApiConstants.USER.BALANCEUPDATE
+              }
               element={element}
               selected={selected == 1}
               setSelected={() => {
@@ -89,7 +105,11 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 2 && (
             <SetCreditComponent
-              endpoint={element?.roleName === "superAdmin" ? ApiConstants.SUPERADMIN.CREDIT_REFERRENCE : ApiConstants.USER.CREDITREFERRENCE}
+              endpoint={
+                element?.roleName === "superAdmin"
+                  ? ApiConstants.SUPERADMIN.CREDIT_REFERRENCE
+                  : ApiConstants.USER.CREDITREFERRENCE
+              }
               element={element}
               selected={selected == 2}
               setSelected={() => {
@@ -100,7 +120,11 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 3 && (
             <ChangePasswordComponent
-              endpoint={element?.roleName === "superAdmin" ? ApiConstants.SUPERADMIN.CHANGE_PASSWORD : ApiConstants.USER.CHANGEPASSWORD}
+              endpoint={
+                element?.roleName === "superAdmin"
+                  ? ApiConstants.SUPERADMIN.CHANGE_PASSWORD
+                  : ApiConstants.USER.CHANGEPASSWORD
+              }
               element={element}
               selected={selected == 3}
               setSelected={() => {
@@ -111,7 +135,11 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 5 && (
             <SetExposureLimit
-              endpoint={element?.roleName === "superAdmin" ? ApiConstants.SUPERADMIN.EXPOSURE_LIMIT : ApiConstants.USER.EXPOSURELIMIT}
+              endpoint={
+                element?.roleName === "superAdmin"
+                  ? ApiConstants.SUPERADMIN.EXPOSURE_LIMIT
+                  : ApiConstants.USER.EXPOSURELIMIT
+              }
               element={element}
               selected={selected == 5}
               setSelected={() => {
@@ -122,7 +150,11 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 4 && (
             <LockUnlockComponent
-              endpoint={element?.roleName === "superAdmin" ? ApiConstants.SUPERADMIN.LOCK_UNLOCK_USER : ApiConstants.USER.LOCKUNLOCK}
+              endpoint={
+                element?.roleName === "superAdmin"
+                  ? ApiConstants.SUPERADMIN.LOCK_UNLOCK_USER
+                  : ApiConstants.USER.LOCKUNLOCK
+              }
               element={element}
               selected={selected == 4}
               setSelected={() => {

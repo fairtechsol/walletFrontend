@@ -9,7 +9,7 @@ const BoxButtonWithSwitch = (props: any) => {
   const classes = {
     mainBox: [
       {
-        background: !checked ? "#0B4F26" : "#E32A2A",
+        background: checked ? "#0B4F26" : "#E32A2A",
         display: "flex",
         flex: 1,
         justifyContent: "center",
@@ -32,7 +32,7 @@ const BoxButtonWithSwitch = (props: any) => {
   return (
     <Box sx={classes.mainBox}>
       <MaterialUISwitch
-        checked={!checked}
+        checked={checked}
         onChange={() => {
           setLockUnlockObj({
             ...lockUnlockObj,

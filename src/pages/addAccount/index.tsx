@@ -18,6 +18,7 @@ import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
 import {
   addExpert,
+  addReset,
   addUrlAdmin,
   addUser,
   getUsersDetail,
@@ -27,6 +28,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
+import Modal from "../../components/Common/Modal";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -91,8 +93,9 @@ const defaultLockUnlockObj = {
 const AddAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
-  const { state, pathname } = useLocation();
+  const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const [mode, setMode] = useState("");
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
@@ -101,7 +104,7 @@ const AddAccount = () => {
     (state: RootState) => state.user.profile
   );
 
-  const { success, loading, userDetail } = useSelector(
+  const { success, loading, userDetail, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
   );
 
@@ -131,7 +134,7 @@ const AddAccount = () => {
         fullName: values.fullName,
         password: values.password,
         confirmPassword: values.confirmPassword,
-        phoneNumber: values.phoneNumber,
+        phoneNumber: values.phoneNumber.toString(),
         city: values.city,
       };
 
@@ -266,48 +269,62 @@ const AddAccount = () => {
   }, [state?.id]);
 
   useEffect(() => {
-    if (pathname.includes("add_account")) {
-      formik.resetForm();
-      setLockUnlockObj(defaultLockUnlockObj);
-    } else if (success) {
-      formik.setValues({
-        ...formik.values,
-        userName: userDetail?.userName,
-        fullName: userDetail?.fullName,
-        city: userDetail?.city,
-        phoneNumber: userDetail?.phoneNumber,
-        roleName: {
-          label: userDetail?.roleName,
-          value: userDetail?.roleName,
-        },
-        creditRefrence: userDetail?.creditRefrence,
-        uplinePartnership: userDetail?.fwPartnership,
-        myPartnership: 0,
-        downlinePartnership: userDetail?.faPartnership,
-        matchCommissionType: {
-          label: userDetail?.matchComissionType,
-          value: userDetail?.matchComissionType,
-        },
-        matchCommission: {
-          label: userDetail?.matchCommission,
-          value: userDetail?.matchCommission,
-        },
-        sessionCommission: {
-          label: userDetail?.sessionCommission,
-          value: userDetail?.sessionCommission,
-        },
-        remarks: "",
-        adminTransPassword: "",
-      });
-      setLockUnlockObj({
-        allPrivilege: userDetail?.allPrivilege,
-        addMatchPrivilege: userDetail?.addMatchPrivilege,
-        betFairMatchPrivilege: userDetail?.betFairMatchPrivilege,
-        bookmakerMatchPrivilege: userDetail?.bookmakerMatchPrivilege,
-        sessionMatchPrivilege: userDetail?.sessionMatchPrivilege,
-      });
+    try {
+      if (success) {
+        formik.setValues({
+          ...formik.values,
+          userName: userDetail?.userName,
+          fullName: userDetail?.fullName,
+          city: userDetail?.city,
+          phoneNumber: userDetail?.phoneNumber,
+          roleName: {
+            label: userDetail?.roleName,
+            value: userDetail?.roleName,
+          },
+          creditRefrence: userDetail?.creditRefrence,
+          uplinePartnership: userDetail?.fwPartnership,
+          myPartnership: 0,
+          downlinePartnership: userDetail?.faPartnership,
+          matchCommissionType: {
+            label: userDetail?.matchComissionType,
+            value: userDetail?.matchComissionType,
+          },
+          matchCommission: {
+            label: userDetail?.matchCommission,
+            value: userDetail?.matchCommission,
+          },
+          sessionCommission: {
+            label: userDetail?.sessionCommission,
+            value: userDetail?.sessionCommission,
+          },
+          remarks: "",
+          adminTransPassword: "",
+        });
+        setLockUnlockObj({
+          allPrivilege: userDetail?.allPrivilege,
+          addMatchPrivilege: userDetail?.addMatchPrivilege,
+          betFairMatchPrivilege: userDetail?.betFairMatchPrivilege,
+          bookmakerMatchPrivilege: userDetail?.bookmakerMatchPrivilege,
+          sessionMatchPrivilege: userDetail?.sessionMatchPrivilege,
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
-  }, [loading, pathname, success]);
+  }, [success]);
+
+  useEffect(() => {
+    try {
+      if (addSuccess) {
+        setShowModal(true);
+        formik.resetForm();
+        setLockUnlockObj(defaultLockUnlockObj);
+        dispatch(addReset());
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [addSuccess]);
 
   return (
     <>
@@ -506,7 +523,7 @@ const AddAccount = () => {
                     title={"Mobile Number"}
                     name={"phoneNumber"}
                     id="phoneNumber"
-                    type={"text"}
+                    type={"number"}
                     value={formik.values.phoneNumber}
                     error={touched.phoneNumber && Boolean(errors.phoneNumber)}
                     onBlur={formik.handleBlur}
@@ -991,6 +1008,15 @@ const AddAccount = () => {
           </Box>
         </form>
       </Box>
+      {showModal && (
+        <Modal
+          modalTitle="User Added sucessfully"
+          setShowModal={setShowModal}
+          showModal={showModal}
+          buttonMessage={"Ok"}
+          navigateTo={"/wallet/list_of_clients"}
+        />
+      )}
     </>
   );
 };

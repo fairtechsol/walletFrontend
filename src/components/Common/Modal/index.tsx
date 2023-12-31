@@ -27,6 +27,7 @@ const Modal = ({
   buttonMessage,
   setShowModal,
   closeBtn,
+  navigateTo,
 }: any) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -117,7 +118,7 @@ const Modal = ({
                 onClick={() => {
                   dispatch(changePasswordReset());
                   setShowModal(false);
-                  navigate("/wallet/login");
+                  navigate(navigateTo);
                 }}
               >
                 {buttonMessage}

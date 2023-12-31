@@ -14,7 +14,7 @@ const MainLayout = () => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    if (!localStorage.getItem("userToken")) {
+    if (!sessionStorage.getItem("userToken")) {
       navigate("/wallet/login");
     }
     dispatch(getUsersProfile());

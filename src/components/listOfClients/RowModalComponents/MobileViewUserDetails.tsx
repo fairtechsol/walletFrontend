@@ -445,7 +445,7 @@ const MobileViewUserDetails = (props: any) => {
               InputProps={{
                 placeholder: "Type Amount...",
                 autoComplete: "new-password",
-                inputProps: { min: "0", step: "0.01" },
+                inputProps: { min: "0", step: "1" },
                 disableUnderline: true,
                 style: {
                   fontSize: "15px",

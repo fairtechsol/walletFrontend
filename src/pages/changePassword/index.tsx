@@ -195,6 +195,7 @@ const ChangePassword = (props: any) => {
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Navigate To Login"}
+          navigateTo={"/wallet/login"}
         />
       )}
     </>

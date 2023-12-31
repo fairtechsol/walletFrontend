@@ -17,6 +17,7 @@ export interface AccountListDataInterface {
   profit_loss: string | number;
   percent_profit_loss: string;
   totalCommissions: string;
+  roleName: string;
   exposure: string;
   available_balance: string;
   bet_blocked: boolean;
