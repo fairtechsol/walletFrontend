@@ -873,32 +873,33 @@ const AddAccount = () => {
                         touched={touched.matchCommissionType}
                         error={errors.matchCommissionType}
                       />
-                      {formik.values.matchCommissionType.label !== "" &&
-                        formik.values.matchCommissionType.label !== "0.00" && (
-                          <>
-                            <SelectField
-                              containerStyle={containerStyles}
-                              titleStyle={titleStyles}
-                              id={"matchCommission"}
-                              name={"matchCommission"}
-                              label={"Match Commission (%)*"}
-                              options={matchComissionArray}
-                              value={matchComissionArray.find((option: any) => {
-                                option.value ===
-                                  formik.values.matchCommission.value;
-                              })}
-                              onChange={(matchComissionArray: any) => {
-                                formik.setFieldValue(
-                                  "matchCommission",
-                                  matchComissionArray
-                                );
-                              }}
-                              onBlur={formik.handleBlur}
-                              touched={touched.matchCommission}
-                              error={errors.matchCommission}
-                            />
-                          </>
-                        )}
+                      {!["", null, "0.00"].includes(
+                        formik.values.matchCommissionType.value
+                      ) && (
+                        <>
+                          <SelectField
+                            containerStyle={containerStyles}
+                            titleStyle={titleStyles}
+                            id={"matchCommission"}
+                            name={"matchCommission"}
+                            label={"Match Commission (%)*"}
+                            options={matchComissionArray}
+                            value={matchComissionArray.find((option: any) => {
+                              option.value ===
+                                formik.values.matchCommission.value;
+                            })}
+                            onChange={(matchComissionArray: any) => {
+                              formik.setFieldValue(
+                                "matchCommission",
+                                matchComissionArray
+                              );
+                            }}
+                            onBlur={formik.handleBlur}
+                            touched={touched.matchCommission}
+                            error={errors.matchCommission}
+                          />
+                        </>
+                      )}
 
                       <SelectField
                         containerStyle={containerStyles}
