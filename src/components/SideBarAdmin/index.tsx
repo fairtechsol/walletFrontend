@@ -7,49 +7,19 @@ const colors = ["#F8C851", "#FFDA7D", "#FFE7AD", "#FFF1CF", "#FFF8E6"];
 const datas = [
   {
     title: "Cricket",
-    values: [
-      {
-        title: "01, November, 2022",
-        values: [
-          {
-            title: "India vs Bangladesh",
-            values: [
-              {
-                title: "Match Odds 3",
-                values: false,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: "01, November, 2022",
-        values: [
-          {
-            title: "India vs Bangladesh",
-            values: [
-              {
-                title: "Match Odds 3",
-                values: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    value: "cricket",
   },
-
   {
     title: "Football",
-    values: [],
+    value: "football",
   },
   {
     title: "Tennis",
-    values: [],
+    value: "tennis",
   },
   {
-    title: "Ice hockey",
-    values: [],
+    title: "Hockey",
+    value: "hockey",
   },
 ];
 const SideBarAdmin = (props: any) => {
@@ -128,13 +98,12 @@ const SideBarAdmin = (props: any) => {
           </Box>
         </Box>
       </Box>
-      {matchData?.map((i, k) => {
+      {matchData?.map((games, index) => {
         return (
           <RenderGames
-            key={k}
+            key={index}
             handleDrawerToggle={handleDrawerToggle}
-            i={i}
-            k={k}
+            games={games}
             colors={colors}
           />
         );

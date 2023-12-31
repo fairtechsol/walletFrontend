@@ -75,8 +75,6 @@ const MainBox = (props: any) => {
           />
         </Box>
       )}
-      {/* {selected && under && <MinusBox />}
-        {!selected && under && <PlusBox />} */}
     </Box>
   );
 };
