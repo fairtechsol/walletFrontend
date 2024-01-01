@@ -63,7 +63,7 @@ const ChangePasswordComponent = (props: any) => {
   const { handleSubmit, touched, errors } = formik;
 
   const { loading } = useSelector((state: RootState) => state.user.userList);
-  console.log(touched, "console.log(touched.newPassword)");
+
   return (
     <form onSubmit={handleSubmit}>
       <Box

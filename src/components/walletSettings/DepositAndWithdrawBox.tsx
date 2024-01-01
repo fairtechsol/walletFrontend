@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../login/Input";
 import { EyeIcon, EyeSlash } from "../../assets";
 import DailogModal from "./DailogModal";
-import Modal from "./Modal";
+import WalletModal from "./WalletModal";
 
 const DepositAndWithdrawBox = () => {
   const navigate = useNavigate();
@@ -442,7 +442,7 @@ const DepositAndWithdrawBox = () => {
 
       <DailogModal />
       {showSuccessModal && (
-        <Modal
+        <WalletModal
           message={showModalMessage}
           setShowSuccessModal={handleChangeShowModalSuccess}
           showSuccessModal={showSuccessModal}

@@ -3,12 +3,13 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { eye, eyeLock } from "../../assets";
-import Modal from "../../components/Common/Modal";
+import CustomModal from "../../components/Common/CustomModal";
 import Input from "../../components/login/Input";
 import { changePassword } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { changePasswordSchema } from "../../utils/Validations";
 import { ApiConstants } from "../../utils/Constants";
+import { logout } from "../../store/actions/auth/authAction";
 
 const initialValues: any = {
   oldPassword: "",
@@ -189,11 +190,12 @@ const ChangePassword = (props: any) => {
         </Box>
       </form>
       {showModal && (
-        <Modal
+        <CustomModal
           transactionMessage={transactionPassword?.transactionPassword}
           modalTitle="Your password has been changed sucessfully"
           setShowModal={setShowModal}
           showModal={showModal}
+          functionDispatch={() => dispatch(logout())}
           buttonMessage={"Navigate To Login"}
           navigateTo={"/wallet/login"}
         />

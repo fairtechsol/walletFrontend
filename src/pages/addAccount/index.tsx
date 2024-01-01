@@ -28,7 +28,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
-import Modal from "../../components/Common/Modal";
+import CustomModal from "../../components/Common/CustomModal";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -1010,11 +1010,14 @@ const AddAccount = () => {
         </form>
       </Box>
       {showModal && (
-        <Modal
-          modalTitle="User Added sucessfully"
+        <CustomModal
+          modalTitle={`User ${
+            mode === "edit" ? "Edited" : "Added"
+          } sucessfully`}
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
+          functionDispatch={() => {}}
           navigateTo={"/wallet/list_of_clients"}
         />
       )}
