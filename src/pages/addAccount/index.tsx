@@ -380,8 +380,8 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.userName}
                     onChange={formik.handleChange}
-                    // error={touched.userName && Boolean(errors.userName)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.userName && Boolean(errors.userName)}
+                    onBlur={formik.handleBlur}
                   />
                   <CustomErrorMessage
                     touched={touched.userName}
@@ -412,8 +412,8 @@ const AddAccount = () => {
                     placeholder={"Ex : Abc@12"}
                     required={true}
                     value={formik.values.password}
-                    // error={touched.password && Boolean(errors.password)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.password && Boolean(errors.password)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />{" "}
                   <CustomErrorMessage
@@ -447,8 +447,6 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
-                    // error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-                    // onBlur={formik.handleBlur}
                     error={
                       touched.confirmPassword && Boolean(errors.confirmPassword)
                     }
@@ -500,8 +498,8 @@ const AddAccount = () => {
                     id="city"
                     type={"text"}
                     value={formik.values.city}
-                    // error={touched.city && Boolean(errors.city)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.city && Boolean(errors.city)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                   <CustomErrorMessage
@@ -527,8 +525,8 @@ const AddAccount = () => {
                     id="phoneNumber"
                     type={"number"}
                     value={formik.values.phoneNumber}
-                    // error={touched.phoneNumber && Boolean(errors.phoneNumber)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.phoneNumber && Boolean(errors.phoneNumber)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                   <CustomErrorMessage
@@ -835,8 +833,8 @@ const AddAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    value={formik.values.downlinePartnership}
-                    onChange={formik.handleChange}
+                    // value={formik.values.downlinePartnership}
+                    // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -874,8 +872,8 @@ const AddAccount = () => {
                             option.value ===
                             formik.values.matchCommissionType.value
                         )}
-                        touched={touched.matchCommissionType}
-                        error={errors.matchCommissionType}
+                        // touched={touched.matchCommissionType}
+                        // error={errors.matchCommissionType}
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
@@ -899,8 +897,8 @@ const AddAccount = () => {
                               );
                             }}
                             onBlur={formik.handleBlur}
-                            touched={touched.matchCommission}
-                            error={errors.matchCommission}
+                            // touched={touched.matchCommission}
+                            // error={errors.matchCommission}
                           />
                         </>
                       )}
@@ -923,8 +921,8 @@ const AddAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        touched={touched.sessionCommission}
-                        error={errors.sessionCommission}
+                        // touched={touched.sessionCommission}
+                        // error={errors.sessionCommission}
                       />
                     </Box>
                   </>
