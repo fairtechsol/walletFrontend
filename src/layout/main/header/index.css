@@ -4,6 +4,9 @@
     position: relative;
 }
 
+body{
+ overflow-x: hidden;
+}
 .slanted:after {
     content: "";
     position: absolute;
