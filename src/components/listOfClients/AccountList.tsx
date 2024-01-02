@@ -66,7 +66,7 @@ const AccountList = (endpoint: any) => {
               >
                 <Box>
                   <ListHeaderRow />
-                  <SubHeaderListRow data={profileDetail} /> 
+                  <SubHeaderListRow data={profileDetail} />
                   {userList?.list?.length === 0 && (
                     <Box>
                       <Typography
@@ -98,6 +98,11 @@ const AccountList = (endpoint: any) => {
                               fContainerStyle={{ background: "#0B4F26" }}
                               fTextStyle={{ color: "white" }}
                               element={element}
+                              show={
+                                element?.roleName === "superAdmin"
+                                  ? true
+                                  : false
+                              }
                             />
                           );
                         } else {

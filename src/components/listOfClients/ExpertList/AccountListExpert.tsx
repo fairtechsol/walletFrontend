@@ -1,14 +1,14 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AccountListDataInterface } from "../../interface/listOfClients";
-import { getUserList } from "../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../store/store";
-import { ApiConstants, Constants } from "../../utils/Constants";
-import Pagination from "../Common/Pagination";
-import Loader from "../Loader";
+import { AccountListDataInterface } from "../../../interface/listOfClients";
+import { getUserList } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { ApiConstants, Constants } from "../../../utils/Constants";
+import Pagination from "../../Common/Pagination";
+import Loader from "../../Loader";
 import AccountListExpertRow from "./AccountListExpertRow";
-import HeaderRow from "./HeaderRow";
+import HeaderRow from "../HeaderRow";
 import ListHeaderExpertRow from "./ListHeaderExpertRow";
 
 const AccountListExpert = (endpoint: any) => {
@@ -65,7 +65,6 @@ const AccountListExpert = (endpoint: any) => {
               >
                 <Box>
                   <ListHeaderExpertRow />
-                  {/* <SubHeaderListExpertRow data={profileDetail} /> */}
                   {userList?.list?.length === 0 && (
                     <Box>
                       <Typography

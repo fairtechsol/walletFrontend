@@ -2,6 +2,7 @@ import { lazy } from "react";
 import Loadable from "../utils/loadable";
 import MultipleMatch from "../pages/analysis/multipleMatch";
 import { Navigate } from "react-router-dom";
+import { Constants } from "../utils/Constants";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const ListOfClients = Loadable(lazy(() => import("../pages/listOfClients")));
@@ -15,64 +16,64 @@ const MatchDetail = Loadable(lazy(() => import("../pages/matchDetail")));
 const WalletSettings = Loadable(lazy(() => import("../pages/walletSettings")));
 
 const MainRoutes = {
-  path: "/wallet",
+  path: Constants.MainPaths.root,
   element: <MainLayout />,
   children: [
     {
-      path: "list_of_clients",
+      path: Constants.MainPaths.listOfClients,
       element: <ListOfClients />,
     },
     {
-      path: "match",
+      path: Constants.MainPaths.match,
       element: <MatchDetail />,
     },
     {
-      path: "live_market",
+      path: Constants.MainPaths.liveMarket,
       element: <Inplay />,
     },
     {
-      path: "live_market/matches",
+      path: Constants.MainPaths.liveMarketMatches,
       element: <MatchDetail />,
     },
     {
-      path: "add_account",
+      path: Constants.MainPaths.addAccount,
       element: <AddAccount />,
     },
     {
-      path: "edit_account",
+      path: Constants.MainPaths.editAccount,
       element: <AddAccount />,
     },
     {
-      path: "market_analysis",
+      path: Constants.MainPaths.marketAnalysis,
       element: <Analysis />,
     },
     {
-      path: "market_analysis/matches",
+      path: Constants.MainPaths.marketAnalysisMatches,
       element: <MatchDetail />,
     },
     {
-      path: "market_analysis/multiple_Match",
+      path: Constants.MainPaths.multipleMatch,
       element: <MultipleMatch />,
     },
     {
-      path: "reports",
+      path: Constants.MainPaths.reports,
       element: <Reports />,
     },
     {
-      path: "walletSettings",
+      path: Constants.MainPaths.walletSettings,
       element: <WalletSettings />,
     },
     {
-      path: "my-account",
+      path: Constants.MainPaths.myAccount,
       element: <MyAccount />,
     },
     {
-      path: "change-password",
+      path: Constants.MainPaths.changePassword,
       element: <ChangePassword />,
     },
     {
       path: "*",
-      element: <Navigate to={"/expert/match"} replace />,
+      element: <Navigate to={"/wallet/match"} replace />,
     },
   ],
 };

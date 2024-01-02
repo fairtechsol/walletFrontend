@@ -27,6 +27,7 @@ const Input: React.FC<InputInterface> = (props: any) => {
     img1,
     imgstyle,
     onBlur,
+    error,
     onChange,
     name,
   } = props;
@@ -75,6 +76,7 @@ const Input: React.FC<InputInterface> = (props: any) => {
           required={required}
           name={name}
           onBlur={onBlur}
+          error={error}
           InputProps={{
             autoComplete: "new-password",
             inputProps: {

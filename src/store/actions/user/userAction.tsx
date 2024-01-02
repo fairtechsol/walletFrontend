@@ -43,7 +43,7 @@ interface RequestData {
 //         if (resp?.data) {
 //           return resp?.data?.transactionPassword;
 //         }
-//         localStorage.clear();
+//         sessionStorage.clear();
 //       }
 //     } catch (error: any) {
 //       const err = error as AxiosError;
@@ -366,4 +366,5 @@ export const handleExport = createAsyncThunk<any, string>(
 export const changePasswordReset = createAction("changePassword/reset");
 export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");
+export const addReset = createAction("add/reset");
 export const userListSuccessReset = createAction("userList/reset")

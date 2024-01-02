@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-const ListHeaderExpertRow = (props: any) => {
-  const { userName } = props;
+const ListHeaderExpertRow = () => {
   return (
     <Box
       sx={{
@@ -28,7 +27,7 @@ const ListHeaderExpertRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: { lg: "12px", xs: "9px" } }}
         >
-          {userName ?? "User Details"}
+          {"User Details"}
         </Typography>
       </Box>
       <Box

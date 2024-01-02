@@ -14,7 +14,10 @@ import MobileViewUserDetails from "./MobileViewUserDetails";
 
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { changeAmmountUser, userListSuccessReset } from "../../../store/actions/user/userAction";
+import {
+  changeAmmountUser,
+  userListSuccessReset,
+} from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
@@ -32,7 +35,6 @@ const DepositComponent = (props: any) => {
     endpoint,
     walletAccountDetail,
     element,
-    handleKeyDown,
     backgroundColor,
     elementToUDM,
     setSelected,
@@ -44,7 +46,7 @@ const DepositComponent = (props: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const [initialBalance] = useState(
+  const [initialBalance, setInitialBalance] = useState(
     walletAccountDetail?.userBal?.currentBalance
   );
 
@@ -79,21 +81,28 @@ const DepositComponent = (props: any) => {
           payload: payload,
         })
       );
-   
     },
   });
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { loading, success } = useSelector((state: RootState) => state.user.userList);
+  const { loading, success } = useSelector(
+    (state: RootState) => state.user.userList
+  );
 
   useEffect(() => {
     if (success) {
       formik.resetForm();
-      setSelected(false)
-      dispatch(userListSuccessReset())
+      setSelected(false);
+      dispatch(userListSuccessReset());
     }
   }, [success]);
+
+  useEffect(() => {
+    setInitialBalance(
+      +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
+    );
+  }, [formik.values.amount]);
 
   return (
     <>
@@ -210,7 +219,7 @@ const DepositComponent = (props: any) => {
                     required={true}
                     id="amount"
                     name="amount"
-                    onKeyDown={handleKeyDown}
+                    // onKeyDown={handleKeyDown}
                     // value={depositObj.amount}
                     value={formik.values.amount}
                     variant="standard"
@@ -219,7 +228,7 @@ const DepositComponent = (props: any) => {
                       disableUnderline: true,
                       autoComplete: "new-password",
                       autoFocus: true,
-                      inputProps: { min: "0", step: "0.01" },
+                      inputProps: { min: "0", step: "1" },
                       style: {
                         fontSize: "15px",
                         height: "45px",

@@ -2,7 +2,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import AccountList from "../../components/listOfClients/AccountList";
-import AccountListExpert from "../../components/listOfClients/AccountListExpert";
+import AccountListExpert from "../../components/listOfClients/ExpertList/AccountListExpert";
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 

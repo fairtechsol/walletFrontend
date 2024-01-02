@@ -11,7 +11,9 @@ import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
 
 import {
+  // EyeIcon,
   EyeIconWhite,
+  // EyeSlash,
   EyeSlashWhite,
 } from "../../../assets";
 import CustomErrorMessage from "../../Common/CustomErrorMessage";
@@ -47,19 +49,21 @@ const ChangePasswordComponent = (props: any) => {
           // remark: values.remark,
         };
       }
-      dispatch(changePassword({
-        url: walletAccountDetail
-          ? ApiConstants.WALLET.CHANGEPASSWORD
-          : endpoint,
-        payload: payload,
-      }));
+      dispatch(
+        changePassword({
+          url: walletAccountDetail
+            ? ApiConstants.WALLET.CHANGEPASSWORD
+            : endpoint,
+          payload: payload,
+        })
+      );
     },
   });
 
   const { handleSubmit, touched, errors } = formik;
 
   const { loading } = useSelector((state: RootState) => state.user.userList);
-  console.log(touched, "console.log(touched.newPassword)")
+
   return (
     <form onSubmit={handleSubmit}>
       <Box
@@ -153,10 +157,11 @@ const ChangePasswordComponent = (props: any) => {
                     />
                   </Box>
                 </Box>
-                <CustomErrorMessage touched={touched.newPassword} errors={errors.newPassword} />
+                <CustomErrorMessage
+                  touched={touched.newPassword}
+                  errors={errors.newPassword}
+                />
               </Box>
-
-
             </Box>
             <Box
               sx={{
@@ -256,7 +261,7 @@ const ChangePasswordComponent = (props: any) => {
                         fontSize: "13px",
                         height: "45px",
                         fontWeight: "600",
-                        color: "white"
+                        color: "white",
                       },
                     }}
                   />
@@ -267,11 +272,14 @@ const ChangePasswordComponent = (props: any) => {
                   >
                     <StyledImage
                       src={showPass ? EyeIconWhite : EyeSlashWhite}
-                      sx={{ height: "14px", width: "20px", }}
+                      sx={{ height: "14px", width: "20px" }}
                     />
                   </Box>
                 </Box>
-                <CustomErrorMessage touched={touched.transactionPassword} errors={errors.transactionPassword} />
+                <CustomErrorMessage
+                  touched={touched.transactionPassword}
+                  errors={errors.transactionPassword}
+                />
               </Box>
             </Box>
 
