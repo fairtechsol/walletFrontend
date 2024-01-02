@@ -30,8 +30,10 @@ const Header = () => {
     AppBarVal: { zIndex: (theme: any) => theme.zIndex.drawer + 1 },
     BoxCont1: [
       {
-        width: "100%",
+        // flex: "1",
+        width: "auto",
         minHeight: { lg: 60, md: 60, xs: 60 },
+        minWidth: {lg: 60, md: 60, xs: 60},
         display: "flex",
         flexDirection: matchesMobile ? "column" : "row",
         alignItems: !matchesMobile ? "center" : "flex-start",
@@ -47,7 +49,7 @@ const Header = () => {
     BoxCont1sub1: {
       display: "flex",
       alignItems: "center",
-      width: "100%",
+      width: "auto",
       flex: 1,
     },
     BoxCont1sub1sub1: {
@@ -107,9 +109,9 @@ const Header = () => {
       display: "flex",
       marginLeft: { xs: 0, lg: 0, md: 0 },
       justifyContent: "flex-end",
-      // minWidth: matchesMobile ? "100%" : "0px",
+      minWidth: matchesMobile ? "50%" : "0px",
       alignItems: "center",
-      marginTop: matchesMobile ? "0" : "0px",
+      marginTop: matchesMobile ? "0px" : "0px",
     },
     BoxCont1sub2SearchInputContStyle: {
       height: "30px",
@@ -134,7 +136,10 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={classes.AppBarVal}>
+      <AppBar position="fixed" sx={{
+        width: "100%",
+        zIndex: (theme: any) => theme.zIndex.drawer + 1,
+      }}>
         <Box sx={classes.BoxCont1}>
           <Box sx={classes.BoxCont1sub1}>
             <Box sx={classes.BoxCont1sub1sub1}>

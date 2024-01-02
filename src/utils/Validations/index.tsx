@@ -53,6 +53,23 @@ export const addUserValidation = Yup.object({
     .required("Confirm Password is required"),
   fullName: Yup.string().required("Full Name is required"),
   city: Yup.string().max(15, 'City must be at most 15 characters').matches(/^[a-zA-Z\s]*$/, 'City must only contain letters and spaces').required('City is required'),
+
+ 
+
+
+  
+  number: Yup.string().matches(/^[0-9]*$/, 'Number must only contain numeric characters').required("Number is required"),
+  domain: Yup.string().required("Domain is required"),
+  roleName: Yup.string().required("Account Type is required"),
+  creditReference: Yup.string().required("Credit Reference is required"),
+  uplinePartnership: Yup.string().required("Upline Partnership is required"),
+  myPartnership: Yup.string().required("My Partnership is required"),
+  downlinePartnership: Yup.string().required(
+    "Downline Partnership is required"
+  ),
+  matchCommissionType: Yup.string().required(
+    "Match Commission Type is required"
+  ),
   phoneNumber: Yup.string().matches(/^[6-9]\d{9}$/, 'Invalid phone number').required("Number is required"),
   // domain: Yup.string().required("Domain is required"),
   // roleName: Yup.string().required("Account Type is required"),
