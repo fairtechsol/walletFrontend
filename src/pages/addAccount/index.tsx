@@ -380,8 +380,8 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.userName}
                     onChange={formik.handleChange}
-                    error={touched.userName && Boolean(errors.userName)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.userName && Boolean(errors.userName)}
+                    // onBlur={formik.handleBlur}
                   />
                   <CustomErrorMessage
                     touched={touched.userName}
@@ -412,8 +412,8 @@ const AddAccount = () => {
                     placeholder={"Ex : Abc@12"}
                     required={true}
                     value={formik.values.password}
-                    error={touched.password && Boolean(errors.password)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.password && Boolean(errors.password)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />{" "}
                   <CustomErrorMessage
@@ -447,6 +447,8 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
+                    // error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                    // onBlur={formik.handleBlur}
                     error={
                       touched.confirmPassword && Boolean(errors.confirmPassword)
                     }
@@ -498,8 +500,8 @@ const AddAccount = () => {
                     id="city"
                     type={"text"}
                     value={formik.values.city}
-                    error={touched.city && Boolean(errors.city)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.city && Boolean(errors.city)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                   <CustomErrorMessage
@@ -525,8 +527,8 @@ const AddAccount = () => {
                     id="phoneNumber"
                     type={"number"}
                     value={formik.values.phoneNumber}
-                    error={touched.phoneNumber && Boolean(errors.phoneNumber)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.phoneNumber && Boolean(errors.phoneNumber)}
+                    // onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                   <CustomErrorMessage
@@ -551,8 +553,8 @@ const AddAccount = () => {
                       type={"text"}
                       id="domain"
                       value={formik.values.domain}
-                      error={touched.domain && Boolean(errors.domain)}
-                      onBlur={formik.handleBlur}
+                      // error={touched.domain && Boolean(errors.domain)}
+                      // onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
                     <CustomErrorMessage
@@ -654,6 +656,7 @@ const AddAccount = () => {
                     // touched={touched.roleName}
                     // error={errors.roleName}
                     // error={touched.roleName && Boolean(errors.roleName)}
+                    // onBlur={formik.handleBlur}
                   />
                   {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
@@ -800,6 +803,7 @@ const AddAccount = () => {
                       id={"myPartnership"}
                       type={"Number"}
                       value={formik.values.myPartnership}
+                      // error={touched.myPartnership && Boolean(errors.myPartnership)}
                       // error={
                       //   touched.myPartnership && Boolean(errors.myPartnership)
                       // }
