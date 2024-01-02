@@ -77,6 +77,7 @@ const formDataSchema = {
   remarks: "",
   adminTransPassword: "",
   logo: "",
+  base64Image: "",
   sidebarColor: "",
   headerColor: "",
   footerColor: "",
@@ -167,7 +168,7 @@ const AddAccount = () => {
             ...commonPayload,
             roleName: values.roleName.value,
             domain: values.domain,
-            logo: values.logo,
+            logo: values.base64Image,
             sidebarColor: values.sidebarColor,
             headerColor: values.headerColor,
             footerColor: values.footerColor,
@@ -248,6 +249,22 @@ const AddAccount = () => {
       setAccountTypes(accountTypeMap[roleName] || []);
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const handleImageChange = (event: any) => {
+    const file = event.currentTarget.files[0];
+
+    if (file) {
+      formik.setFieldValue("logo", file);
+
+      // Convert the image to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        console.log(reader.result);
+        formik.setFieldValue("base64Image", reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -571,11 +588,21 @@ const AddAccount = () => {
                       disabled={state?.id ? true : false}
                       title={"Logo"}
                       name="logo"
-                      type={"text"}
+                      type={"file"}
                       id="logo"
-                      value={formik.values.logo}
-                      onChange={formik.handleChange}
+                      // value={formik.values.logo}
+                      onChange={handleImageChange}
                     />
+                    {formik.values.base64Image && (
+                      <div>
+                        <p>Base64 Image:</p>
+                        <img
+                          src={formik.values.base64Image}
+                          alt="Base64"
+                          style={{ maxWidth: "100%" }}
+                        />
+                      </div>
+                    )}
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>

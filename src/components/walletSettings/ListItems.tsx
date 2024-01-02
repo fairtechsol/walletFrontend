@@ -23,20 +23,19 @@ const ListItems = (props: any) => {
 
   useEffect(() => {
     const handleResize = () => {
-      const isSmallOrMediumScreen = window.matchMedia('(max-width: 960px)').matches;
+      const isSmallOrMediumScreen =
+        window.matchMedia("(max-width: 960px)").matches;
       setIsSliderVisible(isSmallOrMediumScreen);
     };
 
-
     handleResize();
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   const [selected, setSelected] = useState<any>(null);
   const classes = {
@@ -118,10 +117,10 @@ const ListItems = (props: any) => {
           >
             <Box
               sx={{
-                background: isSliderVisible ? '#F8C851' : 'transparent',
-                marginLeft: '6px',
-                padding: '10px',
-                width: isSliderVisible ? 'calc(100% + 400px)' : '100%',
+                background: isSliderVisible ? "#F8C851" : "transparent",
+                marginLeft: "6px",
+                padding: "10px",
+                width: isSliderVisible ? "calc(100% + 400px)" : "100%",
               }}
             >
               <ListHeader userName={"User Name"} />
@@ -143,6 +142,7 @@ const ListItems = (props: any) => {
             >
               {selected == 0 && (
                 <DepositComponent
+                  isWallet={true}
                   walletAccountDetail={profileDetail}
                   selected={selected == 0}
                   setSelected={() => {
@@ -154,6 +154,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 1 && (
                 <WithdrawComponent
+                  isWallet={true}
                   walletAccountDetail={profileDetail}
                   selected={selected == 1}
                   setSelected={() => {
@@ -164,6 +165,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 2 && (
                 <SetCreditComponent
+                  isWallet={true}
                   walletAccountDetail={profileDetail}
                   selected={selected == 2}
                   setSelected={() => {
@@ -173,6 +175,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 4 && (
                 <LockUnlockComponent
+                  isWallet={true}
                   selected={selected == 4}
                   setSelected={() => {
                     setSelected(null);
@@ -182,6 +185,7 @@ const ListItems = (props: any) => {
               )}
               {selected == 5 && (
                 <SetExposureLimit
+                  isWallet={true}
                   walletAccountDetail={profileDetail}
                   selected={selected == 5}
                   setSelected={() => {

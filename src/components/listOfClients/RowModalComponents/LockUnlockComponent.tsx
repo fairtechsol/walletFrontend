@@ -18,7 +18,7 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint } = props;
+  const { setSelected, element, walletAccountDetail, endpoint, isWallet } = props;
 
   const defaultLockUnlockObj = {
     all_blocked: element?.userBlock ?? walletAccountDetail?.userBlock,
@@ -46,7 +46,7 @@ const LockUnlockComponent = (props: any) => {
         transactionPassword: values.transactionPassword,
       };
       dispatch(setLockUnlockUser({
-        url: walletAccountDetail
+        url: isWallet
         ? ApiConstants.WALLET.LOCKUNLOCK
         : endpoint,
         payload: payload,

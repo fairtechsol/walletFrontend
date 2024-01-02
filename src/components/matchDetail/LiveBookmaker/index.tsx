@@ -14,6 +14,8 @@ const LiveBookmaker = (props: any) => {
     locked,
     handleShowLock,
     selft,
+    minBet,
+    maxBet,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -159,8 +161,8 @@ const LiveBookmaker = (props: any) => {
                     marginLeft: "7px",
                   }}
                 >
-                  MIN: {currentMatch?.betfair_bookmaker_min_bet} MAX:
-                  {currentMatch?.betfair_bookmaker_max_bet}
+                  MIN: {minBet} MAX:
+                  {maxBet}
                 </Typography>
               </Box>
               <Box

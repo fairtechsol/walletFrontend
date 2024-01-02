@@ -6,7 +6,10 @@ import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { setExposureLimit, userListSuccessReset } from "../../../store/actions/user/userAction";
+import {
+  setExposureLimit,
+  userListSuccessReset,
+} from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
@@ -19,7 +22,13 @@ const initialValues: any = {
 };
 
 const SetExposureLimit = (props: any) => {
-  const { backgroundColor, setSelected, element, walletAccountDetail, endpoint } = props;
+  const {
+    backgroundColor,
+    setSelected,
+    element,
+    endpoint,
+    isWallet,
+  } = props;
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -29,7 +38,7 @@ const SetExposureLimit = (props: any) => {
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
       let payload;
-      if (walletAccountDetail) {
+      if (isWallet) {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
@@ -45,25 +54,24 @@ const SetExposureLimit = (props: any) => {
       }
       dispatch(
         setExposureLimit({
-          url: walletAccountDetail
-            ? ApiConstants.WALLET.EXPOSURELIMIT
-            : endpoint,
+          url: isWallet ? ApiConstants.WALLET.EXPOSURELIMIT : endpoint,
           payload: payload,
         })
       );
-      
     },
   });
 
   const { handleSubmit } = formik;
 
-  const { loading, success } = useSelector((state: RootState) => state.user.userList);
+  const { loading, success } = useSelector(
+    (state: RootState) => state.user.userList
+  );
 
   useEffect(() => {
     if (success) {
       formik.resetForm();
-      setSelected(false)
-      dispatch(userListSuccessReset())
+      setSelected(false);
+      dispatch(userListSuccessReset());
     }
   }, [success]);
 
@@ -247,7 +255,7 @@ const SetExposureLimit = (props: any) => {
           <Box sx={{ display: "flex", width: "100px" }}>
             <BoxButton
               color={"#0B4F26"}
-                loading={loading}
+              loading={loading}
               containerStyle={{ width: "150px", height: "35px" }}
               isSelected={true}
               type="submit"
