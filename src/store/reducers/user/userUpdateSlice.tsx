@@ -5,14 +5,17 @@ import {
   addUrlAdmin,
   addUser,
   getUsersDetail,
+  updateExpert,
   updateReset,
   updateUser,
+  updateUserReset,
 } from "../../actions/user/userAction";
 
 interface InitialState {
   userDetail: any;
   success: boolean;
   addSuccess: boolean;
+  editSuccess: boolean;
   loading: boolean;
   error: any;
 }
@@ -22,6 +25,7 @@ const initialState: InitialState = {
   loading: false,
   success: false,
   addSuccess: false,
+  editSuccess: false,
   error: null,
 };
 
@@ -72,10 +76,22 @@ const userUpdateSlice = createSlice({
         state.error = null;
       })
       .addCase(updateUser.fulfilled, (state) => {
-        state.success = true;
+        state.editSuccess = true;
         state.loading = false;
       })
       .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(updateExpert.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateExpert.fulfilled, (state) => {
+        state.editSuccess = true;
+        state.loading = false;
+      })
+      .addCase(updateExpert.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
@@ -103,6 +119,9 @@ const userUpdateSlice = createSlice({
       })
       .addCase(addReset, (state) => {
         return { ...state, addSuccess: false };
+      })
+      .addCase(updateUserReset, (state) => {
+        return { ...state, editSuccess: false };
       });
   },
 });
