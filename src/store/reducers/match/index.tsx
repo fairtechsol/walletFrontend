@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { matchListReducer } from "./matchListSlice";
 import { analysisListReducer } from "./matchAnalysisSlice";
-import { sidebarListReducer } from "./sideBarListSlice";
+import { sidebarListReducer } from "./sidebarListSlice";
 
 export const matchReducer = combineReducers({
   matchList: matchListReducer,
