@@ -99,7 +99,7 @@ const WithdrawComponent = (props: any) => {
 
   useEffect(() => {
     setInitialBalance(
-      +walletAccountDetail?.userBal?.currentBalance - +formik.values.amount
+      +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
     );
   }, [formik.values.amount]);
 
