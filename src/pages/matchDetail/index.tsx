@@ -89,9 +89,11 @@ const MatchDetail = () => {
             maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
           />
         )}
-        {matchDetail?.apiBookMakerActive && (
+        {matchDetail?.bookmaker?.isActive && (
           <LiveBookmaker
             currentMatch={matchDetail}
+            minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
+            maxBet={Math.floor(matchDetail?.bookmaker?.maxBet)}
             data={
               bookmakerLive?.runners?.length > 0 ? bookmakerLive?.runners : []
             }

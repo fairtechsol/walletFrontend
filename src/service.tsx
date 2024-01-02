@@ -11,12 +11,12 @@ const toastOptions = {
 const PORT = "5050";
 
 // PRODUCTION:
-// let DEVELOPMENT = `http://localhost:${PORT}`;
-let TESTING = `http://3.89.232.255:${PORT}`;
+let DEVELOPMENT = `http://localhost:${PORT}`;
+// let TESTING = `http://3.89.232.255:${PORT}`;
 
 const service = axios.create({
-  // baseURL: DEVELOPMENT,
-  baseURL: TESTING,
+  baseURL: DEVELOPMENT,
+  // baseURL: TESTING,
 });
 
 service.defaults.timeout = 100000;

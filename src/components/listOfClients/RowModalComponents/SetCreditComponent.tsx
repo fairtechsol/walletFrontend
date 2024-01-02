@@ -5,7 +5,10 @@ import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreditRefference, userListSuccessReset } from "../../../store/actions/user/userAction";
+import {
+  setCreditRefference,
+  userListSuccessReset,
+} from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
@@ -20,11 +23,11 @@ const initialValues: any = {
 
 const SetCreditComponent = (props: any) => {
   const {
+    isWallet,
     handleKeyDown,
     backgroundColor,
     setSelected,
     element,
-    walletAccountDetail,
     endpoint,
   } = props;
   const [showPass, setShowPass] = useState(false);
@@ -36,7 +39,7 @@ const SetCreditComponent = (props: any) => {
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
       let payload;
-      if (walletAccountDetail) {
+      if (isWallet) {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
@@ -53,7 +56,7 @@ const SetCreditComponent = (props: any) => {
       }
       dispatch(
         setCreditRefference({
-          url: walletAccountDetail
+          url: isWallet
             ? ApiConstants.WALLET.CREDITREFERRENCE
             : endpoint,
           payload: payload,
@@ -64,13 +67,15 @@ const SetCreditComponent = (props: any) => {
 
   const { handleSubmit } = formik;
 
-  const { loading, success } = useSelector((state: RootState) => state.user.userList);
+  const { loading, success } = useSelector(
+    (state: RootState) => state.user.userList
+  );
 
   useEffect(() => {
     if (success) {
       formik.resetForm();
-      setSelected(false)
-      dispatch(userListSuccessReset())
+      setSelected(false);
+      dispatch(userListSuccessReset());
     }
   }, [success]);
 

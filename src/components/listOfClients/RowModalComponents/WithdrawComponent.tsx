@@ -33,6 +33,7 @@ const initialValues: any = {
 const WithdrawComponent = (props: any) => {
   const {
     endpoint,
+    isWallet,
     walletAccountDetail,
     element,
     backgroundColor,
@@ -57,7 +58,7 @@ const WithdrawComponent = (props: any) => {
     validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
       let payload;
-      if (walletAccountDetail) {
+      if (isWallet) {
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
@@ -75,13 +76,10 @@ const WithdrawComponent = (props: any) => {
       }
       dispatch(
         changeAmmountUser({
-          url: walletAccountDetail
-            ? ApiConstants.WALLET.BALANCEUPDATE
-            : endpoint,
+          url: isWallet ? ApiConstants.WALLET.BALANCEUPDATE : endpoint,
           payload: payload,
         })
       );
-
     },
   });
 
