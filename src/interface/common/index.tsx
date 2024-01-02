@@ -15,7 +15,9 @@ export interface InputInterface {
   img?: any;
   img1?: any;
   imgstyle?: any;
+  onBlur?: any;
   place?: number;
+  error?: any;
   okButtonRef?: string;
   onChange?: (value: any) => void;
   name?: string;

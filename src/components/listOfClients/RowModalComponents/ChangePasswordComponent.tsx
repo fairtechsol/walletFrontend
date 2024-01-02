@@ -11,11 +11,12 @@ import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
 
 import {
-  EyeIcon,
+  // EyeIcon,
   EyeIconWhite,
-  EyeSlash,
+  // EyeSlash,
   EyeSlashWhite,
 } from "../../../assets";
+import CustomErrorMessage from "../../Common/CustomErrorMessage";
 
 const initialValues: any = {
   userId: "",
@@ -24,7 +25,7 @@ const initialValues: any = {
 };
 
 const ChangePasswordComponent = (props: any) => {
-  const { setSelected, element,  walletAccountDetail, endpoint } = props;
+  const { setSelected, element, walletAccountDetail, endpoint } = props;
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -34,11 +35,6 @@ const ChangePasswordComponent = (props: any) => {
     validationSchema: userChangePasswordValidations,
     onSubmit: (values: any) => {
       let payload;
-      // let payload: any = {
-      //   userId: element.id,
-      //   newPassword: values.newPassword,
-      //   transactionPassword: values.transactionPassword,
-      // };
       if (walletAccountDetail) {
         payload = {
           newPassword: values.newPassword,
@@ -53,12 +49,14 @@ const ChangePasswordComponent = (props: any) => {
           // remark: values.remark,
         };
       }
-      dispatch(changePassword({
-        url: walletAccountDetail
-        ? ApiConstants.WALLET.CHANGEPASSWORD
-        : endpoint,
-      payload: payload,
-      }));
+      dispatch(
+        changePassword({
+          url: walletAccountDetail
+            ? ApiConstants.WALLET.CHANGEPASSWORD
+            : endpoint,
+          payload: payload,
+        })
+      );
     },
   });
 
@@ -108,53 +106,62 @@ const ChangePasswordComponent = (props: any) => {
               <Box
                 sx={{
                   width: { xs: "100%", lg: "32.5", md: "60%" },
-                  height: "45px",
-                  background: "#0B4F26",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  border: "2px solid #26262633",
-                  paddingX: "20px",
                 }}
               >
-                <TextField
-                  required={true}
-                  id="newPassword"
-                  name="newPassword"
-                  value={formik.values.newPassword}
-                  onChange={formik.handleChange}
-                  sx={{ width: "100%", height: "45px", color: "white" }}
-                  variant="standard"
-                  InputProps={{
-                    placeholder: "",
-                    autoFocus: true,
-                    disableUnderline: true,
-                    autoComplete: "new-password",
-                    type: !showPass ? "password" : "text",
-                    style: {
-                      fontSize: "13px",
-                      height: "45px",
-                      fontWeight: "600",
-                      color: "white",
-                    },
-                  }}
-                />
                 <Box
-                  onClick={() => {
-                    setShowPass(!showPass);
+                  sx={{
+                    width: { xs: "100%", lg: "100%", md: "100%" },
+                    height: "45px",
+                    background: "#0B4F26",
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    border: "2px solid #26262633",
+                    paddingX: "20px",
                   }}
                 >
-                  <StyledImage
-                    src={showPass ? EyeIconWhite : EyeSlashWhite}
-                    sx={{ height: "14px", width: "20px", fill: "white" }}
+                  <TextField
+                    required={true}
+                    id="newPassword"
+                    name="newPassword"
+                    value={formik.values.newPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={touched.newPassword && Boolean(errors.newPassword)}
+                    // helperText={touched.newPassword && errors.newPassword}
+                    sx={{ width: "100%", height: "45px", color: "white" }}
+                    variant="standard"
+                    InputProps={{
+                      placeholder: "",
+                      autoFocus: true,
+                      disableUnderline: true,
+                      autoComplete: "new-password",
+                      type: !showPass ? "password" : "text",
+                      style: {
+                        fontSize: "13px",
+                        height: "45px",
+                        fontWeight: "600",
+                        color: "white",
+                      },
+                    }}
                   />
+
+                  <Box
+                    onClick={() => {
+                      setShowPass(!showPass);
+                    }}
+                  >
+                    <StyledImage
+                      src={showPass ? EyeIconWhite : EyeSlashWhite}
+                      sx={{ height: "14px", width: "20px", fill: "white" }}
+                    />
+                  </Box>
                 </Box>
+                <CustomErrorMessage
+                  touched={touched.newPassword}
+                  errors={errors.newPassword}
+                />
               </Box>
-              {touched.transactionPassword && errors.transactionPassword && (
-                <p style={{ color: "#fa1e1e" }}>
-                  {errors.transactionPassword as string}
-                </p>
-              )}
             </Box>
             <Box
               sx={{
@@ -220,46 +227,59 @@ const ChangePasswordComponent = (props: any) => {
 
               <Box
                 sx={{
-                  width: { xs: "100%", lg: "60%", md: "60%" },
-                  height: "45px",
-                  background: "white",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  border: "2px solid #26262633",
-                  paddingX: "20px",
+                  width: { xs: "100%", lg: "32.5", md: "60%" },
                 }}
               >
-                <TextField
-                  required={true}
-                  id="transactionPassword"
-                  name="transactionPassword"
-                  value={formik.values.transactionPassword}
-                  onChange={formik.handleChange}
-                  sx={{ width: "100%", height: "45px" }}
-                  variant="standard"
-                  InputProps={{
-                    placeholder: "",
-                    disableUnderline: true,
-                    autoComplete: "new-password",
-                    type: !showPass ? "password" : "text",
-                    style: {
-                      fontSize: "13px",
-                      height: "45px",
-                      fontWeight: "600",
-                    },
-                  }}
-                />
                 <Box
-                  onClick={() => {
-                    setShowPass(!showPass);
+                  sx={{
+                    width: { xs: "100%", lg: "100%", md: "100%" },
+                    height: "45px",
+                    background: "#0B4F26",
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    border: "2px solid #26262633",
+                    paddingX: "20px",
                   }}
                 >
-                  <StyledImage
-                    src={showPass ? EyeIcon : EyeSlash}
-                    sx={{ height: "14px", width: "20px" }}
+                  <TextField
+                    required={true}
+                    id="transactionPassword"
+                    name="transactionPassword"
+                    value={formik.values.transactionPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={touched.newPassword && Boolean(errors.newPassword)}
+                    sx={{ width: "100%", height: "45px" }}
+                    variant="standard"
+                    InputProps={{
+                      placeholder: "",
+                      disableUnderline: true,
+                      autoComplete: "new-password",
+                      type: !showPass ? "password" : "text",
+                      style: {
+                        fontSize: "13px",
+                        height: "45px",
+                        fontWeight: "600",
+                        color: "white",
+                      },
+                    }}
                   />
+                  <Box
+                    onClick={() => {
+                      setShowPass(!showPass);
+                    }}
+                  >
+                    <StyledImage
+                      src={showPass ? EyeIconWhite : EyeSlashWhite}
+                      sx={{ height: "14px", width: "20px" }}
+                    />
+                  </Box>
                 </Box>
+                <CustomErrorMessage
+                  touched={touched.transactionPassword}
+                  errors={errors.transactionPassword}
+                />
               </Box>
             </Box>
 

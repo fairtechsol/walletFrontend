@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addExpert,
+  addReset,
   addUrlAdmin,
   addUser,
   getUsersDetail,
@@ -11,6 +12,7 @@ import {
 interface InitialState {
   userDetail: any;
   success: boolean;
+  addSuccess: boolean;
   loading: boolean;
   error: any;
 }
@@ -19,6 +21,7 @@ const initialState: InitialState = {
   userDetail: null,
   loading: false,
   success: false,
+  addSuccess: false,
   error: null,
 };
 
@@ -33,7 +36,7 @@ const userUpdateSlice = createSlice({
         state.error = null;
       })
       .addCase(addUser.fulfilled, (state) => {
-        state.success = true;
+        state.addSuccess = true;
         state.loading = false;
       })
       .addCase(addUser.rejected, (state, action) => {
@@ -45,7 +48,7 @@ const userUpdateSlice = createSlice({
         state.error = null;
       })
       .addCase(addExpert.fulfilled, (state) => {
-        state.success = true;
+        state.addSuccess = true;
         state.loading = false;
       })
       .addCase(addExpert.rejected, (state, action) => {
@@ -57,7 +60,7 @@ const userUpdateSlice = createSlice({
         state.error = null;
       })
       .addCase(addUrlAdmin.fulfilled, (state) => {
-        state.success = true;
+        state.addSuccess = true;
         state.loading = false;
       })
       .addCase(addUrlAdmin.rejected, (state, action) => {
@@ -89,13 +92,17 @@ const userUpdateSlice = createSlice({
         state.loading = false;
         state.error = action?.error?.message;
       })
-      .addCase(updateReset, () => {
+      .addCase(updateReset, (state) => {
         return {
+          ...state,
           userDetail: null,
           loading: false,
           success: false,
           error: null,
         };
+      })
+      .addCase(addReset, (state) => {
+        return { ...state, addSuccess: false };
       });
   },
 });

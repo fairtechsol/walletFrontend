@@ -9,7 +9,7 @@ import {
 } from "../../actions/user/userAction";
 
 interface InitialState {
-  transactionPassword: string;
+  transactionPassword: any;
   myAccountDetails: any;
   profileDetail: any;
   success: boolean;

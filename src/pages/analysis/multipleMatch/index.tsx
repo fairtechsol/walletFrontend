@@ -12,326 +12,44 @@ import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import SessionMarket from "../../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  analysisListReset,
+  getMultipleMatchDetail,
+} from "../../../store/actions/match/matchAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
+
 const MultipleMatch = ({}) => {
   const theme = useTheme();
+  const { state } = useLocation();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const location = useLocation();
-
-  const matchData: any = [
-    {
-      id: "7ecf206e-6fdd-4f9b-b5e8-b085f045e0a0",
-      isActive: true,
-      createAt: "2023-11-22T05:49:55.887Z",
-      updateAt: "2023-11-22T05:50:04.807Z",
-      createdBy: "f06cf1a0-3bdb-43c4-abf3-afaf115ac167",
-      deletedAt: null,
-      gameType: "cricket",
-      competitionId: "10529093",
-      competitionName: "WBBL",
-      title: "Perth Scorchers WBBL v Melbourne Stars WBBL",
-      marketId: "1.221430601",
-      EventId: "32779030",
-      teamA: "Perth Scorchers WBBL",
-      teamB: "Melbourne Stars WBBL",
-      teamC: null,
-      startAt: "2023-11-22T09:10:00.000Z",
-      stopAt: null,
-      matchImage: null,
-      teamA_Image: null,
-      teamB_Image: null,
-      match_max_bet: null,
-      betfair_match_min_bet: 100,
-      betfair_match_max_bet: 100100,
-      betfair_session_min_bet: 100,
-      betfair_session_max_bet: 100100,
-      betfair_bookmaker_min_bet: 100,
-      betfair_bookmaker_max_bet: 100100,
-      bookmaker_manual_min_bet: 0,
-      bookmaker_manual_max_bet: 0,
-      manaual_session_min_bet: 100,
-      manaual_session_max_bet: 100100,
-      apiMatchActive: true,
-      apiBookMakerActive: true,
-      apiSessionActive: true,
-      manualBookMakerActive: false,
-      manualSessionActive: true,
-      delaySecond: 5,
-      bettings: [
-        {
-          id: "c6adcfa9-f399-4cd3-8170-51375e0ffd74",
-          isActive: true,
-          createAt: "2023-11-22T05:49:55.895Z",
-          updateAt: "2023-11-22T05:49:55.895Z",
-          createdBy: "f06cf1a0-3bdb-43c4-abf3-afaf115ac167",
-          deletedAt: null,
-          match_id: "7ecf206e-6fdd-4f9b-b5e8-b085f045e0a0",
-          matchType: "cricket",
-          bet_condition: null,
-          no_rate: null,
-          yes_rate: null,
-          rate_percent: null,
-          suspended: "suspended",
-          selectionId: null,
-          sessionBet: false,
-          betStatus: 1,
-          stopAt: "2023-11-22T05:49:55.895Z",
-          betRestult: null,
-        },
-      ],
-      bookmakers: [
-        {
-          id: "609939de-e18b-4353-876e-018a3859d263",
-          isActive: true,
-          createAt: "2023-11-22T05:49:55.903Z",
-          updateAt: "2023-11-28T06:29:43.168Z",
-          createdBy: "f06cf1a0-3bdb-43c4-abf3-afaf115ac167",
-          deletedAt: null,
-          match_id: "7ecf206e-6fdd-4f9b-b5e8-b085f045e0a0",
-          bet_id: "c6adcfa9-f399-4cd3-8170-51375e0ffd74",
-          matchType: "cricket",
-          marketType: "QuickBookmaker1",
-          marketName: "b1",
-          min_bet: 100,
-          max_bet: 100100,
-          teamA_Back: null,
-          teamB_Back: null,
-          teamC_Back: null,
-          teamA_suspend: "suspended",
-          teamB_suspend: "suspended",
-          teamC_suspend: "suspended",
-          teamA_lay: null,
-          teamB_lay: null,
-          teamC_lay: null,
-          sessionBet: false,
-          betStatus: 1,
-        },
-        {
-          id: "4c64903a-5270-4416-9148-39cabf819c78",
-          isActive: true,
-          createAt: "2023-11-22T05:49:55.903Z",
-          updateAt: "2023-11-28T06:29:43.212Z",
-          createdBy: "f06cf1a0-3bdb-43c4-abf3-afaf115ac167",
-          deletedAt: null,
-          match_id: "7ecf206e-6fdd-4f9b-b5e8-b085f045e0a0",
-          bet_id: "c6adcfa9-f399-4cd3-8170-51375e0ffd74",
-          matchType: "cricket",
-          marketType: "QuickBookmaker0",
-          marketName: "b0",
-          min_bet: 100,
-          max_bet: 100100,
-          teamA_Back: 50,
-          teamB_Back: null,
-          teamC_Back: null,
-          teamA_suspend: null,
-          teamB_suspend: "suspended",
-          teamC_suspend: "suspended",
-          teamA_lay: 53,
-          teamB_lay: null,
-          teamC_lay: null,
-          sessionBet: false,
-          betStatus: 1,
-        },
-      ],
-      bookMakerRateLive: false,
-      matchOddRateLive: false,
-      teamA_rate: null,
-      teamB_rate: null,
-      teamC_rate: null,
-      blockMarket: {
-        BOOKMAKER: {
-          block: false,
-        },
-        MANUALBOOKMAKER: {
-          block: false,
-        },
-        MATCH_ODDS: {
-          block: false,
-        },
-        SESSION: {
-          block: false,
-        },
-      },
-    },
-    {
-      id: "44c55207-c75e-404a-b9b3-55f2fb54c731",
-      isActive: true,
-      createAt: "2023-11-20T10:52:41.370Z",
-      updateAt: "2023-11-20T10:53:48.819Z",
-      createdBy: "c59d1bd5-41ae-4224-a720-33b9c49ed30f",
-      deletedAt: null,
-      gameType: "cricket",
-      competitionId: "12264582",
-      competitionName: "Marsh One-Day Cup",
-      title: "Western Australia v South Australia",
-      marketId: "1.221404798",
-      EventId: "32808336",
-      teamA: "Western Australia",
-      teamB: "South Australia",
-      teamC: null,
-      startAt: "2023-11-20T04:35:00.000Z",
-      stopAt: null,
-      matchImage: null,
-      teamA_Image: null,
-      teamB_Image: null,
-      match_max_bet: null,
-      betfair_match_min_bet: 100,
-      betfair_match_max_bet: 10000,
-      betfair_session_min_bet: 100,
-      betfair_session_max_bet: 10000,
-      betfair_bookmaker_min_bet: 100,
-      betfair_bookmaker_max_bet: 10000,
-      bookmaker_manual_min_bet: 0,
-      bookmaker_manual_max_bet: 0,
-      manaual_session_min_bet: 100,
-      manaual_session_max_bet: 10000,
-      apiMatchActive: true,
-      apiBookMakerActive: true,
-      apiSessionActive: true,
-      manualBookMakerActive: false,
-      manualSessionActive: true,
-      delaySecond: 2,
-      bettings: [
-        {
-          id: "5d1e9dee-d377-4843-ba9f-62b071df3864",
-          isActive: true,
-          createAt: "2023-11-20T10:52:41.378Z",
-          updateAt: "2023-11-20T10:52:41.378Z",
-          createdBy: "c59d1bd5-41ae-4224-a720-33b9c49ed30f",
-          deletedAt: null,
-          match_id: "44c55207-c75e-404a-b9b3-55f2fb54c731",
-          matchType: "cricket",
-          bet_condition: null,
-          no_rate: null,
-          yes_rate: null,
-          rate_percent: null,
-          suspended: "suspended",
-          selectionId: null,
-          sessionBet: false,
-          betStatus: 1,
-          stopAt: "2023-11-20T10:52:41.378Z",
-          betRestult: null,
-        },
-        {
-          id: "64f38a50-5859-4833-86c4-786543401065",
-          isActive: true,
-          createAt: "2023-11-20T10:54:06.293Z",
-          updateAt: "2023-11-20T10:54:06.293Z",
-          createdBy: "c59d1bd5-41ae-4224-a720-33b9c49ed30f",
-          deletedAt: null,
-          match_id: "44c55207-c75e-404a-b9b3-55f2fb54c731",
-          matchType: "cricket",
-          bet_condition: "40 over run WA",
-          no_rate: 201,
-          yes_rate: 202,
-          rate_percent: "100-100",
-          suspended: "",
-          selectionId: "40overrunwa",
-          sessionBet: true,
-          betStatus: 1,
-          stopAt: "2023-11-20T10:54:06.293Z",
-          betRestult: null,
-          profitLoss: null,
-        },
-        {
-          id: "6c3ba15f-a991-4072-8582-fef2846c7a39",
-          isActive: true,
-          createAt: "2023-11-20T10:54:08.498Z",
-          updateAt: "2023-11-20T10:54:08.498Z",
-          createdBy: "c59d1bd5-41ae-4224-a720-33b9c49ed30f",
-          deletedAt: null,
-          match_id: "44c55207-c75e-404a-b9b3-55f2fb54c731",
-          matchType: "cricket",
-          bet_condition: "38 over run WA",
-          no_rate: 188,
-          yes_rate: 189,
-          rate_percent: "100-100",
-          suspended: "",
-          selectionId: "38overrunwa",
-          sessionBet: true,
-          betStatus: 1,
-          stopAt: "2023-11-20T10:54:08.498Z",
-          betRestult: null,
-          profitLoss: null,
-        },
-        {
-          id: "9d96594a-6e41-40ef-9712-d1e461985c36",
-          isActive: true,
-          createAt: "2023-12-04T05:17:32.604Z",
-          updateAt: "2023-12-04T05:17:32.604Z",
-          createdBy: "d1dc65aa-a481-4aff-aa9c-37d656f38ff6",
-          deletedAt: null,
-          match_id: "44c55207-c75e-404a-b9b3-55f2fb54c731",
-          matchType: "cricket",
-          bet_condition: "test10",
-          no_rate: 9,
-          yes_rate: 10,
-          rate_percent: "100-100",
-          suspended: "ACTIVE",
-          selectionId: null,
-          sessionBet: true,
-          betStatus: 1,
-          stopAt: "2023-12-04T05:17:32.604Z",
-          betRestult: null,
-          profitLoss: null,
-        },
-      ],
-      bookmakers: [
-        {
-          id: "f75bc413-7e82-4d54-974d-03972cb2979d",
-          isActive: true,
-          createAt: "2023-11-20T10:52:41.386Z",
-          updateAt: "2023-11-20T10:52:41.386Z",
-          createdBy: "c59d1bd5-41ae-4224-a720-33b9c49ed30f",
-          deletedAt: null,
-          match_id: "44c55207-c75e-404a-b9b3-55f2fb54c731",
-          bet_id: "5d1e9dee-d377-4843-ba9f-62b071df3864",
-          matchType: "cricket",
-          marketType: "QuickBookmaker0",
-          marketName: "BookVR",
-          min_bet: 100,
-          max_bet: 10000,
-          teamA_Back: null,
-          teamB_Back: null,
-          teamC_Back: null,
-          teamA_suspend: "suspended",
-          teamB_suspend: "suspended",
-          teamC_suspend: "suspended",
-          teamA_lay: null,
-          teamB_lay: null,
-          teamC_lay: null,
-          sessionBet: false,
-          betStatus: 1,
-        },
-      ],
-      bookMakerRateLive: false,
-      matchOddRateLive: false,
-      teamA_rate: "-0.5",
-      teamB_rate: "5",
-      teamC_rate: null,
-      blockMarket: {
-        BOOKMAKER: {
-          block: false,
-        },
-        MANUALBOOKMAKER: {
-          block: false,
-        },
-        MATCH_ODDS: {
-          block: false,
-        },
-        SESSION: {
-          block: false,
-        },
-      },
-    },
-  ];
+  const dispatch: AppDispatch = useDispatch();
+  const { multipleMatchDetail, success } = useSelector(
+    (state: RootState) => state.match.analysisList
+  );
 
   const manualRateHttp: any = {};
 
   const IObets: any = [];
   const sessionBets: any = [];
+
+  useEffect(() => {
+    if (state?.matchIds) {
+      dispatch(getMultipleMatchDetail(state?.matchIds));
+    }
+  }, [state?.matchIds]);
+
+  useEffect(() => {
+    if (success) {
+      dispatch(analysisListReset());
+    }
+  }, [success]);
+
   return (
     <>
-      {location?.state?.match == 3 && (
+      {state?.match == 3 && (
         <>
           <Box
             sx={{
@@ -350,8 +68,8 @@ const MultipleMatch = ({}) => {
                 width: "100%",
               }}
             >
-              {matchData?.length > 0 &&
-                matchData?.map((item: any, index: any) => {
+              {multipleMatchDetail?.length > 0 &&
+                multipleMatchDetail?.map((item: any, index: any) => {
                   let manualSessionHttp: any = {};
                   if (manualRateHttp.hasOwnProperty(item?.id)) {
                     manualSessionHttp = manualRateHttp[item?.id];
@@ -727,11 +445,11 @@ const MultipleMatch = ({}) => {
         </>
       )}
 
-      {true && (
+      {(state?.match == 2 || state?.match == 4) && (
         <>
           <Box
             sx={{
-              display: "flex", 
+              display: "flex",
               flexDirection: { matchesMobile: "column", lg: "row" },
               flex: 1,
               height: "100%",
@@ -746,8 +464,8 @@ const MultipleMatch = ({}) => {
                 width: "100%",
               }}
             >
-              {matchData?.length > 0 &&
-                matchData?.map((item: any) => {
+              {multipleMatchDetail?.length > 0 &&
+                multipleMatchDetail?.map((item: any) => {
                   let manualSessionHttp: any = {};
                   if (manualRateHttp.hasOwnProperty(item?.id)) {
                     manualSessionHttp = manualRateHttp[item?.id];

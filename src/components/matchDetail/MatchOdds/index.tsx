@@ -225,25 +225,25 @@ const MatchOdds = (props: any) => {
             {session === "manualBookMaker" ? (
               <>
                 <TeamRowComponent
-                  teamImage={currentMatch?.teamA_Image}
+                  // teamImage={currentMatch?.teamA_Image}
                   name={currentMatch?.teamA}
                   rates={
-                    currentMatch?.teamA_rate ? currentMatch?.teamA_rate : 0
+                    currentMatch?.teamArate ? currentMatch?.teamArate : 0
                   }
                   color={currentMatch?.teamA_rate <= 0 ? "#FF4D4D" : "#319E5B"}
                   data={data?.length > 0 ? data[0] : []}
                   lock={false}
                   matchOddsData={{
-                    back: data?.teamA_Back,
-                    lay: data?.teamA_lay,
+                    back: data?.backTeamA,
+                    lay: data?.layTeamA,
                   }}
-                  ballStatus={data?.teamA_Ball === "ball" ? true : false}
-                  status={data?.teamA_suspend ? true : false}
+                  ballStatus={data?.statusTeamA === "ball" ? true : false}
+                  status={data?.statusTeamA ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
                 <Divider />
                 <TeamRowComponent
-                  teamImage={currentMatch?.teamA_Image}
+                  // teamImage={currentMatch?.teamA_Image}
                   name={currentMatch?.teamB}
                   rates={
                     currentMatch?.teamB_rate ? currentMatch?.teamB_rate : 0
@@ -252,22 +252,22 @@ const MatchOdds = (props: any) => {
                   data={data?.length > 0 ? data[1] : []}
                   lock={false}
                   matchOddsData={{
-                    back: data?.teamB_Back,
-                    lay: data?.teamB_lay,
+                    back: data?.backTeamB,
+                    lay: data?.layTeamB,
                   }}
-                  ballStatus={data?.teamB_Ball === "ball" ? true : false}
-                  status={data?.teamB_suspend ? true : false}
+                  ballStatus={data?.statusTeamA === "ball" ? true : false}
+                  status={data?.statusTeamB ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
                 {currentMatch?.teamC ? (
                   <>
                     <Divider />
                     <TeamRowComponent
-                      teamImage={
-                        currentMatch?.teamC_Image
-                          ? currentMatch?.teamC_Image
-                          : null
-                      }
+                      // teamImage={
+                      //   currentMatch?.teamC_Image
+                      //     ? currentMatch?.teamC_Image
+                      //     : null
+                      // }
                       name={currentMatch?.teamC}
                       rates={
                         currentMatch?.teamC_rate ? currentMatch?.teamC_rate : 0
@@ -278,11 +278,11 @@ const MatchOdds = (props: any) => {
                       data={data?.length > 0 ? data[2] : []}
                       lock={false}
                       matchOddsData={{
-                        back: data?.teamC_Back,
-                        lay: data?.teamC_lay,
+                        back: data?.backTeamC,
+                        lay: data?.layTeamC,
                       }}
-                      ballStatus={data?.teamC_Ball === "ball" ? true : false}
-                      status={data?.teamC_suspend ? true : false}
+                      ballStatus={data?.statusTeamA === "ball" ? true : false}
+                      status={data?.statusTeamC ? true : false}
                       isTeamC={currentMatch?.teamC}
                     />
                   </>
@@ -334,7 +334,7 @@ const MatchOdds = (props: any) => {
             ) : (
               <>
                 <BoxComponent
-                  teamImage={currentMatch?.teamA_Image}
+                  // teamImage={currentMatch?.teamA_Image}
                   name={currentMatch?.teamA}
                   rates={
                     currentMatch?.teamA_rate ? currentMatch?.teamA_rate : 0
@@ -345,7 +345,7 @@ const MatchOdds = (props: any) => {
                 />
                 <Divider />
                 <BoxComponent
-                  teamImage={currentMatch?.teamB_Image}
+                  // teamImage={currentMatch?.teamB_Image}
                   color={currentMatch?.teamB_rate <= 0 ? "#FF4D4D" : "#319E5B"}
                   name={currentMatch?.teamB}
                   rates={
@@ -359,11 +359,6 @@ const MatchOdds = (props: any) => {
                   <>
                     <Divider />
                     <BoxComponent
-                      teamImage={
-                        currentMatch?.teamC_Image
-                          ? currentMatch?.teamC_Image
-                          : null
-                      }
                       color={
                         currentMatch?.teamC_rate <= 0 ? "#FF4D4D" : "#46e080"
                       }

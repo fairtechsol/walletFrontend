@@ -98,6 +98,11 @@ const AccountList = (endpoint: any) => {
                               fContainerStyle={{ background: "#0B4F26" }}
                               fTextStyle={{ color: "white" }}
                               element={element}
+                              show={
+                                element?.roleName === "superAdmin"
+                                  ? true
+                                  : false
+                              }
                             />
                           );
                         } else {

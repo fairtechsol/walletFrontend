@@ -8,10 +8,10 @@ const AuthLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("userToken")) {
+    if (sessionStorage.getItem("userToken")) {
       navigate(-1);
     } else {
-      if (!localStorage.getItem("forceChangePassword")) {
+      if (!sessionStorage.getItem("forceChangePassword")) {
         navigate("/wallet/login");
       }
     }

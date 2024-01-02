@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const Modal = ({
+const WalletModal = ({
   message,
   buttonMessage,
   navigateTo,
@@ -97,4 +97,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default WalletModal;
