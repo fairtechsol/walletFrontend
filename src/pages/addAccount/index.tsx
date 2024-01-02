@@ -26,7 +26,7 @@ import {
   updateUser,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation } from "../../utils/Validations";
+import { addUserValidation, SuperURLValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
 
@@ -92,6 +92,7 @@ const defaultLockUnlockObj = {
 };
 
 const AddAccount = () => {
+  
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
@@ -126,9 +127,13 @@ const AddAccount = () => {
     border: "1px solid #DEDEDE",
   };
 
+  let roleAccType = formDataSchema.roleName.value;
+
   const formik = useFormik({
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
+    // validationSchema: roleAccType === "superAdmin" ? SuperURLValidation : addUserValidation,
+    // SuperURLValidation
     onSubmit: (values: any) => {
       const commonPayload = {
         userName: values.userName,
@@ -193,6 +198,7 @@ const AddAccount = () => {
       dispatch(updateReset());
     },
   });
+    
 
   const { handleSubmit, touched, errors } = formik;
 
@@ -603,12 +609,17 @@ const AddAccount = () => {
                         />
                       </div>
                     )}
-                    <Box m={2}>
-                      <Grid container spacing={2}>
+                    <Box m={2} mr={0} sx={{pt: 1}} >
+                      <Grid container spacing={2} sx={{border: "1px solid #ddd",  borderRadius: "5px", pr: 2, pb: 2}}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="sidebarColor">
-                            Sidebar Color:{" "}
-                          </InputLabel>
+                          <Box sx={{
+                            display: "flex",
+                            border: "1px solid #ddd",
+                            padding: '8px',
+                            background: '#eee',
+                            borderRadius: "3px",
+                            p: 1,
+                            }}>
                           <input
                             type="color"
                             id="sidebarColor"
@@ -616,37 +627,79 @@ const AddAccount = () => {
                             value={formik.values.sidebarColor}
                             onChange={formik.handleChange}
                           />
+                          <InputLabel htmlFor="sidebarColor" sx={{fontWeight: "bold"}}>
+                            &nbsp; Sidebar Color:{" "}
+                          </InputLabel>
+                          </Box>
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="headerColor">
-                            Header Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="headerColor"
-                            name={"headerColor"}
-                            value={formik.values.headerColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box sx={{
+                              display: "flex",
+                              border: "1px solid #ddd",
+                              padding: '8px',
+                              background: '#eee',
+                              borderRadius: "3px",
+                              p: 1,
+                              }}>
+                            <input
+                              type="color"
+                              id="headerColor"
+                              name={"headerColor"}
+                              value={formik.values.headerColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel htmlFor="headerColor" sx={{fontWeight: "bold"}}>
+                            &nbsp; Header Color:{" "}
+                            </InputLabel>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <Box sx={{
+                                display: "flex",
+                                border: "1px solid #ddd",
+                                padding: '8px',
+                                background: '#eee',
+                                borderRadius: "3px",
+                                p: 1,
+                                }}>
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel htmlFor="footerColor" sx={{fontWeight: "bold"}}>
+                            &nbsp; Footer Color:{" "}
+                            </InputLabel>
+                          </Box>
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2}>
+                    {/* <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="footerColor">
-                            Footer Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="footerColor"
-                            name={"footerColor"}
-                            value={formik.values.footerColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box sx={{
+                                display: "flex",
+                                border: "1px solid #ddd",
+                                padding: '8px',
+                                background: '#eee',
+                                p: 1,
+                                }}>
+                            <InputLabel htmlFor="footerColor">
+                              Footer Color:{" "}
+                            </InputLabel>
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                          </Box>
                         </Grid>
                       </Grid>
-                    </Box>
+                    </Box> */}
                   </div>
                 )}
               </Box>
@@ -678,13 +731,14 @@ const AddAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    // touched={touched.roleName}
+                    touched={touched.roleName}
                     // error={errors.roleName}
-                    // error={touched.roleName && Boolean(errors.roleName)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.roleName && Boolean(errors.roleName)}
+                    onBlur={formik.handleBlur}
                   />
-                  {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
+                  <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} />
                 </Box>
+                
                 {formik.values.roleName.value === "expert" && (
                   <>
                     <Box m={2}>
@@ -765,11 +819,11 @@ const AddAccount = () => {
                       type={"Number"}
                       id="creditRefrence"
                       value={formik.values.creditRefrence}
-                      // error={touched.creditRefrence && Boolean(errors.creditRefrence)}
-                      // onBlur={formik.handleBlur}
+                      error={touched.creditRefrence && Boolean(errors.creditRefrence)}
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
-                    {/* <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} /> */}
+                    <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} />
                   </Box>
                 )}
               </Box>
