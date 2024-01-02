@@ -79,7 +79,7 @@ const WithdrawComponent = (props: any) => {
           payload: payload,
         })
       );
-      formik.resetForm();
+
     },
   });
 
