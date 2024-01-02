@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
 import { Navigate } from "react-router-dom";
+import { Constants } from "../utils/Constants";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const ProfitLossReport = Loadable(
@@ -17,28 +18,28 @@ const GeneralReport = Loadable(
 );
 
 const ReportRoutes = {
-  path: "/wallet/reports",
+  path: Constants.ReportsPaths.root,
   element: <MainLayout />,
   children: [
     {
-      path: "profit_loss",
+      path: Constants.ReportsPaths.profitLoss,
       element: <ProfitLossReport />,
     },
     {
-      path: "account_statement",
+      path: Constants.ReportsPaths.accountStatement,
       element: <AccountStatement />,
     },
     {
-      path: "current_bet",
+      path: Constants.ReportsPaths.currentBet,
       element: <CurrentBets />,
     },
     {
-      path: "general_report",
+      path: Constants.ReportsPaths.generalReport,
       element: <GeneralReport />,
     },
     {
       path: "*",
-      element: <Navigate to={"/expert/match"} replace />,
+      element: <Navigate to={"/wallet/match"} replace />,
     },
   ],
 };

@@ -1,4 +1,4 @@
-import { Box, Pagination } from "@mui/material";
+import { Box, Pagination, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import Loader from "../../components/Loader";
 import MatchComponent from "../../components/Inplay/MatchComponent";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ const Inplay = () => {
 
   return (
     <>
-      {matchListInplay?.matches &&
+      {matchListInplay?.matches?.length > 0 ? (
         matchListInplay?.matches?.map((match: any) => {
           return (
             <MatchComponent
@@ -51,8 +51,19 @@ const Inplay = () => {
               // handleUpdateMatch={handleUpdateMatch}
             />
           );
-        })}
-      {matchListInplay?.matches?.length != 0 && (
+        })
+      ) : (
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell style={{ color: "white", textAlign: "center" }}>
+                No Record Found...
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
+      {matchListInplay?.matches?.length > 0 && (
         <Pagination
           page={currentPage}
           className="whiteTextPagination d-flex justify-content-center"
@@ -63,7 +74,7 @@ const Inplay = () => {
           color="primary"
           onChange={(e: any, value: number) => {
             setCurrentPage(value);
-            console.log(e)
+            console.log(e);
           }}
         />
       )}

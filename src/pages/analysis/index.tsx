@@ -1,5 +1,13 @@
 import Loader from "../../components/Loader";
-import { Box, Pagination, Typography } from "@mui/material";
+import {
+  Box,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import CustomBox from "../../components/analysis/CustomBox";
 import { useEffect, useState } from "react";
 import MatchListComponent from "../../components/analysis/MatchListComponent";
@@ -208,37 +216,45 @@ const Analysis = () => {
           >
             <Loader />
           </Box>
+        ) : analysisList?.matches?.length > 0 ? (
+          <>
+            {analysisList?.matches?.map((match: any) => {
+              return (
+                <MatchListComponent
+                  key={match?.id}
+                  data={match}
+                  setSelected={() => changeSelected(match)}
+                  mode={mode}
+                  selected={!selected.includes(match.id as never)}
+                  team={match?.teamA}
+                  team2={match?.teamB}
+                />
+              );
+            })}
+            <Pagination
+              page={currentPage}
+              className="whiteTextPagination d-flex justify-content-center"
+              count={Math.ceil(
+                parseInt(analysisList?.count ? analysisList?.count : 1) /
+                  Constants.pageLimit
+              )}
+              color="primary"
+              onChange={(e: any, value: number) => {
+                setCurrentPage(value);
+                console.log(e);
+              }}
+            />
+          </>
         ) : (
-          analysisList?.matches?.length > 0 && (
-            <>
-              {analysisList?.matches?.map((match: any) => {
-                return (
-                  <MatchListComponent
-                    key={match?.id}
-                    data={match}
-                    setSelected={() => changeSelected(match)}
-                    mode={mode}
-                    selected={!selected.includes(match.id as never)}
-                    team={match?.teamA}
-                    team2={match?.teamB}
-                  />
-                );
-              })}
-              <Pagination
-                page={currentPage}
-                className="whiteTextPagination d-flex justify-content-center"
-                count={Math.ceil(
-                  parseInt(analysisList?.count ? analysisList?.count : 1) /
-                    Constants.pageLimit
-                )}
-                color="primary"
-                onChange={(e: any, value: number) => {
-                  setCurrentPage(value);
-                  console.log(e)
-                }}
-              />
-            </>
-          )
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell style={{ color: "white", textAlign: "center" }}>
+                  No Record Found...
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         )}
       </Box>
     </>

@@ -26,7 +26,7 @@ const RenderBets = (props: any) => {
         under={false}
         color={colors[4]}
         width={70}
-        title={i.title}
+        title={i?.title}
       />
     </Box>
   );

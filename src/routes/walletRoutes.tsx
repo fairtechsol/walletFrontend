@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Loadable from "../utils/loadable";
 import { Navigate } from "react-router-dom";
+import { Constants } from "../utils/Constants";
 
 const MainLayout = Loadable(lazy(() => import("../layout/main")));
 const DepositAndWithdrawBox = Loadable(
@@ -8,24 +9,24 @@ const DepositAndWithdrawBox = Loadable(
 );
 
 const WalletRoutes = {
-  path: "/wallet/walletSettings",
+  path: Constants.WalletSettingsPaths.root,
   element: <MainLayout />,
   children: [
     {
-      path: "deposit",
+      path: Constants.WalletSettingsPaths.deposit,
       element: <DepositAndWithdrawBox />,
     },
     {
-      path: "withdraw",
+      path: Constants.WalletSettingsPaths.withdraw,
       element: <DepositAndWithdrawBox />,
     },
     {
-      path: "credit_reference",
+      path: Constants.WalletSettingsPaths.creditReference,
       element: <DepositAndWithdrawBox />,
     },
     {
       path: "*",
-      element: <Navigate to={"/expert/match"} replace />,
+      element: <Navigate to={"/wallet/match"} replace />,
     },
   ],
 };

@@ -35,14 +35,53 @@ export const ApiConstants = {
     LOCKUNLOCK: "/user/lockUnlockUser",
     CHANGEPASSWORD: "/user/changePassword",
   },
+  EXPERT: {
+    COMPETITIONLIST: "/expert/match/competitionList/",
+    COMPETITIONDATES: "/expert/match/competition/dates/",
+    COMPETITIONMATCHES: "/expert/match/competition/getMatch/",
+  },
   INPLAY: {
-    MATCHLIST: "match/list"
+    MATCHLIST: "match/list",
   },
   MATCH: {
-    GET: "match"
-  }
+    GET: "match",
+  },
 };
 
 export const Constants = {
   pageLimit: 10,
+  AuthPaths: {
+    root: "/",
+    login: "wallet/login",
+    changePassword: "wallet/change_password",
+  },
+  MainPaths: {
+    root: "/wallet",
+    listOfClients: "list_of_clients",
+    match: "match",
+    liveMarket: "live_market",
+    liveMarketMatches: "live_market/matches",
+    addAccount: "add_account",
+    editAccount: "edit_account",
+    marketAnalysis: "market_analysis",
+    marketAnalysisMatches: "market_analysis/matches",
+    multipleMatch: "market_analysis/multiple_Match",
+    reports: "reports",
+    walletSettings: "walletSettings",
+    myAccount: "my-account",
+    changePassword: "change-password",
+  },
+  WalletSettingsPaths: {
+    root: "/wallet/walletSettings",
+    deposit: "deposit",
+    withdraw: "withdraw",
+    creditReference: "credit_reference",
+  },
+  ReportsPaths: {
+    root: "/wallet/reports",
+    profitLoss: "profit_loss",
+    accountStatement: "account_statement",
+    currentBet: "current_bet",
+    generalReport: "general_report",
+  },
 };

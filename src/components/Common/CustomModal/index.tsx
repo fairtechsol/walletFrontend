@@ -4,29 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { changePasswordReset } from "../../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 
-{
-  /* <Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <Box sx={style}>
-    <Typography id="modal-modal-title" variant="h6" component="h2">
-      Text in a modal
-    </Typography>
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-    </Typography>
-  </Box>
-</Modal> */
-}
-const Modal = ({
+const CustomModal = ({
   transactionMessage,
   modalTitle,
   buttonMessage,
   setShowModal,
   closeBtn,
+  functionDispatch,
+  navigateTo,
 }: any) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -117,7 +102,8 @@ const Modal = ({
                 onClick={() => {
                   dispatch(changePasswordReset());
                   setShowModal(false);
-                  navigate("/wallet/login");
+                  functionDispatch();
+                  navigate(navigateTo);
                 }}
               >
                 {buttonMessage}
@@ -130,4 +116,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default CustomModal;

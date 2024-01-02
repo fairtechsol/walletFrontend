@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ListHeader from "./ListHeader";
 import ListBody from "./ListBody";
-import DepositComponent from "../listOfClients/RowModalComponents/DepositComponets";
+import DepositComponent from "../listOfClients/RowModalComponents/DepositComponent";
 import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawComponent";
 import SetCreditComponent from "../listOfClients/RowModalComponents/SetCreditComponent";
 import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockComponent";

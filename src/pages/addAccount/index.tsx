@@ -18,6 +18,7 @@ import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
 import {
   addExpert,
+  addReset,
   addUrlAdmin,
   addUser,
   getUsersDetail,
@@ -27,6 +28,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
+import CustomModal from "../../components/Common/CustomModal";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -91,8 +93,9 @@ const defaultLockUnlockObj = {
 const AddAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
-  const { state, pathname } = useLocation();
+  const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const [mode, setMode] = useState("");
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
@@ -101,7 +104,7 @@ const AddAccount = () => {
     (state: RootState) => state.user.profile
   );
 
-  const { success, loading, userDetail } = useSelector(
+  const { success, loading, userDetail, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
   );
 
@@ -131,7 +134,7 @@ const AddAccount = () => {
         fullName: values.fullName,
         password: values.password,
         confirmPassword: values.confirmPassword,
-        phoneNumber: values.phoneNumber,
+        phoneNumber: values.phoneNumber.toString(),
         city: values.city,
       };
 
@@ -266,48 +269,62 @@ const AddAccount = () => {
   }, [state?.id]);
 
   useEffect(() => {
-    if (pathname.includes("add_account")) {
-      formik.resetForm();
-      setLockUnlockObj(defaultLockUnlockObj);
-    } else if (success) {
-      formik.setValues({
-        ...formik.values,
-        userName: userDetail?.userName,
-        fullName: userDetail?.fullName,
-        city: userDetail?.city,
-        phoneNumber: userDetail?.phoneNumber,
-        roleName: {
-          label: userDetail?.roleName,
-          value: userDetail?.roleName,
-        },
-        creditRefrence: userDetail?.creditRefrence,
-        uplinePartnership: userDetail?.fwPartnership,
-        myPartnership: 0,
-        downlinePartnership: userDetail?.faPartnership,
-        matchCommissionType: {
-          label: userDetail?.matchComissionType,
-          value: userDetail?.matchComissionType,
-        },
-        matchCommission: {
-          label: userDetail?.matchCommission,
-          value: userDetail?.matchCommission,
-        },
-        sessionCommission: {
-          label: userDetail?.sessionCommission,
-          value: userDetail?.sessionCommission,
-        },
-        remarks: "",
-        adminTransPassword: "",
-      });
-      setLockUnlockObj({
-        allPrivilege: userDetail?.allPrivilege,
-        addMatchPrivilege: userDetail?.addMatchPrivilege,
-        betFairMatchPrivilege: userDetail?.betFairMatchPrivilege,
-        bookmakerMatchPrivilege: userDetail?.bookmakerMatchPrivilege,
-        sessionMatchPrivilege: userDetail?.sessionMatchPrivilege,
-      });
+    try {
+      if (success) {
+        formik.setValues({
+          ...formik.values,
+          userName: userDetail?.userName,
+          fullName: userDetail?.fullName,
+          city: userDetail?.city,
+          phoneNumber: userDetail?.phoneNumber,
+          roleName: {
+            label: userDetail?.roleName,
+            value: userDetail?.roleName,
+          },
+          creditRefrence: userDetail?.creditRefrence,
+          uplinePartnership: userDetail?.fwPartnership,
+          myPartnership: 0,
+          downlinePartnership: userDetail?.faPartnership,
+          matchCommissionType: {
+            label: userDetail?.matchComissionType,
+            value: userDetail?.matchComissionType,
+          },
+          matchCommission: {
+            label: userDetail?.matchCommission,
+            value: userDetail?.matchCommission,
+          },
+          sessionCommission: {
+            label: userDetail?.sessionCommission,
+            value: userDetail?.sessionCommission,
+          },
+          remarks: "",
+          adminTransPassword: "",
+        });
+        setLockUnlockObj({
+          allPrivilege: userDetail?.allPrivilege,
+          addMatchPrivilege: userDetail?.addMatchPrivilege,
+          betFairMatchPrivilege: userDetail?.betFairMatchPrivilege,
+          bookmakerMatchPrivilege: userDetail?.bookmakerMatchPrivilege,
+          sessionMatchPrivilege: userDetail?.sessionMatchPrivilege,
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
-  }, [loading, pathname, success]);
+  }, [success]);
+
+  useEffect(() => {
+    try {
+      if (addSuccess) {
+        setShowModal(true);
+        formik.resetForm();
+        setLockUnlockObj(defaultLockUnlockObj);
+        dispatch(addReset());
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [addSuccess]);
 
   return (
     <>
@@ -346,7 +363,7 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <Box sx={{pb: errors.userName && touched.userName ? 2 : 0 }}>
+                <Box sx={{ pb: errors.userName && touched.userName ? 2 : 0 }}>
                   <Input
                     id={"userName"}
                     titleStyle={titleStyles}
@@ -366,14 +383,17 @@ const AddAccount = () => {
                     error={touched.userName && Boolean(errors.userName)}
                     onBlur={formik.handleBlur}
                   />
-                <CustomErrorMessage touched={touched.userName} errors={errors.userName} />
+                  <CustomErrorMessage
+                    touched={touched.userName}
+                    errors={errors.userName}
+                  />
                 </Box>
                 {/* {touched.userName && errors.userName && (
                   <p style={{ color: "#fa1e1e" }}>
                     {errors.userName as string}
                   </p>
                 )} */}
-                <Box sx={{pb: errors.password && touched.password ? 2 : 0 }}>
+                <Box sx={{ pb: errors.password && touched.password ? 2 : 0 }}>
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -396,10 +416,18 @@ const AddAccount = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />{" "}
-                  <CustomErrorMessage touched={touched.password} errors={errors.password} />
+                  <CustomErrorMessage
+                    touched={touched.password}
+                    errors={errors.password}
+                  />
                 </Box>
-                
-                <Box sx={{pb: errors.confirmPassword && touched.confirmPassword ? 2 : 0 }}>
+
+                <Box
+                  sx={{
+                    pb:
+                      errors.confirmPassword && touched.confirmPassword ? 2 : 0,
+                  }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -419,12 +447,17 @@ const AddAccount = () => {
                     required={true}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
-                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                    error={
+                      touched.confirmPassword && Boolean(errors.confirmPassword)
+                    }
                     onBlur={formik.handleBlur}
                   />
-                <CustomErrorMessage touched={touched.confirmPassword} errors={errors.confirmPassword} />
+                  <CustomErrorMessage
+                    touched={touched.confirmPassword}
+                    errors={errors.confirmPassword}
+                  />
                 </Box>
-                <div>
+                <Box sx={{ pb: touched.fullName && errors.fullName ? 2 : 0 }}>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -440,13 +473,16 @@ const AddAccount = () => {
                     id="fullName"
                     type={"text"}
                     value={formik.values.fullName}
-                    // error={touched.fullName && Boolean(errors.fullName)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.fullName && Boolean(errors.fullName)}
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                   {/* <CustomErrorMessage touched={touched.fullName} errors={errors.fullName} /> */}
-                </div>
-                <Box sx={{pb: touched.city && errors.city ? 2 : 0}} >
+                  <CustomErrorMessage
+                    touched={touched.fullName}
+                    errors={errors.fullName}
+                  />
+                </Box>
+                <Box sx={{ pb: touched.city && errors.city ? 2 : 0 }}>
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -466,9 +502,14 @@ const AddAccount = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  <CustomErrorMessage touched={touched.city} errors={errors.city} />
+                  <CustomErrorMessage
+                    touched={touched.city}
+                    errors={errors.city}
+                  />
                 </Box>
-                <div>
+                <Box
+                  sx={{ pb: touched.phoneNumber && errors.phoneNumber ? 2 : 0 }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -482,14 +523,17 @@ const AddAccount = () => {
                     title={"Mobile Number"}
                     name={"phoneNumber"}
                     id="phoneNumber"
-                    type={"text"}
+                    type={"number"}
                     value={formik.values.phoneNumber}
                     error={touched.phoneNumber && Boolean(errors.phoneNumber)}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  <CustomErrorMessage touched={touched.phoneNumber} errors={errors.phoneNumber} />
-                </div>
+                  <CustomErrorMessage
+                    touched={touched.phoneNumber}
+                    errors={errors.phoneNumber}
+                  />
+                </Box>
                 {formik?.values?.roleName?.value === "superAdmin" && (
                   <div>
                     <Input
@@ -511,7 +555,10 @@ const AddAccount = () => {
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
-                    <CustomErrorMessage touched={touched.domain} errors={errors.domain} />
+                    <CustomErrorMessage
+                      touched={touched.domain}
+                      errors={errors.domain}
+                    />
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -526,7 +573,7 @@ const AddAccount = () => {
                       name="logo"
                       type={"text"}
                       id="logo"
-                      value={formik.values.logo}                     
+                      value={formik.values.logo}
                       onChange={formik.handleChange}
                     />
                     <Box m={2}>
@@ -599,17 +646,16 @@ const AddAccount = () => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}
                     isDisabled={state?.id}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                     value={AccountTypes.find(
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
                     // touched={touched.roleName}
                     // error={errors.roleName}
-                    error={touched.roleName && Boolean(errors.roleName)}
-                    onBlur={formik.handleBlur}
+                    // error={touched.roleName && Boolean(errors.roleName)}
                   />
-                  <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} />
+                  {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
                 {formik.values.roleName.value === "expert" && (
                   <>
@@ -676,7 +722,7 @@ const AddAccount = () => {
                   </>
                 )}
                 {formik?.values?.roleName?.value !== "expert" && (
-                  <div>
+                  <Box>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -691,12 +737,12 @@ const AddAccount = () => {
                       type={"Number"}
                       id="creditRefrence"
                       value={formik.values.creditRefrence}
-                      error={touched.creditRefrence && Boolean(errors.creditRefrence)}
-                      onBlur={formik.handleBlur}
+                      // error={touched.creditRefrence && Boolean(errors.creditRefrence)}
+                      // onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
-                    <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} />
-                  </div>
+                    {/* <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} /> */}
+                  </Box>
                 )}
               </Box>
               {formik.values.roleName.value !== "expert" && (
@@ -754,11 +800,16 @@ const AddAccount = () => {
                       id={"myPartnership"}
                       type={"Number"}
                       value={formik.values.myPartnership}
-                      error={touched.myPartnership && Boolean(errors.myPartnership)}
-                      onBlur={formik.handleBlur}
+                      // error={
+                      //   touched.myPartnership && Boolean(errors.myPartnership)
+                      // }
+                      // onBlur={formik.handleBlur}
                       onChange={handlePartnershipChange}
                     />
-                    <CustomErrorMessage touched={touched.myPartnership} errors={errors.myPartnership} />
+                    {/* <CustomErrorMessage
+                      touched={touched.myPartnership}
+                      errors={errors.myPartnership}
+                    /> */}
                   </Box>
                   <Input
                     containerStyle={{
@@ -783,7 +834,6 @@ const AddAccount = () => {
                     value={formik.values.downlinePartnership}
                     onChange={formik.handleChange}
                   />
-                  
                 </>
               )}
 
@@ -823,32 +873,33 @@ const AddAccount = () => {
                         touched={touched.matchCommissionType}
                         error={errors.matchCommissionType}
                       />
-                      {formik.values.matchCommissionType.label !== "" &&
-                        formik.values.matchCommissionType.label !== "0.00" && (
-                          <>
-                            <SelectField
-                              containerStyle={containerStyles}
-                              titleStyle={titleStyles}
-                              id={"matchCommission"}
-                              name={"matchCommission"}
-                              label={"Match Commission (%)*"}
-                              options={matchComissionArray}
-                              value={matchComissionArray.find((option: any) => {
-                                option.value ===
-                                  formik.values.matchCommission.value;
-                              })}
-                              onChange={(matchComissionArray: any) => {
-                                formik.setFieldValue(
-                                  "matchCommission",
-                                  matchComissionArray
-                                );
-                              }}
-                              onBlur={formik.handleBlur}
-                              touched={touched.matchCommission}
-                              error={errors.matchCommission}
-                            />
-                          </>
-                        )}
+                      {!["", null, "0.00"].includes(
+                        formik.values.matchCommissionType.value
+                      ) && (
+                        <>
+                          <SelectField
+                            containerStyle={containerStyles}
+                            titleStyle={titleStyles}
+                            id={"matchCommission"}
+                            name={"matchCommission"}
+                            label={"Match Commission (%)*"}
+                            options={matchComissionArray}
+                            value={matchComissionArray.find((option: any) => {
+                              option.value ===
+                                formik.values.matchCommission.value;
+                            })}
+                            onChange={(matchComissionArray: any) => {
+                              formik.setFieldValue(
+                                "matchCommission",
+                                matchComissionArray
+                              );
+                            }}
+                            onBlur={formik.handleBlur}
+                            touched={touched.matchCommission}
+                            error={errors.matchCommission}
+                          />
+                        </>
+                      )}
 
                       <SelectField
                         containerStyle={containerStyles}
@@ -918,11 +969,17 @@ const AddAccount = () => {
                     placeholder={"Ex : 12345"}
                     required={true}
                     value={formik.values.adminTransPassword}
-                    error={touched.adminTransPassword && Boolean(errors.adminTransPassword)}
+                    error={
+                      touched.adminTransPassword &&
+                      Boolean(errors.adminTransPassword)
+                    }
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  <CustomErrorMessage touched={touched.adminTransPassword} errors={errors.adminTransPassword} />
+                  <CustomErrorMessage
+                    touched={touched.adminTransPassword}
+                    errors={errors.adminTransPassword}
+                  />
                 </div>
               </Box>
               <Button
@@ -952,6 +1009,18 @@ const AddAccount = () => {
           </Box>
         </form>
       </Box>
+      {showModal && (
+        <CustomModal
+          modalTitle={`User ${
+            mode === "edit" ? "Edited" : "Added"
+          } sucessfully`}
+          setShowModal={setShowModal}
+          showModal={showModal}
+          buttonMessage={"Ok"}
+          functionDispatch={() => {}}
+          navigateTo={"/wallet/list_of_clients"}
+        />
+      )}
     </>
   );
 };
