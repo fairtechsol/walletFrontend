@@ -10,6 +10,7 @@ const ChangePassword = Loadable(lazy(() => import("../pages/changePassword")));
 const MyAccount = Loadable(lazy(() => import("../pages/myAccount")));
 const Inplay = Loadable(lazy(() => import("../pages/inplay")));
 const AddAccount = Loadable(lazy(() => import("../pages/addAccount")));
+const EditAccount = Loadable(lazy(() => import("../pages/editAccount")));
 const Analysis = Loadable(lazy(() => import("../pages/analysis")));
 const Reports = Loadable(lazy(() => import("../pages/reports")));
 const MatchDetail = Loadable(lazy(() => import("../pages/matchDetail")));
@@ -41,7 +42,7 @@ const MainRoutes = {
     },
     {
       path: Constants.MainPaths.editAccount,
-      element: <AddAccount />,
+      element: <EditAccount />,
     },
     {
       path: Constants.MainPaths.marketAnalysis,

@@ -21,10 +21,13 @@ import {
   addReset,
   addUrlAdmin,
   addUser,
+  getUsersDetail,
+  updateExpert,
   updateReset,
+  updateUser,
+  updateUserReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
 
@@ -89,7 +92,7 @@ const defaultLockUnlockObj = {
   sessionMatchPrivilege: false,
 };
 
-const AddAccount = () => {
+const EditAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
@@ -101,7 +104,7 @@ const AddAccount = () => {
     (state: RootState) => state.user.profile
   );
 
-  const { loading, addSuccess } = useSelector(
+  const { success, loading, userDetail, editSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
   );
 
@@ -124,7 +127,7 @@ const AddAccount = () => {
 
   const formik = useFormik({
     initialValues: formDataSchema,
-    validationSchema: addUserValidation,
+    //   validationSchema: addUserValidation,
     onSubmit: (values: any) => {
       const commonPayload = {
         userName: values.userName,
@@ -136,6 +139,14 @@ const AddAccount = () => {
       };
 
       let payload;
+      payload = {
+        id: state?.id,
+        sessionCommission: values.sessionCommission.value,
+        matchComissionType: values.matchCommissionType.value,
+        matchCommission: values.matchCommission.value,
+        transactionPassword: values.adminTransPassword,
+      };
+      dispatch(updateUser(payload));
       if (values.roleName.value === "expert") {
         payload = {
           ...commonPayload,
@@ -147,34 +158,8 @@ const AddAccount = () => {
           bookmakerMatchPrivilege: lockUnlockObj.bookmakerMatchPrivilege,
           sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
         };
-        dispatch(addExpert(payload));
-      } else if (values.roleName.value === "superAdmin") {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          domain: values.domain,
-          logo: values.base64Image,
-          sidebarColor: values.sidebarColor,
-          headerColor: values.headerColor,
-          footerColor: values.footerColor,
-          transactionPassword: values.adminTransPassword,
-          myPartnership: values.myPartnership,
-        };
-        dispatch(addUrlAdmin(payload));
-      } else {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          creditRefrence: values.creditRefrence,
-          exposureLimit: values.exposureLimit,
-          maxBetLimit: values.maxBetLimit,
-          minBetLimit: values.minBetLimit,
-          myPartnership: values.myPartnership,
-          transactionPassword: values.adminTransPassword,
-        };
-        dispatch(addUser(payload));
+        dispatch(updateExpert(payload));
       }
-      dispatch(updateReset());
     },
   });
 
@@ -254,20 +239,76 @@ const AddAccount = () => {
 
   useEffect(() => {
     setTypeForAccountType();
-  }, [profileDetail]);
+  }, [profileDetail, state?.id]);
 
   useEffect(() => {
     try {
-      if (addSuccess) {
-        setShowModal(true);
-        formik.resetForm();
-        setLockUnlockObj(defaultLockUnlockObj);
-        dispatch(addReset());
+      if (state?.id) {
+        dispatch(getUsersDetail(state?.id));
       }
     } catch (e) {
       console.log(e);
     }
-  }, [addSuccess]);
+  }, [state?.id]);
+
+  useEffect(() => {
+    try {
+      if (success) {
+        formik.setValues({
+          ...formik.values,
+          userName: userDetail?.userName,
+          fullName: userDetail?.fullName,
+          city: userDetail?.city,
+          phoneNumber: userDetail?.phoneNumber,
+          roleName: {
+            label: userDetail?.roleName,
+            value: userDetail?.roleName,
+          },
+          creditRefrence: userDetail?.creditRefrence,
+          uplinePartnership: userDetail?.fwPartnership,
+          myPartnership: 0,
+          downlinePartnership: userDetail?.faPartnership,
+          matchCommissionType: {
+            label: userDetail?.matchComissionType,
+            value: userDetail?.matchComissionType,
+          },
+          matchCommission: {
+            label: userDetail?.matchCommission,
+            value: userDetail?.matchCommission,
+          },
+          sessionCommission: {
+            label: userDetail?.sessionCommission,
+            value: userDetail?.sessionCommission,
+          },
+          remarks: "",
+          adminTransPassword: "",
+        });
+        setLockUnlockObj({
+          allPrivilege: userDetail?.allPrivilege,
+          addMatchPrivilege: userDetail?.addMatchPrivilege,
+          betFairMatchPrivilege: userDetail?.betFairMatchPrivilege,
+          bookmakerMatchPrivilege: userDetail?.bookmakerMatchPrivilege,
+          sessionMatchPrivilege: userDetail?.sessionMatchPrivilege,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    try {
+      if (editSuccess) {
+        setShowModal(true);
+        formik.resetForm();
+        setLockUnlockObj(defaultLockUnlockObj);
+        dispatch(updateReset());
+        dispatch(updateUserReset());
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [editSuccess]);
 
   return (
     <>
@@ -281,7 +322,7 @@ const AddAccount = () => {
             marginLeft: "4px",
           }}
         >
-          Add Account
+          Edit Account
         </Typography>
         <form style={{ marginTop: "1%" }} onSubmit={handleSubmit}>
           <Box
@@ -332,10 +373,10 @@ const AddAccount = () => {
                   />
                 </Box>
                 {/* {touched.userName && errors.userName && (
-                  <p style={{ color: "#fa1e1e" }}>
-                    {errors.userName as string}
-                  </p>
-                )} */}
+                    <p style={{ color: "#fa1e1e" }}>
+                      {errors.userName as string}
+                    </p>
+                  )} */}
                 <Box sx={{ pb: errors.password && touched.password ? 2 : 0 }}>
                   <Input
                     containerStyle={containerStyles}
@@ -762,9 +803,9 @@ const AddAccount = () => {
                       onChange={handlePartnershipChange}
                     />
                     {/* <CustomErrorMessage
-                      touched={touched.myPartnership}
-                      errors={errors.myPartnership}
-                    /> */}
+                        touched={touched.myPartnership}
+                        errors={errors.myPartnership}
+                      /> */}
                   </Box>
                   <Input
                     containerStyle={{
@@ -966,7 +1007,7 @@ const AddAccount = () => {
       </Box>
       {showModal && (
         <CustomModal
-          modalTitle={`User Added sucessfully`}
+          modalTitle={`User Edited sucessfully`}
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
@@ -978,4 +1019,4 @@ const AddAccount = () => {
   );
 };
 
-export default AddAccount;
+export default EditAccount;

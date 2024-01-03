@@ -51,18 +51,16 @@ export const addUserValidation = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), ""], "Passwords must match")
     .required("Confirm Password is required"),
-  fullName: Yup.string().required("Full Name is required"),
-  city: Yup.string()
-    .max(15, "City must be at most 15 characters")
-    .matches(/^[a-zA-Z\s]*$/, "City must only contain letters and spaces")
-    .required("City is required"),
-  phoneNumber: Yup.string()
-    .matches(/^[6-9]\d{9}$/, "Invalid phone number")
-    .required("Number is required"),
+  // fullName: Yup.string().required("Full Name is required"),
+  // city: Yup.string()
+  //   .max(15, "City must be at most 15 characters")
+  //   .matches(/^[a-zA-Z\s]*$/, "City must only contain letters and spaces")
+  //   .required("City is required"),
+  phoneNumber: Yup.string().matches(/^[6-9]\d{9}$/, "Invalid phone number"),
   // number: Yup.string()
   //   .matches(/^[0-9]*$/, "Number must only contain numeric characters")
   //   .required("Number is required"),
-  // domain: Yup.string().required("Domain is required"),
+  // domain: Yup.string().matches(/^http:\/\/localhost:5000$/, "Invalid URL"),
   // domain: Yup.string().required("Domain is required"),
   // roleName: Yup.string().required("Account Type is required"),
   // creditRefrence: Yup.string().required("Credit Reference is required"),

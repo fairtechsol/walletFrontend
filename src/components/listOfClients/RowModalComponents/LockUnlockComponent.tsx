@@ -18,7 +18,8 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, isWallet } = props;
+  const { setSelected, element, walletAccountDetail, endpoint, isWallet } =
+    props;
 
   const defaultLockUnlockObj = {
     all_blocked: element?.userBlock ?? walletAccountDetail?.userBlock,
@@ -45,12 +46,12 @@ const LockUnlockComponent = (props: any) => {
         userBlock: lockUnlockObj.all_blocked,
         transactionPassword: values.transactionPassword,
       };
-      dispatch(setLockUnlockUser({
-        url: isWallet
-        ? ApiConstants.WALLET.LOCKUNLOCK
-        : endpoint,
-        payload: payload,
-      }));
+      dispatch(
+        setLockUnlockUser({
+          url: isWallet ? ApiConstants.WALLET.LOCKUNLOCK : endpoint,
+          payload: payload,
+        })
+      );
     },
   });
 
@@ -61,8 +62,8 @@ const LockUnlockComponent = (props: any) => {
   useEffect(() => {
     if (success) {
       formik.resetForm();
-      setSelected(false)
-      dispatch(userListSuccessReset())
+      setSelected(false);
+      dispatch(userListSuccessReset());
     }
   }, [success]);
 
@@ -124,7 +125,7 @@ const LockUnlockComponent = (props: any) => {
                 <BoxButtonWithSwitch
                   title={"User"}
                   name={"all_blocked"}
-                  val={lockUnlockObj?.all_blocked}
+                  val={!lockUnlockObj?.all_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
@@ -141,7 +142,7 @@ const LockUnlockComponent = (props: any) => {
                 <BoxButtonWithSwitch
                   title={"Bet"}
                   name={"bet_blocked"}
-                  val={lockUnlockObj?.bet_blocked}
+                  val={!lockUnlockObj?.bet_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
