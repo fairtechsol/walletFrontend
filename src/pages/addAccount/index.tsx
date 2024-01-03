@@ -16,6 +16,7 @@ import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
+import * as Yup from "yup";
 import {
   addExpert,
   addReset,
@@ -123,23 +124,23 @@ const AddAccount = () => {
     border: "1px solid #DEDEDE",
   };
 
-  
 
   const formik = useFormik({
     initialValues: formDataSchema,
-    // validationSchema: addUserValidation,
-    validationSchema: () => {
-    if (formik.values.roleName.value === "superAdmin") {
-      return SuperURLValidation;
-    } else if (formik.values.roleName.value === "fairGameAdmin") {
-      return FgAdminValidation
+    // validationSchema: validationSchema,
+  //   validationSchema: () => {
+  //   if (formik.values.roleName.value === "superAdmin") {
+  //     return SuperURLValidation;
+  //   } else if (formik.values.roleName.value === "fairGameAdmin") {
+  //     return FgAdminValidation
     
-    } else {
-      return addUserValidation;
-    }
-  },
-    // validationSchema: roleAccType === "superAdmin" ? SuperURLValidation : addUserValidation,
-    // SuperURLValidation
+  //   } else {
+  //     return addUserValidation;
+  //   }
+  // },
+
+  
+    
     onSubmit: (values: any) => {
       const commonPayload = {
         userName: values.userName,
@@ -256,12 +257,17 @@ const AddAccount = () => {
     const file = event.currentTarget.files[0];
 
     if (file) {
+      if(file.size > 1024*100*5){
+        alert("File should be smaller than 500/400")
+        return
+      }
+      console.warn(file.size)
       formik.setFieldValue("logo", file);
 
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log(reader.result);
+        // console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
