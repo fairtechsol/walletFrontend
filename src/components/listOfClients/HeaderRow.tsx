@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { AppDispatch } from "../../store/store";
 import { handleExport } from "../../store/actions/user/userAction";
 
-const HeaderRow = ({ endpoint }: any) => {
+const HeaderRow = ({ endpoint, searchFor }: any) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box
@@ -59,6 +59,7 @@ const HeaderRow = ({ endpoint }: any) => {
       <SearchInput
         placeholder={"Search User..."}
         show={true}
+        searchFor={searchFor}
         endpoint={endpoint}
       />
     </Box>

@@ -5,60 +5,62 @@ import YellowHeader from "../../../components/report/AccountStatement/YellowHead
 import ListHeaderRow from "../../../components/report/AccountStatement/ListHeaderRow";
 import TableHeaderList from "../../../components/report/AccountStatement/TableHeaderList";
 import TableDataRow from "../../../components/report/AccountStatement/TableDataRow";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { getAccountStatement } from "../../../store/actions/reports";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import { Constants } from "../../../utils/Constants";
 
 const AccountStatement = () => {
-  const loading = false;
-  const pageCount = "10";
+  const dispatch: AppDispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [fromDate, setFromDate] = useState<any>();
+  const [toDate, setToDate] = useState<any>();
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
 
-  const statementObj = [
-    {
-      id: "51bb3e25-a0c5-4483-a2c3-c1d9b3d869bc",
-      createAt: "2023-12-01T04:08:31.292Z",
-      userId: "76ba076a-0d75-424d-ae1e-79c1ace7fc9c",
-      match_id: null,
-      current_amount: 100000,
-      amount: 100000,
-      trans_type: "add",
-      action_by: {
-        id: "0fcef171-3e9c-4b97-bba2-7c2e7bca112f",
-        userName: "FAIRGAMEWALLET",
-        phoneNumber: "1234567890",
-      },
-      settling: 0,
-      description: "",
-      user: {
-        id: "76ba076a-0d75-424d-ae1e-79c1ace7fc9c",
-        userName: "AJFADMIN",
-        phoneNumber: "0",
-      },
-    },
-    {
-      id: "d0f8b960-5fd3-40e9-b56c-b9da84f2e738",
-      createAt: "2023-12-01T04:07:48.602Z",
-      userId: "bad689d1-197b-4ec2-8711-a68df38562c9",
-      match_id: null,
-      current_amount: 1000,
-      amount: 0,
-      trans_type: "credit_refer",
-      action_by: {
-        id: "76ba076a-0d75-424d-ae1e-79c1ace7fc9c",
-        userName: "AJFADMIN",
-        phoneNumber: "0",
-      },
-      settling: 0,
-      description: "CREDIT REFRENCE as user create",
-      user: {
-        id: "bad689d1-197b-4ec2-8711-a68df38562c9",
-        userName: "USER51",
-        phoneNumber: "0",
-      },
-    },
-  ];
+  const { accountStatement, loading } = useSelector(
+    (state: RootState) => state.user.reportList
+  );
+
+  useEffect(() => {
+    if (profileDetail) {
+      dispatch(
+        getAccountStatement({ id: profileDetail?.id, page: currentPage })
+      );
+    }
+  }, [profileDetail, currentPage]);
+
   return (
     <>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ marginX: { xs: "2vw", lg: "1vw" } }}>
-          <YellowHeader />
+          <YellowHeader
+            fromDate={fromDate}
+            toDate={toDate}
+            getAccountStatement={() => {
+              let filter = "";
+              if (fromDate && toDate) {
+                filter += `&createdAt=between${moment(
+                  new Date(fromDate)
+                )?.format("DD/MM/YYYY")}|${moment(
+                  new Date(toDate).setDate(toDate.getDate() + 1)
+                )?.format("DD/MM/YYYY")}`;
+              }
+              dispatch(
+                getAccountStatement({
+                  id: profileDetail?.id,
+                  page: currentPage,
+                  filter: filter,
+                })
+              );
+            }}
+            setToDate={setToDate}
+            setFromDate={setFromDate}
+          />
         </Box>
 
         <Box
@@ -83,7 +85,7 @@ const AccountStatement = () => {
             },
           ]}
         >
-          <ListHeaderRow />
+          <ListHeaderRow searchFor={"accountStatement"} />
 
           {loading ? (
             <Box
@@ -100,7 +102,7 @@ const AccountStatement = () => {
             <>
               <Box sx={{ overflowX: "scroll", width: "100%" }}>
                 <TableHeaderList />
-                {statementObj?.map((item) => (
+                {accountStatement?.transactions?.map((item: any) => (
                   <TableDataRow
                     key={item?.id}
                     index={item?.id}
@@ -108,20 +110,24 @@ const AccountStatement = () => {
                     profit={true}
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
-                    date={item?.createAt}
+                    date={moment(item?.createAt)}
                     description={item?.description}
-                    closing={item?.current_amount}
-                    trans_type={item?.trans_type}
+                    closing={item?.closingBalance}
+                    trans_type={item?.transType}
                     amount={item?.amount}
-                    fromuserName={item?.action_by?.userName}
+                    fromuserName={item?.actionByUser?.userName}
                     touserName={item?.user?.userName}
                   />
                 ))}
               </Box>
               <Pagination
-                currentPage={1}
-                pages={pageCount}
-                setCurrentPage={() => {}}
+                currentPage={currentPage}
+                pages={Math.ceil(
+                  parseInt(
+                    accountStatement?.count ? accountStatement?.count : 1
+                  ) / Constants.pageLimit
+                )}
+                setCurrentPage={setCurrentPage}
               />
             </>
           )}

@@ -342,7 +342,7 @@ export const handleExport = createAsyncThunk<any, string>(
         `${ApiConstants.USER.LIST}?type=${type}`
       );
 
-      const fileData = response?.data;
+      const fileData = response?.data?.file;
 
       let blob = new Blob();
       if (type == "pdf") {
@@ -385,4 +385,4 @@ export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");
 export const updateUserReset = createAction("updateUser/reset");
 export const addReset = createAction("add/reset");
-export const userListSuccessReset = createAction("userList/reset")
+export const userListSuccessReset = createAction("userList/reset");
