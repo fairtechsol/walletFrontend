@@ -239,8 +239,8 @@ const AddAccount = () => {
       const roleName = profileDetail?.roleName;
 
       const accountTypeMap: any = {
-        fairGameAdmin: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
-        fairGameAdminass: [
+        fairGameWallet: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
+        fairGameAdmin: [
           { value: "superAdmin", label: "URL Super Admin" },
           { value: "expert", label: "Expert" },
         ],
