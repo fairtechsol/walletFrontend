@@ -1,7 +1,7 @@
 {
   "name": "old-fair-game-admin",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
+    "@types/node": "^20.10.6",
     "@types/react": "^18.2.38",
     "@types/react-datepicker": "^4.19.3",
     "@types/react-dom": "^18.2.15",

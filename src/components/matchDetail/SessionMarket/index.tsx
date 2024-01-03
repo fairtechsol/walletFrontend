@@ -1,7 +1,6 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import BetsCountBox from "./BetsCountBox";
-import { useState } from "react";
 import Divider from "../../Inplay/Divider";
 import SeasonMarketBox from "./SeasonMarketBox";
 

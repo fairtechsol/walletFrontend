@@ -35,6 +35,9 @@ export const ApiConstants = {
     EXPOSURELIMIT: "wallet/update/exposurelimit",
     LOCKUNLOCK: "/user/lockUnlockUser",
     CHANGEPASSWORD: "/user/changePassword",
+    REPORTS: {
+      GETACCOUNTSTATEMENT: "/transaction/get",
+    },
   },
   EXPERT: {
     COMPETITIONLIST: "/expert/match/competitionList/",
