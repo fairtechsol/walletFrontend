@@ -186,6 +186,23 @@ export const updateUser = createAsyncThunk<any, any>(
     }
   }
 );
+export const updateExpert = createAsyncThunk<any, any>(
+  "user/updateExpert",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        `${ApiConstants.USER.UPDATEEXPERT}`,
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
 
 export const getUsersProfile = createAsyncThunk("user/profile", async () => {
   try {
@@ -366,5 +383,6 @@ export const handleExport = createAsyncThunk<any, string>(
 export const changePasswordReset = createAction("changePassword/reset");
 export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");
+export const updateUserReset = createAction("updateUser/reset");
 export const addReset = createAction("add/reset");
 export const userListSuccessReset = createAction("userList/reset")
