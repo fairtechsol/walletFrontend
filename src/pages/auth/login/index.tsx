@@ -31,8 +31,13 @@ const Login = () => {
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { success, forceChangePassword, userRole, isTransPasswordCreated } =
-    useSelector((state: RootState) => state.auth);
+  const {
+    success,
+    forceChangePassword,
+    userRole,
+    isTransPasswordCreated,
+    loading,
+  } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (success) {
@@ -112,7 +117,7 @@ const Login = () => {
             background: `${theme.palette.secondary}`,
           }}
         >
-          Login
+          {loading ? "Loading..." : "Login"}
         </Button>
       </Box>
     </form>

@@ -39,7 +39,7 @@ const RenderDates = (props: any) => {
         under={true}
         color={colors[2]}
         width={80}
-        title={moment(i?.startdate).format("DD/MM/YYYY HH:mm:ss")}
+        title={moment(i?.startdate).format("DD/MM/YYYY")}
       />
       {selected &&
         competitionMatches.length > 0 &&

@@ -230,6 +230,7 @@ const MultipleMatch = ({}) => {
                                   title={"Quick Session Market"}
                                   // match={"multiple"}
                                   //   currentOdds={currentOdds}
+                                  sessionData={item?.sessionBettings}
                                   currentMatch={item}
                                   data={[]}
                                   sessionOffline={item?.sessionOffline}
@@ -447,9 +448,10 @@ const MultipleMatch = ({}) => {
                               />
                             )}
 
-                            {item?.manualSessionActive && (
+                            {item?.apiSessionActive && (
                               <SessionMarket
                                 title={"Quick Session Market"}
+                                sessionData={item?.sessionBettings}
                                 // match={"multiple"}
                                 // currentOdds={currentOdds}
                                 currentMatch={item}
@@ -552,10 +554,10 @@ const MultipleMatch = ({}) => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any) => {
-                  let manualSessionHttp: any = {};
-                  if (manualRateHttp.hasOwnProperty(item?.id)) {
-                    manualSessionHttp = manualRateHttp[item?.id];
-                  }
+                  // let manualSessionHttp: any = {};
+                  // if (manualRateHttp.hasOwnProperty(item?.id)) {
+                  //   manualSessionHttp = manualRateHttp[item?.id];
+                  // }
                   // let matchOddsDataTemp = item?.bettings?.filter(
                   //   (element: any) => element?.sessionBet === false
                   // );
@@ -694,11 +696,12 @@ const MultipleMatch = ({}) => {
                           />
                         )}
 
-                        {item?.manualSessionActive && (
+                        {item?.apiSessionActive && (
                           <SessionMarket
                             title={"Quick Session Market"}
                             // match={"multiple"}
                             currentMatch={item}
+                            sessionData={item?.sessionBettings}
                             // currentOdds={currentOdds}
                             sessionOffline={item?.sessionOffline}
                             // sessionExposer={manualSessionHttp?.sessionExposure}

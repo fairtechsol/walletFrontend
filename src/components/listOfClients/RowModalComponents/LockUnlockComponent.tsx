@@ -22,8 +22,8 @@ const LockUnlockComponent = (props: any) => {
     props;
 
   const defaultLockUnlockObj = {
-    all_blocked: element?.userBlock ?? walletAccountDetail?.userBlock,
-    bet_blocked: element?.betBlock ?? walletAccountDetail?.betBlock,
+    all_blocked: !element?.userBlock ?? walletAccountDetail?.userBlock,
+    bet_blocked: !element?.betBlock ?? walletAccountDetail?.betBlock,
   };
 
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
@@ -125,7 +125,7 @@ const LockUnlockComponent = (props: any) => {
                 <BoxButtonWithSwitch
                   title={"User"}
                   name={"all_blocked"}
-                  val={!lockUnlockObj?.all_blocked}
+                  val={lockUnlockObj?.all_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}
@@ -142,7 +142,7 @@ const LockUnlockComponent = (props: any) => {
                 <BoxButtonWithSwitch
                   title={"Bet"}
                   name={"bet_blocked"}
-                  val={!lockUnlockObj?.bet_blocked}
+                  val={lockUnlockObj?.bet_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
                   lockUnlockObj={lockUnlockObj}

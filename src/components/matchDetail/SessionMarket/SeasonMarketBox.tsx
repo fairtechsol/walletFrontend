@@ -56,7 +56,7 @@ const SeasonMarketBox = (props: any) => {
               fontWeight: "600",
             }}
           >
-            {newData?.bet_condition}
+            {newData?.name}
           </Typography>
         </Box>
         <Box
@@ -86,7 +86,7 @@ const SeasonMarketBox = (props: any) => {
             />
           )}
 
-          {!["ACTIVE", "", undefined, null].includes(newData?.suspended) ? (
+          {newData?.status !== "active" ? (
             <Box
               sx={{
                 background: "rgba(0,0,0,1)",
@@ -102,7 +102,7 @@ const SeasonMarketBox = (props: any) => {
                 zIndex: 1,
               }}
             >
-              {newData?.suspended == "Ball Started" ? (
+              {newData?.status == "Ball Started" ? (
                 <img
                   src={BallStart}
                   style={{ width: "113px", height: "32px" }}
@@ -118,7 +118,7 @@ const SeasonMarketBox = (props: any) => {
                     fontWeight: "400",
                   }}
                 >
-                  {newData?.suspended}
+                  {newData?.status}
                 </Typography>
               )}
             </Box>
@@ -127,11 +127,11 @@ const SeasonMarketBox = (props: any) => {
               <SeperateBox
                 session={true}
                 back={true}
-                value={newData?.no_rate}
-                value2={formatNumber(newData?.rate_percent?.split("-")[0])}
+                value={Math.floor(newData?.noRate)}
+                value2={Math.floor(newData?.noPercent)}
                 lock={
-                  newData?.suspended === "suspended" ||
-                  [0, "0"].includes(newData?.no_rate)
+                  newData?.status === "suspended" ||
+                  [0, "0"].includes(Math.floor(newData?.noRate))
                 }
                 color={"#F6D0CB"}
               />
@@ -140,11 +140,11 @@ const SeasonMarketBox = (props: any) => {
               ></Box>
               <SeperateBox
                 session={true}
-                value={newData?.yes_rate}
-                value2={formatNumber(newData?.rate_percent?.split("-")[1])}
+                value={Math.floor(newData?.yesRate)}
+                value2={formatNumber(Math.floor(newData?.yesPercent))}
                 lock={
-                  newData?.suspended === "suspended" ||
-                  [0, "0"].includes(newData?.yes_rate)
+                  newData?.status === "suspended" ||
+                  [0, "0"].includes(Math.floor(newData?.yesRate))
                 }
                 color={"#B3E0FF"}
               />
