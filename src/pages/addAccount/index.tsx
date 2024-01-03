@@ -24,7 +24,7 @@ import {
   updateReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation, SuperURLValidation } from "../../utils/Validations";
+import { addUserValidation, SuperURLValidation, FgAdminValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
 
@@ -123,11 +123,21 @@ const AddAccount = () => {
     border: "1px solid #DEDEDE",
   };
 
-  let roleAccType = formDataSchema.roleName.value;
+  
 
   const formik = useFormik({
     initialValues: formDataSchema,
-    validationSchema: addUserValidation,
+    // validationSchema: addUserValidation,
+    validationSchema: () => {
+    if (formik.values.roleName.value === "superAdmin") {
+      return SuperURLValidation;
+    } else if (formik.values.roleName.value === "fairGameAdmin") {
+      return FgAdminValidation
+    
+    } else {
+      return addUserValidation;
+    }
+  },
     // validationSchema: roleAccType === "superAdmin" ? SuperURLValidation : addUserValidation,
     // SuperURLValidation
     onSubmit: (values: any) => {
@@ -223,14 +233,14 @@ const AddAccount = () => {
   for (let i = 0.0; i <= 3.5; i += 0.25) {
     sessionComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
   }
-
+                                                                                  
   const setTypeForAccountType = () => {
     try {
       const roleName = profileDetail?.roleName;
 
       const accountTypeMap: any = {
-        fairGameWallet: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
-        fairGameAdmin: [
+        fairGameAdmin: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
+        fairGameAdminass: [
           { value: "superAdmin", label: "URL Super Admin" },
           { value: "expert", label: "Expert" },
         ],
@@ -484,7 +494,8 @@ const AddAccount = () => {
                   />
                 </Box>
                 {formik?.values?.roleName?.value === "superAdmin" && (
-                  <div>
+                  <Box >                    
+                  <Box sx={{ pb: touched.domain && errors.domain ? 2 : 0 }}>                    
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -500,14 +511,15 @@ const AddAccount = () => {
                       type={"text"}
                       id="domain"
                       value={formik.values.domain}
-                      // error={touched.domain && Boolean(errors.domain)}
-                      // onBlur={formik.handleBlur}
+                      error={touched.domain && Boolean(errors.domain)}
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
                     <CustomErrorMessage
                       touched={touched.domain}
                       errors={errors.domain}
                     />
+                    </Box>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -526,17 +538,17 @@ const AddAccount = () => {
                       onChange={handleImageChange}
                     />
                     {formik.values.base64Image && (
-                      <div>
-                        <p>Base64 Image:</p>
-                        <img
+                      <Box display={'flex'} alignItems={'center'} sx={{mt: 1, p: 1, borderRadius: "5px", background: "#91943f", color: "white"}}>
+                        <img                          
                           src={formik.values.base64Image}
                           alt="Base64"
-                          style={{ maxWidth: "100%" }}
+                          style={{ maxWidth: "100%", height: "60px", width: "60px", objectFit: "cover", borderRadius: "5px"}}
                         />
-                      </div>
+                        <Typography variant="h5" sx={{ml: 2}}>Super URL Admin Logo.... </Typography>
+                      </Box>
                     )}
                     <Box m={2} mr={0} sx={{pt: 1}} >
-                      <Grid container spacing={2} sx={{border: "1px solid #ddd",  borderRadius: "5px", pr: 2, pb: 2}}>
+                      <Grid container spacing={2} sx={{background: " #91943f",  borderRadius: "5px", pr: 2, pb: 2}}>
                         <Grid item xs={6} md={12} lg={6}>
                           <Box sx={{
                             display: "flex",
@@ -626,7 +638,7 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box> */}
-                  </div>
+                  </Box>
                 )}
               </Box>
             </Box>
@@ -730,7 +742,7 @@ const AddAccount = () => {
                   </>
                 )}
                 {formik?.values?.roleName?.value !== "expert" && (
-                  <Box>
+                  <Box sx={{pb: touched.creditRefrence && errors.creditRefrence ? 2 : 0}}>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -809,16 +821,13 @@ const AddAccount = () => {
                       type={"Number"}
                       value={formik.values.myPartnership}
                       // error={touched.myPartnership && Boolean(errors.myPartnership)}
-                      // error={
-                      //   touched.myPartnership && Boolean(errors.myPartnership)
-                      // }
-                      // onBlur={formik.handleBlur}
+                      error={
+                        touched.myPartnership && Boolean(errors.myPartnership)
+                      }
+                      onBlur={formik.handleBlur}
                       onChange={handlePartnershipChange}
                     />
-                    {/* <CustomErrorMessage
-                      touched={touched.myPartnership}
-                      errors={errors.myPartnership}
-                    /> */}
+                    <CustomErrorMessage touched={touched.myPartnership} errors={errors.myPartnership} />
                   </Box>
                   <Input
                     containerStyle={{
@@ -840,7 +849,7 @@ const AddAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    // value={formik.values.downlinePartnership}
+                    value={formik.values.downlinePartnership}
                     // onChange={formik.handleChange}
                   />
                 </>
@@ -881,6 +890,7 @@ const AddAccount = () => {
                         )}
                         // touched={touched.matchCommissionType}
                         // error={errors.matchCommissionType}
+                        error={touched.creditRefrence && Boolean(errors.creditRefrence)}
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
