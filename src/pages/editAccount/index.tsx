@@ -17,10 +17,6 @@ import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
 import {
-  addExpert,
-  addReset,
-  addUrlAdmin,
-  addUser,
   getUsersDetail,
   updateExpert,
   updateReset,

@@ -1,33 +1,41 @@
 import MainBox from "./MainBox";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import RenderOdds from "./RenderOdds";
 
 const RenderBets = (props: any) => {
   const { i, handleDrawerToggle, colors } = props;
-  const navigate = useNavigate();
-  const path = window.location.pathname.split("/")[1];
+  const [selected, setSelected] = useState(false);
+
+  console.log(i, "i");
   return (
     <Box
       onClick={(event: any) => {
         event.stopPropagation();
-        navigate(`/${path}/match`);
-        handleDrawerToggle();
+        setSelected((prev) => !prev);
       }}
       sx={{
         width: "100%",
         display: "flex",
-        marginLeft: "7%",
         alignSelf: "flex-end",
         flexDirection: "column",
       }}
     >
       <MainBox
         sub={i?.sub}
-        under={false}
+        under={true}
+        selected={selected}
         color={colors[4]}
-        width={70}
+        width={75}
         title={i?.title}
       />
+      {selected && (
+        <RenderOdds
+          i={i}
+          handleDrawerToggle={handleDrawerToggle}
+          colors={colors}
+        />
+      )}
     </Box>
   );
 };

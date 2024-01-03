@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import BetsCountBox from "./BetsCountBox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Divider from "../../Inplay/Divider";
 import SeasonMarketBox from "./SeasonMarketBox";
 
@@ -9,7 +9,6 @@ const SessionMarket = (props: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const {
-    currentMatch,
     sessionBets,
     blockMatch,
     showUnlock,
@@ -21,44 +20,41 @@ const SessionMarket = (props: any) => {
     max,
     sessionExposer,
     sessionData,
-    match,
   } = props;
   const visible = true;
 
-  const [matchSessionData, setMatchSessionData] = useState([]);
+  const dataToIterate = sessionData;
 
-  const dataToIterate = match === "multiple" ? matchSessionData : sessionData;
+  // useEffect(() => {
+  //   if (currentMatch?.sessionBettings?.length > 0) {
+  //     const sessionData =
+  //       currentMatch?.sessionBettings?.length > 0
+  //         ? currentMatch?.bettings?.filter((element: any) => {
+  //             if (
+  //               currentMatch?.apiSessionActive &&
+  //               title === "Session Market"
+  //             ) {
+  //               return (
+  //                 element?.sessionBet === true && element?.selectionId !== null
+  //               ); // Show elements where selectionId is not null when apiSessionActive is true
+  //             }
 
-  useEffect(() => {
-    if (currentMatch?.bettings?.length > 0) {
-      const sessionData =
-        currentMatch?.bettings?.length > 0
-          ? currentMatch?.bettings?.filter((element: any) => {
-              if (
-                currentMatch?.apiSessionActive &&
-                title === "Session Market"
-              ) {
-                return (
-                  element?.sessionBet === true && element?.selectionId !== null
-                ); // Show elements where selectionId is not null when apiSessionActive is true
-              }
+  //             if (
+  //               currentMatch?.manualSessionActive &&
+  //               title === "Quick Session Market"
+  //             ) {
+  //               return (
+  //                 element?.sessionBet === true && element?.selectionId === null
+  //               ); // Show elements where selectionId is null when manualSessionActive is true
+  //             }
 
-              if (
-                currentMatch?.manualSessionActive &&
-                title === "Quick Session Market"
-              ) {
-                return (
-                  element?.sessionBet === true && element?.selectionId === null
-                ); // Show elements where selectionId is null when manualSessionActive is true
-              }
+  //             return false; // Default case: no active session types
+  //           })
+  //         : 0;
 
-              return false; // Default case: no active session types
-            })
-          : 0;
-
-      setMatchSessionData(sessionData);
-    }
-  }, [currentMatch]);
+  //     setMatchSessionData(sessionData);
+  //   }
+  // }, [currentMatch]);
   return (
     <>
       <Box
@@ -344,15 +340,14 @@ const SessionMarket = (props: any) => {
                 dataToIterate?.map((element: any, index: any) => {
                   return (
                     <Box
-                      key={element?.id}
+                      key={JSON.parse(element)?.id}
                       sx={{
                         width: "100%",
                         display: element?.betStatus === 2 ? "none" : "block",
                       }}
                     >
                       <SeasonMarketBox
-                        newData={element}
-                        setMatchSessionData={setMatchSessionData}
+                        newData={JSON.parse(element)}
                         index={index}
                       />
                       <Divider />
