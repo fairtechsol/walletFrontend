@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import SmallDropDown from "../../../report/AccountStatement/SmallDropDown";
 
-const NumberDropDown = ({ getLimitEntries, textColor }: any) => {
+const NumberDropDown = ({ getLimitEntries, textColor, setPageLimit, pageLimit }: any) => {
   return (
     <Box display={"flex"} alignItems="center" sx={{ width: "100%" }}>
       <Typography
@@ -9,7 +9,7 @@ const NumberDropDown = ({ getLimitEntries, textColor }: any) => {
       >
         Show
       </Typography>
-      <SmallDropDown getLimitEntries={getLimitEntries} />
+      <SmallDropDown getLimitEntries={getLimitEntries} pageLimit={pageLimit} setPageLimit={setPageLimit}/>
       <Typography
         sx={{ fontSize: "10px", color: `${textColor}`, fontWeight: "500" }}
       >

@@ -11,11 +11,11 @@ import { AppDispatch, RootState } from "../../../store/store";
 import { getAccountStatement } from "../../../store/actions/reports";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { Constants } from "../../../utils/Constants";
 
 const AccountStatement = () => {
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageLimit, setPageLimit] = useState<number>(15);
   const [fromDate, setFromDate] = useState<any>();
   const [toDate, setToDate] = useState<any>();
   const { profileDetail } = useSelector(
@@ -29,10 +29,10 @@ const AccountStatement = () => {
   useEffect(() => {
     if (profileDetail) {
       dispatch(
-        getAccountStatement({ id: profileDetail?.id, page: currentPage })
+        getAccountStatement({ id: profileDetail?.id, page: currentPage, pageLimit: pageLimit })
       );
     }
-  }, [profileDetail, currentPage]);
+  }, [profileDetail, currentPage, pageLimit]);
 
   return (
     <>
@@ -85,7 +85,7 @@ const AccountStatement = () => {
             },
           ]}
         >
-          <ListHeaderRow searchFor={"accountStatement"} />
+          <ListHeaderRow searchFor={"accountStatement"} pageLimit={pageLimit} setPageLimit={setPageLimit} />
 
           {loading ? (
             <Box
@@ -125,7 +125,7 @@ const AccountStatement = () => {
                 pages={Math.ceil(
                   parseInt(
                     accountStatement?.count ? accountStatement?.count : 1
-                  ) / Constants.pageLimit
+                  ) / pageLimit
                 )}
                 setCurrentPage={setCurrentPage}
               />

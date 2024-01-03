@@ -40,7 +40,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.creditRefrence}
+          {+data?.creditRefrence || 0}
         </Typography>
       </Box>
       <Box
@@ -56,13 +56,13 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {Number(data?.userBal.currentBalance) >= 0 ? (
+          {Number(data?.userBal.currentBalance || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(data?.userBal.currentBalance)}
+              {Number(data?.userBal?.currentBalance || 0)}
             </>
           ) : (
-            Number(data?.userBal.currentBalance)
+            Number(data?.userBal?.currentBalance || 0)
           )}
         </Typography>
       </Box>
@@ -72,7 +72,7 @@ const SubHeaderListRow = (props: any) => {
           display: "flex",
           paddingX: "10px",
           background: `${
-            Number(data?.userBal?.profitLoss) >= 0 ? "#27AC1E" : "#E32A2A"
+            Number(data?.userBal?.profitLoss || 0) >= 0 ? "#27AC1E" : "#E32A2A"
           }`,
           alignItems: "center",
           height: "45px",
@@ -86,13 +86,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?userBal?.profitLoss} */}
-          {Number(data?.userBal?.profitLoss) >= 0 ? (
+          {Number(data?.userBal?.profitLoss || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {data?.userBal?.profitLoss}
+              {+data?.userBal?.profitLoss || 0}
             </>
           ) : (
-            data?.userBal?.profitLoss
+            +data?.userBal?.profitLoss || 0
           )}
         </Typography>
         <StyledImage
@@ -111,7 +111,9 @@ const SubHeaderListRow = (props: any) => {
           display: "flex",
           paddingX: "10px",
           background: `${
-            Number(data?.userBal?.myProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A"
+            Number(+data?.userBal?.myProfitLoss || 0) >= 0
+              ? "#27AC1E"
+              : "#E32A2A"
           }`,
           alignItems: "center",
           height: "45px",
@@ -125,13 +127,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?.percent_profit_loss} */}
-          {Number(data?.userBal?.myProfitLoss) >= 0 ? (
+          {Number(+data?.userBal?.myProfitLoss || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {data?.userBal?.myProfitLoss}
+              {+data?.userBal?.myProfitLoss || 0}
             </>
           ) : (
-            data?.userBal?.myProfitLoss
+            +data?.userBal?.myProfitLoss || 0
           )}
         </Typography>
         <StyledImage
@@ -157,7 +159,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.totalcomission}
+          {+data?.totalcomission || 0}
         </Typography>
       </Box>
       <Box
@@ -173,7 +175,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.exposureLimit}
+          {+data?.userBal?.exposure || 0}
         </Typography>
       </Box>
       <Box
@@ -190,13 +192,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?.availablebalancesum} */}
-          {Number(data?.userBal.currentBalance) >= 0 ? (
+          {Number(data?.userBal?.currentBalance || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(data?.userBal.currentBalance)}
+              {Number(data?.userBal?.currentBalance || 0)}
             </>
           ) : (
-            Number(data?.userBal.currentBalance)
+            Number(data?.userBal?.currentBalance || 0)
           )}
         </Typography>
       </Box>
@@ -236,7 +238,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.exposurelimit}
+          {+data?.exposureLimit || 0}
         </Typography>
       </Box>
       <Box
