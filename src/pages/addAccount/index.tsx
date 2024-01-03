@@ -264,7 +264,7 @@ const AddAccount = () => {
         console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
   };
 
