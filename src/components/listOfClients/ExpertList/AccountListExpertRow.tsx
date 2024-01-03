@@ -2,10 +2,13 @@ import { Box, Typography } from "@mui/material";
 import { LockIcon, UnLockIcon } from "../../../assets";
 import { AccountListRowInterface } from "../../../interface/listOfClients";
 import StyledImage from "../../Common/StyledImages";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { useNavigate } from "react-router-dom";
 
 const AccountListExpertRow = (props: AccountListRowInterface) => {
-  const { containerStyle, fContainerStyle, fTextStyle, element } = props;
+  const { containerStyle, fContainerStyle, fTextStyle, element, showOptions, show } = props;
 
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -49,6 +52,25 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
           >
             {element?.userName}
           </Typography>
+          {showOptions && !show && (
+            <EditOutlinedIcon
+              fontSize="medium"
+              onClick={() => {
+                navigate(`/wallet/edit_account`, {
+                  state: {
+                    id: element?.id,
+                  },
+                });
+              }}
+              sx={{
+                color:
+                  fContainerStyle.background == "#F8C851"
+                    ? "#0B4F26"
+                    : "#FFFFFF",
+                cursor: "pointer",
+              }}
+            />
+          )}
         </Box>
         <Box
           sx={{

@@ -16,6 +16,7 @@ import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
+import * as Yup from "yup";
 import {
   addExpert,
   addReset,
@@ -24,7 +25,7 @@ import {
   updateReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation } from "../../utils/Validations";
+import { addUserValidation, SuperURLValidation, FgAdminValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
 
@@ -90,6 +91,7 @@ const defaultLockUnlockObj = {
 };
 
 const AddAccount = () => {
+  
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
@@ -122,9 +124,23 @@ const AddAccount = () => {
     border: "1px solid #DEDEDE",
   };
 
+
   const formik = useFormik({
     initialValues: formDataSchema,
-    validationSchema: addUserValidation,
+    // validationSchema: validationSchema,
+  //   validationSchema: () => {
+  //   if (formik.values.roleName.value === "superAdmin") {
+  //     return SuperURLValidation;
+  //   } else if (formik.values.roleName.value === "fairGameAdmin") {
+  //     return FgAdminValidation
+    
+  //   } else {
+  //     return addUserValidation;
+  //   }
+  // },
+
+  
+    
     onSubmit: (values: any) => {
       const commonPayload = {
         userName: values.userName,
@@ -177,6 +193,7 @@ const AddAccount = () => {
       dispatch(updateReset());
     },
   });
+    
 
   const { handleSubmit, touched, errors } = formik;
 
@@ -217,7 +234,7 @@ const AddAccount = () => {
   for (let i = 0.0; i <= 3.5; i += 0.25) {
     sessionComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
   }
-
+                                                                                  
   const setTypeForAccountType = () => {
     try {
       const roleName = profileDetail?.roleName;
@@ -240,12 +257,17 @@ const AddAccount = () => {
     const file = event.currentTarget.files[0];
 
     if (file) {
+      if(file.size > 1024*100*5){
+        alert("File should be smaller than 500/400")
+        return
+      }
+      console.warn(file.size)
       formik.setFieldValue("logo", file);
 
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log(reader.result);
+        // console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
@@ -478,7 +500,8 @@ const AddAccount = () => {
                   />
                 </Box>
                 {formik?.values?.roleName?.value === "superAdmin" && (
-                  <div>
+                  <Box >                    
+                  <Box sx={{ pb: touched.domain && errors.domain ? 2 : 0 }}>                    
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -494,14 +517,15 @@ const AddAccount = () => {
                       type={"text"}
                       id="domain"
                       value={formik.values.domain}
-                      // error={touched.domain && Boolean(errors.domain)}
-                      // onBlur={formik.handleBlur}
+                      error={touched.domain && Boolean(errors.domain)}
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
                     <CustomErrorMessage
                       touched={touched.domain}
                       errors={errors.domain}
                     />
+                    </Box>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -520,21 +544,26 @@ const AddAccount = () => {
                       onChange={handleImageChange}
                     />
                     {formik.values.base64Image && (
-                      <div>
-                        <p>Base64 Image:</p>
-                        <img
+                      <Box display={'flex'} alignItems={'center'} sx={{mt: 1, p: 1, borderRadius: "5px", background: "#91943f", color: "white"}}>
+                        <img                          
                           src={formik.values.base64Image}
                           alt="Base64"
-                          style={{ maxWidth: "100%" }}
+                          style={{ maxWidth: "100%", height: "60px", width: "60px", objectFit: "cover", borderRadius: "5px"}}
                         />
-                      </div>
+                        <Typography variant="h5" sx={{ml: 2}}>Super URL Admin Logo.... </Typography>
+                      </Box>
                     )}
-                    <Box m={2}>
-                      <Grid container spacing={2}>
+                    <Box m={2} mr={0} sx={{pt: 1}} >
+                      <Grid container spacing={2} sx={{background: " #91943f",  borderRadius: "5px", pr: 2, pb: 2}}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="sidebarColor">
-                            Sidebar Color:{" "}
-                          </InputLabel>
+                          <Box sx={{
+                            display: "flex",
+                            border: "1px solid #ddd",
+                            padding: '8px',
+                            background: '#eee',
+                            borderRadius: "3px",
+                            p: 1,
+                            }}>
                           <input
                             type="color"
                             id="sidebarColor"
@@ -542,38 +571,80 @@ const AddAccount = () => {
                             value={formik.values.sidebarColor}
                             onChange={formik.handleChange}
                           />
+                          <InputLabel htmlFor="sidebarColor" sx={{fontWeight: "bold"}}>
+                            &nbsp; Sidebar Color:{" "}
+                          </InputLabel>
+                          </Box>
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="headerColor">
-                            Header Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="headerColor"
-                            name={"headerColor"}
-                            value={formik.values.headerColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box sx={{
+                              display: "flex",
+                              border: "1px solid #ddd",
+                              padding: '8px',
+                              background: '#eee',
+                              borderRadius: "3px",
+                              p: 1,
+                              }}>
+                            <input
+                              type="color"
+                              id="headerColor"
+                              name={"headerColor"}
+                              value={formik.values.headerColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel htmlFor="headerColor" sx={{fontWeight: "bold"}}>
+                            &nbsp; Header Color:{" "}
+                            </InputLabel>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <Box sx={{
+                                display: "flex",
+                                border: "1px solid #ddd",
+                                padding: '8px',
+                                background: '#eee',
+                                borderRadius: "3px",
+                                p: 1,
+                                }}>
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel htmlFor="footerColor" sx={{fontWeight: "bold"}}>
+                            &nbsp; Footer Color:{" "}
+                            </InputLabel>
+                          </Box>
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2}>
+                    {/* <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="footerColor">
-                            Footer Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="footerColor"
-                            name={"footerColor"}
-                            value={formik.values.footerColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box sx={{
+                                display: "flex",
+                                border: "1px solid #ddd",
+                                padding: '8px',
+                                background: '#eee',
+                                p: 1,
+                                }}>
+                            <InputLabel htmlFor="footerColor">
+                              Footer Color:{" "}
+                            </InputLabel>
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                          </Box>
                         </Grid>
                       </Grid>
-                    </Box>
-                  </div>
+                    </Box> */}
+                  </Box>
                 )}
               </Box>
             </Box>
@@ -604,13 +675,14 @@ const AddAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    // touched={touched.roleName}
+                    touched={touched.roleName}
                     // error={errors.roleName}
-                    // error={touched.roleName && Boolean(errors.roleName)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.roleName && Boolean(errors.roleName)}
+                    onBlur={formik.handleBlur}
                   />
-                  {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
+                  <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} />
                 </Box>
+                
                 {formik.values.roleName.value === "expert" && (
                   <>
                     <Box m={2}>
@@ -676,7 +748,7 @@ const AddAccount = () => {
                   </>
                 )}
                 {formik?.values?.roleName?.value !== "expert" && (
-                  <Box>
+                  <Box sx={{pb: touched.creditRefrence && errors.creditRefrence ? 2 : 0}}>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -691,11 +763,11 @@ const AddAccount = () => {
                       type={"Number"}
                       id="creditRefrence"
                       value={formik.values.creditRefrence}
-                      // error={touched.creditRefrence && Boolean(errors.creditRefrence)}
-                      // onBlur={formik.handleBlur}
+                      error={touched.creditRefrence && Boolean(errors.creditRefrence)}
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
-                    {/* <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} /> */}
+                    <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} />
                   </Box>
                 )}
               </Box>
@@ -755,16 +827,13 @@ const AddAccount = () => {
                       type={"Number"}
                       value={formik.values.myPartnership}
                       // error={touched.myPartnership && Boolean(errors.myPartnership)}
-                      // error={
-                      //   touched.myPartnership && Boolean(errors.myPartnership)
-                      // }
-                      // onBlur={formik.handleBlur}
+                      error={
+                        touched.myPartnership && Boolean(errors.myPartnership)
+                      }
+                      onBlur={formik.handleBlur}
                       onChange={handlePartnershipChange}
                     />
-                    {/* <CustomErrorMessage
-                      touched={touched.myPartnership}
-                      errors={errors.myPartnership}
-                    /> */}
+                    <CustomErrorMessage touched={touched.myPartnership} errors={errors.myPartnership} />
                   </Box>
                   <Input
                     containerStyle={{
@@ -786,7 +855,7 @@ const AddAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    // value={formik.values.downlinePartnership}
+                    value={formik.values.downlinePartnership}
                     // onChange={formik.handleChange}
                   />
                 </>
@@ -827,6 +896,7 @@ const AddAccount = () => {
                         )}
                         // touched={touched.matchCommissionType}
                         // error={errors.matchCommissionType}
+                        error={touched.creditRefrence && Boolean(errors.creditRefrence)}
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
