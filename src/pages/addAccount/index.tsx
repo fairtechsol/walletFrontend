@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
-import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
@@ -32,6 +31,7 @@ import {
   // SuperURLValidation,
   addUserValidation,
 } from "../../utils/Validations";
+import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -777,7 +777,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="All Privilege"
                             name="allPrivilege"
                             showLockUnlock={false}
@@ -787,7 +787,7 @@ const AddAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Add Match Privilege"
                             name="addMatchPrivilege"
                             val={lockUnlockObj?.addMatchPrivilege}
@@ -800,7 +800,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="BetFair Match Privilege"
                             name="betFairMatchPrivilege"
                             showLockUnlock={false}
@@ -810,7 +810,7 @@ const AddAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Bookmaker Match Privilege"
                             name="bookmakerMatchPrivilege"
                             val={lockUnlockObj?.bookmakerMatchPrivilege}
@@ -823,7 +823,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Session Match Privilege"
                             name="sessionMatchPrivilege"
                             showLockUnlock={false}
