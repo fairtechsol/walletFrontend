@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   changeAmmountUser,
+  changePasswordRow,
   getUserList,
   handleExport,
   setCreditRefference,
@@ -102,11 +103,22 @@ export const userList = createSlice({
         state.loading = false;
         state.error = action?.error?.message;
       })
-      .addCase(userListSuccessReset, (state) => {
-        return { ...state, success: false }
+      .addCase(changePasswordRow.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
+      .addCase(changePasswordRow.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(changePasswordRow.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(userListSuccessReset, (state) => {
+        return { ...state, success: false };
+      });
   },
-},
-);
+});
 
 export const userListReducers = userList.reducer;

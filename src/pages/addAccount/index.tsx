@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
-import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
@@ -21,12 +20,18 @@ import {
   addReset,
   addUrlAdmin,
   addUser,
+  // profileReset,
   updateReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
+import {
+  // FgAdminValidation,
+  // SuperURLValidation,
+  addUserValidation,
+} from "../../utils/Validations";
+import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -44,62 +49,62 @@ const MatchCommissionTypes = [
   { value: "entryWise", label: "Entry Wise" },
 ];
 
-const formDataSchema = {
-  userName: "",
-  password: "",
-  confirmPassword: "",
-  fullName: "",
-  city: "",
-  phoneNumber: "",
-  domain: "",
-  roleName: {
-    label: "",
-    value: "",
-  },
-  creditRefrence: "",
-  uplinePartnership: 10,
-  myPartnership: 0,
-  downlinePartnership: 90,
-  matchCommissionType: {
-    label: "",
-    value: "",
-  },
-  matchCommission: {
-    label: "",
-    value: "",
-  },
-  sessionCommission: {
-    label: "",
-    value: "",
-  },
-  remarks: "",
-  adminTransPassword: "",
-  logo: "",
-  base64Image: "",
-  sidebarColor: "",
-  headerColor: "",
-  footerColor: "",
-};
-
-const defaultLockUnlockObj = {
-  allPrivilege: false,
-  addMatchPrivilege: false,
-  betFairMatchPrivilege: false,
-  bookmakerMatchPrivilege: false,
-  sessionMatchPrivilege: false,
-};
-
 const AddAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
-  const [AccountTypes, setAccountTypes] = useState<any>([]);
-  const { profileDetail } = useSelector(
+  const { profileDetail, success } = useSelector(
     (state: RootState) => state.user.profile
   );
+  const formDataSchema = {
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    city: "",
+    phoneNumber: "",
+    domain: "",
+    roleName: {
+      label: "",
+      value: "",
+    },
+    creditRefrence: "",
+    uplinePartnership: 0,
+    myPartnership: 0,
+    downlinePartnership: 0,
+    matchCommissionType: {
+      label: "",
+      value: "",
+    },
+    matchCommission: {
+      label: "",
+      value: "",
+    },
+    sessionCommission: {
+      label: "",
+      value: "",
+    },
+    remarks: "",
+    adminTransPassword: "",
+    logo: "",
+    base64Image: "",
+    sidebarColor: "",
+    headerColor: "",
+    footerColor: "",
+  };
+
+  const defaultLockUnlockObj = {
+    allPrivilege: false,
+    addMatchPrivilege: false,
+    betFairMatchPrivilege: false,
+    bookmakerMatchPrivilege: false,
+    sessionMatchPrivilege: false,
+  };
+  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
+  const [AccountTypes, setAccountTypes] = useState<any>([]);
+  const [down, setDown] = useState<number>(0);
 
   const { loading, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
@@ -125,6 +130,16 @@ const AddAccount = () => {
   const formik = useFormik({
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
+    // validationSchema: () => {
+    //   if (formik.values.roleName.value === "superAdmin") {
+    //     return SuperURLValidation;
+    //   } else if (formik.values.roleName.value === "fairGameAdmin") {
+    //     return FgAdminValidation;
+    //   } else {
+    //     return addUserValidation;
+    //   }
+    // },
+
     onSubmit: (values: any) => {
       const commonPayload = {
         userName: values.userName,
@@ -183,7 +198,10 @@ const AddAccount = () => {
   const handlePartnershipChange = (event: any) => {
     try {
       const newValue = parseInt(event.target.value, 10);
-      const remainingDownline = 90 - newValue;
+      const remainingDownline = +down - +newValue;
+      if (remainingDownline < 0) {
+        return;
+      }
 
       formik.setValues({
         ...formik.values,
@@ -240,17 +258,65 @@ const AddAccount = () => {
     const file = event.currentTarget.files[0];
 
     if (file) {
+      if (file.size > 1024 * 100 * 5) {
+        alert("File should be smaller than 500/400");
+        return;
+      }
+      console.warn(file.size);
       formik.setFieldValue("logo", file);
 
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log(reader.result);
+        // console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
+
+  const handleUpline = () => {
+    const {
+      aPartnership,
+      saPartnership,
+      smPartnership,
+      faPartnership,
+      fwPartnership,
+      roleName,
+    } = profileDetail;
+
+    const partnershipMap: any = {
+      superMaster: aPartnership + saPartnership + faPartnership + fwPartnership,
+      superAdmin: faPartnership + fwPartnership,
+      master:
+        smPartnership +
+        aPartnership +
+        saPartnership +
+        faPartnership +
+        fwPartnership,
+      admin: saPartnership + faPartnership + fwPartnership,
+      fairGameWallet: 0,
+      fairGameAdmin: fwPartnership,
+    };
+
+    const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+
+    return thisUplinePertnerShip;
+  };
+
+  useEffect(() => {
+    if (success) {
+      if (profileDetail && profileDetail.roleName) {
+        const res = handleUpline();
+        formik.setValues({
+          ...formik.values,
+          uplinePartnership: res,
+          downlinePartnership: 100 - res,
+        });
+        setDown(100 - res);
+      }
+    }
+  }, [profileDetail, profileDetail?.roleName, success]);
 
   useEffect(() => {
     setTypeForAccountType();
@@ -478,30 +544,32 @@ const AddAccount = () => {
                   />
                 </Box>
                 {formik?.values?.roleName?.value === "superAdmin" && (
-                  <div>
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      placeholder={"Domain"}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      disabled={state?.id ? true : false}
-                      title={"Domain"}
-                      name={"domain"}
-                      type={"text"}
-                      id="domain"
-                      value={formik.values.domain}
-                      // error={touched.domain && Boolean(errors.domain)}
-                      // onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                    />
-                    <CustomErrorMessage
-                      touched={touched.domain}
-                      errors={errors.domain}
-                    />
+                  <Box>
+                    <Box sx={{ pb: touched.domain && errors.domain ? 2 : 0 }}>
+                      <Input
+                        containerStyle={containerStyles}
+                        titleStyle={titleStyles}
+                        inputStyle={inputStyle}
+                        placeholder={"Domain"}
+                        inputContainerStyle={{
+                          ...inputContainerStyle,
+                          height: { lg: "45px", xs: "36px" },
+                        }}
+                        disabled={state?.id ? true : false}
+                        title={"Domain"}
+                        name={"domain"}
+                        type={"text"}
+                        id="domain"
+                        value={formik.values.domain}
+                        error={touched.domain && Boolean(errors.domain)}
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                      />
+                      <CustomErrorMessage
+                        touched={touched.domain}
+                        errors={errors.domain}
+                      />
+                    </Box>
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -520,60 +588,149 @@ const AddAccount = () => {
                       onChange={handleImageChange}
                     />
                     {formik.values.base64Image && (
-                      <div>
-                        <p>Base64 Image:</p>
+                      <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        sx={{
+                          mt: 1,
+                          p: 1,
+                          borderRadius: "5px",
+                          background: "#91943f",
+                          color: "white",
+                        }}
+                      >
                         <img
                           src={formik.values.base64Image}
                           alt="Base64"
-                          style={{ maxWidth: "100%" }}
+                          style={{
+                            maxWidth: "100%",
+                            height: "60px",
+                            width: "60px",
+                            objectFit: "cover",
+                            borderRadius: "5px",
+                          }}
                         />
-                      </div>
+                        <Typography variant="h5" sx={{ ml: 2 }}>
+                          Super URL Admin Logo....{" "}
+                        </Typography>
+                      </Box>
                     )}
-                    <Box m={2}>
-                      <Grid container spacing={2}>
+                    <Box m={2} mr={0} sx={{ pt: 1 }}>
+                      <Grid
+                        container
+                        spacing={2}
+                        sx={{
+                          background: " #91943f",
+                          borderRadius: "5px",
+                          pr: 2,
+                          pb: 2,
+                        }}
+                      >
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="sidebarColor">
-                            Sidebar Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="sidebarColor"
-                            name={"sidebarColor"}
-                            value={formik.values.sidebarColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box
+                            sx={{
+                              display: "flex",
+                              border: "1px solid #ddd",
+                              padding: "8px",
+                              background: "#eee",
+                              borderRadius: "3px",
+                              p: 1,
+                            }}
+                          >
+                            <input
+                              type="color"
+                              id="sidebarColor"
+                              name={"sidebarColor"}
+                              value={formik.values.sidebarColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel
+                              htmlFor="sidebarColor"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              &nbsp; Sidebar Color:{" "}
+                            </InputLabel>
+                          </Box>
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="headerColor">
-                            Header Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="headerColor"
-                            name={"headerColor"}
-                            value={formik.values.headerColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box
+                            sx={{
+                              display: "flex",
+                              border: "1px solid #ddd",
+                              padding: "8px",
+                              background: "#eee",
+                              borderRadius: "3px",
+                              p: 1,
+                            }}
+                          >
+                            <input
+                              type="color"
+                              id="headerColor"
+                              name={"headerColor"}
+                              value={formik.values.headerColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel
+                              htmlFor="headerColor"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              &nbsp; Header Color:{" "}
+                            </InputLabel>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6} md={12} lg={6}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              border: "1px solid #ddd",
+                              padding: "8px",
+                              background: "#eee",
+                              borderRadius: "3px",
+                              p: 1,
+                            }}
+                          >
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                            <InputLabel
+                              htmlFor="footerColor"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              &nbsp; Footer Color:{" "}
+                            </InputLabel>
+                          </Box>
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2}>
+                    {/* <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="footerColor">
-                            Footer Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="footerColor"
-                            name={"footerColor"}
-                            value={formik.values.footerColor}
-                            onChange={formik.handleChange}
-                          />
+                          <Box sx={{
+                                display: "flex",
+                                border: "1px solid #ddd",
+                                padding: '8px',
+                                background: '#eee',
+                                p: 1,
+                                }}>
+                            <InputLabel htmlFor="footerColor">
+                              Footer Color:{" "}
+                            </InputLabel>
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                          </Box>
                         </Grid>
                       </Grid>
-                    </Box>
-                  </div>
+                    </Box> */}
+                  </Box>
                 )}
               </Box>
             </Box>
@@ -604,19 +761,23 @@ const AddAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    // touched={touched.roleName}
+                    touched={touched.roleName}
                     // error={errors.roleName}
-                    // error={touched.roleName && Boolean(errors.roleName)}
-                    // onBlur={formik.handleBlur}
+                    error={touched.roleName && Boolean(errors.roleName)}
+                    onBlur={formik.handleBlur}
                   />
-                  {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
+                  <CustomErrorMessage
+                    touched={touched.roleName}
+                    errors={errors.roleName}
+                  />
                 </Box>
+
                 {formik.values.roleName.value === "expert" && (
                   <>
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="All Privilege"
                             name="allPrivilege"
                             showLockUnlock={false}
@@ -626,7 +787,7 @@ const AddAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Add Match Privilege"
                             name="addMatchPrivilege"
                             val={lockUnlockObj?.addMatchPrivilege}
@@ -639,7 +800,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="BetFair Match Privilege"
                             name="betFairMatchPrivilege"
                             showLockUnlock={false}
@@ -649,7 +810,7 @@ const AddAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Bookmaker Match Privilege"
                             name="bookmakerMatchPrivilege"
                             val={lockUnlockObj?.bookmakerMatchPrivilege}
@@ -662,7 +823,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Session Match Privilege"
                             name="sessionMatchPrivilege"
                             showLockUnlock={false}
@@ -676,7 +837,12 @@ const AddAccount = () => {
                   </>
                 )}
                 {formik?.values?.roleName?.value !== "expert" && (
-                  <Box>
+                  <Box
+                    sx={{
+                      pb:
+                        touched.creditRefrence && errors.creditRefrence ? 2 : 0,
+                    }}
+                  >
                     <Input
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
@@ -691,11 +857,16 @@ const AddAccount = () => {
                       type={"Number"}
                       id="creditRefrence"
                       value={formik.values.creditRefrence}
-                      // error={touched.creditRefrence && Boolean(errors.creditRefrence)}
-                      // onBlur={formik.handleBlur}
+                      error={
+                        touched.creditRefrence && Boolean(errors.creditRefrence)
+                      }
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
-                    {/* <CustomErrorMessage touched={touched.creditRefrence} errors={errors.creditRefrence} /> */}
+                    <CustomErrorMessage
+                      touched={touched.creditRefrence}
+                      errors={errors.creditRefrence}
+                    />
                   </Box>
                 )}
               </Box>
@@ -752,19 +923,20 @@ const AddAccount = () => {
                       title={"My Partnership"}
                       name={"myPartnership"}
                       id={"myPartnership"}
-                      type={"Number"}
+                      type={"number"}
+                      max={100}
                       value={formik.values.myPartnership}
                       // error={touched.myPartnership && Boolean(errors.myPartnership)}
-                      // error={
-                      //   touched.myPartnership && Boolean(errors.myPartnership)
-                      // }
-                      // onBlur={formik.handleBlur}
+                      error={
+                        touched.myPartnership && Boolean(errors.myPartnership)
+                      }
+                      onBlur={formik.handleBlur}
                       onChange={handlePartnershipChange}
                     />
-                    {/* <CustomErrorMessage
+                    <CustomErrorMessage
                       touched={touched.myPartnership}
                       errors={errors.myPartnership}
-                    /> */}
+                    />
                   </Box>
                   <Input
                     containerStyle={{
@@ -786,7 +958,8 @@ const AddAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    // value={formik.values.downlinePartnership}
+                    min={0}
+                    value={formik.values.downlinePartnership || 0}
                     // onChange={formik.handleChange}
                   />
                 </>
@@ -827,6 +1000,10 @@ const AddAccount = () => {
                         )}
                         // touched={touched.matchCommissionType}
                         // error={errors.matchCommissionType}
+                        error={
+                          touched.creditRefrence &&
+                          Boolean(errors.creditRefrence)
+                        }
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value

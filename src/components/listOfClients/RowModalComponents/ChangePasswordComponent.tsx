@@ -1,11 +1,14 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { changePassword } from "../../../store/actions/user/userAction";
+import {
+  changePasswordRow,
+  userListSuccessReset,
+} from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
@@ -50,7 +53,7 @@ const ChangePasswordComponent = (props: any) => {
         };
       }
       dispatch(
-        changePassword({
+        changePasswordRow({
           url: walletAccountDetail
             ? ApiConstants.WALLET.CHANGEPASSWORD
             : endpoint,
@@ -62,7 +65,17 @@ const ChangePasswordComponent = (props: any) => {
 
   const { handleSubmit, touched, errors } = formik;
 
-  const { loading } = useSelector((state: RootState) => state.user.userList);
+  const { loading, success } = useSelector(
+    (state: RootState) => state.user.userList
+  );
+
+  useEffect(() => {
+    if (success) {
+      formik.resetForm();
+      setSelected(false);
+      dispatch(userListSuccessReset());
+    }
+  }, [success]);
 
   return (
     <form onSubmit={handleSubmit}>

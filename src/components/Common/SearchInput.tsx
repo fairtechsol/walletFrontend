@@ -5,7 +5,9 @@ import { SEARCH, Search } from "../../assets";
 import { debounce } from "lodash";
 import { getUserList } from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
+import { getAccountStatement } from "../../store/actions/reports";
+import { useSelector } from "react-redux";
 
 const SearchInput = (props: any) => {
   const {
@@ -19,10 +21,15 @@ const SearchInput = (props: any) => {
     searchContainerStyle,
     onChange,
     endpoint,
+    searchFor,
+    pageLimit,
   } = props;
 
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   const dispatch: AppDispatch = useDispatch();
 
   const handleInputChange = debounce(async (event: any) => {
@@ -31,13 +38,27 @@ const SearchInput = (props: any) => {
       onChange(value);
     }
     try {
-      dispatch(
-        getUserList({
-          userName: value,
-          currentPage: 1,
-          url: { endpoint: endpoint },
-        })
-      );
+      if (searchFor === "accountStatement") {
+        dispatch(
+          getAccountStatement({
+            id: profileDetail?.id,
+            page: 1,
+            pageLimit: pageLimit,
+            keyword: value,
+            searchBy: "description,user.userName,actionByUser.userName",
+          })
+        );
+      } else {
+        if (searchFor === "userList") {
+          dispatch(
+            getUserList({
+              userName: value,
+              currentPage: 1,
+              url: { endpoint: endpoint },
+            })
+          );
+        }
+      }
     } catch (e) {
       console.log(e);
     }

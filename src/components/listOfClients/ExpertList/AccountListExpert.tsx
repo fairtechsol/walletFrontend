@@ -55,7 +55,10 @@ const AccountListExpert = (endpoint: any) => {
               }),
             ]}
           >
-            <HeaderRow endpoint={ApiConstants.USER.EXPERTLIST} />
+            <HeaderRow
+              endpoint={ApiConstants.USER.EXPERTLIST}
+              searchFor={"userList"}
+            />
             <Box sx={{ overflowX: "auto" }}>
               <Box
                 sx={{

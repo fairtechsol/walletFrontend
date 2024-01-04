@@ -2,8 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { ARROWDROPDOWN } from "../../../assets";
 
-const SmallDropDown = ({ getLimitEntries }: any) => {
-  const [value, setValue] = useState(15);
+const SmallDropDown = ({ setPageLimit, pageLimit }: any) => {
   const [open, setOpen] = useState(false);
   return (
     <Box>
@@ -23,7 +22,7 @@ const SmallDropDown = ({ getLimitEntries }: any) => {
           marginX: "5px",
         }}
       >
-        <Typography sx={{ fontSize: "12px" }}>{value}</Typography>
+        <Typography sx={{ fontSize: "12px" }}>{pageLimit}</Typography>
         <img
           src={ARROWDROPDOWN}
           style={{
@@ -71,8 +70,7 @@ const SmallDropDown = ({ getLimitEntries }: any) => {
                 <Typography
                   key={idx}
                   onClick={() => {
-                    getLimitEntries(item);
-                    setValue(item);
+                    setPageLimit(+item);
                     setOpen(false);
                   }}
                   sx={{ textAlign: "center", paddingY: "1px" }}

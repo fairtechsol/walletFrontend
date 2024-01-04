@@ -56,7 +56,10 @@ const AccountList = (endpoint: any) => {
               }),
             ]}
           >
-            <HeaderRow endpoint={ApiConstants.USER.LIST} />
+            <HeaderRow
+              endpoint={ApiConstants.USER.LIST}
+              searchFor={"userList"}
+            />
             <Box sx={{ overflowX: "auto" }}>
               <Box
                 sx={{
