@@ -257,7 +257,7 @@ const SetCreditComponent = (props: any) => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", width: "100px" }}>
+          <Box sx={{ display: "flex", width: "150px" }}>
             <BoxButton
               color={"#0B4F26"}
               loading={loading}

@@ -641,10 +641,10 @@ const EditAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    // touched={touched.roleName}
-                    // error={errors.roleName}
-                    // error={touched.roleName && Boolean(errors.roleName)}
-                    // onBlur={formik.handleBlur}
+                  // touched={touched.roleName}
+                  // error={errors.roleName}
+                  // error={touched.roleName && Boolean(errors.roleName)}
+                  // onBlur={formik.handleBlur}
                   />
                   {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
@@ -823,8 +823,8 @@ const EditAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    // value={formik.values.downlinePartnership}
-                    // onChange={formik.handleChange}
+                  // value={formik.values.downlinePartnership}
+                  // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -862,36 +862,35 @@ const EditAccount = () => {
                             option.value ===
                             formik.values.matchCommissionType.value
                         )}
-                        // touched={touched.matchCommissionType}
-                        // error={errors.matchCommissionType}
+                      // touched={touched.matchCommissionType}
+                      // error={errors.matchCommissionType}
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
                       ) && (
-                        <>
-                          <SelectField
-                            containerStyle={containerStyles}
-                            titleStyle={titleStyles}
-                            id={"matchCommission"}
-                            name={"matchCommission"}
-                            label={"Match Commission (%)*"}
-                            options={matchComissionArray}
-                            value={matchComissionArray.find((option: any) => {
-                              option.value ===
-                                formik.values.matchCommission.value;
-                            })}
-                            onChange={(matchComissionArray: any) => {
-                              formik.setFieldValue(
-                                "matchCommission",
-                                matchComissionArray
-                              );
-                            }}
-                            onBlur={formik.handleBlur}
+                          <>
+                            <SelectField
+                              containerStyle={containerStyles}
+                              titleStyle={titleStyles}
+                              id={"matchCommission"}
+                              name={"matchCommission"}
+                              label={"Match Commission (%)*"}
+                              options={matchComissionArray}
+                              value={
+                                formik.values.matchCommission
+                              }
+                              onChange={(matchComissionArray: any) => {
+                                formik.setFieldValue(
+                                  "matchCommission",
+                                  matchComissionArray
+                                );
+                              }}
+                              onBlur={formik.handleBlur}
                             // touched={touched.matchCommission}
                             // error={errors.matchCommission}
-                          />
-                        </>
-                      )}
+                            />
+                          </>
+                        )}
 
                       <SelectField
                         containerStyle={containerStyles}
@@ -900,10 +899,7 @@ const EditAccount = () => {
                         name={"sessionCommission"}
                         label={"Session Commission (%)*"}
                         options={sessionComissionArray}
-                        value={sessionComissionArray.find((option: any) => {
-                          option.value ===
-                            formik.values.sessionCommission.value;
-                        })}
+                        value={formik.values.sessionCommission}
                         onChange={(sessionComissionArray: any) => {
                           formik.setFieldValue(
                             "sessionCommission",
@@ -911,8 +907,8 @@ const EditAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        // touched={touched.sessionCommission}
-                        // error={errors.sessionCommission}
+                      // touched={touched.sessionCommission}
+                      // error={errors.sessionCommission}
                       />
                     </Box>
                   </>
@@ -1003,11 +999,11 @@ const EditAccount = () => {
       </Box>
       {showModal && (
         <CustomModal
-          modalTitle={`User Edited sucessfully`}
+          modalTitle={`User edited successfully`}
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
-          functionDispatch={() => {}}
+          functionDispatch={() => { }}
           navigateTo={"/wallet/list_of_clients"}
         />
       )}
