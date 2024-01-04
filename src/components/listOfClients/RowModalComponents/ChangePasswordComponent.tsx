@@ -5,7 +5,10 @@ import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { changePassword, userListSuccessReset } from "../../../store/actions/user/userAction";
+import {
+  changePasswordRow,
+  userListSuccessReset,
+} from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
@@ -50,7 +53,7 @@ const ChangePasswordComponent = (props: any) => {
         };
       }
       dispatch(
-        changePassword({
+        changePasswordRow({
           url: walletAccountDetail
             ? ApiConstants.WALLET.CHANGEPASSWORD
             : endpoint,
