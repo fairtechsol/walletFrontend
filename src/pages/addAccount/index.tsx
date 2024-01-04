@@ -26,6 +26,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
+import { FgAdminValidation, SuperURLValidation, addUserValidation } from "../../utils/Validations";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -134,6 +135,16 @@ const AddAccount = () => {
     //     return addUserValidation;
     //   }
     // },
+    validationSchema: () => {
+    if (formik.values.roleName.value === "superAdmin") {
+      return SuperURLValidation;
+    } else if (formik.values.roleName.value === "fairGameAdmin") {
+      return FgAdminValidation
+    
+    } else {
+      return addUserValidation;
+    }
+  },
 
     onSubmit: (values: any) => {
       const commonPayload = {
