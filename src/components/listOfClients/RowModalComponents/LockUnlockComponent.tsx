@@ -21,22 +21,19 @@ const LockUnlockComponent = (props: any) => {
   const { setSelected, element, walletAccountDetail, endpoint, isWallet } =
     props;
 
-  const defaultLockUnlockObj = {
-    all_blocked:
-      element?.userBlock === true
-        ? true
-        : false ?? walletAccountDetail?.userBlock === true
-        ? true
-        : false,
-    bet_blocked:
-      element?.betBlock === true
-        ? true
-        : false ?? walletAccountDetail?.betBlock === true
-        ? true
-        : false,
+  let elementLockUnlockObj1 = {
+    all_blocked: element?.userBlock === true ? true : false,
+    bet_blocked: element?.betBlock === true ? true : false,
   };
 
-  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
+  const walletLockUnlockObj2 = {
+    all_blocked: walletAccountDetail?.userBlock === true ? true : false,
+    bet_blocked: walletAccountDetail?.betBlock === true ? true : false,
+  };
+
+  const [lockUnlockObj, setLockUnlockObj] = useState(
+    element ? elementLockUnlockObj1 : walletLockUnlockObj2
+  );
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
