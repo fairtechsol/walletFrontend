@@ -18,6 +18,8 @@ export interface InputInterface {
   onBlur?: any;
   place?: number;
   error?: any;
+  max?: number;
+  min?: number;
   okButtonRef?: string;
   onChange?: (value: any) => void;
   name?: string;

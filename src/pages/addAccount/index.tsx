@@ -26,6 +26,11 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
+import {
+  FgAdminValidation,
+  SuperURLValidation,
+  addUserValidation,
+} from "../../utils/Validations";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -43,62 +48,62 @@ const MatchCommissionTypes = [
   { value: "entryWise", label: "Entry Wise" },
 ];
 
-const formDataSchema = {
-  userName: "",
-  password: "",
-  confirmPassword: "",
-  fullName: "",
-  city: "",
-  phoneNumber: "",
-  domain: "",
-  roleName: {
-    label: "",
-    value: "",
-  },
-  creditRefrence: "",
-  uplinePartnership: 10,
-  myPartnership: 0,
-  downlinePartnership: 90,
-  matchCommissionType: {
-    label: "",
-    value: "",
-  },
-  matchCommission: {
-    label: "",
-    value: "",
-  },
-  sessionCommission: {
-    label: "",
-    value: "",
-  },
-  remarks: "",
-  adminTransPassword: "",
-  logo: "",
-  base64Image: "",
-  sidebarColor: "",
-  headerColor: "",
-  footerColor: "",
-};
-
-const defaultLockUnlockObj = {
-  allPrivilege: false,
-  addMatchPrivilege: false,
-  betFairMatchPrivilege: false,
-  bookmakerMatchPrivilege: false,
-  sessionMatchPrivilege: false,
-};
-
 const AddAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
-  const [AccountTypes, setAccountTypes] = useState<any>([]);
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
+  const formDataSchema = {
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    city: "",
+    phoneNumber: "",
+    domain: "",
+    roleName: {
+      label: "",
+      value: "",
+    },
+    creditRefrence: "",
+    uplinePartnership: 0,
+    myPartnership: 0,
+    downlinePartnership: 0,
+    matchCommissionType: {
+      label: "",
+      value: "",
+    },
+    matchCommission: {
+      label: "",
+      value: "",
+    },
+    sessionCommission: {
+      label: "",
+      value: "",
+    },
+    remarks: "",
+    adminTransPassword: "",
+    logo: "",
+    base64Image: "",
+    sidebarColor: "",
+    headerColor: "",
+    footerColor: "",
+  };
+
+  const defaultLockUnlockObj = {
+    allPrivilege: false,
+    addMatchPrivilege: false,
+    betFairMatchPrivilege: false,
+    bookmakerMatchPrivilege: false,
+    sessionMatchPrivilege: false,
+  };
+  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
+  const [AccountTypes, setAccountTypes] = useState<any>([]);
+  const [down, setDown] = useState<number>(0);
 
   const { loading, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
@@ -124,16 +129,15 @@ const AddAccount = () => {
   const formik = useFormik({
     initialValues: formDataSchema,
     // validationSchema: validationSchema,
-    //   validationSchema: () => {
-    //   if (formik.values.roleName.value === "superAdmin") {
-    //     return SuperURLValidation;
-    //   } else if (formik.values.roleName.value === "fairGameAdmin") {
-    //     return FgAdminValidation
-
-    //   } else {
-    //     return addUserValidation;
-    //   }
-    // },
+    validationSchema: () => {
+      if (formik.values.roleName.value === "superAdmin") {
+        return SuperURLValidation;
+      } else if (formik.values.roleName.value === "fairGameAdmin") {
+        return FgAdminValidation;
+      } else {
+        return addUserValidation;
+      }
+    },
 
     onSubmit: (values: any) => {
       const commonPayload = {
@@ -193,7 +197,10 @@ const AddAccount = () => {
   const handlePartnershipChange = (event: any) => {
     try {
       const newValue = parseInt(event.target.value, 10);
-      const remainingDownline = 90 - newValue;
+      const remainingDownline = +down - +newValue;
+      if (remainingDownline < 0) {
+        return;
+      }
 
       formik.setValues({
         ...formik.values,
@@ -266,6 +273,47 @@ const AddAccount = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleUpline = ({ roleName }: any) => {
+    const {
+      aPartnership,
+      saPartnership,
+      smPartnership,
+      faPartnership,
+      fwPartnership,
+    } = profileDetail;
+
+    const partnershipMap: any = {
+      superMaster: aPartnership + saPartnership + faPartnership + fwPartnership,
+      superAdmin: faPartnership + fwPartnership,
+      master:
+        smPartnership +
+        aPartnership +
+        saPartnership +
+        faPartnership +
+        fwPartnership,
+      admin: saPartnership + faPartnership + fwPartnership,
+      fairGameWallet: 0,
+      fairGameAdmin: fwPartnership,
+    };
+
+    const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+
+    return thisUplinePertnerShip;
+  };
+
+  useEffect(() => {
+    if (profileDetail && profileDetail.roleName) {
+      const res = handleUpline(profileDetail.roleName);
+      // setUplineP(res);
+      formik.setValues({
+        ...formik.values,
+        uplinePartnership: res,
+        downlinePartnership: 100 - res,
+      });
+      setDown(100 - res);
+    }
+  }, [profileDetail, profileDetail?.roleName]);
 
   useEffect(() => {
     setTypeForAccountType();
@@ -872,7 +920,8 @@ const AddAccount = () => {
                       title={"My Partnership"}
                       name={"myPartnership"}
                       id={"myPartnership"}
-                      type={"Number"}
+                      type={"number"}
+                      max={100}
                       value={formik.values.myPartnership}
                       // error={touched.myPartnership && Boolean(errors.myPartnership)}
                       error={
@@ -906,7 +955,8 @@ const AddAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    value={formik.values.downlinePartnership}
+                    min={0}
+                    value={formik.values.downlinePartnership || 0}
                     // onChange={formik.handleChange}
                   />
                 </>
