@@ -22,6 +22,7 @@ const SearchInput = (props: any) => {
     onChange,
     endpoint,
     searchFor,
+    pageLimit,
   } = props;
 
   const theme = useTheme();
@@ -42,8 +43,9 @@ const SearchInput = (props: any) => {
           getAccountStatement({
             id: profileDetail?.id,
             page: 1,
+            pageLimit: pageLimit,
             keyword: value,
-            searchBy: "description,user.userName,actionByUser.userName"
+            searchBy: "description,user.userName,actionByUser.userName",
           })
         );
       } else {

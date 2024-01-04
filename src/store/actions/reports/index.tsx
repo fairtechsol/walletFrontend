@@ -9,6 +9,7 @@ interface AccountStatement {
   page: number;
   keyword?: any;
   filter?: any;
+  pageLimit?: any;
 }
 
 export const getAccountStatement = createAsyncThunk<any, AccountStatement>(
@@ -18,7 +19,7 @@ export const getAccountStatement = createAsyncThunk<any, AccountStatement>(
       const resp = await service.get(
         `${ApiConstants.WALLET.REPORTS.GETACCOUNTSTATEMENT}/${
           requestData?.id
-        }?page=${requestData?.page}&limit=${Constants.pageLimit}&searchBy=${
+        }?page=${requestData?.page}&limit=${requestData.pageLimit}&searchBy=${
           requestData?.searchBy || ""
         }&keyword=${requestData?.keyword || ""}${requestData?.filter || ""}`
       );
