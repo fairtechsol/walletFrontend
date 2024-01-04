@@ -69,6 +69,23 @@ export const changePassword = createAsyncThunk<any, any>(
     }
   }
 );
+export const changePasswordRow = createAsyncThunk<any, any>(
+  "user/changePasswordRow",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        `${requestData.url}`,
+        requestData.payload
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
 
 export const getMyAccountDetails = createAsyncThunk<any>(
   "user/getMyAccountDetails",
