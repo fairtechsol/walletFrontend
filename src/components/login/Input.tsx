@@ -30,6 +30,8 @@ const Input: React.FC<InputInterface> = (props: any) => {
     error,
     onChange,
     name,
+    max,
+    min,
   } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
@@ -80,7 +82,8 @@ const Input: React.FC<InputInterface> = (props: any) => {
           InputProps={{
             autoComplete: "new-password",
             inputProps: {
-              min: type === "Number" ? 0 : undefined,
+              min: min ? min : type === "number" ? 0 : undefined,
+              max: max ?? undefined,
             },
             disabled: disabled,
             placeholder: placeholder,
