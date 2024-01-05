@@ -101,11 +101,7 @@ const AccountList = (endpoint: any) => {
                               fContainerStyle={{ background: "#0B4F26" }}
                               fTextStyle={{ color: "white" }}
                               element={element}
-                              show={
-                                element?.roleName === "superAdmin"
-                                  ? true
-                                  : false
-                              }
+                              show={false}
                             />
                           );
                         } else {
@@ -121,6 +117,7 @@ const AccountList = (endpoint: any) => {
                               fContainerStyle={{ background: "#F8C851" }}
                               fTextStyle={{ color: "#0B4F26" }}
                               element={element}
+                              show={false}
                             />
                           );
                         }
@@ -130,6 +127,7 @@ const AccountList = (endpoint: any) => {
               </Box>
             </Box>
           </Box>
+        
           <Pagination
             currentPage={currentPage}
             pages={Math.ceil(
