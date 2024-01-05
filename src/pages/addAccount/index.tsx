@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
-import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
@@ -21,12 +20,18 @@ import {
   addReset,
   addUrlAdmin,
   addUser,
+  // profileReset,
   updateReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
-import { FgAdminValidation, SuperURLValidation, addUserValidation } from "../../utils/Validations";
+import {
+  // FgAdminValidation,
+  // SuperURLValidation,
+  addUserValidation,
+} from "../../utils/Validations";
+import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -44,62 +49,62 @@ const MatchCommissionTypes = [
   { value: "entryWise", label: "Entry Wise" },
 ];
 
-const formDataSchema = {
-  userName: "",
-  password: "",
-  confirmPassword: "",
-  fullName: "",
-  city: "",
-  phoneNumber: "",
-  domain: "",
-  roleName: {
-    label: "",
-    value: "",
-  },
-  creditRefrence: "",
-  uplinePartnership: 10,
-  myPartnership: 0,
-  downlinePartnership: 90,
-  matchCommissionType: {
-    label: "",
-    value: "",
-  },
-  matchCommission: {
-    label: "",
-    value: "",
-  },
-  sessionCommission: {
-    label: "",
-    value: "",
-  },
-  remarks: "",
-  adminTransPassword: "",
-  logo: "",
-  base64Image: "",
-  sidebarColor: "",
-  headerColor: "",
-  footerColor: "",
-};
-
-const defaultLockUnlockObj = {
-  allPrivilege: false,
-  addMatchPrivilege: false,
-  betFairMatchPrivilege: false,
-  bookmakerMatchPrivilege: false,
-  sessionMatchPrivilege: false,
-};
-
 const AddAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
-  const [AccountTypes, setAccountTypes] = useState<any>([]);
-  const { profileDetail } = useSelector(
+  const { profileDetail, success } = useSelector(
     (state: RootState) => state.user.profile
   );
+  const formDataSchema = {
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
+    city: "",
+    phoneNumber: "",
+    domain: "",
+    roleName: {
+      label: "",
+      value: "",
+    },
+    creditRefrence: "",
+    uplinePartnership: 0,
+    myPartnership: 0,
+    downlinePartnership: 0,
+    matchCommissionType: {
+      label: "",
+      value: "",
+    },
+    matchCommission: {
+      label: "",
+      value: "",
+    },
+    sessionCommission: {
+      label: "",
+      value: "",
+    },
+    remarks: "",
+    adminTransPassword: "",
+    logo: "",
+    base64Image: "",
+    sidebarColor: "",
+    headerColor: "",
+    footerColor: "",
+  };
+
+  const defaultLockUnlockObj = {
+    allPrivilege: false,
+    addMatchPrivilege: false,
+    betFairMatchPrivilege: false,
+    bookmakerMatchPrivilege: false,
+    sessionMatchPrivilege: false,
+  };
+  const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
+  const [AccountTypes, setAccountTypes] = useState<any>([]);
+  const [down, setDown] = useState<number>(0);
 
   const { loading, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
@@ -124,13 +129,12 @@ const AddAccount = () => {
 
   const formik = useFormik({
     initialValues: formDataSchema,
-    // validationSchema: validationSchema,
-    //   validationSchema: () => {
+    validationSchema: addUserValidation,
+    // validationSchema: () => {
     //   if (formik.values.roleName.value === "superAdmin") {
     //     return SuperURLValidation;
     //   } else if (formik.values.roleName.value === "fairGameAdmin") {
-    //     return FgAdminValidation
-
+    //     return FgAdminValidation;
     //   } else {
     //     return addUserValidation;
     //   }
@@ -204,7 +208,10 @@ const AddAccount = () => {
   const handlePartnershipChange = (event: any) => {
     try {
       const newValue = parseInt(event.target.value, 10);
-      const remainingDownline = 90 - newValue;
+      const remainingDownline = +down - +newValue;
+      if (remainingDownline < 0) {
+        return;
+      }
 
       formik.setValues({
         ...formik.values,
@@ -277,6 +284,49 @@ const AddAccount = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleUpline = () => {
+    const {
+      aPartnership,
+      saPartnership,
+      smPartnership,
+      faPartnership,
+      fwPartnership,
+      roleName,
+    } = profileDetail;
+
+    const partnershipMap: any = {
+      superMaster: aPartnership + saPartnership + faPartnership + fwPartnership,
+      superAdmin: faPartnership + fwPartnership,
+      master:
+        smPartnership +
+        aPartnership +
+        saPartnership +
+        faPartnership +
+        fwPartnership,
+      admin: saPartnership + faPartnership + fwPartnership,
+      fairGameWallet: 0,
+      fairGameAdmin: fwPartnership,
+    };
+
+    const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+
+    return thisUplinePertnerShip;
+  };
+
+  useEffect(() => {
+    if (success) {
+      if (profileDetail && profileDetail.roleName) {
+        const res = handleUpline();
+        formik.setValues({
+          ...formik.values,
+          uplinePartnership: res,
+          downlinePartnership: 100 - res,
+        });
+        setDown(100 - res);
+      }
+    }
+  }, [profileDetail, profileDetail?.roleName, success]);
 
   useEffect(() => {
     setTypeForAccountType();
@@ -737,7 +787,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="All Privilege"
                             name="allPrivilege"
                             showLockUnlock={false}
@@ -747,7 +797,7 @@ const AddAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Add Match Privilege"
                             name="addMatchPrivilege"
                             val={lockUnlockObj?.addMatchPrivilege}
@@ -760,7 +810,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="BetFair Match Privilege"
                             name="betFairMatchPrivilege"
                             showLockUnlock={false}
@@ -770,7 +820,7 @@ const AddAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Bookmaker Match Privilege"
                             name="bookmakerMatchPrivilege"
                             val={lockUnlockObj?.bookmakerMatchPrivilege}
@@ -783,7 +833,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Session Match Privilege"
                             name="sessionMatchPrivilege"
                             showLockUnlock={false}
@@ -883,7 +933,8 @@ const AddAccount = () => {
                       title={"My Partnership"}
                       name={"myPartnership"}
                       id={"myPartnership"}
-                      type={"Number"}
+                      type={"number"}
+                      max={100}
                       value={formik.values.myPartnership}
                       // error={touched.myPartnership && Boolean(errors.myPartnership)}
                       error={
@@ -917,7 +968,8 @@ const AddAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    value={formik.values.downlinePartnership}
+                    min={0}
+                    value={formik.values.downlinePartnership || 0}
                     // onChange={formik.handleChange}
                   />
                 </>
