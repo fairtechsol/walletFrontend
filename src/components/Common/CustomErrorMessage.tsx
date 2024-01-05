@@ -1,15 +1,32 @@
 import { Typography } from "@mui/material";
+interface props {
+  touched?: any;
+  errors: any;
+  style?: React.CSSProperties;
+}
 
-const CustomErrorMessage = (props: any) => {
+const CustomErrorMessage = ({
+  touched,
+  errors,
+  style
+  
+}: props) => {
+  const inlineStyle: React.CSSProperties = {
+    ...style,
+  };
     return (
       <>
-      {props?.touched && props?.errors && (
-          <Typography sx={{ 
+      {touched && errors && (
+          <Typography 
+          sx={{ 
             color: "#fa1e1e", 
-            position: "absolute" ,
-            fontSize: "12px"
-          }}>
-            {props?.errors as string}
+            position: "absolute",
+            fontSize: "12px",
+            wordBreak: "break-all",
+          }}
+          style={{ ...inlineStyle }}
+          >
+            {errors}
           </Typography>
         )}
       </>

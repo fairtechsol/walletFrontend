@@ -7,29 +7,8 @@ const SelectField = ({
   titleStyle,
   touched,
   error,
-  styles,
   ...props
 }: any) => {
-  const mergedStyles = {
-    container: (provided: any) => ({
-      ...provided,
-
-      ...styles?.container, 
-    }),
-    control: (provided: any) => ({
-      ...provided,
-      ...styles?.control, 
-    }),
-    menu: (provided: any) => ({
-      ...provided,
-      ...styles?.menu,
-    }),
-    input: (provided: any) => ({
-      ...provided,
-      ...styles?.input,
-    }),
-  };
-
   return (
     <Box sx={[{}, containerStyle]}>
       <Typography
@@ -48,7 +27,7 @@ const SelectField = ({
       {/* <InputLabel sx={[{}, titleStyle]} htmlFor={props.name}>
         {label}
       </Label> */}
-      <Select styles={mergedStyles}  {...props} />
+      <Select {...props} />
       {touched && error ? <div style={{ color: "red" }}>{error}</div> : null}
     </Box>
   );

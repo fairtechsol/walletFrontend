@@ -104,7 +104,7 @@ const AddAccount = () => {
   };
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [AccountTypes, setAccountTypes] = useState<any>([]);
-  const [down, setDown] = useState<number>(0);
+  const [down, setDown] = useState<number>(100);
 
   const { loading, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
@@ -118,10 +118,10 @@ const AddAccount = () => {
     fontSize: { xs: "10px", lg: "12px" },
     fontWeight: "600",
     marginLeft: "0px",
+    // lineBreak: "2",
   };
   const inputStyle = {
     fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
-    color: 'white'
   };
   const inputContainerStyle = {
     borderRadius: "5px",
@@ -403,7 +403,7 @@ const AddAccount = () => {
                     {errors.userName as string}
                   </p>
                 )} */}
-                <Box sx={{ pb: errors.password && touched.password ? 2 : 0 }}>
+                <Box sx={{ pb: errors.password && touched.password ? 2 : 0, position: 'relative' }}>
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -429,6 +429,10 @@ const AddAccount = () => {
                   <CustomErrorMessage
                     touched={touched.password}
                     errors={errors.password}
+                    style={{
+                      lineHeight: 1,
+                      marginTop: 1,
+                    }}
                   />
                 </Box>
 
@@ -747,19 +751,6 @@ const AddAccount = () => {
                   <SelectField
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
-                    styles={{
-                      container: {
-                        color: '#fff', 
-                      },
-                      control: {          
-                        backgroundColor: '#0B4F26',
-                        color: '#fff', 
-                      },
-                      menu: {
-                        backgroundColor: '#0B4F26',
-                        color: '#fff',
-                      },
-                    }}
                     id="roleName"
                     name="roleName"
                     isSearchable={false}
