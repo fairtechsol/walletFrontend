@@ -121,6 +121,7 @@ const AddAccount = () => {
   };
   const inputStyle = {
     fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
+    color: 'white'
   };
   const inputContainerStyle = {
     borderRadius: "5px",
@@ -746,6 +747,19 @@ const AddAccount = () => {
                   <SelectField
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
+                    styles={{
+                      container: {
+                        color: '#fff', 
+                      },
+                      control: {          
+                        backgroundColor: '#0B4F26',
+                        color: '#fff', 
+                      },
+                      menu: {
+                        backgroundColor: '#0B4F26',
+                        color: '#fff',
+                      },
+                    }}
                     id="roleName"
                     name="roleName"
                     isSearchable={false}
