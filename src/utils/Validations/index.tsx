@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const loginValidationSchema = Yup.object({
-  userName: Yup.string().required("Username is required"),
+  userName: Yup.string().max(20, 'Username must be at most 20 characters long').required("Username is required"),
   password: Yup.string().required("Password is required"),
 });
 
@@ -18,7 +18,7 @@ export const userChangePasswordValidations = Yup.object({
     .min(8, "Password must be at least 8 characters long")
     .matches(
       /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).*$/,
-      "Password must contain at least one uppercase letter, one number, and one special character (@ $ ! % * ? &)"
+      "Password must contain at least one uppercase letter, one number,and one special character (@ $ ! % * ? &)"
     ),
   transactionPassword: Yup.string().required(
     "Transaction Password is required"
@@ -51,6 +51,10 @@ export const addUserValidation = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), ""], "Passwords must match")
     .required("Confirm Password is required"),
+    fullName: Yup.string() 
+    .matches(/^[a-zA-Z\s]*$/, 'Full Name should only contain letters and spaces')
+    .max(20, 'Full Name must be at most 20 characters')
+    .required('Full Name is required'),
   // fullName: Yup.string().required("Full Name is required"),
   // city: Yup.string()
   //   .max(15, "City must be at most 15 characters")
