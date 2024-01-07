@@ -1,4 +1,11 @@
-import { Box, Pagination, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import {
+  Box,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@mui/material";
 import Loader from "../../components/Loader";
 import MatchComponent from "../../components/Inplay/MatchComponent";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +18,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Constants } from "../../utils/Constants";
+import { socketService } from "../../socketManager";
 
 const Inplay = () => {
   const navigate = useNavigate();
@@ -18,6 +26,10 @@ const Inplay = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { loading, matchListInplay, success } = useSelector(
     (state: RootState) => state.match.matchList
+  );
+
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
   );
 
   useEffect(() => {
@@ -30,10 +42,23 @@ const Inplay = () => {
     }
   }, [success]);
 
+  useEffect(() => {
+    if (matchListInplay && matchListInplay?.length > 0) {
+      matchListInplay?.map((item: any) => {
+        socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+      });
+    }
+    return () => {
+      matchListInplay?.forEach((item: any) => {
+        socketService.match.leaveMatchRoom(item?.id);
+      });
+    };
+  }, [matchListInplay.length]);
+
   return (
     <>
-      {matchListInplay?.matches?.length > 0 ? (
-        matchListInplay?.matches?.map((match: any) => {
+      {matchListInplay?.length > 0 ? (
+        matchListInplay?.map((match: any) => {
           return (
             <MatchComponent
               key={match.id}
@@ -63,19 +88,18 @@ const Inplay = () => {
           </TableBody>
         </Table>
       )}
-      {matchListInplay?.matches?.length > 0 && (
+      {matchListInplay?.length > 0 && (
         <Pagination
           page={currentPage}
           className="whiteTextPagination d-flex justify-content-center"
           count={Math.ceil(
-            parseInt(matchListInplay?.count ? matchListInplay?.count : 1) /
+            parseInt(matchListInplay?.length ? matchListInplay?.length : 1) /
               Constants.pageLimit
           )}
           color="primary"
           onChange={(e: any, value: number) => {
             console.log(e);
             setCurrentPage(value);
-            console.log(e);
           }}
         />
       )}

@@ -29,7 +29,11 @@ const AccountStatement = () => {
   useEffect(() => {
     if (profileDetail) {
       dispatch(
-        getAccountStatement({ id: profileDetail?.id, page: currentPage, pageLimit: pageLimit })
+        getAccountStatement({
+          id: profileDetail?.id,
+          page: currentPage,
+          pageLimit: pageLimit,
+        })
       );
     }
   }, [profileDetail, currentPage, pageLimit]);
@@ -44,11 +48,11 @@ const AccountStatement = () => {
             getAccountStatement={() => {
               let filter = "";
               if (fromDate && toDate) {
-                filter += `&createdAt=between${moment(
-                  new Date(fromDate)
-                )?.format("DD/MM/YYYY")}|${moment(
-                  new Date(toDate).setDate(toDate.getDate() + 1)
-                )?.format("DD/MM/YYYY")}`;
+                filter += `&createdAt=between${moment(fromDate)?.format(
+                  "DD/MM/YYYY"
+                )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
+                  "DD/MM/YYYY"
+                )}`;
               }
               dispatch(
                 getAccountStatement({
@@ -85,7 +89,11 @@ const AccountStatement = () => {
             },
           ]}
         >
-          <ListHeaderRow searchFor={"accountStatement"} pageLimit={pageLimit} setPageLimit={setPageLimit} />
+          <ListHeaderRow
+            searchFor={"accountStatement"}
+            pageLimit={pageLimit}
+            setPageLimit={setPageLimit}
+          />
 
           {loading ? (
             <Box

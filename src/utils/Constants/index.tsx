@@ -88,4 +88,23 @@ export const Constants = {
     currentBet: "current_bet",
     generalReport: "general_report",
   },
+
+  apiBasePath: "http://3.89.232.255:5050",
+  thirdParty: "http://3.89.232.255:3200",
+  expertPath: "http://3.89.232.255:6060",
+};
+
+export const baseUrls = {
+  socket:
+    process.env.NODE_ENV === "production"
+      ? `${Constants.apiBasePath}`
+      : "http://localhost:5050",
+  thirdParty:
+    process.env.NODE_ENV === "production"
+      ? `${Constants.thirdParty}`
+      : "http://localhost:3200",
+  expertSocket:
+    process.env.NODE_ENV === "production"
+      ? `${Constants.expertPath}`
+      : "http://localhost:6060",
 };

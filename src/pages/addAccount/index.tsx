@@ -55,7 +55,7 @@ const AddAccount = () => {
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const { profileDetail, success } = useSelector(
+  const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
   const formDataSchema = {
@@ -269,7 +269,6 @@ const AddAccount = () => {
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        // console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
@@ -306,21 +305,16 @@ const AddAccount = () => {
   };
 
   useEffect(() => {
-    if (success) {
-      if (profileDetail && profileDetail.roleName) {
-        const res = handleUpline();
-        formik.setValues({
-          ...formik.values,
-          uplinePartnership: res,
-          downlinePartnership: 100 - res,
-        });
-        setDown(100 - res);
-      }
-    }
-  }, [profileDetail, profileDetail?.roleName, success]);
-
-  useEffect(() => {
     setTypeForAccountType();
+    if (profileDetail && profileDetail.roleName) {
+      const res = handleUpline();
+      formik.setValues({
+        ...formik.values,
+        uplinePartnership: res,
+        downlinePartnership: 100 - res,
+      });
+      setDown(100 - res);
+    }
   }, [profileDetail]);
 
   useEffect(() => {
@@ -403,7 +397,12 @@ const AddAccount = () => {
                     {errors.userName as string}
                   </p>
                 )} */}
-                <Box sx={{ pb: errors.password && touched.password ? 2 : 0, position: 'relative' }}>
+                <Box
+                  sx={{
+                    pb: errors.password && touched.password ? 2 : 0,
+                    position: "relative",
+                  }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
