@@ -51,10 +51,10 @@ export const addUserValidation = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), ""], "Passwords must match")
     .required("Confirm Password is required"),
-    fullName: Yup.string() 
+    fullName: Yup.string().notRequired()
     .matches(/^[a-zA-Z\s]*$/, 'Full Name should only contain letters and spaces')
-    .max(20, 'Full Name must be at most 20 characters')
-    .required('Full Name is required'),
+    .max(20, 'Full Name must be at most 20 characters'),
+    // .required('Full Name is required'),
   // fullName: Yup.string().required("Full Name is required"),
   // city: Yup.string()
   //   .max(15, "City must be at most 15 characters")
