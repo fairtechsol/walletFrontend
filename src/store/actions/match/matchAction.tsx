@@ -11,7 +11,7 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
         `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
       );
       if (resp) {
-        return resp?.data;
+        return resp?.data?.matches;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -116,6 +116,19 @@ export const getCompetitionMatches = createAsyncThunk<any, any>(
       const err = error as AxiosError;
       return thunkApi.rejectWithValue(err.response?.status);
     }
+  }
+);
+
+export const updateMatchListRates = createAsyncThunk<any, any>(
+  "/matchList/rates",
+  async (matchList) => {
+    return matchList;
+  }
+);
+export const updateMatchRates = createAsyncThunk<any, any>(
+  "/match/rates",
+  async (matchDetails) => {
+    return matchDetails;
   }
 );
 

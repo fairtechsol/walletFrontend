@@ -226,7 +226,6 @@ const EditAccount = () => {
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
