@@ -8,6 +8,7 @@ import {
 } from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
 import Header from "./header";
+import { socketService } from "../../socketManager";
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -20,6 +21,16 @@ const MainLayout = () => {
     dispatch(getUsersProfile());
     dispatch(marqueeNotification());
   }, []);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("userToken")) {
+      socketService.connect();
+      socketService.auth.logout();
+    }
+    return () => {
+      socketService.disconnect();
+    };
+  }, [sessionStorage.getItem("userToken")]);
 
   return (
     <>

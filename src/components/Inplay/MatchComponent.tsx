@@ -5,9 +5,14 @@ import TeamDetailRow from "./TeamDetailRow";
 import Divider from "./Divider";
 import { useEffect, useState } from "react";
 import moment from "moment-timezone";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { updateMatchListRates } from "../../store/actions/match/matchAction";
+import { socketService } from "../../socketManager";
 
 const MatchComponent = (props: MatchComponentInterface) => {
   const { onClick, top, blur, match } = props;
+  const dispatch: AppDispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
 
   function calculateTimeLeft() {
@@ -48,11 +53,28 @@ const MatchComponent = (props: MatchComponentInterface) => {
     Number(timeLeft?.hours) === 0 &&
     Number(timeLeft?.minutes) <= 30;
 
+  const setMatchOddRatesInRedux = (event: any) => {
+    try {
+      if (match?.id === event?.id) {
+        dispatch(updateMatchListRates(event));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 100);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    socketService.match.getMatchRates(match?.id, setMatchOddRatesInRedux);
+    return () => {
+      socketService.match.leaveMatchRoom(match?.id);
+    };
   }, []);
 
   return (
@@ -167,12 +189,14 @@ const MatchComponent = (props: MatchComponentInterface) => {
             teamName={match.teamA}
             runnerNumber={0}
             apiBasePath={"abc"}
+            matchOddsLive={match?.matchOdds[0]}
           />
           <Divider />
           <TeamDetailRow
             teamName={match.teamB}
             runnerNumber={1}
             apiBasePath={"abc"}
+            matchOddsLive={match?.matchOdds[0]}
           />
           {match.teamC && (
             <>
@@ -181,6 +205,7 @@ const MatchComponent = (props: MatchComponentInterface) => {
                 teamName={match.teamC}
                 runnerNumber={2}
                 apiBasePath={"abc"}
+                matchOddsLive={match?.matchOdds[0]}
               />
             </>
           )}

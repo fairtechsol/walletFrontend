@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
-import BoxButtonWithSwitch from "../../components/Common/BoxButtonWithSwitch";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
@@ -26,6 +25,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
+import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -226,7 +226,6 @@ const EditAccount = () => {
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
@@ -641,10 +640,10 @@ const EditAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                  // touched={touched.roleName}
-                  // error={errors.roleName}
-                  // error={touched.roleName && Boolean(errors.roleName)}
-                  // onBlur={formik.handleBlur}
+                    // touched={touched.roleName}
+                    // error={errors.roleName}
+                    // error={touched.roleName && Boolean(errors.roleName)}
+                    // onBlur={formik.handleBlur}
                   />
                   {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
@@ -653,7 +652,7 @@ const EditAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="All Privilege"
                             name="allPrivilege"
                             showLockUnlock={false}
@@ -663,7 +662,7 @@ const EditAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Add Match Privilege"
                             name="addMatchPrivilege"
                             val={lockUnlockObj?.addMatchPrivilege}
@@ -676,7 +675,7 @@ const EditAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="BetFair Match Privilege"
                             name="betFairMatchPrivilege"
                             showLockUnlock={false}
@@ -686,7 +685,7 @@ const EditAccount = () => {
                           />
                         </Grid>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Bookmaker Match Privilege"
                             name="bookmakerMatchPrivilege"
                             val={lockUnlockObj?.bookmakerMatchPrivilege}
@@ -699,7 +698,7 @@ const EditAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <BoxButtonWithSwitch
+                          <ButtonWithSwitch
                             title="Session Match Privilege"
                             name="sessionMatchPrivilege"
                             showLockUnlock={false}
@@ -823,8 +822,8 @@ const EditAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                  // value={formik.values.downlinePartnership}
-                  // onChange={formik.handleChange}
+                    // value={formik.values.downlinePartnership}
+                    // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -862,35 +861,33 @@ const EditAccount = () => {
                             option.value ===
                             formik.values.matchCommissionType.value
                         )}
-                      // touched={touched.matchCommissionType}
-                      // error={errors.matchCommissionType}
+                        // touched={touched.matchCommissionType}
+                        // error={errors.matchCommissionType}
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
                       ) && (
-                          <>
-                            <SelectField
-                              containerStyle={containerStyles}
-                              titleStyle={titleStyles}
-                              id={"matchCommission"}
-                              name={"matchCommission"}
-                              label={"Match Commission (%)*"}
-                              options={matchComissionArray}
-                              value={
-                                formik.values.matchCommission
-                              }
-                              onChange={(matchComissionArray: any) => {
-                                formik.setFieldValue(
-                                  "matchCommission",
-                                  matchComissionArray
-                                );
-                              }}
-                              onBlur={formik.handleBlur}
+                        <>
+                          <SelectField
+                            containerStyle={containerStyles}
+                            titleStyle={titleStyles}
+                            id={"matchCommission"}
+                            name={"matchCommission"}
+                            label={"Match Commission (%)*"}
+                            options={matchComissionArray}
+                            value={formik.values.matchCommission}
+                            onChange={(matchComissionArray: any) => {
+                              formik.setFieldValue(
+                                "matchCommission",
+                                matchComissionArray
+                              );
+                            }}
+                            onBlur={formik.handleBlur}
                             // touched={touched.matchCommission}
                             // error={errors.matchCommission}
-                            />
-                          </>
-                        )}
+                          />
+                        </>
+                      )}
 
                       <SelectField
                         containerStyle={containerStyles}
@@ -907,8 +904,8 @@ const EditAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                      // touched={touched.sessionCommission}
-                      // error={errors.sessionCommission}
+                        // touched={touched.sessionCommission}
+                        // error={errors.sessionCommission}
                       />
                     </Box>
                   </>
@@ -1003,7 +1000,7 @@ const EditAccount = () => {
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
-          functionDispatch={() => { }}
+          functionDispatch={() => {}}
           navigateTo={"/wallet/list_of_clients"}
         />
       )}

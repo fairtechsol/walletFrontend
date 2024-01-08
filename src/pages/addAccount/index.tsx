@@ -55,7 +55,7 @@ const AddAccount = () => {
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const { profileDetail, success } = useSelector(
+  const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
   const formDataSchema = {
@@ -104,7 +104,7 @@ const AddAccount = () => {
   };
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [AccountTypes, setAccountTypes] = useState<any>([]);
-  const [down, setDown] = useState<number>(0);
+  const [down, setDown] = useState<number>(100);
 
   const { loading, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
@@ -118,6 +118,7 @@ const AddAccount = () => {
     fontSize: { xs: "10px", lg: "12px" },
     fontWeight: "600",
     marginLeft: "0px",
+    // lineBreak: "2",
   };
   const inputStyle = {
     fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
@@ -278,7 +279,6 @@ const AddAccount = () => {
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        // console.log(reader.result);
         formik.setFieldValue("base64Image", reader.result);
       };
       reader.readAsDataURL(file);
@@ -315,21 +315,16 @@ const AddAccount = () => {
   };
 
   useEffect(() => {
-    if (success) {
-      if (profileDetail && profileDetail.roleName) {
-        const res = handleUpline();
-        formik.setValues({
-          ...formik.values,
-          uplinePartnership: res,
-          downlinePartnership: 100 - res,
-        });
-        setDown(100 - res);
-      }
-    }
-  }, [profileDetail, profileDetail?.roleName, success]);
-
-  useEffect(() => {
     setTypeForAccountType();
+    if (profileDetail && profileDetail.roleName) {
+      const res = handleUpline();
+      formik.setValues({
+        ...formik.values,
+        uplinePartnership: res,
+        downlinePartnership: 100 - res,
+      });
+      setDown(100 - res);
+    }
   }, [profileDetail]);
 
   useEffect(() => {
@@ -412,7 +407,12 @@ const AddAccount = () => {
                     {errors.userName as string}
                   </p>
                 )} */}
-                <Box sx={{ pb: errors.password && touched.password ? 2 : 0 }}>
+                <Box
+                  sx={{
+                    pb: errors.password && touched.password ? 2 : 0,
+                    position: "relative",
+                  }}
+                >
                   <Input
                     containerStyle={containerStyles}
                     img={EyeIcon}
@@ -438,6 +438,10 @@ const AddAccount = () => {
                   <CustomErrorMessage
                     touched={touched.password}
                     errors={errors.password}
+                    style={{
+                      lineHeight: 1,
+                      marginTop: 1,
+                    }}
                   />
                 </Box>
 
