@@ -268,6 +268,11 @@ const AddAccount = () => {
   const handleImageChange = (event: any) => {
     const file = event.currentTarget.files[0];
 
+    if (!file.type.includes("jpeg") && !file.type.includes("png")) {
+      alert("File should be either JPEG or PNG");
+      return;
+    }
+
     if (file) {
       if (file.size > 1024 * 100 * 5) {
         alert("File should be smaller than 500/400");
