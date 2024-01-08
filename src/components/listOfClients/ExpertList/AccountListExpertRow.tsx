@@ -181,6 +181,18 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <Typography variant="h5">{element?.phoneNumber}</Typography>
         </Box>
+        <Box
+          sx={{
+            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            display: "flex",
+            paddingX: "10px",
+            alignItems: "center",
+            height: "45px",
+            borderRight: "2px solid white",
+          }}
+        >
+          <Typography variant="h5">{element?.roleName}</Typography>
+        </Box>
       </Box>
     </>
   );
