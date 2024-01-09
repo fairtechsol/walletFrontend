@@ -1,4 +1,4 @@
-import { Button, Box, useTheme } from "@mui/material";
+import { Button, Box, useTheme, CircularProgress } from "@mui/material";
 import { mail, eye, eyeLock } from "../../../assets";
 import { useEffect } from "react";
 import Input from "../../../components/login/Input";
@@ -117,7 +117,18 @@ const Login = () => {
             background: `${theme.palette.secondary}`,
           }}
         >
-          {loading ? "Loading..." : "Login"}
+          {loading ? (
+            <CircularProgress
+              sx={{
+                color: "#FFF",
+              }}
+              size={20}
+              thickness={4}
+              value={60}
+            />
+          ) : (
+            "Login"
+          )}
         </Button>
       </Box>
     </form>
