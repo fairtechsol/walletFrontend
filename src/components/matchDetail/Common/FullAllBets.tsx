@@ -1,110 +1,113 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ARROWUP } from "../../../assets";
+import moment from "moment";
+import { CHECK } from "../../../assets";
+
 const FullAllBets = (props: any) => {
-  const { tag, mode, IObets, setSelectedBetData } = props;
+  const { tag, mode, IObets, selectedBetData, setSelectedBetData, customClass } = props;
   // const [selectedData, setSelectedData] = useState([]);
-
+  const [newData, setNewBets] = useState([]);
   const [visible, setVisible] = useState(true);
+  const [selectedData, setSelectedData] = useState<any>([]);
+  
+    useEffect(() => {
+      if (IObets) {
+        const uniqueData:any = {};
+        IObets?.forEach((item: any) => {
+          uniqueData[item.id] = item;
+        });
 
-  const [newData] = useState([]);
-  //   useEffect(() => {
-  //     if (IObets) {
-  //       const uniqueData = {};
-  //       IObets?.forEach((item: any) => {
-  //         uniqueData[item.id] = item;
-  //       });
+        const result = Object.values<Record<string, any>>(uniqueData); 
+        const body:any = result?.map((v: any) => {
+          const values = {
+            values: [
+              {
+                name: v?.user?.userName || v?.userName,
+                color: ["no", "yes"].includes(v?.bet_type) ? "#FFF" : "black",
+                background: ["no", "yes"].includes(v?.bet_type)
+                  ? "#319E5B"
+                  : "#F1C550",
+                deleted_reason: v?.deleted_reason,
+                id: v?.id,
+              },
+              {
+                name:
+                  v?.marketType == "MANUAL BOOKMAKER"
+                    ? "Quick Bookmaker"
+                    : v?.marketType,
+                color: ["no", "yes"].includes(v?.bet_type) ? "#FFF" : "black",
+                background: ["no", "yes"].includes(v?.bet_type)
+                  ? "#319E5B"
+                  : "#F1C550",
+                deleted_reason: v?.deleted_reason,
+              },
+              {
+                name: v?.team_bet,
+                color: "black",
+                background: ["yes", "back"].includes(v?.bet_type)
+                  ? "#B3E0FF"
+                  : "rgb(255, 146, 146)",
+                deleted_reason: v?.deleted_reason,
+              },
+              {
+                name: v?.odds,
+                color: "black",
+                rate: v.rate
+                  ? v?.bet_type === "no"
+                    ? v?.rate?.split("-")[0]
+                    : v?.rate?.split("-")[1]
+                  : null,
+                background: ["yes", "back"].includes(v?.bet_type)
+                  ? "#B3E0FF"
+                  : "rgb(255, 146, 146)",
+                small: true,
+                deleted_reason: v?.deleted_reason,
+              },
+              {
+                name: v?.bet_type,
+                color: "black",
+                background: ["yes", "back"].includes(v?.bet_type)
+                  ? "#B3E0FF"
+                  : "rgb(255, 146, 146)",
+                small: true,
+                deleted_reason: v?.deleted_reason,
+              },
+              {
+                name: v?.amount || v?.stake,
+                color: "black",
+                background: ["yes", "back"].includes(v?.bet_type)
+                  ? "#B3E0FF"
+                  : "rgb(255, 146, 146)",
+                deleted_reason: v?.deleted_reason,
+              },
+              {
+                name: v?.myStack,
+                color: "white",
+                background: "#0B4F26",
+                deleted_reason: v?.deleted_reason,
+              },
+              {
+                name: moment(v?.createAt).format("LT"),
+                color: "black",
+                background: ["yes", "back"].includes(v?.bet_type)
+                  ? "#B3E0FF"
+                  : "rgb(255, 146, 146)",
+                time: true,
+                date: moment(v?.createAt).format("L"),
+                deleted_reason: v?.deleted_reason,
+              },
+            ],
+          };
+          return values;
+        });
 
-  //       const result = Object.values(uniqueData);
-  //       const body = result?.map((v: any) => {
-  //         const values = {
-  //           values: [
-  //             {
-  //               name: v?.user?.userName || v?.userName,
-  //               color: ["no", "yes"].includes(v?.bet_type) ? "#FFF" : "black",
-  //               background: ["no", "yes"].includes(v?.bet_type)
-  //                 ? "#319E5B"
-  //                 : "#F1C550",
-  //               deleted_reason: v?.deleted_reason,
-  //               id: v?.id,
-  //             },
-  //             {
-  //               name:
-  //                 v?.marketType == "MANUAL BOOKMAKER"
-  //                   ? "Quick Bookmaker"
-  //                   : v?.marketType,
-  //               color: ["no", "yes"].includes(v?.bet_type) ? "#FFF" : "black",
-  //               background: ["no", "yes"].includes(v?.bet_type)
-  //                 ? "#319E5B"
-  //                 : "#F1C550",
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //             {
-  //               name: v?.team_bet,
-  //               color: "black",
-  //               background: ["yes", "back"].includes(v?.bet_type)
-  //                 ? "#B3E0FF"
-  //                 : "rgb(255, 146, 146)",
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //             {
-  //               name: v?.odds,
-  //               color: "black",
-  //               rate: v.rate
-  //                 ? v?.bet_type === "no"
-  //                   ? v?.rate?.split("-")[0]
-  //                   : v?.rate?.split("-")[1]
-  //                 : null,
-  //               background: ["yes", "back"].includes(v?.bet_type)
-  //                 ? "#B3E0FF"
-  //                 : "rgb(255, 146, 146)",
-  //               small: true,
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //             {
-  //               name: v?.bet_type,
-  //               color: "black",
-  //               background: ["yes", "back"].includes(v?.bet_type)
-  //                 ? "#B3E0FF"
-  //                 : "rgb(255, 146, 146)",
-  //               small: true,
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //             {
-  //               name: v?.amount || v?.stake,
-  //               color: "black",
-  //               background: ["yes", "back"].includes(v?.bet_type)
-  //                 ? "#B3E0FF"
-  //                 : "rgb(255, 146, 146)",
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //             {
-  //               name: v?.myStack,
-  //               color: "white",
-  //               background: "#0B4F26",
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //             {
-  //               name: moment(v?.createAt).format("LT"),
-  //               color: "black",
-  //               background: ["yes", "back"].includes(v?.bet_type)
-  //                 ? "#B3E0FF"
-  //                 : "rgb(255, 146, 146)",
-  //               time: true,
-  //               date: moment(v?.createAt).format("L"),
-  //               deleted_reason: v?.deleted_reason,
-  //             },
-  //           ],
-  //         };
-  //         return values;
-  //       });
-
-  //       setNewBets(body);
-  //     }
-  //   }, [IObets]);
+        setNewBets(body);
+      }
+    }, [IObets]);
 
   useEffect(() => {
-    // setSelectedData([]);
+    setSelectedData([]);
     if (setSelectedBetData !== undefined) {
       setSelectedBetData([]);
     }
@@ -225,35 +228,35 @@ const FullAllBets = (props: any) => {
             className="myScroll"
             style={{ maxHeight: "80vh", overflowY: "auto" }}
           >
-            {newData?.map((k) => {
+            {newData?.map((i:any, k:number) => {
               const num = newData.length - k;
               const formattedNum = num < 10 ? "0" + num : num.toString();
               return (
                 <div
                   key={k}
                   style={{ display: "flex", position: "relative" }}
-                  //   onClick={(e) => {
-                  //     e.stopPropagation();
-                  //     let x = [...selectedData];
-                  //     if (x.length > 0 && x.includes(i?.values[0]?.id)) {
-                  //       const updatedSelectedBetData = selectedBetData.filter(
-                  //         (id) => id !== i?.values[0].id
-                  //       );
-                  //       setSelectedBetData(updatedSelectedBetData);
-                  //       const updatedX = x.filter((v) => v !== i?.values[0]?.id);
-                  //       x = updatedX;
-                  //       setSelectedData(updatedX);
-                  //     } else {
-                  //       if (!i?.values[0].deleted_reason) {
-                  //         setSelectedBetData([
-                  //           ...selectedBetData,
-                  //           i?.values[0].id,
-                  //         ]);
-                  //         x.push(i?.values[0]?.id);
-                  //         setSelectedData([...x]);
-                  //       }
-                  //     }
-                  //   }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      let x:any = [...selectedData];
+                      if (x.length > 0 && x.includes(i?.values[0]?.id)) {
+                        const updatedSelectedBetData = selectedBetData.filter(
+                          (id:any) => id !== i?.values[0].id
+                        );
+                        setSelectedBetData(updatedSelectedBetData);
+                        const updatedX = x.filter((v:any) => v !== i?.values[0]?.id);
+                        x = updatedX;
+                        setSelectedData(updatedX);
+                      } else {
+                        if (!i?.values[0].deleted_reason) {
+                          setSelectedBetData([
+                            ...selectedBetData,
+                            i?.values[0].id,
+                          ]);
+                          x.push(i?.values[0]?.id);
+                          setSelectedData([...x]);
+                        }
+                      }
+                    }}
                 >
                   <Box
                     sx={{
@@ -277,7 +280,7 @@ const FullAllBets = (props: any) => {
                         {formattedNum}
                       </Typography>
                     )}
-                    {/* {mode && !selectedData.includes(i?.values[0]?.id) && (
+                    {mode && !selectedData.includes(i?.values[0]?.id) && (
                       <Box
                         sx={{
                           width: "15px",
@@ -286,23 +289,23 @@ const FullAllBets = (props: any) => {
                           borderRadius: "10px",
                         }}
                       ></Box>
-                    )} */}
-                    {/* {mode && selectedData.includes(i?.values[0]?.id) && (
+                    )}
+                    {mode && selectedData.includes(i?.values[0]?.id) && (
                       <Box sx={{}}>
                         <img
                           src={CHECK}
                           style={{ width: "20px", height: "20px" }}
                         />
                       </Box>
-                    )} */}
+                    )}
                   </Box>
-                  {/* <Row index={k} values={i.values} /> */}
-                  {/* i?.values[0].id */}
-                  {/* {i?.values[0]?.deleted_reason && (
+                  <Row index={k} values={i.values} />
+                  {/* {i?.values[0].id  */}
+                  {i?.values[0]?.deleted_reason && (
                     <Box
                       sx={{
                         background: "rgba(0,0,0,0.5)",
-                        width: "100%",
+                        width: "100%",  
                         // height: "350px",
                         position: "absolute",
                         display: "flex",
@@ -334,7 +337,7 @@ const FullAllBets = (props: any) => {
                         </Box>
                       </Box>
                     </Box>
-                  )} */}
+                  )} 
                 </div>
               );
             })}
@@ -545,4 +548,109 @@ const HeaderRow = ({ tag, mode }: any) => {
     </Box>
   );
 };
+
+const Row = ({ values, index }:any) => {
+  return (
+    <Box key={index} sx={{ width: "100%", display: "flex" }}>
+      {values.map((item:any, k:any) => {
+        if (!item?.small) {
+          return <LargeBox k={k} key={k} item={item} />;
+        } else {
+          return <SmallBox k={k} key={k} item={item} />;
+        }
+      })}
+    </Box>
+  );
+};
+
+
+const LargeBox = ({ item, k }:any) => {
+  const theme = useTheme();
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  return (
+    <Box
+      key={k}
+      sx={{
+        width: k == 1 ? "20%" : "15%",
+        border: "1px solid white",
+        background: item?.background,
+        height: "35px",
+        justifyContent: "center",
+        alignItems: k == 1 || k == 0 ? "center" : "center",
+        paddingLeft:
+          k == 1 || k == 0 ? { mobile: "0", tablet: "5px", laptop: "5px" } : 0,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Typography
+        sx={{
+          fontSize: matchesMobile ? "8px" : ".6vw",
+          fontWeight: "600",
+          color: item?.color,
+          textTransform: "capitalize",
+          wordWrap: "break-word",
+          textAlign: "center",
+          lineHeight: 1,
+          whiteSpace: { mobile: "nowrap", laptop: "inherit" },
+          textOverflow: "ellipsis",
+          maxWidth: { mobile: "43px", laptop: "initial" },
+        }}
+      >
+        {item?.name}
+      </Typography>
+      {item?.time && (
+        <Typography
+          sx={{
+            fontSize: matchesMobile ? "8px" : ".6vw",
+            fontWeight: "600",
+            color: item?.color,
+          }}
+        >
+          {item?.date}
+        </Typography>
+      )}
+    </Box>
+  );
+};
+
+const SmallBox = ({ item, k }:any) => {
+  const theme = useTheme();
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  // alert(JSON.stringify(item))
+  return (
+    <Box
+      key={k}
+      sx={{
+        width: "10%",
+        border: "1px solid white",
+        background: item?.background,
+        height: "35px",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        textTransform: "capitalize",
+      }}
+    >
+      <Typography
+        sx={{
+          fontSize: matchesMobile ? "10px" : ".7vw",
+          fontWeight: "600",
+          lineHeight: 1,
+          color: item?.color,
+        }}
+      >
+        {item?.name}
+      </Typography>
+      <Typography
+        sx={{ fontSize: "9px", fontWeight: "600", color: item?.color }}
+      >
+        {item?.rate && item?.rate}
+      </Typography>
+    </Box>
+  );
+};
+
+
 export default FullAllBets;

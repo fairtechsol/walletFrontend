@@ -119,6 +119,24 @@ export const getCompetitionMatches = createAsyncThunk<any, any>(
   }
 );
 
+export const AllBetDelete = createAsyncThunk<any, any>(
+  "bet/allbet",
+  async (requestData) => {
+    try {
+      const resp = await service.post(
+        `${ApiConstants.MATCH.BETDELETE}${requestData?.id}`,
+        requestData.payload
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
+
 export const updateMatchListRates = createAsyncThunk<any, any>(
   "/matchList/rates",
   async (matchList) => {

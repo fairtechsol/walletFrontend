@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  AllBetDelete,
   getCompetitionDates,
   getCompetitionList,
   getCompetitionMatches,
@@ -8,6 +9,7 @@ import {
 interface InitialState {
   competitionList: Array<object>;
   competitionDates: Array<object>;
+  betDeleteAll: Array<object>;
   competitionMatches: Array<object>;
   loading: boolean;
   success: boolean;
@@ -17,6 +19,7 @@ interface InitialState {
 const initialState: InitialState = {
   competitionList: [],
   competitionDates: [],
+  betDeleteAll: [],
   competitionMatches: [],
   loading: false,
   success: false,
@@ -54,6 +57,20 @@ const sidebarListSlice = createSlice({
         state.loading = false;
       })
       .addCase(getCompetitionDates.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(AllBetDelete.pending, (state) => {
+        state.loading = false;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(AllBetDelete.fulfilled, (state, action) => {
+        state.success = true;
+        state.betDeleteAll = action.payload;
+        state.loading = false;
+      })
+      .addCase(AllBetDelete.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
