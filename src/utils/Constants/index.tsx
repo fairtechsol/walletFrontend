@@ -101,6 +101,6 @@ export const Constants = {
   customPageLimit: 15,
   customTimeOut: 1000 * 60 * 60, // 5 mint in mili seconds user ideal 5 mint after that logout
   customTimer: 1000 * 60 * 5, // 30 sec in mili seconds remainint timer start and show message  Your session will expire in 30 second
-  sessionExpireTime: 60 * 5, // 30 sec, bv h
+  sessionExpireTime: 60 * 5, // 30 sec, bv 
 };
 
