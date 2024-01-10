@@ -15,3 +15,7 @@ code {
 *{
   box-sizing: border-box;
 }
+
+.commissionReport-AccordianSummery .Mui-expanded{
+  margin: 0 !important;
+}
