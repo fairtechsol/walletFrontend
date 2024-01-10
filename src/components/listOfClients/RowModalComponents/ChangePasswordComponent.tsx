@@ -185,7 +185,6 @@ const ChangePasswordComponent = (props: any) => {
             >
               <BoxButton
                 color={"#E32A2A"}
-                loading={loading}
                 containerStyle={{
                   width: "100%",
                   background: "#E32A2A",
@@ -305,6 +304,7 @@ const ChangePasswordComponent = (props: any) => {
             >
               <BoxButton
                 color={"#0B4F26"}
+                loading={loading}
                 containerStyle={{
                   width: "100%",
                   height: "45px",

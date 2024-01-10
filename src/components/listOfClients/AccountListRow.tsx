@@ -7,6 +7,8 @@ import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
 import { AccountListRowInterface } from "../../interface/listOfClients";
 import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
+import {Modal} from "../Common/Modal";
+import CommissionReportTable from "../commisionReport/CommissionReportTable";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -26,7 +28,14 @@ const AccountListRow = (props: AccountListRowInterface) => {
 
   const [userModal] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
+  const [showModalMessage, setShowModalMessage] = useState("No data found");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  const [showCommissionReport, setShowCommissionReport] = useState({
+    value: false,
+    id: "",
+  });
 
   return (
     <>
@@ -506,10 +515,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   }}
                   onClick={() => {
                     if (element?.totalComission !== null) {
-                      //   setShowCommissionReport({
-                      //     value: true,
-                      //     id: element?.userId,
-                      //   });
+                      setShowCommissionReport({
+                        value: true,
+                        id: element?.userId,
+                      });
+                      setShowSuccessModal(true)
                     } else {
                       return false;
                     }
@@ -563,6 +573,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
               setShowUserModal={setShowUserModal}
               backgroundColor={containerStyle?.background}
               userModal={userModal}
+              setShowSuccessModal={setShowSuccessModal}
+              setShowModalMessage={setShowModalMessage}
             />
           </Box>
         </Box>
@@ -570,7 +582,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
 
       <ModalMUI
         open={false}
-        onClose={() => {}}
+        onClose={() => { }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -586,25 +598,21 @@ const AccountListRow = (props: AccountListRowInterface) => {
         ></Box>
       </ModalMUI>
 
-      <ModalMUI
-        open={false}
-        // onClose={() => {
-        //   setShowCommissionReport({ value: false, id: "" });
-        // }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        ></Box>
-      </ModalMUI>
+          
+      {showSuccessModal && (
+        <Modal
+          message={showModalMessage}
+          setShowSuccessModal={setShowSuccessModal}
+          showSuccessModal={showSuccessModal}
+          buttonMessage={"OK"}
+          navigateTo={"list_of_clients"}
+          title="Commision report"
+        >
+          <CommissionReportTable />
+        </Modal>
+      )}
+
+
     </>
   );
 };
