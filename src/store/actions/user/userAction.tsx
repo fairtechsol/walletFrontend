@@ -54,7 +54,7 @@ interface RequestData {
 
 export const changePassword = createAsyncThunk<any, any>(
   "user/changePassword",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${requestData.url}`,
@@ -65,13 +65,13 @@ export const changePassword = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 export const changePasswordRow = createAsyncThunk<any, any>(
   "user/changePasswordRow",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${requestData.url}`,
@@ -82,14 +82,14 @@ export const changePasswordRow = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const getMyAccountDetails = createAsyncThunk<any>(
   "user/getMyAccountDetails",
-  async () => {
+  async (_, thunkApi) => {
     try {
       const resp = await service.get(`${ApiConstants.USER.BALANCE}`);
       if (resp) {
@@ -108,7 +108,7 @@ export const getMyAccountDetails = createAsyncThunk<any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
@@ -134,7 +134,7 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
 
 export const addUser = createAsyncThunk<any, any>(
   "user/add",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${ApiConstants.USER.ADDFGADMIN}`,
@@ -145,14 +145,14 @@ export const addUser = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const addExpert = createAsyncThunk<any, any>(
   "user/addExpert",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${ApiConstants.USER.ADDEXPERT}`,
@@ -163,14 +163,14 @@ export const addExpert = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const addUrlAdmin = createAsyncThunk<any, any>(
   "user/addUrlAdmin",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${ApiConstants.USER.ADDURLADMIN}`,
@@ -181,14 +181,14 @@ export const addUrlAdmin = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const updateUser = createAsyncThunk<any, any>(
   "user/updateUser",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${ApiConstants.USER.UPDATE}`,
@@ -199,13 +199,13 @@ export const updateUser = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 export const updateExpert = createAsyncThunk<any, any>(
   "user/updateExpert",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${ApiConstants.USER.UPDATEEXPERT}`,
@@ -216,25 +216,28 @@ export const updateExpert = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
-export const getUsersProfile = createAsyncThunk("user/profile", async () => {
-  try {
-    const resp = await service.get(`${ApiConstants.USER.PROFILE}`);
-    if (resp) {
-      return resp?.data[0][0];
+export const getUsersProfile = createAsyncThunk(
+  "user/profile",
+  async (_, thunkApi) => {
+    try {
+      const resp = await service.get(`${ApiConstants.USER.PROFILE}`);
+      if (resp) {
+        return resp?.data[0][0];
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
-  } catch (error: any) {
-    const err = error as AxiosError;
-    throw err;
   }
-});
+);
 export const getUsersDetail = createAsyncThunk<any, string>(
   "user/detail",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
         `${ApiConstants.USER.PROFILE}?userId=${requestData}`
@@ -244,14 +247,14 @@ export const getUsersDetail = createAsyncThunk<any, string>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const changeAmmountUser = createAsyncThunk<any, any>(
   "balance/update",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${requestData.url}`,
@@ -262,14 +265,14 @@ export const changeAmmountUser = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const marqueeNotification = createAsyncThunk<any>(
   "expert/notification",
-  async () => {
+  async (_, thunkApi) => {
     try {
       const resp = await service.get(`${ApiConstants.USER.MARQUEE}`);
       if (resp) {
@@ -277,7 +280,7 @@ export const marqueeNotification = createAsyncThunk<any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
@@ -299,7 +302,7 @@ export const marqueeNotification = createAsyncThunk<any>(
 
 export const setCreditRefference = createAsyncThunk<any, any>(
   "user/update/creditreferrence",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${requestData.url}`,
@@ -310,14 +313,14 @@ export const setCreditRefference = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
 
 export const setExposureLimit = createAsyncThunk<any, any>(
   "user/update/exposurelimit",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
         `${requestData.url}`,
@@ -328,7 +331,7 @@ export const setExposureLimit = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );

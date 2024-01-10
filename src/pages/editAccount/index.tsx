@@ -126,28 +126,14 @@ const EditAccount = () => {
     //   validationSchema: addUserValidation,
     onSubmit: (values: any) => {
       const commonPayload = {
-        userName: values.userName,
-        fullName: values.fullName,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        phoneNumber: values.phoneNumber.toString(),
-        city: values.city,
+        id: state?.id,
+        transactionPassword: values.adminTransPassword,
       };
 
       let payload;
-      payload = {
-        id: state?.id,
-        sessionCommission: values.sessionCommission.value,
-        matchComissionType: values.matchCommissionType.value,
-        matchCommission: values.matchCommission.value,
-        transactionPassword: values.adminTransPassword,
-      };
-      dispatch(updateUser(payload));
       if (values.roleName.value === "expert") {
         payload = {
           ...commonPayload,
-          // roleName: values.roleName.value,
-          transactionPassword: values.adminTransPassword,
           allPrivilege: lockUnlockObj.allPrivilege,
           addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
           betFairMatchPrivilege: lockUnlockObj.betFairMatchPrivilege,
@@ -155,6 +141,14 @@ const EditAccount = () => {
           sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
         };
         dispatch(updateExpert(payload));
+      } else {
+        payload = {
+          ...commonPayload,
+          sessionCommission: values.sessionCommission.value,
+          matchComissionType: values.matchCommissionType.value,
+          matchCommission: values.matchCommission.value,
+        };
+        dispatch(updateUser(payload));
       }
     },
   });
@@ -238,8 +232,35 @@ const EditAccount = () => {
 
   useEffect(() => {
     try {
-      if (state?.id) {
+      if (state?.id && !state?.expertMatchDetail) {
         dispatch(getUsersDetail(state?.id));
+      } else if (state?.id && state?.expertMatchDetail) {
+        formik.setValues({
+          ...formik.values,
+          userName: state?.expertMatchDetail?.userName,
+          fullName: state?.expertMatchDetail?.fullName,
+          city: state?.expertMatchDetail?.city,
+          phoneNumber: state?.expertMatchDetail?.phoneNumber,
+          roleName: {
+            label: "Expert",
+            value: "expert",
+          },
+          remarks: "",
+          adminTransPassword: "",
+        });
+        setLockUnlockObj((prev: any) => {
+          return {
+            ...prev,
+            allPrivilege: state?.expertMatchDetail?.allPrivilege,
+            addMatchPrivilege: state?.expertMatchDetail?.addMatchPrivilege,
+            betFairMatchPrivilege:
+              state?.expertMatchDetail?.betFairMatchPrivilege,
+            bookmakerMatchPrivilege:
+              state?.expertMatchDetail?.bookmakerMatchPrivilege,
+            sessionMatchPrivilege:
+              state?.expertMatchDetail?.sessionMatchPrivilege,
+          };
+        });
       }
     } catch (e) {
       console.log(e);

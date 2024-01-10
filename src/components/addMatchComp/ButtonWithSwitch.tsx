@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MaterialUISwitch from "../Common/MaterialUISwitch";
 
 const ButtonWithSwitch = (props: any) => {
@@ -29,6 +29,10 @@ const ButtonWithSwitch = (props: any) => {
       },
     ],
   };
+
+  useEffect(() => {
+    setChecked(val);
+  }, [val]);
   return (
     <Box sx={classes.mainBox}>
       <MaterialUISwitch

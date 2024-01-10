@@ -64,7 +64,9 @@ const LockUnlockComponent = (props: any) => {
 
   const { handleSubmit } = formik;
 
-  const { success } = useSelector((state: RootState) => state.user.userList);
+  const { success, loading } = useSelector(
+    (state: RootState) => state.user.userList
+  );
 
   useEffect(() => {
     if (success) {
@@ -248,6 +250,7 @@ const LockUnlockComponent = (props: any) => {
           >
             <BoxButton
               color={"#0B4F26"}
+              loading={loading}
               containerStyle={{
                 maxWidth: "100%!important",
                 height: "44px",

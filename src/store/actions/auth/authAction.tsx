@@ -27,16 +27,19 @@ export const login = createAsyncThunk<any, LoginData>(
   }
 );
 
-export const logout = createAsyncThunk<any>("auth/logout", async () => {
-  try {
-    const response = await service.post(`${ApiConstants.AUTH.LOGOUT}`);
-    sessionStorage.clear();
-    window.location.replace("/wallet/login");
-    return response;
-  } catch (error) {
-    const err = error as AxiosError;
-    return err.response?.status;
+export const logout = createAsyncThunk<any>(
+  "auth/logout",
+  async (_, thunkApi) => {
+    try {
+      const response = await service.post(`${ApiConstants.AUTH.LOGOUT}`);
+      sessionStorage.clear();
+      window.location.replace("/wallet/login");
+      return response;
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
   }
-});
+);
 
 export const authReset = createAction("auth/reset");
