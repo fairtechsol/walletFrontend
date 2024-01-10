@@ -177,6 +177,27 @@ const ListHeaderExpertRow = () => {
           Phone Number
         </Typography>
       </Box>
+      <Box
+        sx={{
+          width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+          display: "flex",
+          paddingX: "10px",
+          alignItems: "center",
+          height: "35px",
+          borderRight: "2px solid white",
+          lineHeight: "1.1",
+        }}
+      >
+        <Typography
+          sx={{
+            color: "white",
+            fontSize: { lg: "12px", xs: "9px" },
+            lineHeight: "1.1",
+          }}
+        >
+          Rolename
+        </Typography>
+      </Box>
 
       {/* <Box
         sx={{

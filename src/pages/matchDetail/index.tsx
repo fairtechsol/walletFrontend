@@ -11,8 +11,10 @@ import { AppDispatch, RootState } from "../../store/store";
 import {
   getMatchDetail,
   matchListReset,
+  updateMatchRates,
 } from "../../store/actions/match/matchAction";
 import { useSelector } from "react-redux";
+import { socketService } from "../../socketManager";
 
 const MatchDetail = () => {
   const theme = useTheme();
@@ -23,12 +25,25 @@ const MatchDetail = () => {
     (state: RootState) => state.match.matchList
   );
 
-  const bookmakerLive: any = [];
+  const updateMatchDetailToRedux = (event: any) => {
+    if (state?.matchId === event?.id) {
+      dispatch(updateMatchRates(event));
+    } else return;
+  };
 
   useEffect(() => {
     if (state?.matchId) {
+      socketService.match.leaveAllRooms();
       dispatch(getMatchDetail(state?.matchId));
+      socketService.match.joinMatchRoom(state?.matchId, "");
+      socketService.match.getMatchRates(
+        state?.matchId,
+        updateMatchDetailToRedux
+      );
     }
+    return () => {
+      socketService.match.leaveMatchRoom(state?.matchId);
+    };
   }, [state?.matchId]);
 
   useEffect(() => {
@@ -36,6 +51,8 @@ const MatchDetail = () => {
       dispatch(matchListReset());
     }
   }, [success]);
+
+  console.log(matchDetail);
 
   return (
     <Box
@@ -95,7 +112,9 @@ const MatchDetail = () => {
             minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
             maxBet={Math.floor(matchDetail?.bookmaker?.maxBet)}
             data={
-              bookmakerLive?.runners?.length > 0 ? bookmakerLive?.runners : []
+              matchDetail?.bookmaker?.runners?.length > 0
+                ? matchDetail?.bookmaker?.runners
+                : []
             }
           />
         )}
@@ -263,7 +282,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
             />
           )}
-          {matchDetail?.apiSessionActive && (
+          {matchDetail?.manualSessionActive && (
             <SessionMarket
               title={"Quick Session Market"}
               currentMatch={matchDetail}

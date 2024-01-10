@@ -283,22 +283,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
           sx={{
             width: { lg: "5vw", md: "5vw", xs: "14vw" },
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "45px",
-            borderRight: "2px solid white",
-            paddingX: "10px",
-          }}
-        >
-          <StyledImage
-            src={!element?.betBlock ? UnLockIcon : LockIcon}
-            sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
-          />
-        </Box>
-        <Box
-          sx={{
-            width: { lg: "5vw", md: "5vw", xs: "14vw" },
-            display: "flex",
             paddingX: "10px",
             justifyContent: "center",
             alignItems: "center",
@@ -311,6 +295,23 @@ const AccountListRow = (props: AccountListRowInterface) => {
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
+        <Box
+          sx={{
+            width: { lg: "5vw", md: "5vw", xs: "14vw" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "45px",
+            borderRight: "2px solid white",
+            paddingX: "10px",
+          }}
+        >
+          <StyledImage
+            src={!element?.betBlock ? UnLockIcon : LockIcon}
+            sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
+          />
+        </Box>
+       
         <Box
           sx={{
             width: { lg: "8vw", md: "8vw", xs: "26.5vw" },

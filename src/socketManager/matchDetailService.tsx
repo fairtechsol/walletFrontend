@@ -1,10 +1,25 @@
-import { socket } from ".";
-
+import { socket, thirdParty } from ".";
 
 export const matchSocketService = {
-    liveRate: () => {
-      // Connect to the socket server
-     socket.emit
-    },
-    // Add other socket-related methods as needed
-  };
+  joinMatchRoom: (matchId: any, roleName: any) => {
+    socket.emit("matchRoom", {
+      id: matchId,
+    });
+
+    thirdParty.emit("initCricketData", {
+      matchId: matchId,
+      roleName: roleName,
+    });
+  },
+  leaveAllRooms: () => {
+    socket.emit("leaveAll");
+  },
+  leaveMatchRoom: (matchId: any) => {
+    thirdParty.emit("disconnectCricketData", {
+      matchId: matchId,
+    });
+  },
+  getMatchRates: (matchId: string, callback: any) => {
+    thirdParty.on(`liveData${matchId}`, callback);
+  },
+};

@@ -227,18 +227,16 @@ const MatchOdds = (props: any) => {
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
                   name={currentMatch?.teamA}
-                  rates={
-                    currentMatch?.teamArate ? currentMatch?.teamArate : 0
-                  }
+                  rates={currentMatch?.teamArate ? currentMatch?.teamArate : 0}
                   color={currentMatch?.teamA_rate <= 0 ? "#FF4D4D" : "#319E5B"}
                   data={data?.length > 0 ? data[0] : []}
                   lock={false}
                   matchOddsData={{
-                    back: data?.backTeamA,
-                    lay: data?.layTeamA,
+                    back: Math.floor(data?.backTeamA),
+                    lay: Math.floor(data?.layTeamA),
                   }}
-                  ballStatus={data?.statusTeamA === "ball" ? true : false}
-                  status={data?.statusTeamA ? true : false}
+                  ballStatus={data?.statusTeamA === "ball start" ? true : false}
+                  status={data?.statusTeamA !== "active" ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
                 <Divider />
@@ -255,8 +253,8 @@ const MatchOdds = (props: any) => {
                     back: data?.backTeamB,
                     lay: data?.layTeamB,
                   }}
-                  ballStatus={data?.statusTeamA === "ball" ? true : false}
-                  status={data?.statusTeamB ? true : false}
+                  ballStatus={data?.statusTeamA === "ball start" ? true : false}
+                  status={data?.statusTeamB !== "active" ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
                 {currentMatch?.teamC ? (
@@ -281,8 +279,10 @@ const MatchOdds = (props: any) => {
                         back: data?.backTeamC,
                         lay: data?.layTeamC,
                       }}
-                      ballStatus={data?.statusTeamA === "ball" ? true : false}
-                      status={data?.statusTeamC ? true : false}
+                      ballStatus={
+                        data?.statusTeamA === "ball start" ? true : false
+                      }
+                      status={data?.statusTeamC !== "active" ? true : false}
                       isTeamC={currentMatch?.teamC}
                     />
                   </>

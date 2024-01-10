@@ -6,7 +6,14 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate } from "react-router-dom";
 
 const AccountListExpertRow = (props: AccountListRowInterface) => {
-  const { containerStyle, fContainerStyle, fTextStyle, element, showOptions, show } = props;
+  const {
+    containerStyle,
+    fContainerStyle,
+    fTextStyle,
+    element,
+    showOptions,
+    show,
+  } = props;
 
   const navigate = useNavigate();
   return (
@@ -59,6 +66,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
                 navigate(`/wallet/edit_account`, {
                   state: {
                     id: element?.id,
+                    expertMatchDetail: element,
                   },
                 });
               }}
@@ -180,6 +188,18 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">{element?.phoneNumber}</Typography>
+        </Box>
+        <Box
+          sx={{
+            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            display: "flex",
+            paddingX: "10px",
+            alignItems: "center",
+            height: "45px",
+            borderRight: "2px solid white",
+          }}
+        >
+          <Typography variant="h5">{element?.roleName}</Typography>
         </Box>
       </Box>
     </>

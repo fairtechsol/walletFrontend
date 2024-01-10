@@ -192,11 +192,11 @@ const ListHeaderRow = (props: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
+            fontSize: { lg: "11.5px", xs: "9px" },
+            lineHeight: "1",
           }}
         >
-          Bet Lock
+          User Lock
         </Typography>
       </Box>
       <Box
@@ -214,13 +214,14 @@ const ListHeaderRow = (props: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "11.5px", xs: "9px" },
-            lineHeight: "1",
+            fontSize: { lg: "12px", xs: "9px" },
+            lineHeight: "1.1",
           }}
         >
-          User Lock
+          Bet Lock
         </Typography>
       </Box>
+      
       <Box
         sx={{
           width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
