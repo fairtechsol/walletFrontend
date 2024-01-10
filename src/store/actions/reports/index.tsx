@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import service from "../../../service";
-import { ApiConstants } from "../../../utils/Constants";
+import { ApiConstants, Constants } from "../../../utils/Constants";
 import { AxiosError } from "axios";
 
 interface AccountStatement {
@@ -19,9 +19,11 @@ export const getAccountStatement = createAsyncThunk<any, AccountStatement>(
       const resp = await service.get(
         `${ApiConstants.WALLET.REPORTS.GETACCOUNTSTATEMENT}/${
           requestData?.id
-        }?page=${requestData?.page}&limit=${requestData.pageLimit}&searchBy=${
-          requestData?.searchBy || ""
-        }&keyword=${requestData?.keyword || ""}${requestData?.filter || ""}`
+        }?page=${requestData?.page ? requestData?.page : 1}&limit=${
+          requestData.pageLimit ? requestData.pageLimit : Constants.pageLimit
+        }&searchBy=${requestData?.searchBy || ""}&keyword=${
+          requestData?.keyword || ""
+        }${requestData?.filter || ""}`
       );
       if (resp) {
         return resp?.data;
