@@ -141,6 +141,19 @@ const EditAccount = () => {
           sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
         };
         dispatch(updateExpert(payload));
+      } else if (values.roleName.value === "superAdmin") {
+        payload = {
+          ...commonPayload,
+          logo: values.base64Image,
+          sidebarColor: values.sidebarColor,
+          headerColor: values.headerColor,
+          footerColor: values.footerColor,
+          transactionPassword: values.adminTransPassword,
+          fullName: values.fullName,
+          phoneNumber: values.phoneNumber.toString(),
+          city: values.city,
+        };
+        dispatch(updateUser(payload));
       } else {
         payload = {
           ...commonPayload,
@@ -545,7 +558,7 @@ const EditAccount = () => {
                         ...inputContainerStyle,
                         height: { lg: "45px", xs: "36px" },
                       }}
-                      disabled={state?.id ? true : false}
+                      // disabled={state?.id ? true : false}
                       title={"Domain"}
                       name={"domain"}
                       type={"text"}
@@ -568,7 +581,7 @@ const EditAccount = () => {
                         ...inputContainerStyle,
                         height: { lg: "45px", xs: "36px" },
                       }}
-                      disabled={state?.id ? true : false}
+                      // disabled={state?.id ? true : false}
                       title={"Logo"}
                       name="logo"
                       type={"file"}
