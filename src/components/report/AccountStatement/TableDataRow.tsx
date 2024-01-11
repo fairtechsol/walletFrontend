@@ -63,7 +63,7 @@ const TableDataRow = (props: any) => {
             fTextStyle,
           ]}
         >
-          {moment(formattedDate).format("DD-MM-YYYY HH:mm")}
+          {moment(date).format("DD-MM-YYYY HH:mm")}
         </Typography>
       </Box>
       <Box
