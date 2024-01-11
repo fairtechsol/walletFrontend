@@ -50,6 +50,8 @@ const ProfitLossReport = () => {
           user={"admin"}
         />
       </Box>
+
+      
     </>
   );
 };
