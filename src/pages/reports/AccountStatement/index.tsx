@@ -38,6 +38,7 @@ const AccountStatement = () => {
     }
   }, [profileDetail, currentPage, pageLimit]);
 
+
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -49,9 +50,9 @@ const AccountStatement = () => {
               let filter = "";
               if (fromDate && toDate) {
                 filter += `&createdAt=between${moment(fromDate)?.format(
-                  "DD/MM/YYYY"
+                  "MM/DD/YYYY"
                 )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
-                  "DD/MM/YYYY"
+                  "MM/DD/YYYY"
                 )}`;
               }
               dispatch(
@@ -118,7 +119,7 @@ const AccountStatement = () => {
                     profit={true}
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
-                    date={moment(item?.createAt)}
+                    date={moment(item?.createdAt)}
                     description={item?.description}
                     closing={item?.closingBalance}
                     trans_type={item?.transType}

@@ -118,6 +118,7 @@ const AddAccount = () => {
     fontSize: { xs: "10px", lg: "12px" },
     fontWeight: "600",
     marginLeft: "0px",
+
     // lineBreak: "2",
   };
   const inputStyle = {
@@ -355,6 +356,7 @@ const AddAccount = () => {
             fontSize: "18px",
             fontWeight: "600",
             marginLeft: "4px",
+         
           }}
         >
           Add Account
@@ -761,7 +763,7 @@ const AddAccount = () => {
                   gridColumnGap: "10px",
                 }}
               >
-                <Box sx={{ mt: -1 }}>
+                <Box sx={{ mt: 1 }}>
                   <SelectField
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
@@ -817,9 +819,9 @@ const AddAccount = () => {
                       </Grid>
                     </Box>
                     <Box m={2}>
-                      <Grid container spacing={2}>
+                      <Grid container spacing={1}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <ButtonWithSwitch
+                          <ButtonWithSwitch 
                             title="BetFair Match Privilege"
                             name="betFairMatchPrivilege"
                             showLockUnlock={false}
