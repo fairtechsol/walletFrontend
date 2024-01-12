@@ -5,7 +5,7 @@ import moment from "moment";
 import { CHECK } from "../../../assets";
 
 const FullAllBets = (props: any) => {
-  const { tag, mode, IObets, selectedBetData, setSelectedBetData, customClass } = props;
+  const { tag, mode, IObets, selectedBetData, setSelectedBetData } = props;
   // const [selectedData, setSelectedData] = useState([]);
   const [newData, setNewBets] = useState([]);
   const [visible, setVisible] = useState(true);
@@ -578,7 +578,7 @@ const LargeBox = ({ item, k }:any) => {
         justifyContent: "center",
         alignItems: k == 1 || k == 0 ? "center" : "center",
         paddingLeft:
-          k == 1 || k == 0 ? { mobile: "0", tablet: "5px", laptop: "5px" } : 0,
+          k == 1 || k == 0 ? { xs: "0", md: "5px", lg: "5px" } : 0,
         display: "flex",
         flexDirection: "column",
       }}
@@ -592,9 +592,9 @@ const LargeBox = ({ item, k }:any) => {
           wordWrap: "break-word",
           textAlign: "center",
           lineHeight: 1,
-          whiteSpace: { mobile: "nowrap", laptop: "inherit" },
+          whiteSpace: { xs: "nowrap", lg: "inherit" },
           textOverflow: "ellipsis",
-          maxWidth: { mobile: "43px", laptop: "initial" },
+          maxWidth: { xs: "43px", lg: "initial" },
         }}
       >
         {item?.name}

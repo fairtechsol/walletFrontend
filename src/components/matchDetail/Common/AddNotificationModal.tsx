@@ -8,7 +8,6 @@ import { useState } from "react";
 import { memo } from "react";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
 const AddNotificationModal = ({
-    onClick,
     visible,
     setVisible,
     title,
