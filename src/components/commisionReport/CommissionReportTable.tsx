@@ -1,78 +1,23 @@
-import { Box, Accordion, AccordionSummary, AccordionDetails, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
-
-import {Constants }from "../../utils/Constants/index";
 import moment from "moment";
-// import Loader from "../Loader/index";
 import StyledImage from "./StyledImage";
-import  ArrowDown  from "../../assets/images/arrowDown.png";
+import ArrowDown from "../../assets/images/arrowDown.png";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const CommissionReportTable = ({ id, show, setShow, title }: any) => {
-  const theme = useTheme();
-//   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
-//   const [loader, setLoader] = useState(false);
-  const matchesxs = useMediaQuery(theme.breakpoints.down("lg"));
-  const [matchList, setMatchList] = useState([]);
-  const [commisionReport, setCommisionReport] = useState([]);
-  const [pageCount, setPageCount] = useState(Constants.pageLimit);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageLimit, setPageLimit] = useState(Constants.pageLimit);
+const CommissionReportTable = ({ id }: any) => {
+  const [currentPage] = useState(1);
   const [showCommisionReport, setShowCommisionReport] = useState(false);
   const [selectedId, setSelectedId] = useState({
     match_id: "",
     user_id: "",
   });
-
-//   const getListOfMatches = async () => {
-//     let { axios } = setRole();
-//     try {
-//       const { data } = await axios.get(
-//         `/game-match/getMatchListDeclearResult`
-//         // `/fair-game-wallet/getCommisionReport/${id}?&pageNo=${currentPage}&pageLimit=${pageLimit}`
-//       );
-//       setMatchList(data?.data);
-//       setPageCount(
-//         Math.ceil(
-//           parseInt(data?.data?.totalCount ? data.data?.totalCount : 1) /
-//             pageLimit
-//         )
-//       );
-//       setTimeout(() => {
-//         setLoader(false);
-//       }, 1000);
-//     } catch (e) {
-//       setTimeout(() => {
-//         setLoader(false);
-//       }, 1000);
-//       console.log(e);
-//     }
-//   };
-
-//   const getCommisionReport = async (match_id) => {
-//     let { axios } = setRole();
-//     try {
-//       const { data } = await axios.get(
-//         // `/game-match/getMatchListDeclearResult`
-//         `/fair-game-wallet/getCommisionReport/${id}/${match_id}`
-//       );
-//       // console.log("datadata", data);
-//       // alert(JSON.stringify(data?.data.length));
-//       setCommisionReport(data?.data);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-
-//   useEffect(() => {
-//     setLoader(true);
-//     getListOfMatches();
-//   }, [currentPage]);
-
-//   function callPage(val) {
-//     setCurrentPage(parseInt(val));
-//   }
-
   const MatchList = ({
     element,
     index,
@@ -91,13 +36,11 @@ const CommissionReportTable = ({ id, show, setShow, title }: any) => {
               selectedId?.match_id == element?.match_id &&
               selectedId?.user_id == id
             ) {
-            //   setShowCommisionReport((prev) => !prev);
             } else {
               setSelectedId({
                 match_id: element?.match_id,
                 user_id: id,
               });
-              setCommisionReport([]);
               setShowCommisionReport(true);
               getCommisionReport(element?.match_id);
             }
@@ -110,7 +53,7 @@ const CommissionReportTable = ({ id, show, setShow, title }: any) => {
             padding: 0.1,
           }}
         >
-           <Box
+          <Box
             sx={{
               width: { xs: "10%", lg: "5%" },
               height: "100%",
@@ -198,10 +141,7 @@ const CommissionReportTable = ({ id, show, setShow, title }: any) => {
                 // flexDirection: { lg: "row", xs: "column" },
                 flexDirection: { lg: "column", xs: "column" },
               }}
-            >
-    
-           
-            </Box>
+            ></Box>
           </>
         )}
       </Box>
@@ -437,7 +377,7 @@ const CommissionReportTable = ({ id, show, setShow, title }: any) => {
     );
   };
 
-  const Footer = ({ currentPage, pages, callPage, setShow }: any) => {
+  const Footer = ({ currentPage, pages, callPage }: any) => {
     return (
       <Box
         sx={{
@@ -456,7 +396,14 @@ const CommissionReportTable = ({ id, show, setShow, title }: any) => {
         >
           Showing 1 to {pages}
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", padding: "10px", margin: "10px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            padding: "10px",
+            margin: "10px",
+          }}
+        >
           <Box
             sx={{
               height: "35px",
@@ -538,377 +485,393 @@ const CommissionReportTable = ({ id, show, setShow, title }: any) => {
     );
   };
 
-  const AccountListRow = ({
-    containerStyle,
-    fContainerStyle,
-    fTextStyle,
-    element,
-  }: any) => {
-    const prevElement = {
-      title:
-        element?.ComissionType === "session"
-          ? element?.bet_id?.bet_condition
-          : element?.match_id?.title,
-      commissionAmount: element.ComissionAmount,
-      commissionType: element.ComissionType,
-      betType: element?.bet_type,
-      stack:
-        element?.ComissionType === "match total"
-          ? (element?.ComissionAmount * 100) / element?.userData?.matchComission
-          : element?.amount,
-      odds: element?.odds,
-      isActive: element?.isActive,
-      teamBet: element?.team_bet,
-      createAt: element?.updateAt,
-      myCommission: element?.myCommission,
-      userName: element?.userData?.userName,
-    };
-    const [elementToUDM, setElementToUDM] = useState(prevElement);
+  // const AccountListRow = ({
+  //   containerStyle,
+  //   fContainerStyle,
+  //   fTextStyle,
+  //   element,
+  // }: any) => {
+  //   const prevElement = {
+  //     title:
+  //       element?.ComissionType === "session"
+  //         ? element?.bet_id?.bet_condition
+  //         : element?.match_id?.title,
+  //     commissionAmount: element.ComissionAmount,
+  //     commissionType: element.ComissionType,
+  //     betType: element?.bet_type,
+  //     stack:
+  //       element?.ComissionType === "match total"
+  //         ? (element?.ComissionAmount * 100) / element?.userData?.matchComission
+  //         : element?.amount,
+  //     odds: element?.odds,
+  //     isActive: element?.isActive,
+  //     teamBet: element?.team_bet,
+  //     createAt: element?.updateAt,
+  //     myCommission: element?.myCommission,
+  //     userName: element?.userData?.userName,
+  //   };
+  //   const [elementToUDM, setElementToUDM] = useState(prevElement);
 
-    // function checkIfElementUpdated(val) {
-    //   setElementToUDM(val);
-    // }
-    // useEffect(() => {
-    //   checkIfElementUpdated(prevElement);
-    // }, [element?.ComissionType]);
-    return (
-      <>
-        {!elementToUDM?.isActive && (
-          <Box
-            sx={{
-              background: "rgba(0,0,0,0.5)",
-            //   width: { xs: "218%", lg: "100%", md: "100%" },
-              height: "45px",
-              position: "absolute",
-              display: "flex",
-            }}
-          />
-        )}
+  //   // function checkIfElementUpdated(val) {
+  //   //   setElementToUDM(val);
+  //   // }
+  //   // useEffect(() => {
+  //   //   checkIfElementUpdated(prevElement);
+  //   // }, [element?.ComissionType]);
+  //   return (
+  //     <>
+  //       {!elementToUDM?.isActive && (
+  //         <Box
+  //           sx={{
+  //             background: "rgba(0,0,0,0.5)",
+  //             //   width: { xs: "218%", lg: "100%", md: "100%" },
+  //             height: "45px",
+  //             position: "absolute",
+  //             display: "flex",
+  //           }}
+  //         />
+  //       )}
 
-        <Box
-          sx={[
-            {
-              width: { xs: "218%", lg: "100%", md: "100%" },
-              display: "flex",
-              height: "45px",
-              background: "#0B4F26",
-              alignItems: "center",
-              overflow: "hidden",
-              borderBottom: "2px solid white",
-            },
-            containerStyle,
-          ]}
-        >
-          <Box
-            sx={[
-              {
-                width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-                display: "flex",
-                paddingX: "10px",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: "45px",
-                borderRight: "2px solid white",
-              },
-              fContainerStyle,
-            ]}
-          >
-            <Typography
-              sx={[
-                {
-                  fontSize: { xs: "10px", lg: "12px", md: "10px" },
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  textTransform: "capitalize",
-                  color:
-                    ["#319E5B", "#303030"].includes(
-                      fContainerStyle.background
-                    ) && "white",
-                },
-                fTextStyle,
-              ]}
-            >
-              {elementToUDM?.userName}
-            </Typography>
-          </Box>
-          <Box
-            sx={[
-              {
-                width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-                display: "flex",
-                paddingX: "10px",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: "45px",
-                borderRight: "2px solid white",
-              },
-              fContainerStyle,
-            ]}
-          >
-            <Typography
-              sx={[
-                {
-                  fontSize: { xs: "10px", lg: "12px", md: "10px" },
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  textTransform: "capitalize",
-                  color:
-                    ["#319E5B", "#303030"].includes(
-                      fContainerStyle.background
-                    ) && "white",
-                },
-                fTextStyle,
-              ]}
-            >
-              {elementToUDM.commissionType}
-            </Typography>
-          </Box>
-          <Box
-            sx={[
-              {
-                width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-                display: "flex",
-                paddingX: "10px",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: "45px",
-                borderRight: "2px solid white",
-              },
-              fContainerStyle,
-            ]}
-          >
-            <Typography
-              sx={[
-                {
-                  fontSize: { xs: "10px", lg: "12px", md: "10px" },
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  display: " -webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                },
-              ]}
-            >
-              {elementToUDM?.title}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {/* {elementToUDM.teamBet} */}
-              {elementToUDM?.createAt
-                ? `${moment(elementToUDM?.createAt).format("L")}  ${moment(
-                    elementToUDM?.createAt
-                  ).format("LT")}`
-                : ""}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {elementToUDM?.teamBet}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {elementToUDM?.odds}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              width: { lg: "15%", md: "15%", xs: "15%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-              textTransform: "capitalize",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {elementToUDM?.betType}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              width: { lg: "15%", md: "15%", xs: "15%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {elementToUDM?.stack}
-            </Typography>
-          </Box>
+  //       <Box
+  //         sx={[
+  //           {
+  //             width: { xs: "218%", lg: "100%", md: "100%" },
+  //             display: "flex",
+  //             height: "45px",
+  //             background: "#0B4F26",
+  //             alignItems: "center",
+  //             overflow: "hidden",
+  //             borderBottom: "2px solid white",
+  //           },
+  //           containerStyle,
+  //         ]}
+  //       >
+  //         <Box
+  //           sx={[
+  //             {
+  //               width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //               display: "flex",
+  //               paddingX: "10px",
+  //               justifyContent: "space-between",
+  //               alignItems: "center",
+  //               height: "45px",
+  //               borderRight: "2px solid white",
+  //             },
+  //             fContainerStyle,
+  //           ]}
+  //         >
+  //           <Typography
+  //             sx={[
+  //               {
+  //                 fontSize: { xs: "10px", lg: "12px", md: "10px" },
+  //                 fontWeight: "600",
+  //                 cursor: "pointer",
+  //                 textTransform: "capitalize",
+  //                 color:
+  //                   ["#319E5B", "#303030"].includes(
+  //                     fContainerStyle.background
+  //                   ) && "white",
+  //               },
+  //               fTextStyle,
+  //             ]}
+  //           >
+  //             {elementToUDM?.userName}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={[
+  //             {
+  //               width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //               display: "flex",
+  //               paddingX: "10px",
+  //               justifyContent: "space-between",
+  //               alignItems: "center",
+  //               height: "45px",
+  //               borderRight: "2px solid white",
+  //             },
+  //             fContainerStyle,
+  //           ]}
+  //         >
+  //           <Typography
+  //             sx={[
+  //               {
+  //                 fontSize: { xs: "10px", lg: "12px", md: "10px" },
+  //                 fontWeight: "600",
+  //                 cursor: "pointer",
+  //                 textTransform: "capitalize",
+  //                 color:
+  //                   ["#319E5B", "#303030"].includes(
+  //                     fContainerStyle.background
+  //                   ) && "white",
+  //               },
+  //               fTextStyle,
+  //             ]}
+  //           >
+  //             {elementToUDM.commissionType}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={[
+  //             {
+  //               width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //               display: "flex",
+  //               paddingX: "10px",
+  //               justifyContent: "space-between",
+  //               alignItems: "center",
+  //               height: "45px",
+  //               borderRight: "2px solid white",
+  //             },
+  //             fContainerStyle,
+  //           ]}
+  //         >
+  //           <Typography
+  //             sx={[
+  //               {
+  //                 fontSize: { xs: "10px", lg: "12px", md: "10px" },
+  //                 fontWeight: "600",
+  //                 cursor: "pointer",
+  //                 display: " -webkit-box",
+  //                 WebkitLineClamp: 2,
+  //                 WebkitBoxOrient: "vertical",
+  //                 overflow: "hidden",
+  //               },
+  //             ]}
+  //           >
+  //             {elementToUDM?.title}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {/* {elementToUDM.teamBet} */}
+  //             {elementToUDM?.createAt
+  //               ? `${moment(elementToUDM?.createAt).format("L")}  ${moment(
+  //                   elementToUDM?.createAt
+  //                 ).format("LT")}`
+  //               : ""}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {elementToUDM?.teamBet}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {elementToUDM?.odds}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             width: { lg: "15%", md: "15%", xs: "15%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //             textTransform: "capitalize",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {elementToUDM?.betType}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             width: { lg: "15%", md: "15%", xs: "15%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {elementToUDM?.stack}
+  //           </Typography>
+  //         </Box>
 
-          <Box
-            sx={{
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {elementToUDM?.commissionAmount}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingLeft: "10px",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            }}
-          >
-            <Typography
-              sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
-            >
-              {elementToUDM?.myCommission}
-            </Typography>
-          </Box>
-        </Box>
-      </>
-    );
-  };
+  //         <Box
+  //           sx={{
+  //             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {elementToUDM?.commissionAmount}
+  //           </Typography>
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+  //             display: "flex",
+  //             paddingLeft: "10px",
+  //             alignItems: "center",
+  //             height: "45px",
+  //             borderRight: "2px solid white",
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+  //           >
+  //             {elementToUDM?.myCommission}
+  //           </Typography>
+  //         </Box>
+  //       </Box>
+  //     </>
+  //   );
+  // };
   const numberOfAccordions = 3;
   return (
     <>
-    {Array.from({ length: numberOfAccordions }, (_, index) => (
-      <Accordion key={index} sx={{
-        border: "1px solid white",
-            borderBottom: "0",
-        minHeight: "auto"
-
-      }}>
-        <Box
+      {Array.from({ length: numberOfAccordions }, (_, index) => (
+        <Accordion
+          key={index}
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            marginLeft: 2,
-            backgroundColor: "#000",
-            color: "#fff",
-            margin: 0.01,
+            border: "1px solid white",
+            borderBottom: "0",
+            minHeight: "auto",
           }}
         >
-          {/* <Typography variant="h6" sx={{ height: "25px", mx: 2 }}> */}
-          <Box sx={{width: "50px", textAlign: "center"}}>
-            <Typography sx={{ height: "25px", mx: 2 ,fontSize: "14px", fontWeight: "600",margin: 0}} >
-              {index + 1}
-            </Typography>
-          </Box>
-          
-          <AccordionSummary
-          className="commissionReport-AccordianSummery"
-            expandIcon={<ExpandMoreIcon sx={{ color: "#fff",fontSize: "38px"}} />}
-            aria-controls={`match-report-content-${index}`}
-            id={`match-report-header-${index}`}
-            sx={{
-              width: { mb: "90%", lg: "100%" },
-              position: "relative",
-              // height: "60%",
-              alignItems: { lg: "center", sm: "center" },
-              display: "flex",
-              // paddingX: "10px",
-              background: "#0B4F26",
-              marginLeft: 0.1,
-              justifyContent: "space-between",
-              color: "#fff",
-              "&.Mui-expanded": {
-                minHeight: "50px",
-                margin: "0"
-              },
-            }}
-          >
-            <Typography sx={{ fontSize: "14px", color: "white", 
-            fontWeight: "600" , margin: 0, padding: 0,
-            "&.Mui-expanded": {
-
-             margin: '0 !important',
-             padding: 0
-            },
-          }} >
-              Match Report {index + 1}
-            </Typography>
-          </AccordionSummary>
-        </Box>
-        <AccordionDetails>
           <Box
             sx={{
-              overflowX: "auto",
-              width: { xs: "100%", lg: "100%", md: "100%" },
-              background: "#000"
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginLeft: 2,
+              backgroundColor: "#000",
+              color: "#fff",
+              margin: 0.01,
             }}
           >
-            <ListHeaderT />
-            {matchList?.map((element, mapIndex) => (
-              <MatchList
-                // key={element?.match_id}
-                element={element}
-                index={mapIndex}
-                selectedId={selectedId}
-                setSelectedId={setSelectedId}
-                showCommisionReport={showCommisionReport}
-                setShowCommisionReport={setShowCommisionReport}
-                id={id}
-              />
-            ))}
+            {/* <Typography variant="h6" sx={{ height: "25px", mx: 2 }}> */}
+            <Box sx={{ width: "50px", textAlign: "center" }}>
+              <Typography
+                sx={{
+                  height: "25px",
+                  mx: 2,
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  margin: 0,
+                }}
+              >
+                {index + 1}
+              </Typography>
+            </Box>
+
+            <AccordionSummary
+              className="commissionReport-AccordianSummery"
+              expandIcon={
+                <ExpandMoreIcon sx={{ color: "#fff", fontSize: "38px" }} />
+              }
+              aria-controls={`match-report-content-${index}`}
+              id={`match-report-header-${index}`}
+              sx={{
+                width: { mb: "90%", lg: "100%" },
+                position: "relative",
+                // height: "60%",
+                alignItems: { lg: "center", sm: "center" },
+                display: "flex",
+                // paddingX: "10px",
+                background: "#0B4F26",
+                marginLeft: 0.1,
+                justifyContent: "space-between",
+                color: "#fff",
+                "&.Mui-expanded": {
+                  minHeight: "50px",
+                  margin: "0",
+                },
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  fontWeight: "600",
+                  margin: 0,
+                  padding: 0,
+                  "&.Mui-expanded": {
+                    margin: "0 !important",
+                    padding: 0,
+                  },
+                }}
+              >
+                Match Report {index + 1}
+              </Typography>
+            </AccordionSummary>
           </Box>
-        </AccordionDetails>
-      </Accordion>
-    ))}
+          <AccordionDetails>
+            <Box
+              sx={{
+                overflowX: "auto",
+                width: { xs: "100%", lg: "100%", md: "100%" },
+                background: "#000",
+              }}
+            >
+              <ListHeaderT />
+              {[]?.map((element, mapIndex) => (
+                <MatchList
+                  // key={element?.match_id}
+                  element={element}
+                  index={mapIndex}
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}
+                  showCommisionReport={showCommisionReport}
+                  setShowCommisionReport={setShowCommisionReport}
+                  id={id}
+                />
+              ))}
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      ))}
 
-    <Footer currentPage={currentPage} pages={pageCount} />
-  </>
-);
-            }
-
+      <Footer currentPage={currentPage} pages={1} />
+    </>
+  );
+};
 
 // const ListH = ({
 //   id,

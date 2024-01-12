@@ -1,7 +1,4 @@
-
-import { useState } from "react";
 import { Box } from "@mui/material";
-// import Modal from '@mui/material/Modal';
 import { useNavigate } from "react-router-dom";
 
 import { Button, Typography } from "@mui/material";
@@ -10,9 +7,7 @@ import { Button, Typography } from "@mui/material";
 
 
   export function Modal({
-    message,
     children,
-    buttonMessage,
     navigateTo,
     setShowSuccessModal,
     showSuccessModal,
@@ -21,7 +16,6 @@ import { Button, Typography } from "@mui/material";
     title
   }: any) {
     const navigate = useNavigate();
-    const [Open, setOpen] = useState(false);
 
     return (
       <>
