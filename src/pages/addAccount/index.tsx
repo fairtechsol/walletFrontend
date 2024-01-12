@@ -141,16 +141,16 @@ const AddAccount = () => {
     //     return addUserValidation;
     //   }
     // },
-  //   validationSchema: () => {
-  //   if (formik.values.roleName.value === "superAdmin") {
-  //     return SuperURLValidation;
-  //   } else if (formik.values.roleName.value === "fairGameAdmin") {
-  //     return FgAdminValidation
-    
-  //   } else {
-  //     return addUserValidation;
-  //   }
-  // },
+    //   validationSchema: () => {
+    //   if (formik.values.roleName.value === "superAdmin") {
+    //     return SuperURLValidation;
+    //   } else if (formik.values.roleName.value === "fairGameAdmin") {
+    //     return FgAdminValidation
+
+    //   } else {
+    //     return addUserValidation;
+    //   }
+    // },
 
     onSubmit: (values: any) => {
       const commonPayload = {
