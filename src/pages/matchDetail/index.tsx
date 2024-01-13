@@ -176,7 +176,9 @@ const MatchDetail = () => {
           {matchDetail?.manualTiedMatch && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Tied Match"}
+              data={matchDetail?.manualTiedMatch}
               currentMatch={matchDetail}
+              session={"manualBookMaker"}
               minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
             />
@@ -389,10 +391,12 @@ const MatchDetail = () => {
                 sx={{ width: "150px", marginY: ".75%", height: "15px" }}
               ></Box>
             </Box>
-            {matchDetail?.manualTiedMatch?.isActive && (
+            {matchDetail?.manualTiedMatch && (
               <MatchOdds
                 typeOfBet={"Manual Tied Match"}
                 currentMatch={matchDetail}
+                session={"manualBookMaker"}
+                data={matchDetail?.manualTiedMatch}
                 minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
                 maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
               />
