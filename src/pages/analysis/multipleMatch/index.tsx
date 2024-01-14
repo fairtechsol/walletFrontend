@@ -133,7 +133,7 @@ const MultipleMatch = ({}) => {
                                   User Profit Loss
                                 </Button>
                               </Typography>
-                              {item?.matchOdd?.isActive && (
+                              {item?.matchOdd && (
                                 <MatchOdds
                                   currentMatch={item}
                                   matchOddsLive={item?.matchOddsLive}
@@ -145,7 +145,7 @@ const MultipleMatch = ({}) => {
                                   typeOfBet={"Match Odds"}
                                 />
                               )}
-                              {item?.marketCompleteMatch?.isActive && (
+                              {item?.marketCompleteMatch && (
                                 <MatchOdds
                                   currentMatch={item}
                                   typeOfBet={"Market Complete Match"}
@@ -157,7 +157,7 @@ const MultipleMatch = ({}) => {
                                   )}
                                 />
                               )}
-                              {item?.apiTideMatch?.isActive && (
+                              {item?.apiTideMatch && (
                                 <MatchOdds
                                   currentMatch={item}
                                   typeOfBet={"Tied Match"}
@@ -199,7 +199,7 @@ const MultipleMatch = ({}) => {
                                   }
                                 }
                               )}
-                              {item?.bookmaker?.isActive && (
+                              {item?.bookmaker && (
                                 <LiveBookmaker
                                   currentMatch={item}
                                   minBet={Math.floor(item?.bookmaker?.minBet)}
@@ -212,10 +212,11 @@ const MultipleMatch = ({}) => {
                                   }
                                 />
                               )}
-                              {item?.manualTiedMatch?.isActive && (
+                              {item?.manualTiedMatch && (
                                 <MatchOdds
                                   typeOfBet={"Manual Tied Match"}
                                   currentMatch={item}
+                                  session={"manualBookMaker"}
                                   minBet={Math.floor(
                                     item?.manualTiedMatch?.minBet
                                   )}
@@ -336,7 +337,7 @@ const MultipleMatch = ({}) => {
                                 User Profit Loss
                               </Button>
                             </Typography>
-                            {item?.matchOdd?.isActive && (
+                            {item?.matchOdd && (
                               <MatchOdds
                                 currentMatch={item}
                                 // matchOddsLive={matchOddsLive}
@@ -350,7 +351,7 @@ const MultipleMatch = ({}) => {
                                 typeOfBet={"Match Odds"}
                               />
                             )}
-                            {item?.marketCompleteMatch?.isActive && (
+                            {item?.marketCompleteMatch && (
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Market Complete Match"}
@@ -362,7 +363,7 @@ const MultipleMatch = ({}) => {
                                 )}
                               />
                             )}
-                            {item?.apiTideMatch?.isActive && (
+                            {item?.apiTideMatch && (
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Tied Match"}
@@ -370,7 +371,7 @@ const MultipleMatch = ({}) => {
                                 maxBet={Math.floor(item?.apiTideMatch?.maxBet)}
                               />
                             )}
-                            {item?.bookmaker?.isActive && (
+                            {item?.bookmaker && (
                               <LiveBookmaker
                                 currentMatch={item}
                                 minBet={Math.floor(item?.bookmaker?.minBet)}
@@ -435,10 +436,12 @@ const MultipleMatch = ({}) => {
                                 }
                               />
                             )}
-                            {item?.manualTiedMatch?.isActive && (
+                            {item?.manualTiedMatch && (
                               <MatchOdds
                                 typeOfBet={"Manual Tied Match"}
                                 currentMatch={item}
+                                session={"manualBookMaker"}
+                                data={item?.manualTiedMatch}
                                 minBet={Math.floor(
                                   item?.manualTiedMatch?.minBet
                                 )}
