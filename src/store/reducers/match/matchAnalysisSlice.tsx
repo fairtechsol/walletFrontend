@@ -3,6 +3,7 @@ import {
   analysisListReset,
   getAnalysisList,
   getMultipleMatchDetail,
+  updateMultipleMatchDetail,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -54,6 +55,37 @@ const analysisListSlice = createSlice({
       .addCase(getMultipleMatchDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(updateMultipleMatchDetail.fulfilled, (state, action) => {
+        state.multipleMatchDetail = state.multipleMatchDetail.map(
+          (match: any) => {
+            if (match?.id === action.payload?.id) {
+              const {
+                apiSession,
+                apiTiedMatch,
+                bookmaker,
+                manualTideMatch,
+                marketCompleteMatch,
+                matchOdd,
+                quickbookmaker,
+                sessionBettings,
+              } = action.payload;
+              return {
+                ...match,
+                apiSession: apiSession,
+                apiTideMatch: apiTiedMatch,
+                bookmaker: bookmaker,
+                manualTiedMatch: manualTideMatch,
+                marketCompleteMatch: marketCompleteMatch,
+                matchOdd: matchOdd,
+                quickBookmaker: quickbookmaker,
+                sessionBettings: sessionBettings,
+              };
+            } else {
+              return match;
+            }
+          }
+        );
       })
       .addCase(analysisListReset, (state) => {
         return { ...state, success: false };
