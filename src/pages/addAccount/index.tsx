@@ -132,26 +132,6 @@ const AddAccount = () => {
   const formik = useFormik({
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
-    // validationSchema: () => {
-    //   if (formik.values.roleName.value === "superAdmin") {
-    //     return SuperURLValidation;
-    //   } else if (formik.values.roleName.value === "fairGameAdmin") {
-    //     return FgAdminValidation;
-    //   } else {
-    //     return addUserValidation;
-    //   }
-    // },
-    //   validationSchema: () => {
-    //   if (formik.values.roleName.value === "superAdmin") {
-    //     return SuperURLValidation;
-    //   } else if (formik.values.roleName.value === "fairGameAdmin") {
-    //     return FgAdminValidation
-
-    //   } else {
-    //     return addUserValidation;
-    //   }
-    // },
-
     onSubmit: (values: any) => {
       const commonPayload = {
         userName: values.userName,
@@ -166,7 +146,7 @@ const AddAccount = () => {
       if (values.roleName.value === "expert") {
         payload = {
           ...commonPayload,
-          // roleName: values.roleName.value,
+          roleName: values.roleName.value,
           transactionPassword: values.adminTransPassword,
           allPrivilege: lockUnlockObj.allPrivilege,
           addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
@@ -356,7 +336,6 @@ const AddAccount = () => {
             fontSize: "18px",
             fontWeight: "600",
             marginLeft: "4px",
-         
           }}
         >
           Add Account
@@ -727,30 +706,6 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    {/* <Box m={2}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={12} lg={6}>
-                          <Box sx={{
-                                display: "flex",
-                                border: "1px solid #ddd",
-                                padding: '8px',
-                                background: '#eee',
-                                p: 1,
-                                }}>
-                            <InputLabel htmlFor="footerColor">
-                              Footer Color:{" "}
-                            </InputLabel>
-                            <input
-                              type="color"
-                              id="footerColor"
-                              name={"footerColor"}
-                              value={formik.values.footerColor}
-                              onChange={formik.handleChange}
-                            />
-                          </Box>
-                        </Grid>
-                      </Grid>
-                    </Box> */}
                   </Box>
                 )}
               </Box>
@@ -777,13 +732,8 @@ const AddAccount = () => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}
                     isDisabled={state?.id}
-                    // onBlur={formik.handleBlur}
-                    value={AccountTypes.find(
-                      (option: any) =>
-                        option.value === formik.values.roleName.value
-                    )}
+                    value={formik.values.roleName}
                     touched={touched.roleName}
-                    // error={errors.roleName}
                     error={touched.roleName && Boolean(errors.roleName)}
                     onBlur={formik.handleBlur}
                   />
@@ -821,7 +771,7 @@ const AddAccount = () => {
                     <Box m={2}>
                       <Grid container spacing={1}>
                         <Grid item xs={6} md={12} lg={6}>
-                          <ButtonWithSwitch 
+                          <ButtonWithSwitch
                             title="BetFair Match Privilege"
                             name="betFairMatchPrivilege"
                             showLockUnlock={false}
@@ -1014,11 +964,7 @@ const AddAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        value={MatchCommissionTypes.find(
-                          (option: any) =>
-                            option.value ===
-                            formik.values.matchCommissionType.value
-                        )}
+                        value={formik.values.matchCommissionType}
                         // touched={touched.matchCommissionType}
                         // error={errors.matchCommissionType}
                         error={
@@ -1037,10 +983,7 @@ const AddAccount = () => {
                             name={"matchCommission"}
                             label={"Match Commission (%)*"}
                             options={matchComissionArray}
-                            value={matchComissionArray.find((option: any) => {
-                              option.value ===
-                                formik.values.matchCommission.value;
-                            })}
+                            value={formik.values.matchCommission}
                             onChange={(matchComissionArray: any) => {
                               formik.setFieldValue(
                                 "matchCommission",
@@ -1061,10 +1004,7 @@ const AddAccount = () => {
                         name={"sessionCommission"}
                         label={"Session Commission (%)*"}
                         options={sessionComissionArray}
-                        value={sessionComissionArray.find((option: any) => {
-                          option.value ===
-                            formik.values.sessionCommission.value;
-                        })}
+                        value={formik.values.sessionCommission}
                         onChange={(sessionComissionArray: any) => {
                           formik.setFieldValue(
                             "sessionCommission",

@@ -49,7 +49,7 @@ const Inplay = () => {
       });
     }
     return () => {
-      matchListInplay?.forEach((item: any) => {
+      matchListInplay?.map((item: any) => {
         socketService.match.leaveMatchRoom(item?.id);
       });
     };
