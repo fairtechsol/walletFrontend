@@ -29,6 +29,7 @@ interface RequestData {
   userName?: string;
   currentPage?: number;
   url?: any;
+  searchBy?: string;
 }
 
 // export const changePassword = createAsyncThunk<any, ChangePassword>(
@@ -118,9 +119,11 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${requestData?.url?.endpoint}?searchBy=user.userName&keyword=${
-          requestData?.userName ? requestData?.userName : ""
-        }&page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
+        `${requestData?.url?.endpoint}?searchBy=${
+          requestData?.searchBy ? requestData?.searchBy : ""
+        }&keyword=${requestData?.userName ? requestData?.userName : ""}&page=${
+          requestData?.currentPage
+        }&limit=${Constants.pageLimit}`
       );
       if (resp) {
         return resp?.data;
