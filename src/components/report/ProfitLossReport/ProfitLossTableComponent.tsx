@@ -10,6 +10,7 @@ const ProfitLossTableComponent = (props: any) => {
     pageCount,
     setCurrentPage,
     visible,
+    getUserProfitLoss
   } = props;
   return (
     <Box>
@@ -24,29 +25,30 @@ const ProfitLossTableComponent = (props: any) => {
               show={visible}
               setCurrentPage={setCurrentPage}
               // setSelectedEventType={setSelectedEventType}
+              getUserProfitLoss={getUserProfitLoss}
               // selectedEventType={selectedEventType}
             />
-            {/* <Box>
-              {visible &&
+            <Box>
+              {/* {visible &&
                 selectedEventType === item?.eventType &&
                 reportData.map((item: any, index: any) => {
                   return (
                     <RowComponentMatches
-                      key={index}
-                      item={item}
-                      index={index + 1}
-                      selectedId={selectedId}
-                      betData={betData}
-                      sessionBetData={sessionBetData}
-                      sessionBets={sessionBets}
-                      getBetReport={getBetReport}
+                      // key={index}
+                      // item={item}
+                      // index={index + 1}
+                      // selectedId={selectedId}
+                      // betData={betData}
+                      // sessionBetData={sessionBetData}
+                      // sessionBets={sessionBets}
+                      // getBetReport={getBetReport}
                       getUserProfitLoss={getUserProfitLoss}
-                      user={user}
-                      userProfitLoss={userProfitLoss}
+                      // user={user}
+                      // userProfitLoss={userProfitLoss}
                     />
                   );
-                })}
-            </Box> */}
+                })} */}
+            </Box>
           </>
         );
       })}
