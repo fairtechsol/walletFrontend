@@ -146,7 +146,6 @@ const AddAccount = () => {
       if (values.roleName.value === "expert") {
         payload = {
           ...commonPayload,
-          roleName: values.roleName.value,
           transactionPassword: values.adminTransPassword,
           allPrivilege: lockUnlockObj.allPrivilege,
           addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
