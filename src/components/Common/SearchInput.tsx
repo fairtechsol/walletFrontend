@@ -55,6 +55,12 @@ const SearchInput = (props: any) => {
               userName: value,
               currentPage: 1,
               url: { endpoint: endpoint },
+              searchBy:
+                endpoint === "/expert/list"
+                  ? value
+                    ? "userName"
+                    : ""
+                  : "user.userName",
             })
           );
         }
