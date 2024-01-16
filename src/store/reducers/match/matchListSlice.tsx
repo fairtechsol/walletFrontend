@@ -103,6 +103,8 @@ const matchListSlice = createSlice({
         } = action.payload;
         state.matchDetail = {
           ...state.matchDetail,
+          manualSessionActive: sessionBettings?.length >= 0 ? true : false,
+          apiSessionActive: apiSession?.length >= 0 ? true : false,
           apiSession: apiSession,
           apiTideMatch: apiTiedMatch,
           bookmaker: bookmaker,

@@ -123,7 +123,7 @@ const MatchDetail = () => {
           >
             {matchDetail?.teamA} V/S {matchDetail?.teamB}
           </Typography>
-          {matchDetail?.matchOdd && (
+          {matchDetail?.matchOdd?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Match Odds"}
@@ -131,7 +131,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
             />
           )}
-          {matchDetail?.marketCompleteMatch && (
+          {matchDetail?.marketCompleteMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Market Complete Match"}
@@ -139,7 +139,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
             />
           )}
-          {matchDetail?.apiTideMatch && (
+          {matchDetail?.apiTideMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Tied Match"}
@@ -147,7 +147,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
             />
           )}
-          {matchDetail?.bookmaker && (
+          {matchDetail?.bookmaker?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
               minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
@@ -184,7 +184,7 @@ const MatchDetail = () => {
             />
           )}
 
-          {matchDetail?.apiSessionActive && matchesMobile && (
+          {matchDetail?.manualSessionActive && matchesMobile && (
             <SessionMarket
               title={"Quick Session Market"}
               currentMatch={matchDetail}
@@ -391,7 +391,7 @@ const MatchDetail = () => {
                 sx={{ width: "150px", marginY: ".75%", height: "15px" }}
               ></Box>
             </Box>
-            {matchDetail?.manualTiedMatch && (
+            {matchDetail?.manualTiedMatch?.isActive && (
               <MatchOdds
                 typeOfBet={"Manual Tied Match"}
                 currentMatch={matchDetail}
