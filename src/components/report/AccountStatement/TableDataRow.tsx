@@ -16,15 +16,15 @@ const TableDataRow = (props: any) => {
     amount,
   } = props;
 
-  const dateString = date;
-  const dateObj = new Date(dateString);
-  const formattedDate = dateObj.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // const dateString = date;
+  // const dateObj = new Date(dateString);
+  // const formattedDate = dateObj.toLocaleDateString("en-US", {
+  //   year: "numeric",
+  //   month: "2-digit",
+  //   day: "2-digit",
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  // });
 
   return (
     <Box

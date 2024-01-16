@@ -32,11 +32,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  const [showCommissionReport, setShowCommissionReport] = useState({
-    value: false,
-    id: "",
-  });
-
   return (
     <>
       <Box
@@ -515,10 +510,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   }}
                   onClick={() => {
                     if (element?.totalComission !== null) {
-                      setShowCommissionReport({
-                        value: true,
-                        id: element?.userId,
-                      });
                       setShowSuccessModal(true)
                     } else {
                       return false;

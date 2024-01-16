@@ -98,9 +98,15 @@ const WithdrawComponent = (props: any) => {
   }, [success]);
 
   useEffect(() => {
-    setInitialBalance(
-      +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
-    );
+    if (isWallet) {
+      setInitialBalance(
+        +walletAccountDetail?.userBal?.currentBalance - +formik.values.amount
+      );
+    } else {
+      setInitialBalance(
+        +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
+      );
+    }
   }, [formik.values.amount]);
 
   return (

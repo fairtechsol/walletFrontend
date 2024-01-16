@@ -68,6 +68,11 @@ export const getMultipleMatchDetail = createAsyncThunk<any, any>(
   }
 );
 
+export const updateMultipleMatchDetail = createAsyncThunk<any, any>(
+  "multipleMatch/update",
+  async (data) => data
+);
+
 export const getCompetitionList = createAsyncThunk<any, any>(
   "competition/list",
   async (requestData, thunkApi) => {

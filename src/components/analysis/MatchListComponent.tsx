@@ -60,12 +60,9 @@ const MatchListComponent = (props: any) => {
     <Box
       onClick={() => {
         if (mode == "0") {
-          navigate(
-            `/wallet/market_analysis/matches`,
-            {
-              state: { submit: true, matchId: data?.id },
-            }
-          );
+          navigate(`/wallet/market_analysis/matches`, {
+            state: { submit: true, matchId: data?.id },
+          });
         }
         setSelected();
       }}

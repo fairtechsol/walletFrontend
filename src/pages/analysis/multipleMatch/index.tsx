@@ -17,13 +17,18 @@ import { useDispatch } from "react-redux";
 import {
   analysisListReset,
   getMultipleMatchDetail,
+  updateMultipleMatchDetail,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
+import { socketService } from "../../../socketManager";
 
 const MultipleMatch = ({}) => {
   const theme = useTheme();
   const { state } = useLocation();
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
   const { multipleMatchDetail, success } = useSelector(
@@ -35,10 +40,28 @@ const MultipleMatch = ({}) => {
   const IObets: any = [];
   const sessionBets: any = [];
 
+  const updateMatchDetailToRedux = (event: any) => {
+    dispatch(updateMultipleMatchDetail(event));
+  };
+
   useEffect(() => {
     if (state?.matchIds) {
+      socketService.match.leaveAllRooms();
       dispatch(getMultipleMatchDetail(state?.matchIds));
     }
+    if (state?.matchIds && state?.matchIds?.length > 0) {
+      state?.matchIds?.map((item: any) => {
+        socketService.match.joinMatchRoom(item, profileDetail?.roleName);
+      });
+      state?.matchIds?.map((item: any) => {
+        socketService.match.getMatchRates(item, updateMatchDetailToRedux);
+      });
+    }
+    return () => {
+      state?.matchIds?.map((item: any) => {
+        socketService.match.leaveMatchRoom(item);
+      });
+    };
   }, [state?.matchIds]);
 
   useEffect(() => {
@@ -54,7 +77,6 @@ const MultipleMatch = ({}) => {
           <Box
             sx={{
               display: "flex",
-              // flexDirection: "row",
               flexDirection: { matchesMobile: "column", lg: "row" },
               flex: 1,
               height: "100%",
@@ -86,6 +108,7 @@ const MultipleMatch = ({}) => {
                       {index === 0 ? (
                         <>
                           <Box
+                            key={index}
                             sx={{
                               display: "flex",
                               flexWrap: "wrap",
@@ -133,7 +156,7 @@ const MultipleMatch = ({}) => {
                                   User Profit Loss
                                 </Button>
                               </Typography>
-                              {item?.matchOdd?.isActive && (
+                              {item?.matchOdd && (
                                 <MatchOdds
                                   currentMatch={item}
                                   matchOddsLive={item?.matchOddsLive}
@@ -145,7 +168,7 @@ const MultipleMatch = ({}) => {
                                   typeOfBet={"Match Odds"}
                                 />
                               )}
-                              {item?.marketCompleteMatch?.isActive && (
+                              {item?.marketCompleteMatch && (
                                 <MatchOdds
                                   currentMatch={item}
                                   typeOfBet={"Market Complete Match"}
@@ -157,7 +180,7 @@ const MultipleMatch = ({}) => {
                                   )}
                                 />
                               )}
-                              {item?.apiTideMatch?.isActive && (
+                              {item?.apiTideMatch && (
                                 <MatchOdds
                                   currentMatch={item}
                                   typeOfBet={"Tied Match"}
@@ -199,7 +222,7 @@ const MultipleMatch = ({}) => {
                                   }
                                 }
                               )}
-                              {item?.bookmaker?.isActive && (
+                              {item?.bookmaker && (
                                 <LiveBookmaker
                                   currentMatch={item}
                                   minBet={Math.floor(item?.bookmaker?.minBet)}
@@ -212,10 +235,11 @@ const MultipleMatch = ({}) => {
                                   }
                                 />
                               )}
-                              {item?.manualTiedMatch?.isActive && (
+                              {item?.manualTiedMatch && (
                                 <MatchOdds
                                   typeOfBet={"Manual Tied Match"}
                                   currentMatch={item}
+                                  session={"manualBookMaker"}
                                   minBet={Math.floor(
                                     item?.manualTiedMatch?.minBet
                                   )}
@@ -303,6 +327,7 @@ const MultipleMatch = ({}) => {
                       ) : (
                         <>
                           <Box
+                            key={index}
                             sx={{
                               maxWidth: matchesMobile ? "99%" : "49.5%",
                               flex: matchesMobile ? "0 0 99%" : "0 0 49.5%",
@@ -336,7 +361,7 @@ const MultipleMatch = ({}) => {
                                 User Profit Loss
                               </Button>
                             </Typography>
-                            {item?.matchOdd?.isActive && (
+                            {item?.matchOdd && (
                               <MatchOdds
                                 currentMatch={item}
                                 // matchOddsLive={matchOddsLive}
@@ -350,7 +375,7 @@ const MultipleMatch = ({}) => {
                                 typeOfBet={"Match Odds"}
                               />
                             )}
-                            {item?.marketCompleteMatch?.isActive && (
+                            {item?.marketCompleteMatch && (
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Market Complete Match"}
@@ -362,7 +387,7 @@ const MultipleMatch = ({}) => {
                                 )}
                               />
                             )}
-                            {item?.apiTideMatch?.isActive && (
+                            {item?.apiTideMatch && (
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Tied Match"}
@@ -370,7 +395,7 @@ const MultipleMatch = ({}) => {
                                 maxBet={Math.floor(item?.apiTideMatch?.maxBet)}
                               />
                             )}
-                            {item?.bookmaker?.isActive && (
+                            {item?.bookmaker && (
                               <LiveBookmaker
                                 currentMatch={item}
                                 minBet={Math.floor(item?.bookmaker?.minBet)}
@@ -435,16 +460,19 @@ const MultipleMatch = ({}) => {
                                 }
                               />
                             )}
-                            {item?.manualTiedMatch?.isActive && (
+                            {item?.manualTiedMatch && (
                               <MatchOdds
                                 typeOfBet={"Manual Tied Match"}
                                 currentMatch={item}
+                                session={"manualBookMaker"}
+                                data={item?.manualTiedMatch}
                                 minBet={Math.floor(
                                   item?.manualTiedMatch?.minBet
                                 )}
                                 maxBet={Math.floor(
                                   item?.manualTiedMatch?.maxBet
                                 )}
+                                matchOddsData={item?.manualTiedMatch}
                               />
                             )}
 
@@ -452,19 +480,9 @@ const MultipleMatch = ({}) => {
                               <SessionMarket
                                 title={"Quick Session Market"}
                                 sessionData={item?.sessionBettings}
-                                // match={"multiple"}
-                                // currentOdds={currentOdds}
                                 currentMatch={item}
-                                // sessionExposer={
-                                //   manualSessionHttp?.sessionExposure
-                                // }
                                 sessionOffline={item?.sessionOffline}
                                 sessionBets={sessionBetsData?.length}
-                                // setPopData={setPopData}
-                                // popData={popData}
-                                // sessionData={
-                                //   manualSessionHttp?.manualSessionRate
-                                // }
                                 max={item?.manaual_session_max_bet}
                                 min={item?.manaual_session_min_bet}
                               />
@@ -473,15 +491,9 @@ const MultipleMatch = ({}) => {
                               <SessionMarket
                                 title={"Session Market"}
                                 match={"multiple"}
-                                // currentOdds={currentOdds}
                                 currentMatch={item}
-                                // sessionExposer={
-                                //   manualSessionHttp?.sessionExposure
-                                // }
                                 sessionOffline={item?.sessionOffline}
                                 sessionBets={sessionBetsData?.length}
-                                // setPopData={setPopData}
-                                // popData={popData}
                                 max={item?.betfair_session_max_bet}
                                 min={item?.betfair_session_min_bet}
                               />
@@ -693,6 +705,7 @@ const MultipleMatch = ({}) => {
                             currentMatch={item}
                             minBet={Math.floor(item?.manualTiedMatch?.minBet)}
                             maxBet={Math.floor(item?.manualTiedMatch?.maxBet)}
+                            matchOddsData={item?.manualTiedMatch}
                           />
                         )}
 

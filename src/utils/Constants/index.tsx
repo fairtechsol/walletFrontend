@@ -120,4 +120,3 @@ export const baseUrls = {
       ? `${Constants.expertPath}`
       : "http://localhost:6060",
 };
-
