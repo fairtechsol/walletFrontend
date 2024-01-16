@@ -3,20 +3,25 @@ import { authSocketService } from "./authSocket";
 import { matchSocketService } from "./matchDetailService";
 import { baseUrls } from "../utils/Constants";
 
-export const socket = io(baseUrls.socket, {
-  transports: ["websocket"],
-  auth: {
-    token: `${sessionStorage.getItem("userToken")}`,
-  },
-});
-export const thirdParty = io(baseUrls.thirdParty, {
-  transports: ["websocket"],
-  auth: {
-    token: `${sessionStorage.getItem("userToken")}`,
-  },
-});
+export let socket: any = null;
+export let thirdParty: any = null;
 
-// export const expertSocket = io(baseUrls.expertSocket, {
+export const initialiseSocket = () => {
+  socket = io(baseUrls.socket, {
+    transports: ["websocket"],
+    auth: {
+      token: `${sessionStorage.getItem("userToken")}`,
+    },
+  });
+  thirdParty = io(baseUrls.thirdParty, {
+    transports: ["websocket"],
+    auth: {
+      token: `${sessionStorage.getItem("userToken")}`,
+    },
+  });
+};
+
+// export const socket = io(baseUrls.socket, {
 //   transports: ["websocket"],
 //   auth: {
 //     token: `${sessionStorage.getItem("userToken")}`,
@@ -25,6 +30,7 @@ export const thirdParty = io(baseUrls.thirdParty, {
 
 export const socketService = {
   connect: () => {
+    initialiseSocket();
     // Connect to the socket server
     socket.connect();
     thirdParty.connect();
