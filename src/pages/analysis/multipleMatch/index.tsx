@@ -35,8 +35,6 @@ const MultipleMatch = ({}) => {
     (state: RootState) => state.match.analysisList
   );
 
-  const manualRateHttp: any = {};
-
   const IObets: any = [];
   const sessionBets: any = [];
 
@@ -295,13 +293,14 @@ const MultipleMatch = ({}) => {
                                   }}
                                 ></Box>
                               </Box>
-                              <FullAllBets
-                                IObets={IObetsData}
-                                // mode={mode}
-                                tag={false}
-                                // setSelectedBetData={setSelectedBetData}
-                                // selectedBetData={selectedBetData}
-                              />
+                              {profileDetail?.roleName === "fairGameWallet" && (
+                                <FullAllBets
+                                  tag={false}
+                                  IObets={IObetsData}
+                                  //   setSelectedBetData={setSelectedBetData}
+                                  //   selectedBetData={selectedBetData}
+                                />
+                              )}
                             </Box>
                           </Box>
                         </>
@@ -481,12 +480,14 @@ const MultipleMatch = ({}) => {
                                 min={item?.betFairSessionMaxBet}
                               />
                             )}
-                            <FullAllBets
-                              tag={true}
-                              IObets={IObetsData}
-                              //   setSelectedBetData={setSelectedBetData}
-                              //   selectedBetData={selectedBetData}
-                            />
+                            {profileDetail?.roleName === "fairGameWallet" && (
+                              <FullAllBets
+                                tag={true}
+                                IObets={IObetsData}
+                                //   setSelectedBetData={setSelectedBetData}
+                                //   selectedBetData={selectedBetData}
+                              />
+                            )}
                           </Box>
                         </>
                       )}
@@ -726,12 +727,14 @@ const MultipleMatch = ({}) => {
                             min={item?.betFairSessionMinBet}
                           />
                         )}
-                        <FullAllBets
-                          tag={true}
-                          IObets={IObetsData}
-                          //   setSelectedBetData={setSelectedBetData}
-                          //   selectedBetData={selectedBetData}
-                        />
+                        {profileDetail?.roleName === "fairGameWallet" && (
+                          <FullAllBets
+                            tag={true}
+                            IObets={IObetsData}
+                            //   setSelectedBetData={setSelectedBetData}
+                            //   selectedBetData={selectedBetData}
+                          />
+                        )}
                       </Box>
                     </>
                   );
