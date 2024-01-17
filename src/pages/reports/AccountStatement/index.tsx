@@ -50,9 +50,9 @@ const AccountStatement = () => {
               let filter = "";
               if (fromDate && toDate) {
                 filter += `&createdAt=between${moment(fromDate)?.format(
-                  "MM/DD/YYYY"
+                  "DD/MM/YYYY"
                 )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
-                  "MM/DD/YYYY"
+                  "DD/MM/YYYY"
                 )}`;
               }
               dispatch(

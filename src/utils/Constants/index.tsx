@@ -50,6 +50,7 @@ export const ApiConstants = {
   MATCH: {
     GET: "match",
     BETDELETE: "/bet/deleteMultipleBet",
+    GET_BETS: "/superadmin/bets"
   },
 };
 
