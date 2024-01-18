@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAccountStatement,
+  getCurrentBets,
   resetAccountStatement,
 } from "../../actions/reports";
 
 interface InitialState {
   accountStatement: any;
+  currentBetsList: any;
   success: boolean;
   loading: boolean;
   error: any;
@@ -13,6 +15,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   accountStatement: null,
+  currentBetsList: null,
   success: false,
   loading: false,
   error: null,
@@ -34,6 +37,19 @@ export const reportSlice = createSlice({
         state.loading = false;
       })
       .addCase(getAccountStatement.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(getCurrentBets.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentBets.fulfilled, (state, action) => {
+        state.success = true;
+        state.currentBetsList = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCurrentBets.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })

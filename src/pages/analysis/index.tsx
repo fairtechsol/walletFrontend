@@ -73,8 +73,6 @@ const Analysis = () => {
     }
   }, [success]);
 
-  console.log(selected, "selected");
-
   return (
     <>
       <Box
