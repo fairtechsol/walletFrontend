@@ -38,7 +38,6 @@ const AccountStatement = () => {
     }
   }, [profileDetail, currentPage, pageLimit]);
 
-
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -53,6 +52,14 @@ const AccountStatement = () => {
                   "DD/MM/YYYY"
                 )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
                   "DD/MM/YYYY"
+                )}`;
+              } else if (fromDate) {
+                filter += `&createdAt=gte${moment(fromDate)?.format(
+                  "MM/DD/YYYY"
+                )}`;
+              } else if (toDate) {
+                filter += `&createdAt=lte${moment(toDate)?.format(
+                  "MM/DD/YYYY"
                 )}`;
               }
               dispatch(

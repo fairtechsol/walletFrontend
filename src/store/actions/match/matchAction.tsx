@@ -57,7 +57,7 @@ export const getPlacedBets = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET_BETS}?betPlaced.matchId=${requestData}`
+        `${ApiConstants.MATCH.GET_BETS}?betPlaced.matchId=${requestData}&deleteReason=isNull&result=eqPENDING`
       );
       if (resp?.data) {
         return resp?.data;
@@ -144,18 +144,18 @@ export const getCompetitionMatches = createAsyncThunk<any, any>(
 
 export const AllBetDelete = createAsyncThunk<any, any>(
   "bet/allbet",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.MATCH.BETDELETE}${requestData?.id}`,
-        requestData.payload
+        `${ApiConstants.MATCH.BETDELETE}`,
+        requestData
       );
       if (resp) {
         return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      return thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );

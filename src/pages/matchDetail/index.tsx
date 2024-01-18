@@ -28,25 +28,36 @@ const MatchDetail = () => {
   );
   const [mode, setMode] = useState(false);
   const [visible, setVisible] = useState(false);
-  // const [selectedData, setSelectedData] = useState([]);
   const [selectedBetData, setSelectedBetData] = useState([]);
-  const [loadingDeleteBet] = useState(false);
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.match.matchList
   );
-  const { placedBets } = useSelector((state: RootState) => state.match.bets);
+  const { placedBets, loading } = useSelector(
+    (state: RootState) => state.match.bets
+  );
 
-  const handleDeleteBet = () => {
+  const handleDeleteBet = (value: any) => {
     try {
-      let payload = {
+      let payload: any = {
         matchId: state?.matchId,
-        deleteReason: "test the api",
-        urlData: {
-          "http://localhost:5000": selectedBetData,
-        },
+        deleteReason: value,
+        urlData: {},
       };
+      selectedBetData.forEach((item: any) => {
+        const { userId, betId, domain } = item;
+
+        if (!payload.urlData[domain]) {
+          payload.urlData[domain] = [];
+        }
+
+        payload.urlData[domain].push({
+          userId,
+          betId,
+          placeBetId: item.id,
+        });
+      });
       dispatch(AllBetDelete(payload));
     } catch (e) {
       console.log(e);
@@ -98,13 +109,13 @@ const MatchDetail = () => {
 
   return (
     <>
-      {visible && (
+      {visible && selectedBetData.length > 0 && (
         <>
           <AddNotificationModal
             value={""}
             title={"Add Remark"}
             visible={visible}
-            loadingDeleteBet={loadingDeleteBet}
+            loadingDeleteBet={loading}
             setVisible={setVisible}
             onDone={handleDeleteBet}
             onClick={(e: any) => {

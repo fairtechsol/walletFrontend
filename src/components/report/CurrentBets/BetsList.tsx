@@ -4,9 +4,23 @@ import EmptyRow from "./EmptyRow";
 import TableHeaderList from "./TableHeaderList";
 import TableDataRow from "./TableDataRow";
 import ListHeaderRow from "./ListHeaderRow";
+import { useState } from "react";
 
 const BetsList = (props: any) => {
   const { getLimitEntries, betHistory } = props;
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageLimit, setPageLimit] = useState<number>(15);
+
+  function paginate(array: any, pageNumber: number, pageSize: number) {
+    --pageNumber;
+    const startIndex = pageNumber * pageSize;
+    const endIndex = startIndex + pageSize;
+    return array.slice(startIndex, endIndex);
+  }
+
+  const currentPageData = paginate(betHistory, currentPage, pageLimit);
+
   return (
     <Box
       sx={[
@@ -31,25 +45,30 @@ const BetsList = (props: any) => {
         }),
       ]}
     >
-      <ListHeaderRow getLimitEntries={getLimitEntries} />
+      <ListHeaderRow
+        getLimitEntries={getLimitEntries}
+        setPageLimit={setPageLimit}
+        pageLimit={pageLimit}
+      />
 
       <Box sx={{ overflowX: "scroll" }}>
         <TableHeaderList />
 
-        {betHistory?.map((item: any, index: any) => {
-          return (
-            <TableDataRow
-              key={index}
-              data={item}
-              index={index}
-              containerStyle={{ background: "#FFE094" }}
-              profit={true}
-              fContainerStyle={{ background: "#0B4F26" }}
-              fTextStyle={{ color: "white" }}
-            />
-          );
-        })}
-        {betHistory.length === 0 && (
+        {currentPageData &&
+          currentPageData?.map((item: any, index: any) => {
+            return (
+              <TableDataRow
+                key={item?.id}
+                data={item}
+                index={index}
+                containerStyle={{ background: "#FFE094" }}
+                profit={true}
+                fContainerStyle={{ background: "#0B4F26" }}
+                fTextStyle={{ color: "white" }}
+              />
+            );
+          })}
+        {(!betHistory || betHistory.length === 0) && (
           <EmptyRow containerStyle={{ background: "#FFE094" }} />
         )}
       </Box>
@@ -60,7 +79,11 @@ const BetsList = (props: any) => {
           position: "absolute",
         }}
       >
-        <Pagination currentPage={1} pages={10} setCurrentPage={() => {}} />
+        <Pagination
+          currentPage={currentPage}
+          pages={+(betHistory.length / pageLimit).toFixed()}
+          setCurrentPage={setCurrentPage}
+        />
       </Box>
     </Box>
   );

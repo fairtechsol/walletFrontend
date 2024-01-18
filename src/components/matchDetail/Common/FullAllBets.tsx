@@ -87,13 +87,13 @@ const FullAllBets = (props: any) => {
               deletedReason: v?.deletedReason,
             },
             {
-              name: moment(v?.createAt).format("LT"),
+              name: moment(v?.createdAt).format("LT"),
               color: "black",
               background: ["YES", "back"].includes(v?.betType)
                 ? "#B3E0FF"
                 : "rgb(255, 146, 146)",
               time: true,
-              date: moment(v?.createAt).format("L"),
+              date: moment(v?.createdAt).format("L"),
               deletedReason: v?.deletedReason,
             },
           ],
@@ -111,7 +111,7 @@ const FullAllBets = (props: any) => {
       setSelectedBetData([]);
     }
   }, [mode]);
-  
+
   return (
     <Box
       sx={{

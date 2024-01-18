@@ -59,7 +59,7 @@ const TableDataRow = (props: any) => {
         ]}
       >
         <Typography sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}>
-          {data.EventType}
+          {data?.eventType}
         </Typography>
       </Box>
       <Box
@@ -76,7 +76,7 @@ const TableDataRow = (props: any) => {
         <Typography
           sx={{ fontSize: "12px", fontWeight: "600", color: "black" }}
         >
-          {data.EventName}
+          {data.eventName}
         </Typography>
       </Box>
       <Box
@@ -93,7 +93,7 @@ const TableDataRow = (props: any) => {
         <Typography
           sx={{ fontSize: "12px", fontWeight: "600", color: "black" }}
         >
-          {data.userName}
+          {data?.user?.userName}
         </Typography>
       </Box>
       <Box
@@ -101,14 +101,14 @@ const TableDataRow = (props: any) => {
           width: "11%",
           display: "flex",
           paddingLeft: "10px",
-          background: data.BetType === "yes" ? "#FFB5B5" : "#A7DCFF",
+          background: data.betType === "YES" ? "#FFB5B5" : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {data.Team}
+          {data.teamName}
         </Typography>
       </Box>
       <Box
@@ -116,14 +116,14 @@ const TableDataRow = (props: any) => {
           width: "11%",
           display: "flex",
           paddingLeft: "10px",
-          background: data.BetType === "yes" ? "#FFB5B5" : "#A7DCFF",
+          background: data.betType === "YES" ? "#FFB5B5" : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {data.BetType}
+          {data.betType}
         </Typography>
       </Box>
       <Box
@@ -138,7 +138,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {data.UserRate}
+          {data.rate}
         </Typography>
       </Box>
       <Box
@@ -146,14 +146,14 @@ const TableDataRow = (props: any) => {
           width: "8%",
           display: "flex",
           justifyContent: "center",
-          background: data.BetType === "yes" ? "#FFB5B5" : "#A7DCFF",
+          background: data.betType === "YES" ? "#FFB5B5" : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {data.bet_type}
+          {data.betType}
         </Typography>
       </Box>
       <Box
@@ -168,7 +168,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {data.Amount}
+          {data.amount}
         </Typography>
       </Box>
       <Box
@@ -184,10 +184,10 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {moment(data.PlaceDate).format("DD-MM-YYYY")}
+          {moment(data.createdAt).format("DD-MM-YYYY")}
         </Typography>
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {moment(data.PlaceDate).format("HH:mm A")}
+          {moment(data.createdAt).format("HH:mm A")}
         </Typography>
       </Box>
       <Box
@@ -203,10 +203,10 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {moment(data.MatchDate).format("DD-MM-YYYY")}
+          {moment(data.createdAt).format("DD-MM-YYYY")}
         </Typography>
         <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
-          {moment(data.MatchDate).format("HH:mm A")}
+          {moment(data.createdAt).format("HH:mm A")}
         </Typography>
       </Box>
     </Box>

@@ -6,7 +6,10 @@ import { debounce } from "lodash";
 import { getUserList } from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { getAccountStatement } from "../../store/actions/reports";
+import {
+  getAccountStatement,
+  getCurrentBets,
+} from "../../store/actions/reports";
 import { useSelector } from "react-redux";
 
 const SearchInput = (props: any) => {
@@ -48,22 +51,27 @@ const SearchInput = (props: any) => {
             searchBy: "description,user.userName,actionByUser.userName",
           })
         );
-      } else {
-        if (searchFor === "userList") {
-          dispatch(
-            getUserList({
-              userName: value,
-              currentPage: 1,
-              url: { endpoint: endpoint },
-              searchBy:
-                endpoint === "/expert/list"
-                  ? value
-                    ? "userName"
-                    : ""
-                  : "user.userName",
-            })
-          );
-        }
+      } else if (searchFor === "userList") {
+        dispatch(
+          getUserList({
+            userName: value,
+            currentPage: 1,
+            url: { endpoint: endpoint },
+            searchBy:
+              endpoint === "/expert/list"
+                ? value
+                  ? "userName"
+                  : ""
+                : "user.userName",
+          })
+        );
+      } else if (searchFor === "currentBets") {
+        dispatch(
+          getCurrentBets({
+            searchBy: "user.userName",
+            keyword: value,
+          })
+        );
       }
     } catch (e) {
       console.log(e);
