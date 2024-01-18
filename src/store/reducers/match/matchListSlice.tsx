@@ -58,35 +58,33 @@ const matchListSlice = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(updateMatchListRates.fulfilled, (state, action) => {
-        const { id, matchOdd } = action.payload; // Assuming action.payload contains matchId and updatedOdd
+        const { id, matchOdd } = action.payload;
+        if (matchOdd) {
+          const matchListIndex = state.matchListInplay.findIndex(
+            (match: any) => match?.id === id
+          );
+          if (matchListIndex !== -1) {
+            const updatedMatchlist = [...state.matchListInplay];
 
-        // Find the index of the match in state.matchlistinplay.matchlist
-        const matchListIndex = state.matchListInplay.findIndex(
-          (match: any) => match?.id === id
-        );
-
-        // If the match is found, update the specific field (e.g., bookmaker)
-        if (matchListIndex !== -1) {
-          const updatedMatchlist = [...state.matchListInplay];
-
-          let matchOdds =
-            state?.matchListInplay?.matchOdds &&
-            state?.matchListInplay?.matchOdds.length > 0
-              ? state.matchListInplay?.matchOdds[0]
-              : state.matchListInplay?.matchOdds;
-          updatedMatchlist[matchListIndex] = {
-            ...updatedMatchlist[matchListIndex],
-            matchOdds: [
-              {
-                ...matchOdds,
-                ...matchOdd,
-              },
-            ],
-          };
-          return {
-            ...state,
-            matchListInplay: updatedMatchlist,
-          };
+            let matchOdds =
+              state?.matchListInplay?.matchOdds &&
+              state?.matchListInplay?.matchOdds.length > 0
+                ? state.matchListInplay?.matchOdds[0]
+                : state.matchListInplay?.matchOdds;
+            updatedMatchlist[matchListIndex] = {
+              ...updatedMatchlist[matchListIndex],
+              matchOdds: [
+                {
+                  ...matchOdds,
+                  ...matchOdd,
+                },
+              ],
+            };
+            return {
+              ...state,
+              matchListInplay: updatedMatchlist,
+            };
+          }
         }
         return state;
       })
