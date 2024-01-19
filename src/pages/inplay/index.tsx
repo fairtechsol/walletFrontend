@@ -32,21 +32,42 @@ const Inplay = () => {
     (state: RootState) => state.user.profile
   );
 
+  const matchResultDeclared = () => {
+    try {
+      dispatch(getMatchListInplay({ currentPage: currentPage }));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    dispatch(getMatchListInplay({ currentPage: currentPage }));
+    try {
+      dispatch(getMatchListInplay({ currentPage: currentPage }));
+    } catch (e) {
+      console.log(e);
+    }
   }, [currentPage]);
 
   useEffect(() => {
-    if (success) {
-      dispatch(matchListReset());
+    try {
+    } catch (e) {
+      if (success) {
+        dispatch(matchListReset());
+      }
     }
   }, [success]);
 
   useEffect(() => {
-    if (matchListInplay && matchListInplay?.length > 0) {
-      matchListInplay?.map((item: any) => {
-        socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
-      });
+    try {
+      if (matchListInplay && matchListInplay?.length > 0) {
+        matchListInplay?.map((item: any) => {
+          socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+        });
+        socketService.match.matchResultDeclared(matchResultDeclared);
+        socketService.match.matchResultUnDeclared(matchResultDeclared);
+      }
+    } catch (e) {
+      console.log(e);
     }
     return () => {
       matchListInplay?.map((item: any) => {

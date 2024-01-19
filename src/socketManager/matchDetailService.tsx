@@ -22,4 +22,10 @@ export const matchSocketService = {
   getMatchRates: (matchId: string, callback: any) => {
     thirdParty.on(`liveData${matchId}`, callback);
   },
+  matchResultDeclared: (callback: any) => {
+    socket.on("matchResult", callback);
+  },
+  matchResultUnDeclared: (callback: any) => {
+    socket.on("matchResultUnDeclare", callback);
+  },
 };
