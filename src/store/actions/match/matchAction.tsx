@@ -57,7 +57,12 @@ export const getPlacedBets = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET_BETS}?betPlaced.matchId=${requestData}&deleteReason=isNull&result=eqPENDING`
+        `${
+          ApiConstants.MATCH.GET_BETS
+        }?betPlaced.matchId=${requestData}&result=inArr${JSON.stringify([
+          "PENDING",
+          "UNDECLARE",
+        ])}`
       );
       if (resp?.data) {
         return resp?.data;
