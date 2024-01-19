@@ -4,7 +4,7 @@ import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
@@ -21,6 +21,7 @@ import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
 
 const MatchDetail = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { profileDetail } = useSelector(
@@ -73,6 +74,19 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+  const matchResultDeclared = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        if (location.pathname.includes("market_analysis")) {
+          navigate("/wallet/market_analysis");
+        } else {
+          navigate("/wallet/live_market");
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -87,6 +101,7 @@ const MatchDetail = () => {
           state?.matchId,
           updateMatchDetailToRedux
         );
+        socketService.match.matchResultDeclared(matchResultDeclared);
       }
     } catch (e) {
       console.log(e);
