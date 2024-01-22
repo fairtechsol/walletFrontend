@@ -87,6 +87,17 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+  const matchDeleteBet = (event: any) => {
+    try {
+      setMode(false);
+      if (event?.matchId === state?.matchId) {
+        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -102,6 +113,7 @@ const MatchDetail = () => {
           updateMatchDetailToRedux
         );
         socketService.match.matchResultDeclared(matchResultDeclared);
+        socketService.match.matchDeleteBet(matchDeleteBet);
       }
     } catch (e) {
       console.log(e);

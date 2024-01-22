@@ -48,7 +48,7 @@ const ListHeaderExpertRow = () => {
             lineHeight: "1.1",
           }}
         >
-          AddMatch Privilege
+          All Privilege
         </Typography>
       </Box>
       <Box
@@ -69,7 +69,7 @@ const ListHeaderExpertRow = () => {
             lineHeight: "1.1",
           }}
         >
-          All Privilege
+          Add Match Privilege
         </Typography>
       </Box>
       <Box
