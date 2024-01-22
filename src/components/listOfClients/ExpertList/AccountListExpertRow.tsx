@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { LockIcon, UnLockIcon } from "../../../assets";
+import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../../assets";
 import { AccountListRowInterface } from "../../../interface/listOfClients";
 import StyledImage from "../../Common/StyledImages";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import RowModalComponents from "./RowModalCompExpert";
 
 const AccountListExpertRow = (props: AccountListRowInterface) => {
   const {
@@ -13,9 +15,12 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
     element,
     showOptions,
     show,
+    showUserDetails,
   } = props;
 
   const navigate = useNavigate();
+  const [selected, setSelected] = useState(null);
+  const [showUserModal, setShowUserModal] = useState(false);
   return (
     <>
       <Box
@@ -77,6 +82,18 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
                     : "#FFFFFF",
                 cursor: "pointer",
               }}
+            />
+          )}
+          {showOptions && (
+            <StyledImage
+              onClick={() => {
+                setShowUserModal((prev) => !prev);
+                setSelected(null);
+              }}
+              src={
+                fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
+              }
+              style={{ cursor: "pointer", width: "16px", height: "12px" }}
             />
           )}
         </Box>
@@ -202,6 +219,44 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
           <Typography variant="h5">{element?.roleName}</Typography>
         </Box>
       </Box>
+      {showUserModal && (
+        <Box
+          sx={[
+            {
+              width: "100%",
+              display: "flex",
+              height: "100%",
+              background: "#0B4F26",
+              alignItems: "center",
+              overflow: "hidden",
+              flexDirection: { xs: "column", lg: "row" },
+            },
+            containerStyle,
+          ]}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              visibility: showUserDetails ? "visible" : "hidden",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <RowModalComponents
+              selected={selected}
+              element={element}
+              setSelected={setSelected}
+              // getListOfUser={getListOfUser}
+              // setShowUserModal={setShowUserModal}
+              backgroundColor={containerStyle?.background}
+              // userModal={userModal}
+              // setShowSuccessModal={setShowSuccessModal}
+              // setShowModalMessage={setShowModalMessage}
+            />
+          </Box>
+        </Box>
+      )}
     </>
   );
 };
