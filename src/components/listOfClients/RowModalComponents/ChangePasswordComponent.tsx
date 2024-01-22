@@ -44,10 +44,17 @@ const ChangePasswordComponent = (props: any) => {
           transactionPassword: values.transactionPassword,
           // remark: values.remark,
         };
-      } else {
+      } else if (element.roleName === "superAdmin") {
         payload = {
           userId: element?.id,
           newPassword: values.newPassword,
+          transactionPassword: values.transactionPassword,
+          // remark: values.remark,
+        };
+      } else {
+        payload = {
+          id: element?.id,
+          password: values.newPassword,
           transactionPassword: values.transactionPassword,
           // remark: values.remark,
         };

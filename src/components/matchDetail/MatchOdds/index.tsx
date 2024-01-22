@@ -114,14 +114,50 @@ const MatchOdds = (props: any) => {
           }}
         >
           <SmallBox
-            valueA={bookRatioA(
-              currentMatch?.teamA_rate,
-              currentMatch?.teamB_rate
-            )}
-            valueB={bookRatioB(
-              currentMatch?.teamA_rate,
-              currentMatch?.teamB_rate
-            )}
+            valueA={
+              typeOfBet === "Match Odds"
+                ? bookRatioA(
+                    currentMatch?.profitLossDataMatch?.teamARate,
+                    currentMatch?.profitLossDataMatch?.teamBRate
+                  )
+                : typeOfBet === "Tied Match" ||
+                  typeOfBet === "Manual Tied Match"
+                ? bookRatioA(
+                    currentMatch?.profitLossDataMatch?.yesRateTie,
+                    currentMatch?.profitLossDataMatch?.noRateTie
+                  )
+                : typeOfBet === "Market Complete Match"
+                ? bookRatioA(
+                    currentMatch?.profitLossDataMatch?.yesRateTie,
+                    currentMatch?.profitLossDataMatch?.noRateTie
+                  )
+                : bookRatioA(
+                    currentMatch?.profitLossDataMatch?.teamARate,
+                    currentMatch?.profitLossDataMatch?.teamBRate
+                  )
+            }
+            valueB={
+              typeOfBet === "Match Odds"
+                ? bookRatioB(
+                    currentMatch?.profitLossDataMatch?.teamARate,
+                    currentMatch?.profitLossDataMatch?.teamBRate
+                  )
+                : typeOfBet === "Tied Match" ||
+                  typeOfBet === "Manual Tied Match"
+                ? bookRatioB(
+                    currentMatch?.profitLossDataMatch?.yesRateTie,
+                    currentMatch?.profitLossDataMatch?.noRateTie
+                  )
+                : typeOfBet === "Market Complete Match"
+                ? bookRatioB(
+                    currentMatch?.profitLossDataMatch?.yesRateTie,
+                    currentMatch?.profitLossDataMatch?.noRateTie
+                  )
+                : bookRatioB(
+                    currentMatch?.profitLossDataMatch?.teamARate,
+                    currentMatch?.profitLossDataMatch?.teamBRate
+                  )
+            }
           />
           <img
             onClick={() => {
@@ -226,9 +262,27 @@ const MatchOdds = (props: any) => {
               <>
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
-                  name={currentMatch?.teamA}
-                  rates={currentMatch?.teamArate ? currentMatch?.teamArate : 0}
-                  color={currentMatch?.teamA_rate <= 0 ? "#FF4D4D" : "#319E5B"}
+                  name={
+                    typeOfBet !== "Manual Tied Match"
+                      ? currentMatch?.teamA
+                      : "Yes"
+                  }
+                  rates={
+                    typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateTie
+                        ? currentMatch?.profitLossDataMatch?.yesRateTie
+                        : 0
+                      : currentMatch?.profitLossDataMatch?.teamARate
+                      ? currentMatch?.profitLossDataMatch?.teamARate
+                      : 0
+                  }
+                  color={
+                    typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateTie
+                      : currentMatch?.profitLossDataMatch?.teamARate <= 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                  }
                   data={data?.length > 0 ? data[0] : []}
                   lock={false}
                   matchOddsData={{
@@ -242,11 +296,27 @@ const MatchOdds = (props: any) => {
                 <Divider />
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
-                  name={currentMatch?.teamB}
-                  rates={
-                    currentMatch?.teamB_rate ? currentMatch?.teamB_rate : 0
+                  name={
+                    typeOfBet !== "Manual Tied Match"
+                      ? currentMatch?.teamB
+                      : "No"
                   }
-                  color={currentMatch?.teamB_rate <= 0 ? "#FF4D4D" : "#319E5B"}
+                  rates={
+                    typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateTie
+                        ? currentMatch?.profitLossDataMatch?.noRateTie
+                        : 0
+                      : currentMatch?.profitLossDataMatch?.teamBRate
+                      ? currentMatch?.profitLossDataMatch?.teamBRate
+                      : 0
+                  }
+                  color={
+                    typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateTie
+                      : currentMatch?.profitLossDataMatch?.teamBRate <= 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                  }
                   data={data?.length > 0 ? data[1] : []}
                   lock={false}
                   matchOddsData={{
@@ -257,7 +327,7 @@ const MatchOdds = (props: any) => {
                   status={data?.statusTeamB !== "active" ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
-                {currentMatch?.teamC ? (
+                {currentMatch?.teamC && typeOfBet !== "Manual Tied Match" ? (
                   <>
                     <Divider />
                     <TeamRowComponent
@@ -268,10 +338,14 @@ const MatchOdds = (props: any) => {
                       // }
                       name={currentMatch?.teamC}
                       rates={
-                        currentMatch?.teamC_rate ? currentMatch?.teamC_rate : 0
+                        currentMatch?.profitLossDataMatch?.teamCRate
+                          ? currentMatch?.profitLossDataMatch?.teamCRate
+                          : 0
                       }
                       color={
-                        currentMatch?.teamC_rate <= 0 ? "#FF4D4D" : "#319E5B"
+                        currentMatch?.profitLossDataMatch?.teamCRate <= 0
+                          ? "#FF4D4D"
+                          : "#319E5B"
                       }
                       data={data?.length > 0 ? data[2] : []}
                       lock={false}
@@ -335,36 +409,89 @@ const MatchOdds = (props: any) => {
               <>
                 <BoxComponent
                   // teamImage={currentMatch?.teamA_Image}
-                  name={currentMatch?.teamA}
-                  rates={
-                    currentMatch?.teamA_rate ? currentMatch?.teamA_rate : 0
+                  name={
+                    typeOfBet !== "Match Odds" ? "Yes" : currentMatch?.teamA
                   }
-                  color={currentMatch?.teamA_rate <= 0 ? "#FF4D4D" : "#319E5B"}
+                  rates={
+                    typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamARate
+                        ? currentMatch?.profitLossDataMatch?.teamARate
+                        : 0
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateTie
+                        ? currentMatch?.profitLossDataMatch?.yesRateTie
+                        : 0
+                      : typeOfBet === "Market Complete Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateComplete
+                        ? currentMatch?.profitLossDataMatch?.yesRateComplete
+                        : 0
+                      : 0
+                  }
+                  color={
+                    (typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamARate
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateTie
+                      : currentMatch?.profitLossDataMatch?.yesRateComplete) <= 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                  }
                   data={data?.length > 0 ? data[0] : []}
                   lock={handleLock(data?.length > 0 ? data[0] : [])}
                 />
                 <Divider />
                 <BoxComponent
                   // teamImage={currentMatch?.teamB_Image}
-                  color={currentMatch?.teamB_rate <= 0 ? "#FF4D4D" : "#319E5B"}
-                  name={currentMatch?.teamB}
+                  color={
+                    (typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamBRate
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateTie
+                      : currentMatch?.profitLossDataMatch?.noRateComplete) <= 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                  }
+                  name={typeOfBet !== "Match Odds" ? "No" : currentMatch?.teamB}
                   rates={
-                    currentMatch?.teamB_rate ? currentMatch?.teamB_rate : 0
+                    typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamBRate
+                        ? currentMatch?.profitLossDataMatch?.teamBRate
+                        : 0
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateTie
+                        ? currentMatch?.profitLossDataMatch?.noRateTie
+                        : 0
+                      : typeOfBet === "Market Complete Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateComplete
+                        ? currentMatch?.profitLossDataMatch?.noRateComplete
+                        : 0
+                      : 0
                   }
                   data={data?.length > 0 ? data[1] : []}
                   lock={handleLock(data?.length > 0 ? data[1] : [])}
                   align="end"
                 />
-                {currentMatch?.teamC ? (
+                {currentMatch?.teamC &&
+                typeOfBet !== "Tied Match" &&
+                typeOfBet !== "Manual Tied Match" &&
+                typeOfBet !== "Market Complete Match" ? (
                   <>
                     <Divider />
                     <BoxComponent
                       color={
-                        currentMatch?.teamC_rate <= 0 ? "#FF4D4D" : "#46e080"
+                        currentMatch?.profitLossDataMatch?.teamCRate <= 0
+                          ? "#FF4D4D"
+                          : "#46e080"
                       }
                       name={currentMatch?.teamC}
                       rates={
-                        currentMatch?.teamC_rate ? currentMatch?.teamC_rate : 0
+                        currentMatch?.profitLossDataMatch?.teamCRate
+                          ? currentMatch?.profitLossDataMatch?.teamCRate
+                          : 0
                       }
                       data={data?.length > 0 ? data[2] : []}
                       lock={handleLock(data?.length > 0 ? data[2] : [])}

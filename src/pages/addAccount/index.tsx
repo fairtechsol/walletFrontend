@@ -160,6 +160,7 @@ const AddAccount = () => {
           roleName: values.roleName.value,
           domain: values.domain,
           logo: values.base64Image,
+          creditRefrence: values.creditRefrence,
           sidebarColor: values.sidebarColor,
           headerColor: values.headerColor,
           footerColor: values.footerColor,

@@ -108,12 +108,12 @@ const LiveBookmaker = (props: any) => {
           <SmallBox
             color={"#FF4D4D"}
             valueA={bookRatioA(
-              currentMatch?.teamA_rate,
-              currentMatch?.teamB_rate
+              currentMatch?.profitLossDataMatch?.teamARate,
+              currentMatch?.profitLossDataMatch?.teamBRate
             )}
             valueB={bookRatioB(
-              currentMatch?.teamA_rate,
-              currentMatch?.teamB_rate
+              currentMatch?.profitLossDataMatch?.teamARate,
+              currentMatch?.profitLossDataMatch?.teamBRate
             )}
           />
           <img
@@ -218,8 +218,16 @@ const LiveBookmaker = (props: any) => {
               // color={"#46e080"}
               teamImage={currentMatch?.teamA_Image}
               name={currentMatch?.teamA}
-              rates={currentMatch?.teamA_rate ? currentMatch?.teamA_rate : 0}
-              color={currentMatch?.teamA_rate <= 0 ? "#FF4D4D" : "#319E5B"}
+              rates={
+                currentMatch?.profitLossDataMatch?.teamARate
+                  ? currentMatch?.profitLossDataMatch?.teamARate
+                  : 0
+              }
+              color={
+                currentMatch?.profitLossDataMatch?.teamARate <= 0
+                  ? "#FF4D4D"
+                  : "#319E5B"
+              }
               data={data?.length > 0 ? data[0] : []}
               lock={handleLock(data?.length > 0 ? data[0] : [])}
             />
@@ -229,8 +237,16 @@ const LiveBookmaker = (props: any) => {
               // lock={true}
               teamImage={currentMatch?.teamB_Image}
               name={currentMatch?.teamB}
-              rates={currentMatch?.teamB_rate ? currentMatch?.teamB_rate : 0}
-              color={currentMatch?.teamB_rate <= 0 ? "#FF4D4D" : "#319E5B"}
+              rates={
+                currentMatch?.profitLossDataMatch?.teamBRate
+                  ? currentMatch?.profitLossDataMatch?.teamBRate
+                  : 0
+              }
+              color={
+                currentMatch?.profitLossDataMatch?.teamBRate <= 0
+                  ? "#FF4D4D"
+                  : "#319E5B"
+              }
               data={data?.length > 0 ? data[1] : []}
               lock={handleLock(data?.length > 0 ? data[1] : [])}
               align="end"
@@ -243,10 +259,16 @@ const LiveBookmaker = (props: any) => {
                     currentMatch?.teamC_Image ? currentMatch?.teamC_Image : null
                   }
                   // color={"#FF4D4D"}
-                  color={currentMatch?.teamC_rate <= 0 ? "#FF4D4D" : "#46e080"}
+                  color={
+                    currentMatch?.profitLossDataMatch?.teamCRate <= 0
+                      ? "#FF4D4D"
+                      : "#46e080"
+                  }
                   name={currentMatch?.teamC}
                   rates={
-                    currentMatch?.teamC_rate ? currentMatch?.teamC_rate : 0
+                    currentMatch?.profitLossDataMatch?.teamCRate
+                      ? currentMatch?.profitLossDataMatch?.teamCRate
+                      : 0
                   }
                   data={data?.length > 0 ? data[2] : []}
                   lock={handleLock(data?.length > 0 ? data[2] : [])}
