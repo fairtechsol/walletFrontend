@@ -11,7 +11,7 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
         `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}&sort=match.startAt:ASC`
       );
       if (resp) {
-        return resp?.data?.matches;
+        return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
