@@ -42,6 +42,7 @@ export const ApiConstants = {
   },
   EXPERT: {
     CHANGE_PASSWORD: "/expert/password",
+    LOCK_UNLOCK: "/expert/lockUnlockExpert",
     COMPETITIONLIST: "/expert/match/competitionList/",
     COMPETITIONDATES: "/expert/match/competition/dates/",
     COMPETITIONMATCHES: "/expert/match/competition/getMatch/",

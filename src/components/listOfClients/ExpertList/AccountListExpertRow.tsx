@@ -184,7 +184,23 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
+            display: "flex",
+            paddingX: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "45px",
+            borderRight: "2px solid white",
+          }}
+        >
+          <StyledImage
+            src={!element?.userBlock ? UnLockIcon : LockIcon}
+            sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
+          />
+        </Box>
+        <Box
+          sx={{
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -196,7 +212,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -208,7 +224,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",

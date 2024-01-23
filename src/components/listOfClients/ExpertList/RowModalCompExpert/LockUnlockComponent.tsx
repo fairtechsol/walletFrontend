@@ -7,7 +7,6 @@ import {
   setLockUnlockUser,
   userListSuccessReset,
 } from "../../../../store/actions/user/userAction";
-import { ApiConstants } from "../../../../utils/Constants";
 import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../../assets";
@@ -19,35 +18,22 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, isWallet } =
-    props;
+  const { setSelected, element, endpoint } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,
   };
 
-  const walletLockUnlockObj2 = {
-    all_blocked: walletAccountDetail?.userBlock === true ? true : false,
-    bet_blocked: walletAccountDetail?.betBlock === true ? true : false,
-  };
-
-  const [lockUnlockObj, setLockUnlockObj] = useState(
-    element ? elementLockUnlockObj1 : walletLockUnlockObj2
-  );
+  const [lockUnlockObj, setLockUnlockObj] = useState(elementLockUnlockObj1);
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const id = element?.id
-        ? element?.id
-        : walletAccountDetail?.id
-        ? walletAccountDetail?.id
-        : "";
+      const id = element?.id;
       const payload = {
         userId: id,
         userBlock: lockUnlockObj.all_blocked,
@@ -55,11 +41,12 @@ const LockUnlockComponent = (props: any) => {
       };
       dispatch(
         setLockUnlockUser({
-          url: isWallet ? ApiConstants.WALLET.LOCKUNLOCK : endpoint,
+          url: endpoint,
           payload: payload,
         })
       );
     },
+    
   });
 
   const { handleSubmit } = formik;
@@ -76,9 +63,6 @@ const LockUnlockComponent = (props: any) => {
     }
   }, [success]);
 
-  // const handleLockSubmit = (e: any) => {
-  //   e.preventDefault();
-  // };
   return (
     <form onSubmit={handleSubmit}>
       <Box

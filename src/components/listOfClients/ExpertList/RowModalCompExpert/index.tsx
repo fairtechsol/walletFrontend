@@ -72,7 +72,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 4 && (
             <LockUnlockComponent
-              endpoint={ApiConstants.EXPERT.CHANGE_PASSWORD}
+              endpoint={ApiConstants.EXPERT.LOCK_UNLOCK}
               element={element}
               selected={selected == 4}
               setSelected={() => {
