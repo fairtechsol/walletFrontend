@@ -60,11 +60,14 @@ export const addUserValidation = Yup.object({
       "Full Name should only contain letters and spaces"
     )
     .max(20, "Full Name must be at most 20 characters"),
-  roleName: Yup.object().shape({
+  roleName: Yup.object({
     value: Yup.string().required("Please select an option"),
     label: Yup.string().required("Please select an option"),
   }),
-  // domain: Yup.string().matches(/^http:\/\/localhost:5000$/, "Invalid URL"),
+  // domain: Yup.string().matches(
+  //   /^http:\/\/localhost:5000$/,
+  //   "Your URL should be http://3.89.232.255:5000 format for dev"
+  // ),
   // matchCommissionType: Yup.string().required(
   //   "Match Commission Type is required"
   // ),
