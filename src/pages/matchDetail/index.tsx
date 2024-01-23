@@ -114,6 +114,7 @@ const MatchDetail = () => {
         );
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
+        socketService.match.sessionDeleteBet(matchDeleteBet);
       }
     } catch (e) {
       console.log(e);

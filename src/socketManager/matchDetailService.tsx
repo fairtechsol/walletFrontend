@@ -31,4 +31,7 @@ export const matchSocketService = {
   matchDeleteBet: (callback: any) => {
     socket.on("matchDeleteBet", callback);
   },
+  sessionDeleteBet: (callback: any) => {
+    socket.on("sessionDeleteBet", callback);
+  },
 };
