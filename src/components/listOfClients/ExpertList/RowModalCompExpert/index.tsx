@@ -3,6 +3,7 @@ import ChangePasswordComponent from "../../RowModalComponents/ChangePasswordComp
 import BoxButton from "../../RowModalComponents/BoxButton";
 import { ApiConstants } from "../../../../utils/Constants";
 import LockUnlockComponent from "./LockUnlockComponent";
+import { memo } from "react";
 
 const RowModalComponents = (props: any) => {
   const { element, selected, setSelected, backgroundColor } = props;
@@ -72,7 +73,7 @@ const RowModalComponents = (props: any) => {
           )}
           {selected == 4 && (
             <LockUnlockComponent
-              endpoint={ApiConstants.EXPERT.CHANGE_PASSWORD}
+              endpoint={ApiConstants.EXPERT.LOCK_UNLOCK}
               element={element}
               selected={selected == 4}
               setSelected={() => {
@@ -134,4 +135,4 @@ const RowModalComponents = (props: any) => {
   );
 };
 
-export default RowModalComponents;
+export default memo(RowModalComponents);

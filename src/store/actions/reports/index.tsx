@@ -28,7 +28,7 @@ export const getAccountStatement = createAsyncThunk<any, AccountStatement>(
           requestData.pageLimit ? requestData.pageLimit : Constants.pageLimit
         }&searchBy=${requestData?.searchBy || ""}&keyword=${
           requestData?.keyword || ""
-        }${requestData?.filter || ""}`
+        }${requestData?.filter || ""}&sort=transaction.createdAt:DESC`
       );
       if (resp) {
         return resp?.data;

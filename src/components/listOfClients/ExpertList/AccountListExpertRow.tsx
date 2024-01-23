@@ -4,7 +4,7 @@ import { AccountListRowInterface } from "../../../interface/listOfClients";
 import StyledImage from "../../Common/StyledImages";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { memo, useState } from "react";
 import RowModalComponents from "./RowModalCompExpert";
 
 const AccountListExpertRow = (props: AccountListRowInterface) => {
@@ -21,6 +21,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
+
   return (
     <>
       <Box
@@ -184,7 +185,23 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
+            display: "flex",
+            paddingX: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "45px",
+            borderRight: "2px solid white",
+          }}
+        >
+          <StyledImage
+            src={!element?.userBlock ? UnLockIcon : LockIcon}
+            sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
+          />
+        </Box>
+        <Box
+          sx={{
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -196,7 +213,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -208,7 +225,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "15vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -261,4 +278,4 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
   );
 };
 
-export default AccountListExpertRow;
+export default memo(AccountListExpertRow);

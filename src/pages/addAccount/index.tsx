@@ -32,6 +32,7 @@ import {
   addUserValidation,
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
+import _ from "lodash";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -58,7 +59,7 @@ const AddAccount = () => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
-  const formDataSchema = {
+  const formDataSchema: any = {
     userName: "",
     password: "",
     confirmPassword: "",
@@ -133,55 +134,59 @@ const AddAccount = () => {
     initialValues: formDataSchema,
     validationSchema: addUserValidation,
     onSubmit: (values: any) => {
-      const commonPayload = {
-        userName: values.userName,
-        fullName: values.fullName,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        phoneNumber: values.phoneNumber.toString(),
-        city: values.city,
-      };
+      try {
+        const commonPayload = {
+          userName: values.userName,
+          fullName: values.fullName,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+          phoneNumber: values.phoneNumber.toString(),
+          city: values.city,
+        };
 
-      let payload;
-      if (values.roleName.value === "expert") {
-        payload = {
-          ...commonPayload,
-          transactionPassword: values.adminTransPassword,
-          allPrivilege: lockUnlockObj.allPrivilege,
-          addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
-          betFairMatchPrivilege: lockUnlockObj.betFairMatchPrivilege,
-          bookmakerMatchPrivilege: lockUnlockObj.bookmakerMatchPrivilege,
-          sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
-        };
-        dispatch(addExpert(payload));
-      } else if (values.roleName.value === "superAdmin") {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          domain: values.domain,
-          logo: values.base64Image,
-          creditRefrence: values.creditRefrence,
-          sidebarColor: values.sidebarColor,
-          headerColor: values.headerColor,
-          footerColor: values.footerColor,
-          transactionPassword: values.adminTransPassword,
-          myPartnership: values.myPartnership,
-        };
-        dispatch(addUrlAdmin(payload));
-      } else {
-        payload = {
-          ...commonPayload,
-          roleName: values.roleName.value,
-          creditRefrence: values.creditRefrence,
-          exposureLimit: values.exposureLimit,
-          maxBetLimit: values.maxBetLimit,
-          minBetLimit: values.minBetLimit,
-          myPartnership: values.myPartnership,
-          transactionPassword: values.adminTransPassword,
-        };
-        dispatch(addUser(payload));
+        let payload;
+        if (values.roleName.value === "expert") {
+          payload = {
+            ...commonPayload,
+            transactionPassword: values.adminTransPassword,
+            allPrivilege: lockUnlockObj.allPrivilege,
+            addMatchPrivilege: lockUnlockObj.addMatchPrivilege,
+            betFairMatchPrivilege: lockUnlockObj.betFairMatchPrivilege,
+            bookmakerMatchPrivilege: lockUnlockObj.bookmakerMatchPrivilege,
+            sessionMatchPrivilege: lockUnlockObj.sessionMatchPrivilege,
+          };
+          dispatch(addExpert(payload));
+        } else if (values.roleName.value === "superAdmin") {
+          payload = {
+            ...commonPayload,
+            roleName: values.roleName.value,
+            domain: values.domain,
+            logo: values.base64Image,
+            creditRefrence: values.creditRefrence,
+            sidebarColor: values.sidebarColor,
+            headerColor: values.headerColor,
+            footerColor: values.footerColor,
+            transactionPassword: values.adminTransPassword,
+            myPartnership: values.myPartnership,
+          };
+          dispatch(addUrlAdmin(payload));
+        } else {
+          payload = {
+            ...commonPayload,
+            roleName: values.roleName.value,
+            creditRefrence: values.creditRefrence,
+            exposureLimit: values.exposureLimit,
+            maxBetLimit: values.maxBetLimit,
+            minBetLimit: values.minBetLimit,
+            myPartnership: values.myPartnership,
+            transactionPassword: values.adminTransPassword,
+          };
+          dispatch(addUser(payload));
+        }
+        dispatch(updateReset());
+      } catch (e) {
+        console.log(e);
       }
-      dispatch(updateReset());
     },
   });
 
@@ -247,69 +252,82 @@ const AddAccount = () => {
   };
 
   const handleImageChange = (event: any) => {
-    const file = event.currentTarget.files[0];
+    try {
+      const file = event.currentTarget.files[0];
 
-    if (!file.type.includes("jpeg") && !file.type.includes("png")) {
-      alert("File should be either JPEG or PNG");
-      return;
-    }
-
-    if (file) {
-      if (file.size > 1024 * 100 * 5) {
-        alert("File should be smaller than 500/400");
+      if (!file.type.includes("jpeg") && !file.type.includes("png")) {
+        alert("File should be either JPEG or PNG");
         return;
       }
-      console.warn(file.size);
-      formik.setFieldValue("logo", file);
 
-      // Convert the image to base64
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        formik.setFieldValue("base64Image", reader.result);
-      };
-      reader.readAsDataURL(file);
+      if (file) {
+        if (file.size > 1024 * 100 * 5) {
+          alert("File should be smaller than 500/400");
+          return;
+        }
+        console.warn(file.size);
+        formik.setFieldValue("logo", file);
+
+        // Convert the image to base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          formik.setFieldValue("base64Image", reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const handleUpline = () => {
-    const {
-      aPartnership,
-      saPartnership,
-      smPartnership,
-      faPartnership,
-      fwPartnership,
-      roleName,
-    } = profileDetail;
-
-    const partnershipMap: any = {
-      superMaster: aPartnership + saPartnership + faPartnership + fwPartnership,
-      superAdmin: faPartnership + fwPartnership,
-      master:
-        smPartnership +
-        aPartnership +
-        saPartnership +
-        faPartnership +
+    try {
+      const {
+        aPartnership,
+        saPartnership,
+        smPartnership,
+        faPartnership,
         fwPartnership,
-      admin: saPartnership + faPartnership + fwPartnership,
-      fairGameWallet: 0,
-      fairGameAdmin: fwPartnership,
-    };
+        roleName,
+      } = profileDetail;
 
-    const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+      const partnershipMap: any = {
+        superMaster:
+          aPartnership + saPartnership + faPartnership + fwPartnership,
+        superAdmin: faPartnership + fwPartnership,
+        master:
+          smPartnership +
+          aPartnership +
+          saPartnership +
+          faPartnership +
+          fwPartnership,
+        admin: saPartnership + faPartnership + fwPartnership,
+        fairGameWallet: 0,
+        fairGameAdmin: fwPartnership,
+      };
 
-    return thisUplinePertnerShip;
+      const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+
+      return thisUplinePertnerShip;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    setTypeForAccountType();
-    if (profileDetail && profileDetail.roleName) {
-      const res = handleUpline();
-      formik.setValues({
-        ...formik.values,
-        uplinePartnership: res,
-        downlinePartnership: 100 - res,
-      });
-      setDown(100 - res);
+    try {
+      setTypeForAccountType();
+      if (profileDetail && profileDetail.roleName) {
+        const res = handleUpline();
+        formik.setValues({
+          ...formik.values,
+          uplinePartnership: res,
+          downlinePartnership: 100 - res,
+        });
+        setDown(100 - res);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }, [profileDetail]);
 
@@ -325,6 +343,7 @@ const AddAccount = () => {
       console.log(e);
     }
   }, [addSuccess]);
+  console.log(formik.errors);
 
   return (
     <>
@@ -732,14 +751,10 @@ const AddAccount = () => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}
                     isDisabled={state?.id}
-                    value={formik.values.roleName}
-                    touched={touched.roleName}
-                    error={touched.roleName && Boolean(errors.roleName)}
+                    value={formik?.values?.roleName}
+                    touched={_.get(touched, "roleName.value")}
+                    error={_.get(errors, "roleName.value")}
                     onBlur={formik.handleBlur}
-                  />
-                  <CustomErrorMessage
-                    touched={touched.roleName}
-                    errors={errors.roleName}
                   />
                 </Box>
 

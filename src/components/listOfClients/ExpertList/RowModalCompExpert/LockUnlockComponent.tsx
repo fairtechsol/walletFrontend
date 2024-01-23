@@ -1,17 +1,18 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
 import {
+  getUserList,
   setLockUnlockUser,
   userListSuccessReset,
 } from "../../../../store/actions/user/userAction";
-import { ApiConstants } from "../../../../utils/Constants";
 import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../../assets";
 import BoxButton from "../../RowModalComponents/BoxButton";
+import { ApiConstants } from "../../../../utils/Constants";
 
 const initialValues: any = {
   userBlock: false,
@@ -19,35 +20,22 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, isWallet } =
-    props;
+  const { setSelected, element, endpoint } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,
   };
 
-  const walletLockUnlockObj2 = {
-    all_blocked: walletAccountDetail?.userBlock === true ? true : false,
-    bet_blocked: walletAccountDetail?.betBlock === true ? true : false,
-  };
-
-  const [lockUnlockObj, setLockUnlockObj] = useState(
-    element ? elementLockUnlockObj1 : walletLockUnlockObj2
-  );
+  const [lockUnlockObj, setLockUnlockObj] = useState(elementLockUnlockObj1);
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      const id = element?.id
-        ? element?.id
-        : walletAccountDetail?.id
-        ? walletAccountDetail?.id
-        : "";
+      const id = element?.id;
       const payload = {
         userId: id,
         userBlock: lockUnlockObj.all_blocked,
@@ -55,7 +43,7 @@ const LockUnlockComponent = (props: any) => {
       };
       dispatch(
         setLockUnlockUser({
-          url: isWallet ? ApiConstants.WALLET.LOCKUNLOCK : endpoint,
+          url: endpoint,
           payload: payload,
         })
       );
@@ -72,13 +60,16 @@ const LockUnlockComponent = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
+      dispatch(
+        getUserList({
+          currentPage: 1,
+          url: { endpoint: ApiConstants.USER.EXPERTLIST },
+        })
+      );
       dispatch(userListSuccessReset());
     }
   }, [success]);
 
-  // const handleLockSubmit = (e: any) => {
-  //   e.preventDefault();
-  // };
   return (
     <form onSubmit={handleSubmit}>
       <Box
@@ -281,4 +272,4 @@ const LockUnlockComponent = (props: any) => {
   );
 };
 
-export default LockUnlockComponent;
+export default memo(LockUnlockComponent);

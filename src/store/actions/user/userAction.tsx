@@ -341,10 +341,10 @@ export const setExposureLimit = createAsyncThunk<any, any>(
 
 export const setLockUnlockUser = createAsyncThunk<any, any>(
   "/user/lockUnlockUser",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.LOCKUNLOCK}`,
+        `${requestData.url}`,
         requestData.payload
       );
       if (resp) {
@@ -352,7 +352,7 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
