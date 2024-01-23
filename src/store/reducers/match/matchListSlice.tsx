@@ -16,7 +16,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  matchListInplay: [],
+  matchListInplay: null,
   matchDetail: null,
   loading: false,
   success: false,
@@ -60,17 +60,19 @@ const matchListSlice = createSlice({
       .addCase(updateMatchListRates.fulfilled, (state, action) => {
         const { id, matchOdd } = action.payload;
         if (matchOdd) {
-          const matchListIndex = state.matchListInplay.findIndex(
+          const matchListIndex = state.matchListInplay.matches.findIndex(
             (match: any) => match?.id === id
           );
           if (matchListIndex !== -1) {
-            const updatedMatchlist = [...state.matchListInplay];
+            const updatedMatchlist = [...state.matchListInplay.matches];
 
             let matchOdds =
-              state?.matchListInplay?.matchOdds &&
-              state?.matchListInplay?.matchOdds.length > 0
-                ? state.matchListInplay?.matchOdds[0]
-                : state.matchListInplay?.matchOdds;
+              state?.matchListInplay.matches[matchListIndex]?.matchOdds &&
+              state?.matchListInplay.matches[matchListIndex]?.matchOdds.length >
+                0
+                ? state.matchListInplay.matches[matchListIndex].matchOdds[0]
+                : state.matchListInplay.matches[matchListIndex].matchOdds;
+
             updatedMatchlist[matchListIndex] = {
               ...updatedMatchlist[matchListIndex],
               matchOdds: [
@@ -80,9 +82,13 @@ const matchListSlice = createSlice({
                 },
               ],
             };
+
             return {
               ...state,
-              matchListInplay: updatedMatchlist,
+              matchListInplay: {
+                ...state.matchListInplay,
+                matches: updatedMatchlist,
+              },
             };
           }
         }
