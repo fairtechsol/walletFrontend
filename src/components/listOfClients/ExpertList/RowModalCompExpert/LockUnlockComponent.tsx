@@ -1,9 +1,10 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
 import {
+  getUserList,
   setLockUnlockUser,
   userListSuccessReset,
 } from "../../../../store/actions/user/userAction";
@@ -11,6 +12,7 @@ import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../../assets";
 import BoxButton from "../../RowModalComponents/BoxButton";
+import { ApiConstants } from "../../../../utils/Constants";
 
 const initialValues: any = {
   userBlock: false,
@@ -46,7 +48,6 @@ const LockUnlockComponent = (props: any) => {
         })
       );
     },
-    
   });
 
   const { handleSubmit } = formik;
@@ -59,6 +60,12 @@ const LockUnlockComponent = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
+      dispatch(
+        getUserList({
+          currentPage: 1,
+          url: { endpoint: ApiConstants.USER.EXPERTLIST },
+        })
+      );
       dispatch(userListSuccessReset());
     }
   }, [success]);
@@ -265,4 +272,4 @@ const LockUnlockComponent = (props: any) => {
   );
 };
 
-export default LockUnlockComponent;
+export default memo(LockUnlockComponent);

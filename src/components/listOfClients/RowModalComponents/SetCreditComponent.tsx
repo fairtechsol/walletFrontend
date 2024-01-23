@@ -6,6 +6,8 @@ import BoxButton from "./BoxButton";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getUserList,
+  getUsersProfile,
   setCreditRefference,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
@@ -75,6 +77,16 @@ const SetCreditComponent = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
+      if (isWallet) {
+        dispatch(getUsersProfile());
+      } else {
+        dispatch(
+          getUserList({
+            currentPage: 1,
+            url: { endpoint: ApiConstants.USER.LIST },
+          })
+        );
+      }
       dispatch(userListSuccessReset());
     }
   }, [success]);

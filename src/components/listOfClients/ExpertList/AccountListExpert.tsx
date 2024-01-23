@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountListDataInterface } from "../../../interface/listOfClients";
 import { getUserList } from "../../../store/actions/user/userAction";
@@ -135,4 +135,4 @@ const AccountListExpert = (endpoint: any) => {
   );
 };
 
-export default AccountListExpert;
+export default memo(AccountListExpert);

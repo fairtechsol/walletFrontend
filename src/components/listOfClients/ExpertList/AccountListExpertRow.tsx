@@ -4,7 +4,7 @@ import { AccountListRowInterface } from "../../../interface/listOfClients";
 import StyledImage from "../../Common/StyledImages";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { memo, useState } from "react";
 import RowModalComponents from "./RowModalCompExpert";
 
 const AccountListExpertRow = (props: AccountListRowInterface) => {
@@ -21,6 +21,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
+
   return (
     <>
       <Box
@@ -277,4 +278,4 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
   );
 };
 
-export default AccountListExpertRow;
+export default memo(AccountListExpertRow);

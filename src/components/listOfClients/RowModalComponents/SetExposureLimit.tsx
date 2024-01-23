@@ -7,6 +7,8 @@ import BoxButton from "./BoxButton";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getUserList,
+  getUsersProfile,
   setExposureLimit,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
@@ -22,13 +24,7 @@ const initialValues: any = {
 };
 
 const SetExposureLimit = (props: any) => {
-  const {
-    backgroundColor,
-    setSelected,
-    element,
-    endpoint,
-    isWallet,
-  } = props;
+  const { backgroundColor, setSelected, element, endpoint, isWallet } = props;
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -71,6 +67,16 @@ const SetExposureLimit = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
+      if (isWallet) {
+        dispatch(getUsersProfile());
+      } else {
+        dispatch(
+          getUserList({
+            currentPage: 1,
+            url: { endpoint: ApiConstants.USER.LIST },
+          })
+        );
+      }
       dispatch(userListSuccessReset());
     }
   }, [success]);

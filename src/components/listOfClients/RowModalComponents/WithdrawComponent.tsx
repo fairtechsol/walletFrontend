@@ -16,6 +16,8 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeAmmountUser,
+  getUserList,
+  getUsersProfile,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -93,6 +95,16 @@ const WithdrawComponent = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
+      if (isWallet) {
+        dispatch(getUsersProfile());
+      } else {
+        dispatch(
+          getUserList({
+            currentPage: 1,
+            url: { endpoint: ApiConstants.USER.LIST },
+          })
+        );
+      }
       dispatch(userListSuccessReset());
     }
   }, [success]);
