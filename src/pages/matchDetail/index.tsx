@@ -135,6 +135,18 @@ const MatchDetail = () => {
     }
   }, [success]);
 
+  const QuicksessionData = matchDetail?.sessionBettings
+    ?.filter((item: any) => !JSON.parse(item).selectionId)
+    ?.map((item: any) => {
+      return item;
+    });
+
+  const sessionData = matchDetail?.sessionBettings
+    ?.filter((item: any) => JSON.parse(item).selectionId)
+    ?.map((item: any) => {
+      return item;
+    });
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -246,7 +258,7 @@ const MatchDetail = () => {
             <SessionMarket
               title={"Quick Session Market"}
               currentMatch={matchDetail}
-              sessionData={matchDetail?.sessionBettings}
+              sessionData={QuicksessionData}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
             />
@@ -255,6 +267,7 @@ const MatchDetail = () => {
             <SessionMarket
               title={"Session Market"}
               currentMatch={matchDetail}
+              sessionData={sessionData}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
             />
@@ -390,7 +403,7 @@ const MatchDetail = () => {
                 title={"Quick Session Market"}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
-                sessionData={matchDetail?.sessionBettings}
+                sessionData={QuicksessionData}
                 min={matchDetail?.betFairSessionMinBet || 0}
                 max={matchDetail?.betFairSessionMaxBet || 0}
               />
@@ -400,6 +413,7 @@ const MatchDetail = () => {
                 title={"Session Market"}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
+                sessionData={sessionData}
                 max={Math.floor(matchDetail?.betFairSessionMaxBet)}
                 min={Math.floor(matchDetail?.betFairSessionMinBet)}
               />
