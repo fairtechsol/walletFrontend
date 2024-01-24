@@ -102,6 +102,18 @@ const MultipleMatch = ({}) => {
                     (element: any) => element?.match_id === item?.id
                   );
 
+                  const QuicksessionData = item?.sessionBettings
+                    ?.filter((item: any) => !JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
+                  const sessionData = item?.sessionBettings
+                    ?.filter((item: any) => JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
                   return (
                     <>
                       {index === 0 ? (
@@ -238,7 +250,7 @@ const MultipleMatch = ({}) => {
                                   title={"Quick Session Market"}
                                   // match={"multiple"}
                                   //   currentOdds={currentOdds}
-                                  sessionData={item?.sessionBettings}
+                                  sessionData={QuicksessionData}
                                   currentMatch={item}
                                   data={[]}
                                   sessionOffline={item?.sessionOffline}
@@ -260,6 +272,7 @@ const MultipleMatch = ({}) => {
                                   title={"Session Market"}
                                   match={"multiple"}
                                   //   currentOdds={currentOdds}
+                                  sessionData={sessionData}
                                   currentMatch={item}
                                   data={[]}
                                   sessionOffline={item?.sessionOffline}
@@ -564,6 +577,19 @@ const MultipleMatch = ({}) => {
                   let sessionBetsData = sessionBets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
+
+                  const QuicksessionData = item?.sessionBettings
+                    ?.filter((item: any) => !JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
+                  const sessionData = item?.sessionBettings
+                    ?.filter((item: any) => JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
                   return (
                     <>
                       <Box
@@ -701,7 +727,7 @@ const MultipleMatch = ({}) => {
                             title={"Quick Session Market"}
                             // match={"multiple"}
                             currentMatch={item}
-                            sessionData={item?.sessionBettings}
+                            sessionData={QuicksessionData}
                             // currentOdds={currentOdds}
                             sessionOffline={item?.sessionOffline}
                             // sessionExposer={manualSessionHttp?.sessionExposure}
@@ -718,6 +744,7 @@ const MultipleMatch = ({}) => {
                             title={"Session Market"}
                             match={"multiple"}
                             currentMatch={item}
+                            sessionData={sessionData}
                             // currentOdds={currentOdds}
                             sessionOffline={item?.sessionOffline}
                             // sessionExposer={manualSessionHttp?.sessionExposure}
