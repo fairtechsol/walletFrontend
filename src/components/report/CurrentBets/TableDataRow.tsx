@@ -101,13 +101,18 @@ const TableDataRow = (props: any) => {
           width: "11%",
           display: "flex",
           paddingLeft: "10px",
-          background: data.betType === "YES" ? "#FFB5B5" : "#A7DCFF",
+          background:
+            data.betType === "YES" || data.betType === "BACK"
+              ? "#FFB5B5"
+              : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "600", color: "#575757" }}
+        >
           {data.teamName}
         </Typography>
       </Box>
@@ -116,13 +121,18 @@ const TableDataRow = (props: any) => {
           width: "11%",
           display: "flex",
           paddingLeft: "10px",
-          background: data.betType === "YES" ? "#FFB5B5" : "#A7DCFF",
+          background:
+            data.betType === "YES" || data.betType === "BACK"
+              ? "#FFB5B5"
+              : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "600", color: "#575757" }}
+        >
           {data.betType}
         </Typography>
       </Box>
@@ -130,14 +140,19 @@ const TableDataRow = (props: any) => {
         sx={{
           width: "7%",
           display: "flex",
-          background: data.BetType === "yes" ? "#FFB5B5" : "#A7DCFF",
+          background:
+            data.betType === "YES" || data.betType === "BACK"
+              ? "#FFB5B5"
+              : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
           justifyContent: "center",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {data.rate}
         </Typography>
       </Box>
@@ -146,13 +161,18 @@ const TableDataRow = (props: any) => {
           width: "8%",
           display: "flex",
           justifyContent: "center",
-          background: data.betType === "YES" ? "#FFB5B5" : "#A7DCFF",
+          background:
+            data.betType === "YES" || data.betType === "BACK"
+              ? "#FFB5B5"
+              : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {data.betType}
         </Typography>
       </Box>
@@ -161,13 +181,18 @@ const TableDataRow = (props: any) => {
           width: "8%",
           display: "flex",
           paddingLeft: "10px",
-          background: data.BetType === "yes" ? "#FFB5B5" : "#A7DCFF",
+          background:
+            data.betType === "YES" || data.betType === "BACK"
+              ? "#FFB5B5"
+              : "#A7DCFF",
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {data.amount}
         </Typography>
       </Box>
@@ -183,10 +208,14 @@ const TableDataRow = (props: any) => {
           background: flag ? "#ECECEC" : "#FFE094",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {moment(data.createdAt).format("DD-MM-YYYY")}
         </Typography>
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {moment(data.createdAt).format("HH:mm A")}
         </Typography>
       </Box>
@@ -202,10 +231,14 @@ const TableDataRow = (props: any) => {
           background: flag ? "#ECECEC" : "#FFE094",
         }}
       >
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {moment(data.createdAt).format("DD-MM-YYYY")}
         </Typography>
-        <Typography sx={{ fontSize: "12px", fontWeight: "700" }}>
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+        >
           {moment(data.createdAt).format("HH:mm A")}
         </Typography>
       </Box>
