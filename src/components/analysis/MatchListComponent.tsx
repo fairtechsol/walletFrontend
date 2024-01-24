@@ -55,7 +55,7 @@ const MatchListComponent = (props: any) => {
   const upcoming =
     Number(timeLeft.days) === 0 &&
     Number(timeLeft.hours) === 0 &&
-    Number(timeLeft.minutes) <= 59;
+    Number(timeLeft.minutes) <= 30;
   return (
     <Box
       onClick={() => {
