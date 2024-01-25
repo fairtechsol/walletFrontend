@@ -58,7 +58,7 @@ export const ApiConstants = {
 };
 
 export const Constants = {
-  pageLimit: 10,
+  pageLimit: 15,
   AuthPaths: {
     root: "/",
     login: "wallet/login",
