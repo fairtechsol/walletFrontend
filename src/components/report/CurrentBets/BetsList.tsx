@@ -49,6 +49,7 @@ const BetsList = (props: any) => {
         getLimitEntries={getLimitEntries}
         setPageLimit={setPageLimit}
         pageLimit={pageLimit}
+        setCurrentPage={setCurrentPage}
       />
 
       <Box sx={{ overflowX: "scroll" }}>

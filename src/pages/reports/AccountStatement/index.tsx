@@ -101,6 +101,7 @@ const AccountStatement = () => {
             searchFor={"accountStatement"}
             pageLimit={pageLimit}
             setPageLimit={setPageLimit}
+            setCurrentPage={setCurrentPage}
           />
 
           {loading ? (

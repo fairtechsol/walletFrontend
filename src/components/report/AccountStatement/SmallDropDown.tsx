@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { ARROWDROPDOWN } from "../../../assets";
 
-const SmallDropDown = ({ setPageLimit, pageLimit }: any) => {
+const SmallDropDown = ({ setPageLimit, pageLimit, setCurrentPage }: any) => {
   const [open, setOpen] = useState(false);
   return (
     <Box>
@@ -71,6 +71,7 @@ const SmallDropDown = ({ setPageLimit, pageLimit }: any) => {
                   key={idx}
                   onClick={() => {
                     setPageLimit(+item);
+                    setCurrentPage(1);
                     setOpen(false);
                   }}
                   sx={{ textAlign: "center", paddingY: "1px" }}
