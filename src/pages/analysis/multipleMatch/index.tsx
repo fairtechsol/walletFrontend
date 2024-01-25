@@ -12,7 +12,7 @@ import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import SessionMarket from "../../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   analysisListReset,
@@ -31,6 +31,7 @@ const MultipleMatch = ({}) => {
   );
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
+  const [selectedBetData, setSelectedBetData] = useState([]);
   const { multipleMatchDetail, success } = useSelector(
     (state: RootState) => state.match.analysisList
   );
@@ -43,17 +44,21 @@ const MultipleMatch = ({}) => {
   };
 
   useEffect(() => {
-    if (state?.matchIds) {
-      socketService.match.leaveAllRooms();
-      dispatch(getMultipleMatchDetail(state?.matchIds));
-    }
-    if (state?.matchIds && state?.matchIds?.length > 0) {
-      state?.matchIds?.map((item: any) => {
-        socketService.match.joinMatchRoom(item, profileDetail?.roleName);
-      });
-      state?.matchIds?.map((item: any) => {
-        socketService.match.getMatchRates(item, updateMatchDetailToRedux);
-      });
+    try {
+      if (state?.matchIds) {
+        socketService.match.leaveAllRooms();
+        dispatch(getMultipleMatchDetail(state?.matchIds));
+      }
+      if (state?.matchIds && state?.matchIds?.length > 0) {
+        state?.matchIds?.map((item: any) => {
+          socketService.match.joinMatchRoom(item, profileDetail?.roleName);
+        });
+        state?.matchIds?.map((item: any) => {
+          socketService.match.getMatchRates(item, updateMatchDetailToRedux);
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
     return () => {
       state?.matchIds?.map((item: any) => {
@@ -96,6 +101,18 @@ const MultipleMatch = ({}) => {
                   let sessionBetsData = sessionBets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
+
+                  const QuicksessionData = item?.sessionBettings
+                    ?.filter((item: any) => !JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
+                  const sessionData = item?.sessionBettings
+                    ?.filter((item: any) => JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
 
                   return (
                     <>
@@ -233,7 +250,7 @@ const MultipleMatch = ({}) => {
                                   title={"Quick Session Market"}
                                   // match={"multiple"}
                                   //   currentOdds={currentOdds}
-                                  sessionData={item?.sessionBettings}
+                                  sessionData={QuicksessionData}
                                   currentMatch={item}
                                   data={[]}
                                   sessionOffline={item?.sessionOffline}
@@ -255,6 +272,7 @@ const MultipleMatch = ({}) => {
                                   title={"Session Market"}
                                   match={"multiple"}
                                   //   currentOdds={currentOdds}
+                                  sessionData={sessionData}
                                   currentMatch={item}
                                   data={[]}
                                   sessionOffline={item?.sessionOffline}
@@ -293,14 +311,12 @@ const MultipleMatch = ({}) => {
                                   }}
                                 ></Box>
                               </Box>
-                              {profileDetail?.roleName === "fairGameWallet" && (
-                                <FullAllBets
-                                  tag={false}
-                                  IObets={IObetsData}
-                                  //   setSelectedBetData={setSelectedBetData}
-                                  //   selectedBetData={selectedBetData}
-                                />
-                              )}
+                              <FullAllBets
+                                tag={false}
+                                IObets={IObetsData}
+                                setSelectedBetData={setSelectedBetData}
+                                selectedBetData={selectedBetData}
+                              />
                             </Box>
                           </Box>
                         </>
@@ -480,14 +496,12 @@ const MultipleMatch = ({}) => {
                                 min={item?.betFairSessionMaxBet}
                               />
                             )}
-                            {profileDetail?.roleName === "fairGameWallet" && (
-                              <FullAllBets
-                                tag={true}
-                                IObets={IObetsData}
-                                //   setSelectedBetData={setSelectedBetData}
-                                //   selectedBetData={selectedBetData}
-                              />
-                            )}
+                            <FullAllBets
+                              tag={true}
+                              IObets={IObetsData}
+                              setSelectedBetData={setSelectedBetData}
+                              selectedBetData={selectedBetData}
+                            />
                           </Box>
                         </>
                       )}
@@ -563,6 +577,19 @@ const MultipleMatch = ({}) => {
                   let sessionBetsData = sessionBets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
+
+                  const QuicksessionData = item?.sessionBettings
+                    ?.filter((item: any) => !JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
+                  const sessionData = item?.sessionBettings
+                    ?.filter((item: any) => JSON.parse(item).selectionId)
+                    ?.map((item: any) => {
+                      return item;
+                    });
+
                   return (
                     <>
                       <Box
@@ -700,7 +727,7 @@ const MultipleMatch = ({}) => {
                             title={"Quick Session Market"}
                             // match={"multiple"}
                             currentMatch={item}
-                            sessionData={item?.sessionBettings}
+                            sessionData={QuicksessionData}
                             // currentOdds={currentOdds}
                             sessionOffline={item?.sessionOffline}
                             // sessionExposer={manualSessionHttp?.sessionExposure}
@@ -717,6 +744,7 @@ const MultipleMatch = ({}) => {
                             title={"Session Market"}
                             match={"multiple"}
                             currentMatch={item}
+                            sessionData={sessionData}
                             // currentOdds={currentOdds}
                             sessionOffline={item?.sessionOffline}
                             // sessionExposer={manualSessionHttp?.sessionExposure}
@@ -727,14 +755,12 @@ const MultipleMatch = ({}) => {
                             min={item?.betFairSessionMinBet}
                           />
                         )}
-                        {profileDetail?.roleName === "fairGameWallet" && (
-                          <FullAllBets
-                            tag={true}
-                            IObets={IObetsData}
-                            //   setSelectedBetData={setSelectedBetData}
-                            //   selectedBetData={selectedBetData}
-                          />
-                        )}
+                        <FullAllBets
+                          tag={true}
+                          IObets={IObetsData}
+                          setSelectedBetData={setSelectedBetData}
+                          selectedBetData={selectedBetData}
+                        />
                       </Box>
                     </>
                   );

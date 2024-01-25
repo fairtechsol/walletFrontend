@@ -48,7 +48,7 @@ const FullAllBets = (props: any) => {
             {
               name: v?.teamName,
               color: "black",
-              background: ["YES", "back"].includes(v?.betType)
+              background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"
                 : "rgb(255, 146, 146)",
               deletedReason: v?.deletedReason,
@@ -57,7 +57,7 @@ const FullAllBets = (props: any) => {
               name: v?.odds,
               color: "black",
               rate: v.rate ? (v?.betType === "NO" ? v?.rate : v?.rate) : null,
-              background: ["YES", "back"].includes(v?.betType)
+              background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"
                 : "rgb(255, 146, 146)",
               small: true,
@@ -66,7 +66,7 @@ const FullAllBets = (props: any) => {
             {
               name: v?.betType,
               color: "black",
-              background: ["YES", "back"].includes(v?.betType)
+              background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"
                 : "rgb(255, 146, 146)",
               small: true,
@@ -75,7 +75,7 @@ const FullAllBets = (props: any) => {
             {
               name: v?.amount || v?.stake,
               color: "black",
-              background: ["YES", "back"].includes(v?.betType)
+              background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"
                 : "rgb(255, 146, 146)",
               deletedReason: v?.deletedReason,
@@ -89,7 +89,7 @@ const FullAllBets = (props: any) => {
             {
               name: moment(v?.createdAt).format("LT"),
               color: "black",
-              background: ["YES", "back"].includes(v?.betType)
+              background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"
                 : "rgb(255, 146, 146)",
               time: true,

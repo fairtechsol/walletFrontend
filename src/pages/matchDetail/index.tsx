@@ -135,6 +135,18 @@ const MatchDetail = () => {
     }
   }, [success]);
 
+  const QuicksessionData = matchDetail?.sessionBettings
+    ?.filter((item: any) => !JSON.parse(item).selectionId)
+    ?.map((item: any) => {
+      return item;
+    });
+
+  const sessionData = matchDetail?.sessionBettings
+    ?.filter((item: any) => JSON.parse(item).selectionId)
+    ?.map((item: any) => {
+      return item;
+    });
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -246,7 +258,7 @@ const MatchDetail = () => {
             <SessionMarket
               title={"Quick Session Market"}
               currentMatch={matchDetail}
-              sessionData={matchDetail?.sessionBettings}
+              sessionData={QuicksessionData}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
             />
@@ -255,6 +267,7 @@ const MatchDetail = () => {
             <SessionMarket
               title={"Session Market"}
               currentMatch={matchDetail}
+              sessionData={sessionData}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
             />
@@ -267,53 +280,18 @@ const MatchDetail = () => {
               // matchId={matchId}
             />
           )}
-          {profileDetail?.roleName === "fairGameWallet" && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                width: "100%",
-              }}
-            >
-              {mode && (
-                <Box
-                  onClick={() => {
-                    setMode(!mode);
-                  }}
-                  sx={{
-                    width: "150px",
-                    marginY: ".75%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "5px",
-                    background: "#f1c550",
-                    height: "35px",
-                    border: "1.5px solid white",
-                    display: "flex",
-                    alignSelf: "flex-end",
-                    cursor: "pointer",
-                  }}
-                >
-                  <Typography
-                    style={{
-                      fontWeight: "600",
-                      fontSize: "13px",
-                      color: "black",
-                      marginRight: "10px",
-                    }}
-                  >
-                    {"Cancel"}
-                  </Typography>
-                </Box>
-              )}
-              <Box sx={{ width: "2%" }}></Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
+          >
+            {mode && (
               <Box
                 onClick={() => {
-                  if (mode) {
-                    setVisible(true);
-                  } else {
-                    setMode(!mode);
-                  }
+                  setMode(!mode);
                 }}
                 sx={{
                   width: "150px",
@@ -321,7 +299,7 @@ const MatchDetail = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: "5px",
-                  background: "#E32A2A",
+                  background: "#f1c550",
                   height: "35px",
                   border: "1.5px solid white",
                   display: "flex",
@@ -333,35 +311,59 @@ const MatchDetail = () => {
                   style={{
                     fontWeight: "600",
                     fontSize: "13px",
-                    color: "white",
+                    color: "black",
                     marginRight: "10px",
                   }}
                 >
-                  {profileDetail?.roleName === "fairGameWallet" && !mode
-                    ? "Delete Bet"
-                    : "Delete"}
+                  {"Cancel"}
                 </Typography>
-                <img
-                  src={DeleteIcon}
-                  style={{ width: "17px", height: "20px" }}
-                />
               </Box>
-            </Box>
-          )}
-          {/* } */}
-          {profileDetail?.roleName === "fairGameWallet" && (
+            )}
+            <Box sx={{ width: "2%" }}></Box>
             <Box
-              sx={{ mt: profileDetail?.roleName === "fairGameWallet" ? 0 : 1 }}
+              onClick={() => {
+                if (mode) {
+                  setVisible(true);
+                } else {
+                  setMode(!mode);
+                }
+              }}
+              sx={{
+                width: "150px",
+                marginY: ".75%",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "5px",
+                background: "#E32A2A",
+                height: "35px",
+                border: "1.5px solid white",
+                display: "flex",
+                alignSelf: "flex-end",
+                cursor: "pointer",
+              }}
             >
-              <FullAllBets
-                IObets={placedBets.length > 0 ? placedBets : []}
-                mode={mode}
-                tag={false}
-                setSelectedBetData={setSelectedBetData}
-                selectedBetData={selectedBetData}
-              />
+              <Typography
+                style={{
+                  fontWeight: "600",
+                  fontSize: "13px",
+                  color: "white",
+                  marginRight: "10px",
+                }}
+              >
+                {!mode ? "Delete Bet" : "Delete"}
+              </Typography>
+              <img src={DeleteIcon} style={{ width: "17px", height: "20px" }} />
             </Box>
-          )}
+          </Box>
+          <Box sx={{ mt: 0 }}>
+            <FullAllBets
+              IObets={placedBets.length > 0 ? placedBets : []}
+              mode={mode}
+              tag={false}
+              setSelectedBetData={setSelectedBetData}
+              selectedBetData={selectedBetData}
+            />
+          </Box>
         </Box>
         {!matchesMobile && <Box sx={{ width: "20px" }} />}
         {!matchesMobile && (
@@ -401,7 +403,7 @@ const MatchDetail = () => {
                 title={"Quick Session Market"}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
-                sessionData={matchDetail?.sessionBettings}
+                sessionData={QuicksessionData}
                 min={matchDetail?.betFairSessionMinBet || 0}
                 max={matchDetail?.betFairSessionMaxBet || 0}
               />
@@ -411,6 +413,7 @@ const MatchDetail = () => {
                 title={"Session Market"}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
+                sessionData={sessionData}
                 max={Math.floor(matchDetail?.betFairSessionMaxBet)}
                 min={Math.floor(matchDetail?.betFairSessionMinBet)}
               />
