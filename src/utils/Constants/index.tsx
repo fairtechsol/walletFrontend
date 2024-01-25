@@ -37,9 +37,12 @@ export const ApiConstants = {
     CHANGEPASSWORD: "/user/changePassword",
     REPORTS: {
       GETACCOUNTSTATEMENT: "/transaction/get",
+      CURRENT_BETS: "/superadmin/bets",
     },
   },
   EXPERT: {
+    CHANGE_PASSWORD: "/expert/password",
+    LOCK_UNLOCK: "/expert/lockUnlockExpert",
     COMPETITIONLIST: "/expert/match/competitionList/",
     COMPETITIONDATES: "/expert/match/competition/dates/",
     COMPETITIONMATCHES: "/expert/match/competition/getMatch/",
@@ -50,6 +53,7 @@ export const ApiConstants = {
   MATCH: {
     GET: "match",
     BETDELETE: "/bet/deleteMultipleBet",
+    GET_BETS: "/superadmin/bets",
   },
 };
 

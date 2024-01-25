@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
-import { ApiConstants } from "../../../utils/Constants";
+// import { ApiConstants } from "../../../utils/Constants";
 
-const ListHeaderRow = ({ getLimitEntries }: any) => {
+const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit }: any) => {
   return (
     <Box
       sx={{
@@ -21,8 +21,18 @@ const ListHeaderRow = ({ getLimitEntries }: any) => {
         py: "6px",
       }}
     >
-      <NumberDropDown getLimitEntries={getLimitEntries} textColor={"000"} />
-      <SearchInput show={true} width={"100%"} placeholder={"Search..."} endpoint={ApiConstants.USER.LIST}/>
+      <NumberDropDown
+        getLimitEntries={getLimitEntries}
+        textColor={"000"}
+        setPageLimit={setPageLimit}
+        pageLimit={pageLimit}
+      />
+      <SearchInput
+        show={true}
+        width={"100%"}
+        searchFor={"currentBets"}
+        placeholder={"Search..."}
+      />
     </Box>
   );
 };

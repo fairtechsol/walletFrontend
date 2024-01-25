@@ -8,10 +8,10 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
+        `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}&sort=match.startAt:ASC`
       );
       if (resp) {
-        return resp?.data?.matches;
+        return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -24,7 +24,7 @@ export const getAnalysisList = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
+        `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}&sort=match.startAt:ASC`
       );
       if (resp) {
         return resp?.data;
@@ -51,6 +51,29 @@ export const getMatchDetail = createAsyncThunk<any, any>(
     }
   }
 );
+
+export const getPlacedBets = createAsyncThunk<any, any>(
+  "get/placedBets",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${
+          ApiConstants.MATCH.GET_BETS
+        }?betPlaced.matchId=${requestData}&result=inArr${JSON.stringify([
+          "PENDING",
+          "UNDECLARE",
+        ])}`
+      );
+      if (resp?.data) {
+        return resp?.data;
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
 export const getMultipleMatchDetail = createAsyncThunk<any, any>(
   "multipleMatch/detail",
   async (requestData, thunkApi) => {
@@ -126,18 +149,18 @@ export const getCompetitionMatches = createAsyncThunk<any, any>(
 
 export const AllBetDelete = createAsyncThunk<any, any>(
   "bet/allbet",
-  async (requestData) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.MATCH.BETDELETE}${requestData?.id}`,
-        requestData.payload
+        `${ApiConstants.MATCH.BETDELETE}`,
+        requestData
       );
       if (resp) {
         return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      return thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );

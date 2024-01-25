@@ -11,6 +11,11 @@ interface AccountStatement {
   filter?: any;
   pageLimit?: any;
 }
+interface currentBets {
+  searchBy?: any;
+  keyword?: any;
+  filter?: any;
+}
 
 export const getAccountStatement = createAsyncThunk<any, AccountStatement>(
   "accountStatement/list",
@@ -23,7 +28,25 @@ export const getAccountStatement = createAsyncThunk<any, AccountStatement>(
           requestData.pageLimit ? requestData.pageLimit : Constants.pageLimit
         }&searchBy=${requestData?.searchBy || ""}&keyword=${
           requestData?.keyword || ""
-        }${requestData?.filter || ""}`
+        }${requestData?.filter || ""}&sort=transaction.createdAt:DESC`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const getCurrentBets = createAsyncThunk<any, currentBets>(
+  "currentBets/list",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.WALLET.REPORTS.CURRENT_BETS}?&searchBy=${
+          requestData?.searchBy || ""
+        }&keyword=${requestData?.keyword || ""}`
       );
       if (resp) {
         return resp?.data;

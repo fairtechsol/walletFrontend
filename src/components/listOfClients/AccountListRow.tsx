@@ -7,7 +7,7 @@ import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
 import { AccountListRowInterface } from "../../interface/listOfClients";
 import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
-import {Modal} from "../Common/Modal";
+import { Modal } from "../Common/Modal";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
 
 const AccountListRow = (props: AccountListRowInterface) => {
@@ -158,22 +158,20 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.userBal?.myProfitLoss) >= 0
-                ? "#27AC1E"
-                : "#E32A2A",
+              Number(element?.userBal?.profitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.userBal?.myProfitLoss) >= 0 ? (
+            {Number(element?.userBal?.profitLoss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.userBal?.myProfitLoss}
+                {element?.userBal?.profitLoss}
               </>
             ) : (
-              element?.userBal?.myProfitLoss
+              element?.userBal?.profitLoss
             )}
           </Typography>
           <StyledImage
@@ -306,7 +304,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
-       
+
         <Box
           sx={{
             width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
@@ -510,7 +508,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   }}
                   onClick={() => {
                     if (element?.totalComission !== null) {
-                      setShowSuccessModal(true)
+                      setShowSuccessModal(true);
                     } else {
                       return false;
                     }
@@ -573,7 +571,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
 
       <ModalMUI
         open={false}
-        onClose={() => { }}
+        onClose={() => {}}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -589,7 +587,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
         ></Box>
       </ModalMUI>
 
-          
       {showSuccessModal && (
         <Modal
           message={showModalMessage}
@@ -602,8 +599,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
           <CommissionReportTable />
         </Modal>
       )}
-
-
     </>
   );
 };

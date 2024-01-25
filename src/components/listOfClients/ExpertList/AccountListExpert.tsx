@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountListDataInterface } from "../../../interface/listOfClients";
 import { getUserList } from "../../../store/actions/user/userAction";
@@ -14,12 +14,10 @@ import ListHeaderExpertRow from "./ListHeaderExpertRow";
 const AccountListExpert = (endpoint: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const dispatch: AppDispatch = useDispatch();
-  const loading = false;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  // const { profileDetail } = useSelector(
-  //   (state: RootState) => state.user.profile
-  // );
-  const { userList } = useSelector((state: RootState) => state.user.userList);
+  const { userList, loading } = useSelector(
+    (state: RootState) => state.user.userList
+  );
 
   useEffect(() => {
     dispatch(getUserList({ currentPage: currentPage, url: endpoint }));
@@ -137,4 +135,4 @@ const AccountListExpert = (endpoint: any) => {
   );
 };
 
-export default AccountListExpert;
+export default memo(AccountListExpert);

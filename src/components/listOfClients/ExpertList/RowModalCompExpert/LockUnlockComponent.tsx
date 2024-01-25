@@ -1,56 +1,49 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
-
+import { useState, useEffect, memo } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store/store";
 import {
   getUserList,
-  getUsersProfile,
-  setExposureLimit,
+  setLockUnlockUser,
   userListSuccessReset,
-} from "../../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../../store/store";
-import { depositAmountValidations } from "../../../utils/Validations";
-import { ApiConstants } from "../../../utils/Constants";
+} from "../../../../store/actions/user/userAction";
+import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
+import StyledImage from "../../../Common/StyledImages";
+import { EyeIcon, EyeSlash } from "../../../../assets";
+import BoxButton from "../../RowModalComponents/BoxButton";
+import { ApiConstants } from "../../../../utils/Constants";
 
 const initialValues: any = {
-  userId: "",
-  amount: "",
-  remark: "",
+  userBlock: false,
   transactionPassword: "",
 };
 
-const SetExposureLimit = (props: any) => {
-  const { backgroundColor, setSelected, element, endpoint, isWallet } = props;
+const LockUnlockComponent = (props: any) => {
+  const { setSelected, element, endpoint } = props;
+
+  let elementLockUnlockObj1 = {
+    all_blocked: element?.userBlock === true ? true : false,
+    bet_blocked: element?.betBlock === true ? true : false,
+  };
+
+  const [lockUnlockObj, setLockUnlockObj] = useState(elementLockUnlockObj1);
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: initialValues,
-    validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
-      let payload;
-      if (isWallet) {
-        payload = {
-          amount: values.amount,
-          transactionPassword: values.transactionPassword,
-          // remark: values.remark,
-        };
-      } else {
-        payload = {
-          userId: element?.id,
-          amount: values.amount,
-          transactionPassword: values.transactionPassword,
-          // remark: values.remark,
-        };
-      }
+      const id = element?.id;
+      const payload = {
+        userId: id,
+        userBlock: lockUnlockObj.all_blocked,
+        transactionPassword: values.transactionPassword,
+      };
       dispatch(
-        setExposureLimit({
-          url: isWallet ? ApiConstants.WALLET.EXPOSURELIMIT : endpoint,
+        setLockUnlockUser({
+          url: endpoint,
           payload: payload,
         })
       );
@@ -59,7 +52,7 @@ const SetExposureLimit = (props: any) => {
 
   const { handleSubmit } = formik;
 
-  const { loading, success } = useSelector(
+  const { success, loading } = useSelector(
     (state: RootState) => state.user.userList
   );
 
@@ -67,16 +60,12 @@ const SetExposureLimit = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
-      if (isWallet) {
-        dispatch(getUsersProfile());
-      } else {
-        dispatch(
-          getUserList({
-            currentPage: 1,
-            url: { endpoint: ApiConstants.USER.LIST },
-          })
-        );
-      }
+      dispatch(
+        getUserList({
+          currentPage: 1,
+          url: { endpoint: ApiConstants.USER.EXPERTLIST },
+        })
+      );
       dispatch(userListSuccessReset());
     }
   }, [success]);
@@ -87,62 +76,61 @@ const SetExposureLimit = (props: any) => {
         sx={{
           display: "flex",
           borderRadius: "5px",
-          paddingRight: "10px",
+          // paddingRight: { xs: "0", lg: "10px" },
           flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 2,
+          // width: { xs: "92vw", md: "80%", lg: "80%" },
         }}
       >
         <Box sx={{ width: "100%" }}>
           <Box
             sx={{
               display: "flex",
+              justifyContent: {
+                xs: "center",
+                md: "flex-start ",
+                lg: "flex-start ",
+              },
+              height: "45px",
               alignItems: "center",
-              justifyContent: "flex-end",
-              flexDirection: { xs: "column", md: "row", lg: "row" },
+              overflow: "hidden",
             }}
           >
             <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
-                width: { xs: "100%", lg: "40%", md: "40%" },
+                width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
+
+                visibility: "hidden",
+                display: { xs: "none", lg: "block" },
               }}
             >
-              New Exposure Limit
+              Dummy
             </Typography>
             <Box
               sx={{
-                background: "#004A25",
-                width: { xs: "100%", lg: "60%", md: "60%" },
+                width: { xs: "100%", lg: "65%", md: "65%" },
                 height: "45px",
+                // background: "white",
+                display: "flex",
+                alignItems: "center",
                 borderRadius: "5px",
-                paddingX: "20px",
+                // border: "2px solid #26262633",
+                // paddingX: "20px",
               }}
             >
-              <TextField
-                // onKeyDown={handleKeyDown}
-                required={true}
-                id="amount"
-                name="amount"
-                value={formik.values.amount}
-                onChange={formik.handleChange}
-                variant="standard"
-                InputProps={{
-                  placeholder: "Type Amount...",
-                  disableUnderline: true,
-                  autoComplete: "new-password",
-                  autoFocus: true,
-                  inputProps: { min: "0" },
-                  style: {
-                    fontSize: "15px",
-                    height: "45px",
-                    fontWeight: "600",
-                    color: "white",
-                  },
-                }}
-                type={"Number"}
-              />
+              <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>
+                <BoxButtonWithSwitch
+                  title={"User"}
+                  name={"all_blocked"}
+                  val={lockUnlockObj?.all_blocked}
+                  showLockUnlock={true}
+                  setLockUnlockObj={setLockUnlockObj}
+                  lockUnlockObj={lockUnlockObj}
+                />
+              </Box>
             </Box>
           </Box>
           <Box
@@ -150,15 +138,16 @@ const SetExposureLimit = (props: any) => {
               display: "flex",
               alignItems: "center",
               overflow: "hidden",
-              justifyContent: "flex-end",
-              marginTop: "10px",
               flexDirection: { xs: "column", md: "row", lg: "row" },
+              justifyContent: "flex-start",
+              marginTop: "10px",
+              width: "100%",
             }}
           >
             <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
-                width: { xs: "100%", lg: "40%", md: "40%" },
+                width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
               }}
@@ -167,7 +156,7 @@ const SetExposureLimit = (props: any) => {
             </Typography>
             <Box
               sx={{
-                width: { xs: "100%", lg: "60%", md: "60%" },
+                width: { xs: "100%", lg: "65%", md: "65%" },
                 height: "45px",
                 background: "white",
                 display: "flex",
@@ -210,59 +199,41 @@ const SetExposureLimit = (props: any) => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ display: "flex", overflow: "hidden", width: "100%" }}>
-          <Box
-            sx={{
-              flex: 1,
-              background: backgroundColor == "#ECECEC" ? "white" : "#FFECBC",
-              display: "flex",
-              alignItems: "center",
-              borderRadius: "5px",
-              border: "2px solid #26262633",
-              minHeight: "80px",
-              maxHeight: "115px",
-              paddingX: "10px",
-            }}
-          >
-            <TextField
-              id="remark"
-              name="remark"
-              value={formik.values.remark}
-              onChange={formik.handleChange}
-              rows={4}
-              sx={{ width: "100%", minHeight: "40px" }}
-              multiline={true}
-              variant="standard"
-              InputProps={{
-                placeholder: "Remark (Optional)",
-                disableUnderline: true,
-                style: {
-                  fontSize: "13px",
-                  minHeight: "45px",
-                  fontWeight: "600",
-                },
-              }}
-            />
-          </Box>
-        </Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: {
-              xs: "row",
-              md: "column",
-              lg: "column",
+              xs: "row-reverse",
+              md: "column-reverse",
+              lg: "column-reverse",
             },
-            justifyContent: "center",
+            justifyContent: {
+              xs: "space-between",
+              md: "center",
+              lg: "center",
+            },
             gap: 1,
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", width: "150px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: { xs: "48%", md: "150px", lg: "150px" },
+            }}
+          >
             <BoxButton
               color={"#0B4F26"}
               loading={loading}
-              containerStyle={{ width: "150px", height: "35px" }}
+              containerStyle={{
+                maxWidth: "100%!important",
+                height: "44px",
+                flex: {
+                  xs: "0 0 100%",
+                  md: "0 0 100%",
+                  lg: "0 0 100%",
+                },
+              }}
               isSelected={true}
               type="submit"
               title={"Submit"}
@@ -271,17 +242,22 @@ const SetExposureLimit = (props: any) => {
           <Box
             sx={{
               display: "flex",
-              width: "150px",
-              marginTop: { xs: 0, md: "10px", lg: "10px" },
+              width: { xs: "48%", md: "150px", lg: "150px" },
+              marginTop: { xs: 0, md: "0", lg: "0" },
             }}
           >
             <BoxButton
               color={"#E32A2A"}
               containerStyle={{
-                width: "150px",
+                maxWidth: "100%!important",
+                height: "44px",
                 background: "#E32A2A",
                 border: "0px",
-                height: "35px",
+                flex: {
+                  xs: "0 0 100%",
+                  md: "0 0 100%",
+                  lg: "0 0 100%",
+                },
               }}
               isSelected={true}
               onClick={() => {
@@ -296,4 +272,4 @@ const SetExposureLimit = (props: any) => {
   );
 };
 
-export default SetExposureLimit;
+export default memo(LockUnlockComponent);

@@ -32,33 +32,54 @@ const Inplay = () => {
     (state: RootState) => state.user.profile
   );
 
+  const matchResultDeclared = () => {
+    try {
+      dispatch(getMatchListInplay({ currentPage: currentPage }));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    dispatch(getMatchListInplay({ currentPage: currentPage }));
+    try {
+      dispatch(getMatchListInplay({ currentPage: currentPage }));
+    } catch (e) {
+      console.log(e);
+    }
   }, [currentPage]);
 
   useEffect(() => {
-    if (success) {
-      dispatch(matchListReset());
+    try {
+    } catch (e) {
+      if (success) {
+        dispatch(matchListReset());
+      }
     }
   }, [success]);
 
   useEffect(() => {
-    if (matchListInplay && matchListInplay?.length > 0) {
-      matchListInplay?.map((item: any) => {
-        socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
-      });
+    try {
+      if (matchListInplay && matchListInplay?.matches?.length > 0) {
+        matchListInplay?.matches?.map((item: any) => {
+          socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+        });
+        socketService.match.matchResultDeclared(matchResultDeclared);
+        socketService.match.matchResultUnDeclared(matchResultDeclared);
+      }
+    } catch (e) {
+      console.log(e);
     }
     return () => {
-      matchListInplay?.map((item: any) => {
+      matchListInplay?.matches?.map((item: any) => {
         socketService.match.leaveMatchRoom(item?.id);
       });
     };
-  }, [matchListInplay.length]);
+  }, []);
 
   return (
     <>
-      {matchListInplay?.length > 0 ? (
-        matchListInplay?.map((match: any) => {
+      {matchListInplay && matchListInplay?.matches?.length > 0 ? (
+        matchListInplay?.matches?.map((match: any) => {
           return (
             <MatchComponent
               key={match.id}
@@ -88,12 +109,12 @@ const Inplay = () => {
           </TableBody>
         </Table>
       )}
-      {matchListInplay?.length > 0 && (
+      {matchListInplay && matchListInplay?.matches?.length > 0 && (
         <Pagination
           page={currentPage}
           className="whiteTextPagination d-flex justify-content-center"
           count={Math.ceil(
-            parseInt(matchListInplay?.length ? matchListInplay?.length : 1) /
+            parseInt(matchListInplay?.count ? matchListInplay?.count : 1) /
               Constants.pageLimit
           )}
           color="primary"

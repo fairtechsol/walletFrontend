@@ -16,7 +16,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  matchListInplay: [],
+  matchListInplay: null,
   matchDetail: null,
   loading: false,
   success: false,
@@ -58,35 +58,39 @@ const matchListSlice = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(updateMatchListRates.fulfilled, (state, action) => {
-        const { id, matchOdd } = action.payload; // Assuming action.payload contains matchId and updatedOdd
+        const { id, matchOdd } = action.payload;
+        if (matchOdd) {
+          const matchListIndex = state.matchListInplay.matches.findIndex(
+            (match: any) => match?.id === id
+          );
+          if (matchListIndex !== -1) {
+            const updatedMatchlist = [...state.matchListInplay.matches];
 
-        // Find the index of the match in state.matchlistinplay.matchlist
-        const matchListIndex = state.matchListInplay.findIndex(
-          (match: any) => match?.id === id
-        );
+            let matchOdds =
+              state?.matchListInplay.matches[matchListIndex]?.matchOdds &&
+              state?.matchListInplay.matches[matchListIndex]?.matchOdds.length >
+                0
+                ? state.matchListInplay.matches[matchListIndex].matchOdds[0]
+                : state.matchListInplay.matches[matchListIndex].matchOdds;
 
-        // If the match is found, update the specific field (e.g., bookmaker)
-        if (matchListIndex !== -1) {
-          const updatedMatchlist = [...state.matchListInplay];
+            updatedMatchlist[matchListIndex] = {
+              ...updatedMatchlist[matchListIndex],
+              matchOdds: [
+                {
+                  ...matchOdds,
+                  ...matchOdd,
+                },
+              ],
+            };
 
-          let matchOdds =
-            state?.matchListInplay?.matchOdds &&
-            state?.matchListInplay?.matchOdds.length > 0
-              ? state.matchListInplay?.matchOdds[0]
-              : state.matchListInplay?.matchOdds;
-          updatedMatchlist[matchListIndex] = {
-            ...updatedMatchlist[matchListIndex],
-            matchOdds: [
-              {
-                ...matchOdds,
-                ...matchOdd,
+            return {
+              ...state,
+              matchListInplay: {
+                ...state.matchListInplay,
+                matches: updatedMatchlist,
               },
-            ],
-          };
-          return {
-            ...state,
-            matchListInplay: updatedMatchlist,
-          };
+            };
+          }
         }
         return state;
       })
@@ -103,6 +107,8 @@ const matchListSlice = createSlice({
         } = action.payload;
         state.matchDetail = {
           ...state.matchDetail,
+          manualSessionActive: sessionBettings?.length >= 0 ? true : false,
+          apiSessionActive: apiSession?.length >= 0 ? true : false,
           apiSession: apiSession,
           apiTideMatch: apiTiedMatch,
           bookmaker: bookmaker,

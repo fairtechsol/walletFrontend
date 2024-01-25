@@ -4,7 +4,11 @@ import { EyeIcon, EyeSlash } from "../../../assets";
 import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
-import { userListSuccessReset } from "../../../store/actions/user/userAction";
+import {
+  getUserList,
+  getUsersProfile,
+  userListSuccessReset,
+} from "../../../store/actions/user/userAction";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { setLockUnlockUser } from "../../../store/actions/user/userAction";
@@ -72,6 +76,16 @@ const LockUnlockComponent = (props: any) => {
     if (success) {
       formik.resetForm();
       setSelected(false);
+      if (isWallet) {
+        dispatch(getUsersProfile());
+      } else {
+        dispatch(
+          getUserList({
+            currentPage: 1,
+            url: { endpoint: ApiConstants.USER.LIST },
+          })
+        );
+      }
       dispatch(userListSuccessReset());
     }
   }, [success]);

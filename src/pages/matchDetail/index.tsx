@@ -4,13 +4,14 @@ import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import {
   AllBetDelete,
   getMatchDetail,
+  getPlacedBets,
   matchListReset,
   updateMatchRates,
 } from "../../store/actions/match/matchAction";
@@ -20,6 +21,7 @@ import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
 
 const MatchDetail = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { profileDetail } = useSelector(
@@ -27,65 +29,133 @@ const MatchDetail = () => {
   );
   const [mode, setMode] = useState(false);
   const [visible, setVisible] = useState(false);
-  // const [selectedData, setSelectedData] = useState([]);
   const [selectedBetData, setSelectedBetData] = useState([]);
-  const [loadingDeleteBet] = useState(false);
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.match.matchList
   );
+  const { placedBets, loading } = useSelector(
+    (state: RootState) => state.match.bets
+  );
 
-  const handleDeleteBet = () => {
-    let payload = {
-      matchId: state?.matchId,
-      deleteReason: "test the api",
-      urlData: {
-        "http://localhost:5000": selectedBetData,
-      },
-    };
-    dispatch(AllBetDelete(payload));
+  const handleDeleteBet = (value: any) => {
+    try {
+      let payload: any = {
+        matchId: state?.matchId,
+        deleteReason: value,
+        urlData: {},
+      };
+      selectedBetData.forEach((item: any) => {
+        const { userId, betId, domain } = item;
+
+        if (!payload.urlData[domain]) {
+          payload.urlData[domain] = [];
+        }
+
+        payload.urlData[domain].push({
+          userId,
+          betId,
+          placeBetId: item.id,
+        });
+      });
+      dispatch(AllBetDelete(payload));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const updateMatchDetailToRedux = (event: any) => {
-    if (state?.matchId === event?.id) {
-      dispatch(updateMatchRates(event));
-    } else return;
+    try {
+      if (state?.matchId === event?.id) {
+        dispatch(updateMatchRates(event));
+      } else return;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const matchResultDeclared = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        if (location.pathname.includes("market_analysis")) {
+          navigate("/wallet/market_analysis");
+        } else {
+          navigate("/wallet/live_market");
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const matchDeleteBet = (event: any) => {
+    try {
+      setMode(false);
+      if (event?.matchId === state?.matchId) {
+        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    if (state?.matchId) {
-      socketService.match.leaveAllRooms();
-      dispatch(getMatchDetail(state?.matchId));
-      socketService.match.joinMatchRoom(
-        state?.matchId,
-        profileDetail?.roleName
-      );
-      socketService.match.getMatchRates(
-        state?.matchId,
-        updateMatchDetailToRedux
-      );
+    try {
+      if (state?.matchId) {
+        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getPlacedBets(state?.matchId));
+        socketService.match.joinMatchRoom(
+          state?.matchId,
+          profileDetail?.roleName
+        );
+        socketService.match.getMatchRates(
+          state?.matchId,
+          updateMatchDetailToRedux
+        );
+        socketService.match.matchResultDeclared(matchResultDeclared);
+        socketService.match.matchDeleteBet(matchDeleteBet);
+        socketService.match.sessionDeleteBet(matchDeleteBet);
+      }
+    } catch (e) {
+      console.log(e);
     }
     return () => {
+      socketService.match.leaveAllRooms();
       socketService.match.leaveMatchRoom(state?.matchId);
     };
   }, [state?.matchId]);
 
   useEffect(() => {
-    if (success) {
-      dispatch(matchListReset());
+    try {
+      if (success) {
+        dispatch(matchListReset());
+      }
+    } catch (e) {
+      console.log(e);
     }
   }, [success]);
 
+  const QuicksessionData = matchDetail?.sessionBettings
+    ?.filter((item: any) => !JSON.parse(item).selectionId)
+    ?.map((item: any) => {
+      return item;
+    });
+
+  const sessionData = matchDetail?.sessionBettings
+    ?.filter((item: any) => JSON.parse(item).selectionId)
+    ?.map((item: any) => {
+      return item;
+    });
+
   return (
     <>
-      {visible && (
+      {visible && selectedBetData.length > 0 && (
         <>
           <AddNotificationModal
             value={""}
             title={"Add Remark"}
             visible={visible}
-            loadingDeleteBet={loadingDeleteBet}
+            loadingDeleteBet={loading}
             setVisible={setVisible}
             onDone={handleDeleteBet}
             onClick={(e: any) => {
@@ -123,7 +193,7 @@ const MatchDetail = () => {
           >
             {matchDetail?.teamA} V/S {matchDetail?.teamB}
           </Typography>
-          {matchDetail?.matchOdd && (
+          {matchDetail?.matchOdd?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Match Odds"}
@@ -131,7 +201,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
             />
           )}
-          {matchDetail?.marketCompleteMatch && (
+          {matchDetail?.marketCompleteMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Market Complete Match"}
@@ -139,7 +209,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
             />
           )}
-          {matchDetail?.apiTideMatch && (
+          {matchDetail?.apiTideMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Tied Match"}
@@ -147,7 +217,7 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
             />
           )}
-          {matchDetail?.bookmaker && (
+          {matchDetail?.bookmaker?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
               minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
@@ -184,11 +254,11 @@ const MatchDetail = () => {
             />
           )}
 
-          {matchDetail?.apiSessionActive && matchesMobile && (
+          {matchDetail?.manualSessionActive && matchesMobile && (
             <SessionMarket
               title={"Quick Session Market"}
               currentMatch={matchDetail}
-              sessionData={matchDetail?.sessionBettings}
+              sessionData={QuicksessionData}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
             />
@@ -197,6 +267,7 @@ const MatchDetail = () => {
             <SessionMarket
               title={"Session Market"}
               currentMatch={matchDetail}
+              sessionData={sessionData}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
             />
@@ -209,53 +280,18 @@ const MatchDetail = () => {
               // matchId={matchId}
             />
           )}
-          {profileDetail?.roleName === "fairGameWallet" && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                width: "100%",
-              }}
-            >
-              {mode && (
-                <Box
-                  onClick={() => {
-                    setMode(!mode);
-                  }}
-                  sx={{
-                    width: "150px",
-                    marginY: ".75%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "5px",
-                    background: "#f1c550",
-                    height: "35px",
-                    border: "1.5px solid white",
-                    display: "flex",
-                    alignSelf: "flex-end",
-                    cursor: "pointer",
-                  }}
-                >
-                  <Typography
-                    style={{
-                      fontWeight: "600",
-                      fontSize: "13px",
-                      color: "black",
-                      marginRight: "10px",
-                    }}
-                  >
-                    {"Cancel"}
-                  </Typography>
-                </Box>
-              )}
-              <Box sx={{ width: "2%" }}></Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
+          >
+            {mode && (
               <Box
                 onClick={() => {
-                  if (mode) {
-                    setVisible(true);
-                  } else {
-                    setMode(!mode);
-                  }
+                  setMode(!mode);
                 }}
                 sx={{
                   width: "150px",
@@ -263,7 +299,7 @@ const MatchDetail = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: "5px",
-                  background: "#E32A2A",
+                  background: "#f1c550",
                   height: "35px",
                   border: "1.5px solid white",
                   display: "flex",
@@ -275,98 +311,59 @@ const MatchDetail = () => {
                   style={{
                     fontWeight: "600",
                     fontSize: "13px",
-                    color: "white",
+                    color: "black",
                     marginRight: "10px",
                   }}
                 >
-                  {profileDetail?.roleName === "fairGameWallet" && !mode
-                    ? "Delete Bet"
-                    : "Delete"}
+                  {"Cancel"}
                 </Typography>
-                <img
-                  src={DeleteIcon}
-                  style={{ width: "17px", height: "20px" }}
-                />
               </Box>
-            </Box>
-          )}
-          {/* } */}
-          {profileDetail?.roleName === "fairGameWallet" && (
+            )}
+            <Box sx={{ width: "2%" }}></Box>
             <Box
-              sx={{ mt: profileDetail?.roleName === "fairGameWallet" ? 0 : 1 }}
+              onClick={() => {
+                if (mode) {
+                  setVisible(true);
+                } else {
+                  setMode(!mode);
+                }
+              }}
+              sx={{
+                width: "150px",
+                marginY: ".75%",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "5px",
+                background: "#E32A2A",
+                height: "35px",
+                border: "1.5px solid white",
+                display: "flex",
+                alignSelf: "flex-end",
+                cursor: "pointer",
+              }}
             >
-              <FullAllBets
-                IObets={[
-                  {
-                    id: "d5c89cfb-c5d1-4e66-ad7d-436f567b7300",
-                    isActive: true,
-                    createAt: "2024-01-05T12:33:33.303Z",
-                    updateAt: "2024-01-05T12:33:33.303Z",
-                    createdBy: "4113dbe1-dd42-489d-85bf-6cc9c50e3c7f",
-                    deletedAt: null,
-                    user_id: "4113dbe1-dd42-489d-85bf-6cc9c50e3c7f",
-                    match_id: "b501723d-a82c-4a95-a20c-c40e428fce04",
-                    bet_id: "5b259bdb-8431-4bab-8696-22a0eec9bf17",
-                    result: "pending",
-                    team_bet: "Bangladesh",
-                    amount: 100,
-                    odds: 10,
-                    win_amount: 10,
-                    loss_amount: 100,
-                    max_loss_amount: 7290,
-                    bet_type: "back",
-                    country: "Not found",
-                    ip_address: "Not found",
-                    rate: null,
-                    marketType: "QuickBookmaker0",
-                    deleted_reason: null,
-                    user: {
-                      id: "4113dbe1-dd42-489d-85bf-6cc9c50e3c7f",
-                      userName: "SUSER00",
-                      fullName: "",
-                      fw_partnership: 10,
-                    },
-                    myStack: "10.00",
-                  },
-                  {
-                    id: "b800eb45-d460-4946-8517-d7085b8ac82d",
-                    isActive: true,
-                    createAt: "2023-12-27T05:58:10.481Z",
-                    updateAt: "2024-01-05T04:07:29.283Z",
-                    createdBy: "c0cc10f9-53df-4371-afea-bf09e0dab206",
-                    deletedAt: null,
-                    user_id: "c0cc10f9-53df-4371-afea-bf09e0dab206",
-                    match_id: "b501723d-a82c-4a95-a20c-c40e428fce04",
-                    bet_id: "5b259bdb-8431-4bab-8696-22a0eec9bf17",
-                    result: "pending",
-                    team_bet: "Bangladesh",
-                    amount: 100,
-                    odds: 10,
-                    win_amount: 10,
-                    loss_amount: 100,
-                    max_loss_amount: 420,
-                    bet_type: "back",
-                    country: "Not found",
-                    ip_address: "Not found",
-                    rate: null,
-                    marketType: "QuickBookmaker1",
-                    deleted_reason: "check delete payload",
-                    user: {
-                      id: "c0cc10f9-53df-4371-afea-bf09e0dab206",
-                      userName: "SUSER1",
-                      fullName: "",
-                      fw_partnership: 10,
-                    },
-                    myStack: "10.00",
-                  },
-                ]}
-                mode={mode}
-                tag={false}
-                setSelectedBetData={setSelectedBetData}
-                selectedBetData={selectedBetData}
-              />
+              <Typography
+                style={{
+                  fontWeight: "600",
+                  fontSize: "13px",
+                  color: "white",
+                  marginRight: "10px",
+                }}
+              >
+                {!mode ? "Delete Bet" : "Delete"}
+              </Typography>
+              <img src={DeleteIcon} style={{ width: "17px", height: "20px" }} />
             </Box>
-          )}
+          </Box>
+          <Box sx={{ mt: 0 }}>
+            <FullAllBets
+              IObets={placedBets.length > 0 ? placedBets : []}
+              mode={mode}
+              tag={false}
+              setSelectedBetData={setSelectedBetData}
+              selectedBetData={selectedBetData}
+            />
+          </Box>
         </Box>
         {!matchesMobile && <Box sx={{ width: "20px" }} />}
         {!matchesMobile && (
@@ -391,7 +388,7 @@ const MatchDetail = () => {
                 sx={{ width: "150px", marginY: ".75%", height: "15px" }}
               ></Box>
             </Box>
-            {matchDetail?.manualTiedMatch && (
+            {matchDetail?.manualTiedMatch?.isActive && (
               <MatchOdds
                 typeOfBet={"Manual Tied Match"}
                 currentMatch={matchDetail}
@@ -406,7 +403,7 @@ const MatchDetail = () => {
                 title={"Quick Session Market"}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
-                sessionData={matchDetail?.sessionBettings}
+                sessionData={QuicksessionData}
                 min={matchDetail?.betFairSessionMinBet || 0}
                 max={matchDetail?.betFairSessionMaxBet || 0}
               />
@@ -414,24 +411,15 @@ const MatchDetail = () => {
             {matchDetail?.apiSessionActive && (
               <SessionMarket
                 title={"Session Market"}
-                //   currentOdds={currentOdds}
                 currentMatch={matchDetail}
-                //   sessionBets={sessionBets?.length}
                 sessionExposer={"0.00"}
-                // data={[]}
-                //   sessionOffline={sessionOff}
-                //   setPopData={setPopData}
-                //   popData={popData}
+                sessionData={sessionData}
                 max={Math.floor(matchDetail?.betFairSessionMaxBet)}
                 min={Math.floor(matchDetail?.betFairSessionMinBet)}
               />
             )}
 
-            <UserProfitLoss
-              single={"single"}
-              title={"User Profit Loss"}
-              // matchId={matchId}
-            />
+            <UserProfitLoss single={"single"} title={"User Profit Loss"} />
           </Box>
         )}
       </Box>
