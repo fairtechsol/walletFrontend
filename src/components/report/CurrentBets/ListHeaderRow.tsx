@@ -3,7 +3,7 @@ import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 // import { ApiConstants } from "../../../utils/Constants";
 
-const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit }: any) => {
+const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit, setCurrentPage }: any) => {
   return (
     <Box
       sx={{
@@ -26,6 +26,7 @@ const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit }: any) => {
         textColor={"000"}
         setPageLimit={setPageLimit}
         pageLimit={pageLimit}
+        setCurrentPage={setCurrentPage}
       />
       <SearchInput
         show={true}

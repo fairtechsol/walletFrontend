@@ -49,17 +49,17 @@ const AccountStatement = () => {
               let filter = "";
               if (fromDate && toDate) {
                 filter += `&createdAt=between${moment(fromDate)?.format(
-                  "YYYY-DD-MM"
+                  "YYYY-MM-DD"
                 )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
-                  "YYYY-DD-MM"
+                  "YYYY-MM-DD"
                 )}`;
               } else if (fromDate) {
                 filter += `&createdAt=gte${moment(fromDate)?.format(
-                  "YYYY-DD-MM"
+                  "YYYY-MM-DD"
                 )}`;
               } else if (toDate) {
                 filter += `&createdAt=lte${moment(toDate)?.format(
-                  "YYYY-DD-MM"
+                  "YYYY-MM-DD"
                 )}`;
               }
               dispatch(
@@ -101,6 +101,7 @@ const AccountStatement = () => {
             searchFor={"accountStatement"}
             pageLimit={pageLimit}
             setPageLimit={setPageLimit}
+            setCurrentPage={setCurrentPage}
           />
 
           {loading ? (
