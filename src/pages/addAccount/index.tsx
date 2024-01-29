@@ -343,7 +343,6 @@ const AddAccount = () => {
       console.log(e);
     }
   }, [addSuccess]);
-  console.log(formik.errors);
 
   return (
     <>

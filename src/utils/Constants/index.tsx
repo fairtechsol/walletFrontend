@@ -10,6 +10,7 @@ export const ApiConstants = {
     BALANCE: "/user/balance",
     EXPERTLIST: "/expert/list",
     ADDFGADMIN: "/user/add",
+    ALREADY_EXIST: "/user/exist",
     ADDURLADMIN: "/superadmin/add",
     ADDEXPERT: "/expert/add",
     UPDATEEXPERT: "/expert/update",
