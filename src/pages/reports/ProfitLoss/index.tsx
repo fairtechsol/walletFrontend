@@ -3,8 +3,13 @@ import ProfitLossHeader from "../../../components/report/ProfitLossReport/Profit
 import ProfitLossTableComponent from "../../../components/report/ProfitLossReport/ProfitLossTableComponent";
 import { useEffect, useState } from "react";
 import { ARROWUP } from "../../../assets";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import { getTotalProfitLoss } from "../../../store/actions/reports";
+import moment from "moment";
 
 const ProfitLossReport = () => {
+  const dispatch: AppDispatch = useDispatch();
   // const [visible, setVisible] = useState(false);
   const [pageLimit] = useState(10);
   const [pageCount] = useState(1);
@@ -22,9 +27,9 @@ const ProfitLossReport = () => {
   // const [sessionBetData, setSessionBetData] = useState([]);
   // const [allClinets] = useState([]);
   // const [loading, setLoading] = useState(false);
-  // const [search, setSearch] = useState("");
-  // const [startDate, setStartDate] = useState(null);
-  // const [endDate, setEndDate] = useState(null);
+  const [search, setSearch] = useState("");
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
 
   useEffect(() => {
     getEventList();
@@ -109,15 +114,40 @@ const ProfitLossReport = () => {
   const handleClick = () => {
     try {
       // setVisible(false);
-      getEventList();
+      let filter = "";
+      if (startDate && endDate) {
+        filter += `&createdAt=between${moment(startDate)?.format(
+          "YYYY-MM-DD"
+        )}|${moment(endDate.setDate(endDate.getDate() + 1))?.format(
+          "YYYY-MM-DD"
+        )}`;
+      } else if (startDate) {
+        filter += `&createdAt=gte${moment(startDate)?.format("YYYY-MM-DD")}`;
+      } else if (endDate) {
+        filter += `&createdAt=lte${moment(endDate)?.format("YYYY-MM-DD")}`;
+      }
+      dispatch(getTotalProfitLoss({ filter: filter }));
     } catch (error) {
       console.error("Error:", (error as Error)?.message);
     }
   };
 
+  useEffect(() => {
+    dispatch(getTotalProfitLoss({ filter: "" }));
+  }, []);
+
   return (
     <div>
-      <ProfitLossHeader title="Profit/Loss" onClick={handleClick} />
+      <ProfitLossHeader
+        title="Profit/Loss"
+        onClick={handleClick}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
+        setSearch={setSearch}
+        search={search}
+      />
       <Typography
         sx={{
           fontSize: "16px",

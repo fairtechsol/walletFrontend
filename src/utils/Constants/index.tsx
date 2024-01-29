@@ -55,6 +55,10 @@ export const ApiConstants = {
     GET: "match",
     BETDELETE: "/bet/deleteMultipleBet",
     GET_BETS: "/superadmin/bets",
+    TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
+    DOMAIN_PROFIT_LOSS: "/user/total/domain/profitLoss",
+    BET_PROFIT_LOSS: "/user/total/bet/profitLoss",
+    SESSION_PROFIT_LOSS: "/user/total/session/profitLoss",
   },
 };
 

@@ -56,9 +56,9 @@ const formDataSchema = {
     value: "",
   },
   creditRefrence: "",
-  uplinePartnership: 10,
+  uplinePartnership: 0,
   myPartnership: 0,
-  downlinePartnership: 90,
+  downlinePartnership: 0,
   matchCommissionType: {
     label: "",
     value: "",
@@ -96,6 +96,7 @@ const EditAccount = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [lockUnlockObj, setLockUnlockObj] = useState(defaultLockUnlockObj);
   const [AccountTypes, setAccountTypes] = useState<any>([]);
+  const [down, setDown] = useState<number>(100);
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -171,7 +172,7 @@ const EditAccount = () => {
   const handlePartnershipChange = (event: any) => {
     try {
       const newValue = parseInt(event.target.value, 10);
-      const remainingDownline = 90 - newValue;
+      const remainingDownline = +down - newValue;
 
       formik.setValues({
         ...formik.values,
@@ -280,9 +281,75 @@ const EditAccount = () => {
     }
   }, [state?.id]);
 
+  const handleUpline = (userDetail: any) => {
+    try {
+      const {
+        aPartnership,
+        saPartnership,
+        smPartnership,
+        faPartnership,
+        fwPartnership,
+        roleName,
+      } = userDetail;
+
+      const partnershipMap: any = {
+        superMaster:
+          aPartnership + saPartnership + faPartnership + fwPartnership,
+        superAdmin: faPartnership + fwPartnership,
+        master:
+          smPartnership +
+          aPartnership +
+          saPartnership +
+          faPartnership +
+          fwPartnership,
+        admin: saPartnership + faPartnership + fwPartnership,
+        fairGameWallet: 0,
+        fairGameAdmin: fwPartnership,
+      };
+
+      const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+
+      return thisUplinePertnerShip;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleMyPartnership = (userDetail: any) => {
+    try {
+      const {
+        aPartnership,
+        saPartnership,
+        smPartnership,
+        faPartnership,
+        fwPartnership,
+        mPartnership,
+        roleName,
+      } = userDetail;
+
+      const partnershipMap: any = {
+        superMaster: smPartnership,
+        superAdmin: saPartnership,
+        master: mPartnership,
+        admin: aPartnership,
+        fairGameWallet: fwPartnership,
+        fairGameAdmin: faPartnership,
+      };
+
+      const thisUplinePertnerShip = partnershipMap[roleName] || 0;
+
+      return thisUplinePertnerShip;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     try {
       if (success) {
+        const res = handleUpline(userDetail);
+        const my = handleMyPartnership(userDetail);
+        setDown(100 - res);
         formik.setValues({
           ...formik.values,
           userName: userDetail?.userName,
@@ -294,9 +361,9 @@ const EditAccount = () => {
             value: userDetail?.roleName,
           },
           creditRefrence: userDetail?.creditRefrence,
-          uplinePartnership: userDetail?.fwPartnership,
-          myPartnership: 0,
-          downlinePartnership: userDetail?.faPartnership,
+          uplinePartnership: res,
+          myPartnership: my,
+          downlinePartnership: 100 - res - my,
           matchCommissionType: {
             label: userDetail?.matchComissionType,
             value: userDetail?.matchComissionType,
