@@ -223,7 +223,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <Typography variant="h5">{element?.phoneNumber}</Typography>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
             display: "flex",
@@ -234,7 +234,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">{element?.roleName}</Typography>
-        </Box>
+        </Box> */}
       </Box>
       {showUserModal && (
         <Box

@@ -59,6 +59,7 @@ const AccountList = (endpoint: any) => {
             <HeaderRow
               endpoint={ApiConstants.USER.LIST}
               searchFor={"userList"}
+              downloadPdfExcel={true}
             />
             <Box sx={{ overflowX: "auto" }}>
               <Box
