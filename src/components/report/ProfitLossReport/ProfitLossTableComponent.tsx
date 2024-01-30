@@ -5,28 +5,25 @@ import Pagination from "../../Common/Pagination";
 const ProfitLossTableComponent = (props: any) => {
   const {
     eventData,
-    handleReport,
     currentPage,
     pageCount,
     setCurrentPage,
     visible,
-    getUserProfitLoss
+    startDate,
+    endDate,
   } = props;
   return (
     <Box>
-      {eventData.map((item: any, index: any) => {
+      {eventData?.map((item: any, index: any) => {
         return (
           <>
             <RowHeaderMatches
               key={index}
               item={item}
-              index={index}
-              // getHandleReport={getHandleReport}
               show={visible}
               setCurrentPage={setCurrentPage}
-              // setSelectedEventType={setSelectedEventType}
-              getUserProfitLoss={getUserProfitLoss}
-              // selectedEventType={selectedEventType}
+              startDate={startDate}
+              endDate={endDate}
             />
             <Box>
               {/* {visible &&
@@ -54,10 +51,10 @@ const ProfitLossTableComponent = (props: any) => {
       })}
       {visible && (
         <Pagination
-          getListOfUser={(event: any) => handleReport(event)}
+          getListOfUser={() => {}}
           currentPage={currentPage}
           pages={pageCount}
-          setCurrentPage={() => {}}
+          setCurrentPage={setCurrentPage}
         />
       )}
     </Box>

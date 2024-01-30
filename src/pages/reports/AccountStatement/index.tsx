@@ -28,11 +28,24 @@ const AccountStatement = () => {
 
   useEffect(() => {
     if (profileDetail) {
+      let filter = "";
+      if (fromDate && toDate) {
+        filter += `&createdAt=between${moment(fromDate)?.format(
+          "YYYY-MM-DD"
+        )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
+          "YYYY-MM-DD"
+        )}`;
+      } else if (fromDate) {
+        filter += `&createdAt=gte${moment(fromDate)?.format("YYYY-MM-DD")}`;
+      } else if (toDate) {
+        filter += `&createdAt=lte${moment(toDate)?.format("YYYY-MM-DD")}`;
+      }
       dispatch(
         getAccountStatement({
           id: profileDetail?.id,
           page: currentPage,
           pageLimit: pageLimit,
+          filter,
         })
       );
     }
@@ -102,6 +115,8 @@ const AccountStatement = () => {
             pageLimit={pageLimit}
             setPageLimit={setPageLimit}
             setCurrentPage={setCurrentPage}
+            fromDate={fromDate}
+            toDate={toDate}
           />
 
           {loading ? (
