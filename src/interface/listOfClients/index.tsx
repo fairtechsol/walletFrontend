@@ -14,6 +14,7 @@ export interface AccountListDataInterface {
   userName: string;
   credit_refer: string;
   balance: string;
+  userBal: any;
   profit_loss: string | number;
   percent_profit_loss: string;
   totalCommissions: string;
