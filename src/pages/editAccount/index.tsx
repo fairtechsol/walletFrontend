@@ -289,8 +289,8 @@ const EditAccount = () => {
         smPartnership,
         faPartnership,
         fwPartnership,
-        roleName,
       } = userDetail;
+      const roleName = profileDetail?.roleName;
 
       const partnershipMap: any = {
         superMaster:
@@ -324,8 +324,8 @@ const EditAccount = () => {
         faPartnership,
         fwPartnership,
         mPartnership,
-        roleName,
       } = userDetail;
+      const roleName = profileDetail?.roleName;
 
       const partnershipMap: any = {
         superMaster: smPartnership,
@@ -346,10 +346,10 @@ const EditAccount = () => {
 
   useEffect(() => {
     try {
-      if (success) {
+      if (success && profileDetail) {
         const res = handleUpline(userDetail);
         const my = handleMyPartnership(userDetail);
-        setDown(100 - res);
+        setDown(100 - res - my);
         formik.setValues({
           ...formik.values,
           userName: userDetail?.userName,
@@ -390,7 +390,7 @@ const EditAccount = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success]);
+  }, [success, profileDetail]);
 
   useEffect(() => {
     try {
@@ -923,7 +923,7 @@ const EditAccount = () => {
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
-                    // value={formik.values.downlinePartnership}
+                    value={formik.values.downlinePartnership}
                     // onChange={formik.handleChange}
                   />
                 </>
