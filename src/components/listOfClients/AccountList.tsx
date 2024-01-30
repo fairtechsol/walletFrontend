@@ -59,6 +59,7 @@ const AccountList = (endpoint: any) => {
             <HeaderRow
               endpoint={ApiConstants.USER.LIST}
               searchFor={"userList"}
+              downloadPdfExcel={true}
             />
             <Box sx={{ overflowX: "auto" }}>
               <Box
@@ -69,7 +70,7 @@ const AccountList = (endpoint: any) => {
               >
                 <Box>
                   <ListHeaderRow />
-                  <SubHeaderListRow data={profileDetail} />
+                  <SubHeaderListRow data={userList && userList?.totalBalance} />
                   {userList?.list?.length === 0 && (
                     <Box>
                       <Typography
@@ -97,7 +98,7 @@ const AccountList = (endpoint: any) => {
                               showUserDetails={true}
                               showCReport={true}
                               containerStyle={{ background: "#FFE094" }}
-                              profit={+element.profit_loss >= 0}
+                              profit={(+element?.userBal?.profitLoss || 0) >= 0}
                               fContainerStyle={{ background: "#0B4F26" }}
                               fTextStyle={{ color: "white" }}
                               element={element}
@@ -113,7 +114,7 @@ const AccountList = (endpoint: any) => {
                               showUserDetails={true}
                               showOptions={true}
                               containerStyle={{ background: "#ECECEC" }}
-                              profit={+element.profit_loss >= 0}
+                              profit={(+element?.userBal?.profitLoss || 0) >= 0}
                               fContainerStyle={{ background: "#F8C851" }}
                               fTextStyle={{ color: "#0B4F26" }}
                               element={element}
@@ -127,7 +128,7 @@ const AccountList = (endpoint: any) => {
               </Box>
             </Box>
           </Box>
-        
+
           <Pagination
             currentPage={currentPage}
             pages={Math.ceil(

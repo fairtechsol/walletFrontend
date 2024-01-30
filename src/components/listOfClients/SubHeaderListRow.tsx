@@ -40,7 +40,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {+data?.creditRefrence || 0}
+          {+data?.totalCreditReference || 0}
         </Typography>
       </Box>
       <Box
@@ -56,13 +56,13 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {Number(data?.userBal.currentBalance || 0) >= 0 ? (
+          {Number(data?.currBalance || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(data?.userBal?.currentBalance || 0)}
+              {Number(data?.currBalance || 0)}
             </>
           ) : (
-            Number(data?.userBal?.currentBalance || 0)
+            Number(data?.currBalance || 0)
           )}
         </Typography>
       </Box>
@@ -72,7 +72,7 @@ const SubHeaderListRow = (props: any) => {
           display: "flex",
           paddingX: "10px",
           background: `${
-            Number(data?.userBal?.profitLoss || 0) >= 0 ? "#27AC1E" : "#E32A2A"
+            Number(+data?.profitsum || 0) >= 0 ? "#27AC1E" : "#E32A2A"
           }`,
           alignItems: "center",
           height: "45px",
@@ -86,13 +86,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?userBal?.profitLoss} */}
-          {Number(data?.userBal?.profitLoss || 0) >= 0 ? (
+          {Number(+data?.profitsum || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {+data?.userBal?.profitLoss || 0}
+              {+data?.profitsum || 0}
             </>
           ) : (
-            +data?.userBal?.profitLoss || 0
+            +data?.profitsum || 0
           )}
         </Typography>
         <StyledImage
@@ -111,9 +111,7 @@ const SubHeaderListRow = (props: any) => {
           display: "flex",
           paddingX: "10px",
           background: `${
-            Number(+data?.userBal?.myProfitLoss || 0) >= 0
-              ? "#27AC1E"
-              : "#E32A2A"
+            Number(+data?.percentprofitloss || 0) >= 0 ? "#27AC1E" : "#E32A2A"
           }`,
           alignItems: "center",
           height: "45px",
@@ -127,13 +125,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?.percent_profit_loss} */}
-          {Number(+data?.userBal?.myProfitLoss || 0) >= 0 ? (
+          {Number(+data?.percentprofitloss || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {+data?.userBal?.myProfitLoss || 0}
+              {+data?.percentprofitloss || 0}
             </>
           ) : (
-            +data?.userBal?.myProfitLoss || 0
+            +data?.percentprofitloss || 0
           )}
         </Typography>
         <StyledImage
@@ -175,7 +173,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {+data?.userBal?.exposure || 0}
+          {+data?.totalExposure || 0}
         </Typography>
       </Box>
       <Box
@@ -192,13 +190,13 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
           {/* {data?.availablebalancesum} */}
-          {Number(data?.userBal?.currentBalance || 0) >= 0 ? (
+          {Number(data?.availableBalance || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(data?.userBal?.currentBalance || 0)}
+              {Number(data?.availableBalance || 0)}
             </>
           ) : (
-            Number(data?.userBal?.currentBalance || 0)
+            Number(data?.availableBalance || 0)
           )}
         </Typography>
       </Box>
@@ -238,7 +236,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {+data?.exposureLimit || 0}
+          {+data?.totalExposure || 0}
         </Typography>
       </Box>
       <Box

@@ -58,4 +58,69 @@ export const getCurrentBets = createAsyncThunk<any, currentBets>(
   }
 );
 
+export const getTotalProfitLoss = createAsyncThunk<any, any>(
+  "totalProfitLoss/list",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.TOTAL_PROFIT_LOSS}?${requestData.filter}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const getDomainProfitLoss = createAsyncThunk<any, any>(
+  "domainProfitLoss/list",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?url=${requestData.url}&type=${requestData.type}${requestData.filter}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const getBetProfitLoss = createAsyncThunk<any, any>(
+  "bet/list",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}&betId=${requestData.betId}&isSession=${requestData.isSession}&url=${requestData.url}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const getSessionProfitLoss = createAsyncThunk<any, any>(
+  "session/list",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${requestData.matchId}&url=${requestData.url}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
 export const resetAccountStatement = createAction("statement/reset");

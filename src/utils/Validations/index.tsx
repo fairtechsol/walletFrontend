@@ -1,4 +1,6 @@
 import * as Yup from "yup";
+import service from "../../service";
+import { ApiConstants } from "../Constants";
 
 export const loginValidationSchema = Yup.object({
   userName: Yup.string()
@@ -42,7 +44,27 @@ export const changePasswordSchema = Yup.object({
 });
 
 export const addUserValidation = Yup.object({
-  userName: Yup.string().required("Username is required"),
+  userName: Yup.string()
+    .required("Username is required")
+    .test({
+      name: "clientName",
+      message: "Client Name already exists",
+      test: async function (value: any) {
+        if (value) {
+          try {
+            const resp = await service.get(
+              `${ApiConstants.USER.ALREADY_EXIST}?userName=${value}`
+            );
+            if (resp) {
+              return resp?.data?.isUserExist ? false : true;
+            }
+          } catch (error: any) {
+            console.log(error);
+          }
+        }
+        return true;
+      },
+    }),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters long")

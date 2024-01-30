@@ -128,7 +128,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element?.creditRefrence}</Typography>
+          <Typography variant="h5">{+element?.creditRefrence || 0}</Typography>
         </Box>
         <Box
           sx={{
@@ -141,13 +141,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {Number(element?.balance) >= 0 ? (
+            {Number(+element?.balance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(element?.balance)}
+                {Number(+element?.balance || 0)}
               </>
             ) : (
-              Number(element?.balance)
+              Number(+element?.balance || 0)
             )}
           </Typography>
         </Box>
@@ -158,20 +158,22 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.userBal?.profitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(+element?.userBal?.profitLoss || 0) >= 0
+                ? "#27AC1E"
+                : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.userBal?.profitLoss) >= 0 ? (
+            {Number(+element?.userBal?.profitLoss || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.userBal?.profitLoss}
+                {+element?.userBal?.profitLoss || 0}
               </>
             ) : (
-              element?.userBal?.profitLoss
+              +element?.userBal?.profitLoss || 0
             )}
           </Typography>
           <StyledImage
@@ -195,20 +197,22 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(element?.percentProfitLoss) >= 0 ? "#27AC1E" : "#E32A2A",
+              Number(+element?.percentProfitLoss || 0) >= 0
+                ? "#27AC1E"
+                : "#E32A2A",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(element?.percentProfitLoss) >= 0 ? (
+            {Number(+element?.percentProfitLoss || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {element?.percentProfitLoss}
+                {+element?.percentProfitLoss || 0}
               </>
             ) : (
-              element?.percentProfitLoss
+              +element?.percentProfitLoss || 0
             )}
           </Typography>
           <StyledImage
@@ -237,19 +241,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element?.totalComission}</Typography>
-        </Box>
-        <Box
-          sx={{
-            width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
-            display: "flex",
-            paddingX: "10px",
-            alignItems: "center",
-            height: "45px",
-            borderRight: "2px solid white",
-          }}
-        >
-          <Typography variant="h5">{element?.userBal?.exposure}</Typography>
+          <Typography variant="h5">{+element?.totalComission || 0}</Typography>
         </Box>
         <Box
           sx={{
@@ -262,13 +254,27 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {Number(element?.availableBalance) >= 0 ? (
+            {+element?.userBal?.exposure || 0}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+            display: "flex",
+            paddingX: "10px",
+            alignItems: "center",
+            height: "45px",
+            borderRight: "2px solid white",
+          }}
+        >
+          <Typography variant="h5">
+            {Number(+element?.availableBalance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(element?.availableBalance)}
+                {Number(+element?.availableBalance || 0)}
               </>
             ) : (
-              Number(element?.availableBalance)
+              Number(+element?.availableBalance || 0)
             )}
           </Typography>
         </Box>

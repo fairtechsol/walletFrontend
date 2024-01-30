@@ -357,18 +357,18 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
   }
 );
 
-export const handleExport = createAsyncThunk<any, string>(
+export const handleExport = createAsyncThunk<any, any>(
   "user/export",
-  async (type) => {
+  async (requestData, thunkApi) => {
     try {
       const response = await service.get(
-        `${ApiConstants.USER.LIST}?type=${type}`
+        `${requestData.endPoint}?type=${requestData.type}`
       );
 
       const fileData = response?.data?.file;
 
       let blob = new Blob();
-      if (type == "pdf") {
+      if (requestData.type == "pdf") {
         // window.open(`data:application/pdf;base64,${fileData}`, '_blank');
         const binaryData = new Uint8Array(
           atob(fileData)
@@ -376,7 +376,7 @@ export const handleExport = createAsyncThunk<any, string>(
             .map((char) => char.charCodeAt(0))
         );
         blob = new Blob([binaryData], { type: "application/pdf" });
-      } else if (type == "excel") {
+      } else if (requestData.type == "excel") {
         const binaryData = new Uint8Array(
           atob(fileData)
             .split("")
@@ -398,7 +398,7 @@ export const handleExport = createAsyncThunk<any, string>(
       window.URL.revokeObjectURL(url);
     } catch (error: any) {
       const err = error as AxiosError;
-      throw err;
+      throw thunkApi.rejectWithValue(err.response?.status);
     }
   }
 );
