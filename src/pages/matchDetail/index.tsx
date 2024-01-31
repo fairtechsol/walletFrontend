@@ -419,7 +419,7 @@ const MatchDetail = () => {
               />
             )}
 
-            <UserProfitLoss single={"single"} title={"User Profit Loss"} />
+            <UserProfitLoss single={"single"} title={"User Profit Loss"} matchDetail={matchDetail}/>
           </Box>
         )}
       </Box>

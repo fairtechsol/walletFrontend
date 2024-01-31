@@ -1,6 +1,4 @@
 import * as Yup from "yup";
-import service from "../../service";
-import { ApiConstants } from "../Constants";
 
 export const loginValidationSchema = Yup.object({
   userName: Yup.string()

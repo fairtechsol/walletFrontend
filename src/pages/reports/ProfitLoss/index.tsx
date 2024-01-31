@@ -9,7 +9,7 @@ import moment from "moment";
 
 const ProfitLossReport = () => {
   const dispatch: AppDispatch = useDispatch();
-  const [pageLimit] = useState(10);
+  // const [pageLimit] = useState(10);
   const [pageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");

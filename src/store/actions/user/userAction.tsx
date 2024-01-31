@@ -320,6 +320,22 @@ export const getAlreadyUserExist = createAsyncThunk<
     throw err;
   }
 });
+export const getChildUserProfitLoss = createAsyncThunk<any, string>(
+  "user/childProfitLoss",
+  async (requestData) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.CHILD_PROFIT_LOSS}/${requestData}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
+    }
+  }
+);
 
 export const handleExport = createAsyncThunk<any, any>(
   "user/export",
