@@ -3,28 +3,6 @@ import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants, Constants } from "../../../utils/Constants";
 
-// interface ChangePassword {
-//   oldPassword: string;
-//   newPassword: string;
-//   confirmPassword: string;
-// }
-
-// interface AddUser {
-//   userName: string;
-//   fullName: string;
-//   password: string;
-//   confirmPassword: string;
-//   phoneNumber: string;
-//   city: string;
-//   roleName: string;
-//   myPartnership: string;
-//   createdBy: string;
-//   creditRefrence: string;
-//   exposureLimit: string;
-//   maxBetLimit: string;
-//   minBetLimit: string;
-// }
-
 interface RequestData {
   userName?: string;
   currentPage?: number;
@@ -32,26 +10,10 @@ interface RequestData {
   searchBy?: string;
 }
 
-// export const changePassword = createAsyncThunk<any, ChangePassword>(
-//   "user/changePassword",
-//   async (requestData, thunkApi) => {
-//     try {
-//       const resp = await service.post(
-//         `${ApiConstants.USER.CHANGEPASSWORD}`,
-//         requestData
-//       );
-//       if (resp) {
-//         if (resp?.data) {
-//           return resp?.data?.transactionPassword;
-//         }
-//         sessionStorage.clear();
-//       }
-//     } catch (error: any) {
-//       const err = error as AxiosError;
-//       return thunkApi.rejectWithValue(err.response?.status);
-//     }
-//   }
-// );
+interface SearchUsers {
+  userName?: string;
+  createdBy: string;
+}
 
 export const changePassword = createAsyncThunk<any, any>(
   "user/changePassword",
@@ -288,21 +250,6 @@ export const marqueeNotification = createAsyncThunk<any>(
   }
 );
 
-// export const userChangePassword = createAsyncThunk<any, any>(
-//   "user/changePassword",
-//   async (requestData) => {
-//     try {
-//       const resp = await service.post("/user/changePassword", requestData);
-//       if (resp) {
-//         return resp?.data;
-//       }
-//     } catch (error: any) {
-//       const err = error as AxiosError;
-//       throw err;
-//     }
-//   }
-// );
-
 export const setCreditRefference = createAsyncThunk<any, any>(
   "user/update/creditreferrence",
   async (requestData, thunkApi) => {
@@ -353,6 +300,39 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
     } catch (error: any) {
       const err = error as AxiosError;
       throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
+export const getAlreadyUserExist = createAsyncThunk<
+  any,
+  SearchUsers | undefined
+>("user/clientName", async (requestData) => {
+  try {
+    const resp = await service.get(
+      `${ApiConstants.USER.ALREADY_EXIST}?userName=${requestData}`
+    );
+    if (resp) {
+      return resp?.data?.isUserExist;
+    }
+  } catch (error: any) {
+    const err = error as AxiosError;
+    throw err;
+  }
+});
+export const getChildUserProfitLoss = createAsyncThunk<any, string>(
+  "user/childProfitLoss",
+  async (requestData) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.CHILD_PROFIT_LOSS}/${requestData}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw err;
     }
   }
 );

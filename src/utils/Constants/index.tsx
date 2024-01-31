@@ -20,6 +20,7 @@ export const ApiConstants = {
     LOCKUNLOCK: "/user/lockUnlockUser",
     CREDITREFERRENCE: "/user/update/creditreferrence",
     EXPOSURELIMIT: "/user/update/exposurelimit",
+    CHILD_PROFIT_LOSS: "",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",

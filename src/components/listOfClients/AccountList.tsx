@@ -17,9 +17,6 @@ const AccountList = (endpoint: any) => {
   const dispatch: AppDispatch = useDispatch();
   const loading = false;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { profileDetail } = useSelector(
-    (state: RootState) => state.user.profile
-  );
   const { userList } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {

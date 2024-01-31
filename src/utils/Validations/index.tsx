@@ -1,6 +1,4 @@
 import * as Yup from "yup";
-import service from "../../service";
-import { ApiConstants } from "../Constants";
 
 export const loginValidationSchema = Yup.object({
   userName: Yup.string()
@@ -43,62 +41,59 @@ export const changePasswordSchema = Yup.object({
     .required("Confirm Password is required"),
 });
 
-export const addUserValidation = Yup.object({
-  userName: Yup.string()
-    .required("Username is required")
-    .test({
-      name: "clientName",
-      message: "Client Name already exists",
-      test: async function (value: any) {
-        if (value) {
-          try {
-            const resp = await service.get(
-              `${ApiConstants.USER.ALREADY_EXIST}?userName=${value}`
-            );
-            if (resp) {
-              return resp?.data?.isUserExist ? false : true;
+export const addUserValidation = (item: any) => {
+  return Yup.object({
+    userName: Yup.string()
+      .required("Username is required")
+      .test({
+        name: "clientName",
+        message: "Client Name already exists",
+        test: async function (value: any) {
+          if (value) {
+            try {
+              return !item;
+            } catch (error: any) {
+              console.log(error);
             }
-          } catch (error: any) {
-            console.log(error);
           }
-        }
-        return true;
-      },
+          return true;
+        },
+      }),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters long")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).*$/,
+        "Password must contain at least one uppercase letter, one number, and one special character (@ $ ! % * ? &)"
+      ),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), ""], "Passwords must match")
+      .required("Confirm Password is required"),
+    fullName: Yup.string()
+      .notRequired()
+      .matches(
+        /^[a-zA-Z\s]*$/,
+        "Full Name should only contain letters and spaces"
+      )
+      .max(20, "Full Name must be at most 20 characters"),
+    roleName: Yup.object({
+      value: Yup.string().required("Please select an option"),
+      label: Yup.string().required("Please select an option"),
     }),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters long")
-    .matches(
-      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).*$/,
-      "Password must contain at least one uppercase letter, one number, and one special character (@ $ ! % * ? &)"
+    // domain: Yup.string().matches(
+    //   /^http:\/\/localhost:5000$/,
+    //   "Your URL should be http://3.89.232.255:5000 format for dev"
+    // ),
+    // matchCommissionType: Yup.string().required(
+    //   "Match Commission Type is required"
+    // ),
+    // matchCommission: Yup.number().required("Match Commission is required"),
+    // sessionCommission: Yup.number().required("Session Commission is required"),
+    adminTransPassword: Yup.string().required(
+      "Admin Transaction Password is required"
     ),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), ""], "Passwords must match")
-    .required("Confirm Password is required"),
-  fullName: Yup.string()
-    .notRequired()
-    .matches(
-      /^[a-zA-Z\s]*$/,
-      "Full Name should only contain letters and spaces"
-    )
-    .max(20, "Full Name must be at most 20 characters"),
-  roleName: Yup.object({
-    value: Yup.string().required("Please select an option"),
-    label: Yup.string().required("Please select an option"),
-  }),
-  // domain: Yup.string().matches(
-  //   /^http:\/\/localhost:5000$/,
-  //   "Your URL should be http://3.89.232.255:5000 format for dev"
-  // ),
-  // matchCommissionType: Yup.string().required(
-  //   "Match Commission Type is required"
-  // ),
-  // matchCommission: Yup.number().required("Match Commission is required"),
-  // sessionCommission: Yup.number().required("Session Commission is required"),
-  adminTransPassword: Yup.string().required(
-    "Admin Transaction Password is required"
-  ),
-});
+  });
+};
 
 export const SuperURLValidation = Yup.object({
   userName: Yup.string().required("Username is required"),

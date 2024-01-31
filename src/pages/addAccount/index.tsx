@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
@@ -20,6 +20,7 @@ import {
   addReset,
   addUrlAdmin,
   addUser,
+  getAlreadyUserExist,
   // profileReset,
   updateReset,
 } from "../../store/actions/user/userAction";
@@ -32,7 +33,7 @@ import {
   addUserValidation,
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
-import _ from "lodash";
+import _, { debounce } from "lodash";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -110,6 +111,9 @@ const AddAccount = () => {
   const { loading, addSuccess } = useSelector(
     (state: RootState) => state.user.userUpdate
   );
+  const { userAlreadyExist } = useSelector(
+    (state: RootState) => state.user.userList
+  );
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -132,7 +136,7 @@ const AddAccount = () => {
 
   const formik = useFormik({
     initialValues: formDataSchema,
-    validationSchema: addUserValidation,
+    validationSchema: addUserValidation(userAlreadyExist),
     onSubmit: (values: any) => {
       try {
         const commonPayload = {
@@ -314,6 +318,18 @@ const AddAccount = () => {
     }
   };
 
+  const debouncedInputValue = useMemo(() => {
+    return debounce((value) => {
+      dispatch(getAlreadyUserExist(value));
+    }, 500);
+  }, []);
+
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    formik.handleChange(e);
+    debouncedInputValue(query);
+  };
+
   useEffect(() => {
     try {
       setTypeForAccountType();
@@ -397,7 +413,7 @@ const AddAccount = () => {
                     type={"text"}
                     required={true}
                     value={formik.values.userName}
-                    onChange={formik.handleChange}
+                    onChange={handleUserNameChange}
                     error={touched.userName && Boolean(errors.userName)}
                     onBlur={formik.handleBlur}
                   />

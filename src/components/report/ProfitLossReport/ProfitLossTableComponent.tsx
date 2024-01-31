@@ -1,63 +1,50 @@
 import { Box } from "@mui/material";
 import RowHeaderMatches from "./RowHeaderMatches";
 import Pagination from "../../Common/Pagination";
+import { useState } from "react";
 
 const ProfitLossTableComponent = (props: any) => {
   const {
     eventData,
-    handleReport,
     currentPage,
     pageCount,
     setCurrentPage,
     visible,
-    getUserProfitLoss
+    startDate,
+    endDate,
   } = props;
+
+  const [selectedId, setSelectedId] = useState({
+    type: "",
+    id: "",
+    betId: "",
+    sessionBet: false,
+  });
+
   return (
     <Box>
-      {eventData.map((item: any, index: any) => {
+      {eventData?.map((item: any, index: any) => {
         return (
           <>
             <RowHeaderMatches
               key={index}
               item={item}
-              index={index}
-              // getHandleReport={getHandleReport}
               show={visible}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
               setCurrentPage={setCurrentPage}
-              // setSelectedEventType={setSelectedEventType}
-              getUserProfitLoss={getUserProfitLoss}
-              // selectedEventType={selectedEventType}
+              startDate={startDate}
+              endDate={endDate}
             />
-            <Box>
-              {/* {visible &&
-                selectedEventType === item?.eventType &&
-                reportData.map((item: any, index: any) => {
-                  return (
-                    <RowComponentMatches
-                      // key={index}
-                      // item={item}
-                      // index={index + 1}
-                      // selectedId={selectedId}
-                      // betData={betData}
-                      // sessionBetData={sessionBetData}
-                      // sessionBets={sessionBets}
-                      // getBetReport={getBetReport}
-                      getUserProfitLoss={getUserProfitLoss}
-                      // user={user}
-                      // userProfitLoss={userProfitLoss}
-                    />
-                  );
-                })} */}
-            </Box>
           </>
         );
       })}
       {visible && (
         <Pagination
-          getListOfUser={(event: any) => handleReport(event)}
+          getListOfUser={() => {}}
           currentPage={currentPage}
           pages={pageCount}
-          setCurrentPage={() => {}}
+          setCurrentPage={setCurrentPage}
         />
       )}
     </Box>

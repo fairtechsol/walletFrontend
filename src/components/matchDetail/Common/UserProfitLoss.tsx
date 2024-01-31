@@ -10,7 +10,7 @@ import UserProfitLossListComp from "./UserProfitLossListComp";
 import { Refresh } from "../../../assets";
 
 const UserProfitLoss = (props: any) => {
-  const { title, setShowUserProfitLoss, single } = props;
+  const { title, setShowUserProfitLoss, single, matchDetail } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const userProfitLoss: any = {
@@ -197,7 +197,7 @@ const UserProfitLoss = (props: any) => {
                     fontWeight: "600",
                   }}
                 >
-                  {userProfitLoss?.teamA}
+                  {matchDetail?.teamA}
                 </Typography>
               </Box>
               <Box
@@ -221,10 +221,10 @@ const UserProfitLoss = (props: any) => {
                     fontWeight: "600",
                   }}
                 >
-                  {userProfitLoss?.teamB}
+                  {matchDetail?.teamB}
                 </Typography>
               </Box>
-              {userProfitLoss?.teamC && (
+              {matchDetail?.teamC && (
                 <>
                   <Box
                     sx={{
@@ -251,7 +251,7 @@ const UserProfitLoss = (props: any) => {
                         fontWeight: "600",
                       }}
                     >
-                      {userProfitLoss?.teamC}
+                      {matchDetail?.teamC}
                     </Typography>
                   </Box>
                 </>

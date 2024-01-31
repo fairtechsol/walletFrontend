@@ -4,6 +4,9 @@ import {
   getDomainProfitLoss,
   getSessionProfitLoss,
   getTotalProfitLoss,
+  resetBetProfitLoss,
+  resetDomainProfitLoss,
+  resetSessionProfitLoss,
 } from "../../actions/reports";
 
 interface InitialState {
@@ -17,10 +20,10 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  totalProfitLossList: null,
-  domainProfitLossList: null,
-  betProfitLossList: null,
-  sessionProfitLossList: null,
+  totalProfitLossList: [],
+  domainProfitLossList: [],
+  betProfitLossList: [],
+  sessionProfitLossList: [],
   loading: false,
   success: false,
   error: null,
@@ -87,6 +90,15 @@ const profitLossReportSlice = createSlice({
       .addCase(getSessionProfitLoss.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(resetDomainProfitLoss, (state) => {
+        return { ...state, domainProfitLossList: [] };
+      })
+      .addCase(resetSessionProfitLoss, (state) => {
+        return { ...state, sessionProfitLossList: [] };
+      })
+      .addCase(resetBetProfitLoss, (state) => {
+        return { ...state, betProfitLossList: [] };
       });
   },
 });

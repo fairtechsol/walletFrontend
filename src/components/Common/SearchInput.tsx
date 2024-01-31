@@ -11,6 +11,7 @@ import {
   getCurrentBets,
 } from "../../store/actions/reports";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 const SearchInput = (props: any) => {
   const {
@@ -26,6 +27,8 @@ const SearchInput = (props: any) => {
     endpoint,
     searchFor,
     pageLimit,
+    fromDate,
+    toDate,
   } = props;
 
   const theme = useTheme();
@@ -41,6 +44,18 @@ const SearchInput = (props: any) => {
       onChange(value);
     }
     try {
+      let filter = "";
+      if (fromDate && toDate) {
+        filter += `&createdAt=between${moment(fromDate)?.format(
+          "YYYY-MM-DD"
+        )}|${moment(toDate.setDate(toDate.getDate() + 1))?.format(
+          "YYYY-MM-DD"
+        )}`;
+      } else if (fromDate) {
+        filter += `&createdAt=gte${moment(fromDate)?.format("YYYY-MM-DD")}`;
+      } else if (toDate) {
+        filter += `&createdAt=lte${moment(toDate)?.format("YYYY-MM-DD")}`;
+      }
       if (searchFor === "accountStatement") {
         dispatch(
           getAccountStatement({
@@ -49,6 +64,7 @@ const SearchInput = (props: any) => {
             pageLimit: pageLimit,
             keyword: value,
             searchBy: "description,user.userName,actionByUser.userName",
+            filter,
           })
         );
       } else if (searchFor === "userList") {

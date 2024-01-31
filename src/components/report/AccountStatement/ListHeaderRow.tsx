@@ -4,7 +4,16 @@ import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown"
 import { ApiConstants } from "../../../utils/Constants";
 
 const ListHeaderRow = (props: any) => {
-  const { getLimitEntries, getAccountStatement, searchFor, pageLimit, setPageLimit, setCurrentPage } = props;
+  const {
+    getLimitEntries,
+    getAccountStatement,
+    searchFor,
+    pageLimit,
+    setPageLimit,
+    setCurrentPage,
+    fromDate,
+    toDate,
+  } = props;
   return (
     <Box
       sx={{
@@ -20,9 +29,17 @@ const ListHeaderRow = (props: any) => {
         py: "6px",
       }}
     >
-      <NumberDropDown getLimitEntries={getLimitEntries} setPageLimit={setPageLimit} pageLimit={pageLimit} textColor={"000"} setCurrentPage={setCurrentPage} />
+      <NumberDropDown
+        getLimitEntries={getLimitEntries}
+        setPageLimit={setPageLimit}
+        pageLimit={pageLimit}
+        textColor={"000"}
+        setCurrentPage={setCurrentPage}
+      />
       <SearchInput
         show={true}
+        fromDate={fromDate}
+        toDate={toDate}
         searchFor={searchFor}
         endpoint={ApiConstants.USER.LIST}
         getListOfUser={getAccountStatement}

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   changeAmmountUser,
   changePasswordRow,
+  getAlreadyUserExist,
   getUserList,
   handleExport,
   setCreditRefference,
@@ -12,6 +13,7 @@ import {
 
 interface InitialState {
   userDetail: any;
+  userAlreadyExist: boolean;
   userList: any;
   success: boolean;
   loading: boolean;
@@ -20,6 +22,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   userDetail: null,
+  userAlreadyExist: false,
   userList: null,
   success: false,
   loading: false,
@@ -112,6 +115,20 @@ export const userList = createSlice({
         state.loading = false;
       })
       .addCase(changePasswordRow.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(getAlreadyUserExist.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(getAlreadyUserExist.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.userAlreadyExist = action.payload;
+      })
+      .addCase(getAlreadyUserExist.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
