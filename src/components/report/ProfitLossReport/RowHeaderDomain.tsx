@@ -4,14 +4,20 @@ import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
-import { getDomainProfitLoss } from "../../../store/actions/reports";
+import {
+  getDomainProfitLoss,
+  resetBetProfitLoss,
+  resetDomainProfitLoss,
+  resetSessionProfitLoss,
+} from "../../../store/actions/reports";
 import moment from "moment";
 
 const RowHeaderDomain = ({
   item,
   index,
-  selectedEventType,
+  showMatchList,
   setCurrentPage,
+  setShowMatchList,
   startDate,
   endDate,
 }: any) => {
@@ -20,26 +26,34 @@ const RowHeaderDomain = ({
   return (
     <Box
       onClick={() => {
-        let filter = "";
-        if (startDate && endDate) {
-          filter += `&createdAt=between${moment(startDate)?.format(
-            "YYYY-MM-DD"
-          )}|${moment(endDate.setDate(endDate.getDate() + 1))?.format(
-            "YYYY-MM-DD"
-          )}`;
-        } else if (startDate) {
-          filter += `&createdAt=gte${moment(startDate)?.format("YYYY-MM-DD")}`;
-        } else if (endDate) {
-          filter += `&createdAt=lte${moment(endDate)?.format("YYYY-MM-DD")}`;
+        if (!visible) {
+          let filter = "";
+          if (startDate && endDate) {
+            filter += `&createdAt=between${moment(startDate)?.format(
+              "YYYY-MM-DD"
+            )}|${moment(endDate.setDate(endDate.getDate() + 1))?.format(
+              "YYYY-MM-DD"
+            )}`;
+          } else if (startDate) {
+            filter += `&createdAt=gte${moment(startDate)?.format(
+              "YYYY-MM-DD"
+            )}`;
+          } else if (endDate) {
+            filter += `&createdAt=lte${moment(endDate)?.format("YYYY-MM-DD")}`;
+          }
+          setCurrentPage(1);
+          dispatch(
+            getDomainProfitLoss({
+              url: item?.domainUrl,
+              type: item?.eventType,
+              filter: filter,
+            })
+          );
         }
-        setCurrentPage(1);
-        dispatch(
-          getDomainProfitLoss({
-            url: item?.domainUrl,
-            type: item?.eventType,
-            filter: filter,
-          })
-        );
+        dispatch(resetDomainProfitLoss());
+        dispatch(resetBetProfitLoss());
+        dispatch(resetSessionProfitLoss());
+        setShowMatchList((prev: boolean) => !prev);
         setVisible((prev) => !prev);
       }}
       sx={{
@@ -109,10 +123,7 @@ const RowHeaderDomain = ({
           src={ArrowDown}
           sx={{
             width: { lg: "20px", xs: "10px" },
-            transform:
-              visible && selectedEventType === item?.eventType
-                ? "rotate(180deg)"
-                : "rotate(0deg)",
+            transform: showMatchList ? "rotate(180deg)" : "rotate(0deg)",
             height: { lg: "10px", xs: "6px" },
           }}
         />

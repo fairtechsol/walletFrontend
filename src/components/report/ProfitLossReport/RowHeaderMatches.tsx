@@ -10,14 +10,23 @@ import {
   Tennis,
 } from "../../../assets";
 import RowHeaderDomain from "./RowHeaderDomain";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import RowComponentMatches from "./RowComponentMatches";
 
 const RowHeaderMatches = ({
   item,
   setCurrentPage,
   startDate,
   endDate,
+  selectedId,
+  setSelectedId,
 }: any) => {
   const [visible, setVisible] = useState(false);
+  const { domainProfitLossList } = useSelector(
+    (state: RootState) => state.report.reportList
+  );
+  const [showMatchList, setShowMatchList] = useState(false);
   return (
     <>
       <Box
@@ -179,13 +188,32 @@ const RowHeaderMatches = ({
         item?.domainData &&
         item?.domainData?.map((domain: any, index: number) => {
           return (
-            <RowHeaderDomain
-              item={domain}
-              index={index}
-              setCurrentPage={setCurrentPage}
-              startDate={startDate}
-              endDate={endDate}
-            />
+            <>
+              <RowHeaderDomain
+                item={domain}
+                index={index}
+                setCurrentPage={setCurrentPage}
+                startDate={startDate}
+                endDate={endDate}
+                showMatchList={showMatchList}
+                setShowMatchList={setShowMatchList}
+              />
+              <Box>
+                {showMatchList &&
+                  domainProfitLossList?.result?.map((item: any, index: any) => {
+                    return (
+                      <RowComponentMatches
+                        domainUrl={domain?.domainUrl}
+                        key={index}
+                        item={item}
+                        index={index + 1}
+                        selectedId={selectedId}
+                        setSelectedId={setSelectedId}
+                      />
+                    );
+                  })}
+              </Box>
+            </>
           );
         })}
     </>

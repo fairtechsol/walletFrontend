@@ -82,7 +82,7 @@ export const getDomainProfitLoss = createAsyncThunk<any, any>(
         `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?url=${requestData.url}&type=${requestData.type}${requestData.filter}`
       );
       if (resp) {
-        return resp?.data;
+        return resp?.data?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -95,10 +95,12 @@ export const getBetProfitLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}&betId=${requestData.betId}&isSession=${requestData.isSession}&url=${requestData.url}`
+        `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}${
+          requestData.betId ? `&betId=${requestData.betId}` : ""
+        }&isSession=${requestData.isSession}&url=${requestData.url}`
       );
       if (resp) {
-        return resp?.data;
+        return resp?.data?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -114,7 +116,7 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
         `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${requestData.matchId}&url=${requestData.url}`
       );
       if (resp) {
-        return resp?.data;
+        return resp?.data?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -124,3 +126,6 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
 );
 
 export const resetAccountStatement = createAction("statement/reset");
+export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");
+export const resetBetProfitLoss = createAction("betProfitLoss/reset");
+export const resetDomainProfitLoss = createAction("domainProfitLoss/reset");

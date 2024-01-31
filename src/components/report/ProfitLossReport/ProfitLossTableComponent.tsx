@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import RowHeaderMatches from "./RowHeaderMatches";
 import Pagination from "../../Common/Pagination";
+import { useState } from "react";
 
 const ProfitLossTableComponent = (props: any) => {
   const {
@@ -12,6 +13,14 @@ const ProfitLossTableComponent = (props: any) => {
     startDate,
     endDate,
   } = props;
+
+  const [selectedId, setSelectedId] = useState({
+    type: "",
+    id: "",
+    betId: "",
+    sessionBet: false,
+  });
+
   return (
     <Box>
       {eventData?.map((item: any, index: any) => {
@@ -21,31 +30,12 @@ const ProfitLossTableComponent = (props: any) => {
               key={index}
               item={item}
               show={visible}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
               setCurrentPage={setCurrentPage}
               startDate={startDate}
               endDate={endDate}
             />
-            <Box>
-              {/* {visible &&
-                selectedEventType === item?.eventType &&
-                reportData.map((item: any, index: any) => {
-                  return (
-                    <RowComponentMatches
-                      // key={index}
-                      // item={item}
-                      // index={index + 1}
-                      // selectedId={selectedId}
-                      // betData={betData}
-                      // sessionBetData={sessionBetData}
-                      // sessionBets={sessionBets}
-                      // getBetReport={getBetReport}
-                      getUserProfitLoss={getUserProfitLoss}
-                      // user={user}
-                      // userProfitLoss={userProfitLoss}
-                    />
-                  );
-                })} */}
-            </Box>
           </>
         );
       })}
