@@ -14,15 +14,16 @@ const TableHeaderList = () => {
     >
       <Box
         sx={{
-          width: "4%",
+          width: "8%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           height: "35px",
           borderRight: "2px solid white",
+          overflow: "hidden"
         }}
       >
-        <Typography sx={{ color: "white", fontSize: "12px" }}>
+        <Typography sx={{ color: "white", fontSize: "11px" }}>
           Sr.No.
         </Typography>
       </Box>
@@ -54,15 +55,16 @@ const TableHeaderList = () => {
       </Box>
       <Box
         sx={{
-          width: "4%",
+          width: "8%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           height: "35px",
           borderRight: "2px solid white",
+          overflow:"hidden"
         }}
       >
-        <Typography sx={{ color: "white", fontSize: "12px" }}>
+        <Typography sx={{ color: "white", fontSize: "11px" }}>
           Sr.No.
         </Typography>
       </Box>
