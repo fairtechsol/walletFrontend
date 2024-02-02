@@ -34,7 +34,7 @@ import {
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import _, { debounce } from "lodash";
-
+import { makeStyles } from '@mui/styles';
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
 //   { value: "superAdmin", label: "URL Super Admin", level: 2 },
@@ -50,6 +50,7 @@ const MatchCommissionTypes = [
   { value: "totalLoss", label: "Total Loss" },
   { value: "entryWise", label: "Entry Wise" },
 ];
+
 
 const AddAccount = () => {
   const theme = useTheme();
@@ -69,7 +70,7 @@ const AddAccount = () => {
     phoneNumber: "",
     domain: "",
     roleName: {
-      label: "",
+      label: "Select Account Type",
       value: "",
     },
     creditRefrence: "",
@@ -77,15 +78,15 @@ const AddAccount = () => {
     myPartnership: 0,
     downlinePartnership: 0,
     matchCommissionType: {
-      label: "",
+      label: "0.00",
       value: "",
     },
     matchCommission: {
-      label: "",
+      label: "0.00",
       value: "",
     },
     sessionCommission: {
-      label: "",
+      label: "0.00",
       value: "",
     },
     remarks: "",
@@ -117,14 +118,13 @@ const AddAccount = () => {
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
+
   };
   const titleStyles = {
     color: "#202020",
     fontSize: { xs: "10px", lg: "12px" },
     fontWeight: "600",
     marginLeft: "0px",
-
-    // lineBreak: "2",
   };
   const inputStyle = {
     fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
@@ -133,6 +133,8 @@ const AddAccount = () => {
     borderRadius: "5px",
     border: "1px solid #DEDEDE",
   };
+
+
 
   const formik = useFormik({
     initialValues: formDataSchema,
@@ -505,7 +507,7 @@ const AddAccount = () => {
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"Full Name"}
+                    placeholder={"Full Name (optional)"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
@@ -530,7 +532,7 @@ const AddAccount = () => {
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"City"}
+                    placeholder={"City (optional)"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
@@ -557,7 +559,7 @@ const AddAccount = () => {
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     inputStyle={inputStyle}
-                    placeholder={"Mobile"}
+                    placeholder={"Mobile (optional)"}
                     inputContainerStyle={{
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
@@ -754,8 +756,10 @@ const AddAccount = () => {
               >
                 <Box sx={{ mt: 1 }}>
                   <SelectField
+
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
+                    placeholder="Select"
                     id="roleName"
                     name="roleName"
                     isSearchable={false}
@@ -770,6 +774,7 @@ const AddAccount = () => {
                     touched={_.get(touched, "roleName.value")}
                     error={_.get(errors, "roleName.value")}
                     onBlur={formik.handleBlur}
+                   
                   />
                 </Box>
 

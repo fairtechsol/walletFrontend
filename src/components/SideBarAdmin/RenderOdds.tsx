@@ -28,10 +28,10 @@ const RenderOdds = (props: any) => {
           under={false}
           color={colors[4]}
           width={70}
-          title={"Match Odds"}
+          title={"Tied Match"}
         />
       )}
-      {i?.matchOdds && (
+      {true && (
         <MainBox
           sub={i?.sub}
           under={false}
