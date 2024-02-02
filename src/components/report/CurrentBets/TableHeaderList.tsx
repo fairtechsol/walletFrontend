@@ -14,7 +14,7 @@ const TableHeaderList = () => {
     >
       <Box
         sx={{
-          width: "3%",
+          width: "6%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -32,9 +32,11 @@ const TableHeaderList = () => {
           alignItems: "center",
           height: "35px",
           borderRight: "2px solid white",
+       
         }}
       >
-        <Typography sx={{ color: "white", fontSize: "12px" }}>
+        <Typography sx={{ color: "white", fontSize: "12px" , paddingTop: "2px", // Adjust top padding
+      paddingBottom: "2px",}}>
           Event Type
         </Typography>
       </Box>

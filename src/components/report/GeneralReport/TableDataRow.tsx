@@ -18,7 +18,7 @@ const TableDataRow = (props: any) => {
       <Box
         sx={[
           {
-            width: "4%",
+            width: "8%",
             display: "flex",
             alignItems: "center",
             height: "45px",
@@ -84,7 +84,7 @@ const TableDataRow = (props: any) => {
       <Box
         sx={[
           {
-            width: "4%",
+            width: "8%",
             display: "flex",
             alignItems: "center",
             height: "45px",
