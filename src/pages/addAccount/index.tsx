@@ -186,6 +186,9 @@ const AddAccount = () => {
             maxBetLimit: values.maxBetLimit,
             minBetLimit: values.minBetLimit,
             myPartnership: values.myPartnership,
+            sessionCommission: values.sessionCommission.value,
+            matchComissionType: values.matchCommissionType.value,
+            matchCommission: values.matchCommission.value,
             transactionPassword: values.adminTransPassword,
           };
           dispatch(addUser(payload));
