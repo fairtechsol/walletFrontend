@@ -146,6 +146,7 @@ const AddAccount = () => {
           confirmPassword: values.confirmPassword,
           phoneNumber: values.phoneNumber.toString(),
           city: values.city,
+          // remark: values.remarks,
         };
 
         let payload;

@@ -132,7 +132,7 @@ const EditAccount = () => {
         fullName: values.fullName,
         phoneNumber: values.phoneNumber.toString(),
         city: values.city,
-        remark: values.remarks,
+        // remark: values.remarks,
       };
 
       let payload;
