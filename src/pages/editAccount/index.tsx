@@ -129,6 +129,10 @@ const EditAccount = () => {
       const commonPayload = {
         id: state?.id,
         transactionPassword: values.adminTransPassword,
+        fullName: values.fullName,
+        phoneNumber: values.phoneNumber.toString(),
+        city: values.city,
+        remark: values.remarks,
       };
 
       let payload;
@@ -150,9 +154,6 @@ const EditAccount = () => {
           headerColor: values.headerColor,
           footerColor: values.footerColor,
           transactionPassword: values.adminTransPassword,
-          fullName: values.fullName,
-          phoneNumber: values.phoneNumber.toString(),
-          city: values.city,
         };
         dispatch(updateUser(payload));
       } else {
@@ -547,7 +548,7 @@ const EditAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
-                    disabled={state?.id ? true : false}
+                    // disabled={state?.id ? true : false}
                     title={"Full Name"}
                     name={"fullName"}
                     id="fullName"
@@ -572,7 +573,7 @@ const EditAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
-                    disabled={state?.id ? true : false}
+                    // disabled={state?.id ? true : false}
                     title={"City"}
                     name={"city"}
                     id="city"
@@ -599,7 +600,7 @@ const EditAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
-                    disabled={state?.id ? true : false}
+                    // disabled={state?.id ? true : false}
                     title={"Mobile Number"}
                     name={"phoneNumber"}
                     id="phoneNumber"
