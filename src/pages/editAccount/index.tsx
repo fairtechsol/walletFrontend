@@ -105,6 +105,8 @@ const EditAccount = () => {
     (state: RootState) => state.user.userUpdate
   );
 
+
+
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
   };
@@ -254,6 +256,7 @@ const EditAccount = () => {
           ...formik.values,
           userName: state?.expertMatchDetail?.userName,
           fullName: state?.expertMatchDetail?.fullName,
+
           city: state?.expertMatchDetail?.city,
           phoneNumber: state?.expertMatchDetail?.phoneNumber,
           roleName: {
@@ -347,7 +350,7 @@ const EditAccount = () => {
 
   useEffect(() => {
     try {
-      if (success && profileDetail) {
+      if (success && profileDetail && !state?.expertMatchDetail) {
         const res = handleUpline(userDetail);
         const my = handleMyPartnership(userDetail);
         setDown(100 - res - my);
@@ -654,7 +657,7 @@ const EditAccount = () => {
                       name="logo"
                       type={"file"}
                       id="logo"
-                      // value={formik.values.logo}
+                      value={formik.values.logo}
                       onChange={handleImageChange}
                     />
                     {formik.values.base64Image && (
