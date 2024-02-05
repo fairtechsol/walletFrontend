@@ -30,6 +30,7 @@ const initialValues: any = {
 const ChangePasswordComponent = (props: any) => {
   const { setSelected, element, walletAccountDetail, endpoint } = props;
   const [showPass, setShowPass] = useState(false);
+  const [showPassTransaction, setShowPassTransaction] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -287,7 +288,7 @@ const ChangePasswordComponent = (props: any) => {
                       placeholder: "",
                       disableUnderline: true,
                       autoComplete: "new-password",
-                      type: !showPass ? "password" : "text",
+                      type: !showPassTransaction ? "password" : "text",
                       style: {
                         fontSize: "13px",
                         height: "45px",
@@ -298,11 +299,11 @@ const ChangePasswordComponent = (props: any) => {
                   />
                   <Box
                     onClick={() => {
-                      setShowPass(!showPass);
+                      setShowPassTransaction(!showPassTransaction);
                     }}
                   >
                     <StyledImage
-                      src={showPass ? EyeIconWhite : EyeSlashWhite}
+                      src={showPassTransaction ? EyeIconWhite : EyeSlashWhite}
                       sx={{ height: "14px", width: "20px" }}
                     />
                   </Box>

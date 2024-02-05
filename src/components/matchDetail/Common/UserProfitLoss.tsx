@@ -18,6 +18,7 @@ const UserProfitLoss = (props: any) => {
     teamB: "Australia",
     childProfitLoss: [],
   };
+
   return (
     <>
       <Box
@@ -192,10 +193,16 @@ const UserProfitLoss = (props: any) => {
               >
                 <Typography
                   sx={{
-                    fontSize: "12px",
+                    fontSize: {
+                      lg: "13px",
+                      md: "12px",
+                      xs: matchesMobile ? "8px" : "8px",
+                    },
                     color: "black",
                     fontWeight: "600",
+                    lineHeight: "0.9"
                   }}
+                  
                 >
                   {matchDetail?.teamA}
                 </Typography>
@@ -216,9 +223,14 @@ const UserProfitLoss = (props: any) => {
               >
                 <Typography
                   sx={{
-                    fontSize: "12px",
+                    fontSize: {
+                      lg: "13px",
+                      md: "12px",
+                      xs: matchesMobile ? "8px" : "8px",
+                    },
                     color: "black",
                     fontWeight: "600",
+                    lineHeight: "0.9"
                   }}
                 >
                   {matchDetail?.teamB}
@@ -249,6 +261,7 @@ const UserProfitLoss = (props: any) => {
                         fontSize: "12px",
                         color: "black",
                         fontWeight: "600",
+                        lineHeight: "0.9"
                       }}
                     >
                       {matchDetail?.teamC}
