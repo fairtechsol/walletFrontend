@@ -33,8 +33,7 @@ const ListOfClients = () => {
     (state: RootState) => state.user.profile
   );
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    console.log(event);
+  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
   return (
