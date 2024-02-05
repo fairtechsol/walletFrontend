@@ -600,7 +600,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
           navigateTo={"list_of_clients"}
-          title="Commision report"
+          title= {`${element?.userName} - (Commission Report)`}
         >
           <CommissionReportTable />
         </Modal>

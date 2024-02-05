@@ -278,6 +278,7 @@ const MatchDetail = () => {
               single={"single"}
               title={"User Profit Loss"}
               // matchId={matchId}
+              matchDetail={matchDetail}
             />
           )}
 
