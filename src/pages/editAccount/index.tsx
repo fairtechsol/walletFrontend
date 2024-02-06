@@ -19,6 +19,7 @@ import {
   getUsersDetail,
   updateExpert,
   updateReset,
+  updateUrlAdmin,
   updateUser,
   updateUserReset,
 } from "../../store/actions/user/userAction";
@@ -134,7 +135,7 @@ const EditAccount = () => {
         fullName: values.fullName,
         phoneNumber: values.phoneNumber.toString(),
         city: values.city,
-        // remark: values.remarks,
+        remark: values.remarks,
       };
 
       let payload;
@@ -152,12 +153,13 @@ const EditAccount = () => {
         payload = {
           ...commonPayload,
           logo: values.base64Image,
+          isOldFairGame: false,
           sidebarColor: values.sidebarColor,
           headerColor: values.headerColor,
           footerColor: values.footerColor,
           transactionPassword: values.adminTransPassword,
         };
-        dispatch(updateUser(payload));
+        dispatch(updateUrlAdmin(payload));
       } else {
         payload = {
           ...commonPayload,
@@ -229,17 +231,31 @@ const EditAccount = () => {
   };
 
   const handleImageChange = (event: any) => {
-    const file = event.currentTarget.files[0];
+    try {
+      const file = event.currentTarget.files[0];
 
-    if (file) {
-      formik.setFieldValue("logo", file);
+      if (!file.type.includes("jpeg") && !file.type.includes("png")) {
+        alert("File should be either JPEG or PNG");
+        return;
+      }
 
-      // Convert the image to base64
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        formik.setFieldValue("base64Image", reader.result);
-      };
-      reader.readAsDataURL(file);
+      if (file) {
+        if (file.size > 1024 * 100 * 5) {
+          alert("File should be smaller than 500/400");
+          return;
+        }
+        console.warn(file.size);
+        formik.setFieldValue("logo", file);
+
+        // Convert the image to base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          formik.setFieldValue("base64Image", reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -367,6 +383,11 @@ const EditAccount = () => {
           creditRefrence: userDetail?.creditRefrence,
           uplinePartnership: res,
           myPartnership: my,
+          domain: userDetail?.domainData?.domain,
+          sidebarColor: userDetail?.domainData?.sidebarColor,
+          headerColor: userDetail?.domainData?.headerColor,
+          footerColor: userDetail?.domainData?.footerColor,
+          base64Image: userDetail?.domainData?.logo,
           downlinePartnership: 100 - res - my,
           matchCommissionType: {
             label: userDetail?.matchComissionType,
@@ -409,6 +430,8 @@ const EditAccount = () => {
       console.log(e);
     }
   }, [editSuccess]);
+  
+
 
   return (
     <>
@@ -657,18 +680,36 @@ const EditAccount = () => {
                       name="logo"
                       type={"file"}
                       id="logo"
-                      value={formik.values.logo}
+                      // value={formik.values.logo}
                       onChange={handleImageChange}
                     />
                     {formik.values.base64Image && (
-                      <div>
-                        <p>Base64 Image:</p>
+                      <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        sx={{
+                          mt: 1,
+                          p: 1,
+                          borderRadius: "5px",
+                          background: "#91943f",
+                          color: "white",
+                        }}
+                      >
                         <img
                           src={formik.values.base64Image}
                           alt="Base64"
-                          style={{ maxWidth: "100%" }}
+                          style={{
+                            maxWidth: "100%",
+                            height: "60px",
+                            width: "60px",
+                            objectFit: "cover",
+                            borderRadius: "5px",
+                          }}
                         />
-                      </div>
+                        <Typography variant="h5" sx={{ ml: 2 }}>
+                          Super URL Admin Logo....{" "}
+                        </Typography>
+                      </Box>
                     )}
                     <Box m={2}>
                       <Grid container spacing={2}>
@@ -745,10 +786,10 @@ const EditAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    // touched={touched.roleName}
-                    // error={errors.roleName}
-                    // error={touched.roleName && Boolean(errors.roleName)}
-                    // onBlur={formik.handleBlur}
+                  // touched={touched.roleName}
+                  // error={errors.roleName}
+                  // error={touched.roleName && Boolean(errors.roleName)}
+                  // onBlur={formik.handleBlur}
                   />
                   {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
@@ -928,7 +969,7 @@ const EditAccount = () => {
                     id={"downlinePartnership"}
                     type={"Number"}
                     value={formik.values.downlinePartnership}
-                    // onChange={formik.handleChange}
+                  // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -966,33 +1007,33 @@ const EditAccount = () => {
                             option.value ===
                             formik.values.matchCommissionType.value
                         )}
-                        // touched={touched.matchCommissionType}
-                        // error={errors.matchCommissionType}
+                      // touched={touched.matchCommissionType}
+                      // error={errors.matchCommissionType}
                       />
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
                       ) && (
-                        <>
-                          <SelectField
-                            containerStyle={containerStyles}
-                            titleStyle={titleStyles}
-                            id={"matchCommission"}
-                            name={"matchCommission"}
-                            label={"Match Commission (%)*"}
-                            options={matchComissionArray}
-                            value={formik.values.matchCommission}
-                            onChange={(matchComissionArray: any) => {
-                              formik.setFieldValue(
-                                "matchCommission",
-                                matchComissionArray
-                              );
-                            }}
-                            onBlur={formik.handleBlur}
+                          <>
+                            <SelectField
+                              containerStyle={containerStyles}
+                              titleStyle={titleStyles}
+                              id={"matchCommission"}
+                              name={"matchCommission"}
+                              label={"Match Commission (%)*"}
+                              options={matchComissionArray}
+                              value={formik.values.matchCommission}
+                              onChange={(matchComissionArray: any) => {
+                                formik.setFieldValue(
+                                  "matchCommission",
+                                  matchComissionArray
+                                );
+                              }}
+                              onBlur={formik.handleBlur}
                             // touched={touched.matchCommission}
                             // error={errors.matchCommission}
-                          />
-                        </>
-                      )}
+                            />
+                          </>
+                        )}
 
                       <SelectField
                         containerStyle={containerStyles}
@@ -1009,8 +1050,8 @@ const EditAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        // touched={touched.sessionCommission}
-                        // error={errors.sessionCommission}
+                      // touched={touched.sessionCommission}
+                      // error={errors.sessionCommission}
                       />
                     </Box>
                   </>
@@ -1105,7 +1146,7 @@ const EditAccount = () => {
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
-          functionDispatch={() => {}}
+          functionDispatch={() => { }}
           navigateTo={"/wallet/list_of_clients"}
         />
       )}

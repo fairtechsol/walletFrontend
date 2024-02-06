@@ -151,6 +151,24 @@ export const addUrlAdmin = createAsyncThunk<any, any>(
   }
 );
 
+export const updateUrlAdmin = createAsyncThunk<any, any>(
+  "user/updateUrlAdmin",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.post(
+        `${ApiConstants.USER.UPDATEURLADMIN}`,
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
 export const updateUser = createAsyncThunk<any, any>(
   "user/updateUser",
   async (requestData, thunkApi) => {

@@ -7,6 +7,7 @@ import {
   getUsersDetail,
   updateExpert,
   updateReset,
+  updateUrlAdmin,
   updateUser,
   updateUserReset,
 } from "../../actions/user/userAction";
@@ -68,6 +69,18 @@ const userUpdateSlice = createSlice({
         state.loading = false;
       })
       .addCase(addUrlAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(updateUrlAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUrlAdmin.fulfilled, (state) => {
+        state.editSuccess = true;
+        state.loading = false;
+      })
+      .addCase(updateUrlAdmin.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
