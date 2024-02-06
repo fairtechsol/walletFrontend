@@ -1,6 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { checkUserType } from "./helper";
 
 const toastOptions = {
   autoClose: 1500,

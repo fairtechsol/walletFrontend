@@ -6,7 +6,7 @@ function App() {
 
   return (
     <RouterProvider
-      router={routes(window.location.pathname.includes("admin") ? "admin" : "")}
+      router={routes()}
     />
   );
 }

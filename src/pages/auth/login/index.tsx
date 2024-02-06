@@ -2,7 +2,7 @@ import { Button, Box, useTheme, CircularProgress } from "@mui/material";
 import { mail, eye, eyeLock } from "../../../assets";
 import { useEffect } from "react";
 import Input from "../../../components/login/Input";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { authReset, login } from "../../../store/actions/auth/authAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
@@ -11,7 +11,6 @@ import { useFormik } from "formik";
 import { loginValidationSchema } from "../../../utils/Validations";
 
 const Login = () => {
-  const location = useLocation();
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -19,7 +18,7 @@ const Login = () => {
   const initialValues: any = {
     userName: "",
     password: "",
-    loginType: location.pathname.includes("wallet") ? "wallet" : "admin",
+    loginType: "wallet",
   };
 
   const formik = useFormik({
