@@ -35,8 +35,6 @@ const RowComponentMatches = ({
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  console.log(selectedId);
-
   return (
     <Box sx={{ width: "100%" }}>
       <Box

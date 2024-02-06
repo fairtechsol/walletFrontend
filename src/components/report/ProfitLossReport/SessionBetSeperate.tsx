@@ -485,7 +485,7 @@ const SingleBox = ({
   isPercent,
   rate,
 }: any) => {
-  // console.log(data, "dataaaa")
+  
   return !header ? (
     first ? (
       <Box

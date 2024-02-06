@@ -34,7 +34,6 @@ import {
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import _, { debounce } from "lodash";
-import { makeStyles } from '@mui/styles';
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
 //   { value: "superAdmin", label: "URL Super Admin", level: 2 },
@@ -50,7 +49,6 @@ const MatchCommissionTypes = [
   { value: "totalLoss", label: "Total Loss" },
   { value: "entryWise", label: "Entry Wise" },
 ];
-
 
 const AddAccount = () => {
   const theme = useTheme();
@@ -118,7 +116,6 @@ const AddAccount = () => {
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
-
   };
   const titleStyles = {
     color: "#202020",
@@ -133,8 +130,6 @@ const AddAccount = () => {
     borderRadius: "5px",
     border: "1px solid #DEDEDE",
   };
-
-
 
   const formik = useFormik({
     initialValues: formDataSchema,
@@ -181,14 +176,27 @@ const AddAccount = () => {
           payload = {
             ...commonPayload,
             roleName: values.roleName.value,
-            creditRefrence: values.creditRefrence,
+            creditRefrence:
+              values.creditRefrence === "" ? 0 : values.creditRefrence,
             exposureLimit: values.exposureLimit,
             maxBetLimit: values.maxBetLimit,
             minBetLimit: values.minBetLimit,
             myPartnership: values.myPartnership,
-            sessionCommission: values.sessionCommission.value,
-            matchComissionType: values.matchCommissionType.value,
-            matchCommission: values.matchCommission.value,
+            sessionCommission:
+              values.sessionCommission.value === "" ||
+              values.sessionCommission.value === "0.00"
+                ? 0
+                : values.sessionCommission.value,
+            matchComissionType:
+              values.matchCommissionType.value === "" ||
+              values.matchCommissionType.value === "0.00"
+                ? null
+                : values.matchCommissionType.value,
+            matchCommission:
+              values.matchCommission.value === "" ||
+              values.matchCommission.value === "0.00"
+                ? 0
+                : values.matchCommission.value,
             transactionPassword: values.adminTransPassword,
           };
           dispatch(addUser(payload));
@@ -760,7 +768,6 @@ const AddAccount = () => {
               >
                 <Box sx={{ mt: 1 }}>
                   <SelectField
-
                     containerStyle={containerStyles}
                     titleStyle={titleStyles}
                     placeholder="Select"
@@ -778,7 +785,6 @@ const AddAccount = () => {
                     touched={_.get(touched, "roleName.value")}
                     error={_.get(errors, "roleName.value")}
                     onBlur={formik.handleBlur}
-                   
                   />
                 </Box>
 

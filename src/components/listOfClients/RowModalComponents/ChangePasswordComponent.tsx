@@ -45,17 +45,29 @@ const ChangePasswordComponent = (props: any) => {
           transactionPassword: values.transactionPassword,
           // remark: values.remark,
         };
-      } else if (element.roleName === "superAdmin") {
+      }
+      // else if (
+      //   element.roleName === "superAdmin" ||
+      //   element.roleName === "fairGameAdmin"
+      // ) {
+      //   payload = {
+      //     userId: element?.id,
+      //     newPassword: values.newPassword,
+      //     transactionPassword: values.transactionPassword,
+      //     // remark: values.remark,
+      //   };
+      // }
+      else if (element.roleName === "expert") {
         payload = {
-          userId: element?.id,
-          newPassword: values.newPassword,
+          id: element?.id,
+          password: values.newPassword,
           transactionPassword: values.transactionPassword,
           // remark: values.remark,
         };
       } else {
         payload = {
-          id: element?.id,
-          password: values.newPassword,
+          userId: element?.id,
+          newPassword: values.newPassword,
           transactionPassword: values.transactionPassword,
           // remark: values.remark,
         };

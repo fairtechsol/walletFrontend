@@ -29,8 +29,6 @@ const SessionComponentMatches = ({
   );
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  console.log(selectedId, item?.betId, "abc");
-
   return (
     <Box key={index} sx={{ width: "100%" }}>
       <Box

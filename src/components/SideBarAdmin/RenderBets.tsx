@@ -7,7 +7,6 @@ const RenderBets = (props: any) => {
   const { i, handleDrawerToggle, colors } = props;
   const [selected, setSelected] = useState(false);
 
-  console.log(i, "i");
   return (
     <Box
       onClick={(event: any) => {
