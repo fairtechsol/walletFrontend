@@ -8,8 +8,9 @@ import Input from "../../components/login/Input";
 import { changePassword } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { changePasswordSchema } from "../../utils/Validations";
-import { ApiConstants } from "../../utils/Constants";
+import { ApiConstants, Constants } from "../../utils/Constants";
 import { logout } from "../../store/actions/auth/authAction";
+import { checkUserType } from "../../helper";
 
 const initialValues: any = {
   oldPassword: "",
@@ -197,7 +198,7 @@ const ChangePassword = (props: any) => {
           showModal={showModal}
           functionDispatch={() => dispatch(logout())}
           buttonMessage={"Navigate To Login"}
-          navigateTo={"/wallet/login"}
+          navigateTo={`/${checkUserType()}/login`}
         />
       )}
     </>

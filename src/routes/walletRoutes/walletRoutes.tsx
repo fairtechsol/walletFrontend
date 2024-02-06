@@ -1,11 +1,11 @@
 import { lazy } from "react";
-import Loadable from "../utils/loadable";
+import Loadable from "../../utils/loadable";
 import { Navigate } from "react-router-dom";
-import { Constants } from "../utils/Constants";
+import { Constants } from "../../utils/Constants";
 
-const MainLayout = Loadable(lazy(() => import("../layout/main")));
+const MainLayout = Loadable(lazy(() => import("../../layout/main")));
 const DepositAndWithdrawBox = Loadable(
-  lazy(() => import("../components/walletSettings/DepositAndWithdrawBox"))
+  lazy(() => import("../../components/walletSettings/DepositAndWithdrawBox"))
 );
 
 const WalletRoutes = {
@@ -26,7 +26,7 @@ const WalletRoutes = {
     },
     {
       path: "*",
-      element: <Navigate to={"/wallet/match"} replace />,
+      element: <Navigate to={"/wallet/list_of_clients"} replace />,
     },
   ],
 };

@@ -1,26 +1,31 @@
 import { lazy } from "react";
-import Loadable from "../utils/loadable";
-import MultipleMatch from "../pages/analysis/multipleMatch";
+import Loadable from "../../utils/loadable";
+import MultipleMatch from "../../pages/analysis/multipleMatch";
 import { Navigate } from "react-router-dom";
-import { Constants } from "../utils/Constants";
+import { Constants } from "../../utils/Constants";
 
-const MainLayout = Loadable(lazy(() => import("../layout/main")));
-const ListOfClients = Loadable(lazy(() => import("../pages/listOfClients")));
-const ChangePassword = Loadable(lazy(() => import("../pages/changePassword")));
-const MyAccount = Loadable(lazy(() => import("../pages/myAccount")));
-const Inplay = Loadable(lazy(() => import("../pages/inplay")));
-const AddAccount = Loadable(lazy(() => import("../pages/addAccount")));
-const EditAccount = Loadable(lazy(() => import("../pages/editAccount")));
-const Analysis = Loadable(lazy(() => import("../pages/analysis")));
-const Reports = Loadable(lazy(() => import("../pages/reports")));
-const MatchDetail = Loadable(lazy(() => import("../pages/matchDetail")));
-const WalletSettings = Loadable(lazy(() => import("../pages/walletSettings")));
+const MainLayout = Loadable(lazy(() => import("../../layout/main")));
+const ListOfClients = Loadable(lazy(() => import("../../pages/listOfClients")));
+const ChangePassword = Loadable(
+  lazy(() => import("../../pages/changePassword"))
+);
+const MyAccount = Loadable(lazy(() => import("../../pages/myAccount")));
+const Inplay = Loadable(lazy(() => import("../../pages/inplay")));
+const AddAccount = Loadable(lazy(() => import("../../pages/addAccount")));
+const EditAccount = Loadable(lazy(() => import("../../pages/editAccount")));
+const Analysis = Loadable(lazy(() => import("../../pages/analysis")));
+const Reports = Loadable(lazy(() => import("../../pages/reports")));
+const MatchDetail = Loadable(lazy(() => import("../../pages/matchDetail")));
+const WalletSettings = Loadable(
+  lazy(() => import("../../pages/walletSettings"))
+);
 
 const MainRoutes = {
   path: Constants.MainPaths.root,
   element: <MainLayout />,
   children: [
     {
+      index: true,
       path: Constants.MainPaths.listOfClients,
       element: <ListOfClients />,
     },
@@ -74,7 +79,7 @@ const MainRoutes = {
     },
     {
       path: "*",
-      element: <Navigate to={"/wallet/match"} replace />,
+      element: <Navigate to={"/wallet/list_of_clients"} replace />,
     },
   ],
 };

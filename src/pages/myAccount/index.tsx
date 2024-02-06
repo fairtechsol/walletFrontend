@@ -62,7 +62,7 @@ const MyAccount = () => {
             }}
           >
             <DataShow
-              title={"Upper Level Credit Referance"}
+              title={"Upper Level Credit Reference"}
               value={myAccountDetails?.userCreditReference ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
@@ -90,7 +90,7 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"Down Level Credit Referance"}
+              title={"Down Level Credit Reference"}
               value={myAccountDetails?.downLevelCreditReference ?? 0}
               containerStyle={{
                 flex: 1,

@@ -7,9 +7,9 @@ import {
   marqueeNotification,
 } from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
-import Header from "./header";
 import { socketService } from "../../socketManager";
-import { WalletPrivateRoute } from "../../helper";
+import Header from "../../layout/main/header";
+import { AdminPrivateRoute } from "../../helper";
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (!sessionStorage.getItem("userToken")) {
-      navigate("/wallet/login");
+      navigate("/old/admin/login");
     }
     dispatch(getUsersProfile());
     dispatch(marqueeNotification());
@@ -35,12 +35,12 @@ const MainLayout = () => {
 
   return (
     <>
-      <WalletPrivateRoute>
+      <AdminPrivateRoute>
         <Header />
         <BackgroundLayout>
           <Outlet />
         </BackgroundLayout>
-      </WalletPrivateRoute>
+      </AdminPrivateRoute>
     </>
   );
 };

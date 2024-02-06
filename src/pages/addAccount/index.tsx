@@ -34,15 +34,7 @@ import {
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import _, { debounce } from "lodash";
-// const AccountTypes = [
-//   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
-//   { value: "superAdmin", label: "URL Super Admin", level: 2 },
-//   { value: "superAdmin", label: "Super Admin", level: 3 },
-//   { value: "admin", label: "Admin", level: 4 },
-//   { value: "superMaster", label: "Super Master", level: 5 },
-//   { value: "master", label: "Master", level: 6 },
-//   { value: "user", label: "User", level: 8 },
-// ];
+import { checkUserType } from "../../helper";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -170,9 +162,24 @@ const AddAccount = () => {
             footerColor: values.footerColor,
             transactionPassword: values.adminTransPassword,
             myPartnership: values.myPartnership,
+            sessionCommission:
+              values.sessionCommission.value === "" ||
+              values.sessionCommission.value === "0.00"
+                ? 0
+                : values.sessionCommission.value,
+            matchComissionType:
+              values.matchCommissionType.value === "" ||
+              values.matchCommissionType.value === "0.00"
+                ? null
+                : values.matchCommissionType.value,
+            matchCommission:
+              values.matchCommission.value === "" ||
+              values.matchCommission.value === "0.00"
+                ? 0
+                : values.matchCommission.value,
           };
           dispatch(addUrlAdmin(payload));
-        } else {
+        } else if (values.roleName.value === "fairGameAdmin") {
           payload = {
             ...commonPayload,
             roleName: values.roleName.value,
@@ -197,9 +204,41 @@ const AddAccount = () => {
               values.matchCommission.value === "0.00"
                 ? 0
                 : values.matchCommission.value,
+            isOldFairGame: true,
             transactionPassword: values.adminTransPassword,
           };
           dispatch(addUser(payload));
+        } else {
+          payload = {
+            ...commonPayload,
+            roleName:
+              values.roleName.value === "oldSuperAdmin"
+                ? "superAdmin"
+                : values.roleName.value,
+            creditRefrence: values.creditRefrence,
+            isOldFairGame: true,
+            transactionPassword: values.adminTransPassword,
+            myPartnership:
+              values.roleName.value !== "user"
+                ? values.myPartnership
+                : values.downlinePartnership,
+            sessionCommission:
+              values.sessionCommission.value === "" ||
+              values.sessionCommission.value === "0.00"
+                ? 0
+                : values.sessionCommission.value,
+            matchComissionType:
+              values.matchCommissionType.value === "" ||
+              values.matchCommissionType.value === "0.00"
+                ? null
+                : values.matchCommissionType.value,
+            matchCommission:
+              values.matchCommission.value === "" ||
+              values.matchCommission.value === "0.00"
+                ? 0
+                : values.matchCommission.value,
+          };
+          dispatch(addUrlAdmin(payload));
         }
         dispatch(updateReset());
       } catch (e) {
@@ -256,11 +295,39 @@ const AddAccount = () => {
       const roleName = profileDetail?.roleName;
 
       const accountTypeMap: any = {
-        fairGameWallet: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
+        fairGameWallet: [
+          { value: "fairGameAdmin", label: "Fairgame Admin" },
+          { value: "oldSuperAdmin", label: "Super Admin" },
+          { value: "admin", label: "Admin" },
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
         fairGameAdmin: [
           { value: "superAdmin", label: "URL Super Admin" },
+          { value: "oldSuperAdmin", label: "Super Admin" },
+          { value: "admin", label: "Admin" },
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
           { value: "expert", label: "Expert" },
+          { value: "user", label: "User" },
         ],
+        superAdmin: [
+          { value: "admin", label: "Admin" },
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
+        admin: [
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
+        superMaster: [
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
+        master: [{ value: "user", label: "User" }],
       };
 
       setAccountTypes(accountTypeMap[roleName] || []);
@@ -982,7 +1049,7 @@ const AddAccount = () => {
               )}
 
               {formik?.values?.roleName?.value !== "expert" &&
-                formik?.values?.roleName?.value === "fairGameAdmin" && (
+                formik?.values?.roleName?.value !== "superAdmin" && (
                   <>
                     <Box
                       sx={{
@@ -1154,7 +1221,7 @@ const AddAccount = () => {
           showModal={showModal}
           buttonMessage={"Ok"}
           functionDispatch={() => {}}
-          navigateTo={"/wallet/list_of_clients"}
+          navigateTo={`/${checkUserType()}/list_of_clients`}
         />
       )}
     </>

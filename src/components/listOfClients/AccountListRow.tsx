@@ -9,6 +9,7 @@ import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
 import { Modal } from "../Common/Modal";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
+import { checkUserType } from "../../helper";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -90,7 +91,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate(`/wallet/edit_account`, {
+                navigate(`/${checkUserType()}/edit_account`, {
                   state: {
                     id: element?.id,
                   },
@@ -241,7 +242,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{+element?.totalComission || 0}</Typography>
+          <Typography variant="h5">{element?.commission || 0}</Typography>
         </Box>
         <Box
           sx={{
@@ -600,7 +601,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
           navigateTo={"list_of_clients"}
-          title= {`${element?.userName} - (Commission Report)`}
+          title={`${element?.userName} - (Commission Report)`}
         >
           <CommissionReportTable />
         </Modal>

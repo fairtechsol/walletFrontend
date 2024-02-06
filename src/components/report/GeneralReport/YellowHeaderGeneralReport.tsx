@@ -45,7 +45,7 @@ const YellowHeaderGeneralReport = () => {
           <DropDown
             titleStyle={{ marginLeft: "0px" }}
             title={"Select Type"}
-            data={["General Report", "Credit Refrance Report"]}
+            data={["General Report", "Credit Reference Report"]}
           />
           <Box sx={{ width: "30px" }}></Box>
           <CustomButtonAdmin />

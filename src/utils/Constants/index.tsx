@@ -64,11 +64,13 @@ export const ApiConstants = {
 };
 
 export const Constants = {
+  wallet: "wallet",
+  oldAdmin: "old/admin",
   pageLimit: 15,
   AuthPaths: {
     root: "/",
-    login: "wallet/login",
-    changePassword: "wallet/change_password",
+    login: "/wallet/login",
+    changePassword: "/wallet/change_password",
   },
   MainPaths: {
     root: "/wallet",
@@ -94,6 +96,34 @@ export const Constants = {
   },
   ReportsPaths: {
     root: "/wallet/reports",
+    profitLoss: "profit_loss",
+    accountStatement: "account_statement",
+    currentBet: "current_bet",
+    generalReport: "general_report",
+  },
+  AdminAuthPaths: {
+    root: "/old/admin",
+    login: "login",
+    changePassword: "change_password",
+  },
+  AdminMainPaths: {
+    root: "/old/admin",
+    listOfClients: "list_of_clients",
+    match: "match",
+    liveMarket: "live_market",
+    liveMarketMatches: "live_market/matches",
+    addAccount: "add_account",
+    editAccount: "edit_account",
+    marketAnalysis: "market_analysis",
+    marketAnalysisMatches: "market_analysis/matches",
+    multipleMatch: "market_analysis/multiple_Match",
+    reports: "reports",
+    walletSettings: "walletSettings",
+    myAccount: "my-account",
+    changePassword: "change-password",
+  },
+  AdminReportsPaths: {
+    root: "/old/admin/reports",
     profitLoss: "profit_loss",
     accountStatement: "account_statement",
     currentBet: "current_bet",

@@ -2,24 +2,26 @@ import { Button, Box, useTheme, CircularProgress } from "@mui/material";
 import { mail, eye, eyeLock } from "../../../assets";
 import { useEffect } from "react";
 import Input from "../../../components/login/Input";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { authReset, login } from "../../../store/actions/auth/authAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { loginValidationSchema } from "../../../utils/Validations";
-
-const initialValues: any = {
-  userName: "",
-  password: "",
-  loginType: "wallet",
-};
+import { checkUserType } from "../../../helper";
 
 const Login = () => {
+  const location = useLocation();
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+
+  const initialValues: any = {
+    userName: "",
+    password: "",
+    loginType: location.pathname.includes("wallet") ? "wallet" : "admin",
+  };
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -47,9 +49,9 @@ const Login = () => {
           "forceChangePassword",
           JSON.stringify(forceChangePassword)
         );
-        navigate("/wallet/change_password");
+        navigate(`/${checkUserType()}/change_password`);
       } else if (isTransPasswordCreated) {
-        navigate("/wallet/list_of_clients");
+        navigate(`/${checkUserType()}/list_of_clients`);
       }
       dispatch(authReset());
     }

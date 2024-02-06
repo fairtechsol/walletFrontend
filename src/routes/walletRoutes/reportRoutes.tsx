@@ -1,20 +1,20 @@
 import { lazy } from "react";
-import Loadable from "../utils/loadable";
+import Loadable from "../../utils/loadable";
 import { Navigate } from "react-router-dom";
-import { Constants } from "../utils/Constants";
+import { Constants } from "../../utils/Constants";
 
-const MainLayout = Loadable(lazy(() => import("../layout/main")));
+const MainLayout = Loadable(lazy(() => import("../../layout/main")));
 const ProfitLossReport = Loadable(
-  lazy(() => import("../pages/reports/ProfitLoss"))
+  lazy(() => import("../../pages/reports/ProfitLoss"))
 );
 const AccountStatement = Loadable(
-  lazy(() => import("../pages/reports/AccountStatement"))
+  lazy(() => import("../../pages/reports/AccountStatement"))
 );
 const CurrentBets = Loadable(
-  lazy(() => import("../pages/reports/CurrentBets"))
+  lazy(() => import("../../pages/reports/CurrentBets"))
 );
 const GeneralReport = Loadable(
-  lazy(() => import("../pages/reports/GeneralReport"))
+  lazy(() => import("../../pages/reports/GeneralReport"))
 );
 
 const ReportRoutes = {
@@ -39,7 +39,7 @@ const ReportRoutes = {
     },
     {
       path: "*",
-      element: <Navigate to={"/wallet/match"} replace />,
+      element: <Navigate to={"/wallet/list_of_clients"} replace />,
     },
   ],
 };

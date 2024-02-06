@@ -1,6 +1,7 @@
 import MainBox from "./MainBox";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { checkUserType } from "../../helper";
 
 const RenderOdds = (props: any) => {
   const { i, handleDrawerToggle, colors } = props;
@@ -9,7 +10,7 @@ const RenderOdds = (props: any) => {
     <Box
       onClick={(event: any) => {
         event.stopPropagation();
-        navigate(`/wallet/match`, {
+        navigate(`/${checkUserType()}/match`, {
           state: { matchId: i?.id },
         });
         handleDrawerToggle();
