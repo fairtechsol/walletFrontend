@@ -34,7 +34,6 @@ import {
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import _, { debounce } from "lodash";
-import { checkUserType } from "../../helper";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -135,7 +134,7 @@ const AddAccount = () => {
           confirmPassword: values.confirmPassword,
           phoneNumber: values.phoneNumber.toString(),
           city: values.city,
-          // remark: values.remarks,
+          remark: values.remarks,
         };
 
         let payload;
@@ -204,7 +203,6 @@ const AddAccount = () => {
               values.matchCommission.value === "0.00"
                 ? 0
                 : values.matchCommission.value,
-            isOldFairGame: true,
             transactionPassword: values.adminTransPassword,
           };
           dispatch(addUser(payload));
@@ -1221,7 +1219,7 @@ const AddAccount = () => {
           showModal={showModal}
           buttonMessage={"Ok"}
           functionDispatch={() => {}}
-          navigateTo={`/${checkUserType()}/list_of_clients`}
+          navigateTo={`/wallet/list_of_clients`}
         />
       )}
     </>

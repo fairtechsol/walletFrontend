@@ -9,7 +9,6 @@ import {
 import { AppDispatch } from "../../store/store";
 import Header from "./header";
 import { socketService } from "../../socketManager";
-import { WalletPrivateRoute } from "../../helper";
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -35,12 +34,10 @@ const MainLayout = () => {
 
   return (
     <>
-      <WalletPrivateRoute>
         <Header />
         <BackgroundLayout>
           <Outlet />
         </BackgroundLayout>
-      </WalletPrivateRoute>
     </>
   );
 };

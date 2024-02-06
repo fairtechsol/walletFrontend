@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { loginValidationSchema } from "../../../utils/Validations";
-import { checkUserType } from "../../../helper";
 
 const Login = () => {
   const location = useLocation();
@@ -49,9 +48,9 @@ const Login = () => {
           "forceChangePassword",
           JSON.stringify(forceChangePassword)
         );
-        navigate(`/${checkUserType()}/change_password`);
+        navigate(`/wallet/change_password`);
       } else if (isTransPasswordCreated) {
-        navigate(`/${checkUserType()}/list_of_clients`);
+        navigate(`/wallet/list_of_clients`);
       }
       dispatch(authReset());
     }

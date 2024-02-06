@@ -27,7 +27,6 @@ import { AppDispatch, RootState } from "../../store/store";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
-import { checkUserType } from "../../helper";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -1166,7 +1165,7 @@ const EditAccount = () => {
           showModal={showModal}
           buttonMessage={"Ok"}
           functionDispatch={() => {}}
-          navigateTo={`/${checkUserType()}/list_of_clients`}
+          navigateTo={`/wallet/list_of_clients`}
         />
       )}
     </>
