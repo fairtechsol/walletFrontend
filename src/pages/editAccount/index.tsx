@@ -158,9 +158,18 @@ const EditAccount = () => {
           transactionPassword: values.adminTransPassword,
         };
         dispatch(updateUrlAdmin(payload));
+      } else if (values.roleName.value === "fairGameAdmin") {
+        payload = {
+          ...commonPayload,
+          sessionCommission: values.sessionCommission.value,
+          matchComissionType: values.matchCommissionType.value,
+          matchCommission: values.matchCommission.value,
+        };
+        dispatch(updateUser(payload));
       } else {
         payload = {
           ...commonPayload,
+          isOldFairGame: true,
           sessionCommission: values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
           matchCommission: values.matchCommission.value,
@@ -466,8 +475,6 @@ const EditAccount = () => {
       console.log(e);
     }
   }, [editSuccess]);
-  
-
 
   return (
     <>
@@ -805,10 +812,10 @@ const EditAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                  // touched={touched.roleName}
-                  // error={errors.roleName}
-                  // error={touched.roleName && Boolean(errors.roleName)}
-                  // onBlur={formik.handleBlur}
+                    // touched={touched.roleName}
+                    // error={errors.roleName}
+                    // error={touched.roleName && Boolean(errors.roleName)}
+                    // onBlur={formik.handleBlur}
                   />
                   {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
@@ -988,7 +995,7 @@ const EditAccount = () => {
                     id={"downlinePartnership"}
                     type={"Number"}
                     value={formik.values.downlinePartnership}
-                  // onChange={formik.handleChange}
+                    // onChange={formik.handleChange}
                   />
                 </>
               )}

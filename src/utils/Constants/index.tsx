@@ -114,7 +114,7 @@ export const Constants = {
   customTimeOut: 1000 * 60 * 60, // 5 mint in mili seconds user ideal 5 mint after that logout
   customTimer: 1000 * 60 * 5, // 30 sec in mili seconds remainint timer start and show message  Your session will expire in 30 second
   sessionExpireTime: 60 * 5, // 30 sec
-  apiBasePath: "http://3.89.232.255:5050",
+  apiBasePath: "http://3.89.232.255:5000",
   thirdParty: "http://3.89.232.255:3200",
   expertPath: "http://3.89.232.255:6060",
 };
@@ -123,7 +123,7 @@ export const baseUrls = {
   socket:
     process.env.NODE_ENV === "production"
       ? `${Constants.apiBasePath}`
-      : "http://localhost:5050",
+      : "http://localhost:5000",
   thirdParty:
     process.env.NODE_ENV === "production"
       ? `${Constants.thirdParty}`
