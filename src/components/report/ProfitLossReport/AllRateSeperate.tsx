@@ -235,7 +235,7 @@ const AllRateSeperate = ({
                       </Typography>
                     </Box>
                     <RowComponent header={false} data={i} />
-                    {i?.deleted_reason && betHistory && (
+                    {i?.deleteReason && betHistory && (
                       <Box
                         sx={{
                           width: {
@@ -253,7 +253,7 @@ const AllRateSeperate = ({
                         <Box sx={{ width: mark2 ? "20%" : "35%" }}></Box>
                       </Box>
                     )}
-                    {i?.deleted_reason && betHistory === undefined && (
+                    {i?.deleteReason && betHistory === undefined && (
                       <Box
                         sx={{
                           width: {
@@ -290,13 +290,13 @@ const AllRateSeperate = ({
                             >
                               Bet{" "}
                               <span style={{ color: "#e41b23" }}>deleted</span>{" "}
-                              due to ${i?.deleted_reason}
+                              due to ${i?.deleteReason}
                             </Typography>
                           )}
                         </Box>
                       </Box>
                     )}
-                    {i?.deleted_reason && profit && (
+                    {i?.deleteReason && profit && (
                       <Box
                         sx={{
                           width: {
@@ -314,7 +314,7 @@ const AllRateSeperate = ({
                         <Box sx={{ width: mark2 ? "20%" : "35%" }}></Box>
                       </Box>
                     )}
-                    {profit && !i?.deleted_reason && (
+                    {profit && !i?.deleteReason && (
                       <Box
                         sx={{
                           height: "40px",
@@ -365,7 +365,7 @@ const AllRateSeperate = ({
                         </Box>
                       </Box>
                     )}
-                    {profit && i?.deleted_reason && (
+                    {profit && i?.deleteReason && (
                       <Box
                         sx={{
                           height: "40px",
@@ -396,11 +396,11 @@ const AllRateSeperate = ({
                           }}
                         >
                           Bet <span style={{ color: "#e41b23" }}>Deleted</span>{" "}
-                          Due {"\n"} {i?.deleted_reason}
+                          Due {"\n"} {i?.deleteReason}
                         </Typography>
                       </Box>
                     )}
-                    {i?.deleted_reason && betHistory && (
+                    {i?.deleteReason && betHistory && (
                       <Box
                         sx={{
                           height: "40px",
@@ -433,7 +433,7 @@ const AllRateSeperate = ({
                           }}
                         >
                           Bet <span style={{ color: "#e41b23" }}>Deleted</span>{" "}
-                          Due {"\n"} {i?.deleted_reason}
+                          Due {"\n"} {i?.deleteReason}
                         </Typography>
                       </Box>
                     )}
