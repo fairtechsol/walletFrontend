@@ -192,7 +192,7 @@ const SessionBetSeperate = ({
                       </Typography>
                     </Box>
                     <RowComponent header={false} data={i} />
-                    {i?.deleted_reason && (
+                    {i?.deleteReason && (
                       <Box
                         sx={{
                           width: {
@@ -210,7 +210,7 @@ const SessionBetSeperate = ({
                         <Box sx={{ width: mark2 ? "35%" : "35%" }}></Box>
                       </Box>
                     )}
-                    {i?.deleted_reason && betHistory === undefined && (
+                    {i?.deleteReason && betHistory === undefined && (
                       <Box
                         sx={{
                           width: {
@@ -247,13 +247,13 @@ const SessionBetSeperate = ({
                             >
                               Bet{" "}
                               <span style={{ color: "#e41b23" }}>deleted</span>{" "}
-                              due to ${i?.deleted_reason}
+                              due to ${i?.deleteReason}
                             </Typography>
                           )}
                         </Box>
                       </Box>
                     )}
-                    {profit && !i?.deleted_reason && (
+                    {profit && !i?.deleteReason && (
                       <Box
                         sx={{
                           height: "40px",
@@ -299,7 +299,7 @@ const SessionBetSeperate = ({
                         </Box>
                       </Box>
                     )}
-                    {profit && i?.deleted_reason && (
+                    {profit && i?.deleteReason && (
                       <Box
                         sx={{
                           height: "40px",
@@ -332,11 +332,11 @@ const SessionBetSeperate = ({
                         >
                           Bet <span style={{ color: "#e41b23" }}>Deleted</span>{" "}
                           Due {"\n"}
-                          {i?.deleted_reason}
+                          {i?.deleteReason}
                         </Typography>
                       </Box>
                     )}
-                    {i?.deleted_reason && betHistory && (
+                    {i?.deleteReason && betHistory && (
                       <Box
                         sx={{
                           height: "40px",
@@ -371,7 +371,7 @@ const SessionBetSeperate = ({
                         >
                           Bet <span style={{ color: "#e41b23" }}>Deleted</span>{" "}
                           Due {"\n"}
-                          {i?.deleted_reason}
+                          {i?.deleteReason}
                         </Typography>
                       </Box>
                     )}
