@@ -74,7 +74,7 @@ const Inplay = () => {
         socketService.match.leaveMatchRoom(item?.id);
       });
     };
-  }, []);
+  }, [matchListInplay?.matches?.length]);
 
   return (
     <>
