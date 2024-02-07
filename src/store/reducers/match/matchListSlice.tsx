@@ -33,6 +33,7 @@ const matchListSlice = createSlice({
         state.loading = true;
         state.success = false;
         state.error = null;
+        state.matchListInplay = null;
       })
       .addCase(getMatchListInplay.fulfilled, (state, action) => {
         state.matchListInplay = action.payload;
@@ -47,6 +48,7 @@ const matchListSlice = createSlice({
         state.loading = true;
         state.success = false;
         state.error = null;
+        state.matchDetail = null;
       })
       .addCase(getMatchDetail.fulfilled, (state, action) => {
         state.matchDetail = action.payload;

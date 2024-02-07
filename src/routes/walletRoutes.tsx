@@ -26,7 +26,7 @@ const WalletRoutes = {
     },
     {
       path: "*",
-      element: <Navigate to={"/wallet/match"} replace />,
+      element: <Navigate to={"/wallet/list_of_clients"} replace />,
     },
   ],
 };

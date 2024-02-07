@@ -78,9 +78,9 @@ const MatchDetail = () => {
     try {
       if (event?.matchId === state?.matchId) {
         if (location.pathname.includes("market_analysis")) {
-          navigate("/wallet/market_analysis");
+          navigate(`/wallet/market_analysis`);
         } else {
-          navigate("/wallet/live_market");
+          navigate(`/wallet/live_market`);
         }
       }
     } catch (e) {
@@ -420,7 +420,11 @@ const MatchDetail = () => {
               />
             )}
 
-            <UserProfitLoss single={"single"} title={"User Profit Loss"} matchDetail={matchDetail}/>
+            <UserProfitLoss
+              single={"single"}
+              title={"User Profit Loss"}
+              matchDetail={matchDetail}
+            />
           </Box>
         )}
       </Box>

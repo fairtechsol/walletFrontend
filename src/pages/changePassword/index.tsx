@@ -197,7 +197,7 @@ const ChangePassword = (props: any) => {
           showModal={showModal}
           functionDispatch={() => dispatch(logout())}
           buttonMessage={"Navigate To Login"}
-          navigateTo={"/wallet/login"}
+          navigateTo={`/wallet/login`}
         />
       )}
     </>

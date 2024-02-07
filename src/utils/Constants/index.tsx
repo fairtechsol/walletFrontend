@@ -65,11 +65,13 @@ export const ApiConstants = {
 };
 
 export const Constants = {
+  wallet: "wallet",
+  oldAdmin: "old/admin",
   pageLimit: 15,
   AuthPaths: {
     root: "/",
-    login: "wallet/login",
-    changePassword: "wallet/change_password",
+    login: "/wallet/login",
+    changePassword: "/wallet/change_password",
   },
   MainPaths: {
     root: "/wallet",
@@ -95,10 +97,10 @@ export const Constants = {
   },
   ReportsPaths: {
     root: "/wallet/reports",
-    profitLoss: "profit_loss",
-    accountStatement: "account_statement",
-    currentBet: "current_bet",
-    generalReport: "general_report",
+    profitLoss: "/wallet/reports/profit_loss",
+    accountStatement: "/wallet/reports/account_statement",
+    currentBet: "/wallet/reports/current_bet",
+    generalReport: "/wallet/reports/general_report",
   },
   pageCount: 10,
   listOfClientCountLimit: 15,

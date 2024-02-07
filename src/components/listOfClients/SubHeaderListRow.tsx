@@ -157,7 +157,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {+data?.totalcomission || 0}
+          {data?.totalcomission || 0}
         </Typography>
       </Box>
       <Box

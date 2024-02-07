@@ -241,7 +241,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{+element?.totalComission || 0}</Typography>
+          <Typography variant="h5">{element?.commission || 0}</Typography>
         </Box>
         <Box
           sx={{
@@ -600,7 +600,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
           navigateTo={"list_of_clients"}
-          title= {`${element?.userName} - (Commission Report)`}
+          title={`${element?.userName} - (Commission Report)`}
         >
           <CommissionReportTable />
         </Modal>

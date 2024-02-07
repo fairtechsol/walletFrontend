@@ -111,6 +111,7 @@ const userUpdateSlice = createSlice({
       .addCase(getUsersDetail.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.userDetail = null;
       })
       .addCase(getUsersDetail.fulfilled, (state, action) => {
         state.success = true;

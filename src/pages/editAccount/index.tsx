@@ -106,8 +106,6 @@ const EditAccount = () => {
     (state: RootState) => state.user.userUpdate
   );
 
-
-
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
   };
@@ -217,11 +215,39 @@ const EditAccount = () => {
       const roleName = profileDetail?.roleName;
 
       const accountTypeMap: any = {
-        fairGameWallet: [{ value: "fairGameAdmin", label: "Fairgame Admin" }],
+        fairGameWallet: [
+          { value: "fairGameAdmin", label: "Fairgame Admin" },
+          { value: "oldSuperAdmin", label: "Super Admin" },
+          { value: "admin", label: "Admin" },
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
         fairGameAdmin: [
           { value: "superAdmin", label: "URL Super Admin" },
+          { value: "oldSuperAdmin", label: "Super Admin" },
+          { value: "admin", label: "Admin" },
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
           { value: "expert", label: "Expert" },
+          { value: "user", label: "User" },
         ],
+        superAdmin: [
+          { value: "admin", label: "Admin" },
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
+        admin: [
+          { value: "superMaster", label: "Super Master" },
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
+        superMaster: [
+          { value: "master", label: "Master" },
+          { value: "user", label: "User" },
+        ],
+        master: [{ value: "user", label: "User" }],
       };
 
       setAccountTypes(accountTypeMap[roleName] || []);
@@ -366,7 +392,7 @@ const EditAccount = () => {
 
   useEffect(() => {
     try {
-      if (success && profileDetail && !state?.expertMatchDetail) {
+      if (success && profileDetail && !state?.expertMatchDetail && userDetail) {
         const res = handleUpline(userDetail);
         const my = handleMyPartnership(userDetail);
         setDown(100 - res - my);
@@ -377,8 +403,18 @@ const EditAccount = () => {
           city: userDetail?.city,
           phoneNumber: userDetail?.phoneNumber,
           roleName: {
-            label: userDetail?.roleName,
-            value: userDetail?.roleName,
+            label:
+              userDetail?.roleName === "superAdmin"
+                ? userDetail?.isUrl
+                  ? "URL Super Admin"
+                  : "Super Admin"
+                : userDetail?.roleName,
+            value:
+              userDetail?.roleName === "superAdmin"
+                ? userDetail?.isUrl
+                  ? "superAdmin"
+                  : "oldSuperAdmin"
+                : userDetail?.roleName,
           },
           creditRefrence: userDetail?.creditRefrence,
           uplinePartnership: res,
@@ -415,7 +451,7 @@ const EditAccount = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail]);
+  }, [success, profileDetail, userDetail]);
 
   useEffect(() => {
     try {
@@ -641,122 +677,105 @@ const EditAccount = () => {
                     errors={errors.phoneNumber}
                   />
                 </Box>
-                {formik?.values?.roleName?.value === "superAdmin" && (
-                  <div>
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      placeholder={"Domain"}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      // disabled={state?.id ? true : false}
-                      title={"Domain"}
-                      name={"domain"}
-                      type={"text"}
-                      id="domain"
-                      value={formik.values.domain}
-                      // error={touched.domain && Boolean(errors.domain)}
-                      // onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                    />
-                    <CustomErrorMessage
-                      touched={touched.domain}
-                      errors={errors.domain}
-                    />
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      placeholder={"logo"}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                      }}
-                      // disabled={state?.id ? true : false}
-                      title={"Logo"}
-                      name="logo"
-                      type={"file"}
-                      id="logo"
-                      // value={formik.values.logo}
-                      onChange={handleImageChange}
-                    />
-                    {formik.values.base64Image && (
-                      <Box
-                        display={"flex"}
-                        alignItems={"center"}
-                        sx={{
-                          mt: 1,
-                          p: 1,
-                          borderRadius: "5px",
-                          background: "#91943f",
-                          color: "white",
+                {formik?.values?.roleName?.value === "superAdmin" &&
+                  userDetail?.isUrl && (
+                    <div>
+                      <Input
+                        containerStyle={containerStyles}
+                        titleStyle={titleStyles}
+                        inputStyle={inputStyle}
+                        placeholder={"Domain"}
+                        inputContainerStyle={{
+                          ...inputContainerStyle,
+                          height: { lg: "45px", xs: "36px" },
                         }}
-                      >
-                        <img
-                          src={formik.values.base64Image}
-                          alt="Base64"
-                          style={{
-                            maxWidth: "100%",
-                            height: "60px",
-                            width: "60px",
-                            objectFit: "cover",
-                            borderRadius: "5px",
-                          }}
-                        />
-                        <Typography variant="h5" sx={{ ml: 2 }}>
-                          Super URL Admin Logo....{" "}
-                        </Typography>
+                        // disabled={state?.id ? true : false}
+                        title={"Domain"}
+                        name={"domain"}
+                        type={"text"}
+                        id="domain"
+                        value={formik.values.domain}
+                        // error={touched.domain && Boolean(errors.domain)}
+                        // onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                      />
+                      <CustomErrorMessage
+                        touched={touched.domain}
+                        errors={errors.domain}
+                      />
+                      <Input
+                        containerStyle={containerStyles}
+                        titleStyle={titleStyles}
+                        inputStyle={inputStyle}
+                        placeholder={"logo"}
+                        inputContainerStyle={{
+                          ...inputContainerStyle,
+                          height: { lg: "45px", xs: "36px" },
+                        }}
+                        // disabled={state?.id ? true : false}
+                        title={"Logo"}
+                        name="logo"
+                        type={"file"}
+                        id="logo"
+                        value={formik.values.logo}
+                        onChange={handleImageChange}
+                      />
+                      {formik.values.base64Image && (
+                        <div>
+                          <p>Base64 Image:</p>
+                          <img
+                            src={formik.values.base64Image}
+                            alt="Base64"
+                            style={{ maxWidth: "100%" }}
+                          />
+                        </div>
+                      )}
+                      <Box m={2}>
+                        <Grid container spacing={2}>
+                          <Grid item xs={6} md={12} lg={6}>
+                            <InputLabel htmlFor="sidebarColor">
+                              Sidebar Color:{" "}
+                            </InputLabel>
+                            <input
+                              type="color"
+                              id="sidebarColor"
+                              name={"sidebarColor"}
+                              value={formik.values.sidebarColor}
+                              onChange={formik.handleChange}
+                            />
+                          </Grid>
+                          <Grid item xs={6} md={12} lg={6}>
+                            <InputLabel htmlFor="headerColor">
+                              Header Color:{" "}
+                            </InputLabel>
+                            <input
+                              type="color"
+                              id="headerColor"
+                              name={"headerColor"}
+                              value={formik.values.headerColor}
+                              onChange={formik.handleChange}
+                            />
+                          </Grid>
+                        </Grid>
                       </Box>
-                    )}
-                    <Box m={2}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="sidebarColor">
-                            Sidebar Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="sidebarColor"
-                            name={"sidebarColor"}
-                            value={formik.values.sidebarColor}
-                            onChange={formik.handleChange}
-                          />
+                      <Box m={2}>
+                        <Grid container spacing={2}>
+                          <Grid item xs={6} md={12} lg={6}>
+                            <InputLabel htmlFor="footerColor">
+                              Footer Color:{" "}
+                            </InputLabel>
+                            <input
+                              type="color"
+                              id="footerColor"
+                              name={"footerColor"}
+                              value={formik.values.footerColor}
+                              onChange={formik.handleChange}
+                            />
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="headerColor">
-                            Header Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="headerColor"
-                            name={"headerColor"}
-                            value={formik.values.headerColor}
-                            onChange={formik.handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                    <Box m={2}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={12} lg={6}>
-                          <InputLabel htmlFor="footerColor">
-                            Footer Color:{" "}
-                          </InputLabel>
-                          <input
-                            type="color"
-                            id="footerColor"
-                            name={"footerColor"}
-                            value={formik.values.footerColor}
-                            onChange={formik.handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </div>
-                )}
+                      </Box>
+                    </div>
+                  )}
               </Box>
             </Box>
             <Box sx={{ flex: 2 }}>
@@ -974,88 +993,87 @@ const EditAccount = () => {
                 </>
               )}
 
-              {formik?.values?.roleName?.value !== "expert" &&
-                formik?.values?.roleName?.value === "fairGameAdmin" && (
-                  <>
-                    <Box
-                      sx={{
-                        display: {
-                          lg: "block",
-                          md: "grid",
-                          xs: "grid",
-                        },
-                        gridTemplateColumns: "50% 47%",
-                        gridColumnGap: "10px",
+              {formik?.values?.roleName?.value !== "expert" && (
+                <>
+                  <Box
+                    sx={{
+                      display: {
+                        lg: "block",
+                        md: "grid",
+                        xs: "grid",
+                      },
+                      gridTemplateColumns: "50% 47%",
+                      gridColumnGap: "10px",
+                    }}
+                  >
+                    <SelectField
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
+                      id="matchCommissionType"
+                      name="matchCommissionType"
+                      label={"Match Commission Type"}
+                      options={MatchCommissionTypes}
+                      onChange={(MatchCommissionTypes: any) => {
+                        formik.setFieldValue(
+                          "matchCommissionType",
+                          MatchCommissionTypes
+                        );
                       }}
-                    >
-                      <SelectField
-                        containerStyle={containerStyles}
-                        titleStyle={titleStyles}
-                        id="matchCommissionType"
-                        name="matchCommissionType"
-                        label={"Match Commission Type"}
-                        options={MatchCommissionTypes}
-                        onChange={(MatchCommissionTypes: any) => {
-                          formik.setFieldValue(
-                            "matchCommissionType",
-                            MatchCommissionTypes
-                          );
-                        }}
-                        onBlur={formik.handleBlur}
-                        value={MatchCommissionTypes.find(
-                          (option: any) =>
-                            option.value ===
-                            formik.values.matchCommissionType.value
-                        )}
+                      onBlur={formik.handleBlur}
+                      value={MatchCommissionTypes.find(
+                        (option: any) =>
+                          option.value ===
+                          formik.values.matchCommissionType.value
+                      )}
                       // touched={touched.matchCommissionType}
                       // error={errors.matchCommissionType}
-                      />
-                      {!["", null, "0.00"].includes(
-                        formik.values.matchCommissionType.value
-                      ) && (
-                          <>
-                            <SelectField
-                              containerStyle={containerStyles}
-                              titleStyle={titleStyles}
-                              id={"matchCommission"}
-                              name={"matchCommission"}
-                              label={"Match Commission (%)*"}
-                              options={matchComissionArray}
-                              value={formik.values.matchCommission}
-                              onChange={(matchComissionArray: any) => {
-                                formik.setFieldValue(
-                                  "matchCommission",
-                                  matchComissionArray
-                                );
-                              }}
-                              onBlur={formik.handleBlur}
-                            // touched={touched.matchCommission}
-                            // error={errors.matchCommission}
-                            />
-                          </>
-                        )}
+                    />
+                    {!["", null, "0.00"].includes(
+                      formik.values.matchCommissionType.value
+                    ) && (
+                      <>
+                        <SelectField
+                          containerStyle={containerStyles}
+                          titleStyle={titleStyles}
+                          id={"matchCommission"}
+                          name={"matchCommission"}
+                          label={"Match Commission (%)*"}
+                          options={matchComissionArray}
+                          value={formik.values.matchCommission}
+                          onChange={(matchComissionArray: any) => {
+                            formik.setFieldValue(
+                              "matchCommission",
+                              matchComissionArray
+                            );
+                          }}
+                          onBlur={formik.handleBlur}
+                          // touched={touched.matchCommission}
+                          // error={errors.matchCommission}
+                        />
+                      </>
+                    )}
 
-                      <SelectField
-                        containerStyle={containerStyles}
-                        titleStyle={titleStyles}
-                        id={"sessionCommission"}
-                        name={"sessionCommission"}
-                        label={"Session Commission (%)*"}
-                        options={sessionComissionArray}
-                        value={formik.values.sessionCommission}
-                        onChange={(sessionComissionArray: any) => {
-                          formik.setFieldValue(
-                            "sessionCommission",
-                            sessionComissionArray
-                          );
-                        }}
-                        onBlur={formik.handleBlur}
+                    <SelectField
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
+                      id={"sessionCommission"}
+                      name={"sessionCommission"}
+                      label={"Session Commission (%)*"}
+                      options={sessionComissionArray}
+                      value={formik.values.sessionCommission}
+                      onChange={(sessionComissionArray: any) => {
+                        formik.setFieldValue(
+                          "sessionCommission",
+                          sessionComissionArray
+                        );
+                      }}
+                      onBlur={formik.handleBlur}
                       // touched={touched.sessionCommission}
                       // error={errors.sessionCommission}
-                      />
-                    </Box>
-                  </>
-                )}
+                    />
+                  </Box>
+                </>
+              )}
             </Box>
             <Box sx={{ flex: 2 }} className="addAccountRemark">
               <Box
@@ -1146,8 +1164,8 @@ const EditAccount = () => {
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
-          functionDispatch={() => { }}
-          navigateTo={"/wallet/list_of_clients"}
+          functionDispatch={() => {}}
+          navigateTo={`/wallet/list_of_clients`}
         />
       )}
     </>

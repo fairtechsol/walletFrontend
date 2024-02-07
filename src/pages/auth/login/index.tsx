@@ -10,16 +10,16 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { loginValidationSchema } from "../../../utils/Validations";
 
-const initialValues: any = {
-  userName: "",
-  password: "",
-  loginType: "wallet",
-};
-
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+
+  const initialValues: any = {
+    userName: "",
+    password: "",
+    loginType: "wallet",
+  };
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -47,9 +47,9 @@ const Login = () => {
           "forceChangePassword",
           JSON.stringify(forceChangePassword)
         );
-        navigate("/wallet/change_password");
+        navigate(`/wallet/change_password`);
       } else if (isTransPasswordCreated) {
-        navigate("/wallet/list_of_clients");
+        navigate(`/wallet/list_of_clients`);
       }
       dispatch(authReset());
     }

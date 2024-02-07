@@ -15,12 +15,25 @@ const Analysis = Loadable(lazy(() => import("../pages/analysis")));
 const Reports = Loadable(lazy(() => import("../pages/reports")));
 const MatchDetail = Loadable(lazy(() => import("../pages/matchDetail")));
 const WalletSettings = Loadable(lazy(() => import("../pages/walletSettings")));
+const ProfitLossReport = Loadable(
+  lazy(() => import("../pages/reports/ProfitLoss"))
+);
+const AccountStatement = Loadable(
+  lazy(() => import("../pages/reports/AccountStatement"))
+);
+const CurrentBets = Loadable(
+  lazy(() => import("../pages/reports/CurrentBets"))
+);
+const GeneralReport = Loadable(
+  lazy(() => import("../pages/reports/GeneralReport"))
+);
 
 const MainRoutes = {
   path: Constants.MainPaths.root,
   element: <MainLayout />,
   children: [
     {
+      index: true,
       path: Constants.MainPaths.listOfClients,
       element: <ListOfClients />,
     },
@@ -73,8 +86,24 @@ const MainRoutes = {
       element: <ChangePassword />,
     },
     {
+      path: Constants.ReportsPaths.profitLoss,
+      element: <ProfitLossReport />,
+    },
+    {
+      path: Constants.ReportsPaths.accountStatement,
+      element: <AccountStatement />,
+    },
+    {
+      path: Constants.ReportsPaths.currentBet,
+      element: <CurrentBets />,
+    },
+    {
+      path: Constants.ReportsPaths.generalReport,
+      element: <GeneralReport />,
+    },
+    {
       path: "*",
-      element: <Navigate to={"/wallet/match"} replace />,
+      element: <Navigate to={"/wallet/list_of_clients"} replace />,
     },
   ],
 };

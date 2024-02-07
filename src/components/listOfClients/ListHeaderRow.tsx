@@ -49,7 +49,7 @@ const ListHeaderRow = (props: any) => {
             lineHeight: "1.1",
           }}
         >
-          Credit Referance
+          Credit Reference 
         </Typography>
       </Box>
       <Box

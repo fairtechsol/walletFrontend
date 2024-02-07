@@ -34,10 +34,10 @@ const MainLayout = () => {
 
   return (
     <>
-      <Header />
-      <BackgroundLayout>
-        <Outlet />
-      </BackgroundLayout>
+        <Header />
+        <BackgroundLayout>
+          <Outlet />
+        </BackgroundLayout>
     </>
   );
 };
