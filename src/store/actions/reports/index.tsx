@@ -124,6 +124,38 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
     }
   }
 );
+export const getCommissionMatch = createAsyncThunk<any, any>(
+  "commissionMatch/list",
+  async (userId, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.COMMISSION_MATCH}/${userId}`
+      );
+      if (resp) {
+        return resp?.data?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const getCommissionBetPlaced = createAsyncThunk<any, any>(
+  "commissionBetPlaced/list",
+  async (userId, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.COMMISSION_BET_PLACED}/${userId}`
+      );
+      if (resp) {
+        return resp?.data?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
 
 export const resetAccountStatement = createAction("statement/reset");
 export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");

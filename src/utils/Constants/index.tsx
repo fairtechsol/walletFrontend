@@ -22,6 +22,8 @@ export const ApiConstants = {
     CREDITREFERRENCE: "/user/update/creditreferrence",
     EXPOSURELIMIT: "/user/update/exposurelimit",
     CHILD_PROFIT_LOSS: "",
+    COMMISSION_MATCH: "/user/commissionMatch",
+    COMMISSION_BET_PLACED: "/user/commissionBetPlaced",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
