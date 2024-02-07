@@ -74,7 +74,7 @@ const RowModalComponents = (props: any) => {
             <DepositComponent
               walletAccountDetail={profileDetail}
               endpoint={
-                element?.roleName === "superAdmin"
+                element?.roleName === "superAdmin" && element?.isUrl
                   ? ApiConstants.SUPERADMIN.UPDATE_BALANCE
                   : ApiConstants.USER.BALANCEUPDATE
               }
@@ -92,7 +92,7 @@ const RowModalComponents = (props: any) => {
               walletAccountDetail={profileDetail}
               endpoint={
                 element?.roleName === "superAdmin"
-                  ? ApiConstants.SUPERADMIN.UPDATE_BALANCE
+                  ? ApiConstants.SUPERADMIN.UPDATE_BALANCE && element?.isUrl
                   : ApiConstants.USER.BALANCEUPDATE
               }
               element={element}
@@ -106,7 +106,7 @@ const RowModalComponents = (props: any) => {
           {selected == 2 && (
             <SetCreditComponent
               endpoint={
-                element?.roleName === "superAdmin"
+                element?.roleName === "superAdmin" && element?.isUrl
                   ? ApiConstants.SUPERADMIN.CREDIT_REFERRENCE
                   : ApiConstants.USER.CREDITREFERRENCE
               }
@@ -121,7 +121,7 @@ const RowModalComponents = (props: any) => {
           {selected == 3 && (
             <ChangePasswordComponent
               endpoint={
-                element?.roleName === "superAdmin"
+                element?.roleName === "superAdmin" && element?.isUrl
                   ? ApiConstants.SUPERADMIN.CHANGE_PASSWORD
                   : ApiConstants.USER.CHANGEPASSWORD
               }
@@ -136,7 +136,7 @@ const RowModalComponents = (props: any) => {
           {selected == 5 && (
             <SetExposureLimit
               endpoint={
-                element?.roleName === "superAdmin"
+                element?.roleName === "superAdmin" && element?.isUrl
                   ? ApiConstants.SUPERADMIN.EXPOSURE_LIMIT
                   : ApiConstants.USER.EXPOSURELIMIT
               }
@@ -151,7 +151,7 @@ const RowModalComponents = (props: any) => {
           {selected == 4 && (
             <LockUnlockComponent
               endpoint={
-                element?.roleName === "superAdmin"
+                element?.roleName === "superAdmin" && element?.isUrl
                   ? ApiConstants.SUPERADMIN.LOCK_UNLOCK_USER
                   : ApiConstants.USER.LOCKUNLOCK
               }
