@@ -68,11 +68,7 @@ const ListOfClients = () => {
               indicatorColor="secondary"
               aria-label="secondary tabs example"
             >
-              <Tab
-                sx={{ color: "white" }}
-                value="one"
-                label="Super Url Admin"
-              />
+              <Tab sx={{ color: "white" }} value="one" label="Users" />
               <Tab sx={{ color: "white" }} value="two" label="Expert" />
             </Tabs>
 
