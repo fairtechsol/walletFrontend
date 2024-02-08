@@ -68,7 +68,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {walletAccountDetail?.creditRefrence}
+          {+walletAccountDetail?.creditRefrence || 0}
         </Typography>
       </Box>
       <Box
@@ -87,13 +87,13 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {Number(walletAccountDetail?.userBal?.currentBalance) >= 0 ? (
+          {Number(walletAccountDetail?.userBal?.currentBalance || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {Number(walletAccountDetail?.userBal?.currentBalance)}
+              {Number(walletAccountDetail?.userBal?.currentBalance || 0)}
             </>
           ) : (
-            Number(walletAccountDetail?.userBal?.currentBalance)
+            Number(walletAccountDetail?.userBal?.currentBalance || 0)
           )}
         </Typography>
       </Box>
@@ -108,7 +108,7 @@ const ListBody = (props: any) => {
           paddingX: "10px",
           justifyContent: "space-between",
           background:
-            Number(walletAccountDetail?.userBal?.myProfitLoss) >= 0
+            Number(+walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0
               ? "#27AC1E"
               : "#E32A2A",
           alignItems: "center",
@@ -119,18 +119,18 @@ const ListBody = (props: any) => {
         <Typography
           sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
         >
-          {Number(walletAccountDetail?.userBal?.myProfitLoss) >= 0 ? (
+          {Number(+walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {walletAccountDetail?.userBal?.myProfitLoss}
+              {Number(+walletAccountDetail?.userBal?.myProfitLoss || 0)}
             </>
           ) : (
-            walletAccountDetail?.userBal?.myProfitLoss
+            Number(+walletAccountDetail?.userBal?.myProfitLoss || 0)
           )}
         </Typography>
         <StyledImage
           src={
-            Number(walletAccountDetail?.userBal?.myProfitLoss) >= 0
+            Number(+walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0
               ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
               : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
           }
@@ -153,7 +153,7 @@ const ListBody = (props: any) => {
           paddingX: "10px",
           justifyContent: "space-between",
           background:
-            Number(walletAccountDetail?.userBal?.profitLoss) >= 0
+            Number(+walletAccountDetail?.userBal?.profitLoss || 0) >= 0
               ? "#27AC1E"
               : "#E32A2A",
           alignItems: "center",
@@ -164,18 +164,18 @@ const ListBody = (props: any) => {
         <Typography
           sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
         >
-          {Number(walletAccountDetail?.userBal?.profitLoss) >= 0 ? (
+          {Number(+walletAccountDetail?.userBal?.profitLoss) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {walletAccountDetail?.userBal?.profitLoss}
+              {Number(+walletAccountDetail?.userBal?.profitLoss || 0)}
             </>
           ) : (
-            walletAccountDetail?.userBal?.profitLoss
+            Number(+walletAccountDetail?.userBal?.profitLoss || 0)
           )}
         </Typography>
         <StyledImage
           src={
-            Number(walletAccountDetail?.userBal?.profitLoss) >= 0
+            Number(+walletAccountDetail?.userBal?.profitLoss || 0) >= 0
               ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
               : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
           }
@@ -204,7 +204,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {walletAccountDetail?.totalComission}
+          {+walletAccountDetail?.totalComission || 0}
         </Typography>
       </Box>
       <Box
@@ -223,7 +223,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {walletAccountDetail?.userBal?.exposure}
+          {+walletAccountDetail?.userBal?.exposure || 0}
         </Typography>
       </Box>
       <Box
@@ -298,7 +298,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {walletAccountDetail?.exposureLimit}
+          {+walletAccountDetail?.exposureLimit || 0}
         </Typography>
       </Box>
       <Box

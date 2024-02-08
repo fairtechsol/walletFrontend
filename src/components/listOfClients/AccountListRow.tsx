@@ -30,6 +30,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showModalMessage, setShowModalMessage] = useState("No data found");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showCommissionReport, setShowCommissionReport] = useState({
+    value: false,
+    id: "",
+  });
   const [selected, setSelected] = useState(null);
 
   return (
@@ -514,7 +518,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   }}
                   onClick={() => {
                     if (element?.totalComission !== null) {
-                      setShowSuccessModal(true);
+                      setShowCommissionReport({
+                        value: true,
+                        id: element?.id,
+                      });
                     } else {
                       return false;
                     }
@@ -576,8 +583,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
       )}
 
       <ModalMUI
-        open={false}
-        onClose={() => {}}
+        open={showCommissionReport?.value}
+        onClose={() => {
+          setShowCommissionReport({ value: false, id: "" });
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -590,7 +599,14 @@ const AccountListRow = (props: AccountListRowInterface) => {
             flexDirection: "column",
             alignItems: "center",
           }}
-        ></Box>
+        >
+          <CommissionReportTable
+            title={element?.userName}
+            id={showCommissionReport?.id}
+            show={showCommissionReport?.value}
+            setShow={setShowCommissionReport}
+          />
+        </Box>
       </ModalMUI>
 
       {showSuccessModal && (
@@ -600,10 +616,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
           navigateTo={"list_of_clients"}
-          title={`${element?.userName} - (Commission Report)`}
-        >
-          <CommissionReportTable />
-        </Modal>
+          // title={`${element?.userName} - (Commission Report)`}
+        ></Modal>
       )}
     </>
   );
