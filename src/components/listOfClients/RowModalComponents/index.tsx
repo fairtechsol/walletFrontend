@@ -240,12 +240,12 @@ const RowModalComponents = (props: any) => {
               }}
               title={"C_Settlement"}
               containerStyle={{
-                marginLeft: { laptop: "10px", mobile: "0" },
+                marginLeft: { lg: "10px", xs: "0" },
                 flex: 1,
                 borderColor: "white",
               }}
               titleStyle={{
-                fontSize: { mobile: "12px" },
+                fontSize: { xs: "12px" },
               }}
               labelStyle={{}}
             />
