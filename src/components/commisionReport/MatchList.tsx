@@ -26,10 +26,13 @@ const MatchList = ({
     <Box sx={{ width: "100%" }}>
       <Box
         onClick={() => {
-          if (selectedId?.matchId == element?.id && selectedId?.userId == id) {
+          if (
+            selectedId?.matchId == element?.matchId &&
+            selectedId?.userId == id
+          ) {
           } else {
             setSelectedId({
-              matchId: element?.id,
+              matchId: element?.matchId,
               userId: id,
             });
             setShowCommisionReport(true);
@@ -94,7 +97,7 @@ const MatchList = ({
                 lineClamp: 2,
               }}
             >
-              {element?.title}
+              {element?.matchName}
             </Typography>
             <Typography
               sx={{
@@ -104,7 +107,7 @@ const MatchList = ({
                 fontWeight: "500",
               }}
             >
-              ({moment(element?.createdAt).format("DD-MM-YYYY")})
+              ({moment(element?.matchStartDate).format("DD-MM-YYYY")})
             </Typography>
           </Box>
           <StyledImage
@@ -113,14 +116,14 @@ const MatchList = ({
               width: { lg: "20px", xs: "10px" },
               height: { lg: "10px", xs: "6px" },
               transform:
-                showCommisionReport && selectedId?.matchId == element?.id
+                showCommisionReport && selectedId?.matchId == element?.matchId
                   ? "rotate(180deg)"
                   : "rotate(0deg)",
             }}
           />
         </Box>
       </Box>
-      {showCommisionReport && selectedId?.matchId == element?.id && (
+      {showCommisionReport && selectedId?.matchId == element?.matchId && (
         <>
           <Box
             sx={{
@@ -148,31 +151,27 @@ const MatchList = ({
                     showChildModal={true}
                     containerStyle={{
                       background:
-                        element?.ComissionType === "commission setteled"
+                        element?.commissionType === "commission setteled"
                           ? "#135a2e"
-                          : ["back", "yes"].includes(
-                              element?.bet_place_id?.bet_type
-                            )
+                          : ["BACK", "YES"].includes(element?.betType)
                           ? "#B3E0FF"
-                          : ["lay", "no"].includes(
-                              element?.bet_place_id?.bet_type
-                            )
+                          : ["LAY", "NO"].includes(element?.betType)
                           ? "#FF9292"
                           : "#FFE094 ",
                     }}
                     profit={element.profitLoss >= 0}
                     fContainerStyle={{
                       background:
-                        element?.ComissionType === "session"
+                        element?.commissionType === "session"
                           ? "#319E5B"
-                          : element?.ComissionType === "commission setteled"
+                          : element?.commissionType === "commission setteled"
                           ? "#135a2e"
                           : "#F1C550",
                     }}
                     fTextStyle={{
                       color:
                         ["commission setteled"].includes(
-                          element?.ComissionType
+                          element?.commissionType
                         ) && "white",
                     }}
                     element={element}

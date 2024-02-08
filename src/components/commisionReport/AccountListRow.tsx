@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AccountListRow = ({
   containerStyle,
@@ -10,31 +10,29 @@ const AccountListRow = ({
 }: any) => {
   const prevElement = {
     title:
-      element?.ComissionType === "session"
+      element?.commissionType === "session"
         ? element?.bet_id?.bet_condition
         : element?.match_id?.title,
-    commissionAmount: element.ComissionAmount,
-    commissionType: element.ComissionType,
-    betType: element?.bet_type,
-    stack:
-      element?.ComissionType === "match total"
-        ? (element?.ComissionAmount * 100) / element?.userData?.matchComission
-        : element?.amount,
+    commissionAmount: element?.commissionAmount,
+    commissionType: element?.commissionType,
+    betType: element?.betType,
+    stack: element?.stake,
     odds: element?.odds,
     isActive: element?.isActive,
-    teamBet: element?.team_bet,
-    createAt: element?.updateAt,
+    teamBet: element?.teamName,
+    createAt: element?.date,
     myCommission: element?.myCommission,
-    userName: element?.userData?.userName,
+    userName: element?.userName,
   };
-  const [elementToUDM] = useState(prevElement);
+  const [elementToUDM, setElementToUDM] = useState(prevElement);
 
-  // function checkIfElementUpdated(val) {
-  //   setElementToUDM(val);
-  // }
-  // useEffect(() => {
-  //   checkIfElementUpdated(prevElement);
-  // }, [element?.ComissionType]);
+  function checkIfElementUpdated(val: any) {
+    setElementToUDM(val);
+  }
+  useEffect(() => {
+    checkIfElementUpdated(prevElement);
+  }, [element?.commissionType]);
+  
   return (
     <>
       {!elementToUDM?.isActive && (
