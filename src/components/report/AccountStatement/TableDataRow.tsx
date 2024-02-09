@@ -25,7 +25,7 @@ const TableDataRow = (props: any) => {
   //   hour: "2-digit",
   //   minute: "2-digit",
   // });
-
+  // console.log(trans_type);
   return (
     <Box
       sx={[
@@ -59,6 +59,8 @@ const TableDataRow = (props: any) => {
             {
               fontSize: { xs: "10px", lg: "12px", md: "12px" },
               fontWeight: "600",
+              lineHeight: {sx: "0" , lg: "1.9" },
+              letterSpacing: "0.1em",
             },
             fTextStyle,
           ]}
@@ -123,9 +125,10 @@ const TableDataRow = (props: any) => {
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
-          background: trans_type === "credit_refer" ? "#F8C851" : "#FFE094",
+          backgroundColor: trans_type === "credit_refer" ? "#F8C851" : "#FFE094",
         }}
       >
+    
         <Typography sx={{ fontSize: "12px", fontWeight: "500" }}>
           {description}
         </Typography>
