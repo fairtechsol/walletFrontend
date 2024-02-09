@@ -80,12 +80,8 @@ const ProfitLossHeader = (props: any) => {
 
           <Box sx={{ width: "10px" }}></Box>
 
-          <Box
-            sx={{ display: "flex", width: { xs: "100%", lg: "60%" } }}
-          >
-            <Box
-              sx={{ display: "flex", width: { lg: "70%", xs: "60%" } }}
-            >
+          <Box sx={{ display: "flex", width: { xs: "100%", lg: "60%" } }}>
+            <Box sx={{ display: "flex", width: { lg: "70%", xs: "60%" } }}>
               <Calendar
                 title={"From"}
                 startDate={startDate}

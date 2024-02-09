@@ -6,9 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { getTotalProfitLoss } from "../../../store/actions/reports";
 import moment from "moment";
+import { getSearchClientList } from "../../../store/actions/user/userAction";
 
 const ProfitLossReport = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   // const [pageLimit] = useState(10);
   const [pageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +43,15 @@ const ProfitLossReport = () => {
       console.error("Error:", (error as Error)?.message);
     }
   };
+
+  useEffect(() => {
+    dispatch(
+      getSearchClientList({
+        userName: search,
+        createdBy: profileDetail && profileDetail?.id,
+      })
+    );
+  }, [search]);
 
   useEffect(() => {
     dispatch(getTotalProfitLoss({ filter: "" }));
