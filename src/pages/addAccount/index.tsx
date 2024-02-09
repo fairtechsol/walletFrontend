@@ -206,7 +206,7 @@ const AddAccount = () => {
             transactionPassword: values.adminTransPassword,
           };
           dispatch(addUser(payload));
-        } else {
+        } else {  
           payload = {
             ...commonPayload,
             roleName:
