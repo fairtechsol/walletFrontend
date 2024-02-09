@@ -17,7 +17,7 @@ const SubHeaderListRow = (props: any) => {
     >
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
+          width: { lg: "11.5vw", md: "20.2vw", xs: "26.5vw" },
           display: "flex",
           alignItems: "center",
           height: "45px",
@@ -29,7 +29,7 @@ const SubHeaderListRow = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "10.5vw", md: "10.5vw", xs: "26.5vw" },
+          width: { lg: "10.5vw", md: "9.8vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -45,7 +45,7 @@ const SubHeaderListRow = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+          width: { lg: "9.5vw", md: "9.4vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",

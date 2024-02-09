@@ -55,7 +55,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         <Box
           sx={[
             {
-              width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
+              width: { lg: "11.5vw", md: "20.2vw", xs: "26.5vw" },
               display: "flex",
               paddingX: "10px",
               justifyContent: "space-between",
@@ -124,7 +124,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "10.5vw", md: "10.5vw", xs: "26.5vw" },
+            width: { lg: "10.5vw", md: "9vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -136,7 +136,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "9.5vw", md: "9vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -157,7 +157,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
+            width: { lg: "11.5vw", md: "10.5vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             justifyContent: "space-between",
@@ -235,7 +235,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+            width: { lg: "9.5vw", md: "9vw", xs: "26.5vw" },
             display: "flex",
             justifyContent: "space-between",
             paddingX: "10px",
@@ -330,7 +330,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         </Box>
         <Box
           sx={{
-            width: { lg: "10vw", md: "10vw", xs: "26.5vw" },
+            width: { lg: "10vw", md: "8vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
