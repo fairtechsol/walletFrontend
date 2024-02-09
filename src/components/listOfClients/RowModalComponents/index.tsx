@@ -231,7 +231,7 @@ const RowModalComponents = (props: any) => {
             title={"Withdraw"}
             labelStyle={{}}
           />
-          {element?.domainData === null && (
+          {!element?.isUrl && (
             <BoxButton
               color={"#0B4F26"}
               onClick={(e: any) => {
