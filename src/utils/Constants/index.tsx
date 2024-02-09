@@ -8,6 +8,7 @@ export const ApiConstants = {
     CHANGEPASSWORD: "/user/changePassword",
     LIST: "/user/list",
     BALANCE: "/user/balance",
+    COMMISSION_SETTLEMENT: "/balance/settle/commission",
     EXPERTLIST: "/expert/list",
     ADDFGADMIN: "/user/add",
     ALREADY_EXIST: "/user/exist",
