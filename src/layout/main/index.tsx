@@ -5,6 +5,7 @@ import BackgroundLayout from "../../components/Common/BackgroundLayout";
 import {
   getUsersProfile,
   marqueeNotification,
+  updateBalanceOfLoggedUser,
 } from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
 import Header from "./header";
@@ -13,6 +14,10 @@ import { socketService } from "../../socketManager";
 const MainLayout = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+
+  const updateUserBalance = (event: any) => {
+    dispatch(updateBalanceOfLoggedUser(event));
+  };
 
   useEffect(() => {
     if (!sessionStorage.getItem("userToken")) {
@@ -26,6 +31,7 @@ const MainLayout = () => {
     if (sessionStorage.getItem("userToken")) {
       socketService.connect();
       socketService.auth.logout();
+      socketService.match.userBalanceUpdate(updateUserBalance);
     }
     return () => {
       socketService.disconnect();
@@ -34,10 +40,10 @@ const MainLayout = () => {
 
   return (
     <>
-        <Header />
-        <BackgroundLayout>
-          <Outlet />
-        </BackgroundLayout>
+      <Header />
+      <BackgroundLayout>
+        <Outlet />
+      </BackgroundLayout>
     </>
   );
 };

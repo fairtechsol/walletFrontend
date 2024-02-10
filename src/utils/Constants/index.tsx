@@ -127,7 +127,7 @@ export const baseUrls = {
   socket:
     process.env.NODE_ENV === "production"
       ? `${Constants.apiBasePath}`
-      : "http://localhost:5000",
+      : "http://localhost:5050",
   thirdParty:
     process.env.NODE_ENV === "production"
       ? `${Constants.thirdParty}`
