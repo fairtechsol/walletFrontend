@@ -5,6 +5,9 @@ import {
   matchListReset,
   updateMatchListRates,
   updateMatchRates,
+  updateBalance,
+  updateMaxLossForBet,
+  betDataFromSocket,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -13,14 +16,20 @@ interface InitialState {
   success: boolean;
   loading: boolean;
   error: any;
+  getProfile: any;
+  matchDetails: any;
+  betPlaceData: any;
 }
 
 const initialState: InitialState = {
+  getProfile: null,
   matchListInplay: null,
   matchDetail: null,
   loading: false,
   success: false,
   error: null,
+  matchDetails: null,
+  betPlaceData: [],
 };
 
 const matchListSlice = createSlice({
@@ -123,6 +132,56 @@ const matchListSlice = createSlice({
       })
       .addCase(matchListReset, (state) => {
         return { ...state, success: false };
+      })
+      .addCase(updateBalance.fulfilled, (state, action) => {
+        state.getProfile = {
+          ...state.getProfile,
+          userBal: {
+            ...state?.getProfile?.userBal,
+            exposure: action.payload.newUserExposure ?? action.payload.exposure,
+          },
+        };
+      })
+      .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
+        const { betPlaced, profitLossData } = action.payload;
+        if (state?.matchDetails?.id === betPlaced?.placedBet?.matchId) {
+          const updatedProfitLossDataSession =
+            state.matchDetails?.profitLossDataSession.map((item: any) => {
+              if (item?.betId === betPlaced?.placedBet?.betId) {
+                return {
+                  ...item,
+                  maxLoss: JSON.parse(profitLossData)?.maxLoss,
+                };
+              }
+              return item;
+            });
+
+          state.matchDetails = {
+            ...state.matchDetails,
+            profitLossDataSession: updatedProfitLossDataSession,
+          };
+        } else {
+          return state.matchDetails;
+        }
+      })
+      .addCase(betDataFromSocket.fulfilled, (state, action) => {
+        const betId = action.payload?.betPlaced?.placedBet?.betId;
+
+        if (
+          !state.betPlaceData.some(
+            (item: any) => item.betPlaced.placedBet.betId === betId
+          )
+        ) {
+          state.betPlaceData = [...state.betPlaceData, action.payload];
+        } else {
+          const existingIndex = state.betPlaceData.findIndex(
+            (item: any) => item.betPlaced.placedBet.betId === betId
+          );
+          if (existingIndex !== -1) {
+            let updatedSlice = state.betPlaceData.splice(existingIndex, 1);
+            state.betPlaceData = [...updatedSlice, action.payload];
+          }
+        }
       });
   },
 });

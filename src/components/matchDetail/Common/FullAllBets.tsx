@@ -3,15 +3,20 @@ import { useEffect, useState } from "react";
 import { ARROWUP } from "../../../assets";
 import moment from "moment";
 import { CHECK } from "../../../assets";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const FullAllBets = (props: any) => {
   const { tag, mode, IObets, selectedBetData, setSelectedBetData } = props;
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   const [newData, setNewBets] = useState([]);
   const [visible, setVisible] = useState(true);
   const [selectedData, setSelectedData] = useState<any>([]);
-
   useEffect(() => {
     if (IObets) {
+      // console.log("IObets", IObets);
       const uniqueData: any = {};
       IObets?.forEach((item: any) => {
         uniqueData[item.id] = item;
@@ -19,6 +24,35 @@ const FullAllBets = (props: any) => {
 
       const result = Object.values<Record<string, any>>(uniqueData);
       const body: any = result?.map((v: any) => {
+        const roleName = profileDetail?.roleName;
+        let partnership = 0;
+
+        switch (roleName) {
+          case "fairGameAdmin":
+            partnership = v?.user?.faPartnership;
+            break;
+          case "superAdmin":
+            partnership = v?.user?.saPartnership;
+            break;
+          case "admin":
+            partnership = v?.user?.aPartnership;
+            break;
+          case "superMaster":
+            partnership = v?.user?.smPartnership;
+            break;
+          case "master":
+            partnership = v?.user?.mPartnership;
+            break;
+          case "agent":
+            partnership = v?.user?.agPartnership;
+            break;
+          case "fairGameWallet":
+            partnership = v?.user?.fwPartnership;
+            break;
+
+          default:
+            partnership = 0;
+        }
         const values = {
           values: [
             {
@@ -43,7 +77,7 @@ const FullAllBets = (props: any) => {
               background: ["NO", "YES"].includes(v?.betType)
                 ? "#319E5B"
                 : "#F1C550",
-              deleteReason: v?.deleteReason ,
+              deleteReason: v?.deleteReason,
             },
             {
               name: v?.teamName,
@@ -81,7 +115,7 @@ const FullAllBets = (props: any) => {
               deleteReason: v?.deleteReason,
             },
             {
-              name: (v?.amount * v?.user?.fwPartnership) / 100,
+              name: v?.myStake ? v?.myStake : (v?.amount * partnership) / 100,
               color: "white",
               background: "#0B4F26",
               deleteReason: v?.deleteReason,
@@ -105,7 +139,7 @@ const FullAllBets = (props: any) => {
     }
   }, [IObets]);
 
-  console.log(newData, "abc")
+  // console.log(newData, "abc");
 
   useEffect(() => {
     setSelectedData([]);
@@ -357,7 +391,7 @@ const FullAllBets = (props: any) => {
                           >
                             Bet{" "}
                             <span style={{ color: "#e41b23" }}>deleted</span>{" "}
-                          Due To {"\n"} {i?.values[0]?.deleteReason}
+                            Due To {"\n"} {i?.values[0]?.deleteReason}
                           </Typography>
                         </Box>
                       </Box>

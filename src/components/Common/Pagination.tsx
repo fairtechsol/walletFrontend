@@ -76,9 +76,13 @@ const Pagination = (props: PaginationInterface) => {
             cursor: "pointer",
             justifyContent: "center",
             alignItems: "center",
+            opacity: currentPage === pages ? 0.5 : 1,
+
           }}
           onClick={() => {
-            setCurrentPage(+currentPage === pages ? pages : +currentPage + 1);
+            if (+currentPage !== pages) { 
+              setCurrentPage(+currentPage + 1); 
+            }
           }}
         >
           <Typography

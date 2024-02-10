@@ -16,7 +16,7 @@ const ListHeaderRow = (props: any) => {
     >
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
+          width: { lg: "11.5vw", md: "20.2vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -33,7 +33,7 @@ const ListHeaderRow = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "10.5vw", md: "10.5vw", xs: "26.5vw" },
+          width: { lg: "10.5vw", md: "10vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",

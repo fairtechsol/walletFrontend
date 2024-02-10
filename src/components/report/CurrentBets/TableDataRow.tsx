@@ -122,6 +122,7 @@ const TableDataRow = (props: any) => {
           width: "10%",
           display: "flex",
           paddingLeft: "6px",
+          justifyContent: "center",
           background:
             data?.betType === "YES" || data?.betType === "BACK"
               ? "#FFB5B5"
@@ -132,7 +133,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "600", color: "#575757" }}
+          sx={{ fontSize: { xs: "9px", md: "9px", lg: "14px" }, fontWeight: "600", color: "#575757" }}
         >
           {data?.marketType}
         </Typography>
@@ -181,6 +182,7 @@ const TableDataRow = (props: any) => {
         sx={{
           width: "8%",
           display: "flex",
+          justifyContent: "center",
           paddingLeft: "10px",
           background:
             data?.betType === "YES" || data?.betType === "BACK"
@@ -192,7 +194,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "700", color: "#575757" , lineHeight: "0.9"}}
+          sx={{ fontSize: { xs: "9px", md: "9px", lg: "13px" },   display: "flex", fontWeight: "700", color: "#575757" , lineHeight: "0.9", justifyContent: "center"}}
         >
           {data?.amount}
         </Typography>
@@ -210,7 +212,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "700", color: "#575757", lineHeight: "0.9" }}
+          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "700", color: "#575757", lineHeight: {sx: "0" , lg: "1.9" },letterSpacing: "0.1em", }}
         >
           {moment(data?.createdAt).format("DD-MM-YYYY")}
         </Typography>
@@ -233,12 +235,12 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "700", color: "#575757", lineHeight: "0.9" }}
+          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "900", color: "#575757", lineHeight: {sx: "0" , lg: "1.9" },letterSpacing: "0.1em", }}
         >
           {moment(data?.match?.startAt).format("DD-MM-YYYY")}
         </Typography>
         <Typography
-          sx={{ fontSize:{ xs: "9px", md: "9px", lg: "12px" }, fontWeight: "700", color: "#575757", lineHeight: "0.9" }}
+          sx={{ fontSize:{ xs: "9px", md: "9px", lg: "12px" }, fontWeight: "900", color: "#575757", lineHeight: "0.9" }}
         >
           {moment(data?.match?.startAt).format("HH:mm A")}
         </Typography>

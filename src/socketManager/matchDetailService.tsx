@@ -34,4 +34,16 @@ export const matchSocketService = {
   sessionDeleteBet: (callback: any) => {
     socket.on("sessionDeleteBet", callback);
   },
+  matchAdded: (callback: any) => {
+    socket.on("addMatch", callback);
+  },
+  updateUserBalance: (callback: any) => {
+    socket.on("updateUserBalance", callback);
+  },
+  userSessionBetPlaced: (callback: any) => {
+    socket.on("userSessionBetPlaced", callback);
+  },
+  userMatchBetPlaced: (callback: any) => {
+    socket.on("userMatchBetPlaced", callback);
+  },
 };
