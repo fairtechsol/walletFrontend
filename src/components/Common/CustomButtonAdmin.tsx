@@ -5,7 +5,11 @@ const CustomButtonAdmin = (props: any) => {
 
   return (
     <Box
-      onClick={onClick}
+      onClick={(e: any) => {
+        e.stopPropagation();
+        e.preventDefault();
+        onClick();
+      }}
       sx={[
         {
           width: "200px",
