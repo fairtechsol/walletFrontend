@@ -56,11 +56,14 @@ const betsSlice = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(updateBetsPlaced.fulfilled, (state, action) => {
-        const { newBet, myStake } = action.payload;
+        const { newBet, myStake, userName } = action.payload;
         const betId = action.payload.betId;
+        const user = {
+          userName: userName,
+        };
         if (!state.placedBets.some((item: any) => item.id === betId)) {
           newBet.myStake = myStake;
-
+          newBet.user = user;
           state.placedBets = [newBet, ...state.placedBets];
         }
       });
