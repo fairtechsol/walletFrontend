@@ -73,6 +73,20 @@ export const getPlacedBets = createAsyncThunk<any, any>(
     }
   }
 );
+export const getRunAmount = createAsyncThunk<any, any>(
+  "/runAmount",
+  async (id, thunkApi) => {
+    try {
+      const resp = await service.get(`${ApiConstants.USER.RUN_AMOUNT}/${id}`);
+      if (resp) {
+        return JSON.parse(resp?.data?.profitLoss).betPlaced;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
 
 export const getMultipleMatchDetail = createAsyncThunk<any, any>(
   "multipleMatch/detail",

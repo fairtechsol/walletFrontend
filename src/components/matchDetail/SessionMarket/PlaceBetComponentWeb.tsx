@@ -1,14 +1,27 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
 import { UD } from "../../../assets";
+// import { useState } from "react";
+// import DropdownMenu from "./DropDownMenu";
+import { AppDispatch } from "../../../store/store";
+// import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getRunAmount } from "../../../store/actions/match/matchAction";
 
-const PlaceBetComponentWeb = (props: any) => {
-  const { amount, newData } = props;
-  const [proLoss] = useState(newData?.profitLoss);
+const PlaceBetComponentWeb = ({ amount, newData, profitLoss }: any) => {
+  const dispatch: AppDispatch = useDispatch();
+  // const { runAmount } = useSelector((state: RootState) => state.match.bets);
+  // const [show, setShow] = useState(false);
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
   return (
     <>
       <Box
-        // onClick={handleClick}
+        onClick={() => {
+          dispatch(getRunAmount(newData?.id));
+          // setShow(!show);
+        }}
         sx={{
           background: "#0B4F26",
           flexDirection: "row",
@@ -42,7 +55,7 @@ const PlaceBetComponentWeb = (props: any) => {
           <Typography
             sx={{ fontSize: ".5vw", fontWeight: "bold", color: "#0B4F26" }}
           >
-            {proLoss?.total_bet || 0}
+            {profitLoss?.totalBet || 0}
           </Typography>
         </Box>
         <Box
@@ -61,15 +74,22 @@ const PlaceBetComponentWeb = (props: any) => {
             }}
           >
             {" "}
-            {!newData?.profitLoss?.max_loss
-              ? "Profit/Loss"
-              : newData?.profitLoss?.max_loss}
+            {!profitLoss?.maxLoss ? "Profit/Loss" : profitLoss?.maxLoss}
           </Typography>
           <img
             src={UD}
             style={{ width: "12px", height: "12px", marginLeft: "5px" }}
           />
         </Box>
+        {/* {show && (
+          <DropdownMenu
+            open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            list={runAmount && runAmount}
+            // list={profitLoss?.betData}
+            handleClose={handleClose}
+          />
+        )} */}
       </Box>
     </>
   );

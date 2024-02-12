@@ -26,6 +26,7 @@ export const ApiConstants = {
     CHILD_PROFIT_LOSS: "",
     COMMISSION_MATCH: "/user/commissionMatch",
     COMMISSION_BET_PLACED: "/user/commissionBetPlaced",
+    RUN_AMOUNT: "bet/session/profitLoss",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",

@@ -12,9 +12,11 @@ import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
 const SeasonMarketBox = (props: any) => {
-  const { newData, setData } = props;
+  const { newData, setData, profitLossData } = props;
+  console.log(profitLossData, "profit");
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <>
       <Box
@@ -74,14 +76,14 @@ const SeasonMarketBox = (props: any) => {
             <PlaceBetComponent
               // amount={index == 2}
               newData={newData}
-              // setData={setData}
+              profitLoss={profitLossData && profitLossData[0]}
               setData={setData}
             />
           ) : (
             <PlaceBetComponentWeb
               // amount={index == 2}
               newData={newData}
-              // setData={setData}
+              profitLoss={profitLossData && profitLossData[0]}
               setData={setData}
             />
           )}
