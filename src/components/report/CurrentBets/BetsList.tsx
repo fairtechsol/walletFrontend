@@ -80,14 +80,13 @@ const BetsList = (props: any) => {
           position: "absolute",
         }}
       >
-        
         <Pagination
           currentPage={currentPage}
           // pages={+(betHistory.length / pageLimit).toFixed()}
           setCurrentPage={setCurrentPage}
           pages={Math.ceil(
             parseInt(
-              betHistory && betHistory?.length ? betHistory?.count : 1
+              betHistory && betHistory?.length ? betHistory?.length : 1
             ) / pageLimit
           )}
         />

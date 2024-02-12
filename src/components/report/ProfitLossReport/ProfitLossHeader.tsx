@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import SearchInputWallet from "./SearchInputWallet";
 import Calendar from "../../Common/Calendar";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
+import { memo } from "react";
 
 const ProfitLossHeader = (props: any) => {
   const {
@@ -12,6 +13,7 @@ const ProfitLossHeader = (props: any) => {
     startDate,
     setEndDate,
     setStartDate,
+    setSelectedUser,
     endDate,
     onClick,
     title,
@@ -74,18 +76,15 @@ const ProfitLossHeader = (props: any) => {
                 title={"Search By Client Name"}
                 setSearch={setSearch}
                 search={search}
+                setSelectedUser={setSelectedUser}
               />
             </Box>
           )}
 
           <Box sx={{ width: "10px" }}></Box>
 
-          <Box
-            sx={{ display: "flex", width: { xs: "100%", lg: "60%" } }}
-          >
-            <Box
-              sx={{ display: "flex", width: { lg: "70%", xs: "60%" } }}
-            >
+          <Box sx={{ display: "flex", width: { xs: "100%", lg: "60%" } }}>
+            <Box sx={{ display: "flex", width: { lg: "70%", xs: "60%" } }}>
               <Calendar
                 title={"From"}
                 startDate={startDate}
@@ -132,4 +131,4 @@ const ProfitLossHeader = (props: any) => {
   );
 };
 
-export default ProfitLossHeader;
+export default memo(ProfitLossHeader);

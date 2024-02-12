@@ -12,6 +12,7 @@ export const ApiConstants = {
     EXPERTLIST: "/expert/list",
     ADDFGADMIN: "/user/add",
     ALREADY_EXIST: "/user/exist",
+    ALREADY_SEARCHLIST: "/user/searchlist",
     ADDURLADMIN: "/superadmin/add",
     UPDATEURLADMIN: "/superadmin/updateUser",
     ADDEXPERT: "/expert/add",
@@ -126,7 +127,7 @@ export const baseUrls = {
   socket:
     process.env.NODE_ENV === "production"
       ? `${Constants.apiBasePath}`
-      : "http://localhost:5000",
+      : "http://localhost:5050",
   thirdParty:
     process.env.NODE_ENV === "production"
       ? `${Constants.thirdParty}`

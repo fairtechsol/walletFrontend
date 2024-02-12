@@ -40,6 +40,9 @@ export const matchSocketService = {
   updateUserBalance: (callback: any) => {
     socket.on("updateUserBalance", callback);
   },
+  userBalanceUpdate: (callback: any) => {
+    socket.on("userBalanceUpdate", callback);
+  },
   userSessionBetPlaced: (callback: any) => {
     socket.on("userSessionBetPlaced", callback);
   },

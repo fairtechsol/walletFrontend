@@ -174,7 +174,7 @@ const EditAccount = () => {
           matchComissionType: values.matchCommissionType.value,
           matchCommission: values.matchCommission.value,
         };
-        dispatch(updateUser(payload));
+        dispatch(updateUrlAdmin(payload));
       }
     },
   });

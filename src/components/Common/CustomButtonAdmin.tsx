@@ -5,7 +5,7 @@ const CustomButtonAdmin = (props: any) => {
 
   return (
     <Box
-      onClick={onClick}
+      onClick={() => onClick()}
       sx={[
         {
           width: "200px",

@@ -3,6 +3,7 @@ import {
   changeAmmountUser,
   changePasswordRow,
   getAlreadyUserExist,
+  getSearchClientList,
   getUserList,
   handleExport,
   handleSettleCommission,
@@ -16,6 +17,7 @@ interface InitialState {
   userDetail: any;
   userAlreadyExist: boolean;
   userList: any;
+  searchUserList: any;
   success: boolean;
   loading: boolean;
   error: any;
@@ -25,6 +27,7 @@ const initialState: InitialState = {
   userDetail: null,
   userAlreadyExist: false,
   userList: null,
+  searchUserList: [],
   success: false,
   loading: false,
   error: null,
@@ -142,6 +145,20 @@ export const userList = createSlice({
         state.userAlreadyExist = action.payload;
       })
       .addCase(getAlreadyUserExist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(getSearchClientList.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(getSearchClientList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.searchUserList = action.payload;
+      })
+      .addCase(getSearchClientList.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })

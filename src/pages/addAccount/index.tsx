@@ -424,7 +424,7 @@ const AddAccount = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [profileDetail]);
+  }, [profileDetail, formik.values.roleName]);
 
   useEffect(() => {
     try {
