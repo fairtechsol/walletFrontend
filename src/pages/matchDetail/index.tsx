@@ -301,6 +301,7 @@ const MatchDetail = () => {
 
           {matchDetail?.manualSessionActive && matchesMobile && (
             <SessionMarket
+              allBetsData={matchDetail?.profitLossDataSession}
               title={"Quick Session Market"}
               currentMatch={matchDetail}
               sessionData={QuicksessionData}
@@ -310,6 +311,7 @@ const MatchDetail = () => {
           )}
           {matchDetail?.apiSessionActive && matchesMobile && (
             <SessionMarket
+              allBetsData={matchDetail?.profitLossDataSession}
               title={"Session Market"}
               currentMatch={matchDetail}
               sessionData={sessionData}
@@ -447,6 +449,7 @@ const MatchDetail = () => {
             {matchDetail?.manualSessionActive && (
               <SessionMarket
                 title={"Quick Session Market"}
+                allBetsData={matchDetail?.profitLossDataSession}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
                 sessionData={QuicksessionData}
@@ -457,6 +460,7 @@ const MatchDetail = () => {
             {matchDetail?.apiSessionActive && (
               <SessionMarket
                 title={"Session Market"}
+                allBetsData={matchDetail?.profitLossDataSession}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
                 sessionData={sessionData}

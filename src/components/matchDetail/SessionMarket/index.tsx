@@ -3,23 +3,27 @@ import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import BetsCountBox from "./BetsCountBox";
 import Divider from "../../Inplay/Divider";
 import SeasonMarketBox from "./SeasonMarketBox";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import RunsBox from "./RunsBox";
+import { useState } from "react";
 
-const SessionMarket = (props: any) => {
+const SessionMarket = ({
+  blockMatch,
+  showUnlock,
+  locked,
+  handleShowLock,
+  selft,
+  title,
+  min,
+  max,
+  sessionData,
+  allBetsData,
+}: any) => {
+  const { runAmount } = useSelector((state: RootState) => state.match.bets);
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const {
-    sessionBets,
-    blockMatch,
-    showUnlock,
-    locked,
-    handleShowLock,
-    selft,
-    title,
-    min,
-    max,
-    sessionExposer,
-    sessionData,
-  } = props;
+  const [currentOdds] = useState<any>(null);
   const visible = true;
 
   const dataToIterate = sessionData;
@@ -54,6 +58,7 @@ const SessionMarket = (props: any) => {
   //     setMatchSessionData(sessionData);
   //   }
   // }, [currentMatch]);
+
   return (
     <>
       <Box
@@ -133,7 +138,11 @@ const SessionMarket = (props: any) => {
             }}
           >
             <Box sx={{ gap: "4px", display: "flex" }}>
-              <BetsCountBox total={sessionBets || 0} />
+              <BetsCountBox
+                total={allBetsData?.reduce((acc: number, bet: any) => {
+                  return acc + bet?.totalBet;
+                }, 0)}
+              />
               {/* static code */}
               <Box
                 sx={{
@@ -165,9 +174,9 @@ const SessionMarket = (props: any) => {
                     lineHeight: 1,
                   }}
                 >
-                  {!isNaN(sessionExposer)
-                    ? Number(sessionExposer).toFixed(2)
-                    : ""}
+                  {allBetsData?.reduce((acc: number, bet: any) => {
+                    return acc + bet?.maxLoss;
+                  }, 0)}
                 </Typography>
               </Box>
             </Box>
@@ -347,6 +356,9 @@ const SessionMarket = (props: any) => {
                     >
                       <SeasonMarketBox
                         newData={JSON.parse(element)}
+                        profitLossData={allBetsData?.filter(
+                          (item: any) => item?.betId === JSON.parse(element)?.id
+                        )}
                         index={index}
                       />
                       <Divider />
@@ -397,7 +409,7 @@ const SessionMarket = (props: any) => {
           </Box>
         )}
       </Box>
-      {0 > 0 && (
+      {runAmount?.length > 0 && (
         <Box
           sx={{
             display: "flex",
@@ -410,22 +422,19 @@ const SessionMarket = (props: any) => {
             marginTop: ".25vw",
           }}
         >
-          {/* {data?.map((v) => {
-            console.log(
-              "currentOdds?.bet_id === v?.id ? currentOdds : null",
-              v
-            );
+          {runAmount?.map((v: any) => {
+            console.log(v);
             return (
               <RunsBox
-                currentOdds={currentOdds?.bet_id === v?.id ? currentOdds : null}
-                key={v?.id}
-                item={v}
+                currentOdds={currentOdds?.betId === v?.id ? currentOdds : null}
+                key={v[0]?.id}
+                item={v[0]}
                 // setData={setData}
-                setData={setData}
+                // setData={setData}
                 // popData={popData}
               />
             );
-          })} */}
+          })}
         </Box>
       )}
     </>
