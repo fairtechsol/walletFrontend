@@ -12,7 +12,7 @@ const ButtonWithSwitch = (props: any) => {
         background: checked ? "#0B4F26" : "#E32A2A",
         display: "flex",
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "start",
         height: "45px",
         alignItems: "center",
         borderRadius: "5px",
@@ -20,12 +20,13 @@ const ButtonWithSwitch = (props: any) => {
     ],
     mainBoxTypography: [
       {
-        fontSize: { xs: "3vw", lg: "0.7vw", md: "0.7vw" },
+        fontSize: { xs: "2vw", lg: "0.9vw", md: "0.7vw" },
         fontWeight: "600",
-        textAlign: "right",
+        textAlign: "start",
         color: "white",
         marginRight: "10px",
         minWidth: { lg: "80px", xs: "0px", md: "0px" },
+        lineHeight: "1"
       },
     ],
   };

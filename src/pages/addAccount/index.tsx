@@ -439,6 +439,18 @@ const AddAccount = () => {
     }
   }, [addSuccess]);
 
+  useEffect(() => {
+    if (lockUnlockObj.allPrivilege) {
+      setLockUnlockObj({
+        ...lockUnlockObj,
+        addMatchPrivilege: true,
+        betFairMatchPrivilege: true,
+        bookmakerMatchPrivilege: true,
+        sessionMatchPrivilege: true,
+      });
+    }
+  }, [lockUnlockObj]);
+  
   return (
     <>
       {loading && <Loader />}
@@ -823,12 +835,14 @@ const AddAccount = () => {
                 )}
               </Box>
             </Box>
-            <Box sx={{ flex: 2 }}>
+            <Box sx={{ flex: 2, overflow: "hidden" , width: "100%"}}>
               <Box
                 sx={{
                   display: { lg: "block", md: "grid", xs: "block" },
                   gridTemplateColumns: "50% 47%",
                   gridColumnGap: "10px",
+                  width: "100%",
+                  // overflowX: "hidden"
                 }}
               >
                 <Box sx={{ mt: 1 }}>
@@ -851,11 +865,11 @@ const AddAccount = () => {
                     error={_.get(errors, "roleName.value")}
                     onBlur={formik.handleBlur}
                   />
-                </Box>
+                  </Box>
 
                 {formik.values.roleName.value === "expert" && (
                   <>
-                    <Box m={2}>
+                    <Box m={2} sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
                           <ButtonWithSwitch
@@ -878,8 +892,8 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2}>
-                      <Grid container spacing={1}>
+                    <Box m={2} sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}>
+                      <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
                           <ButtonWithSwitch
                             title="BetFair Match Privilege"
@@ -901,7 +915,7 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2}>
+                    <Box m={2} sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
                           <ButtonWithSwitch
@@ -917,6 +931,7 @@ const AddAccount = () => {
                     </Box>
                   </>
                 )}
+              
                 {formik?.values?.roleName?.value !== "expert" && (
                   <Box
                     sx={{
