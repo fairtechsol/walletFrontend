@@ -1,8 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
 
 const PlaceBetComponent = (props: any) => {
-  const { newData, profitLoss } = props;
+  const { profitLoss } = props;
   return (
     <Box
       //   onClick={handleClick}

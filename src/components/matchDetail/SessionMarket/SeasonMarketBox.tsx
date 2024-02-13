@@ -13,7 +13,6 @@ import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
 const SeasonMarketBox = (props: any) => {
   const { newData, setData, profitLossData } = props;
-  console.log(profitLossData, "profit");
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
