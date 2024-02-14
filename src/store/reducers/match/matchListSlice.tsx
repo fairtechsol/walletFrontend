@@ -152,11 +152,23 @@ const matchListSlice = createSlice({
                 return {
                   ...item,
                   maxLoss: profitLoss?.maxLoss,
-                  totalBet: profitLoss?.totalBet,
+                  totalBet: +item?.totalBet + 1,
                 };
               }
               return item;
             });
+
+          const betIndex = updatedProfitLossDataSession.findIndex(
+            (item: any) => item?.betId === jobData?.placedBet?.betId
+          );
+          if (betIndex === -1) {
+            updatedProfitLossDataSession.push({
+              betId: jobData?.placedBet?.betId,
+              maxLoss: profitLoss?.maxLoss,
+              totalBet: 1,
+              // Add other properties as necessary
+            });
+          }
 
           state.matchDetail = {
             ...state.matchDetail,
