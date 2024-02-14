@@ -384,7 +384,7 @@ const AllRateSeperate = ({
                             height: { lg: "20px", xs: "14px" },
                             marginRight: "5px",
                           }}
-                            src={DeleteIcon}
+                          src={DeleteIcon}
                         />
                         <Typography
                           sx={{

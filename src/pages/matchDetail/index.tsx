@@ -15,9 +15,8 @@ import {
   matchListReset,
   updateMatchRates,
   updateBetsPlaced,
-  updateBalance,
-  betDataFromSocket,
   updateMaxLossForBet,
+  updateTeamRates,
 } from "../../store/actions/match/matchAction";
 import { useSelector } from "react-redux";
 import { socketService } from "../../socketManager";
@@ -105,10 +104,16 @@ const MatchDetail = () => {
 
   const setSessionBetsPlaced = (event: any) => {
     try {
-      if (event?.betPlaced?.placedBet?.matchId === state?.matchId) {
-        dispatch(updateBetsPlaced(event?.betPlaced?.placedBet));
-        dispatch(updateBalance(event));
-        dispatch(betDataFromSocket(event));
+      if (event?.jobData?.placedBet?.matchId === state?.matchId) {
+        dispatch(
+          updateBetsPlaced({
+            newBet: event?.jobData?.placedBet,
+            userName: event?.jobData?.betPlaceObject?.betPlacedData?.userName,
+            myStake: event?.jobData?.betPlaceObject?.myStack,
+          })
+        );
+        // dispatch(updateBalance(event));
+        // dispatch(betDataFromSocket(event));
         dispatch(updateMaxLossForBet(event));
       }
     } catch (e) {
@@ -120,7 +125,8 @@ const MatchDetail = () => {
     try {
       if (event?.jobData?.newBet?.matchId === state?.matchId) {
         dispatch(updateBetsPlaced(event?.jobData));
-        dispatch(updateBalance(event?.jobData));
+        // dispatch(updateBalance(event?.jobData));
+        dispatch(updateTeamRates(event));
       }
     } catch (e) {
       console.log(e);
@@ -129,7 +135,7 @@ const MatchDetail = () => {
 
   useEffect(() => {
     try {
-      if (state?.matchId) {
+      if (state?.matchId && profileDetail?.roleName) {
         dispatch(getMatchDetail(state?.matchId));
         dispatch(getPlacedBets(state?.matchId));
         socketService.match.joinMatchRoom(
@@ -153,7 +159,7 @@ const MatchDetail = () => {
       socketService.match.leaveAllRooms();
       socketService.match.leaveMatchRoom(state?.matchId);
     };
-  }, [state?.matchId]);
+  }, [state?.matchId, profileDetail?.roleName]);
 
   useEffect(() => {
     try {
