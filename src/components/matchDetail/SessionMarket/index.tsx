@@ -422,19 +422,13 @@ const SessionMarket = ({
             marginTop: ".25vw",
           }}
         >
-          {runAmount?.map((v: any) => {
-            console.log(v);
-            return (
-              <RunsBox
-                currentOdds={currentOdds?.betId === v?.id ? currentOdds : null}
-                key={v[0]?.id}
-                item={v[0]}
-                // setData={setData}
-                // setData={setData}
-                // popData={popData}
-              />
-            );
-          })}
+          <RunsBox
+            currentOdds={currentOdds?.betId === "" ? currentOdds : null}
+            item={runAmount}
+            // setData={setData}
+            // setData={setData}
+            // popData={popData}
+          />
         </Box>
       )}
     </>
