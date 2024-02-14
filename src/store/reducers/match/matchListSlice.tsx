@@ -8,6 +8,7 @@ import {
   updateBalance,
   updateMaxLossForBet,
   betDataFromSocket,
+  updateTeamRates,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -143,25 +144,26 @@ const matchListSlice = createSlice({
         };
       })
       .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
-        const { betPlaced, profitLossData } = action.payload;
-        if (state?.matchDetails?.id === betPlaced?.placedBet?.matchId) {
+        const { jobData, profitLoss } = action.payload;
+        if (state?.matchDetail?.id === jobData?.placedBet?.matchId) {
           const updatedProfitLossDataSession =
-            state.matchDetails?.profitLossDataSession.map((item: any) => {
-              if (item?.betId === betPlaced?.placedBet?.betId) {
+            state.matchDetail?.profitLossDataSession.map((item: any) => {
+              if (item?.betId === jobData?.placedBet?.betId) {
                 return {
                   ...item,
-                  maxLoss: JSON.parse(profitLossData)?.maxLoss,
+                  maxLoss: profitLoss?.maxLoss,
+                  totalBet: profitLoss?.totalBet,
                 };
               }
               return item;
             });
 
-          state.matchDetails = {
-            ...state.matchDetails,
+          state.matchDetail = {
+            ...state.matchDetail,
             profitLossDataSession: updatedProfitLossDataSession,
           };
         } else {
-          return state.matchDetails;
+          return state.matchDetail;
         }
       })
       .addCase(betDataFromSocket.fulfilled, (state, action) => {
@@ -181,6 +183,29 @@ const matchListSlice = createSlice({
             let updatedSlice = state.betPlaceData.splice(existingIndex, 1);
             state.betPlaceData = [...updatedSlice, action.payload];
           }
+        }
+      })
+      .addCase(updateTeamRates.fulfilled, (state, action) => {
+        const { userRedisObj, jobData } = action.payload;
+        if (["tiedMatch2", "tiedMatch"].includes(jobData?.newBet?.marketType)) {
+          state.matchDetail.profitLossDataMatch = {
+            ...state.matchDetail.profitLossDataMatch,
+            yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
+            noRateTie: userRedisObj[jobData?.teamBrateRedisKey],
+          };
+        } else if (["completeMatch"].includes(jobData?.newBet?.marketType)) {
+          state.matchDetail.profitLossDataMatch = {
+            ...state.matchDetail.profitLossDataMatch,
+            yesRateComplete: userRedisObj[jobData?.teamArateRedisKey],
+            noRateComplete: userRedisObj[jobData?.teamBrateRedisKey],
+          };
+        } else {
+          state.matchDetail.profitLossDataMatch = {
+            ...state.matchDetail.profitLossDataMatch,
+            teamARate: userRedisObj[jobData?.teamArateRedisKey],
+            teamBRate: userRedisObj[jobData?.teamBrateRedisKey],
+            teamCRate: userRedisObj[jobData?.teamCrateRedisKey] ?? "",
+          };
         }
       });
   },
