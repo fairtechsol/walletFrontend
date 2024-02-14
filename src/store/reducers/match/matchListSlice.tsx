@@ -152,7 +152,7 @@ const matchListSlice = createSlice({
                 return {
                   ...item,
                   maxLoss: profitLoss?.maxLoss,
-                  totalBet: +item?.totalBet + 1,
+                  totalBet: profitLoss?.totalBet,
                 };
               }
               return item;
@@ -166,7 +166,6 @@ const matchListSlice = createSlice({
               betId: jobData?.placedBet?.betId,
               maxLoss: profitLoss?.maxLoss,
               totalBet: 1,
-              // Add other properties as necessary
             });
           }
 
