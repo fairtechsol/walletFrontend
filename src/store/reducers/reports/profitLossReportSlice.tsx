@@ -44,6 +44,7 @@ const profitLossReportSlice = createSlice({
       .addCase(getTotalProfitLoss.pending, (state) => {
         state.loading = false;
         state.success = false;
+        state.totalProfitLossList = [];
         state.error = null;
       })
       .addCase(getTotalProfitLoss.fulfilled, (state, action) => {
@@ -58,6 +59,7 @@ const profitLossReportSlice = createSlice({
       .addCase(getDomainProfitLoss.pending, (state) => {
         state.loading = false;
         state.success = false;
+        state.domainProfitLossList = [];
         state.error = null;
       })
       .addCase(getDomainProfitLoss.fulfilled, (state, action) => {
@@ -72,6 +74,7 @@ const profitLossReportSlice = createSlice({
       .addCase(getBetProfitLoss.pending, (state) => {
         state.loading = false;
         state.success = false;
+        state.betProfitLossList = [];
         state.error = null;
       })
       .addCase(getBetProfitLoss.fulfilled, (state, action) => {
@@ -87,6 +90,7 @@ const profitLossReportSlice = createSlice({
         state.loading = false;
         state.success = false;
         state.error = null;
+        state.sessionProfitLossList = [];
       })
       .addCase(getSessionProfitLoss.fulfilled, (state, action) => {
         state.success = true;

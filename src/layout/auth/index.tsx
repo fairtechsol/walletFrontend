@@ -8,12 +8,13 @@ const AuthLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (sessionStorage.getItem("userToken")) {
+    if (
+      sessionStorage.getItem("userToken") &&
+      !sessionStorage.getItem("forceChangePassword")
+    ) {
       navigate("/wallet/list_of_clients");
     } else {
-      if (!sessionStorage.getItem("forceChangePassword")) {
-        navigate("/wallet/login");
-      }
+      navigate("/wallet/login");
     }
   }, []);
 
