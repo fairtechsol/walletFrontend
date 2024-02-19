@@ -43,10 +43,10 @@ const MultipleMatch = ({}) => {
     dispatch(updateMultipleMatchDetail(event));
   };
 
-  const setMultiSessionBetsPlaced = (event: any) => {};
-  const setMultiMatchBetsPlaced = (event: any) => {};
-  const matchMultiResultDeclared = (event: any) => {};
-  const matchMultiDeleteBet = (event: any) => {};
+  const setMultiSessionBetsPlaced = () => {};
+  const setMultiMatchBetsPlaced = () => {};
+  const matchMultiResultDeclared = () => {};
+  const matchMultiDeleteBet = () => {};
 
   useEffect(() => {
     try {
