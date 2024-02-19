@@ -35,6 +35,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
     id: "",
   });
   const [selected, setSelected] = useState(null);
+  const [depositeValue, setDepositeValue] = useState(0)
+  
+const handleAmountChange = (amount: string,id:string) => {
+  if(id === element?.id){
+    setDepositeValue(Number(amount))
+  }
+};
 
   return (
     <>
@@ -174,10 +181,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
             {Number(+element?.userBal?.profitLoss || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {+element?.userBal?.profitLoss || 0}
+                {+element?.userBal?.profitLoss + depositeValue || 0+ depositeValue}
               </>
             ) : (
-              +element?.userBal?.profitLoss || 0
+              +element?.userBal?.profitLoss + depositeValue || 0+ depositeValue
             )}
           </Typography>
           <StyledImage
@@ -213,10 +220,12 @@ const AccountListRow = (props: AccountListRowInterface) => {
             {Number(+element?.percentProfitLoss || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {+element?.percentProfitLoss || 0}
+                {depositeValue>0 ? (Number(+element?.userBal?.profitLoss + depositeValue)*element?.upLinePartnership)/100  : +element?.percentProfitLoss || 0}
               </>
             ) : (
-              +element?.percentProfitLoss || 0
+              <>
+              {depositeValue>0 ? (Number(+element?.userBal?.profitLoss + depositeValue)*element?.upLinePartnership)/100  : +element?.percentProfitLoss || 0}
+              </>
             )}
           </Typography>
           <StyledImage
@@ -275,10 +284,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
             {Number(+element?.availableBalance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(+element?.availableBalance || 0)}
+                {Number(+element?.availableBalance + depositeValue || 0 + depositeValue)}
               </>
             ) : (
-              Number(+element?.availableBalance || 0)
+              Number(+element?.availableBalance + depositeValue || 0 + depositeValue)
             )}
           </Typography>
         </Box>
@@ -583,6 +592,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
               userModal={userModal}
               setShowSuccessModal={setShowSuccessModal}
               setShowModalMessage={setShowModalMessage}
+              onValueChange={handleAmountChange}
             />
           </Box>
         </Box>
