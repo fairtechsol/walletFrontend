@@ -116,10 +116,13 @@ const AddAccount = () => {
   };
   const inputStyle = {
     fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
+
   };
   const inputContainerStyle = {
     borderRadius: "5px",
     border: "1px solid #DEDEDE",
+
+
   };
 
   const formik = useFormik({
@@ -835,14 +838,13 @@ const AddAccount = () => {
                 )}
               </Box>
             </Box>
-            <Box sx={{ flex: 2, overflow: "hidden" , width: "100%"}}>
+            <Box sx={{ flex: 2, width: "100%", }}>
               <Box
                 sx={{
                   display: { lg: "block", md: "grid", xs: "block" },
                   gridTemplateColumns: "50% 47%",
                   gridColumnGap: "10px",
                   width: "100%",
-                  // overflowX: "hidden"
                 }}
               >
                 <Box sx={{ mt: 1 }}>
@@ -1069,12 +1071,13 @@ const AddAccount = () => {
                         display: {
                           lg: "block",
                           md: "grid",
-                          xs: "grid",
+                          xs: "block",
                         },
                         gridTemplateColumns: "50% 47%",
                         gridColumnGap: "10px",
                       }}
                     >
+                 
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
@@ -1090,11 +1093,11 @@ const AddAccount = () => {
                         }}
                         onBlur={formik.handleBlur}
                         value={formik.values.matchCommissionType}
-                        // touched={touched.matchCommissionType}
+                        touched={touched.matchCommissionType}
                         // error={errors.matchCommissionType}
                         error={
-                          touched.creditRefrence &&
-                          Boolean(errors.creditRefrence)
+                          touched.matchCommissionType &&
+                          Boolean(errors.matchCommissionType)
                         }
                       />
                       {!["", null, "0.00"].includes(
@@ -1122,6 +1125,7 @@ const AddAccount = () => {
                         </>
                       )}
 
+  
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
