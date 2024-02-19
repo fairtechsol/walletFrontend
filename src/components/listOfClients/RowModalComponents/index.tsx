@@ -17,7 +17,7 @@ import {
 } from "../../../store/actions/user/userAction";
 
 const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor } = props;
+  const { element, selected, setSelected, backgroundColor,onValueChange } = props;
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -28,7 +28,9 @@ const RowModalComponents = (props: any) => {
   );
 
   const { success } = useSelector((state: RootState) => state.user.userList);
-
+  const handleAmountChange = (amount: string,id:string) => {
+    onValueChange(amount,id)
+  };
   const classes = {
     mainBox: {
       background: "#F8C851",
@@ -104,6 +106,7 @@ const RowModalComponents = (props: any) => {
                 setSelected(null);
               }}
               titleBackgroundColor="#27AC1E"
+              onChangeAmount={handleAmountChange}
             />
           )}
           {selected == 1 && (
