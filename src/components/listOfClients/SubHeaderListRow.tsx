@@ -2,7 +2,8 @@ import { Box, Typography } from "@mui/material";
 import StyledImage from "../Common/StyledImages";
 
 const SubHeaderListRow = (props: any) => {
-  const { data } = props;
+  const { data, profit } = props;
+
   return (
     <Box
       sx={{
@@ -71,9 +72,10 @@ const SubHeaderListRow = (props: any) => {
           width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
-          background: `${
-            Number(+data?.profitsum || 0) >= 0 ? "#27AC1E" : "#E32A2A"
-          }`,
+          background: `${Number(+data?.profitsum || 0) >= 0
+              ? "#27AC1E"
+              : "#E32A2A"
+            }`,
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
@@ -96,7 +98,11 @@ const SubHeaderListRow = (props: any) => {
           )}
         </Typography>
         <StyledImage
-          src="https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
+          src={
+            +data?.profitsum >= 0
+              ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
+              : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
+          }
           sx={{
             height: "15px",
             marginLeft: "5px",
@@ -110,9 +116,8 @@ const SubHeaderListRow = (props: any) => {
           width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
           display: "flex",
           paddingX: "10px",
-          background: `${
-            Number(+data?.percentprofitloss || 0) >= 0 ? "#27AC1E" : "#E32A2A"
-          }`,
+          background: `${Number(+data?.percentprofitloss || 0) >= 0 ? "#27AC1E" : "#E32A2A"
+            }`,
           alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
@@ -135,7 +140,11 @@ const SubHeaderListRow = (props: any) => {
           )}
         </Typography>
         <StyledImage
-          src="https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
+         src={
+          +data?.profitsum >= 0
+            ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
+            : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
+        }
           sx={{
             height: "15px",
             marginLeft: "5px",
