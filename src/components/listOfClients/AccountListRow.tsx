@@ -59,6 +59,62 @@ const AccountListRow = (props: AccountListRowInterface) => {
     }
   };
 
+
+  const calculateValue = (): number => {
+    const baseValue = +element?.userBal?.profitLoss || 0;
+  
+    if (Number(baseValue) >= 0) {
+      return (
+        Number(typeOfAmount === 'deposite'
+          ? baseValue + depositeValue || 0 + depositeValue
+          : typeOfAmount === 'withdraw'
+            ? baseValue - withdrawValue || 0 - withdrawValue
+            : typeOfAmount === 'credit' && creditValue
+              ? baseValue + element?.creditRefrence - creditValue || 0 - creditValue
+              : baseValue
+        )
+      );
+    } else {
+      return (
+        Number(typeOfAmount === 'deposite'
+          ? baseValue + depositeValue || 0 + depositeValue
+          : typeOfAmount === 'withdraw'
+            ? baseValue - withdrawValue || 0 - withdrawValue
+            : typeOfAmount === 'credit' && creditValue
+              ? baseValue + element?.creditRefrence - creditValue || 0 - creditValue
+              : baseValue
+        )
+      );
+    }
+  };
+  const calculateProfitLoss = (): number => {
+    const baseProfitLoss = +element?.percentProfitLoss || 0;
+
+    if (typeof baseProfitLoss === 'number' && baseProfitLoss >= 0) {
+      return (
+        Number(typeOfAmount === 'deposite'
+          ? (Number(+element?.userBal?.profitLoss + depositeValue) * element?.upLinePartnership) / 100
+          : typeOfAmount === 'credit' && creditValue
+            ? (Number(+element?.userBal?.profitLoss + element?.creditRefrence - creditValue) * element?.upLinePartnership) / 100
+            : typeOfAmount === 'withdraw'
+              ? (Number(+element?.userBal?.profitLoss - withdrawValue) * element?.upLinePartnership) / 100
+              : +element?.percentProfitLoss || 0
+        )
+      );
+    } else {
+      return (
+        Number(typeOfAmount === 'deposite'
+          ? (Number(+element?.userBal?.profitLoss + depositeValue) * element?.upLinePartnership) / 100
+          : typeOfAmount === 'credit' && creditValue
+            ? (Number(+element?.userBal?.profitLoss + element?.creditRefrence - creditValue) * element?.upLinePartnership) / 100
+            : typeOfAmount === 'withdraw'
+              ? (Number(+element?.userBal?.profitLoss - withdrawValue) * element?.upLinePartnership) / 100
+              : +element?.percentProfitLoss || 0
+        )
+      );
+    }
+  };
+
   return (
     <>
       <Box
@@ -185,7 +241,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(+element?.userBal?.profitLoss || 0) >= 0
+            calculateValue() >= 0
                 ? "#27AC1E"
                 : "#E32A2A",
             alignItems: "center",
@@ -195,17 +251,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         >
           
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(+element?.userBal?.profitLoss || 0) >= 0 ? (
-              <>
-                <span style={{ visibility: "hidden" }}>-</span>
-                {typeOfAmount ==='deposite' ?  +element?.userBal?.profitLoss + depositeValue ||
-                  0 + depositeValue  : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue ||
-                  0 - withdrawValue : +element?.userBal?.profitLoss - creditValue ||
-                  0 - creditValue }
-              </>
-            ) : (
-              typeOfAmount ==='deposite' ? +element?.userBal?.profitLoss + depositeValue || 0 + depositeValue : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue || 0 - withdrawValue : +element?.userBal?.profitLoss - creditValue || 0 - creditValue
-            )}
+          {calculateValue()}
           </Typography>
           <StyledImage
             src={
@@ -228,7 +274,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
             justifyContent: "space-between",
             background:
-              Number(+element?.percentProfitLoss || 0) >= 0
+            calculateProfitLoss() >= 0
                 ? "#27AC1E"
                 : "#E32A2A",
             alignItems: "center",
@@ -237,35 +283,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-          {Number(+element?.percentProfitLoss || 0) >= 0 ? (
-              <>
-                <span style={{ visibility: "hidden" }}>-</span>
-                {typeOfAmount === 'deposite'
-                  ? (Number(+element?.userBal?.profitLoss + depositeValue) *
-                      element?.upLinePartnership) /
-                    100 : typeOfAmount === 'credit' ? (Number(+element?.userBal?.profitLoss - creditValue) *
-                    element?.upLinePartnership) /
-                  100 : typeOfAmount === 'withdraw' ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
-                  element?.upLinePartnership) /
-                100
-                  : +element?.percentProfitLoss || 0}
-              </>
-            ) : typeOfAmount === 'deposite' ? (
-              (Number(+element?.userBal?.profitLoss + depositeValue) *
-                element?.upLinePartnership) /
-              100
-            ) : typeOfAmount === 'credit' ? (
-              (Number(+element?.userBal?.profitLoss - creditValue) *
-                element?.upLinePartnership) /
-              100
-            ) : typeOfAmount === 'withdraw' ? (
-              (Number(+element?.userBal?.profitLoss - withdrawValue) *
-                element?.upLinePartnership) /
-              100
-            ) 
-            : (
-              +element?.percentProfitLoss || 0
-            )}
+          {calculateProfitLoss()}
           </Typography>
           <StyledImage
             src={
