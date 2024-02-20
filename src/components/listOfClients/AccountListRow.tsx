@@ -200,11 +200,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
                 <span style={{ visibility: "hidden" }}>-</span>
                 {typeOfAmount ==='deposite' ?  +element?.userBal?.profitLoss + depositeValue ||
                   0 + depositeValue  : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue ||
-                  0 - withdrawValue : +element?.userBal?.profitLoss - creditValue ||
-                  0 - creditValue }
+                  0 - withdrawValue : typeOfAmount ==='credit' && creditValue ? +element?.userBal?.profitLoss + element?.creditRefrence - creditValue ||
+                  0 - creditValue : +element?.userBal?.profitLoss }
               </>
             ) : (
-              typeOfAmount ==='deposite' ? +element?.userBal?.profitLoss + depositeValue || 0 + depositeValue : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue || 0 - withdrawValue : +element?.userBal?.profitLoss - creditValue || 0 - creditValue
+              typeOfAmount ==='deposite' ? +element?.userBal?.profitLoss + depositeValue || 0 + depositeValue : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue || 0 - withdrawValue : typeOfAmount ==='credit' && creditValue ? +element?.userBal?.profitLoss + element?.creditRefrence - creditValue || 0 - creditValue : +element?.userBal?.profitLoss
             )}
           </Typography>
           <StyledImage
@@ -243,7 +243,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                 {typeOfAmount === 'deposite'
                   ? (Number(+element?.userBal?.profitLoss + depositeValue) *
                       element?.upLinePartnership) /
-                    100 : typeOfAmount === 'credit' ? (Number(+element?.userBal?.profitLoss - creditValue) *
+                    100 : typeOfAmount === 'credit' && creditValue ? (Number(+element?.userBal?.profitLoss + element?.creditRefrence - creditValue) *
                     element?.upLinePartnership) /
                   100 : typeOfAmount === 'withdraw' ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
                   element?.upLinePartnership) /
@@ -254,8 +254,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
               (Number(+element?.userBal?.profitLoss + depositeValue) *
                 element?.upLinePartnership) /
               100
-            ) : typeOfAmount === 'credit' ? (
-              (Number(+element?.userBal?.profitLoss - creditValue) *
+            ) : typeOfAmount === 'credit' && creditValue ? (
+              (Number(+element?.userBal?.profitLoss + element?.creditRefrence - creditValue) *
                 element?.upLinePartnership) /
               100
             ) : typeOfAmount === 'withdraw' ? (
