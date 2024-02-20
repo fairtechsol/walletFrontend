@@ -128,6 +128,7 @@ const SearchInput = (props: any) => {
         {(!matchesMobile || show) && (
           <TextField
             variant="standard"
+            name={`search_${Math.random().toString(36).substring(7)}`}
             placeholder={placeholder}
             onChange={handleInputChange}
             InputProps={{
@@ -154,6 +155,7 @@ const SearchInput = (props: any) => {
             variant="standard"
             placeholder={placeholder}
             onChange={handleInputChange}
+            name={`search_${Math.random().toString(36).substring(7)}`}
             InputProps={{
               disableUnderline: true,
               autoComplete: "new-password",

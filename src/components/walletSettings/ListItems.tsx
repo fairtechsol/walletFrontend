@@ -77,7 +77,9 @@ const ListItems = (props: any) => {
       },
     },
   };
-
+  const handleAmountChange = () => {
+    console.log('')
+  };
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -150,6 +152,7 @@ const ListItems = (props: any) => {
                   }}
                   navigate={navigate}
                   titleBackgroundColor="#27AC1E"
+                  onChangeAmount={handleAmountChange}
                 />
               )}
               {selected == 1 && (
@@ -161,6 +164,8 @@ const ListItems = (props: any) => {
                     setSelected(null);
                   }}
                   titleBackgroundColor="#ff0000"
+                  onChangeAmount={handleAmountChange}
+
                 />
               )}
               {selected == 2 && (
@@ -171,6 +176,7 @@ const ListItems = (props: any) => {
                   setSelected={() => {
                     setSelected(null);
                   }}
+                  onChangeAmount={handleAmountChange}
                 />
               )}
               {selected == 4 && (
@@ -181,6 +187,7 @@ const ListItems = (props: any) => {
                     setSelected(null);
                   }}
                   walletAccountDetail={profileDetail}
+                  onChangeAmount={handleAmountChange}
                 />
               )}
               {selected == 5 && (
@@ -191,6 +198,7 @@ const ListItems = (props: any) => {
                   setSelected={() => {
                     setSelected(null);
                   }}
+                  onChangeAmount={handleAmountChange}
                 />
               )}
             </Box>
