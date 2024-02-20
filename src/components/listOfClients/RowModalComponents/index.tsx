@@ -28,8 +28,9 @@ const RowModalComponents = (props: any) => {
   );
 
   const { success } = useSelector((state: RootState) => state.user.userList);
-  const handleAmountChange = (amount: string,id:string) => {
-    onValueChange(amount,id)
+  const handleAmountChange = (amount: string,id:string,type:string) => {
+    console.log(amount,type)
+    onValueChange(amount,id,type)
   };
   const classes = {
     mainBox: {
@@ -123,6 +124,7 @@ const RowModalComponents = (props: any) => {
                 setSelected(null);
               }}
               backgroundColor={backgroundColor}
+              onChangeAmount={handleAmountChange}
             />
           )}
           {selected == 2 && (
@@ -138,6 +140,7 @@ const RowModalComponents = (props: any) => {
                 setSelected(null);
               }}
               backgroundColor={backgroundColor}
+              onChangeAmount={handleAmountChange}
             />
           )}
           {selected == 3 && (
@@ -168,6 +171,7 @@ const RowModalComponents = (props: any) => {
                 setSelected(null);
               }}
               backgroundColor={backgroundColor}
+              onChangeAmount={handleAmountChange}
             />
           )}
           {selected == 4 && (
@@ -183,6 +187,7 @@ const RowModalComponents = (props: any) => {
                 setSelected(null);
               }}
               backgroundColor={backgroundColor}
+              onChangeAmount={handleAmountChange}
             />
           )}
         </Box>

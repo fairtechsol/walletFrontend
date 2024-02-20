@@ -36,12 +36,28 @@ const AccountListRow = (props: AccountListRowInterface) => {
   });
   const [selected, setSelected] = useState(null);
   const [depositeValue, setDepositeValue] = useState(0)
+  const [withdrawValue, setWithdrawValue] = useState(0);
+  const [creditValue, setCreditValue] = useState(0);
+  const [exposureValue, setExposureValue] = useState(0);
+  const [lockValue, setLockValue] = useState<any>(null)
+  const [typeOfAmount, setTypeOfAmount] = useState<string>("");
   
-const handleAmountChange = (amount: string,id:string) => {
-  if(id === element?.id){
-    setDepositeValue(Number(amount))
-  }
-};
+  const handleAmountChange = (amount: any, id: string, type: string) => {
+    if (id === element?.id) {
+      setTypeOfAmount(type);
+      if (type === "deposite") {
+        setDepositeValue(Number(amount));
+      } else if (type === "withdraw") {
+        setWithdrawValue(Number(amount));
+      } else if (type === "credit") {
+        setCreditValue(Number(amount));
+      } else if (type === "exposure") {
+        setExposureValue(Number(amount));
+      } else if (type === "lock"){
+        setLockValue(amount)
+      }
+    }
+  };
 
   return (
     <>
@@ -139,7 +155,7 @@ const handleAmountChange = (amount: string,id:string) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{+element?.creditRefrence || 0}</Typography>
+          <Typography variant="h5">{typeOfAmount === 'credit' && creditValue > 0 ? Number(+creditValue) : +element?.creditRefrence || 0}</Typography>
         </Box>
         <Box
           sx={{
@@ -152,13 +168,13 @@ const handleAmountChange = (amount: string,id:string) => {
           }}
         >
           <Typography variant="h5">
-            {Number(+element?.balance || 0) >= 0 ? (
+          {Number(+element?.balance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(+element?.balance || 0)}
+                {typeOfAmount === 'withdraw'? Number(+element?.balance - withdrawValue || 0 - withdrawValue) :  Number(+element?.balance || 0)}
               </>
             ) : (
-              Number(+element?.balance || 0)
+              typeOfAmount === 'withdraw'? Number(+element?.balance - withdrawValue || 0 - withdrawValue) :  Number(+element?.balance || 0)
             )}
           </Typography>
         </Box>
@@ -177,14 +193,18 @@ const handleAmountChange = (amount: string,id:string) => {
             borderRight: "2px solid white",
           }}
         >
+          
           <Typography variant="h5" sx={{ color: "white" }}>
             {Number(+element?.userBal?.profitLoss || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {+element?.userBal?.profitLoss + depositeValue || 0+ depositeValue}
+                {typeOfAmount ==='deposite' ?  +element?.userBal?.profitLoss + depositeValue ||
+                  0 + depositeValue  : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue ||
+                  0 - withdrawValue : +element?.userBal?.profitLoss - creditValue ||
+                  0 - creditValue }
               </>
             ) : (
-              +element?.userBal?.profitLoss + depositeValue || 0+ depositeValue
+              typeOfAmount ==='deposite' ? +element?.userBal?.profitLoss + depositeValue || 0 + depositeValue : typeOfAmount ==='withdraw' ? +element?.userBal?.profitLoss - withdrawValue || 0 - withdrawValue : +element?.userBal?.profitLoss - creditValue || 0 - creditValue
             )}
           </Typography>
           <StyledImage
@@ -217,15 +237,34 @@ const handleAmountChange = (amount: string,id:string) => {
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {Number(+element?.percentProfitLoss || 0) >= 0 ? (
+          {Number(+element?.percentProfitLoss || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {depositeValue>0 ? (Number(+element?.userBal?.profitLoss + depositeValue)*element?.upLinePartnership)/100  : +element?.percentProfitLoss || 0}
+                {typeOfAmount === 'deposite'
+                  ? (Number(+element?.userBal?.profitLoss + depositeValue) *
+                      element?.upLinePartnership) /
+                    100 : typeOfAmount === 'credit' ? (Number(+element?.userBal?.profitLoss - creditValue) *
+                    element?.upLinePartnership) /
+                  100 : typeOfAmount === 'withdraw' ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
+                  element?.upLinePartnership) /
+                100
+                  : +element?.percentProfitLoss || 0}
               </>
-            ) : (
-              <>
-              {depositeValue>0 ? (Number(+element?.userBal?.profitLoss + depositeValue)*element?.upLinePartnership)/100  : +element?.percentProfitLoss || 0}
-              </>
+            ) : typeOfAmount === 'deposite' ? (
+              (Number(+element?.userBal?.profitLoss + depositeValue) *
+                element?.upLinePartnership) /
+              100
+            ) : typeOfAmount === 'credit' ? (
+              (Number(+element?.userBal?.profitLoss - creditValue) *
+                element?.upLinePartnership) /
+              100
+            ) : typeOfAmount === 'withdraw' ? (
+              (Number(+element?.userBal?.profitLoss - withdrawValue) *
+                element?.upLinePartnership) /
+              100
+            ) 
+            : (
+              +element?.percentProfitLoss || 0
             )}
           </Typography>
           <StyledImage
@@ -281,13 +320,23 @@ const handleAmountChange = (amount: string,id:string) => {
           }}
         >
           <Typography variant="h5">
-            {Number(+element?.availableBalance || 0) >= 0 ? (
+          {Number(+element?.availableBalance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(+element?.availableBalance + depositeValue || 0 + depositeValue)}
+                {typeOfAmount ==='deposite' ?  Number(
+                  +element?.availableBalance + depositeValue ||
+                    0 + depositeValue
+                )  : typeOfAmount ==='withdraw' ? Number(
+                  +element?.availableBalance - withdrawValue ||
+                    0 - withdrawValue) : +element?.availableBalance || 0
+               }
               </>
-            ) : (
-              Number(+element?.availableBalance + depositeValue || 0 + depositeValue)
+            ) : ( typeOfAmount ==='deposite' ?
+              Number(
+                +element?.availableBalance + depositeValue || 0 + depositeValue
+              ) : typeOfAmount ==='withdraw' ? Number(
+                +element?.availableBalance - withdrawValue || 0 - withdrawValue
+              ) : +element?.availableBalance || 0
             )}
           </Typography>
         </Box>
@@ -303,7 +352,7 @@ const handleAmountChange = (amount: string,id:string) => {
           }}
         >
           <StyledImage
-            src={!element?.userBlock ? UnLockIcon : LockIcon}
+            src={  lockValue ? !lockValue?.all_blocked ? UnLockIcon : LockIcon :  !element?.userBlock ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -319,7 +368,7 @@ const handleAmountChange = (amount: string,id:string) => {
           }}
         >
           <StyledImage
-            src={!element?.betBlock ? UnLockIcon : LockIcon}
+            src={ lockValue ? !lockValue?.bet_blocked ? UnLockIcon : LockIcon :   !element?.betBlock ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -335,7 +384,9 @@ const handleAmountChange = (amount: string,id:string) => {
             paddingX: "10px",
           }}
         >
-          <Typography variant="h5">{element?.exposureLimit}</Typography>
+          <Typography variant="h5">
+          {typeOfAmount === 'exposure' && exposureValue > 0 ? Number(exposureValue) : element?.exposureLimit}
+          </Typography>
         </Box>
         <Box
           sx={{

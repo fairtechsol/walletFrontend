@@ -112,7 +112,7 @@ const DepositComponent = (props: any) => {
   }, [success]);
 
   useEffect(() => {
-    onChangeAmount(formik.values.amount,element?.id);
+      onChangeAmount(formik.values.amount,element?.id,'deposite');
     if (isWallet) {
       setInitialBalance(
         +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount

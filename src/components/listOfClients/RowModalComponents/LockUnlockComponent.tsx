@@ -22,7 +22,7 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, isWallet } =
+  const { setSelected, element, walletAccountDetail, endpoint, isWallet,onChangeAmount } =
     props;
 
   let elementLockUnlockObj1 = {
@@ -89,6 +89,10 @@ const LockUnlockComponent = (props: any) => {
       dispatch(userListSuccessReset());
     }
   }, [success]);
+
+  useEffect(() => {
+    onChangeAmount(lockUnlockObj,element?.id,'lock');
+  }, [lockUnlockObj,onChangeAmount]);
 
   // const handleLockSubmit = (e: any) => {
   //   e.preventDefault();
