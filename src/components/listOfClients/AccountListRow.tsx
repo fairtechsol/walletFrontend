@@ -41,6 +41,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
   const [exposureValue, setExposureValue] = useState(0);
   const [lockValue, setLockValue] = useState<any>(null)
   const [typeOfAmount, setTypeOfAmount] = useState<string>("");
+  const [showSubUsers, setSubSusers] = useState({
+    value: false,
+    id: "",
+    title: "",
+  });
   
   const handleAmountChange = (amount: any, id: string, type: string) => {
     if (id === element?.id) {
@@ -114,7 +119,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
       );
     }
   };
-
   return (
     <>
       <Box
@@ -666,6 +670,33 @@ const AccountListRow = (props: AccountListRowInterface) => {
           </Box>
         </Box>
       )}
+
+     <ModalMUI
+        open={showSubUsers?.value}
+        onClose={() => {
+          setSubSusers({ value: false, id: "",title:'' });
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {/* <CommissionReportTable
+            title={element?.userName}
+            id={showCommissionReport?.id}
+            show={showCommissionReport?.value}
+            setShow={setShowCommissionReport}
+          /> */}
+        </Box>
+      </ModalMUI>
 
       <ModalMUI
         open={showCommissionReport?.value}
