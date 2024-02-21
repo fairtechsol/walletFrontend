@@ -15,6 +15,7 @@ const ProfitLossTableComponent = (props: any) => {
   } = props;
 
   const [selectedId, setSelectedId] = useState({
+    domainId: "",
     type: "",
     id: "",
     betId: "",
