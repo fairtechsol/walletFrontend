@@ -138,6 +138,16 @@ const MatchDetail = () => {
       if (state?.matchId && profileDetail?.roleName) {
         dispatch(getMatchDetail(state?.matchId));
         dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [state?.matchId, profileDetail?.roleName]);
+
+  useEffect(() => {
+    try {
+      if (success) {
+        dispatch(matchListReset());
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -155,20 +165,6 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
-    return () => {
-      socketService.match.leaveAllRooms();
-      socketService.match.leaveMatchRoom(state?.matchId);
-    };
-  }, [state?.matchId, profileDetail?.roleName]);
-
-  useEffect(() => {
-    try {
-      if (success) {
-        dispatch(matchListReset());
-      }
-    } catch (e) {
-      console.log(e);
-    }
   }, [success]);
 
   const QuicksessionData = matchDetail?.sessionBettings
@@ -182,6 +178,28 @@ const MatchDetail = () => {
     ?.map((item: any) => {
       return item;
     });
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        if (state?.matchId) {
+          dispatch(getMatchDetail(state?.matchId));
+          dispatch(getPlacedBets(state?.matchId));
+        }
+      } else if (document.visibilityState === "hidden") {
+        socketService.match.leaveMatchRoom(state?.matchId);
+        socketService.match.getMatchRatesOff(
+          state?.matchId,
+          updateMatchDetailToRedux
+        );
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <>
@@ -320,7 +338,7 @@ const MatchDetail = () => {
               allBetsData={matchDetail?.profitLossDataSession}
               title={"Session Market"}
               currentMatch={matchDetail}
-              sessionData={sessionData}
+              sessionData={matchDetail.apiSession}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
             />

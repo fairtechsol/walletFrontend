@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import StyledImage from "../Common/StyledImages";
 
 const SubHeaderListRow = (props: any) => {
-  const { data, profit } = props;
+  const { data } = props;
 
   return (
     <Box
