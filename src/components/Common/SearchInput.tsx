@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import StyledImage from "./StyledImages";
 import { SEARCH, Search } from "../../assets";
 import { debounce } from "lodash";
-import { getUserList } from "../../store/actions/user/userAction";
+import { getModalUserList, getUserList } from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import {
@@ -29,6 +29,9 @@ const SearchInput = (props: any) => {
     pageLimit,
     fromDate,
     toDate,
+    userId,
+    roleName,
+    domain
   } = props;
 
   const theme = useTheme();
@@ -81,7 +84,25 @@ const SearchInput = (props: any) => {
                 : "user.userName",
           })
         );
-      } else if (searchFor === "currentBets") {
+      }else if (searchFor === "userModalList") {
+        dispatch(
+          getModalUserList({
+            userName: value,
+            currentPage: 1,
+            url:  endpoint ,
+            userId:userId,
+            roleName:roleName,
+            domain:domain,
+            searchBy:
+              endpoint === "/expert/list"
+                ? value
+                  ? "userName"
+                  : ""
+                : "user.userName",
+          })
+        );
+      }
+       else if (searchFor === "currentBets") {
         dispatch(
           getCurrentBets({
             searchBy: "user.userName",

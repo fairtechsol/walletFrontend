@@ -3,6 +3,7 @@ import {
   changeAmmountUser,
   changePasswordRow,
   getAlreadyUserExist,
+  getModalUserList,
   getSearchClientList,
   getTotalBalance,
   getUserList,
@@ -18,6 +19,7 @@ interface InitialState {
   userDetail: any;
   userAlreadyExist: boolean;
   userList: any;
+  userModalList: any;
   searchUserList: any;
   success: boolean;
   loading: boolean;
@@ -29,6 +31,7 @@ const initialState: InitialState = {
   userDetail: null,
   userAlreadyExist: false,
   userList: null,
+  userModalList: null,
   searchUserList: [],
   success: false,
   loading: false,
@@ -62,6 +65,19 @@ export const userList = createSlice({
         state.loading = false;
       })
       .addCase(getUserList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      
+      .addCase(getModalUserList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getModalUserList.fulfilled, (state, action) => {
+        state.userModalList = action.payload;
+        state.loading = false;
+      })
+      .addCase(getModalUserList.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
