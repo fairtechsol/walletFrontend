@@ -9,6 +9,8 @@ import StyledImage from "../Common/StyledImages";
 import RowModalComponents from "./RowModalComponents";
 import { Modal } from "../Common/Modal";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
+import AccountListModal from "./AccountListModal";
+import { ApiConstants } from "../../utils/Constants";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -153,11 +155,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
             variant="h5"
             onClick={() => {
               if (!["user", "expert"].includes(element?.roleName)) {
-                // setSubSusers({
-                //   value: true,
-                //   id: element?.id,
-                //   title: element?.userName,
-                // });
+                setSubSusers({
+                  value: true,
+                  id: element?.id,
+                  title: element?.userName,
+                });
               } else {
                 return false;
               }
@@ -670,7 +672,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
           </Box>
         </Box>
       )}
-
      <ModalMUI
         open={showSubUsers?.value}
         onClose={() => {
@@ -685,16 +686,19 @@ const AccountListRow = (props: AccountListRowInterface) => {
             height: "100%",
             display: "flex",
             justifyContent: "center",
-            flexDirection: "column",
+            // flexDirection: "column",
             alignItems: "center",
           }}
         >
-          {/* <CommissionReportTable
+          <AccountListModal
             title={element?.userName}
-            id={showCommissionReport?.id}
-            show={showCommissionReport?.value}
-            setShow={setShowCommissionReport}
-          /> */}
+            id={element?.id}
+            endpoint={ApiConstants.USER.LIST}
+            show={showSubUsers?.value}
+            setShow={setSubSusers}
+            roleName={element?.roleName}
+            domain={element?.domainData?.domain}
+          />
         </Box>
       </ModalMUI>
 
