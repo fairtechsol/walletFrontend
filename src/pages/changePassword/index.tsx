@@ -96,12 +96,13 @@ const ChangePassword = (props: any) => {
               img1={eyeLock}
               id="oldPassword"
               name={"oldPassword"}
+              onBlur={formik.handleBlur}
               type="password"
               value={formik.values.oldPassword}
               onChange={formik.handleChange}
             />
             {touched.oldPassword && errors.oldPassword && (
-              <p style={{ color: "#fa1e1e" }}>{errors.oldPassword as string}</p>
+              <p style={{ color: "#fa1e1e", marginTop: "0" }}>{errors.oldPassword as string}</p>
             )}
             <Input
               required={true}
@@ -118,18 +119,20 @@ const ChangePassword = (props: any) => {
               containerStyle={{ marginTop: "30px" }}
               img={eye}
               img1={eyeLock}
+              onBlur={formik.handleBlur}
               type="password"
               value={formik.values.newPassword}
               onChange={formik.handleChange}
             />
             {touched.newPassword && errors.newPassword && (
-              <p style={{ color: "#fa1e1e" }}>{errors.newPassword as string}</p>
+              <p style={{ color: "#fa1e1e", marginTop: "0"  }}>{errors.newPassword as string}</p>
             )}
             <Input
               required={true}
               placeholder={"Enter Confirm Password"}
               title={"Confirm New Password"}
               name={"confirmPassword"}
+              onBlur={formik.handleBlur}
               id="confirmPassword"
               titleStyle={{
                 color: "#222222",
@@ -145,7 +148,7 @@ const ChangePassword = (props: any) => {
               onChange={formik.handleChange}
             />
             {touched.confirmPassword && errors.confirmPassword && (
-              <p style={{ color: "#fa1e1e" }}>
+              <p style={{ color: "#fa1e1e", marginTop: "0"  }}>
                 {errors.confirmPassword as string}
               </p>
             )}
