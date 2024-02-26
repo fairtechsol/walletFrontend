@@ -1,12 +1,12 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
-import BetsCountBox from "./BetsCountBox";
-import Divider from "../../Inplay/Divider";
-import SeasonMarketBox from "./SeasonMarketBox";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import RunsBox from "./RunsBox";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
+import { RootState } from "../../../store/store";
+import Divider from "../../Inplay/Divider";
+import BetsCountBox from "./BetsCountBox";
+import RunsBox from "./RunsBox";
+import SeasonMarketBox from "./SeasonMarketBox";
 
 const SessionMarket = ({
   blockMatch,
@@ -20,44 +20,13 @@ const SessionMarket = ({
   sessionData,
   allBetsData,
 }: any) => {
-  const { runAmount } = useSelector((state: RootState) => state.match.bets);
+  const { sessionProLoss } = useSelector(
+    (state: RootState) => state.match.bets
+  );
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [currentOdds] = useState<any>(null);
   const visible = true;
-
-  const dataToIterate = sessionData;
-
-  // useEffect(() => {
-  //   if (currentMatch?.sessionBettings?.length > 0) {
-  //     const sessionData =
-  //       currentMatch?.sessionBettings?.length > 0
-  //         ? currentMatch?.bettings?.filter((element: any) => {
-  //             if (
-  //               currentMatch?.apiSessionActive &&
-  //               title === "Session Market"
-  //             ) {
-  //               return (
-  //                 element?.sessionBet === true && element?.selectionId !== null
-  //               ); // Show elements where selectionId is not null when apiSessionActive is true
-  //             }
-
-  //             if (
-  //               currentMatch?.manualSessionActive &&
-  //               title === "Quick Session Market"
-  //             ) {
-  //               return (
-  //                 element?.sessionBet === true && element?.selectionId === null
-  //               ); // Show elements where selectionId is null when manualSessionActive is true
-  //             }
-
-  //             return false; // Default case: no active session types
-  //           })
-  //         : 0;
-
-  //     setMatchSessionData(sessionData);
-  //   }
-  // }, [currentMatch]);
 
   return (
     <>
@@ -343,21 +312,33 @@ const SessionMarket = ({
                 position: "relative",
               }}
             >
-              {dataToIterate?.length > 0 &&
+              {sessionData?.length > 0 &&
                 // matchSessionData?.reverse()?.map((element, index) => {
-                dataToIterate?.map((element: any, index: any) => {
+                sessionData?.map((element: any, index: any) => {
                   return (
                     <Box
-                      key={JSON.parse(element)?.id}
+                      key={
+                        title === "Session Market"
+                          ? element?.id
+                          : JSON.parse(element)?.id
+                      }
                       sx={{
                         width: "100%",
                         display: element?.betStatus === 2 ? "none" : "block",
                       }}
                     >
                       <SeasonMarketBox
-                        newData={JSON.parse(element)}
+                        newData={
+                          title === "Session Market"
+                            ? element
+                            : JSON.parse(element)
+                        }
                         profitLossData={allBetsData?.filter(
-                          (item: any) => item?.betId === JSON.parse(element)?.id
+                          (item: any) =>
+                            item?.betId ===
+                            (title === "Session Market"
+                              ? element?.id
+                              : JSON.parse(element)?.id)
                         )}
                         index={index}
                       />
@@ -409,28 +390,35 @@ const SessionMarket = ({
           </Box>
         )}
       </Box>
-      {runAmount?.length > 0 && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: "1px",
-            // height: "524px",
-            height: "360",
-            overflow: "auto",
-            marginTop: ".25vw",
-          }}
-        >
-          <RunsBox
-            currentOdds={currentOdds?.betId === "" ? currentOdds : null}
-            item={runAmount}
-            // setData={setData}
-            // setData={setData}
-            // popData={popData}
-          />
-        </Box>
-      )}
+      {sessionProLoss?.length > 0 &&
+        sessionProLoss?.find((v: any) => v?.type === title) && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "1px",
+              rowGap: "5px",
+              height: "524px",
+              overflow: "scroll",
+              marginTop: "1.25vw",
+            }}
+          >
+            {sessionProLoss
+              ?.filter((v: any) => v.type == title)
+              ?.map((v: any) => {
+                return (
+                  <RunsBox
+                    key={v?.id}
+                    item={v}
+                    currentOdd={
+                      currentOdds?.betId === v?.id ? currentOdds : null
+                    }
+                  />
+                );
+              })}
+          </Box>
+        )}
     </>
   );
 };

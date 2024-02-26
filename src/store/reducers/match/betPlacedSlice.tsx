@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getPlacedBets,
-  getRunAmount,
+  getSessionProLoss,
+  getSessionProfitLossMatchDetailFilter,
   updateBetsPlaced,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
   placedBets: Array<object>;
-  runAmount: Array<object>;
+  sessionProLoss: Array<object>;
+  loadingProLoss: boolean;
+  successProLoss: boolean;
   loading: boolean;
   success: boolean;
   error: any;
@@ -15,7 +18,9 @@ interface InitialState {
 
 const initialState: InitialState = {
   placedBets: [],
-  runAmount: [],
+  sessionProLoss: [],
+  loadingProLoss: false,
+  successProLoss: false,
   loading: false,
   success: false,
   error: null,
@@ -41,20 +46,6 @@ const betsSlice = createSlice({
         state.loading = false;
         state.error = action?.error?.message;
       })
-      .addCase(getRunAmount.pending, (state) => {
-        state.loading = true;
-        state.success = false;
-        state.error = null;
-      })
-      .addCase(getRunAmount.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.runAmount = action.payload;
-      })
-      .addCase(getRunAmount.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action?.error?.message;
-      })
       .addCase(updateBetsPlaced.fulfilled, (state, action) => {
         const { newBet, myStake, userName } = action.payload;
         const betId = action.payload.betId;
@@ -66,7 +57,37 @@ const betsSlice = createSlice({
           newBet.user = user;
           state.placedBets = [newBet, ...state.placedBets];
         }
-      });
+      })
+      .addCase(getSessionProLoss.pending, (state) => {
+        state.loadingProLoss = true;
+        state.successProLoss = false;
+        state.error = null;
+      })
+      .addCase(getSessionProLoss.fulfilled, (state, action) => {
+        state.loadingProLoss = false;
+        state.successProLoss = true;
+        const idToAdd = action.payload?.id;
+
+        if (
+          idToAdd &&
+          !state.sessionProLoss.some((item: any) => item.id === idToAdd)
+        ) {
+          state.sessionProLoss.push(action.payload);
+        }
+      })
+      .addCase(getSessionProLoss.rejected, (state, action) => {
+        state.loadingProLoss = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(
+        getSessionProfitLossMatchDetailFilter.fulfilled,
+        (state, action) => {
+          const idToRemove = action.payload;
+          state.sessionProLoss = state.sessionProLoss.filter(
+            (item: any) => item?.id !== idToRemove
+          );
+        }
+      );
   },
 });
 
