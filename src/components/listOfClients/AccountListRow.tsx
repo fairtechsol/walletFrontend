@@ -56,7 +56,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
     id: "",
     title: "",
   });
-
   const handleAmountChange = (amount: any, id: string, type: string) => {
     if (id === element?.id) {
       setTypeOfAmount(type);
@@ -165,7 +164,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         domain: element?.domainData ? element?.domainData?.domain : "",
       })
     );
-  };
+  }
   return (
     <>
       <Box

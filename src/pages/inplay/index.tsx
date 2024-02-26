@@ -8,12 +8,15 @@ import {
 } from "@mui/material";
 import Loader from "../../components/Loader";
 import MatchComponent from "../../components/Inplay/MatchComponent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+  getMatchDetail,
   getMatchListInplay,
+  getPlacedBets,
   matchListReset,
+  updateMatchRates,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
@@ -22,6 +25,7 @@ import { socketService } from "../../socketManager";
 
 const Inplay = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { loading, matchListInplay, success } = useSelector(
@@ -39,7 +43,15 @@ const Inplay = () => {
       console.log(e);
     }
   };
-
+  const updateMatchDetailToRedux = (event: any) => {
+    try {
+      if (state?.matchId === event?.id) {
+        dispatch(updateMatchRates(event));
+      } else return;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     try {
       dispatch(getMatchListInplay({ currentPage: currentPage }));
@@ -63,6 +75,7 @@ const Inplay = () => {
 
   useEffect(() => {
     try {
+      if(success){
       if (matchListInplay && matchListInplay?.matches?.length > 0) {
         matchListInplay?.matches?.map((item: any) => {
           socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
@@ -70,7 +83,7 @@ const Inplay = () => {
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.matchResultUnDeclared(matchResultDeclared);
         socketService.match.matchAdded(getMatchListService);
-      }
+      }}
     } catch (e) {
       console.log(e);
     }
@@ -78,8 +91,39 @@ const Inplay = () => {
       matchListInplay?.matches?.map((item: any) => {
         socketService.match.leaveMatchRoom(item?.id);
       });
+      socketService.match.matchResultDeclaredOff(matchResultDeclared);
+      socketService.match.matchResultUnDeclaredOff(matchResultDeclared);
+      socketService.match.matchAddedOff(getMatchListService);
     };
-  }, [matchListInplay?.matches?.length]);
+  }, [matchListInplay?.matches?.length,success]);
+
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        matchListInplay?.matches?.map((item: any) => {
+          if (item?.id) {
+            dispatch(getMatchDetail(item?.id));
+            dispatch(getPlacedBets(item?.id));
+          }
+        });
+       
+      } else if (document.visibilityState === "hidden") {
+        matchListInplay?.matches?.map((item: any) => {
+        socketService.match.leaveMatchRoom(item?.id);
+        socketService.match.getMatchRatesOff(
+          item?.id,
+          updateMatchDetailToRedux
+        );
+      });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <>
