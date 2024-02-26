@@ -63,7 +63,7 @@ const Inplay = () => {
 
   useEffect(() => {
     try {
-      if (matchListInplay && matchListInplay?.matches?.length > 0) {
+      if (matchListInplay && matchListInplay?.matches?.length > 0 && success) {
         matchListInplay?.matches?.map((item: any) => {
           socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
         });
@@ -78,8 +78,11 @@ const Inplay = () => {
       matchListInplay?.matches?.map((item: any) => {
         socketService.match.leaveMatchRoom(item?.id);
       });
+      socketService.match.matchResultDeclaredOff(matchResultDeclared);
+      socketService.match.matchResultUnDeclaredOff(matchResultDeclared);
+      socketService.match.matchAddedOff(getMatchListService);
     };
-  }, [matchListInplay?.matches?.length]);
+  }, [matchListInplay?.matches?.length,success]);
 
   return (
     <>

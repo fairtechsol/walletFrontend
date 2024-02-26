@@ -165,6 +165,19 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
+    return () => {
+      socketService.match.leaveAllRooms();
+      socketService.match.leaveMatchRoom(state?.matchId);
+      socketService.match.getMatchRatesOff(
+        state?.matchId,
+        profileDetail?.roleName
+      );
+      socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
+      socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
+      socketService.match.matchResultDeclaredOff(matchResultDeclared);
+      socketService.match.matchDeleteBetOff(matchDeleteBet);
+      socketService.match.sessionDeleteBetOff(matchDeleteBet);
+    };
   }, [success]);
 
   const QuicksessionData = matchDetail?.sessionBettings

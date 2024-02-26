@@ -9,6 +9,10 @@ import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 import SearchInput from "../Common/SearchInput";
 import { Constants } from "../../utils/Constants";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { getTotalBalance } from "../../store/actions/user/userAction";
+
 
 const AccountListTable = ({
   id,
@@ -20,6 +24,7 @@ const AccountListTable = ({
 }: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const dispatch: AppDispatch = useDispatch();
 
   // console.log(domain, "title", title, id);
   const { userModalList } = useSelector(
@@ -28,7 +33,11 @@ const AccountListTable = ({
   const { totalBalance } = useSelector(
     (state: RootState) => state.user.userList
   );
-
+  const handleModal=()=>{
+    setShow({ value: false, id: "", title: "" });
+    dispatch(getTotalBalance())
+  }
+  
   return (
     <>
       <Box
@@ -85,7 +94,7 @@ const AccountListTable = ({
             <Button
               sx={{ color: "", fontSize: "30px" }}
               onClick={() => {
-                setShow({ value: false, id: "", title: "" });
+                handleModal();
               }}
             >
               &times;
