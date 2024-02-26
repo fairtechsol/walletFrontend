@@ -11,10 +11,12 @@ import { Modal } from "../Common/Modal";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
 import AccountListModal from "./AccountListModal";
 import { ApiConstants } from "../../utils/Constants";
-import { getModalUserList, getTotalBalance } from "../../store/actions/user/userAction";
+import {
+  getModalUserList,
+  getTotalBalance,
+} from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -41,7 +43,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
     value: false,
     id: "",
   });
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage] = useState<number>(1);
   const [selected, setSelected] = useState(null);
   const [depositeValue, setDepositeValue] = useState(0);
   const [withdrawValue, setWithdrawValue] = useState(0);
@@ -140,7 +142,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
       );
     }
   };
-  const handleModal=()=>{
+  const handleModal = () => {
     setSubSusers({
       value: true,
       id: element?.id,
@@ -198,7 +200,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             onClick={(e: any) => {
               e.stopPropagation();
               if (!["user", "expert"].includes(element?.roleName)) {
-                handleModal()
+                handleModal();
               } else {
                 return false;
               }

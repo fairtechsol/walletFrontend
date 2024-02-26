@@ -351,7 +351,7 @@ const MatchDetail = () => {
               allBetsData={matchDetail?.profitLossDataSession}
               title={"Session Market"}
               currentMatch={matchDetail}
-              sessionData={matchDetail.apiSession}
+              sessionData={sessionData}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
             />
