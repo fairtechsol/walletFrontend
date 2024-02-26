@@ -101,16 +101,21 @@ const Inplay = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        if (state?.matchId) {
-          dispatch(getMatchDetail(state?.matchId));
-          dispatch(getPlacedBets(state?.matchId));
-        }
+        matchListInplay?.matches?.map((item: any) => {
+          if (item?.id) {
+            dispatch(getMatchDetail(item?.id));
+            dispatch(getPlacedBets(item?.id));
+          }
+        });
+       
       } else if (document.visibilityState === "hidden") {
-        socketService.match.leaveMatchRoom(state?.matchId);
+        matchListInplay?.matches?.map((item: any) => {
+        socketService.match.leaveMatchRoom(item?.id);
         socketService.match.getMatchRatesOff(
-          state?.matchId,
+          item?.id,
           updateMatchDetailToRedux
         );
+      });
       }
     };
 
