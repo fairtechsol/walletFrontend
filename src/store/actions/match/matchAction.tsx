@@ -80,7 +80,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.USER.RUN_AMOUNT}/${requestData?.id}`
       );
-      if (resp?.data) {
+      if (resp?.data && resp?.data?.profitLoss[0]) {
         return {
           id: requestData?.id,
           name: requestData?.name,
@@ -92,7 +92,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
           id: requestData?.id,
           name: requestData?.name,
           type: requestData?.type,
-          proLoss: [],
+          proLoss: [JSON.stringify({ betPlaced: [] })],
         };
       }
     } catch (error: any) {
@@ -209,6 +209,12 @@ export const updateBetsPlaced = createAsyncThunk<any, any>(
   "/placed/bets",
   async (placedBets) => {
     return placedBets;
+  }
+);
+export const updateProfitLoss = createAsyncThunk<any, any>(
+  "/placed/profitLoss",
+  async (profitLoss) => {
+    return profitLoss;
   }
 );
 export const updateBalance = createAsyncThunk<any, any>(
