@@ -3,9 +3,13 @@ import { useEffect, useRef } from "react";
 import { memo } from "react";
 import StyledImage from "../../Common/StyledImages";
 import { CANCEL } from "../../../assets";
+import { getSessionProfitLossMatchDetailFilter } from "../../../store/actions/match/matchAction";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
 
-const RunsBox = ({ item, setData, currentOdds }: any) => {
+const RunsBox = ({ item, currentOdds }: any) => {
   const theme = useTheme();
+  const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const containerRef = useRef(null);
 
@@ -66,14 +70,11 @@ const RunsBox = ({ item, setData, currentOdds }: any) => {
             lineHeight: "1",
           }}
         >
-          {item?.bet_condition}
+          {item?.name}
         </Typography>
         <img
           onClick={() => {
-            setData((prev: any) => {
-              const updatedArray = prev?.filter((v: any) => v?.id !== item?.id);
-              return updatedArray;
-            });
+            dispatch(getSessionProfitLossMatchDetailFilter(item?.id));
           }}
           src={CANCEL}
           alt="close"
@@ -120,8 +121,8 @@ const RunsBox = ({ item, setData, currentOdds }: any) => {
         </Box>
       </Box>
       <Box ref={containerRef} sx={{ height: "350px", overflowY: "scroll" }}>
-        {item?.length > 0 ? (
-          item?.map((v: any) => {
+        {JSON.parse(item?.proLoss)?.betPlaced?.length > 0 ? (
+          JSON.parse(item?.proLoss)?.betPlaced?.map((v: any) => {
             const getColor = (value: any) => {
               if (value >= 1) {
                 return "#10DC61";

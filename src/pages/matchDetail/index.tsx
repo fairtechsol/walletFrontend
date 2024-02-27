@@ -147,7 +147,7 @@ const MatchDetail = () => {
   useEffect(() => {
     try {
       if (success) {
-        dispatch(matchListReset());
+        // dispatch(matchListReset());
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -166,7 +166,7 @@ const MatchDetail = () => {
       console.log(e);
     }
     return () => {
-      socketService.match.leaveAllRooms();
+      // socketService.match.leaveAllRooms();
       socketService.match.leaveMatchRoom(state?.matchId);
       socketService.match.getMatchRatesOff(
         state?.matchId,
@@ -179,18 +179,6 @@ const MatchDetail = () => {
       socketService.match.sessionDeleteBetOff(matchDeleteBet);
     };
   }, [success]);
-
-  const QuicksessionData = matchDetail?.sessionBettings
-    ?.filter((item: any) => !JSON.parse(item).selectionId)
-    ?.map((item: any) => {
-      return item;
-    });
-
-  const sessionData = matchDetail?.sessionBettings
-    ?.filter((item: any) => JSON.parse(item).selectionId)
-    ?.map((item: any) => {
-      return item;
-    });
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -341,7 +329,9 @@ const MatchDetail = () => {
               allBetsData={matchDetail?.profitLossDataSession}
               title={"Quick Session Market"}
               currentMatch={matchDetail}
-              sessionData={QuicksessionData}
+              sessionData={matchDetail?.sessionBettings?.filter(
+                (item: any) => !JSON.parse(item).selectionId
+              )}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
             />
@@ -351,7 +341,7 @@ const MatchDetail = () => {
               allBetsData={matchDetail?.profitLossDataSession}
               title={"Session Market"}
               currentMatch={matchDetail}
-              sessionData={sessionData}
+              sessionData={matchDetail?.apiSession}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
             />
@@ -489,7 +479,9 @@ const MatchDetail = () => {
                 allBetsData={matchDetail?.profitLossDataSession}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
-                sessionData={QuicksessionData}
+                sessionData={matchDetail?.sessionBettings?.filter(
+                  (item: any) => !JSON.parse(item).selectionId
+                )}
                 min={matchDetail?.betFairSessionMinBet || 0}
                 max={matchDetail?.betFairSessionMaxBet || 0}
               />
@@ -500,7 +492,7 @@ const MatchDetail = () => {
                 allBetsData={matchDetail?.profitLossDataSession}
                 currentMatch={matchDetail}
                 sessionExposer={"0.00"}
-                sessionData={sessionData}
+                sessionData={matchDetail?.apiSession}
                 max={Math.floor(matchDetail?.betFairSessionMaxBet)}
                 min={Math.floor(matchDetail?.betFairSessionMinBet)}
               />

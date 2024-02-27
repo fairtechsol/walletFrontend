@@ -57,7 +57,7 @@ const SeasonMarketBox = (props: any) => {
               fontWeight: "600",
             }}
           >
-            {newData?.name}
+            {newData?.name ?? newData?.RunnerName}
           </Typography>
         </Box>
         <Box
@@ -87,7 +87,7 @@ const SeasonMarketBox = (props: any) => {
             />
           )}
 
-          {newData?.status !== "active" ? (
+          {newData?.status !== "active" || newData?.activeStatus !== "live" ? (
             <Box
               sx={{
                 background: "rgba(0,0,0,1)",
@@ -128,11 +128,11 @@ const SeasonMarketBox = (props: any) => {
               <SeperateBox
                 session={true}
                 back={true}
-                value={Math.floor(newData?.noRate)}
+                value={Math.floor(newData?.noRate ?? 0)}
                 value2={Math.floor(newData?.noPercent)}
                 lock={
                   newData?.status === "suspended" ||
-                  [0, "0"].includes(Math.floor(newData?.noRate))
+                  [0, "0"].includes(Math.floor(newData?.noRate ?? 0))
                 }
                 color={"#F6D0CB"}
               />
@@ -141,11 +141,11 @@ const SeasonMarketBox = (props: any) => {
               ></Box>
               <SeperateBox
                 session={true}
-                value={Math.floor(newData?.yesRate)}
-                value2={formatNumber(Math.floor(newData?.yesPercent))}
+                value={Math.floor(newData?.yesRate ?? 0)}
+                value2={formatNumber(Math.floor(newData?.yesPercent ?? 0))}
                 lock={
                   newData?.status === "suspended" ||
-                  [0, "0"].includes(Math.floor(newData?.yesRate))
+                  [0, "0"].includes(Math.floor(newData?.yesRate ?? 0))
                 }
                 color={"#B3E0FF"}
               />

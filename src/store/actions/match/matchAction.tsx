@@ -73,13 +73,27 @@ export const getPlacedBets = createAsyncThunk<any, any>(
     }
   }
 );
-export const getRunAmount = createAsyncThunk<any, any>(
-  "/runAmount",
-  async (id, thunkApi) => {
+export const getSessionProLoss = createAsyncThunk<any, any>(
+  "/getSessionProLoss",
+  async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(`${ApiConstants.USER.RUN_AMOUNT}/${id}`);
-      if (resp) {
-        return JSON.parse(resp?.data?.profitLoss).betPlaced;
+      const resp = await service.get(
+        `${ApiConstants.USER.RUN_AMOUNT}/${requestData?.id}`
+      );
+      if (resp?.data) {
+        return {
+          id: requestData?.id,
+          name: requestData?.name,
+          type: requestData?.type,
+          proLoss: resp?.data?.profitLoss,
+        };
+      } else {
+        return {
+          id: requestData?.id,
+          name: requestData?.name,
+          type: requestData?.type,
+          proLoss: [],
+        };
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -226,6 +240,13 @@ export const updateTeamRates = createAsyncThunk<any, any>(
   "/teamRates/update",
   async (data) => {
     return data;
+  }
+);
+
+export const getSessionProfitLossMatchDetailFilter = createAsyncThunk<any, any>(
+  "getSessionProfitLossMatchDetail/filter",
+  async (requestData) => {
+    return requestData;
   }
 );
 
