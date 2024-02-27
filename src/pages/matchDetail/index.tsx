@@ -12,7 +12,6 @@ import {
   AllBetDelete,
   getMatchDetail,
   getPlacedBets,
-  matchListReset,
   updateMatchRates,
   updateBetsPlaced,
   updateMaxLossForBet,

@@ -6,7 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
@@ -21,8 +21,8 @@ import {
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
+import { depositAmountValidations } from "../../../utils/Validations";
 
 const initialValues: any = {
   userId: "",
@@ -112,7 +112,7 @@ const DepositComponent = (props: any) => {
   }, [success]);
 
   useEffect(() => {
-      onChangeAmount(formik.values.amount,element?.id,'deposite');
+    onChangeAmount(formik.values.amount, element?.id, "deposite");
     if (isWallet) {
       setInitialBalance(
         +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
@@ -122,7 +122,7 @@ const DepositComponent = (props: any) => {
         +walletAccountDetail?.userBal?.currentBalance - +formik.values.amount
       );
     }
-  }, [formik.values.amount,onChangeAmount]);
+  }, [formik.values.amount, onChangeAmount]);
 
   return (
     <>
