@@ -399,16 +399,16 @@ const SessionMarket = ({
       {sessionProLoss?.length > 0 &&
         sessionProLoss?.find((v: any) => v?.type === title) && (
           <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "1px",
-              rowGap: "5px",
-              height: "524px",
-              overflow: "scroll",
-              marginTop: "1.25vw",
-            }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "1px",
+            rowGap: "5px",
+            height: "524px",
+            overflow: "scroll",
+            marginTop: "1.25vw",
+          }}
           >
             {sessionProLoss
               ?.filter((v: any) => v.type == title)
