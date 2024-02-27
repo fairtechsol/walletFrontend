@@ -17,7 +17,8 @@ import {
 } from "../../../store/actions/user/userAction";
 
 const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor,onValueChange } = props;
+  const { element, selected, setSelected, backgroundColor, onValueChange } =
+    props;
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -28,9 +29,9 @@ const RowModalComponents = (props: any) => {
   );
 
   const { success } = useSelector((state: RootState) => state.user.userList);
-  const handleAmountChange = (amount: string,id:string,type:string) => {
-    console.log(amount,type)
-    onValueChange(amount,id,type)
+  const handleAmountChange = (amount: string, id: string, type: string) => {
+    console.log(amount, type);
+    onValueChange(amount, id, type);
   };
   const classes = {
     mainBox: {

@@ -39,7 +39,7 @@ const ChangePassword = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit, touched, errors, isSubmitting } = formik;
 
   useEffect(() => {
     if (success) {
@@ -154,6 +154,7 @@ const ChangePassword = (props: any) => {
             )}
             <Button
               type="submit"
+              disabled={isSubmitting}
               sx={{
                 height: "50px",
                 display: "flex",
