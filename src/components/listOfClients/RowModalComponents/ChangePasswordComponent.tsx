@@ -83,7 +83,7 @@ const ChangePasswordComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit, touched, errors, isSubmitting } = formik;
 
   const { loading, success } = useSelector(
     (state: RootState) => state.user.userList
@@ -325,6 +325,7 @@ const ChangePasswordComponent = (props: any) => {
               <BoxButton
                 color={"#0B4F26"}
                 loading={loading}
+                disabled={isSubmitting}
                 containerStyle={{
                   width: "100%",
                   height: "45px",

@@ -86,7 +86,7 @@ const DepositComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit, touched, errors, isSubmitting } = formik;
 
   const { loading, success } = useSelector(
     (state: RootState) => state.user.userList
@@ -482,6 +482,7 @@ const DepositComponent = (props: any) => {
                 <BoxButton
                   color={"#0B4F26"}
                   loading={loading}
+                  disabled={isSubmitting}
                   containerStyle={{
                     height: "44px",
                     maxWidth: "150px !important",
