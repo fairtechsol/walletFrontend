@@ -22,7 +22,7 @@ const ChangePassword = (props: any) => {
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const { success, transactionPassword, loading } = useSelector(
+  const { success, transactionPassword, loading, error } = useSelector(
     (state: RootState) => state.user.profile
   );
 
@@ -39,13 +39,17 @@ const ChangePassword = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors, isSubmitting } = formik;
+  const { handleSubmit, touched, errors, isSubmitting, setSubmitting } = formik;
 
   useEffect(() => {
     if (success) {
       setShowModal(true);
+      setSubmitting(false);
     }
-  }, [loading]);
+    if (error) {
+      setSubmitting(false);
+    }
+  }, [loading, error]);
 
   return (
     <>
@@ -102,7 +106,9 @@ const ChangePassword = (props: any) => {
               onChange={formik.handleChange}
             />
             {touched.oldPassword && errors.oldPassword && (
-              <p style={{ color: "#fa1e1e", marginTop: "0" }}>{errors.oldPassword as string}</p>
+              <p style={{ color: "#fa1e1e", marginTop: "0" }}>
+                {errors.oldPassword as string}
+              </p>
             )}
             <Input
               required={true}
@@ -125,7 +131,9 @@ const ChangePassword = (props: any) => {
               onChange={formik.handleChange}
             />
             {touched.newPassword && errors.newPassword && (
-              <p style={{ color: "#fa1e1e", marginTop: "0"  }}>{errors.newPassword as string}</p>
+              <p style={{ color: "#fa1e1e", marginTop: "0" }}>
+                {errors.newPassword as string}
+              </p>
             )}
             <Input
               required={true}
@@ -148,7 +156,7 @@ const ChangePassword = (props: any) => {
               onChange={formik.handleChange}
             />
             {touched.confirmPassword && errors.confirmPassword && (
-              <p style={{ color: "#fa1e1e", marginTop: "0"  }}>
+              <p style={{ color: "#fa1e1e", marginTop: "0" }}>
                 {errors.confirmPassword as string}
               </p>
             )}

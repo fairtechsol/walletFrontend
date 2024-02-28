@@ -29,7 +29,7 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, touched, errors, isSubmitting } = formik;
+  const { handleSubmit, touched, errors, setSubmitting, isSubmitting } = formik;
 
   const {
     success,
@@ -37,6 +37,7 @@ const Login = () => {
     userRole,
     isTransPasswordCreated,
     loading,
+    error,
   } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -51,9 +52,13 @@ const Login = () => {
       } else if (isTransPasswordCreated) {
         navigate(`/wallet/list_of_clients`);
       }
+      setSubmitting(false);
       dispatch(authReset());
     }
-  }, [success]);
+    if (error) {
+      setSubmitting(false);
+    }
+  }, [success, error]);
 
   return (
     <form
@@ -108,9 +113,9 @@ const Login = () => {
       >
         <Button
           type="submit"
-          disabled={isSubmitting}
           variant="contained"
           color="secondary"
+          disabled={isSubmitting}
           sx={{
             width: "62%",
             cursor: "pointer",
