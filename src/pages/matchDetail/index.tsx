@@ -12,11 +12,11 @@ import {
   AllBetDelete,
   getMatchDetail,
   getPlacedBets,
-  matchListReset,
   updateMatchRates,
   updateBetsPlaced,
   updateMaxLossForBet,
   updateTeamRates,
+  updateProfitLoss,
 } from "../../store/actions/match/matchAction";
 import { useSelector } from "react-redux";
 import { socketService } from "../../socketManager";
@@ -112,6 +112,7 @@ const MatchDetail = () => {
             myStake: event?.jobData?.betPlaceObject?.myStack,
           })
         );
+        dispatch(updateProfitLoss(event))
         // dispatch(updateBalance(event));
         // dispatch(betDataFromSocket(event));
         dispatch(updateMaxLossForBet(event));

@@ -2,21 +2,21 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
 import { AccountListRowInterface } from "../../interface/listOfClients";
-import StyledImage from "../Common/StyledImages";
-import RowModalComponents from "./RowModalComponents";
-import { Modal } from "../Common/Modal";
-import CommissionReportTable from "../commisionReport/CommissionReportTable";
-import AccountListModal from "./AccountListModal";
-import { ApiConstants } from "../../utils/Constants";
 import {
   getModalUserList,
   getTotalBalance,
 } from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { ApiConstants } from "../../utils/Constants";
+import { Modal } from "../Common/Modal";
+import StyledImage from "../Common/StyledImages";
+import CommissionReportTable from "../commisionReport/CommissionReportTable";
+import AccountListModal from "./AccountListModal";
+import RowModalComponents from "./RowModalComponents";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -164,7 +164,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
         domain: element?.domainData ? element?.domainData?.domain : "",
       })
     );
-  }
+  };
   return (
     <>
       <Box
@@ -532,32 +532,96 @@ const AccountListRow = (props: AccountListRowInterface) => {
               fContainerStyle,
             ]}
           >
-            <Box
-              sx={{
-                width: "100% ",
-                height: "100%",
-                padding: "10px",
-                display: { lg: "block", xs: "flex" },
-                justifyContent: "space-between",
-                alignItems: "center",
-                overflow: "hidden",
-                borderBottom: "2px solid white",
-              }}
-            >
-              <Box sx={{ width: { lg: "100%", xs: "50%" } }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    width: "100%",
-                    alignItems: "center",
-                    justifyContent: {
-                      lg: "flex-start",
-                      xs: "flex-start",
-                    },
-                  }}
-                >
-                  {element?.matchComissionType ? (
-                    <>
+            {!element?.isUrl && (
+              <Box
+                sx={{
+                  width: "100% ",
+                  height: "100%",
+                  padding: "10px",
+                  display: { lg: "block", xs: "flex" },
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  overflow: "hidden",
+                  borderBottom: "2px solid white",
+                }}
+              >
+                <Box sx={{ width: { lg: "100%", xs: "50%" } }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      width: "100%",
+                      alignItems: "center",
+                      justifyContent: {
+                        lg: "flex-start",
+                        xs: "flex-start",
+                      },
+                    }}
+                  >
+                    {element?.matchComissionType ? (
+                      <>
+                        <Typography
+                          variant="h5"
+                          sx={[
+                            {
+                              color: "white",
+                              textAlign: { lg: "left", xs: "left" },
+                              width: { lg: "100px", xs: "100px" },
+                            },
+                            fTextStyle,
+                          ]}
+                        >
+                          {element?.matchComissionType} Com
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          sx={[
+                            {
+                              color: "white",
+                              textAlign: "center",
+                              marginRight: "1px",
+                            },
+                            fTextStyle,
+                          ]}
+                        >
+                          {":"}{" "}
+                          {element?.matchCommission
+                            ? element?.matchCommission
+                            : 0}
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        <Typography
+                          variant="h5"
+                          sx={[
+                            {
+                              color: "white",
+                              textAlign: { lg: "left", xs: "left" },
+                              width: { lg: "100px", xs: "100px" },
+                            },
+                            fTextStyle,
+                          ]}
+                        >
+                          Match Com
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          sx={[
+                            {
+                              color: "white",
+                              textAlign: "left",
+                            },
+                            fTextStyle,
+                          ]}
+                        >
+                          : 0
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+
+                  <Box sx={{ display: "flex" }}>
+                    <Box sx={{ display: "flex" }}>
                       <Typography
                         variant="h5"
                         sx={[
@@ -569,7 +633,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           fTextStyle,
                         ]}
                       >
-                        {element?.matchComissionType} Com
+                        Session Com
                       </Typography>
                       <Typography
                         variant="h5"
@@ -582,140 +646,78 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           fTextStyle,
                         ]}
                       >
-                        {":"}{" "}
-                        {element?.matchCommission
-                          ? element?.matchCommission
-                          : 0}
+                        {": "}
                       </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <Typography
-                        variant="h5"
-                        sx={[
-                          {
-                            color: "white",
-                            textAlign: { lg: "left", xs: "left" },
-                            width: { lg: "100px", xs: "100px" },
-                          },
-                          fTextStyle,
-                        ]}
-                      >
-                        Match Com
-                      </Typography>
-                      <Typography
-                        variant="h5"
-                        sx={[
-                          {
-                            color: "white",
-                            textAlign: "left",
-                          },
-                          fTextStyle,
-                        ]}
-                      >
-                        : 0
-                      </Typography>
-                    </>
-                  )}
-                </Box>
-
-                <Box sx={{ display: "flex" }}>
-                  <Box sx={{ display: "flex" }}>
+                    </Box>
                     <Typography
                       variant="h5"
                       sx={[
                         {
                           color: "white",
-                          textAlign: { lg: "left", xs: "left" },
-                          width: { lg: "100px", xs: "100px" },
+                          textAlign: "left",
+                          marginLeft: "3px",
                         },
                         fTextStyle,
                       ]}
                     >
-                      Session Com
+                      {element?.sessionCommission
+                        ? element?.sessionCommission
+                        : 0}
                     </Typography>
+                  </Box>
+                </Box>
+                {showCReport && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      marginTop: { lg: "10px", xs: "0" },
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      marginRight: { lg: "0", xs: "5px" },
+                      width: { lg: "100%", xs: "33%" },
+                    }}
+                    onClick={() => {
+                      if (element?.totalComission !== null) {
+                        setShowCommissionReport({
+                          value: true,
+                          id: element?.id,
+                        });
+                      } else {
+                        return false;
+                      }
+                    }}
+                  >
                     <Typography
                       variant="h5"
                       sx={[
                         {
                           color: "white",
                           textAlign: "center",
-                          marginRight: "1px",
+                          alignItems: "center",
+                          marginRight: { lg: "0", xs: "3px" },
                         },
                         fTextStyle,
                       ]}
                     >
-                      {": "}
+                      Commission Details
                     </Typography>
+                    <StyledImage
+                      src={
+                        fContainerStyle.background == "#F8C851"
+                          ? DownGIcon
+                          : DownIcon
+                      }
+                      sx={{
+                        height: { lg: "10px", xs: "14px" },
+                        cursor: "pointer",
+                        width: { lg: "15px", xs: "23px" },
+                      }}
+                    />
                   </Box>
-                  <Typography
-                    variant="h5"
-                    sx={[
-                      {
-                        color: "white",
-                        textAlign: "left",
-                        marginLeft: "3px",
-                      },
-                      fTextStyle,
-                    ]}
-                  >
-                    {element?.sessionCommission
-                      ? element?.sessionCommission
-                      : 0}
-                  </Typography>
-                </Box>
+                )}
               </Box>
-              {showCReport && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    marginTop: { lg: "10px", xs: "0" },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    marginRight: { lg: "0", xs: "5px" },
-                    width: { lg: "100%", xs: "33%" },
-                  }}
-                  onClick={() => {
-                    if (element?.totalComission !== null) {
-                      setShowCommissionReport({
-                        value: true,
-                        id: element?.id,
-                      });
-                    } else {
-                      return false;
-                    }
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    sx={[
-                      {
-                        color: "white",
-                        textAlign: "center",
-                        alignItems: "center",
-                        marginRight: { lg: "0", xs: "3px" },
-                      },
-                      fTextStyle,
-                    ]}
-                  >
-                    Commission Details
-                  </Typography>
-                  <StyledImage
-                    src={
-                      fContainerStyle.background == "#F8C851"
-                        ? DownGIcon
-                        : DownIcon
-                    }
-                    sx={{
-                      height: { lg: "10px", xs: "14px" },
-                      cursor: "pointer",
-                      width: { lg: "15px", xs: "23px" },
-                    }}
-                  />
-                </Box>
-              )}
-            </Box>
+            )}
           </Box>
 
           <Box

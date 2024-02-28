@@ -4,6 +4,7 @@ import {
   getSessionProLoss,
   getSessionProfitLossMatchDetailFilter,
   updateBetsPlaced,
+  updateProfitLoss,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -56,6 +57,26 @@ const betsSlice = createSlice({
           newBet.myStake = myStake;
           newBet.user = user;
           state.placedBets = [newBet, ...state.placedBets];
+        }
+      })
+      .addCase(updateProfitLoss.fulfilled, (state, action) => {
+        const { jobData, profitLoss } = action.payload;
+        console.log("action.payload", action.payload);
+        if (jobData?.betPlaceObject?.betPlacedData?.betId) {
+          const updatedSessionProLoss = state.sessionProLoss.map((item: any) =>
+            item?.id === jobData.betPlaceObject.betPlacedData.betId
+              ? {
+                  ...item,
+
+                  proLoss: [
+                    JSON.stringify(profitLoss),
+                    ...item.proLoss.slice(1),
+                  ],
+                }
+              : item
+          );
+
+          state.sessionProLoss = updatedSessionProLoss;
         }
       })
       .addCase(getSessionProLoss.pending, (state) => {

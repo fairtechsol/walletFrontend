@@ -57,7 +57,7 @@ const SetExposureLimit = (props: any) => {
     },
   });
 
-  const { handleSubmit } = formik;
+  const { handleSubmit, isSubmitting } = formik;
 
   const { loading, success } = useSelector(
     (state: RootState) => state.user.userList
@@ -265,6 +265,7 @@ const SetExposureLimit = (props: any) => {
             <BoxButton
               color={"#0B4F26"}
               loading={loading}
+              disabled={isSubmitting}
               containerStyle={{ width: "150px", height: "35px" }}
               isSelected={true}
               type="submit"

@@ -66,7 +66,7 @@ const LockUnlockComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit } = formik;
+  const { handleSubmit, isSubmitting } = formik;
 
   const { success, loading } = useSelector(
     (state: RootState) => state.user.userList
@@ -269,6 +269,7 @@ const LockUnlockComponent = (props: any) => {
             <BoxButton
               color={"#0B4F26"}
               loading={loading}
+              disabled={isSubmitting}
               containerStyle={{
                 maxWidth: "100%!important",
                 height: "44px",

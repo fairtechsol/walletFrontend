@@ -29,7 +29,7 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit, touched, errors, isSubmitting } = formik;
 
   const {
     success,
@@ -76,7 +76,9 @@ const Login = () => {
           value={formik.values.userName}
         />
         {touched.userName && errors.userName && (
-          <p style={{ color: "#fa1e1e", marginTop: "1%" }}>{errors.userName as string}</p>
+          <p style={{ color: "#fa1e1e", marginTop: "1%" }}>
+            {errors.userName as string}
+          </p>
         )}
         <Input
           id={"password"}
@@ -91,7 +93,9 @@ const Login = () => {
           value={formik.values.password}
         />
         {touched.password && errors.password && (
-          <p style={{ color: "#fa1e1e", marginTop: "1%"  }}>{errors.password as string}</p>
+          <p style={{ color: "#fa1e1e", marginTop: "1%" }}>
+            {errors.password as string}
+          </p>
         )}
       </Box>
       <Box
@@ -104,6 +108,7 @@ const Login = () => {
       >
         <Button
           type="submit"
+          disabled={isSubmitting}
           variant="contained"
           color="secondary"
           sx={{

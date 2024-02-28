@@ -86,7 +86,7 @@ const WithdrawComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit, touched, errors, isSubmitting } = formik;
 
   const { loading, success } = useSelector(
     (state: RootState) => state.user.userList
@@ -488,6 +488,7 @@ const WithdrawComponent = (props: any) => {
                 <BoxButton
                   color={"#0B4F26"}
                   loading={loading}
+                  disabled={isSubmitting}
                   containerStyle={{
                     maxWidth: "150px !important",
                     height: "44px",

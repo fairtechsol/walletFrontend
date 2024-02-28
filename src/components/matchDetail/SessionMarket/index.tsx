@@ -313,7 +313,6 @@ const SessionMarket = ({
               }}
             >
               {sessionData?.length > 0 &&
-                // matchSessionData?.reverse()?.map((element, index) => {
                 sessionData?.map((element: any, index: any) => {
                   return (
                     <Box
@@ -330,7 +329,14 @@ const SessionMarket = ({
                       <SeasonMarketBox
                         newData={
                           title === "Session Market"
-                            ? element
+                            ? {
+                                ...element,
+                                noRate: element.LayPrice1 ?? 0,
+                                noPercent: element.LaySize1 ?? 0,
+                                yesRate: element.BackPrice1 ?? 0,
+                                yesPercent: element.BackSize1 ?? 0,
+                                status: element?.GameStatus ?? "active",
+                              }
                             : JSON.parse(element)
                         }
                         profitLossData={allBetsData?.filter(
@@ -393,16 +399,16 @@ const SessionMarket = ({
       {sessionProLoss?.length > 0 &&
         sessionProLoss?.find((v: any) => v?.type === title) && (
           <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "1px",
-              rowGap: "5px",
-              height: "524px",
-              overflow: "scroll",
-              marginTop: "1.25vw",
-            }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "1px",
+            rowGap: "5px",
+            height: "524px",
+            overflow: "scroll",
+            marginTop: "1.25vw",
+          }}
           >
             {sessionProLoss
               ?.filter((v: any) => v.type == title)

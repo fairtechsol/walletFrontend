@@ -116,13 +116,10 @@ const AddAccount = () => {
   };
   const inputStyle = {
     fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
-
   };
   const inputContainerStyle = {
     borderRadius: "5px",
     border: "1px solid #DEDEDE",
-
-
   };
 
   const formik = useFormik({
@@ -248,7 +245,7 @@ const AddAccount = () => {
     },
   });
 
-  const { handleSubmit, touched, errors } = formik;
+  const { handleSubmit, touched, errors, isSubmitting } = formik;
 
   const handlePartnershipChange = (event: any) => {
     try {
@@ -453,7 +450,7 @@ const AddAccount = () => {
       });
     }
   }, [lockUnlockObj]);
-  
+
   return (
     <>
       {loading && <Loader />}
@@ -838,7 +835,7 @@ const AddAccount = () => {
                 )}
               </Box>
             </Box>
-            <Box sx={{ flex: 2, width: "100%", }}>
+            <Box sx={{ flex: 2, width: "100%" }}>
               <Box
                 sx={{
                   display: { lg: "block", md: "grid", xs: "block" },
@@ -867,11 +864,14 @@ const AddAccount = () => {
                     error={_.get(errors, "roleName.value")}
                     onBlur={formik.handleBlur}
                   />
-                  </Box>
+                </Box>
 
                 {formik.values.roleName.value === "expert" && (
                   <>
-                    <Box m={2} sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}>
+                    <Box
+                      m={2}
+                      sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}
+                    >
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
                           <ButtonWithSwitch
@@ -894,7 +894,10 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2} sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}>
+                    <Box
+                      m={2}
+                      sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}
+                    >
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
                           <ButtonWithSwitch
@@ -917,7 +920,10 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box m={2} sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}>
+                    <Box
+                      m={2}
+                      sx={{ mt: 1, width: "100%", margin: 0, padding: 0 }}
+                    >
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={12} lg={6}>
                           <ButtonWithSwitch
@@ -933,7 +939,7 @@ const AddAccount = () => {
                     </Box>
                   </>
                 )}
-              
+
                 {formik?.values?.roleName?.value !== "expert" && (
                   <Box
                     sx={{
@@ -1077,7 +1083,6 @@ const AddAccount = () => {
                         gridColumnGap: "10px",
                       }}
                     >
-                 
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
@@ -1125,7 +1130,6 @@ const AddAccount = () => {
                         </>
                       )}
 
-  
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
@@ -1206,6 +1210,7 @@ const AddAccount = () => {
               </Box>
               <Button
                 className="cursor-pointer"
+                disabled={isSubmitting}
                 sx={{
                   background: "#0B4F26",
                   width: "100%",
