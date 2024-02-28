@@ -27,7 +27,7 @@ const SeasonMarketBox = (props: any) => {
           position: "relative",
         }}
       >
-        {newData?.betStatus === 0 && (
+        {newData?.activeStatus === "save" && (
           <Box
             sx={{
               margin: "1px",
@@ -103,7 +103,7 @@ const SeasonMarketBox = (props: any) => {
                 zIndex: 1,
               }}
             >
-              {newData?.status == "Ball Started" ? (
+              {newData?.status == "Ball Running" ? (
                 <img
                   src={BallStart}
                   style={{ width: "113px", height: "32px" }}

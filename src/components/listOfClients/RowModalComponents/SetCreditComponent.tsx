@@ -14,7 +14,6 @@ import {
 import { AppDispatch, RootState } from "../../../store/store";
 import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
-import { error } from "console";
 
 const initialValues: any = {
   userId: "",
