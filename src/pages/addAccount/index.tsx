@@ -44,6 +44,7 @@ const MatchCommissionTypes = [
 const AddAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [submitLoading, setSubmitLoading] = useState(false);
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -98,7 +99,7 @@ const AddAccount = () => {
   const [AccountTypes, setAccountTypes] = useState<any>([]);
   const [down, setDown] = useState<number>(100);
 
-  const { loading, addSuccess } = useSelector(
+  const { loading, addSuccess, error } = useSelector(
     (state: RootState) => state.user.userUpdate
   );
   const { userAlreadyExist } = useSelector(
@@ -126,6 +127,7 @@ const AddAccount = () => {
     initialValues: formDataSchema,
     validationSchema: addUserValidation(userAlreadyExist),
     onSubmit: (values: any) => {
+      setSubmitLoading(true);
       try {
         const commonPayload = {
           userName: values.userName,
@@ -245,7 +247,7 @@ const AddAccount = () => {
     },
   });
 
-  const { handleSubmit, touched, errors, isSubmitting } = formik;
+  const { handleSubmit, touched, errors } = formik;
 
   const handlePartnershipChange = (event: any) => {
     try {
@@ -432,12 +434,16 @@ const AddAccount = () => {
         setShowModal(true);
         formik.resetForm();
         setLockUnlockObj(defaultLockUnlockObj);
+        setSubmitLoading(false);
         dispatch(addReset());
+      }
+      if (error) {
+        setSubmitLoading(false);
       }
     } catch (e) {
       console.log(e);
     }
-  }, [addSuccess]);
+  }, [addSuccess, error]);
 
   useEffect(() => {
     if (lockUnlockObj.allPrivilege) {
@@ -1210,7 +1216,7 @@ const AddAccount = () => {
               </Box>
               <Button
                 className="cursor-pointer"
-                disabled={isSubmitting}
+                disabled={submitLoading}
                 sx={{
                   background: "#0B4F26",
                   width: "100%",
