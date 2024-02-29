@@ -1,6 +1,6 @@
 import { Box, useMediaQuery, Button } from "@mui/material";
 import { useState } from "react";
-import {  RootState } from "../../store/store";
+import { RootState } from "../../store/store";
 import AccountListRow from "./AccountListRow";
 import ListHeader from "./ListHeader";
 import { useSelector } from "react-redux";
@@ -11,16 +11,10 @@ import SearchInput from "../Common/SearchInput";
 import { Constants } from "../../utils/Constants";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-import { getTotalBalance } from "../../store/actions/user/userAction";
-
+import { getTotalBalance, handleModelActions } from "../../store/actions/user/userAction";
 
 const AccountListTable = ({
-  id,
-  setShow,
-  title,
   endpoint,
-  roleName,
-  domain,
 }: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -30,14 +24,22 @@ const AccountListTable = ({
   const { userModalList } = useSelector(
     (state: RootState) => state.user.userList
   );
-  const { totalBalance } = useSelector(
+  const { totalBalance ,domain,userElement} = useSelector(
     (state: RootState) => state.user.userList
   );
-  const handleModal=()=>{
-    setShow({ value: false, id: "", title: "" });
-    dispatch(getTotalBalance())
-  }
-  
+  const handleModal = () => {
+    dispatch(getTotalBalance());
+    dispatch(
+      handleModelActions({
+        url:'',
+        userId: '',
+        roleName: '',
+        domain: "",
+        openModal:false,
+        isUrl:false,
+      })
+    );
+  };
   return (
     <>
       <Box
@@ -64,8 +66,8 @@ const AccountListTable = ({
           }}
         >
           <ListHeader
-            id={id}
-            title={title}
+            id={userElement?.id}
+            title={userElement?.title}
             searchFor={"userList"}
             downloadPdfExcel={true}
             // getListOfUser={getListOfUser}
@@ -87,9 +89,9 @@ const AccountListTable = ({
               show={true}
               searchFor={"userModalList"}
               endpoint={endpoint}
-              userId={id}
-              roleName={roleName}
-              domain={domain ? domain : ""}
+              userId={userElement?.id}
+              roleName={userElement?.roleName}
+              domain={domain ? domain : userElement?.domain ? userElement?.domain : "" }
             />
             <Button
               sx={{ color: "", fontSize: "30px" }}
@@ -120,6 +122,7 @@ const AccountListTable = ({
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
                     element={element}
+                    domain={domain}
                     // currentPage={currentPage}
                   />
                 );
@@ -137,6 +140,7 @@ const AccountListTable = ({
                     fContainerStyle={{ background: "#F8C851" }}
                     fTextStyle={{ color: "#0B4F26" }}
                     element={element}
+                    domain={domain}
                     // getListOfUser={getListOfUser}
                     // currentPage={currentPage}
                   />

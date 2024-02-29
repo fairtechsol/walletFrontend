@@ -8,6 +8,7 @@ import {
   getTotalBalance,
   getUserList,
   handleExport,
+  handleModelActions,
   handleSettleCommission,
   setCreditRefference,
   setExposureLimit,
@@ -25,6 +26,10 @@ interface InitialState {
   loading: boolean;
   error: any;
   totalBalance: any;
+  openModal:boolean;
+  domain:any;
+  userElement:any;
+  isUrl : boolean;
 }
 
 const initialState: InitialState = {
@@ -37,6 +42,10 @@ const initialState: InitialState = {
   loading: false,
   error: null,
   totalBalance: null,
+  openModal:false,
+  domain:null,
+  userElement:null,
+  isUrl:false,
 };
 
 export const userList = createSlice({
@@ -68,7 +77,6 @@ export const userList = createSlice({
         state.loading = false;
         state.error = action?.error?.message;
       })
-      
       .addCase(getModalUserList.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -80,6 +88,24 @@ export const userList = createSlice({
       .addCase(getModalUserList.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(handleModelActions.fulfilled, (state, action) => {
+        const {openModal,domain} = action.payload
+        state.openModal = openModal;
+        let obj = {
+          roleName : action.payload.roleName,
+          id: action.payload.userId,
+          domain : domain,
+          title: action.payload.title
+        }
+        state.userElement=obj
+        state.isUrl = action.payload.isUrl
+        if (domain !== undefined && domain !== null && domain !== '' && openModal) {
+          state.domain = domain;
+        } else {
+          state.domain = ''
+        }
+        state.loading = false;
       })
       .addCase(changeAmmountUser.pending, (state) => {
         state.loading = true;

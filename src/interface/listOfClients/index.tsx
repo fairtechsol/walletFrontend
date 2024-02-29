@@ -6,6 +6,7 @@ export interface AccountListInterface {
   totalcomission: string;
   exposuresum: string;
   availablebalancesum: string;
+  onModalOpen:any;
   exposurelimit: string;
 }
 
@@ -25,6 +26,7 @@ export interface AccountListDataInterface {
   all_blocked: boolean;
   exposure_limit: string;
   role: string;
+  domain:any;
 }
 
 export interface AccountListRowInterface {
@@ -40,6 +42,7 @@ export interface AccountListRowInterface {
   element?: any;
   getListOfUser?: (value: any) => void;
   show?: boolean;
+  domain:any;
 }
 
 export interface RowModalComponent {
