@@ -4,6 +4,7 @@ import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import SmallBox from "./SmallBox";
 import TeamRowComponent from "./TeamRowComponent";
 import BoxComponent from "../LiveBookmaker/BoxComponent";
+import { useState } from "react";
 
 const MatchOdds = (props: any) => {
   const {
@@ -19,7 +20,9 @@ const MatchOdds = (props: any) => {
     session,
   } = props;
 
-  const visible = true;
+
+  const [visible, setVisible] = useState(true);
+
 
   const bookRatioA = (teamARates: any, teamBRates: any) => {
     const bookRatio = teamARates != 0 ? teamBRates / teamARates || 0 : 0;
@@ -161,7 +164,7 @@ const MatchOdds = (props: any) => {
           />
           <img
             onClick={() => {
-              //   setVisible(!visible);
+                setVisible(!visible);
             }}
             src={ARROWUP}
             style={{

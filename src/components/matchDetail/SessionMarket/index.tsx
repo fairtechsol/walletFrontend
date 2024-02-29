@@ -26,7 +26,9 @@ const SessionMarket = ({
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [currentOdds] = useState<any>(null);
-  const visible = true;
+
+  const [visible, setVisible] = useState(true);
+
 
   return (
     <>
@@ -151,7 +153,7 @@ const SessionMarket = ({
             </Box>
             <img
               onClick={() => {
-                // setVisible(!visible);
+                setVisible(!visible);
               }}
               src={ARROWUP}
               style={{

@@ -49,13 +49,13 @@ const Header = () => {
     BoxCont1sub1: {
       display: "flex",
       alignItems: "center",
-      width: "auto",
+      // width: "auto",
       flex: 1,
     },
     BoxCont1sub1sub1: {
       display: "flex",
       alignItems: "center",
-      marginRight: "12px",
+      // marginRight: "12px",
     },
     BoxCont1sub1sub1StyleImg: {
       height: { lg: "24px", xs: "20px" },
@@ -155,9 +155,10 @@ const Header = () => {
                 containerStyle={classes.BoxCont1sub2BoxProfileContStyle}
                 image={"https://picsum.photos/200/300"}
                 value={profileDetail && profileDetail?.userName}
-                balance={
-                  profileDetail && profileDetail?.userBal?.currentBalance
+                balance={profileDetail && profileDetail?.userBal?.currentBalance &&
+                  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(profileDetail.userBal.currentBalance)
                 }
+                
               />
             </Box>
           </Box>
