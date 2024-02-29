@@ -26,7 +26,6 @@ const FullAllBets = (props: any) => {
       const body: any = result?.map((v: any) => {
         const roleName = profileDetail?.roleName;
         let partnership = 0;
-console.log('first',v?.myStake)
         switch (roleName) {
           case "fairGameAdmin":
             partnership = v?.user?.faPartnership;
@@ -70,8 +69,8 @@ console.log('first',v?.myStake)
             },
             {
               name:
-                v?.marketType == "MANUAL BOOKMAKER"
-                  ? "Quick Bookmaker"
+                v?.marketType !== "session"
+                  ? v?.bettingName ?? v?.marketType
                   : v?.marketType,
               color: ["NO", "YES"].includes(v?.betType) ? "#FFF" : "black",
               background: ["NO", "YES"].includes(v?.betType)
@@ -115,7 +114,10 @@ console.log('first',v?.myStake)
               deleteReason: v?.deleteReason,
             },
             {
-              name: v?.myStake || v?.myStake===0 ? v?.myStake : (v?.amount * partnership) / 100,
+              name:
+                v?.myStake || v?.myStake === 0
+                  ? v?.myStake
+                  : (v?.amount * partnership) / 100,
               color: "white",
               background: "#0B4F26",
               deleteReason: v?.deleteReason,
