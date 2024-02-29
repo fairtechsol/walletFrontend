@@ -260,8 +260,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
         >
           <Typography variant="h5">
             {typeOfAmount === "credit" && creditValue > 0
-              ? Number(+creditValue)
-              : +element?.creditRefrence || 0}
+              ? Number(+creditValue)?.toFixed(2)
+              : Number(+element?.creditRefrence)?.toFixed(2) || 0}
           </Typography>
         </Box>
         <Box
@@ -281,13 +281,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
                 {typeOfAmount === "withdraw"
                   ? Number(
                       +element?.balance - withdrawValue || 0 - withdrawValue
-                    )
-                  : Number(+element?.balance || 0)}
+                    ).toFixed(2)
+                  : Number(+element?.balance || 0).toFixed(2)}
               </>
             ) : typeOfAmount === "withdraw" ? (
-              Number(+element?.balance - withdrawValue || 0 - withdrawValue)
+              Number(+element?.balance - withdrawValue || 0 - withdrawValue).toFixed(2)
             ) : (
-              Number(+element?.balance || 0)
+              Number(+element?.balance || 0).toFixed(2)
             )}
           </Typography>
         </Box>
@@ -304,7 +304,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {calculateValue()}
+            {calculateValue()?.toFixed(2)}
           </Typography>
           <StyledImage
             src={
@@ -333,7 +333,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {calculateProfitLoss()}
+            {calculateProfitLoss()?.toFixed(2)}
           </Typography>
           <StyledImage
             src={
@@ -374,7 +374,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {+element?.userBal?.exposure || 0}
+            {Number(+element?.userBal?.exposure)?.toFixed(2) || 0}
           </Typography>
         </Box>
         <Box
@@ -395,24 +395,24 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   ? Number(
                       +element?.availableBalance + depositeValue ||
                         0 + depositeValue
-                    )
+                    )?.toFixed(2)
                   : typeOfAmount === "withdraw"
                   ? Number(
                       +element?.availableBalance - withdrawValue ||
                         0 - withdrawValue
-                    )
-                  : +element?.availableBalance || 0}
+                    )?.toFixed(2)
+                  : Number(+element?.availableBalance)?.toFixed(2) || 0}
               </>
             ) : typeOfAmount === "deposite" ? (
               Number(
                 +element?.availableBalance + depositeValue || 0 + depositeValue
-              )
+              )?.toFixed(2)
             ) : typeOfAmount === "withdraw" ? (
               Number(
                 +element?.availableBalance - withdrawValue || 0 - withdrawValue
-              )
+              )?.toFixed(2)
             ) : (
-              +element?.availableBalance || 0
+              Number(+element?.availableBalance)?.toFixed(2) || 0
             )}
           </Typography>
         </Box>
@@ -478,8 +478,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
         >
           <Typography variant="h5">
             {typeOfAmount === "exposure" && exposureValue > 0
-              ? Number(exposureValue)
-              : element?.exposureLimit}
+              ? Number(exposureValue)?.toFixed(2)
+              : Number(element?.exposureLimit)?.toFixed(2)}
           </Typography>
         </Box>
         <Box
