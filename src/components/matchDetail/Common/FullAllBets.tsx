@@ -26,7 +26,7 @@ const FullAllBets = (props: any) => {
       const body: any = result?.map((v: any) => {
         const roleName = profileDetail?.roleName;
         let partnership = 0;
-
+console.log('first',v?.myStake)
         switch (roleName) {
           case "fairGameAdmin":
             partnership = v?.user?.faPartnership;
@@ -115,7 +115,7 @@ const FullAllBets = (props: any) => {
               deleteReason: v?.deleteReason,
             },
             {
-              name: v?.myStake ? v?.myStake : (v?.amount * partnership) / 100,
+              name: v?.myStake || v?.myStake===0 ? v?.myStake : (v?.amount * partnership) / 100,
               color: "white",
               background: "#0B4F26",
               deleteReason: v?.deleteReason,
