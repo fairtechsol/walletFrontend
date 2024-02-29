@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import { socketService } from "../../socketManager";
 import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
+import moment from "moment";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -206,6 +207,48 @@ const MatchDetail = () => {
     };
   }, []);
 
+  function calculateTimeLeft() {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const targetDate = moment(matchDetail?.startAt).tz(timezone);
+
+    const difference = targetDate.diff(moment().tz(timezone), "milliseconds");
+    let timeLeft = {};
+    if (difference > 0) {
+      timeLeft = {
+        days:
+          ("0" + Math.floor(difference / (1000 * 60 * 60 * 24))).slice(-2) || 0,
+        hours:
+          ("0" + Math.floor((difference / (1000 * 60 * 60)) % 24)).slice(-2) ||
+          0,
+        minutes:
+          ("0" + Math.floor((difference / 1000 / 60) % 60)).slice(-2) || 0,
+        seconds: ("0" + Math.floor((difference / 1000) % 60)).slice(-2) || 0,
+      };
+    } else {
+      timeLeft = {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+      };
+    }
+
+    return timeLeft;
+  }
+
+  const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft);
+
+  const upcoming =
+    Number(timeLeft.days) === 0 &&
+    Number(timeLeft.hours) === 0 &&
+    Number(timeLeft.minutes) <= 30;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft);
+    }, 0);
+    return () => clearTimeout(timer);
+  });
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -256,6 +299,8 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Match Odds"}
+              upcoming={!upcoming}
+              showBox={matchDetail?.matchOdd?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
               maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
               data={
@@ -269,6 +314,10 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Market Complete Match"}
+              upcoming={!upcoming}
+              showBox={
+                matchDetail?.marketCompleteMatch?.activeStatus === "save"
+              }
               minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
               data={
@@ -282,6 +331,8 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Tied Match"}
+              upcoming={!upcoming}
+              showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
               data={
@@ -294,6 +345,8 @@ const MatchDetail = () => {
           {matchDetail?.bookmaker?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
+              upcoming={!upcoming}
+              showBox={matchDetail?.bookmaker?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
               maxBet={Math.floor(matchDetail?.bookmaker?.maxBet)}
               data={
@@ -307,6 +360,7 @@ const MatchDetail = () => {
             return (
               <MatchOdds
                 key={index}
+                upcoming={!upcoming}
                 currentMatch={matchDetail}
                 session={"manualBookMaker"}
                 data={bookmaker}
@@ -320,6 +374,7 @@ const MatchDetail = () => {
           {matchDetail?.manualTiedMatch && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Tied Match"}
+              upcoming={!upcoming}
               data={matchDetail?.manualTiedMatch}
               currentMatch={matchDetail}
               session={"manualBookMaker"}
@@ -338,6 +393,7 @@ const MatchDetail = () => {
               )}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
+              upcoming={!upcoming}
             />
           )}
           {matchDetail?.apiSessionActive && matchesMobile && (
@@ -348,6 +404,7 @@ const MatchDetail = () => {
               sessionData={matchDetail?.apiSession}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
+              upcoming={!upcoming}
             />
           )}
 
