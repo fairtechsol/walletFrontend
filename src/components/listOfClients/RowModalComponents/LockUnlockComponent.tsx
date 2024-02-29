@@ -22,8 +22,14 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, isWallet,onChangeAmount } =
-    props;
+  const {
+    setSelected,
+    element,
+    walletAccountDetail,
+    endpoint,
+    isWallet,
+    onChangeAmount,
+  } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
@@ -66,9 +72,9 @@ const LockUnlockComponent = (props: any) => {
     },
   });
 
-  const { handleSubmit, isSubmitting } = formik;
+  const { handleSubmit, isSubmitting, setSubmitting } = formik;
 
-  const { success, loading } = useSelector(
+  const { success, loading, error } = useSelector(
     (state: RootState) => state.user.userList
   );
 
@@ -86,13 +92,17 @@ const LockUnlockComponent = (props: any) => {
           })
         );
       }
+      setSubmitting(false);
       dispatch(userListSuccessReset());
     }
-  }, [success]);
+    if (error) {
+      setSubmitting(false);
+    }
+  }, [success, error]);
 
   useEffect(() => {
-    onChangeAmount(lockUnlockObj,element?.id,'lock');
-  }, [lockUnlockObj,onChangeAmount]);
+    onChangeAmount(lockUnlockObj, element?.id, "lock");
+  }, [lockUnlockObj, onChangeAmount]);
 
   // const handleLockSubmit = (e: any) => {
   //   e.preventDefault();

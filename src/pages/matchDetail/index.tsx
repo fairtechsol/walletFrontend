@@ -17,6 +17,7 @@ import {
   updateMaxLossForBet,
   updateTeamRates,
   updateProfitLoss,
+  matchListReset,
 } from "../../store/actions/match/matchAction";
 import { useSelector } from "react-redux";
 import { socketService } from "../../socketManager";
@@ -112,7 +113,7 @@ const MatchDetail = () => {
             myStake: event?.jobData?.betPlaceObject?.myStack,
           })
         );
-        dispatch(updateProfitLoss(event))
+        dispatch(updateProfitLoss(event));
         // dispatch(updateBalance(event));
         // dispatch(betDataFromSocket(event));
         dispatch(updateMaxLossForBet(event));
@@ -148,7 +149,6 @@ const MatchDetail = () => {
   useEffect(() => {
     try {
       if (success) {
-        // dispatch(matchListReset());
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -162,16 +162,19 @@ const MatchDetail = () => {
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
         socketService.match.sessionDeleteBet(matchDeleteBet);
+        dispatch(matchListReset());
       }
     } catch (e) {
       console.log(e);
     }
+  }, [success]);
+
+  useEffect(() => {
     return () => {
-      // socketService.match.leaveAllRooms();
       socketService.match.leaveMatchRoom(state?.matchId);
       socketService.match.getMatchRatesOff(
         state?.matchId,
-        profileDetail?.roleName
+        updateMatchDetailToRedux
       );
       socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
       socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
@@ -179,7 +182,7 @@ const MatchDetail = () => {
       socketService.match.matchDeleteBetOff(matchDeleteBet);
       socketService.match.sessionDeleteBetOff(matchDeleteBet);
     };
-  }, [success]);
+  }, []);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
