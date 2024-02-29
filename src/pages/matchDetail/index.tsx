@@ -1,28 +1,28 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DeleteIcon } from "../../assets";
+import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
+import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
+import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
+import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
-import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
-import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { socketService } from "../../socketManager";
 import {
   AllBetDelete,
   getMatchDetail,
   getPlacedBets,
-  updateMatchRates,
-  updateBetsPlaced,
-  updateMaxLossForBet,
-  updateTeamRates,
-  updateProfitLoss,
   matchListReset,
+  updateBetsPlaced,
+  updateMatchRates,
+  updateMaxLossForBet,
+  updateProfitLoss,
+  updateTeamRates,
 } from "../../store/actions/match/matchAction";
-import { useSelector } from "react-redux";
-import { socketService } from "../../socketManager";
-import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
-import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
+import { AppDispatch, RootState } from "../../store/store";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -256,6 +256,7 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Match Odds"}
+              showBox={matchDetail?.matchOdd?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
               maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
               data={
@@ -269,6 +270,9 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Market Complete Match"}
+              showBox={
+                matchDetail?.marketCompleteMatch?.activeStatus === "save"
+              }
               minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
               data={
@@ -282,6 +286,7 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Tied Match"}
+              showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
               data={
@@ -294,6 +299,7 @@ const MatchDetail = () => {
           {matchDetail?.bookmaker?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
+              showBox={matchDetail?.bookmaker?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
               maxBet={Math.floor(matchDetail?.bookmaker?.maxBet)}
               data={
