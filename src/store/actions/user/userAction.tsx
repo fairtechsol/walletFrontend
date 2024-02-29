@@ -489,7 +489,12 @@ export const updateBalanceOfLoggedUser = createAsyncThunk<any, any>(
     return data;
   }
 );
-
+export const handleModelActions = createAsyncThunk<any, any>(
+  "/user/handleModelActions",
+  async (data) => {
+    return data;
+  }
+);
 export const changePasswordReset = createAction("changePassword/reset");
 export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");
