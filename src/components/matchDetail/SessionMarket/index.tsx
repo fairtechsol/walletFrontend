@@ -26,7 +26,9 @@ const SessionMarket = ({
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [currentOdds] = useState<any>(null);
-  const visible = true;
+
+  const [visible, setVisible] = useState(true);
+
 
   return (
     <>
@@ -151,7 +153,7 @@ const SessionMarket = ({
             </Box>
             <img
               onClick={() => {
-                // setVisible(!visible);
+                setVisible(!visible);
               }}
               src={ARROWUP}
               style={{
@@ -331,11 +333,15 @@ const SessionMarket = ({
                           title === "Session Market"
                             ? {
                                 ...element,
-                                noRate: element.LayPrice1 ?? 0,
-                                noPercent: element.LaySize1 ?? 0,
-                                yesRate: element.BackPrice1 ?? 0,
-                                yesPercent: element.BackSize1 ?? 0,
-                                status: element?.GameStatus ?? "active",
+                                noRate: element?.LayPrice1 ?? 0,
+                                noPercent: element?.LaySize1 ?? 0,
+                                yesRate: element?.BackPrice1 ?? 0,
+                                yesPercent: element?.BackSize1 ?? 0,
+                                status:
+                                  element?.GameStatus &&
+                                  element?.GameStatus !== ""
+                                    ? element?.GameStatus
+                                    : "active",
                               }
                             : JSON.parse(element)
                         }
@@ -399,16 +405,16 @@ const SessionMarket = ({
       {sessionProLoss?.length > 0 &&
         sessionProLoss?.find((v: any) => v?.type === title) && (
           <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: "1px",
-            rowGap: "5px",
-            height: "524px",
-            overflow: "scroll",
-            marginTop: "1.25vw",
-          }}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "1px",
+              rowGap: "5px",
+              height: "524px",
+              overflow: "scroll",
+              marginTop: "1.25vw",
+            }}
           >
             {sessionProLoss
               ?.filter((v: any) => v.type == title)

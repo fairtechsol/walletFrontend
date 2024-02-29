@@ -74,7 +74,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
   };
   const calculateValue = (): number => {
     const baseValue = +element?.userBal?.profitLoss || 0;
-
+    
     if (Number(baseValue) >= 0) {
       return Number(
         typeOfAmount === "deposite"
@@ -97,6 +97,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
       );
     }
   };
+  const formattedValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(calculateValue());
+
   const calculateProfitLoss = (): number => {
     const baseProfitLoss = +element?.percentProfitLoss || 0;
 
@@ -142,6 +144,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
       );
     }
   };
+  const formattedPLValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(calculateProfitLoss());
+
   const handleModal = () => {
     setSubSusers({
       value: true,
@@ -259,14 +263,17 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {typeOfAmount === "credit" && creditValue > 0
-              ? Number(+creditValue)?.toFixed(2)
-              : Number(+element?.creditRefrence)?.toFixed(2) || 0}
+          {typeOfAmount === "credit" && creditValue > 0 ? (
+  <>{new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(+creditValue))}</>
+) : (
+  <>{new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+element?.creditRefrence || 0)}</>
+)}
+
           </Typography>
         </Box>
         <Box
           sx={{
-            width: { lg: "9.5vw", md: "9vw", xs: "26.5vw" },
+            width: { lg: "11.5vw", md: "9vw", xs: "26.5vw" },
             display: "flex",
             paddingX: "10px",
             alignItems: "center",
@@ -275,20 +282,23 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {Number(+element?.balance || 0) >= 0 ? (
-              <>
-                <span style={{ visibility: "hidden" }}>-</span>
-                {typeOfAmount === "withdraw"
-                  ? Number(
-                      +element?.balance - withdrawValue || 0 - withdrawValue
-                    ).toFixed(2)
-                  : Number(+element?.balance || 0).toFixed(2)}
-              </>
-            ) : typeOfAmount === "withdraw" ? (
-              Number(+element?.balance - withdrawValue || 0 - withdrawValue).toFixed(2)
-            ) : (
-              Number(+element?.balance || 0).toFixed(2)
-            )}
+          {Number(+element?.balance || 0) >= 0 ? (
+  <>
+    <span style={{ visibility: "hidden" }}>-</span>
+    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
+      typeOfAmount === "withdraw"
+        ? Number(+element?.balance - withdrawValue || 0 - withdrawValue)
+        : Number(+element?.balance || 0)
+    )}
+  </>
+) : (
+  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
+    typeOfAmount === "withdraw"
+      ? Number(+element?.balance - withdrawValue || 0 - withdrawValue)
+      : Number(+element?.balance || 0)
+  )
+)}
+
           </Typography>
         </Box>
         <Box
@@ -304,7 +314,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {calculateValue()?.toFixed(2)}
+            {formattedValue}
           </Typography>
           <StyledImage
             src={
@@ -333,7 +343,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5" sx={{ color: "white" }}>
-            {calculateProfitLoss()?.toFixed(2)}
+            {formattedPLValue}
           </Typography>
           <StyledImage
             src={
@@ -374,7 +384,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {Number(+element?.userBal?.exposure)?.toFixed(2) || 0}
+  {       new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+element?.userBal?.exposure || 0)}
+
           </Typography>
         </Box>
         <Box
@@ -388,32 +399,27 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {Number(+element?.availableBalance || 0) >= 0 ? (
-              <>
-                <span style={{ visibility: "hidden" }}>-</span>
-                {typeOfAmount === "deposite"
-                  ? Number(
-                      +element?.availableBalance + depositeValue ||
-                        0 + depositeValue
-                    )?.toFixed(2)
-                  : typeOfAmount === "withdraw"
-                  ? Number(
-                      +element?.availableBalance - withdrawValue ||
-                        0 - withdrawValue
-                    )?.toFixed(2)
-                  : Number(+element?.availableBalance)?.toFixed(2) || 0}
-              </>
-            ) : typeOfAmount === "deposite" ? (
-              Number(
-                +element?.availableBalance + depositeValue || 0 + depositeValue
-              )?.toFixed(2)
-            ) : typeOfAmount === "withdraw" ? (
-              Number(
-                +element?.availableBalance - withdrawValue || 0 - withdrawValue
-              )?.toFixed(2)
-            ) : (
-              Number(+element?.availableBalance)?.toFixed(2) || 0
-            )}
+          {Number(+element?.availableBalance || 0) >= 0 ? (
+  <>
+    <span style={{ visibility: "hidden" }}>-</span>
+    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
+      typeOfAmount === "deposite"
+        ? +element?.availableBalance + depositeValue || 0 + depositeValue
+        : typeOfAmount === "withdraw"
+          ? +element?.availableBalance - withdrawValue || 0 - withdrawValue
+          : +element?.availableBalance || 0
+    )}
+  </>
+) : (
+  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
+    typeOfAmount === "deposite"
+      ? +element?.availableBalance + depositeValue || 0 + depositeValue
+      : typeOfAmount === "withdraw"
+        ? +element?.availableBalance - withdrawValue || 0 - withdrawValue
+        : +element?.availableBalance || 0
+  )
+)}
+
           </Typography>
         </Box>
         <Box
@@ -477,9 +483,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-            {typeOfAmount === "exposure" && exposureValue > 0
-              ? Number(exposureValue)?.toFixed(2)
-              : Number(element?.exposureLimit)?.toFixed(2)}
+          {typeOfAmount === "exposure" && exposureValue > 0
+  ? new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(exposureValue))
+  : new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(element?.exposureLimit || 0)
+}
+
           </Typography>
         </Box>
         <Box

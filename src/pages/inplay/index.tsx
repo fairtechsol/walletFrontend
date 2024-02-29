@@ -22,7 +22,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Constants } from "../../utils/Constants";
 import { socketService } from "../../socketManager";
-
+import { makeStyles } from '@material-ui/core/styles';
 const Inplay = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -31,7 +31,13 @@ const Inplay = () => {
   const { loading, matchListInplay, success } = useSelector(
     (state: RootState) => state.match.matchList
   );
-
+  const useStyles = makeStyles({
+    whiteTextPagination: {
+      '& .MuiPaginationItem-root': {
+        color: 'white', // Change text color to white
+      },
+    },
+  });
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -124,9 +130,10 @@ const Inplay = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
-
+  const classes = useStyles();
   return (
     <>
+    
       {matchListInplay && matchListInplay?.matches?.length > 0 ? (
         matchListInplay?.matches?.map((match: any) => {
           return (
@@ -161,7 +168,7 @@ const Inplay = () => {
       {matchListInplay && matchListInplay?.matches?.length > 0 && (
         <Pagination
           page={currentPage}
-          className="whiteTextPagination d-flex justify-content-center"
+         className={`${classes.whiteTextPagination} d-flex justify-content-center`}
           count={Math.ceil(
             parseInt(matchListInplay?.count ? matchListInplay?.count : 1) /
               Constants.pageLimit
