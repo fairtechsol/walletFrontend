@@ -129,7 +129,7 @@ const DepositComponent = (props: any) => {
       );
     }
   }, [formik.values.amount, onChangeAmount]);
-
+ 
   return (
     <>
       {matchesMobile && matchesTablet ? (
@@ -245,8 +245,6 @@ const DepositComponent = (props: any) => {
                     required={true}
                     id="amount"
                     name="amount"
-                    // onKeyDown={handleKeyDown}
-                    // value={depositObj.amount}
                     value={formik.values.amount}
                     variant="standard"
                     InputProps={{
@@ -562,5 +560,7 @@ const DepositComponent = (props: any) => {
     </>
   );
 };
+
+
 
 export default DepositComponent;

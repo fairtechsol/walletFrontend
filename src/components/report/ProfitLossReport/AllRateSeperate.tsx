@@ -485,6 +485,7 @@ const RowComponent = ({ header, data }: any) => {
     const timeString = now.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
+      second: "numeric",
       hour12: true,
     });
     return timeString;
@@ -741,7 +742,7 @@ const SingleBox = ({
           <Typography
             sx={{
               fontWeight: "700",
-              fontSize: { xs: "8px", md: "10px", lg: ".5vw" },
+              fontSize: { xs: "8px", md: "10px", lg: "0.8vw" },
               color: "black",
               textAlign: "center",
               maxHeight: "2em",

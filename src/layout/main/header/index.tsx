@@ -49,13 +49,13 @@ const Header = () => {
     BoxCont1sub1: {
       display: "flex",
       alignItems: "center",
-      // width: "auto",
+      width: "auto",
       flex: 1,
     },
     BoxCont1sub1sub1: {
       display: "flex",
       alignItems: "center",
-      // marginRight: "12px",
+      marginRight: "12px",
     },
     BoxCont1sub1sub1StyleImg: {
       height: { lg: "24px", xs: "20px" },
