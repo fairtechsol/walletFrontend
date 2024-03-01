@@ -217,6 +217,12 @@ export const updateProfitLoss = createAsyncThunk<any, any>(
     return profitLoss;
   }
 );
+export const removeRunAmount = createAsyncThunk<any, any>(
+  "/remove/runAmount",
+  async (profitLoss) => {
+    return profitLoss;
+  }
+);
 export const updateBalance = createAsyncThunk<any, any>(
   "/user/balance",
   async (balance) => {

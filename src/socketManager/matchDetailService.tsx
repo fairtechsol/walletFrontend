@@ -52,6 +52,12 @@ export const matchSocketService = {
   userMatchBetPlaced: (callback: any) => {
     socket.on("userMatchBetPlaced", callback);
   },
+  sessionResult: (callback: any) => {
+    socket.on("sessionResult", callback);
+  },
+  sessionResultOff: (callback: any) => {
+    socket.off("sessionResult", callback);
+  },
   userSessionBetPlacedOff: (callback: any) => {
     socket.off("userSessionBetPlaced", callback);
   },

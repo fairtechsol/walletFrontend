@@ -15,6 +15,7 @@ import {
   getMatchDetail,
   getPlacedBets,
   matchListReset,
+  removeRunAmount,
   updateBetsPlaced,
   updateMatchRates,
   updateMaxLossForBet,
@@ -137,6 +138,17 @@ const MatchDetail = () => {
     }
   };
 
+  const handleSessionResultDeclare = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        dispatch(removeRunAmount(event));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       if (state?.matchId && profileDetail?.roleName) {
@@ -164,6 +176,7 @@ const MatchDetail = () => {
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
         socketService.match.sessionDeleteBet(matchDeleteBet);
+        socketService.match.sessionResult(handleSessionResultDeclare);
         dispatch(matchListReset());
       }
     } catch (e) {
@@ -183,6 +196,7 @@ const MatchDetail = () => {
       socketService.match.matchResultDeclaredOff(matchResultDeclared);
       socketService.match.matchDeleteBetOff(matchDeleteBet);
       socketService.match.sessionDeleteBetOff(matchDeleteBet);
+      socketService.match.sessionResultOff(handleSessionResultDeclare);
     };
   }, []);
 
