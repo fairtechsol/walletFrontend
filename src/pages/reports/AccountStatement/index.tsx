@@ -32,9 +32,7 @@ const AccountStatement = () => {
       if (fromDate && toDate) {
         filter += `&createdAt=between${moment(fromDate)?.format(
           "YYYY-MM-DD"
-        )}|${moment(toDate).add(1, "days")?.format(
-          "YYYY-MM-DD"
-        )}`;
+        )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
       } else if (fromDate) {
         filter += `&createdAt=gte${moment(fromDate)?.format("YYYY-MM-DD")}`;
       } else if (toDate) {
@@ -63,9 +61,7 @@ const AccountStatement = () => {
               if (fromDate && toDate) {
                 filter += `&createdAt=between${moment(fromDate)?.format(
                   "YYYY-MM-DD"
-                )}|${moment(toDate).add(1, "days")?.format(
-                  "YYYY-MM-DD"
-                )}`;
+                )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
               } else if (fromDate) {
                 filter += `&createdAt=gte${moment(fromDate)?.format(
                   "YYYY-MM-DD"
@@ -145,7 +141,7 @@ const AccountStatement = () => {
                     date={moment(item?.createdAt)}
                     description={item?.description}
                     closing={item?.closingBalance}
-                    trans_type={item?.transType}
+                    transType={item?.transType}
                     amount={item?.amount}
                     fromuserName={item?.actionByUser?.userName}
                     touserName={item?.user?.userName}

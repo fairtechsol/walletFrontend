@@ -1,11 +1,8 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
-import { RootState } from "../../../store/store";
 import Divider from "../../Inplay/Divider";
 import BetsCountBox from "./BetsCountBox";
-import RunsBox from "./RunsBox";
 import SeasonMarketBox from "./SeasonMarketBox";
 
 const SessionMarket = ({
@@ -20,15 +17,10 @@ const SessionMarket = ({
   sessionData,
   allBetsData,
 }: any) => {
-  const { sessionProLoss } = useSelector(
-    (state: RootState) => state.match.bets
-  );
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const [currentOdds] = useState<any>(null);
 
   const [visible, setVisible] = useState(true);
-
 
   return (
     <>
@@ -402,35 +394,6 @@ const SessionMarket = ({
           </Box>
         )}
       </Box>
-      {sessionProLoss?.length > 0 &&
-        sessionProLoss?.find((v: any) => v?.type === title) && (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "1px",
-              rowGap: "5px",
-              height: "524px",
-              overflow: "scroll",
-              marginTop: "1.25vw",
-            }}
-          >
-            {sessionProLoss
-              ?.filter((v: any) => v.type == title)
-              ?.map((v: any) => {
-                return (
-                  <RunsBox
-                    key={v?.id}
-                    item={v}
-                    currentOdd={
-                      currentOdds?.betId === v?.id ? currentOdds : null
-                    }
-                  />
-                );
-              })}
-          </Box>
-        )}
     </>
   );
 };

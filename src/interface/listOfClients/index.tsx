@@ -42,7 +42,7 @@ export interface AccountListRowInterface {
   element?: any;
   getListOfUser?: (value: any) => void;
   show?: boolean;
-  domain:any;
+  domain?:any;
 }
 
 export interface RowModalComponent {

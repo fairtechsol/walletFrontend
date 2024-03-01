@@ -22,6 +22,7 @@ import {
   updateTeamRates,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
+import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -38,9 +39,11 @@ const MatchDetail = () => {
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.match.matchList
   );
-  const { placedBets, loading } = useSelector(
+  const { placedBets, loading, sessionProLoss } = useSelector(
     (state: RootState) => state.match.bets
   );
+
+  const [currentOdds] = useState<any>(null);
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -520,7 +523,32 @@ const MatchDetail = () => {
                   min={Math.floor(matchDetail?.betFairSessionMinBet)}
                 />
               )}
-
+            {sessionProLoss?.length > 0 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  gap: "1px",
+                  rowGap: "5px",
+                  height: "440px",
+                  overflow: "scroll",
+                  marginTop: "1.25vw",
+                }}
+              >
+                {sessionProLoss.map((v: any) => {
+                  return (
+                    <RunsBox
+                      key={v?.id}
+                      item={v}
+                      currentOdd={
+                        currentOdds?.betId === v?.id ? currentOdds : null
+                      }
+                    />
+                  );
+                })}
+              </Box>
+            )}
             <UserProfitLoss
               single={"single"}
               title={"User Profit Loss"}
