@@ -19,6 +19,7 @@ import {
   updateBetsPlaced,
   updateMatchRates,
   updateMaxLossForBet,
+  updateMaxLossForBetOnUndeclare,
   updateProfitLoss,
   updateTeamRates,
 } from "../../store/actions/match/matchAction";
@@ -94,7 +95,19 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+
   const matchDeleteBet = (event: any) => {
+    try {
+      setMode(false);
+      if (event?.matchId === state?.matchId) {
+        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const handleSessionDeleteBet = (event: any) => {
     try {
       setMode(false);
       if (event?.matchId === state?.matchId) {
@@ -149,6 +162,17 @@ const MatchDetail = () => {
     }
   };
 
+  const handleSessionResultUnDeclare = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        dispatch(updateMaxLossForBetOnUndeclare(event));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       if (state?.matchId && profileDetail?.roleName) {
@@ -175,8 +199,11 @@ const MatchDetail = () => {
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
-        socketService.match.sessionDeleteBet(matchDeleteBet);
+        socketService.match.sessionDeleteBet(handleSessionDeleteBet);
         socketService.match.sessionResult(handleSessionResultDeclare);
+        socketService.match.sessionResultUnDeclare(
+          handleSessionResultUnDeclare
+        );
         dispatch(matchListReset());
       }
     } catch (e) {
@@ -195,8 +222,11 @@ const MatchDetail = () => {
       socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
       socketService.match.matchResultDeclaredOff(matchResultDeclared);
       socketService.match.matchDeleteBetOff(matchDeleteBet);
-      socketService.match.sessionDeleteBetOff(matchDeleteBet);
+      socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
       socketService.match.sessionResultOff(handleSessionResultDeclare);
+      socketService.match.sessionResultUnDeclareOff(
+        handleSessionResultUnDeclare
+      );
     };
   }, []);
 

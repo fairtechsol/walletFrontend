@@ -9,6 +9,7 @@ import {
   updateMaxLossForBet,
   betDataFromSocket,
   updateTeamRates,
+  updateMaxLossForBetOnUndeclare,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -142,6 +143,24 @@ const matchListSlice = createSlice({
             exposure: action.payload.newUserExposure ?? action.payload.exposure,
           },
         };
+      })
+      .addCase(updateMaxLossForBetOnUndeclare.fulfilled, (state, action) => {
+        const { betId, matchId, parentRedisUpdateObj } = action.payload;
+        if (state?.matchDetail?.id === matchId) {
+          state.matchDetail.profitLossDataSession = Array.from(
+            new Set([
+              ...state.matchDetail.profitLossDataSession,
+              {
+                betId: betId,
+                maxLoss: JSON.parse(parentRedisUpdateObj[`${betId}_profitLoss`])
+                  .maxLoss,
+                totalBet: JSON.parse(
+                  parentRedisUpdateObj[`${betId}_profitLoss`]
+                ).totalBet,
+              },
+            ])
+          );
+        }
       })
       .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
         const { jobData, profitLoss } = action.payload;
