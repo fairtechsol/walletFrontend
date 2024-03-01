@@ -72,7 +72,7 @@ const ListBody = (props: any) => {
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
           {walletAccountDetail?.creditRefrence &&
-            new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(+walletAccountDetail.creditRefrence)
+            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+walletAccountDetail.creditRefrence)
           }
         </Typography>
       </Box>

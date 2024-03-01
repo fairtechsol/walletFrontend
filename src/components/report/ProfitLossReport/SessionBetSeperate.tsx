@@ -3,7 +3,7 @@ import { useState } from "react";
 import { formatNumber } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
-
+import moment from "moment";
 const SessionBetSeperate = ({
   profit,
   mark,
@@ -387,13 +387,17 @@ const SessionBetSeperate = ({
 };
 // value2 = { formatNumber(newData?.rate_percent?.split("-")[0])}
 const RowComponent = ({ header, data }: any) => {
-  const getTime = (date: any) => {
-    const now = new Date(date);
-    const timeString = now.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
+  // const getTime = (date: any) => {
+  //   const now = new Date(date);
+  //   const timeString = now.toLocaleTimeString("en-US", {
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //     hour12: true,
+  //   });
+  //   return timeString;
+  // };
+  const getTime = (date:any) => {
+    const timeString = moment(date).format("hh:mm:ss A");
     return timeString;
   };
   const getColor = () => {

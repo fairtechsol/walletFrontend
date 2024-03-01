@@ -2,7 +2,7 @@ import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
-
+import moment from "moment";
 const AllRateSeperate = ({
   profit,
   mark,
@@ -480,14 +480,18 @@ const AllRateSeperate = ({
 };
 
 const RowComponent = ({ header, data }: any) => {
-  const getTime = (date: any) => {
-    const now = new Date(date);
-    const timeString = now.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true,
-    });
+  // const getTime = (date: any) => {
+  //   const now = new Date(date);
+  //   const timeString = now.toLocaleTimeString("en-US", {
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //     second: "numeric",
+  //     hour12: true,
+  //   });
+  //   return timeString;
+  // };
+  const getTime = (date:any) => {
+    const timeString = moment(date).format("hh:mm:ss A");
     return timeString;
   };
   const getColor = () => {
