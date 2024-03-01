@@ -1,5 +1,4 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -309,20 +308,22 @@ const MatchDetail = () => {
               }
             />
           )}
-          {matchDetail?.quickBookmaker?.map((bookmaker: any, index: any) => {
-            return (
-              <MatchOdds
-                key={index}
-                currentMatch={matchDetail}
-                session={"manualBookMaker"}
-                data={bookmaker}
-                minBet={Math.floor(bookmaker?.minBet) || 0}
-                maxBet={Math.floor(bookmaker?.maxBet) || 0}
-                typeOfBet={bookmaker?.name}
-                matchOddsData={bookmaker}
-              />
-            );
-          })}
+          {matchDetail?.quickBookmaker
+            ?.filter((item: any) => item?.isActive)
+            ?.map((bookmaker: any, index: any) => {
+              return (
+                <MatchOdds
+                  key={index}
+                  currentMatch={matchDetail}
+                  session={"manualBookMaker"}
+                  data={bookmaker}
+                  minBet={Math.floor(bookmaker?.minBet) || 0}
+                  maxBet={Math.floor(bookmaker?.maxBet) || 0}
+                  typeOfBet={bookmaker?.name}
+                  matchOddsData={bookmaker}
+                />
+              );
+            })}
           {matchDetail?.manualTiedMatch && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Tied Match"}
@@ -334,28 +335,34 @@ const MatchDetail = () => {
             />
           )}
 
-          {matchDetail?.manualSessionActive && matchesMobile && (
-            <SessionMarket
-              allBetsData={matchDetail?.profitLossDataSession}
-              title={"Quick Session Market"}
-              currentMatch={matchDetail}
-              sessionData={matchDetail?.sessionBettings?.filter(
-                (item: any) => !JSON.parse(item).selectionId
-              )}
-              min={matchDetail?.betFairSessionMinBet || 0}
-              max={matchDetail?.betFairSessionMaxBet || 0}
-            />
-          )}
-          {matchDetail?.apiSessionActive && matchesMobile && (
-            <SessionMarket
-              allBetsData={matchDetail?.profitLossDataSession}
-              title={"Session Market"}
-              currentMatch={matchDetail}
-              sessionData={matchDetail?.apiSession}
-              min={Math.floor(matchDetail?.betFairSessionMinBet)}
-              max={Math.floor(matchDetail?.betFairSessionMaxBet)}
-            />
-          )}
+          {matchDetail?.manualSessionActive &&
+            matchesMobile &&
+            matchDetail?.sessionBettings?.filter(
+              (item: any) => !JSON.parse(item).selectionId
+            )?.length > 0 && (
+              <SessionMarket
+                allBetsData={matchDetail?.profitLossDataSession}
+                title={"Quick Session Market"}
+                currentMatch={matchDetail}
+                sessionData={matchDetail?.sessionBettings?.filter(
+                  (item: any) => !JSON.parse(item).selectionId
+                )}
+                min={matchDetail?.betFairSessionMinBet || 0}
+                max={matchDetail?.betFairSessionMaxBet || 0}
+              />
+            )}
+          {matchDetail?.apiSessionActive &&
+            matchesMobile &&
+            matchDetail?.apiSession?.length > 0 && (
+              <SessionMarket
+                allBetsData={matchDetail?.profitLossDataSession}
+                title={"Session Market"}
+                currentMatch={matchDetail}
+                sessionData={matchDetail?.apiSession}
+                min={Math.floor(matchDetail?.betFairSessionMinBet)}
+                max={Math.floor(matchDetail?.betFairSessionMaxBet)}
+              />
+            )}
 
           {matchesMobile && (
             <UserProfitLoss
@@ -440,15 +447,17 @@ const MatchDetail = () => {
               <img src={DeleteIcon} style={{ width: "17px", height: "20px" }} />
             </Box>
           </Box>
-          <Box sx={{ mt: 0 }}>
-            <FullAllBets
-              IObets={placedBets.length > 0 ? placedBets : []}
-              mode={mode}
-              tag={false}
-              setSelectedBetData={setSelectedBetData}
-              selectedBetData={selectedBetData}
-            />
-          </Box>
+          {placedBets?.length > 0 && (
+            <Box sx={{ mt: 0 }}>
+              <FullAllBets
+                IObets={placedBets.length > 0 ? placedBets : []}
+                mode={mode}
+                tag={false}
+                setSelectedBetData={setSelectedBetData}
+                selectedBetData={selectedBetData}
+              />
+            </Box>
+          )}
         </Box>
         {!matchesMobile && <Box sx={{ width: "20px" }} />}
         {!matchesMobile && (
@@ -483,30 +492,34 @@ const MatchDetail = () => {
                 maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
               />
             )}
-            {matchDetail?.manualSessionActive && (
-              <SessionMarket
-                title={"Quick Session Market"}
-                allBetsData={matchDetail?.profitLossDataSession}
-                currentMatch={matchDetail}
-                sessionExposer={"0.00"}
-                sessionData={matchDetail?.sessionBettings?.filter(
-                  (item: any) => !JSON.parse(item).selectionId
-                )}
-                min={matchDetail?.betFairSessionMinBet || 0}
-                max={matchDetail?.betFairSessionMaxBet || 0}
-              />
-            )}
-            {matchDetail?.apiSessionActive && (
-              <SessionMarket
-                title={"Session Market"}
-                allBetsData={matchDetail?.profitLossDataSession}
-                currentMatch={matchDetail}
-                sessionExposer={"0.00"}
-                sessionData={matchDetail?.apiSession}
-                max={Math.floor(matchDetail?.betFairSessionMaxBet)}
-                min={Math.floor(matchDetail?.betFairSessionMinBet)}
-              />
-            )}
+            {matchDetail?.manualSessionActive &&
+              matchDetail?.sessionBettings?.filter(
+                (item: any) => !JSON.parse(item).selectionId
+              )?.length > 0 && (
+                <SessionMarket
+                  title={"Quick Session Market"}
+                  allBetsData={matchDetail?.profitLossDataSession}
+                  currentMatch={matchDetail}
+                  sessionExposer={"0.00"}
+                  sessionData={matchDetail?.sessionBettings?.filter(
+                    (item: any) => !JSON.parse(item).selectionId
+                  )}
+                  min={matchDetail?.betFairSessionMinBet || 0}
+                  max={matchDetail?.betFairSessionMaxBet || 0}
+                />
+              )}
+            {matchDetail?.apiSessionActive &&
+              matchDetail?.apiSession?.length > 0 && (
+                <SessionMarket
+                  title={"Session Market"}
+                  allBetsData={matchDetail?.profitLossDataSession}
+                  currentMatch={matchDetail}
+                  sessionExposer={"0.00"}
+                  sessionData={matchDetail?.apiSession}
+                  max={Math.floor(matchDetail?.betFairSessionMaxBet)}
+                  min={Math.floor(matchDetail?.betFairSessionMinBet)}
+                />
+              )}
 
             <UserProfitLoss
               single={"single"}
