@@ -12,6 +12,9 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+  getTotalBalance,
+  getUserList,
+  getUsersProfile,
   handleSettleCommission,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
@@ -75,6 +78,14 @@ const RowModalComponents = (props: any) => {
   useEffect(() => {
     if (success) {
       setSettlementModal(false);
+      dispatch(
+        getUserList({
+          currentPage: 1,
+          url: { endpoint: ApiConstants.USER.LIST },
+        })
+      );
+      dispatch(getTotalBalance());
+      dispatch(getUsersProfile());
       dispatch(userListSuccessReset());
     }
   }, [success]);

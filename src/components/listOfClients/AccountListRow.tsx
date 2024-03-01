@@ -9,14 +9,15 @@ import { AccountListRowInterface } from "../../interface/listOfClients";
 import {
   getModalUserList,
   getTotalBalance,
+  handleModelActions,
 } from "../../store/actions/user/userAction";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 import { Modal } from "../Common/Modal";
 import StyledImage from "../Common/StyledImages";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
-import AccountListModal from "./AccountListModal";
 import RowModalComponents from "./RowModalComponents";
+import { useSelector } from "react-redux";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -30,6 +31,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
     showCReport,
     showUserDetails,
     show,
+    domain
   } = props;
 
   const navigate = useNavigate();
@@ -51,11 +53,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
   const [exposureValue, setExposureValue] = useState(0);
   const [lockValue, setLockValue] = useState<any>(null);
   const [typeOfAmount, setTypeOfAmount] = useState<string>("");
-  const [showSubUsers, setSubSusers] = useState({
-    value: false,
-    id: "",
-    title: "",
-  });
+  const { isUrl } = useSelector(
+    (state: RootState) => state.user.userList
+  );
   const handleAmountChange = (amount: any, id: string, type: string) => {
     if (id === element?.id) {
       setTypeOfAmount(type);
@@ -74,7 +74,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
   };
   const calculateValue = (): number => {
     const baseValue = +element?.userBal?.profitLoss || 0;
-    
+
     if (Number(baseValue) >= 0) {
       return Number(
         typeOfAmount === "deposite"
@@ -90,14 +90,16 @@ const AccountListRow = (props: AccountListRowInterface) => {
         typeOfAmount === "deposite"
           ? baseValue + depositeValue 
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue
+          ? baseValue - withdrawValue 
           : typeOfAmount === "credit" && creditValue
           ? baseValue + element?.creditRefrence - creditValue || 0 - creditValue
           : baseValue
       );
     }
   };
-  const formattedValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(calculateValue());
+  const formattedValue = new Intl.NumberFormat("en-IN", {
+    currency: "INR",
+  }).format(calculateValue());
 
   const calculateProfitLoss = (): number => {
     const baseProfitLoss = +element?.percentProfitLoss || 0;
@@ -144,28 +146,36 @@ const AccountListRow = (props: AccountListRowInterface) => {
       );
     }
   };
-  const formattedPLValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(calculateProfitLoss());
+  const formattedPLValue = new Intl.NumberFormat("en-IN", {
+    currency: "INR",
+  }).format(calculateProfitLoss());
 
   const handleModal = () => {
-    setSubSusers({
-      value: true,
-      id: element?.id,
-      title: element?.userName,
-    });
     dispatch(
-      getModalUserList({
-        currentPage: currentPage,
+      handleModelActions({
         url: ApiConstants.USER.LIST,
         userId: element?.id,
         roleName: element?.roleName,
-        domain: element?.domainData ? element?.domainData?.domain : "",
+        domain: element?.domain ? element?.domain : "",
+        openModal:true,
+        isUrl:element?.isUrl,
+        title:element?.userName
       })
     );
     dispatch(
       getTotalBalance({
         userId: element?.id,
         roleName: element?.roleName,
-        domain: element?.domainData ? element?.domainData?.domain : "",
+        domain: domain ? domain : element?.domain ? element?.domain : "",
+      })
+    ); 
+    dispatch(
+      getModalUserList({
+        currentPage: currentPage,
+        url: ApiConstants.USER.LIST,
+        userId: element?.id,
+        roleName: element?.roleName,
+        domain: domain ? domain : element?.domain ? element?.domain : "" ,
       })
     );
   };
@@ -263,12 +273,19 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-          {typeOfAmount === "credit" && creditValue > 0 ? (
-  <>{new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(+creditValue))}</>
-) : (
-  <>{new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+element?.creditRefrence || 0)}</>
-)}
-
+            {typeOfAmount === "credit" && creditValue > 0 ? (
+              <>
+                {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                  Number(+creditValue)
+                )}
+              </>
+            ) : (
+              <>
+                {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                  +element?.creditRefrence || 0
+                )}
+              </>
+            )}
           </Typography>
         </Box>
         <Box
@@ -282,23 +299,26 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-          {Number(+element?.balance || 0) >= 0 ? (
-  <>
-    <span style={{ visibility: "hidden" }}>-</span>
-    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
-      typeOfAmount === "withdraw"
-        ? Number(+element?.balance - withdrawValue || 0 - withdrawValue)
-        : Number(+element?.balance || 0)
-    )}
-  </>
-) : (
-  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
-    typeOfAmount === "withdraw"
-      ? Number(+element?.balance - withdrawValue || 0 - withdrawValue)
-      : Number(+element?.balance || 0)
-  )
-)}
-
+            {Number(+element?.balance || 0) >= 0 ? (
+              <>
+                <span style={{ visibility: "hidden" }}>-</span>
+                {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                  typeOfAmount === "withdraw"
+                    ? Number(
+                        +element?.balance - withdrawValue || 0 - withdrawValue
+                      )
+                    : Number(+element?.balance || 0)
+                )}
+              </>
+            ) : (
+              new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                typeOfAmount === "withdraw"
+                  ? Number(
+                      +element?.balance - withdrawValue || 0 - withdrawValue
+                    )
+                  : Number(+element?.balance || 0)
+              )
+            )}
           </Typography>
         </Box>
         <Box
@@ -384,8 +404,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-  {       new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+element?.userBal?.exposure || 0)}
-
+            {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              +element?.userBal?.exposure || 0
+            )}
           </Typography>
         </Box>
         <Box
@@ -399,27 +420,26 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-          {Number(+element?.availableBalance || 0) >= 0 ? (
-  <>
-    <span style={{ visibility: "hidden" }}>-</span>
-    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
-      typeOfAmount === "deposite"
-        ? +element?.availableBalance + depositeValue || 0 + depositeValue
-        : typeOfAmount === "withdraw"
-          ? +element?.availableBalance - withdrawValue || 0 - withdrawValue
-          : +element?.availableBalance || 0
-    )}
-  </>
-) : (
-  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(
-    typeOfAmount === "deposite"
-      ? +element?.availableBalance + depositeValue || 0 + depositeValue
-      : typeOfAmount === "withdraw"
-        ? +element?.availableBalance - withdrawValue || 0 - withdrawValue
-        : +element?.availableBalance || 0
-  )
-)}
-
+            {Number(+element?.availableBalance || 0) >= 0 ? (
+              <>
+                <span style={{ visibility: "hidden" }}>-</span>
+                {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                  typeOfAmount === "deposite"
+                    ? +element?.availableBalance + depositeValue 
+                    : typeOfAmount === "withdraw"
+                    ? +element?.availableBalance - withdrawValue 
+                    : +element?.availableBalance || 0
+                )}
+              </>
+            ) : (
+              new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                typeOfAmount === "deposite"
+                  ? +element?.availableBalance + depositeValue 
+                  : typeOfAmount === "withdraw"
+                  ? +element?.availableBalance - withdrawValue 
+                  : +element?.availableBalance || 0
+              )
+            )}
           </Typography>
         </Box>
         <Box
@@ -483,11 +503,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
           }}
         >
           <Typography variant="h5">
-          {typeOfAmount === "exposure" && exposureValue > 0
-  ? new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(exposureValue))
-  : new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(element?.exposureLimit || 0)
-}
-
+            {typeOfAmount === "exposure" && exposureValue > 0
+              ? new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                  Number(exposureValue)
+                )
+              : new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                  element?.exposureLimit || 0
+                )}
           </Typography>
         </Box>
         <Box
@@ -540,7 +562,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
               fContainerStyle,
             ]}
           >
-            {!element?.isUrl && (
+            {(!element?.isUrl && !isUrl) && (
               <Box
                 sx={{
                   width: "100% ",
@@ -752,35 +774,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           </Box>
         </Box>
       )}
-      <ModalMUI
-        open={showSubUsers?.value}
-        onClose={() => {
-          setSubSusers({ value: false, id: "", title: "" });
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            // flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <AccountListModal
-            title={element?.userName}
-            id={element?.id}
-            endpoint={ApiConstants.USER.LIST}
-            show={showSubUsers?.value}
-            setShow={setSubSusers}
-            roleName={element?.roleName}
-            domain={element?.domainData?.domain}
-          />
-        </Box>
-      </ModalMUI>
+      
 
       <ModalMUI
         open={showCommissionReport?.value}
