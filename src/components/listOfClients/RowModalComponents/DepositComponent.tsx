@@ -11,7 +11,6 @@ import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 import MobileViewUserDetails from "./MobileViewUserDetails";
-
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,7 +26,7 @@ import { depositAmountValidations } from "../../../utils/Validations";
 
 const initialValues: any = {
   userId: "",
-  amount: "",
+  amount: 0,
   transactionPassword: "",
   remark: "",
   transactionType: "add",
@@ -55,6 +54,16 @@ const DepositComponent = (props: any) => {
     walletAccountDetail?.userBal?.currentBalance
   );
 
+ 
+
+  const formatIndianCurrency = (amount: number) => {
+    const formatter = new Intl.NumberFormat('en-IN', {
+      currency: 'INR'
+    });
+    return formatter.format(amount);
+  };
+
+
   const dispatch: AppDispatch = useDispatch();
 
   const formik = useFormik({
@@ -64,7 +73,7 @@ const DepositComponent = (props: any) => {
       let payload;
       if (isWallet) {
         payload = {
-          amount: values.amount,
+          amount: parseFloat(values.amount),
           transactionPassword: values.transactionPassword,
           remark: values.remark,
           transactionType: "add",
@@ -72,7 +81,7 @@ const DepositComponent = (props: any) => {
       } else {
         payload = {
           userId: element?.id,
-          amount: values.amount,
+          amount: parseFloat(values.amount),
           transactionPassword: values.transactionPassword,
           remark: values.remark,
           transactionType: "add",
@@ -118,7 +127,8 @@ const DepositComponent = (props: any) => {
   }, [success, error]);
 
   useEffect(() => {
-    onChangeAmount(formik.values.amount, element?.id, "deposite");
+    // alert(formik.values.amount)
+    // onChangeAmount(formik.values.amount, element?.id, "deposite");
     if (isWallet) {
       setInitialBalance(
         +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
@@ -129,7 +139,21 @@ const DepositComponent = (props: any) => {
       );
     }
   }, [formik.values.amount, onChangeAmount]);
- 
+
+
+ const checkHandleChange = (event: any) => {
+    let value = 0;
+    if (event.target.value != "") {
+
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ''));
+    }
+    
+    formik.setFieldValue("amount",value);
+    onChangeAmount(value, element?.id, "deposite");
+    // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
+    // setChexckValue(event.target.value);
+  };
+
   return (
     <>
       {matchesMobile && matchesTablet ? (
@@ -234,7 +258,7 @@ const DepositComponent = (props: any) => {
                 <Box
                   sx={{
                     background: "#004A25",
-                    width: { xs: "100%", lg: "43%", md: "43%" },
+                    width: { xs: "43%", lg: "43%", md: "43%" },
                     height: "45px",
                     borderRadius: "5px",
                     paddingX: "20px",
@@ -245,7 +269,8 @@ const DepositComponent = (props: any) => {
                     required={true}
                     id="amount"
                     name="amount"
-                    value={formik.values.amount}
+                    //  value={formik.values.amount}
+                    value={formatIndianCurrency(parseFloat(formik.values.amount?.toString()))}
                     variant="standard"
                     InputProps={{
                       placeholder: "Type Amount...",
@@ -260,10 +285,33 @@ const DepositComponent = (props: any) => {
                         color: "white",
                       },
                     }}
-                    type={"Number"}
-                    onChange={formik.handleChange}
+                    onChange={(e: any) => checkHandleChange(e)}
                   />
                 </Box>
+
+                {/* <NumericFormat
+                    value={formik.values.amount}
+                    onValueChange={(values) => {
+                      // const { value } = values;
+                      // formik.setFieldValue('amount', value);
+                      const formatter = new Intl.NumberFormat('en-IN', {
+                        style: 'currency',
+                        currency: 'INR'
+                      });
+                      formik.setFieldValue('amount', formatter.format(values));
+                    }}
+                    // onChange={formik.handleChange}
+                    customInput={TextField}
+                    type="text"
+                    style={{ textAlign: 'right' }}
+                    InputProps={{
+                      style: {
+                        color: 'white', 
+                        height: "45px"
+                      },
+                    }}
+                  /> */}
+                {/* </Box> */}
               </Box>
 
               <Box

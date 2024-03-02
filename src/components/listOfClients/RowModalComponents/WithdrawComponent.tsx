@@ -27,7 +27,7 @@ import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
   userId: "",
-  amount: "",
+  amount: 0,
   transactionPassword: "",
   remark: "",
   transactionType: "withDraw",
@@ -54,6 +54,27 @@ const WithdrawComponent = (props: any) => {
   const [initialBalance, setInitialBalance] = useState(
     walletAccountDetail?.userBal?.currentBalance
   );
+
+
+  const formatIndianCurrency = (amount: number) => {
+    const formatter = new Intl.NumberFormat('en-IN', {
+      currency: 'INR'
+    });
+    return formatter.format(amount);
+  };
+
+  const checkHandleChange = (event: any) => {
+    let value = 0;
+    if (event.target.value != "") {
+
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ''));
+    }
+    
+    formik.setFieldValue("amount",value);
+    onChangeAmount(value, element?.id, "withdraw");
+    // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
+    // setChexckValue(event.target.value);
+  };
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -244,13 +265,13 @@ const WithdrawComponent = (props: any) => {
                     paddingX: "20px",
                   }}
                 >
+                  {/* replace(/[^\w\s]/gi, '') */}
                   <TextField
                     required={true}
                     id="amount"
                     name="amount"
-                    // onKeyDown={handleKeyDown}
-                    // value={withDrawObj.amount}
-                    value={formik.values.amount}
+                    // value={formik.values.amount}
+                    value={formatIndianCurrency(parseFloat(formik.values.amount?.toString()))}
                     variant="standard"
                     InputProps={{
                       placeholder: "Type Amount...",
@@ -263,10 +284,12 @@ const WithdrawComponent = (props: any) => {
                         height: "45px",
                         fontWeight: "600",
                         color: "white",
+                        textAlign: "right"
                       },
                     }}
-                    type={"Number"}
-                    onChange={formik.handleChange}
+                    // type={"Number"}
+                    // onChange={formik.handleChange}
+                    onChange={(e: any) => checkHandleChange(e)}
                   />
                 </Box>
               </Box>

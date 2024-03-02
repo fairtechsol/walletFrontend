@@ -19,7 +19,7 @@ import { ApiConstants } from "../../../utils/Constants";
 
 const initialValues: any = {
   userId: "",
-  amount: "",
+  amount: 0,
   remark: "",
   transactionPassword: "",
 };
@@ -97,6 +97,27 @@ const SetExposureLimit = (props: any) => {
   useEffect(() => {
     onChangeAmount(formik.values.amount, element?.id, "exposure");
   }, [formik.values.amount, onChangeAmount]);
+
+  const formatIndianCurrency = (amount: number) => {
+    const formatter = new Intl.NumberFormat('en-IN', {
+      currency: 'INR'
+    });
+    return formatter.format(amount);
+  };
+
+  const checkHandleChange = (event: any) => {
+    let value = 0;
+    if (event.target.value != "") {
+
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ''));
+    }
+    
+    formik.setFieldValue("amount",value);
+    onChangeAmount(value, element?.id, "exposure");
+    // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
+    // setChexckValue(event.target.value);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Box
@@ -141,8 +162,8 @@ const SetExposureLimit = (props: any) => {
                 required={true}
                 id="amount"
                 name="amount"
-                value={formik.values.amount}
-                onChange={formik.handleChange}
+                value={formatIndianCurrency(parseFloat(formik.values.amount?.toString()))}
+                onChange={(e: any) => checkHandleChange(e)}
                 variant="standard"
                 InputProps={{
                   placeholder: "Type Amount...",
@@ -157,7 +178,6 @@ const SetExposureLimit = (props: any) => {
                     color: "white",
                   },
                 }}
-                type={"Number"}
               />
             </Box>
           </Box>
