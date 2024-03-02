@@ -15,13 +15,16 @@ import {
   getMatchDetail,
   getPlacedBets,
   matchListReset,
+  removeRunAmount,
   updateBetsPlaced,
   updateMatchRates,
   updateMaxLossForBet,
+  updateMaxLossForBetOnUndeclare,
   updateProfitLoss,
   updateTeamRates,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
+import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -38,9 +41,11 @@ const MatchDetail = () => {
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.match.matchList
   );
-  const { placedBets, loading } = useSelector(
+  const { placedBets, loading, sessionProLoss } = useSelector(
     (state: RootState) => state.match.bets
   );
+
+  const [currentOdds] = useState<any>(null);
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -90,7 +95,19 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+
   const matchDeleteBet = (event: any) => {
+    try {
+      setMode(false);
+      if (event?.matchId === state?.matchId) {
+        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const handleSessionDeleteBet = (event: any) => {
     try {
       setMode(false);
       if (event?.matchId === state?.matchId) {
@@ -134,6 +151,28 @@ const MatchDetail = () => {
     }
   };
 
+  const handleSessionResultDeclare = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        dispatch(removeRunAmount(event));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSessionResultUnDeclare = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        dispatch(updateMaxLossForBetOnUndeclare(event));
+        dispatch(getPlacedBets(state?.matchId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       if (state?.matchId && profileDetail?.roleName) {
@@ -160,7 +199,11 @@ const MatchDetail = () => {
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
-        socketService.match.sessionDeleteBet(matchDeleteBet);
+        socketService.match.sessionDeleteBet(handleSessionDeleteBet);
+        socketService.match.sessionResult(handleSessionResultDeclare);
+        socketService.match.sessionResultUnDeclare(
+          handleSessionResultUnDeclare
+        );
         dispatch(matchListReset());
       }
     } catch (e) {
@@ -179,7 +222,11 @@ const MatchDetail = () => {
       socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
       socketService.match.matchResultDeclaredOff(matchResultDeclared);
       socketService.match.matchDeleteBetOff(matchDeleteBet);
-      socketService.match.sessionDeleteBetOff(matchDeleteBet);
+      socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
+      socketService.match.sessionResultOff(handleSessionResultDeclare);
+      socketService.match.sessionResultUnDeclareOff(
+        handleSessionResultUnDeclare
+      );
     };
   }, []);
 
@@ -520,7 +567,32 @@ const MatchDetail = () => {
                   min={Math.floor(matchDetail?.betFairSessionMinBet)}
                 />
               )}
-
+            {sessionProLoss?.length > 0 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  gap: "1px",
+                  rowGap: "5px",
+                  height: "440px",
+                  overflow: "scroll",
+                  marginTop: "1.25vw",
+                }}
+              >
+                {sessionProLoss.map((v: any) => {
+                  return (
+                    <RunsBox
+                      key={v?.id}
+                      item={v}
+                      currentOdd={
+                        currentOdds?.betId === v?.id ? currentOdds : null
+                      }
+                    />
+                  );
+                })}
+              </Box>
+            )}
             <UserProfitLoss
               single={"single"}
               title={"User Profit Loss"}
