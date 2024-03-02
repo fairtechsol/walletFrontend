@@ -62,7 +62,7 @@ const FullAllBets = (props: any) => {
                 : "#F1C550",
               deleteReason: v?.deleteReason,
               id: v?.id,
-              userId: v?.user?.id,
+              userId: v?.user?.id ?? v?.userId,
               betId: v?.betId,
               matchId: v?.matchId,
               domain: v?.domain,
