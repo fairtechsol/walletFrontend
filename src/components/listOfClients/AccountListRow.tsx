@@ -82,7 +82,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           : typeOfAmount === "withdraw"
           ? baseValue - withdrawValue 
           : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue || 0 - creditValue
+          ? baseValue + element?.creditRefrence - creditValue 
           : baseValue
       );
     } else {
@@ -92,7 +92,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           : typeOfAmount === "withdraw"
           ? baseValue - withdrawValue 
           : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue || 0 - creditValue
+          ? baseValue + element?.creditRefrence - creditValue 
           : baseValue
       );
     }

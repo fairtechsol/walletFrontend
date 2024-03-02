@@ -3,6 +3,7 @@ import {
   getPlacedBets,
   getSessionProLoss,
   getSessionProfitLossMatchDetailFilter,
+  removeRunAmount,
   updateBetsPlaced,
   updateProfitLoss,
 } from "../../actions/match/matchAction";
@@ -61,13 +62,11 @@ const betsSlice = createSlice({
       })
       .addCase(updateProfitLoss.fulfilled, (state, action) => {
         const { jobData, profitLoss } = action.payload;
-        console.log("action.payload", action.payload);
         if (jobData?.betPlaceObject?.betPlacedData?.betId) {
           const updatedSessionProLoss = state.sessionProLoss.map((item: any) =>
             item?.id === jobData.betPlaceObject.betPlacedData.betId
               ? {
                   ...item,
-
                   proLoss: [
                     JSON.stringify(profitLoss),
                     ...item.proLoss.slice(1),
@@ -78,6 +77,12 @@ const betsSlice = createSlice({
 
           state.sessionProLoss = updatedSessionProLoss;
         }
+      })
+      .addCase(removeRunAmount.fulfilled, (state, action) => {
+        const { betId } = action.payload;
+        state.sessionProLoss = state.sessionProLoss.filter(
+          (item: any) => item?.id !== betId
+        );
       })
       .addCase(getSessionProLoss.pending, (state) => {
         state.loadingProLoss = true;

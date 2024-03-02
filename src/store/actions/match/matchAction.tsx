@@ -217,6 +217,12 @@ export const updateProfitLoss = createAsyncThunk<any, any>(
     return profitLoss;
   }
 );
+export const removeRunAmount = createAsyncThunk<any, any>(
+  "/remove/runAmount",
+  async (profitLoss) => {
+    return profitLoss;
+  }
+);
 export const updateBalance = createAsyncThunk<any, any>(
   "/user/balance",
   async (balance) => {
@@ -232,6 +238,12 @@ export const betDataFromSocket = createAsyncThunk<any, any>(
 );
 export const updateMaxLossForBet = createAsyncThunk<any, any>(
   "/maxLoss/update",
+  async (data) => {
+    return data;
+  }
+);
+export const updateMaxLossForBetOnUndeclare = createAsyncThunk<any, any>(
+  "/maxLoss/updateOnUndeclare",
   async (data) => {
     return data;
   }
