@@ -83,7 +83,7 @@ const TableDataRow = (props: any) => {
           sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
         >
           {/* {amount > 0 ? amount : ""} */}
-          {amount > 0 ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount) : ""}
+          {amount > 0 ? new Intl.NumberFormat('en-IN', {  currency: 'INR' }).format(amount) : ""}
         </Typography>
       </Box>
       <Box

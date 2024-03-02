@@ -33,7 +33,7 @@ const RowModalComponents = (props: any) => {
 
   const { success } = useSelector((state: RootState) => state.user.userList);
   const handleAmountChange = (amount: string, id: string, type: string) => {
-    console.log(amount, type);
+    // alert(amount)
     onValueChange(amount, id, type);
   };
   const classes = {
