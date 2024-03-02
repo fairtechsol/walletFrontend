@@ -124,7 +124,10 @@ const MatchDetail = () => {
       if (event?.jobData?.placedBet?.matchId === state?.matchId) {
         dispatch(
           updateBetsPlaced({
-            newBet: event?.jobData?.placedBet,
+            newBet: {
+              ...event?.jobData?.placedBet,
+              domain: event?.jobData?.domainUrl,
+            },
             userName: event?.jobData?.betPlaceObject?.betPlacedData?.userName,
             myStake: event?.jobData?.betPlaceObject?.myStack,
           })
@@ -142,7 +145,17 @@ const MatchDetail = () => {
   const setMatchBetsPlaced = (event: any) => {
     try {
       if (event?.jobData?.newBet?.matchId === state?.matchId) {
-        dispatch(updateBetsPlaced(event?.jobData));
+        dispatch(
+          updateBetsPlaced({
+            newBet: {
+              ...event?.jobData?.newBet,
+              userId: event?.jobData?.userId,
+              domain: event?.jobData?.domainUrl,
+            },
+            userName: event?.jobData?.userName,
+            myStake: event?.jobData?.myStake,
+          })
+        );
         // dispatch(updateBalance(event?.jobData));
         dispatch(updateTeamRates(event));
       }

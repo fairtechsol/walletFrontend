@@ -3,7 +3,10 @@ import { Box } from "@mui/system";
 import StyledImage from "./StyledImages";
 import { SEARCH, Search } from "../../assets";
 import { debounce } from "lodash";
-import { getModalUserList, getUserList } from "../../store/actions/user/userAction";
+import {
+  getModalUserList,
+  getUserList,
+} from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import {
@@ -31,7 +34,8 @@ const SearchInput = (props: any) => {
     toDate,
     userId,
     roleName,
-    domain
+    domain,
+    setCurrentPage,
   } = props;
 
   const theme = useTheme();
@@ -51,14 +55,13 @@ const SearchInput = (props: any) => {
       if (fromDate && toDate) {
         filter += `&createdAt=between${moment(fromDate)?.format(
           "YYYY-MM-DD"
-        )}|${moment(toDate).add(1, "days")?.format(
-          "YYYY-MM-DD"
-        )}`;
+        )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
       } else if (fromDate) {
         filter += `&createdAt=gte${moment(fromDate)?.format("YYYY-MM-DD")}`;
       } else if (toDate) {
         filter += `&createdAt=lte${moment(toDate)?.format("YYYY-MM-DD")}`;
       }
+      setCurrentPage(1);
       if (searchFor === "accountStatement") {
         dispatch(
           getAccountStatement({
@@ -84,15 +87,15 @@ const SearchInput = (props: any) => {
                 : "user.userName",
           })
         );
-      }else if (searchFor === "userModalList") {
+      } else if (searchFor === "userModalList") {
         dispatch(
           getModalUserList({
             userName: value,
             currentPage: 1,
-            url:  endpoint ,
-            userId:userId,
-            roleName:roleName,
-            domain:domain,
+            url: endpoint,
+            userId: userId,
+            roleName: roleName,
+            domain: domain,
             searchBy:
               endpoint === "/expert/list"
                 ? value
@@ -101,8 +104,7 @@ const SearchInput = (props: any) => {
                 : "user.userName",
           })
         );
-      }
-       else if (searchFor === "currentBets") {
+      } else if (searchFor === "currentBets") {
         dispatch(
           getCurrentBets({
             searchBy: "user.userName",
