@@ -90,7 +90,8 @@ const RowComponentMatches = ({
               right: 5,
             }}
           >
-            ({moment(item?.startAt || new Date()).format("DD-MM-YYYY")})
+            {/* ({moment(item?.startAt || new Date()).format("DD-MM-YYYY")}) */}
+            {moment(item?.startAt).format("DD-MM-YYYY HH:mm:ss")}
           </Typography>
 
           <Box
