@@ -1,4 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ListHeader from "./ListHeader";
@@ -10,7 +17,9 @@ import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockC
 import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
 import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
+import { handleSettleCommission } from "../../store/actions/user/userAction";
+import { useDispatch } from "react-redux";
 
 const ListItems = (props: any) => {
   const { title } = props;
@@ -18,6 +27,7 @@ const ListItems = (props: any) => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
+  const dispatch: AppDispatch = useDispatch();
 
   const [isSliderVisible, setIsSliderVisible] = useState(false);
 
@@ -38,6 +48,7 @@ const ListItems = (props: any) => {
   }, []);
 
   const [selected, setSelected] = useState<any>(null);
+  const [settlementUserModal, setSettlementUserModal] = useState(false);
   const classes = {
     Menusx: {
       marginTop: { xs: "15px", lg: "30px", md: "18px" },
@@ -78,7 +89,7 @@ const ListItems = (props: any) => {
     },
   };
   const handleAmountChange = () => {
-    console.log('')
+    console.log("");
   };
   return (
     <>
@@ -165,7 +176,6 @@ const ListItems = (props: any) => {
                   }}
                   titleBackgroundColor="#ff0000"
                   onChangeAmount={handleAmountChange}
-
                 />
               )}
               {selected == 2 && (
@@ -255,7 +265,7 @@ const ListItems = (props: any) => {
                 title={"Withdraw"}
                 labelStyle={{}}
               />
-              {/* <BoxButton
+              <BoxButton
                 color={"#0B4F26"}
                 onClick={(e: any) => {
                   e?.preventDefault();
@@ -271,7 +281,7 @@ const ListItems = (props: any) => {
                   fontSize: { xs: "12px" },
                 }}
                 labelStyle={{}}
-              /> */}
+              />
               {/* <BoxButton
                   color={"#0B4F26"}
                   onClick={() => {
@@ -337,7 +347,7 @@ const ListItems = (props: any) => {
                 labelStyle={{}}
                 isSelected={selected == 5}
               />
-              {/* <Dialog
+              <Dialog
                 open={settlementUserModal}
                 onClose={() => setSettlementUserModal((prev) => !prev)}
                 aria-labelledby="alert-dialog-title"
@@ -352,11 +362,21 @@ const ListItems = (props: any) => {
                   >
                     No
                   </Button>
-                  <Button sx={{ color: "#E32A2A" }} onClick={() => {}}>
+                  <Button
+                    sx={{ color: "#E32A2A" }}
+                    onClick={() => {
+                      dispatch(
+                        handleSettleCommission({
+                          userId: profileDetail?.id,
+                          // domain: profileDetail?.domain,
+                        })
+                      );
+                    }}
+                  >
                     Yes
                   </Button>
                 </DialogActions>
-              </Dialog> */}
+              </Dialog>
             </Box>
           )}
         </Box>
