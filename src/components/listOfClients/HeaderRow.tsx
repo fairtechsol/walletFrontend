@@ -5,8 +5,11 @@ import StyledImage from "../Common/StyledImages";
 import { Box } from "@mui/material";
 import { AppDispatch } from "../../store/store";
 import { handleExport } from "../../store/actions/user/userAction";
+import { ApiConstants } from "../../utils/Constants";
 
-const HeaderRow = ({ endpoint, searchFor, downloadPdfExcel }: any) => {
+const HeaderRow = ({ getListOfUser, endpoint, searchFor, downloadPdfExcel, pageLimit,
+  setCurrentPage,
+  setSearchValue }: any) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box
@@ -68,7 +71,11 @@ const HeaderRow = ({ endpoint, searchFor, downloadPdfExcel }: any) => {
         placeholder={"Search User..."}
         show={true}
         searchFor={searchFor}
-        endpoint={endpoint}
+        endpoint={ApiConstants.USER.LIST}
+        getListOfUser={getListOfUser}
+        pageLimit={pageLimit}
+        onChange={setSearchValue}
+        setCurrentPage={setCurrentPage}
       />
     </Box>
   );

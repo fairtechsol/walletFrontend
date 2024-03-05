@@ -490,7 +490,7 @@ const RowComponent = ({ header, data }: any) => {
   //   });
   //   return timeString;
   // };
-  const getTime = (date:any) => {
+  const getTime = (date: any) => {
     const timeString = moment(date).format("hh:mm:ss A");
     return timeString;
   };
@@ -524,11 +524,12 @@ const RowComponent = ({ header, data }: any) => {
         <>
           <SingleBox
             color={getColor}
-            data={
-              data?.marketType == "MANUAL BOOKMAKER"
-                ? "Quick Bookmaker"
-                : data?.marketType
-            }
+            // data={
+            //   data?.marketType == "MANUAL BOOKMAKER"
+            //     ? "Quick Bookmaker"
+            //     : data?.marketType
+            // }// was showing markettype
+            data={data?.bettingName}
             first={true}
             header={header}
           />
