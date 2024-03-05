@@ -6,6 +6,7 @@ import {
   removeRunAmount,
   resetSessionProLoss,
   updateBetsPlaced,
+  updatePlacedbets,
   updateProfitLoss,
 } from "../../actions/match/matchAction";
 
@@ -117,7 +118,34 @@ const betsSlice = createSlice({
             (item: any) => item?.id !== idToRemove
           );
         }
-      );
+      )
+      .addCase(updatePlacedbets.fulfilled, (state, action) => {
+        const { betPlacedId, deleteReason, profitLoss, betId } = action.payload;
+        const updateDeleteReason = (bet: any) => {
+          if (betPlacedId.includes(bet.id)) {
+            bet.deleteReason = deleteReason;
+          }
+          return bet;
+        };
+        const updatedBetPlaced = state.placedBets.map(updateDeleteReason);
+        state.placedBets = Array.from(new Set(updatedBetPlaced));
+
+        if (betPlacedId) {
+          const updatedSessionProLoss = state.sessionProLoss.map((item: any) =>
+            betId === item?.id
+              ? {
+                  ...item,
+
+                  proLoss: [
+                    JSON.stringify(profitLoss),
+                    ...item.proLoss.slice(1),
+                  ],
+                }
+              : item
+          );
+          state.sessionProLoss = updatedSessionProLoss;
+        }
+      });
   },
 });
 

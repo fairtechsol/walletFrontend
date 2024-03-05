@@ -22,7 +22,10 @@ import {
   updateBetsPlaced,
   updateMatchRates,
   updateMaxLossForBet,
+  updateMaxLossForDeleteBet,
+  updateTeamRatesOnDelete,
   updateMaxLossForBetOnUndeclare,
+  updatePlacedbets,
   updateProfitLoss,
   updateTeamRates,
 } from "../../store/actions/match/matchAction";
@@ -102,8 +105,10 @@ const MatchDetail = () => {
     try {
       setMode(false);
       if (event?.matchId === state?.matchId) {
-        dispatch(getMatchDetail(state?.matchId));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        // dispatch(getMatchDetail(state?.matchId));
+        // dispatch(getPlacedBets(state?.matchId));
+        dispatch(updatePlacedbets(event));
+        dispatch(updateTeamRatesOnDelete(event));
       }
     } catch (e) {
       console.log(e);
@@ -111,10 +116,10 @@ const MatchDetail = () => {
   };
   const handleSessionDeleteBet = (event: any) => {
     try {
-      setMode(false);
+      // setMode(false);
       if (event?.matchId === state?.matchId) {
-        dispatch(getMatchDetail(state?.matchId));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(updatePlacedbets(event));
+        dispatch(updateMaxLossForDeleteBet(event));
       }
     } catch (e) {
       console.log(e);
