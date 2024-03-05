@@ -4,9 +4,6 @@ import { LockIcon, UnLockIcon } from "../../assets";
 
 const ListBody = (props: any) => {
   const { walletAccountDetail, fContainerStyle, fTextStyle } = props;
-
-
-  console.log("totalComission:", walletAccountDetail?.totalComission);
   return (
     <Box
       sx={[

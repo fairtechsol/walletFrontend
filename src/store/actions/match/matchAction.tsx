@@ -59,10 +59,10 @@ export const getPlacedBets = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${
           ApiConstants.MATCH.GET_BETS
-        }?betPlaced.matchId=${requestData}&result=inArr${JSON.stringify([
+        }?matchId=${requestData}&result=inArr${JSON.stringify([
           "PENDING",
           "UNDECLARE",
-        ])}`
+        ])}&sort=betPlaced.createdAt:DESC`
       );
       if (resp?.data) {
         return resp?.data;
