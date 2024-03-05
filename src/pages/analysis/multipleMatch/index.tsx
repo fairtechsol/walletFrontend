@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import {
   analysisListReset,
   getMultipleMatchDetail,
+  getPlacedBets,
   updateMultipleMatchDetail,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -35,8 +36,7 @@ const MultipleMatch = ({}) => {
   const { multipleMatchDetail, success } = useSelector(
     (state: RootState) => state.match.analysisList
   );
-
-  const IObets: any = [];
+  const { placedBets } = useSelector((state: RootState) => state.match.bets);
   const sessionBets: any = [];
 
   const updateMatchDetailToRedux = (event: any) => {
@@ -52,6 +52,7 @@ const MultipleMatch = ({}) => {
     try {
       if (state?.matchIds && profileDetail?.roleName) {
         dispatch(getMultipleMatchDetail(state?.matchIds));
+        dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
         state?.matchIds?.map((item: any) => {
           socketService.match.joinMatchRoom(item, profileDetail?.roleName);
         });
@@ -102,25 +103,16 @@ const MultipleMatch = ({}) => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any, index: any) => {
-                  let IObetsData = IObets?.filter(
-                    (element: any) => element?.match_id === item?.id
-                  );
                   let sessionBetsData = sessionBets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
 
-                  const QuicksessionData = item?.sessionBettings
-                    ?.filter((item: any) => !JSON.parse(item).selectionId)
-                    ?.map((item: any) => {
-                      return item;
-                    });
-
-                  const sessionData = item?.sessionBettings
-                    ?.filter((item: any) => JSON.parse(item).selectionId)
-                    ?.map((item: any) => {
-                      return item;
-                    });
-
+                  const QuicksessionData = item?.sessionBettings?.filter(
+                    (item: any) => !JSON.parse(item).selectionId
+                  );
+                  const sessionData = item?.sessionBettings?.filter(
+                    (item: any) => JSON.parse(item).selectionId
+                  );
                   return (
                     <>
                       {index === 0 ? (
@@ -333,7 +325,9 @@ const MultipleMatch = ({}) => {
                               </Box>
                               <FullAllBets
                                 tag={false}
-                                IObets={IObetsData}
+                                IObets={placedBets.filter(
+                                  (bet: any) => bet?.matchId === item?.id
+                                )}
                                 setSelectedBetData={setSelectedBetData}
                                 selectedBetData={selectedBetData}
                               />
@@ -520,7 +514,9 @@ const MultipleMatch = ({}) => {
                             )}
                             <FullAllBets
                               tag={true}
-                              IObets={IObetsData}
+                              IObets={placedBets.filter(
+                                (bet: any) => bet?.matchId === item?.id
+                              )}
                               setSelectedBetData={setSelectedBetData}
                               selectedBetData={selectedBetData}
                             />
@@ -586,31 +582,17 @@ const MultipleMatch = ({}) => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any, index: number) => {
-                  // let manualSessionHttp: any = {};
-                  // if (manualRateHttp.hasOwnProperty(item?.id)) {
-                  //   manualSessionHttp = manualRateHttp[item?.id];
-                  // }
-                  // let matchOddsDataTemp = item?.bettings?.filter(
-                  //   (element: any) => element?.sessionBet === false
-                  // );
-                  let IObetsData = IObets?.filter(
-                    (element: any) => element?.match_id === item?.id
-                  );
                   let sessionBetsData = sessionBets?.filter(
                     (element: any) => element?.match_id === item?.id
                   );
 
-                  const QuicksessionData = item?.sessionBettings
-                    ?.filter((item: any) => !JSON.parse(item).selectionId)
-                    ?.map((item: any) => {
-                      return item;
-                    });
+                  const QuicksessionData = item?.sessionBettings?.filter(
+                    (item: any) => !JSON.parse(item).selectionId
+                  );
 
-                  const sessionData = item?.sessionBettings
-                    ?.filter((item: any) => JSON.parse(item).selectionId)
-                    ?.map((item: any) => {
-                      return item;
-                    });
+                  const sessionData = item?.sessionBettings?.filter(
+                    (item: any) => JSON.parse(item).selectionId
+                  );
 
                   return (
                     <>
@@ -778,20 +760,18 @@ const MultipleMatch = ({}) => {
                             allBetsData={item?.profitLossDataSession}
                             match={"multiple"}
                             currentMatch={item}
-                            sessionData={sessionData}
-                            // currentOdds={currentOdds}
+                            sessionData={item?.apiSession}
                             sessionOffline={item?.sessionOffline}
-                            // sessionExposer={manualSessionHttp?.sessionExposure}
                             sessionBets={sessionBetsData?.length}
-                            // setPopData={setPopData}
-                            // popData={popData}
                             max={item?.betFairSessionMaxBet}
                             min={item?.betFairSessionMinBet}
                           />
                         )}
                         <FullAllBets
                           tag={true}
-                          IObets={IObetsData}
+                          IObets={placedBets.filter(
+                            (bet: any) => bet?.matchId === item?.id
+                          )}
                           setSelectedBetData={setSelectedBetData}
                           selectedBetData={selectedBetData}
                         />

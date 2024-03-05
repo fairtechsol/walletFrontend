@@ -110,7 +110,7 @@ const Inplay = () => {
         matchListInplay?.matches?.map((item: any) => {
           if (item?.id) {
             dispatch(getMatchDetail(item?.id));
-            dispatch(getPlacedBets(item?.id));
+            dispatch(getPlacedBets(`eq${item?.id}`));
           }
         });
        

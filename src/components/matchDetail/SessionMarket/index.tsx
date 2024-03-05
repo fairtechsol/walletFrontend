@@ -137,9 +137,7 @@ const SessionMarket = ({
                     lineHeight: 1,
                   }}
                 >
-                  {allBetsData?.reduce((acc: number, bet: any) => {
-                    return acc + bet?.maxLoss;
-                  }, 0)}
+                  
                 </Typography>
               </Box>
             </Box>
