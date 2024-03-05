@@ -3,7 +3,7 @@ import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 // import { ApiConstants } from "../../../utils/Constants";
 
-const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit, setCurrentPage }: any) => {
+const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit, setCurrentPage, searchFor, fromDate, toDate, setSearchValue }: any) => {
   return (
     <Box
       sx={{
@@ -33,6 +33,11 @@ const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit, setCurrentPag
         width={"100%"}
         searchFor={"currentBets"}
         placeholder={"Search..."}
+        fromDate={fromDate}
+        toDate={toDate}
+        pageLimit={pageLimit}
+        onChange={setSearchValue}
+        setCurrentPage={setCurrentPage}
       />
     </Box>
   );
