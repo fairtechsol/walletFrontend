@@ -24,7 +24,7 @@ const SessionComponentMatches = ({
 }: any) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
-  const { betProfitLossList } = useSelector(
+  const { betProfitLossList,user } = useSelector(
     (state: RootState) => state.report.reportList
   );
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -51,6 +51,7 @@ const SessionComponentMatches = ({
                   betId: item?.betId,
                   isSession: true,
                   url: domainUrl || "",
+                  id:user?.id 
                 })
               );
               setSelectedId({
