@@ -15,13 +15,14 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  analysisListReset,
-  getAnalysisList,
-} from "../../store/actions/match/matchAction";
 import { useDispatch } from "react-redux";
 import { Constants } from "../../utils/Constants";
 import { toast } from "react-toastify";
+import {
+  analysisListReset,
+  getAnalysisList,
+} from "../../store/actions/match/multipleMatchActions";
+import { socketService } from "../../socketManager";
 
 const Analysis = () => {
   const navigate = useNavigate();
@@ -66,6 +67,23 @@ const Analysis = () => {
   useEffect(() => {
     dispatch(getAnalysisList({ currentPage: currentPage }));
   }, [currentPage]);
+
+  useEffect(() => {
+    socketService.match.matchResultDeclared(
+      dispatch(getAnalysisList({ currentPage: currentPage }))
+    );
+    socketService.match.matchResultUnDeclared(
+      dispatch(getAnalysisList({ currentPage: currentPage }))
+    );
+    return () => {
+      socketService.match.matchResultDeclaredOff(
+        dispatch(getAnalysisList({ currentPage: currentPage }))
+      );
+      socketService.match.matchResultUnDeclaredOff(
+        dispatch(getAnalysisList({ currentPage: currentPage }))
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (success) {

@@ -15,6 +15,7 @@ const PlaceBetComponent = ({ newData, profitLoss }: any) => {
         onClick={() => {
           dispatch(
             getSessionProLoss({
+              matchId: newData?.matchId,
               id: newData?.id,
               name: newData?.name,
               type: !newData?.isManual

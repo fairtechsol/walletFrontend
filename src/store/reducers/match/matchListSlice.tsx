@@ -10,6 +10,7 @@ import {
   betDataFromSocket,
   updateTeamRates,
   updateMaxLossForBetOnUndeclare,
+  updateBetDataOnDeclare,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -160,6 +161,23 @@ const matchListSlice = createSlice({
               },
             ])
           );
+        }
+      })
+
+      .addCase(updateBetDataOnDeclare.fulfilled, (state, action) => {
+        const { betId, matchId } = action.payload;
+        if (state?.matchDetail?.id === matchId) {
+          const updatedProfitLossDataSession =
+            state.matchDetail?.profitLossDataSession.filter(
+              (item: any) => item?.betId !== betId
+            );
+
+          state.matchDetail = {
+            ...state.matchDetail,
+            profitLossDataSession: updatedProfitLossDataSession,
+          };
+        } else {
+          return state.matchDetail;
         }
       })
       .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
