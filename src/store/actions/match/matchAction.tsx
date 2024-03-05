@@ -260,13 +260,29 @@ export const updateTeamRates = createAsyncThunk<any, any>(
     return data;
   }
 );
-
+export const updateMaxLossForDeleteBet = createAsyncThunk<any, any>(
+  "/maxLossOnDelete/update",
+  async (data) => {
+    return data;
+  }
+);
+export const updateTeamRatesOnDelete = createAsyncThunk<any, any>(
+  "/teamRates/updateOnDelete",
+  async (data) => {
+    return data;
+  }
+);
 export const getSessionProfitLossMatchDetailFilter = createAsyncThunk<any, any>(
   "getSessionProfitLossMatchDetail/filter",
   async (requestData) => {
     return requestData;
   }
 );
-
+export const updatePlacedbets = createAsyncThunk<any, any>(
+  "/maxLoss/updatePlacedbets",
+  async (data) => {
+    return data;
+  }
+);
 export const matchListReset = createAction("matchList/reset");
 export const analysisListReset = createAction("analysisList/reset");
