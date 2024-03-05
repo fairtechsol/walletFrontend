@@ -79,6 +79,7 @@ const MultipleMatch = () => {
       console.log(error);
     }
   };
+
   const setMultiMatchBetsPlaced = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.jobData?.newBet?.matchId)) {
@@ -99,6 +100,7 @@ const MultipleMatch = () => {
       console.log(error);
     }
   };
+
   const matchMultiResultDeclared = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
@@ -108,12 +110,7 @@ const MultipleMatch = () => {
       console.log(error);
     }
   };
-  // const matchMultiDeleteBet = (event: any) => {
-  //   try {
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
   const handleMultiMatchSessionResultDeclare = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
@@ -130,6 +127,7 @@ const MultipleMatch = () => {
       console.log(error);
     }
   };
+  
   const handleMultiMatchSessionResultUnDeclare = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {

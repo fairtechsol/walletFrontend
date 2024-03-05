@@ -105,6 +105,7 @@ const MatchDetail = () => {
     try {
       setMode(false);
       if (event?.matchId === state?.matchId) {
+        setSelectedBetData([]);
         // dispatch(getMatchDetail(state?.matchId));
         // dispatch(getPlacedBets(state?.matchId));
         dispatch(updatePlacedbets(event));
@@ -116,8 +117,9 @@ const MatchDetail = () => {
   };
   const handleSessionDeleteBet = (event: any) => {
     try {
-      // setMode(false);
+      setMode(false);
       if (event?.matchId === state?.matchId) {
+        setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
         dispatch(updateMaxLossForDeleteBet(event));
       }
