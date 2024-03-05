@@ -79,7 +79,7 @@ export const getDomainProfitLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?url=${requestData.url}&type=${requestData.type}${requestData.filter}`
+        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?url=${requestData.url}&type=${requestData.type}&${requestData.filter}`
       );
       if (resp) {
         return resp?.data?.data;
@@ -97,7 +97,7 @@ export const getBetProfitLoss = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}${
           requestData.betId ? `&betId=${requestData.betId}` : ""
-        }&isSession=${requestData.isSession}&url=${requestData.url}`
+        }&isSession=${requestData.isSession}&url=${requestData.url}${requestData.id ? `&id=${requestData.id}` : ''}`
       );
       if (resp) {
         return resp?.data?.data;
@@ -113,7 +113,7 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${requestData.matchId}&url=${requestData.url}`
+        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${requestData.matchId}&url=${requestData.url}${requestData.id ?`&id=${requestData.id}` : ''}`
       );
       if (resp) {
         return resp?.data?.data;
@@ -156,7 +156,12 @@ export const getCommissionBetPlaced = createAsyncThunk<any, any>(
     }
   }
 );
-
+export const updateUserSearchId = createAsyncThunk<any, any>(
+  "/maxLoss/updateUserSearchId",
+  async (data) => {
+    return data;
+  }
+);
 export const resetAccountStatement = createAction("statement/reset");
 export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");
 export const resetBetProfitLoss = createAction("betProfitLoss/reset");

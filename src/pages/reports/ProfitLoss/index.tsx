@@ -4,7 +4,7 @@ import ProfitLossTableComponent from "../../../components/report/ProfitLossRepor
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { getTotalProfitLoss } from "../../../store/actions/reports";
+import { getTotalProfitLoss, updateUserSearchId } from "../../../store/actions/reports";
 import moment from "moment";
 import { getSearchClientList } from "../../../store/actions/user/userAction";
 import { debounce } from "lodash";
@@ -34,17 +34,18 @@ const ProfitLossReport = () => {
       let filter = "";
       if (search?.id) {
         filter += `id=${search?.id}`;
+        dispatch(updateUserSearchId({search}))
       }
       if (startDate && endDate) {
-        filter += `&createdAt=between${moment(startDate)?.format(
-          "YYYY-MM-DD"
-        )}|${moment(endDate).add(1, "days")?.format("YYYY-MM-DD")}`;
+        filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&endDate=${moment(endDate).add(1, "days")?.format("YYYY-MM-DD")}`;
       } else if (startDate) {
-        filter += `&createdAt=gte${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
       } else if (endDate) {
-        filter += `&createdAt=lte${moment(endDate)?.format("YYYY-MM-DD")}`;
+        filter += `endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
       }
       dispatch(getTotalProfitLoss({ filter: filter }));
+      
     } catch (error) {
       console.error("Error:", (error as Error)?.message);
     }
