@@ -157,10 +157,19 @@ const MultipleMatch = () => {
 
   useEffect(() => {
     try {
-      if (state?.matchIds && profileDetail?.roleName) {
+      if (state?.matchIds) {
         dispatch(getMultipleMatchDetail(state?.matchIds));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [state?.matchIds]);
+
+  useEffect(() => {
+    try {
+      if (success && profileDetail?.roleName) {
         state?.matchIds?.map((item: any) => {
           socketService.match.joinMatchRoom(item, profileDetail?.roleName);
         });
@@ -176,10 +185,14 @@ const MultipleMatch = () => {
         socketService.match.sessionResultUnDeclare(
           handleMultiMatchSessionResultUnDeclare
         );
+        dispatch(analysisListReset());
       }
     } catch (e) {
       console.log(e);
     }
+  }, [success]);
+
+  useEffect(() => {
     return () => {
       state?.matchIds?.map((item: any) => {
         socketService.match.leaveMatchRoom(item);
@@ -199,13 +212,31 @@ const MultipleMatch = () => {
         handleMultiMatchSessionResultUnDeclare
       );
     };
-  }, [state?.matchIds, profileDetail?.roleName]);
+  }, []);
 
   useEffect(() => {
-    if (success) {
-      dispatch(analysisListReset());
-    }
-  }, [success]);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        if (state?.matchId) {
+          dispatch(getMultipleMatchDetail(state?.matchIds));
+          dispatch(resetSessionProLoss());
+          dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        }
+      } else if (document.visibilityState === "hidden") {
+        state?.matchIds?.map((item: any) => {
+          socketService.match.leaveMatchRoom(item);
+        });
+        state?.matchIds?.map((item: any) => {
+          socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <>
