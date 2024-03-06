@@ -66,15 +66,6 @@ const Inplay = () => {
     }
   }, [currentPage]);
 
-  useEffect(() => {
-    try {
-    } catch (e) {
-      if (success) {
-        dispatch(matchListReset());
-      }
-    }
-  }, [success]);
-
   const getMatchListService = () => {
     dispatch(getMatchListInplay({ currentPage: currentPage }));
   };
@@ -93,6 +84,7 @@ const Inplay = () => {
           socketService.match.matchResultUnDeclared(matchResultDeclared);
           socketService.match.matchAdded(getMatchListService);
         }
+        dispatch(matchListReset());
       }
     } catch (e) {
       console.log(e);
@@ -135,37 +127,37 @@ const Inplay = () => {
   const classes = useStyles();
   return (
     <>
-      {matchListInplay && matchListInplay?.matches?.length > 0 ? (
-        matchListInplay?.matches?.map((match: any) => {
-          return (
-            <MatchComponent
-              key={match.id}
-              onClick={() => {
-                navigate(`/wallet/live_market/matches`, {
-                  state: {
-                    submit: true,
-                    matchId: match?.id,
-                  },
-                });
-              }}
-              top={true}
-              blur={false}
-              match={match}
-              // handleUpdateMatch={handleUpdateMatch}
-            />
-          );
-        })
-      ) : !loading &&(
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell style={{ color: "white", textAlign: "center" }}>
-                No Record Found...
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      )}
+      {matchListInplay && matchListInplay?.matches?.length > 0
+        ? matchListInplay?.matches?.map((match: any) => {
+            return (
+              <MatchComponent
+                key={match.id}
+                onClick={() => {
+                  navigate(`/wallet/live_market/matches`, {
+                    state: {
+                      submit: true,
+                      matchId: match?.id,
+                    },
+                  });
+                }}
+                top={true}
+                blur={false}
+                match={match}
+                // handleUpdateMatch={handleUpdateMatch}
+              />
+            );
+          })
+        : !loading && (
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell style={{ color: "white", textAlign: "center" }}>
+                    No Record Found...
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          )}
       {matchListInplay && matchListInplay?.matches?.length > 0 && (
         <Pagination
           page={currentPage}
