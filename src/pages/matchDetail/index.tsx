@@ -568,6 +568,9 @@ const MatchDetail = () => {
                 maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
               />
             )}
+             <Box
+                sx={{ width: "150px", height: "3px" }}
+              ></Box>
             {matchDetail?.manualSessionActive &&
               matchDetail?.sessionBettings?.filter(
                 (item: any) => !JSON.parse(item).selectionId

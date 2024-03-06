@@ -476,6 +476,18 @@ const EditAccount = () => {
     }
   }, [editSuccess]);
 
+  useEffect(() => {
+    if (lockUnlockObj.allPrivilege) {
+      setLockUnlockObj({
+        ...lockUnlockObj,
+        addMatchPrivilege: true,
+        betFairMatchPrivilege: true,
+        bookmakerMatchPrivilege: true,
+        sessionMatchPrivilege: true,
+      });
+    }
+  }, [lockUnlockObj]);
+
   return (
     <>
       {loading && <Loader />}
