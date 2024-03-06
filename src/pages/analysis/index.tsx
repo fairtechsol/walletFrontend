@@ -24,7 +24,7 @@ import {
 } from "../../store/actions/match/multipleMatchActions";
 import { socketService } from "../../socketManager";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 const Analysis = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -37,8 +37,8 @@ const Analysis = () => {
 
   const useStyles = makeStyles({
     whiteTextPagination: {
-      '& .MuiPaginationItem-root': {
-        color: 'white', // Change text color to white
+      "& .MuiPaginationItem-root": {
+        color: "white", // Change text color to white
       },
     },
   });
@@ -73,32 +73,29 @@ const Analysis = () => {
     }
   };
 
+  const getMatchist = () => {
+    dispatch(getAnalysisList({ currentPage: currentPage }));
+  };
+
   useEffect(() => {
     dispatch(getAnalysisList({ currentPage: currentPage }));
   }, [currentPage]);
 
   useEffect(() => {
-    socketService.match.matchResultDeclared(
-      dispatch(getAnalysisList({ currentPage: currentPage }))
-    );
-    socketService.match.matchResultUnDeclared(
-      dispatch(getAnalysisList({ currentPage: currentPage }))
-    );
-    return () => {
-      socketService.match.matchResultDeclaredOff(
-        dispatch(getAnalysisList({ currentPage: currentPage }))
-      );
-      socketService.match.matchResultUnDeclaredOff(
-        dispatch(getAnalysisList({ currentPage: currentPage }))
-      );
-    };
-  }, []);
-
-  useEffect(() => {
     if (success) {
+      if (analysisList && analysisList?.matches?.length > 0) {
+        socketService.match.matchResultDeclared(getMatchist);
+        socketService.match.matchResultUnDeclared(getMatchist);
+        socketService.match.matchAdded(getMatchist);
+      }
       dispatch(analysisListReset());
     }
-  }, [success]);
+    return () => {
+      socketService.match.matchResultDeclaredOff(getMatchist);
+      socketService.match.matchResultUnDeclaredOff(getMatchist);
+      socketService.match.matchAddedOff(getMatchist);
+    };
+  }, [analysisList?.matches?.length, success]);
 
   return (
     <>
@@ -261,7 +258,7 @@ const Analysis = () => {
               className={`${classes.whiteTextPagination} d-flex justify-content-center`}
               count={Math.ceil(
                 parseInt(analysisList?.count ? analysisList?.count : 1) /
-                Constants.pageLimit
+                  Constants.pageLimit
               )}
               color="primary"
               onChange={(e: any, value: number) => {
