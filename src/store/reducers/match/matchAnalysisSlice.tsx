@@ -6,9 +6,11 @@ import {
   updateBetDataOnDeclareOfMultipleMatch,
   updateMaxLossForBetForMultipleMatch,
   updateMaxLossForBetOnUndeclareForMultipleMatch,
+  updateMaxLossForDeleteBetForMultiMatch,
   updateMultipleMatchDetail,
   updateProfitLossForMultipleMatch,
   updateTeamRatesOfMultipleMatch,
+  updateTeamRatesOnDeleteForMultiMatch,
 } from "../../actions/match/multipleMatchActions";
 
 interface InitialState {
@@ -235,6 +237,88 @@ const analysisListSlice = createSlice({
                   );
 
                 return {
+                  ...match,
+                  profitLossDataSession: updatedProfitLossDataSession,
+                };
+              } else {
+                return match;
+              }
+            }
+          );
+        }
+      )
+      .addCase(
+        updateTeamRatesOnDeleteForMultiMatch.fulfilled,
+        (state, action) => {
+          const { redisObject, matchBetType } = action.payload;
+          state.multipleMatchDetail = state.multipleMatchDetail.map(
+            (match: any) => {
+              if (["tiedMatch2", "tiedMatch"].includes(matchBetType)) {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    yesRateTie: redisObject[action.payload?.teamArateRedisKey],
+                    noRateTie: redisObject[action.payload?.teamBrateRedisKey],
+                  },
+                };
+              } else if (["completeMatch"].includes(matchBetType)) {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    yesRateComplete:
+                      redisObject[action.payload?.teamArateRedisKey],
+                    noRateComplete:
+                      redisObject[action.payload?.teamBrateRedisKey],
+                  },
+                };
+              } else {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    teamARate: redisObject[action.payload?.teamArateRedisKey],
+                    teamBRate: redisObject[action.payload?.teamBrateRedisKey],
+                    teamCRate:
+                      redisObject[action.payload?.teamCrateRedisKey] ?? "",
+                  },
+                };
+              }
+            }
+          );
+        }
+      )
+      .addCase(
+        updateMaxLossForDeleteBetForMultiMatch.fulfilled,
+        (state, action) => {
+          const { matchId, betId, profitLoss } = action.payload;
+          state.multipleMatchDetail = state.multipleMatchDetail.map(
+            (match: any) => {
+              if (match === matchId) {
+                const updatedProfitLossDataSession =
+                  match?.profitLossDataSession.map((item: any) => {
+                    if (betId === item?.betId) {
+                      return {
+                        ...item,
+                        maxLoss: profitLoss?.maxLoss,
+                        totalBet: profitLoss?.totalBet,
+                      };
+                    }
+                    return item;
+                  });
+
+                const betIndex = updatedProfitLossDataSession.findIndex(
+                  (item: any) => item?.betId === betId
+                );
+                if (betIndex === -1) {
+                  updatedProfitLossDataSession.push({
+                    betId: betId,
+                    maxLoss: profitLoss?.maxLoss,
+                    totalBet: 1,
+                  });
+                }
+                match = {
                   ...match,
                   profitLossDataSession: updatedProfitLossDataSession,
                 };

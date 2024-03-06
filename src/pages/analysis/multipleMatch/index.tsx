@@ -19,6 +19,7 @@ import {
   removeRunAmount,
   resetSessionProLoss,
   updateBetsPlaced,
+  updatePlacedbets,
   updateProfitLoss,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -30,8 +31,10 @@ import {
   updateBetDataOnDeclareOfMultipleMatch,
   updateMaxLossForBetForMultipleMatch,
   updateMaxLossForBetOnUndeclareForMultipleMatch,
+  updateMaxLossForDeleteBetForMultiMatch,
   updateMultipleMatchDetail,
   updateTeamRatesOfMultipleMatch,
+  updateTeamRatesOnDeleteForMultiMatch,
 } from "../../../store/actions/match/multipleMatchActions";
 import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
 
@@ -127,7 +130,7 @@ const MultipleMatch = () => {
       console.log(error);
     }
   };
-  
+
   const handleMultiMatchSessionResultUnDeclare = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
@@ -139,12 +142,34 @@ const MultipleMatch = () => {
     }
   };
 
+  const handleMultiMatchDeleteBet = (event: any) => {
+    if (state?.matchIds.includes(event?.matchId)) {
+      dispatch(updatePlacedbets(event));
+      dispatch(updateTeamRatesOnDeleteForMultiMatch(event));
+    }
+  };
+  const handleMultiMatchSessionDeleteBet = (event: any) => {
+    if (state?.matchIds.includes(event?.matchId)) {
+      dispatch(updatePlacedbets(event));
+      dispatch(updateMaxLossForDeleteBetForMultiMatch(event));
+    }
+  };
+
   useEffect(() => {
     try {
-      if (state?.matchIds && profileDetail?.roleName) {
+      if (state?.matchIds) {
         dispatch(getMultipleMatchDetail(state?.matchIds));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [state?.matchIds]);
+
+  useEffect(() => {
+    try {
+      if (success && profileDetail?.roleName) {
         state?.matchIds?.map((item: any) => {
           socketService.match.joinMatchRoom(item, profileDetail?.roleName);
         });
@@ -155,13 +180,19 @@ const MultipleMatch = () => {
         socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchMultiResultDeclared);
         socketService.match.sessionResult(handleMultiMatchSessionResultDeclare);
+        socketService.match.matchDeleteBet(handleMultiMatchDeleteBet);
+        socketService.match.sessionDeleteBet(handleMultiMatchSessionDeleteBet);
         socketService.match.sessionResultUnDeclare(
           handleMultiMatchSessionResultUnDeclare
         );
+        dispatch(analysisListReset());
       }
     } catch (e) {
       console.log(e);
     }
+  }, [success]);
+
+  useEffect(() => {
     return () => {
       state?.matchIds?.map((item: any) => {
         socketService.match.leaveMatchRoom(item);
@@ -172,6 +203,8 @@ const MultipleMatch = () => {
       socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
       socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
       socketService.match.matchResultDeclared(matchMultiResultDeclared);
+      socketService.match.matchDeleteBetOff(handleMultiMatchDeleteBet);
+      socketService.match.sessionDeleteBetOff(handleMultiMatchSessionDeleteBet);
       socketService.match.sessionResultOff(
         handleMultiMatchSessionResultDeclare
       );
@@ -179,13 +212,31 @@ const MultipleMatch = () => {
         handleMultiMatchSessionResultUnDeclare
       );
     };
-  }, [state?.matchIds, profileDetail?.roleName]);
+  }, []);
 
   useEffect(() => {
-    if (success) {
-      dispatch(analysisListReset());
-    }
-  }, [success]);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        if (state?.matchId) {
+          dispatch(getMultipleMatchDetail(state?.matchIds));
+          dispatch(resetSessionProLoss());
+          dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        }
+      } else if (document.visibilityState === "hidden") {
+        state?.matchIds?.map((item: any) => {
+          socketService.match.leaveMatchRoom(item);
+        });
+        state?.matchIds?.map((item: any) => {
+          socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <>
@@ -365,7 +416,9 @@ const MultipleMatch = () => {
                               {item?.manualSessionActive && (
                                 <SessionMarket
                                   title={"Quick Session Market"}
-                                  allBetsData={item?.profitLossDataSession}
+                                  allBetsData={Array.from(
+                                    new Set(item?.profitLossDataSession)
+                                  )}
                                   // match={"multiple"}
                                   //   currentOdds={currentOdds}
                                   sessionData={QuicksessionData}
@@ -388,10 +441,12 @@ const MultipleMatch = () => {
                               {item?.apiSessionActive && (
                                 <SessionMarket
                                   title={"Session Market"}
-                                  allBetsData={item?.profitLossDataSession}
+                                  allBetsData={Array.from(
+                                    new Set(item?.profitLossDataSession)
+                                  )}
                                   match={"multiple"}
                                   //   currentOdds={currentOdds}
-                                  sessionData={sessionData}
+                                  sessionData={item?.apiSession}
                                   currentMatch={item}
                                   data={[]}
                                   sessionOffline={item?.sessionOffline}
@@ -636,7 +691,9 @@ const MultipleMatch = () => {
                             {item?.apiSessionActive && (
                               <SessionMarket
                                 title={"Quick Session Market"}
-                                allBetsData={item?.profitLossDataSession}
+                                allBetsData={Array.from(
+                                  new Set(item?.profitLossDataSession)
+                                )}
                                 sessionData={item?.sessionBettings}
                                 currentMatch={item}
                                 sessionOffline={item?.sessionOffline}
@@ -648,9 +705,12 @@ const MultipleMatch = () => {
                             {item?.manualSessionActive && (
                               <SessionMarket
                                 title={"Session Market"}
-                                allBetsData={item?.profitLossDataSession}
+                                allBetsData={Array.from(
+                                  new Set(item?.profitLossDataSession)
+                                )}
                                 match={"multiple"}
                                 currentMatch={item}
+                                sessionData={item?.apiSession}
                                 sessionOffline={item?.sessionOffline}
                                 sessionBets={sessionBetsData?.length}
                                 max={item?.betFairSessionMaxBet}
@@ -922,7 +982,9 @@ const MultipleMatch = () => {
                         {item?.apiSessionActive && (
                           <SessionMarket
                             title={"Quick Session Market"}
-                            allBetsData={item?.profitLossDataSession}
+                            allBetsData={Array.from(
+                              new Set(item?.profitLossDataSession)
+                            )}
                             // match={"multiple"}
                             currentMatch={item}
                             sessionData={QuicksessionData}
@@ -940,7 +1002,9 @@ const MultipleMatch = () => {
                         {item?.apiSessionActive && (
                           <SessionMarket
                             title={"Session Market"}
-                            allBetsData={item?.profitLossDataSession}
+                            allBetsData={Array.from(
+                              new Set(item?.profitLossDataSession)
+                            )}
                             match={"multiple"}
                             currentMatch={item}
                             sessionData={item?.apiSession}
