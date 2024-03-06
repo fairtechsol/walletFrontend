@@ -19,22 +19,7 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
     }
   }
 );
-export const getAnalysisList = createAsyncThunk<any, any>(
-  "analysis/list",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.get(
-        `${ApiConstants.INPLAY.MATCHLIST}?page=${requestData?.currentPage}&limit=${Constants.pageLimit}&sort=match.startAt:ASC`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      throw thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
+
 export const getMatchDetail = createAsyncThunk<any, any>(
   "match/detail",
   async (requestData, thunkApi) => {
@@ -82,6 +67,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
       );
       if (resp?.data && resp?.data?.profitLoss[0]) {
         return {
+          matchId: requestData?.matchId,
           id: requestData?.id,
           name: requestData?.name,
           type: requestData?.type,
@@ -89,6 +75,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
         };
       } else {
         return {
+          matchId: requestData?.matchId,
           id: requestData?.id,
           name: requestData?.name,
           type: requestData?.type,
@@ -100,28 +87,6 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
       return thunkApi.rejectWithValue(err.response?.status);
     }
   }
-);
-
-export const getMultipleMatchDetail = createAsyncThunk<any, any>(
-  "multipleMatch/detail",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.GET}/${requestData}`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      throw thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
-
-export const updateMultipleMatchDetail = createAsyncThunk<any, any>(
-  "multipleMatch/update",
-  async (data) => data
 );
 
 export const getCompetitionList = createAsyncThunk<any, any>(
@@ -248,6 +213,13 @@ export const updateMaxLossForBetOnUndeclare = createAsyncThunk<any, any>(
     return data;
   }
 );
+
+export const updateBetDataOnDeclare = createAsyncThunk<any, any>(
+  "/user/betData/declare",
+  async (balance) => {
+    return balance;
+  }
+);
 export const updateProfitLossForBet = createAsyncThunk<any, any>(
   "/profitLoss/update",
   async (data) => {
@@ -285,4 +257,4 @@ export const updatePlacedbets = createAsyncThunk<any, any>(
   }
 );
 export const matchListReset = createAction("matchList/reset");
-export const analysisListReset = createAction("analysisList/reset");
+export const resetSessionProLoss = createAction("sessionProloss/reset");

@@ -22,9 +22,7 @@ const MatchOdds = (props: any) => {
     upcoming,
   } = props;
 
-
   const [visible, setVisible] = useState(true);
-
 
   const bookRatioA = (teamARates: any, teamBRates: any) => {
     const bookRatio = teamARates != 0 ? teamBRates / teamARates || 0 : 0;
@@ -133,8 +131,8 @@ const MatchOdds = (props: any) => {
                   )
                 : typeOfBet === "Market Complete Match"
                 ? bookRatioA(
-                    currentMatch?.profitLossDataMatch?.yesRateTie,
-                    currentMatch?.profitLossDataMatch?.noRateTie
+                    currentMatch?.profitLossDataMatch?.yesRateComplete,
+                    currentMatch?.profitLossDataMatch?.noRateComplete
                   )
                 : bookRatioA(
                     currentMatch?.profitLossDataMatch?.teamARate,
@@ -155,8 +153,8 @@ const MatchOdds = (props: any) => {
                   )
                 : typeOfBet === "Market Complete Match"
                 ? bookRatioB(
-                    currentMatch?.profitLossDataMatch?.yesRateTie,
-                    currentMatch?.profitLossDataMatch?.noRateTie
+                    currentMatch?.profitLossDataMatch?.yesRateComplete,
+                    currentMatch?.profitLossDataMatch?.noRateComplete
                   )
                 : bookRatioB(
                     currentMatch?.profitLossDataMatch?.teamARate,
@@ -166,7 +164,7 @@ const MatchOdds = (props: any) => {
           />
           <img
             onClick={() => {
-                setVisible(!visible);
+              setVisible(!visible);
             }}
             src={ARROWUP}
             style={{

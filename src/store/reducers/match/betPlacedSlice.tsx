@@ -4,6 +4,7 @@ import {
   getSessionProLoss,
   getSessionProfitLossMatchDetailFilter,
   removeRunAmount,
+  resetSessionProLoss,
   updateBetsPlaced,
   updatePlacedbets,
   updateProfitLoss,
@@ -105,6 +106,9 @@ const betsSlice = createSlice({
       .addCase(getSessionProLoss.rejected, (state, action) => {
         state.loadingProLoss = false;
         state.error = action?.error?.message;
+      })
+      .addCase(resetSessionProLoss, (state) => {
+        return { ...state, successProLoss: false, sessionProLoss: [] };
       })
       .addCase(
         getSessionProfitLossMatchDetailFilter.fulfilled,

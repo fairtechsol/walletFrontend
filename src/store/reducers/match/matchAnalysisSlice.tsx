@@ -3,8 +3,13 @@ import {
   analysisListReset,
   getAnalysisList,
   getMultipleMatchDetail,
+  updateBetDataOnDeclareOfMultipleMatch,
+  updateMaxLossForBetForMultipleMatch,
+  updateMaxLossForBetOnUndeclareForMultipleMatch,
   updateMultipleMatchDetail,
-} from "../../actions/match/matchAction";
+  updateProfitLossForMultipleMatch,
+  updateTeamRatesOfMultipleMatch,
+} from "../../actions/match/multipleMatchActions";
 
 interface InitialState {
   analysisList: any;
@@ -87,6 +92,159 @@ const analysisListSlice = createSlice({
           }
         );
       })
+      .addCase(updateProfitLossForMultipleMatch.fulfilled, () => {
+        // const { jobData, profitLoss } = action.payload;
+        // if (jobData?.betPlaceObject?.betPlacedData?.betId) {
+        //   const updatedSessionProLoss = state.sessionProLoss.map((item: any) =>
+        //     item?.id === jobData.betPlaceObject.betPlacedData.betId
+        //       ? {
+        //           ...item,
+        //           proLoss: [
+        //             JSON.stringify(profitLoss),
+        //             ...item.proLoss.slice(1),
+        //           ],
+        //         }
+        //       : item
+        //   );
+        //   state.sessionProLoss = updatedSessionProLoss;
+        // }
+      })
+      .addCase(
+        updateMaxLossForBetForMultipleMatch.fulfilled,
+        (state, action) => {
+          const { jobData, profitLoss } = action.payload;
+
+          state.multipleMatchDetail = state.multipleMatchDetail.map(
+            (match: any) => {
+              if (match?.id === jobData?.placedBet?.matchId) {
+                const updatedProfitLossDataSession =
+                  match?.profitLossDataSession.map((item: any) => {
+                    if (item?.betId === jobData?.placedBet?.betId) {
+                      return {
+                        ...item,
+                        maxLoss: profitLoss?.maxLoss,
+                        totalBet: profitLoss?.totalBet,
+                      };
+                    }
+                    return item;
+                  });
+
+                const betIndex = updatedProfitLossDataSession.findIndex(
+                  (item: any) => item?.betId === jobData?.placedBet?.betId
+                );
+                if (betIndex === -1) {
+                  updatedProfitLossDataSession.push({
+                    betId: jobData?.placedBet?.betId,
+                    maxLoss: profitLoss?.maxLoss,
+                    totalBet: 1,
+                  });
+                }
+
+                return {
+                  ...match,
+                  profitLossDataSession: updatedProfitLossDataSession,
+                };
+              } else {
+                return match;
+              }
+            }
+          );
+        }
+      )
+      .addCase(updateTeamRatesOfMultipleMatch.fulfilled, (state, action) => {
+        const { userRedisObj, jobData } = action.payload;
+
+        state.multipleMatchDetail = state.multipleMatchDetail.map(
+          (match: any) => {
+            if (
+              ["tiedMatch2", "tiedMatch"].includes(jobData?.newBet?.marketType)
+            ) {
+              return {
+                ...match,
+                profitLossDataMatch: {
+                  ...match.profitLossDataMatch,
+                  yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
+                  noRateTie: userRedisObj[jobData?.teamBrateRedisKey],
+                },
+              };
+            } else if (
+              ["completeMatch"].includes(jobData?.newBet?.marketType)
+            ) {
+              return {
+                ...match,
+                profitLossDataMatch: {
+                  ...match.profitLossDataMatch,
+                  yesRateComplete: userRedisObj[jobData?.teamArateRedisKey],
+                  noRateComplete: userRedisObj[jobData?.teamBrateRedisKey],
+                },
+              };
+            } else {
+              return {
+                ...match,
+                profitLossDataMatch: {
+                  ...match.profitLossDataMatch,
+                  teamARate: userRedisObj[jobData?.teamArateRedisKey],
+                  teamBRate: userRedisObj[jobData?.teamBrateRedisKey],
+                  teamCRate: userRedisObj[jobData?.teamCrateRedisKey] ?? "",
+                },
+              };
+            }
+          }
+        );
+      })
+      .addCase(
+        updateMaxLossForBetOnUndeclareForMultipleMatch.fulfilled,
+        (state, action) => {
+          const { betId, matchId, parentRedisUpdateObj } = action.payload;
+          state.multipleMatchDetail = state.multipleMatchDetail.map(
+            (match: any) => {
+              if (match?.id === matchId) {
+                const updatedProfitLoss = Array.from(
+                  new Set([
+                    ...match.profitLossDataSession,
+                    {
+                      betId: betId,
+                      maxLoss: JSON.parse(
+                        parentRedisUpdateObj[`${betId}_profitLoss`]
+                      ).maxLoss,
+                      totalBet: JSON.parse(
+                        parentRedisUpdateObj[`${betId}_profitLoss`]
+                      ).totalBet,
+                    },
+                  ])
+                );
+                return {
+                  ...match,
+                  profitLossDataSession: updatedProfitLoss,
+                };
+              } else return match;
+            }
+          );
+        }
+      )
+      .addCase(
+        updateBetDataOnDeclareOfMultipleMatch.fulfilled,
+        (state, action) => {
+          const { betId, matchId } = action.payload;
+          state.multipleMatchDetail = state.multipleMatchDetail.map(
+            (match: any) => {
+              if (matchId === match?.id) {
+                const updatedProfitLossDataSession =
+                  match?.profitLossDataSession.filter(
+                    (item: any) => item?.betId !== betId
+                  );
+
+                return {
+                  ...match,
+                  profitLossDataSession: updatedProfitLossDataSession,
+                };
+              } else {
+                return match;
+              }
+            }
+          );
+        }
+      )
       .addCase(analysisListReset, (state) => {
         return { ...state, success: false };
       });

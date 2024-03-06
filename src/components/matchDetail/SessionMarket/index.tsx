@@ -103,7 +103,7 @@ const SessionMarket = ({
             <Box sx={{ gap: "4px", display: "flex" }}>
               <BetsCountBox
                 total={allBetsData?.reduce((acc: number, bet: any) => {
-                  return acc + bet?.totalBet;
+                  return acc + (bet?.totalBet || 0);
                 }, 0)}
               />
               {/* static code */}
@@ -137,7 +137,9 @@ const SessionMarket = ({
                     lineHeight: 1,
                   }}
                 >
-                  
+                  {allBetsData?.reduce((accumulator: any, bet: any) => {
+                    return accumulator + (+bet?.maxLoss || 0);
+                  }, 0)}
                 </Typography>
               </Box>
             </Box>

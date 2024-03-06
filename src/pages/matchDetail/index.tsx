@@ -9,6 +9,7 @@ import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
+import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import { socketService } from "../../socketManager";
 import {
   AllBetDelete,
@@ -16,6 +17,8 @@ import {
   getPlacedBets,
   matchListReset,
   removeRunAmount,
+  resetSessionProLoss,
+  updateBetDataOnDeclare,
   updateBetsPlaced,
   updateMatchRates,
   updateMaxLossForBet,
@@ -27,7 +30,6 @@ import {
   updateTeamRates,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -103,6 +105,7 @@ const MatchDetail = () => {
     try {
       setMode(false);
       if (event?.matchId === state?.matchId) {
+        setSelectedBetData([]);
         // dispatch(getMatchDetail(state?.matchId));
         // dispatch(getPlacedBets(state?.matchId));
         dispatch(updatePlacedbets(event));
@@ -114,8 +117,9 @@ const MatchDetail = () => {
   };
   const handleSessionDeleteBet = (event: any) => {
     try {
-      // setMode(false);
+      setMode(false);
       if (event?.matchId === state?.matchId) {
+        setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
         dispatch(updateMaxLossForDeleteBet(event));
       }
@@ -172,6 +176,12 @@ const MatchDetail = () => {
   const handleSessionResultDeclare = (event: any) => {
     try {
       if (event?.matchId === state?.matchId) {
+        dispatch(
+          updateBetDataOnDeclare({
+            betId: event?.betId,
+            matchId: event?.matchId,
+          })
+        );
         dispatch(removeRunAmount(event));
         dispatch(getPlacedBets(`eq${state?.matchId}`));
       }
@@ -195,6 +205,7 @@ const MatchDetail = () => {
     try {
       if (state?.matchId && profileDetail?.roleName) {
         dispatch(getMatchDetail(state?.matchId));
+        dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${state?.matchId}`));
       }
     } catch (e) {

@@ -3,7 +3,15 @@ import SearchInput from "../../Common/SearchInput";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 // import { ApiConstants } from "../../../utils/Constants";
 
-const ListHeaderRow = ({ getLimitEntries, setPageLimit, pageLimit, setCurrentPage, searchFor, fromDate, toDate, setSearchValue }: any) => {
+const ListHeaderRow = ({
+  getLimitEntries,
+  setPageLimit,
+  pageLimit,
+  setCurrentPage,
+  fromDate,
+  toDate,
+  setSearchValue,
+}: any) => {
   return (
     <Box
       sx={{
