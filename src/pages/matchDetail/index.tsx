@@ -22,12 +22,12 @@ import {
   updateBetsPlaced,
   updateMatchRates,
   updateMaxLossForBet,
-  updateMaxLossForDeleteBet,
-  updateTeamRatesOnDelete,
   updateMaxLossForBetOnUndeclare,
+  updateMaxLossForDeleteBet,
   updatePlacedbets,
   updateProfitLoss,
   updateTeamRates,
+  updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 
@@ -417,7 +417,9 @@ const MatchDetail = () => {
               (item: any) => !JSON.parse(item).selectionId
             )?.length > 0 && (
               <SessionMarket
-                allBetsData={matchDetail?.profitLossDataSession}
+                allBetsData={Array.from(
+                  new Set(matchDetail?.profitLossDataSession)
+                )}
                 title={"Quick Session Market"}
                 currentMatch={matchDetail}
                 sessionData={matchDetail?.sessionBettings?.filter(
@@ -431,7 +433,9 @@ const MatchDetail = () => {
             matchesMobile &&
             matchDetail?.apiSession?.length > 0 && (
               <SessionMarket
-                allBetsData={matchDetail?.profitLossDataSession}
+                allBetsData={Array.from(
+                  new Set(matchDetail?.profitLossDataSession)
+                )}
                 title={"Session Market"}
                 currentMatch={matchDetail}
                 sessionData={matchDetail?.apiSession}
@@ -577,7 +581,9 @@ const MatchDetail = () => {
               )?.length > 0 && (
                 <SessionMarket
                   title={"Quick Session Market"}
-                  allBetsData={matchDetail?.profitLossDataSession}
+                  allBetsData={Array.from(
+                    new Set(matchDetail?.profitLossDataSession)
+                  )}
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}
                   sessionData={matchDetail?.sessionBettings?.filter(
@@ -591,7 +597,9 @@ const MatchDetail = () => {
               matchDetail?.apiSession?.length > 0 && (
                 <SessionMarket
                   title={"Session Market"}
-                  allBetsData={matchDetail?.profitLossDataSession}
+                  allBetsData={Array.from(
+                    new Set(matchDetail?.profitLossDataSession)
+                  )}
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}
                   sessionData={matchDetail?.apiSession}

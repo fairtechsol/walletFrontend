@@ -101,5 +101,17 @@ export const updateMaxLossForBetOnUndeclareForMultipleMatch = createAsyncThunk<
 >("/maxLoss/updateMaxLossForBetOnUndeclareForMultipleMatch", async (data) => {
   return data;
 });
+export const updateTeamRatesOnDeleteForMultiMatch = createAsyncThunk<any, any>(
+  "/maxLoss/updateTeamRatesOnDeleteForMultiMatch",
+  async (data) => {
+    return data;
+  }
+);
+export const updateMaxLossForDeleteBetForMultiMatch = createAsyncThunk<
+  any,
+  any
+>("/maxLoss/updateMaxLossForDeleteBetForMultiMatch", async (data) => {
+  return data;
+});
 
 export const analysisListReset = createAction("analysisList/reset");

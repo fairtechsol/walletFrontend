@@ -16,6 +16,7 @@ const SessionMarket = ({
   max,
   sessionData,
   allBetsData,
+  currentMatch,
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -334,6 +335,7 @@ const SessionMarket = ({
                                   element?.GameStatus !== ""
                                     ? element?.GameStatus
                                     : "active",
+                                matchId: currentMatch?.id,
                               }
                             : JSON.parse(element)
                         }
