@@ -32,9 +32,9 @@ const ProfitLossReport = () => {
   const handleClick = () => {
     try {
       let filter = "";
+      dispatch(updateUserSearchId({search}))
       if (search?.id) {
         filter += `id=${search?.id}`;
-        dispatch(updateUserSearchId({search}))
       }
       if (startDate && endDate) {
         filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
