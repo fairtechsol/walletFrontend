@@ -75,7 +75,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "600", color: "black" }}
+          sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "600", color: "black", lineHeight: "0.9" }}
         >
           {data?.eventName}
         </Typography>
@@ -135,7 +135,7 @@ const TableDataRow = (props: any) => {
         <Typography
           sx={{ fontSize: { xs: "9px", md: "9px", lg: "12px" }, fontWeight: "600", color: "#575757",  overflowWrap: "anywhere"}}
         >
-          {data?.marketType}
+          {data?.bettingName ?? data?.marketType}
         </Typography>
       </Box>
       <Box
