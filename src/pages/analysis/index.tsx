@@ -24,7 +24,7 @@ import {
 } from "../../store/actions/match/multipleMatchActions";
 import { socketService } from "../../socketManager";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 const Analysis = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -37,8 +37,8 @@ const Analysis = () => {
 
   const useStyles = makeStyles({
     whiteTextPagination: {
-      '& .MuiPaginationItem-root': {
-        color: 'white', // Change text color to white
+      "& .MuiPaginationItem-root": {
+        color: "white", // Change text color to white
       },
     },
   });
@@ -261,7 +261,7 @@ const Analysis = () => {
               className={`${classes.whiteTextPagination} d-flex justify-content-center`}
               count={Math.ceil(
                 parseInt(analysisList?.count ? analysisList?.count : 1) /
-                Constants.pageLimit
+                  Constants.pageLimit
               )}
               color="primary"
               onChange={(e: any, value: number) => {
