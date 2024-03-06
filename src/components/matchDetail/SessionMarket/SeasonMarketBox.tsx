@@ -87,7 +87,7 @@ const SeasonMarketBox = (props: any) => {
             />
           )}
 
-          {newData?.status !== "active" || newData?.activeStatus !== "live" ? (
+          {newData?.status !== "active" ? (
             <Box
               sx={{
                 background: "rgba(0,0,0,1)",
