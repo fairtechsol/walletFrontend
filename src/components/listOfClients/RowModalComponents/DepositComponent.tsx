@@ -54,15 +54,12 @@ const DepositComponent = (props: any) => {
     walletAccountDetail?.userBal?.currentBalance
   );
 
- 
-
   const formatIndianCurrency = (amount: number) => {
-    const formatter = new Intl.NumberFormat('en-IN', {
-      currency: 'INR'
+    const formatter = new Intl.NumberFormat("en-IN", {
+      currency: "INR",
     });
     return formatter.format(amount);
   };
-
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -127,8 +124,7 @@ const DepositComponent = (props: any) => {
   }, [success, error]);
 
   useEffect(() => {
-    // alert(formik.values.amount)
-    // onChangeAmount(formik.values.amount, element?.id, "deposite");
+    onChangeAmount(formik.values.amount, element?.id, "deposite");
     if (isWallet) {
       setInitialBalance(
         +walletAccountDetail?.userBal?.currentBalance + +formik.values.amount
@@ -140,15 +136,13 @@ const DepositComponent = (props: any) => {
     }
   }, [formik.values.amount, onChangeAmount]);
 
-
- const checkHandleChange = (event: any) => {
+  const checkHandleChange = (event: any) => {
     let value = 0;
     if (event.target.value != "") {
-
-      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ''));
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ""));
     }
-    
-    formik.setFieldValue("amount",value);
+
+    formik.setFieldValue("amount", value);
     onChangeAmount(value, element?.id, "deposite");
     // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
     // setChexckValue(event.target.value);
@@ -270,7 +264,9 @@ const DepositComponent = (props: any) => {
                     id="amount"
                     name="amount"
                     //  value={formik.values.amount}
-                    value={formatIndianCurrency(parseFloat(formik.values.amount?.toString()))}
+                    value={formatIndianCurrency(
+                      parseFloat(formik.values.amount?.toString())
+                    )}
                     variant="standard"
                     InputProps={{
                       placeholder: "Type Amount...",
@@ -352,7 +348,9 @@ const DepositComponent = (props: any) => {
                   }}
                 >
                   <TextField
-                    value={new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(initialBalance || 0)}
+                    value={new Intl.NumberFormat("en-IN", {
+                      currency: "INR",
+                    }).format(initialBalance || 0)}
                     sx={{ width: "100%", height: "45px" }}
                     variant="standard"
                     InputProps={{
@@ -608,7 +606,5 @@ const DepositComponent = (props: any) => {
     </>
   );
 };
-
-
 
 export default DepositComponent;

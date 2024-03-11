@@ -190,7 +190,7 @@ const MultipleMatch = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success]);
+  }, [success, profileDetail]);
 
   useEffect(() => {
     return () => {
@@ -266,9 +266,6 @@ const MultipleMatch = () => {
 
                   const QuicksessionData = item?.sessionBettings?.filter(
                     (item: any) => !JSON.parse(item).selectionId
-                  );
-                  const sessionData = item?.sessionBettings?.filter(
-                    (item: any) => JSON.parse(item).selectionId
                   );
                   return (
                     <>
