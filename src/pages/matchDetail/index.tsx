@@ -198,6 +198,7 @@ const MatchDetail = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0); 
     try {
       if (state?.matchId && profileDetail?.roleName) {
         dispatch(getMatchDetail(state?.matchId));
