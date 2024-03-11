@@ -107,6 +107,8 @@ export const addUserValidation = (item: any) => {
     adminTransPassword: Yup.string().required(
       "Admin Transaction Password is required"
     ),
+    creditRefrence:Yup.string()
+    .required("credit refrence  is required")
   });
 };
 
