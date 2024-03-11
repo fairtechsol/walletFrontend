@@ -132,7 +132,7 @@ const SearchInput = (props: any) => {
               xs: "10vw",
             },
             width: {
-              xs: width ? width : "36%",
+              xs: width ? width : "100%",
               lg: "17vw",
               md: "17vw",
             },

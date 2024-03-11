@@ -4,6 +4,7 @@ import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import Divider from "../../Inplay/Divider";
 import BetsCountBox from "./BetsCountBox";
 import SeasonMarketBox from "./SeasonMarketBox";
+import { customSort } from "../../../helper";
 
 const SessionMarket = ({
   blockMatch,
@@ -16,6 +17,7 @@ const SessionMarket = ({
   max,
   sessionData,
   allBetsData,
+  currentMatch,
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -307,49 +309,53 @@ const SessionMarket = ({
               }}
             >
               {sessionData?.length > 0 &&
-                sessionData?.map((element: any, index: any) => {
-                  return (
-                    <Box
-                      key={
-                        title === "Session Market"
-                          ? element?.id
-                          : JSON.parse(element)?.id
-                      }
-                      sx={{
-                        width: "100%",
-                        display: element?.betStatus === 2 ? "none" : "block",
-                      }}
-                    >
-                      <SeasonMarketBox
-                        newData={
+                sessionData
+                  ?.slice()
+                  .sort(customSort)
+                  ?.map((element: any, index: any) => {
+                    return (
+                      <Box
+                        key={
                           title === "Session Market"
-                            ? {
-                                ...element,
-                                noRate: element?.LayPrice1 ?? 0,
-                                noPercent: element?.LaySize1 ?? 0,
-                                yesRate: element?.BackPrice1 ?? 0,
-                                yesPercent: element?.BackSize1 ?? 0,
-                                status:
-                                  element?.GameStatus &&
-                                  element?.GameStatus !== ""
-                                    ? element?.GameStatus
-                                    : "active",
-                              }
-                            : JSON.parse(element)
+                            ? element?.id
+                            : JSON.parse(element)?.id
                         }
-                        profitLossData={allBetsData?.filter(
-                          (item: any) =>
-                            item?.betId ===
-                            (title === "Session Market"
-                              ? element?.id
-                              : JSON.parse(element)?.id)
-                        )}
-                        index={index}
-                      />
-                      <Divider />
-                    </Box>
-                  );
-                })}
+                        sx={{
+                          width: "100%",
+                          display: element?.betStatus === 2 ? "none" : "block",
+                        }}
+                      >
+                        <SeasonMarketBox
+                          newData={
+                            title === "Session Market"
+                              ? {
+                                  ...element,
+                                  noRate: element?.LayPrice1 ?? 0,
+                                  noPercent: element?.LaySize1 ?? 0,
+                                  yesRate: element?.BackPrice1 ?? 0,
+                                  yesPercent: element?.BackSize1 ?? 0,
+                                  status:
+                                    element?.GameStatus &&
+                                    element?.GameStatus !== ""
+                                      ? element?.GameStatus
+                                      : "active",
+                                  matchId: currentMatch?.id,
+                                }
+                              : JSON.parse(element)
+                          }
+                          profitLossData={allBetsData?.filter(
+                            (item: any) =>
+                              item?.betId ===
+                              (title === "Session Market"
+                                ? element?.id
+                                : JSON.parse(element)?.id)
+                          )}
+                          index={index}
+                        />
+                        <Divider />
+                      </Box>
+                    );
+                  })}
             </Box>
             {showUnlock && (
               <Box
