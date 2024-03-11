@@ -196,8 +196,6 @@ const MultipleMatch = () => {
     return () => {
       state?.matchIds?.map((item: any) => {
         socketService.match.leaveMatchRoom(item);
-      });
-      state?.matchIds?.map((item: any) => {
         socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
       });
       socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
@@ -225,8 +223,6 @@ const MultipleMatch = () => {
       } else if (document.visibilityState === "hidden") {
         state?.matchIds?.map((item: any) => {
           socketService.match.leaveMatchRoom(item);
-        });
-        state?.matchIds?.map((item: any) => {
           socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
         });
       }
