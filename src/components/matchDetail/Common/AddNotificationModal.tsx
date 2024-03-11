@@ -48,7 +48,7 @@ const AddNotificationModal = ({
         <form onSubmit={handleDone}>
           <Box
             sx={{
-              width: "500px",
+              width: {lg:"500px", xs: "20rem"},
               height: "270px",
               padding: 0.2,
               borderRadius: 2,
