@@ -396,17 +396,17 @@ const RowComponent = ({ header, data }: any) => {
   //   });
   //   return timeString;
   // };
-  const getTime = (date:any) => {
+  const getTime = (date: any) => {
     const timeString = moment(date).format("hh:mm:ss A");
     return timeString;
   };
   const getColor = () => {
     if (header) {
       return "black";
-    } else if (data?.bet_type === "back" || data?.bet_type == "yes") {
+    } else if (data?.betType === "BACK" || data?.betType == "YES") {
       // return "#00C0F9";
       return "#CEEBFF";
-    } else if (data?.bet_type === "lay" || data?.bet_type == "no") {
+    } else if (data?.betType === "LAY" || data?.betType == "NO") {
       // return "#FF9292";
       return "#F2CBCB";
     }
@@ -429,7 +429,7 @@ const RowComponent = ({ header, data }: any) => {
         <>
           <SingleBox
             color={getColor}
-            data={data?.marketType}
+            data={data?.teamName}
             first={true}
             header={header}
             time={getTime(data.createdAt)}
@@ -444,17 +444,9 @@ const RowComponent = ({ header, data }: any) => {
             data={data?.odds}
             header={header}
             isPercent={true}
-            rate={formatNumber(
-              data?.bet_type === "no" || data?.betType === "no"
-                ? data?.rate?.split("-")[0]
-                : data?.rate?.split("-")[1]
-            )}
+            rate={formatNumber(data?.rate)}
           />
-          <SingleBox
-            color={getColor()}
-            data={data?.betType || data?.bet_type}
-            header={header}
-          />
+          <SingleBox color={getColor()} data={data?.betType} header={header} />
           <SingleBox
             color={getColor()}
             data={data?.stack || data?.stake || data?.amount}
@@ -489,7 +481,6 @@ const SingleBox = ({
   isPercent,
   rate,
 }: any) => {
-  
   return !header ? (
     first ? (
       <Box
