@@ -166,7 +166,7 @@ const AllRateSeperate = ({
                     justifyContent: "center",
                     alignItems: "center",
                     // margin: { xs: "1px", lg: "0" },
-                    overflow: "hidden"
+                    overflow: "hidden",
                   }}
                 >
                   <Typography
