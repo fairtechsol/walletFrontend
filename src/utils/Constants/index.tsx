@@ -123,12 +123,17 @@ export const Constants = {
   apiBasePath: "http://107.23.165.155:5050",
   thirdParty: "http://107.23.165.155:3200",
   expertPath: "http://107.23.165.155:6060",
+  apiBasePathLive: "https://walletapi.fairgame7.com",
+  thirdPartyLive: "https://serviceapi.fairgame7.com",
+  expertPathLive: "https://expertapi.fairgame7.com",
   localPath: "http://localhost:5050",
   localPathThird: "http://localhost:3200",
   localPathExpert: "http://localhost:6060",
   WEBSOCKET: "websocket",
-  POLLING: "polling"
+  POLLING: "polling",
 };
+
+// use below baseUrl for testing build
 
 export const baseUrls = {
   socket:
@@ -144,3 +149,20 @@ export const baseUrls = {
       ? `${Constants.expertPath}`
       : `${Constants.localPathExpert}`,
 };
+
+// use below baseUrl for live build
+
+// export const baseUrls = {
+//   socket:
+//     process.env.NODE_ENV === "production"
+//       ? `${Constants.apiBasePathLive}`
+//       : `${Constants.localPath}`,
+//   thirdParty:
+//     process.env.NODE_ENV === "production"
+//       ? `${Constants.thirdPartyLive}`
+//       : `${Constants.localPathThird}`,
+//   expertSocket:
+//     process.env.NODE_ENV === "production"
+//       ? `${Constants.expertPathLive}`
+//       : `${Constants.localPathExpert}`,
+// };

@@ -106,8 +106,6 @@ const MatchDetail = () => {
       setMode(false);
       if (event?.matchId === state?.matchId) {
         setSelectedBetData([]);
-        // dispatch(getMatchDetail(state?.matchId));
-        // dispatch(getPlacedBets(state?.matchId));
         dispatch(updatePlacedbets(event));
         dispatch(updateTeamRatesOnDelete(event));
       }
@@ -142,8 +140,6 @@ const MatchDetail = () => {
           })
         );
         dispatch(updateProfitLoss(event));
-        // dispatch(updateBalance(event));
-        // dispatch(betDataFromSocket(event));
         dispatch(updateMaxLossForBet(event));
       }
     } catch (e) {
@@ -215,7 +211,7 @@ const MatchDetail = () => {
 
   useEffect(() => {
     try {
-      if (success) {
+      if (success && profileDetail?.roleName) {
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -238,7 +234,7 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success]);
+  }, [success, profileDetail]);
 
   useEffect(() => {
     return () => {
@@ -572,9 +568,7 @@ const MatchDetail = () => {
                 maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
               />
             )}
-             <Box
-                sx={{ width: "150px", height: "3px" }}
-              ></Box>
+            <Box sx={{ width: "150px", height: "3px" }}></Box>
             {matchDetail?.manualSessionActive &&
               matchDetail?.sessionBettings?.filter(
                 (item: any) => !JSON.parse(item).selectionId

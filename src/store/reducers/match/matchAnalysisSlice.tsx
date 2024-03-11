@@ -158,39 +158,43 @@ const analysisListSlice = createSlice({
 
         state.multipleMatchDetail = state.multipleMatchDetail.map(
           (match: any) => {
-            if (
-              ["tiedMatch2", "tiedMatch"].includes(jobData?.newBet?.marketType)
-            ) {
-              return {
-                ...match,
-                profitLossDataMatch: {
-                  ...match.profitLossDataMatch,
-                  yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
-                  noRateTie: userRedisObj[jobData?.teamBrateRedisKey],
-                },
-              };
-            } else if (
-              ["completeMatch"].includes(jobData?.newBet?.marketType)
-            ) {
-              return {
-                ...match,
-                profitLossDataMatch: {
-                  ...match.profitLossDataMatch,
-                  yesRateComplete: userRedisObj[jobData?.teamArateRedisKey],
-                  noRateComplete: userRedisObj[jobData?.teamBrateRedisKey],
-                },
-              };
-            } else {
-              return {
-                ...match,
-                profitLossDataMatch: {
-                  ...match.profitLossDataMatch,
-                  teamARate: userRedisObj[jobData?.teamArateRedisKey],
-                  teamBRate: userRedisObj[jobData?.teamBrateRedisKey],
-                  teamCRate: userRedisObj[jobData?.teamCrateRedisKey] ?? "",
-                },
-              };
-            }
+            if (match?.id === jobData?.matchId) {
+              if (
+                ["tiedMatch2", "tiedMatch"].includes(
+                  jobData?.newBet?.marketType
+                )
+              ) {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
+                    noRateTie: userRedisObj[jobData?.teamBrateRedisKey],
+                  },
+                };
+              } else if (
+                ["completeMatch"].includes(jobData?.newBet?.marketType)
+              ) {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    yesRateComplete: userRedisObj[jobData?.teamArateRedisKey],
+                    noRateComplete: userRedisObj[jobData?.teamBrateRedisKey],
+                  },
+                };
+              } else {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    teamARate: userRedisObj[jobData?.teamArateRedisKey],
+                    teamBRate: userRedisObj[jobData?.teamBrateRedisKey],
+                    teamCRate: userRedisObj[jobData?.teamCrateRedisKey] ?? "",
+                  },
+                };
+              }
+            } else return match;
           }
         );
       })
@@ -253,38 +257,41 @@ const analysisListSlice = createSlice({
           const { redisObject, matchBetType } = action.payload;
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (["tiedMatch2", "tiedMatch"].includes(matchBetType)) {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    yesRateTie: redisObject[action.payload?.teamArateRedisKey],
-                    noRateTie: redisObject[action.payload?.teamBrateRedisKey],
-                  },
-                };
-              } else if (["completeMatch"].includes(matchBetType)) {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    yesRateComplete:
-                      redisObject[action.payload?.teamArateRedisKey],
-                    noRateComplete:
-                      redisObject[action.payload?.teamBrateRedisKey],
-                  },
-                };
-              } else {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    teamARate: redisObject[action.payload?.teamArateRedisKey],
-                    teamBRate: redisObject[action.payload?.teamBrateRedisKey],
-                    teamCRate:
-                      redisObject[action.payload?.teamCrateRedisKey] ?? "",
-                  },
-                };
-              }
+              if (match?.id === action.payload?.machId) {
+                if (["tiedMatch2", "tiedMatch"].includes(matchBetType)) {
+                  return {
+                    ...match,
+                    profitLossDataMatch: {
+                      ...match.profitLossDataMatch,
+                      yesRateTie:
+                        redisObject[action.payload?.teamArateRedisKey],
+                      noRateTie: redisObject[action.payload?.teamBrateRedisKey],
+                    },
+                  };
+                } else if (["completeMatch"].includes(matchBetType)) {
+                  return {
+                    ...match,
+                    profitLossDataMatch: {
+                      ...match.profitLossDataMatch,
+                      yesRateComplete:
+                        redisObject[action.payload?.teamArateRedisKey],
+                      noRateComplete:
+                        redisObject[action.payload?.teamBrateRedisKey],
+                    },
+                  };
+                } else {
+                  return {
+                    ...match,
+                    profitLossDataMatch: {
+                      ...match.profitLossDataMatch,
+                      teamARate: redisObject[action.payload?.teamArateRedisKey],
+                      teamBRate: redisObject[action.payload?.teamBrateRedisKey],
+                      teamCRate:
+                        redisObject[action.payload?.teamCrateRedisKey] ?? "",
+                    },
+                  };
+                }
+              } else return match;
             }
           );
         }
