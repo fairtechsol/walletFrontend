@@ -234,7 +234,7 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail]);
+  }, [success, profileDetail?.roleName]);
 
   useEffect(() => {
     return () => {
@@ -253,7 +253,7 @@ const MatchDetail = () => {
         handleSessionResultUnDeclare
       );
     };
-  }, []);
+  }, [profileDetail?.roleName]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
