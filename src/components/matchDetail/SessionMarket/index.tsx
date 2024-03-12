@@ -139,9 +139,11 @@ const SessionMarket = ({
                     lineHeight: 1,
                   }}
                 >
-                  {allBetsData?.reduce((accumulator: any, bet: any) => {
-                    return accumulator + (+bet?.maxLoss || 0);
-                  }, 0)}
+                  {new Intl.NumberFormat("en-IN").format(
+                    allBetsData?.reduce((accumulator: any, bet: any) => {
+                      return accumulator + (+bet?.maxLoss || 0);
+                    }, 0)
+                  )}
                 </Typography>
               </Box>
             </Box>
@@ -329,18 +331,18 @@ const SessionMarket = ({
                           newData={
                             title === "Session Market"
                               ? {
-                                  ...element,
-                                  noRate: element?.LayPrice1 ?? 0,
-                                  noPercent: element?.LaySize1 ?? 0,
-                                  yesRate: element?.BackPrice1 ?? 0,
-                                  yesPercent: element?.BackSize1 ?? 0,
-                                  status:
-                                    element?.GameStatus &&
+                                ...element,
+                                noRate: element?.LayPrice1 ?? 0,
+                                noPercent: element?.LaySize1 ?? 0,
+                                yesRate: element?.BackPrice1 ?? 0,
+                                yesPercent: element?.BackSize1 ?? 0,
+                                status:
+                                  element?.GameStatus &&
                                     element?.GameStatus !== ""
-                                      ? element?.GameStatus
-                                      : "active",
-                                  matchId: currentMatch?.id,
-                                }
+                                    ? element?.GameStatus
+                                    : "active",
+                                matchId: currentMatch?.id,
+                              }
                               : JSON.parse(element)
                           }
                           profitLossData={allBetsData?.filter(
