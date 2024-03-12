@@ -197,8 +197,9 @@ const SessionMarket = ({
                       marginLeft: "7px",
                     }}
                   >
-                    MIN: {min} MAX:
-                    {max}
+                    MIN: {min} 
+                    {/* MAX:
+                    {max} */}
                   </Typography>
                 </Box>
                 <Box
