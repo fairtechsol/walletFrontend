@@ -8,15 +8,12 @@ import {
 } from "@mui/material";
 import Loader from "../../components/Loader";
 import MatchComponent from "../../components/Inplay/MatchComponent";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  getMatchDetail,
   getMatchListInplay,
-  getPlacedBets,
   matchListReset,
-  updateMatchRates,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
@@ -25,7 +22,6 @@ import { socketService } from "../../socketManager";
 import { makeStyles } from "@material-ui/core/styles";
 const Inplay = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { loading, matchListInplay, success } = useSelector(

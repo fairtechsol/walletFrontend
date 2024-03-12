@@ -215,7 +215,7 @@ const MultipleMatch = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        if (state?.matchId) {
+        if (state?.matchIds) {
           dispatch(getMultipleMatchDetail(state?.matchIds));
           dispatch(resetSessionProLoss());
           dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
