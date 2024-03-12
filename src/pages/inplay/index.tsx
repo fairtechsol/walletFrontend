@@ -52,39 +52,26 @@ const Inplay = () => {
 
   useEffect(() => {
     try {
-      if (success) {
-        if (
-          matchListInplay &&
-          matchListInplay?.matches?.length > 0 &&
-          profileDetail?.roleName
-        ) {
+      if (success && profileDetail?.roleName) {
+        matchListInplay?.matches?.map((item: any) => {
+          socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+        });
+        socketService.match.matchResultDeclared(getMatchListService);
+        socketService.match.matchResultUnDeclared(getMatchListService);
+        socketService.match.matchAdded(getMatchListService);
+        return () => {
           matchListInplay?.matches?.map((item: any) => {
-            socketService.match.joinMatchRoom(
-              item?.id,
-              profileDetail?.roleName
-            );
+            socketService.match.leaveMatchRoom(item?.id);
           });
-          socketService.match.matchResultDeclared(getMatchListService);
-          socketService.match.matchResultUnDeclared(getMatchListService);
-          socketService.match.matchAdded(getMatchListService);
-        }
-        dispatch(matchListReset());
+          socketService.match.matchResultDeclaredOff(getMatchListService);
+          socketService.match.matchResultUnDeclaredOff(getMatchListService);
+          socketService.match.matchAddedOff(getMatchListService);
+        };
       }
     } catch (e) {
       console.log(e);
     }
-  }, [matchListInplay?.matches?.length, success, profileDetail?.roleName]);
-
-  useEffect(() => {
-    return () => {
-      matchListInplay?.matches?.map((item: any) => {
-        socketService.match.leaveMatchRoom(item?.id);
-      });
-      socketService.match.matchResultDeclaredOff(getMatchListService);
-      socketService.match.matchResultUnDeclaredOff(getMatchListService);
-      socketService.match.matchAddedOff(getMatchListService);
-    };
-  }, [matchListInplay?.matches?.length, profileDetail?.roleName]);
+  }, [success, profileDetail?.roleName]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
