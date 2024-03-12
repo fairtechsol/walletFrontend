@@ -63,7 +63,7 @@ const AddAccount = () => {
       label: "Select Account Type",
       value: "",
     },
-    creditRefrence: "",
+    creditRefrence: 0,
     uplinePartnership: 0,
     myPartnership: 0,
     downlinePartnership: 0,
@@ -105,6 +105,22 @@ const AddAccount = () => {
   const { userAlreadyExist } = useSelector(
     (state: RootState) => state.user.userList
   );
+
+  const formatIndianCurrency = (creditRefrence: number) => {
+    const formatter = new Intl.NumberFormat("en-IN", {
+      currency: "INR",
+    });
+    return formatter.format(creditRefrence);
+  };
+
+  const checkHandleChange = (event: any) => {
+    let value = 0;
+    if (event.target.value != "") {
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ""));
+    }
+
+    formik.setFieldValue("creditRefrence", value);
+  };
 
   const containerStyles = {
     marginTop: { xs: "2px", lg: "10px" },
@@ -980,15 +996,16 @@ const AddAccount = () => {
                       disabled={state?.id ? true : false}
                       title={"Credit Reference*"}
                       name={"creditRefrence"}
-                      type={"Number"}
                       id="creditRefrence"
                       required={true}
-                      value={formik.values.creditRefrence}
+                      value={formatIndianCurrency(
+                        parseFloat(formik.values.creditRefrence?.toString())
+                      )}
                       error={
                         touched.creditRefrence && Boolean(errors.creditRefrence)
                       }
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e: any) => checkHandleChange(e)}
                     />
                     <CustomErrorMessage
                       touched={touched.creditRefrence}

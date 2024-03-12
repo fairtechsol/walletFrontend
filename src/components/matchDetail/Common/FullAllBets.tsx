@@ -116,7 +116,7 @@ const FullAllBets = (props: any) => {
             {
               name:
                 v?.myStake || v?.myStake === 0
-                  ? v?.myStake
+                  ? parseFloat(v?.myStake).toFixed(2)
                   : (v?.amount * partnership) / 100,
               color: "white",
               background: "#0B4F26",
@@ -614,12 +614,12 @@ const Row = ({ values, index }: any) => {
   return (
     <Box key={index} sx={{ width: "100%", display: "flex" }}>
       {values.map((item: any, k: any) => {
-        if (!item?.small) {
+                 if (!item?.small) {
           return <LargeBox k={k} key={k} item={item} />;
         } else {
           return <SmallBox k={k} key={k} item={item} />;
         }
-      })}
+             })}
     </Box>
   );
 };
