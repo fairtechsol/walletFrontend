@@ -11,11 +11,12 @@ import SearchInput from "../Common/SearchInput";
 import { Constants } from "../../utils/Constants";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-import { getTotalBalance, handleModelActions } from "../../store/actions/user/userAction";
+import {
+  getTotalBalance,
+  handleModelActions,
+} from "../../store/actions/user/userAction";
 
-const AccountListTable = ({
-  endpoint,
-}: any) => {
+const AccountListTable = ({ endpoint }: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const dispatch: AppDispatch = useDispatch();
@@ -24,19 +25,19 @@ const AccountListTable = ({
   const { userModalList } = useSelector(
     (state: RootState) => state.user.userList
   );
-  const { totalBalance ,domain,userElement} = useSelector(
+  const { totalBalance, domain, userElement } = useSelector(
     (state: RootState) => state.user.userList
   );
   const handleModal = () => {
     dispatch(getTotalBalance());
     dispatch(
       handleModelActions({
-        url:'',
-        userId: '',
-        roleName: '',
+        url: "",
+        userId: "",
+        roleName: "",
         domain: "",
-        openModal:false,
-        isUrl:false,
+        openModal: false,
+        isUrl: false,
       })
     );
   };
@@ -46,7 +47,7 @@ const AccountListTable = ({
         sx={[
           {
             marginX: "0.5%",
-            width: { mobile: "96%", laptop: "90%", tablet: "96%" },
+            width: { xs: "96%", lg: "90%", md: "96%" },
             minHeight: "200px",
             borderRadius: "10px",
             borderBottomRightRadius: "0px",
@@ -91,7 +92,9 @@ const AccountListTable = ({
               endpoint={endpoint}
               userId={userElement?.id}
               roleName={userElement?.roleName}
-              domain={domain ? domain : userElement?.domain ? userElement?.domain : "" }
+              domain={
+                domain ? domain : userElement?.domain ? userElement?.domain : ""
+              }
             />
             <Button
               sx={{ color: "", fontSize: "30px" }}
