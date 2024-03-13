@@ -185,7 +185,28 @@ const MultipleMatch = () => {
         socketService.match.sessionResultUnDeclare(
           handleMultiMatchSessionResultUnDeclare
         );
-        dispatch(analysisListReset());
+        return () => {
+          state?.matchIds?.map((item: any) => {
+            socketService.match.leaveMatchRoom(item);
+            socketService.match.getMatchRatesOff(
+              item,
+              updateMatchDetailToRedux
+            );
+          });
+          socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
+          socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
+          socketService.match.matchResultDeclared(matchMultiResultDeclared);
+          socketService.match.matchDeleteBetOff(handleMultiMatchDeleteBet);
+          socketService.match.sessionDeleteBetOff(
+            handleMultiMatchSessionDeleteBet
+          );
+          socketService.match.sessionResultOff(
+            handleMultiMatchSessionResultDeclare
+          );
+          socketService.match.sessionResultUnDeclareOff(
+            handleMultiMatchSessionResultUnDeclare
+          );
+        };
       }
     } catch (e) {
       console.log(e);
@@ -193,29 +214,9 @@ const MultipleMatch = () => {
   }, [success, profileDetail]);
 
   useEffect(() => {
-    return () => {
-      state?.matchIds?.map((item: any) => {
-        socketService.match.leaveMatchRoom(item);
-        socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
-      });
-      socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
-      socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
-      socketService.match.matchResultDeclared(matchMultiResultDeclared);
-      socketService.match.matchDeleteBetOff(handleMultiMatchDeleteBet);
-      socketService.match.sessionDeleteBetOff(handleMultiMatchSessionDeleteBet);
-      socketService.match.sessionResultOff(
-        handleMultiMatchSessionResultDeclare
-      );
-      socketService.match.sessionResultUnDeclareOff(
-        handleMultiMatchSessionResultUnDeclare
-      );
-    };
-  }, []);
-
-  useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        if (state?.matchId) {
+        if (state?.matchIds) {
           dispatch(getMultipleMatchDetail(state?.matchIds));
           dispatch(resetSessionProLoss());
           dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));

@@ -198,8 +198,8 @@ const MatchDetail = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0); 
     try {
+      window.scrollTo(0, 0);
       if (state?.matchId && profileDetail?.roleName) {
         dispatch(getMatchDetail(state?.matchId));
         dispatch(resetSessionProLoss());
@@ -230,31 +230,27 @@ const MatchDetail = () => {
         socketService.match.sessionResultUnDeclare(
           handleSessionResultUnDeclare
         );
-        dispatch(matchListReset());
+        return () => {
+          socketService.match.leaveMatchRoom(state?.matchId);
+          socketService.match.getMatchRatesOff(
+            state?.matchId,
+            updateMatchDetailToRedux
+          );
+          socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
+          socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
+          socketService.match.matchResultDeclaredOff(matchResultDeclared);
+          socketService.match.matchDeleteBetOff(matchDeleteBet);
+          socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
+          socketService.match.sessionResultOff(handleSessionResultDeclare);
+          socketService.match.sessionResultUnDeclareOff(
+            handleSessionResultUnDeclare
+          );
+        };
       }
     } catch (e) {
       console.log(e);
     }
   }, [success, profileDetail?.roleName]);
-
-  useEffect(() => {
-    return () => {
-      socketService.match.leaveMatchRoom(state?.matchId);
-      socketService.match.getMatchRatesOff(
-        state?.matchId,
-        updateMatchDetailToRedux
-      );
-      socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
-      socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
-      socketService.match.matchResultDeclaredOff(matchResultDeclared);
-      socketService.match.matchDeleteBetOff(matchDeleteBet);
-      socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
-      socketService.match.sessionResultOff(handleSessionResultDeclare);
-      socketService.match.sessionResultUnDeclareOff(
-        handleSessionResultUnDeclare
-      );
-    };
-  }, [profileDetail?.roleName]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {

@@ -1,4 +1,3 @@
-import Loader from "../../components/Loader";
 import {
   Box,
   Pagination,
@@ -8,21 +7,20 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import CustomBox from "../../components/analysis/CustomBox";
 import { useEffect, useState } from "react";
-import MatchListComponent from "../../components/analysis/MatchListComponent";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "./index.css";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { useDispatch } from "react-redux";
-import { Constants } from "../../utils/Constants";
 import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
+import CustomBox from "../../components/analysis/CustomBox";
+import MatchListComponent from "../../components/analysis/MatchListComponent";
+import { socket, socketService } from "../../socketManager";
 import {
-  analysisListReset,
   getAnalysisList,
 } from "../../store/actions/match/multipleMatchActions";
-import { socketService } from "../../socketManager";
+import { AppDispatch, RootState } from "../../store/store";
+import { Constants } from "../../utils/Constants";
+import "./index.css";
 
 import { makeStyles } from "@material-ui/core/styles";
 const Analysis = () => {
@@ -74,6 +72,7 @@ const Analysis = () => {
   };
 
   const getMatchist = () => {
+    setCurrentPage(1);
     dispatch(getAnalysisList({ currentPage: currentPage }));
   };
 
@@ -82,20 +81,21 @@ const Analysis = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (success) {
-      if (analysisList && analysisList?.matches?.length > 0) {
+    try {
+      if (socket?.connected && success) {
         socketService.match.matchResultDeclared(getMatchist);
         socketService.match.matchResultUnDeclared(getMatchist);
         socketService.match.matchAdded(getMatchist);
+        return () => {
+          socketService.match.matchResultDeclaredOff(getMatchist);
+          socketService.match.matchResultUnDeclaredOff(getMatchist);
+          socketService.match.matchAddedOff(getMatchist);
+        };
       }
-      dispatch(analysisListReset());
+    } catch (error) {
+      console.log(error);
     }
-    return () => {
-      socketService.match.matchResultDeclaredOff(getMatchist);
-      socketService.match.matchResultUnDeclaredOff(getMatchist);
-      socketService.match.matchAddedOff(getMatchist);
-    };
-  }, [analysisList?.matches?.length, success]);
+  }, [socket?.connected, success]);
 
   return (
     <>
