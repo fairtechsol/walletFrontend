@@ -11,9 +11,7 @@ import MatchComponent from "../../components/Inplay/MatchComponent";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getMatchListInplay,
-} from "../../store/actions/match/matchAction";
+import { getMatchListInplay } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Constants } from "../../utils/Constants";
@@ -52,20 +50,15 @@ const Inplay = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName) {
+        socketService.match.matchResultDeclaredOff(getMatchListService);
+        socketService.match.matchResultUnDeclaredOff(getMatchListService);
+        socketService.match.matchAddedOff(getMatchListService);
         matchListInplay?.matches?.map((item: any) => {
           socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
         });
         socketService.match.matchResultDeclared(getMatchListService);
         socketService.match.matchResultUnDeclared(getMatchListService);
         socketService.match.matchAdded(getMatchListService);
-        return () => {
-          matchListInplay?.matches?.map((item: any) => {
-            socketService.match.leaveMatchRoom(item?.id);
-          });
-          socketService.match.matchResultDeclaredOff(getMatchListService);
-          socketService.match.matchResultUnDeclaredOff(getMatchListService);
-          socketService.match.matchAddedOff(getMatchListService);
-        };
       }
     } catch (e) {
       console.log(e);
@@ -73,17 +66,23 @@ const Inplay = () => {
   }, [success, profileDetail?.roleName]);
 
   useEffect(() => {
+    return () => {
+      matchListInplay?.matches?.map((item: any) => {
+        socketService.match.leaveMatchRoom(item?.id);
+      });
+      socketService.match.matchResultDeclaredOff(getMatchListService);
+      socketService.match.matchResultUnDeclaredOff(getMatchListService);
+      socketService.match.matchAddedOff(getMatchListService);
+    };
+  }, []);
+
+  useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         setCurrentPage(1);
         getMatchListService();
-      } else if (document.visibilityState === "hidden") {
-        matchListInplay?.matches?.map((item: any) => {
-          socketService.match.leaveMatchRoom(item?.id);
-        });
       }
     };
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
