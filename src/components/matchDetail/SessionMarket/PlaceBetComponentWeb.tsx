@@ -61,7 +61,7 @@ const PlaceBetComponentWeb = ({ newData, profitLoss }: any) => {
             Total Bet
           </Typography>
           <Typography
-            sx={{ fontSize: ".8vw", fontWeight: "bold", color: "#0B4F26" }}
+            sx={{ fontSize: ".6vw", fontWeight: "bold", color: "#0B4F26" }}
           >
             {profitLoss?.totalBet || 0}
           </Typography>
