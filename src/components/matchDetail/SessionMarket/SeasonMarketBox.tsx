@@ -45,15 +45,16 @@ const SeasonMarketBox = (props: any) => {
             display: "flex",
             background: "white",
             height: "38px",
-            width: "40%",
+            width: "45%",
             alignItems: "center",
+            // backgroundColor:"red"
           }}
         >
-          <Typography>
+          <Box>
           <Typography
             sx={{
               color: "black",
-              fontSize: { lg: "14px", md: "11px", xs: "10px" },
+              fontSize: { lg: "12px", md: "11px", xs: "10px" },
               marginLeft: "7px",
               fontWeight: "600",
             }}
@@ -63,14 +64,14 @@ const SeasonMarketBox = (props: any) => {
            <Typography
             sx={{
               color: "black",
-              fontSize: { lg: "12px", md: "10px", xs: "9px" },
+              fontSize: { lg: "11px", md: "10px", xs: "9px" },
               marginLeft: "7px",
               fontWeight: "600",
             }}
           >
             MAX: {newData?.maxBet ?? newData?.max}
           </Typography>
-          </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
