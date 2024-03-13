@@ -15,9 +15,7 @@ import Loader from "../../components/Loader";
 import CustomBox from "../../components/analysis/CustomBox";
 import MatchListComponent from "../../components/analysis/MatchListComponent";
 import { socket, socketService } from "../../socketManager";
-import {
-  getAnalysisList,
-} from "../../store/actions/match/multipleMatchActions";
+import { getAnalysisList } from "../../store/actions/match/multipleMatchActions";
 import { AppDispatch, RootState } from "../../store/store";
 import { Constants } from "../../utils/Constants";
 import "./index.css";
@@ -83,19 +81,25 @@ const Analysis = () => {
   useEffect(() => {
     try {
       if (socket?.connected && success) {
+        socketService.match.matchResultDeclaredOff(getMatchist);
+        socketService.match.matchResultUnDeclaredOff(getMatchist);
+        socketService.match.matchAddedOff(getMatchist);
         socketService.match.matchResultDeclared(getMatchist);
         socketService.match.matchResultUnDeclared(getMatchist);
         socketService.match.matchAdded(getMatchist);
-        return () => {
-          socketService.match.matchResultDeclaredOff(getMatchist);
-          socketService.match.matchResultUnDeclaredOff(getMatchist);
-          socketService.match.matchAddedOff(getMatchist);
-        };
       }
     } catch (error) {
       console.log(error);
     }
   }, [socket?.connected, success]);
+
+  useEffect(() => {
+    return () => {
+      socketService.match.matchResultDeclaredOff(getMatchist);
+      socketService.match.matchResultUnDeclaredOff(getMatchist);
+      socketService.match.matchAddedOff(getMatchist);
+    };
+  }, []);
 
   return (
     <>
@@ -261,9 +265,8 @@ const Analysis = () => {
                   Constants.pageLimit
               )}
               color="primary"
-              onChange={(e: any, value: number) => {
+              onChange={(_: any, value: number) => {
                 setCurrentPage(value);
-                console.log(e);
               }}
             />
           </>

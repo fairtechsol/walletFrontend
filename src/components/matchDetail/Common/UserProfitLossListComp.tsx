@@ -48,7 +48,7 @@ const UserProfitLossListComp = (props: any) => {
         >
           <>
             <SeperateBox
-              value={element?.tramRateA ?? "N/A"}
+              value={element?.teamRateA ?? "N/A"}
               // value={element?.teamA_partnership ?? "N/A"}
               color={"#ffffff"}
               width={10}
@@ -57,7 +57,7 @@ const UserProfitLossListComp = (props: any) => {
               sx={{ width: "3px", display: "flex", background: "#ffffff" }}
             ></Box>
             <SeperateBox
-              value={element?.tramRateB ?? "N/A"}
+              value={element?.teamRateB ?? "N/A"}
               // value={element?.teamB_partnership ?? "N/A"}
               color={"#ffffff"}
               width={10}
@@ -72,7 +72,7 @@ const UserProfitLossListComp = (props: any) => {
                   }}
                 ></Box>
                 <SeperateBox
-                  value={element?.tramRateC ?? "N/A"}
+                  value={element?.teamRateC ?? "N/A"}
                   // value={element?.teamC_partnership ?? "N/A"}
                   color={"#ffffff"}
                   width={10}
