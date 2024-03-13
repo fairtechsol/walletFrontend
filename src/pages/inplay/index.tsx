@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   getMatchListInplay,
-  matchListReset,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";

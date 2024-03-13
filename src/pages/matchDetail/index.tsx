@@ -15,7 +15,7 @@ import {
   AllBetDelete,
   getMatchDetail,
   getPlacedBets,
-  matchListReset,
+  getUserProfitLoss,
   removeRunAmount,
   resetSessionProLoss,
   updateBetDataOnDeclare,
@@ -202,6 +202,7 @@ const MatchDetail = () => {
       window.scrollTo(0, 0);
       if (state?.matchId && profileDetail?.roleName) {
         dispatch(getMatchDetail(state?.matchId));
+        dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${state?.matchId}`));
       }
@@ -257,6 +258,7 @@ const MatchDetail = () => {
       if (document.visibilityState === "visible") {
         if (state?.matchId) {
           dispatch(getMatchDetail(state?.matchId));
+          dispatch(getUserProfitLoss(state?.matchId));
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
       } else if (document.visibilityState === "hidden") {
@@ -411,7 +413,15 @@ const MatchDetail = () => {
             )?.length > 0 && (
               <SessionMarket
                 allBetsData={Array.from(
-                  new Set(matchDetail?.profitLossDataSession)
+                  matchDetail?.profitLossDataSession.reduce(
+                    (acc: any, obj: any) =>
+                      acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                    new Set()
+                  ),
+                  (id) =>
+                    matchDetail?.profitLossDataSession.find(
+                      (obj: any) => obj.id === id
+                    )
                 )}
                 title={"Quick Session Market"}
                 currentMatch={matchDetail}
@@ -427,7 +437,15 @@ const MatchDetail = () => {
             matchDetail?.apiSession?.length > 0 && (
               <SessionMarket
                 allBetsData={Array.from(
-                  new Set(matchDetail?.profitLossDataSession)
+                  matchDetail?.profitLossDataSession.reduce(
+                    (acc: any, obj: any) =>
+                      acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                    new Set()
+                  ),
+                  (id) =>
+                    matchDetail?.profitLossDataSession.find(
+                      (obj: any) => obj.id === id
+                    )
                 )}
                 title={"Session Market"}
                 currentMatch={matchDetail}
@@ -523,7 +541,18 @@ const MatchDetail = () => {
           {placedBets?.length > 0 && (
             <Box sx={{ mt: 0 }}>
               <FullAllBets
-                IObets={placedBets.length > 0 ? placedBets : []}
+                IObets={
+                  placedBets.length > 0
+                    ? Array.from(
+                        placedBets.reduce(
+                          (acc: any, obj: any) =>
+                            acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                          new Set()
+                        ),
+                        (id) => placedBets.find((obj: any) => obj.id === id)
+                      )
+                    : []
+                }
                 mode={mode}
                 tag={false}
                 setSelectedBetData={setSelectedBetData}
@@ -573,7 +602,15 @@ const MatchDetail = () => {
                 <SessionMarket
                   title={"Quick Session Market"}
                   allBetsData={Array.from(
-                    new Set(matchDetail?.profitLossDataSession)
+                    matchDetail?.profitLossDataSession.reduce(
+                      (acc: any, obj: any) =>
+                        acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                      new Set()
+                    ),
+                    (id) =>
+                      matchDetail?.profitLossDataSession.find(
+                        (obj: any) => obj.id === id
+                      )
                   )}
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}
@@ -589,7 +626,15 @@ const MatchDetail = () => {
                 <SessionMarket
                   title={"Session Market"}
                   allBetsData={Array.from(
-                    new Set(matchDetail?.profitLossDataSession)
+                    matchDetail?.profitLossDataSession.reduce(
+                      (acc: any, obj: any) =>
+                        acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                      new Set()
+                    ),
+                    (id) =>
+                      matchDetail?.profitLossDataSession.find(
+                        (obj: any) => obj.id === id
+                      )
                   )}
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}

@@ -488,21 +488,21 @@ const EditAccount = () => {
     }
   }, [lockUnlockObj]);
 
-  useEffect(() => {
-    if (formik.values.matchCommissionType.value) {
-      formik.setValues({
-        ...formik.values,
-        matchCommission: {
-          label: "0.00",
-          value: "0.00",
-        },
-        sessionCommission: {
-          label: "0.00",
-          value: "0.00",
-        },
-      });
-    }
-  }, [formik.values.matchCommissionType.value]);
+  // useEffect(() => {
+  //   if (formik.values.matchCommissionType.value) {
+  //     formik.setValues({
+  //       ...formik.values,
+  //       matchCommission: {
+  //         label: "0.00",
+  //         value: "0.00",
+  //       },
+  //       sessionCommission: {
+  //         label: "0.00",
+  //         value: "0.00",
+  //       },
+  //     });
+  //   }
+  // }, [formik.values.matchCommissionType.value]);
 
   return (
     <>

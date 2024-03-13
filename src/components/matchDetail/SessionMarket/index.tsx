@@ -14,7 +14,6 @@ const SessionMarket = ({
   selft,
   title,
   min,
-  max,
   sessionData,
   allBetsData,
   currentMatch,
