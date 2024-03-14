@@ -5,6 +5,7 @@ import moment from "moment";
 import { CHECK } from "../../../assets";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import { formatToINR } from "../../../helper";
 
 const FullAllBets = (props: any) => {
   const { tag, mode, IObets, selectedBetData, setSelectedBetData } = props;
@@ -106,7 +107,7 @@ const FullAllBets = (props: any) => {
               deleteReason: v?.deleteReason,
             },
             {
-              name: v?.amount || v?.stake,
+              name: formatToINR(v?.amount || v?.stake),
               color: "black",
               background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"

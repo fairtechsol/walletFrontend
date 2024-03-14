@@ -450,7 +450,11 @@ const DepositComponent = (props: any) => {
                       },
                     }}
                   />
-
+                  {touched.transactionPassword && errors.transactionPassword && (
+                    <p style={{ color: "#fa1e1e", lineHeight: "0.8" }}>
+                      {errors.transactionPassword as string}
+                    </p>
+                  )}
                   <Box
                     onClick={() => {
                       setShowPass(!showPass);
@@ -462,12 +466,9 @@ const DepositComponent = (props: any) => {
                     />
                   </Box>
                 </Box>
-                {touched.transactionPassword && errors.transactionPassword && (
-                  <p style={{ color: "#fa1e1e" }}>
-                    {errors.transactionPassword as string}
-                  </p>
-                )}
+
               </Box>
+
             </Box>
 
             <Box
