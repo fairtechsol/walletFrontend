@@ -97,6 +97,7 @@ const ProfitLossHeader = (props: any) => {
                 title={"To"}
                 startDate={endDate}
                 setStartDate={setEndDate}
+                limit={startDate}
                 sx={{ width: "50%" }}
               />
             </Box>
