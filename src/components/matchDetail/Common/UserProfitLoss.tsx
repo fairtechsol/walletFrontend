@@ -301,7 +301,6 @@ const UserProfitLoss = (props: any) => {
                     }}
                   >
                     <UserProfitLossListComp
-                      key={element?.id}
                       element={element}
                       showTeamC={
                         matchDetail?.teamC || matchData?.teamC ? true : false
