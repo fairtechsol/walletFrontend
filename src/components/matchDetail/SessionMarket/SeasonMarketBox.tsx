@@ -70,7 +70,7 @@ const SeasonMarketBox = (props: any) => {
               fontWeight: "500",
             }}
           >
-            MAX: {newData?.maxBet ?? newData?.max}
+            max: {newData?.maxBet ?? newData?.max}
           </Typography>
           </Box>
         </Box>
