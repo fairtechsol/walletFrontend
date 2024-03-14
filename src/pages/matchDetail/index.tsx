@@ -214,6 +214,19 @@ const MatchDetail = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName) {
+        socketService.match.getMatchRatesOff(
+          state?.matchId,
+          updateMatchDetailToRedux
+        );
+        socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
+        socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
+        socketService.match.matchResultDeclaredOff(matchResultDeclared);
+        socketService.match.matchDeleteBetOff(matchDeleteBet);
+        socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
+        socketService.match.sessionResultOff(handleSessionResultDeclare);
+        socketService.match.sessionResultUnDeclareOff(
+          handleSessionResultUnDeclare
+        );
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -231,27 +244,30 @@ const MatchDetail = () => {
         socketService.match.sessionResultUnDeclare(
           handleSessionResultUnDeclare
         );
-        return () => {
-          socketService.match.leaveMatchRoom(state?.matchId);
-          socketService.match.getMatchRatesOff(
-            state?.matchId,
-            updateMatchDetailToRedux
-          );
-          socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
-          socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
-          socketService.match.matchResultDeclaredOff(matchResultDeclared);
-          socketService.match.matchDeleteBetOff(matchDeleteBet);
-          socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
-          socketService.match.sessionResultOff(handleSessionResultDeclare);
-          socketService.match.sessionResultUnDeclareOff(
-            handleSessionResultUnDeclare
-          );
-        };
       }
     } catch (e) {
       console.log(e);
     }
   }, [success, profileDetail?.roleName]);
+
+  useEffect(() => {
+    return () => {
+      socketService.match.leaveMatchRoom(state?.matchId);
+      socketService.match.getMatchRatesOff(
+        state?.matchId,
+        updateMatchDetailToRedux
+      );
+      socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
+      socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
+      socketService.match.matchResultDeclaredOff(matchResultDeclared);
+      socketService.match.matchDeleteBetOff(matchDeleteBet);
+      socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
+      socketService.match.sessionResultOff(handleSessionResultDeclare);
+      socketService.match.sessionResultUnDeclareOff(
+        handleSessionResultUnDeclare
+      );
+    };
+  }, []);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -262,7 +278,6 @@ const MatchDetail = () => {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
       } else if (document.visibilityState === "hidden") {
-        socketService.match.leaveMatchRoom(state?.matchId);
         socketService.match.getMatchRatesOff(
           state?.matchId,
           updateMatchDetailToRedux
@@ -274,6 +289,20 @@ const MatchDetail = () => {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
+  }, []);
+
+  useEffect(() => {
+    if (state?.matchId) {
+      const intervalId = setInterval(() => {
+        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getUserProfitLoss(state?.matchId));
+        dispatch(getPlacedBets(`eq${state?.matchId}`));
+      }, 14100 * 1000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
   }, []);
 
   return (
@@ -413,13 +442,13 @@ const MatchDetail = () => {
             )?.length > 0 && (
               <SessionMarket
                 allBetsData={Array.from(
-                  matchDetail?.profitLossDataSession.reduce(
+                  matchDetail?.profitLossDataSession?.reduce(
                     (acc: any, obj: any) =>
                       acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
                     new Set()
                   ),
                   (id) =>
-                    matchDetail?.profitLossDataSession.find(
+                    matchDetail?.profitLossDataSession?.find(
                       (obj: any) => obj.id === id
                     )
                 )}
@@ -437,13 +466,13 @@ const MatchDetail = () => {
             matchDetail?.apiSession?.length > 0 && (
               <SessionMarket
                 allBetsData={Array.from(
-                  matchDetail?.profitLossDataSession.reduce(
+                  matchDetail?.profitLossDataSession?.reduce(
                     (acc: any, obj: any) =>
                       acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
                     new Set()
                   ),
                   (id) =>
-                    matchDetail?.profitLossDataSession.find(
+                    matchDetail?.profitLossDataSession?.find(
                       (obj: any) => obj.id === id
                     )
                 )}
@@ -602,13 +631,13 @@ const MatchDetail = () => {
                 <SessionMarket
                   title={"Quick Session Market"}
                   allBetsData={Array.from(
-                    matchDetail?.profitLossDataSession.reduce(
+                    matchDetail?.profitLossDataSession?.reduce(
                       (acc: any, obj: any) =>
                         acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
                       new Set()
                     ),
                     (id) =>
-                      matchDetail?.profitLossDataSession.find(
+                      matchDetail?.profitLossDataSession?.find(
                         (obj: any) => obj.id === id
                       )
                   )}
@@ -626,13 +655,13 @@ const MatchDetail = () => {
                 <SessionMarket
                   title={"Session Market"}
                   allBetsData={Array.from(
-                    matchDetail?.profitLossDataSession.reduce(
+                    matchDetail?.profitLossDataSession?.reduce(
                       (acc: any, obj: any) =>
                         acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
                       new Set()
                     ),
                     (id) =>
-                      matchDetail?.profitLossDataSession.find(
+                      matchDetail?.profitLossDataSession?.find(
                         (obj: any) => obj.id === id
                       )
                   )}

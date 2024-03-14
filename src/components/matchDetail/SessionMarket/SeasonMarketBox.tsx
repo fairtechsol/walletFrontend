@@ -57,6 +57,7 @@ const SeasonMarketBox = (props: any) => {
               fontSize: { lg: "12px", md: "11px", xs: "10px" },
               marginLeft: "7px",
               fontWeight: "600",
+              lineHeight:'10px'
             }}
           >
             {newData?.name ?? newData?.RunnerName}
@@ -66,7 +67,7 @@ const SeasonMarketBox = (props: any) => {
               color: "black",
               fontSize: { lg: "11px", md: "10px", xs: "9px" },
               marginLeft: "7px",
-              fontWeight: "600",
+              fontWeight: "500",
             }}
           >
             MAX: {newData?.maxBet ?? newData?.max}

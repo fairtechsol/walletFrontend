@@ -193,6 +193,22 @@ const MultipleMatch = () => {
     try {
       if (success && profileDetail?.roleName) {
         state?.matchIds?.map((item: any) => {
+          socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
+        });
+        socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
+        socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
+        socketService.match.matchResultDeclared(matchMultiResultDeclared);
+        socketService.match.matchDeleteBetOff(handleMultiMatchDeleteBet);
+        socketService.match.sessionDeleteBetOff(
+          handleMultiMatchSessionDeleteBet
+        );
+        socketService.match.sessionResultOff(
+          handleMultiMatchSessionResultDeclare
+        );
+        socketService.match.sessionResultUnDeclareOff(
+          handleMultiMatchSessionResultUnDeclare
+        );
+        state?.matchIds?.map((item: any) => {
           socketService.match.joinMatchRoom(item, profileDetail?.roleName);
         });
         state?.matchIds?.map((item: any) => {
@@ -207,33 +223,31 @@ const MultipleMatch = () => {
         socketService.match.sessionResultUnDeclare(
           handleMultiMatchSessionResultUnDeclare
         );
-        return () => {
-          state?.matchIds?.map((item: any) => {
-            socketService.match.leaveMatchRoom(item);
-            socketService.match.getMatchRatesOff(
-              item,
-              updateMatchDetailToRedux
-            );
-          });
-          socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
-          socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
-          socketService.match.matchResultDeclared(matchMultiResultDeclared);
-          socketService.match.matchDeleteBetOff(handleMultiMatchDeleteBet);
-          socketService.match.sessionDeleteBetOff(
-            handleMultiMatchSessionDeleteBet
-          );
-          socketService.match.sessionResultOff(
-            handleMultiMatchSessionResultDeclare
-          );
-          socketService.match.sessionResultUnDeclareOff(
-            handleMultiMatchSessionResultUnDeclare
-          );
-        };
       }
     } catch (e) {
       console.log(e);
     }
   }, [success, profileDetail]);
+
+  useEffect(() => {
+    return () => {
+      state?.matchIds?.map((item: any) => {
+        socketService.match.leaveMatchRoom(item);
+        socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
+      });
+      socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
+      socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
+      socketService.match.matchResultDeclared(matchMultiResultDeclared);
+      socketService.match.matchDeleteBetOff(handleMultiMatchDeleteBet);
+      socketService.match.sessionDeleteBetOff(handleMultiMatchSessionDeleteBet);
+      socketService.match.sessionResultOff(
+        handleMultiMatchSessionResultDeclare
+      );
+      socketService.match.sessionResultUnDeclareOff(
+        handleMultiMatchSessionResultUnDeclare
+      );
+    };
+  }, []);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -245,7 +259,6 @@ const MultipleMatch = () => {
         }
       } else if (document.visibilityState === "hidden") {
         state?.matchIds?.map((item: any) => {
-          socketService.match.leaveMatchRoom(item);
           socketService.match.getMatchRatesOff(item, updateMatchDetailToRedux);
         });
       }
@@ -438,7 +451,7 @@ const MultipleMatch = () => {
                                 <SessionMarket
                                   title={"Quick Session Market"}
                                   allBetsData={Array.from(
-                                    item?.profitLossDataSession.reduce(
+                                    item?.profitLossDataSession?.reduce(
                                       (acc: any, obj: any) =>
                                         acc.has(obj.id)
                                           ? acc
@@ -446,7 +459,7 @@ const MultipleMatch = () => {
                                       new Set()
                                     ),
                                     (id) =>
-                                      item?.profitLossDataSession.find(
+                                      item?.profitLossDataSession?.find(
                                         (obj: any) => obj.id === id
                                       )
                                   )}
@@ -473,7 +486,7 @@ const MultipleMatch = () => {
                                 <SessionMarket
                                   title={"Session Market"}
                                   allBetsData={Array.from(
-                                    item?.profitLossDataSession.reduce(
+                                    item?.profitLossDataSession?.reduce(
                                       (acc: any, obj: any) =>
                                         acc.has(obj.id)
                                           ? acc
@@ -481,7 +494,7 @@ const MultipleMatch = () => {
                                       new Set()
                                     ),
                                     (id) =>
-                                      item?.profitLossDataSession.find(
+                                      item?.profitLossDataSession?.find(
                                         (obj: any) => obj.id === id
                                       )
                                   )}
@@ -750,7 +763,7 @@ const MultipleMatch = () => {
                               <SessionMarket
                                 title={"Quick Session Market"}
                                 allBetsData={Array.from(
-                                  item?.profitLossDataSession.reduce(
+                                  item?.profitLossDataSession?.reduce(
                                     (acc: any, obj: any) =>
                                       acc.has(obj.id)
                                         ? acc
@@ -758,7 +771,7 @@ const MultipleMatch = () => {
                                     new Set()
                                   ),
                                   (id) =>
-                                    item?.profitLossDataSession.find(
+                                    item?.profitLossDataSession?.find(
                                       (obj: any) => obj.id === id
                                     )
                                 )}
@@ -774,7 +787,7 @@ const MultipleMatch = () => {
                               <SessionMarket
                                 title={"Session Market"}
                                 allBetsData={Array.from(
-                                  item?.profitLossDataSession.reduce(
+                                  item?.profitLossDataSession?.reduce(
                                     (acc: any, obj: any) =>
                                       acc.has(obj.id)
                                         ? acc
@@ -782,7 +795,7 @@ const MultipleMatch = () => {
                                     new Set()
                                   ),
                                   (id) =>
-                                    item?.profitLossDataSession.find(
+                                    item?.profitLossDataSession?.find(
                                       (obj: any) => obj.id === id
                                     )
                                 )}
@@ -1076,7 +1089,7 @@ const MultipleMatch = () => {
                           <SessionMarket
                             title={"Quick Session Market"}
                             allBetsData={Array.from(
-                              item?.profitLossDataSession.reduce(
+                              item?.profitLossDataSession?.reduce(
                                 (acc: any, obj: any) =>
                                   acc.has(obj.id)
                                     ? acc
@@ -1084,7 +1097,7 @@ const MultipleMatch = () => {
                                 new Set()
                               ),
                               (id) =>
-                                item?.profitLossDataSession.find(
+                                item?.profitLossDataSession?.find(
                                   (obj: any) => obj.id === id
                                 )
                             )}
@@ -1106,7 +1119,7 @@ const MultipleMatch = () => {
                           <SessionMarket
                             title={"Session Market"}
                             allBetsData={Array.from(
-                              item?.profitLossDataSession.reduce(
+                              item?.profitLossDataSession?.reduce(
                                 (acc: any, obj: any) =>
                                   acc.has(obj.id)
                                     ? acc
@@ -1114,7 +1127,7 @@ const MultipleMatch = () => {
                                 new Set()
                               ),
                               (id) =>
-                                item?.profitLossDataSession.find(
+                                item?.profitLossDataSession?.find(
                                   (obj: any) => obj.id === id
                                 )
                             )}
