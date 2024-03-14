@@ -267,7 +267,7 @@ const MatchDetail = () => {
         handleSessionResultUnDeclare
       );
     };
-  }, []);
+  }, [state?.matchId]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
