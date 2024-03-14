@@ -441,17 +441,21 @@ const MatchDetail = () => {
               (item: any) => !JSON.parse(item).selectionId
             )?.length > 0 && (
               <SessionMarket
-                allBetsData={Array.from(
-                  matchDetail?.profitLossDataSession?.reduce(
-                    (acc: any, obj: any) =>
-                      acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
-                    new Set()
-                  ),
-                  (id) =>
-                    matchDetail?.profitLossDataSession?.find(
-                      (obj: any) => obj.id === id
-                    )
-                )}
+                allBetsData={
+                  matchDetail?.profitLossDataSession
+                    ? Array.from(
+                        matchDetail?.profitLossDataSession?.reduce(
+                          (acc: any, obj: any) =>
+                            acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                          new Set()
+                        ),
+                        (id) =>
+                          matchDetail?.profitLossDataSession?.find(
+                            (obj: any) => obj.id === id
+                          )
+                      )
+                    : []
+                }
                 title={"Quick Session Market"}
                 currentMatch={matchDetail}
                 sessionData={matchDetail?.sessionBettings?.filter(
@@ -465,17 +469,21 @@ const MatchDetail = () => {
             matchesMobile &&
             matchDetail?.apiSession?.length > 0 && (
               <SessionMarket
-                allBetsData={Array.from(
-                  matchDetail?.profitLossDataSession?.reduce(
-                    (acc: any, obj: any) =>
-                      acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
-                    new Set()
-                  ),
-                  (id) =>
-                    matchDetail?.profitLossDataSession?.find(
-                      (obj: any) => obj.id === id
-                    )
-                )}
+                allBetsData={
+                  matchDetail?.profitLossDataSession
+                    ? Array.from(
+                        matchDetail?.profitLossDataSession?.reduce(
+                          (acc: any, obj: any) =>
+                            acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                          new Set()
+                        ),
+                        (id) =>
+                          matchDetail?.profitLossDataSession?.find(
+                            (obj: any) => obj.id === id
+                          )
+                      )
+                    : []
+                }
                 title={"Session Market"}
                 currentMatch={matchDetail}
                 sessionData={matchDetail?.apiSession}
@@ -630,17 +638,21 @@ const MatchDetail = () => {
               )?.length > 0 && (
                 <SessionMarket
                   title={"Quick Session Market"}
-                  allBetsData={Array.from(
-                    matchDetail?.profitLossDataSession?.reduce(
-                      (acc: any, obj: any) =>
-                        acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
-                      new Set()
-                    ),
-                    (id) =>
-                      matchDetail?.profitLossDataSession?.find(
-                        (obj: any) => obj.id === id
-                      )
-                  )}
+                  allBetsData={
+                    matchDetail?.profitLossDataSession
+                      ? Array.from(
+                          matchDetail?.profitLossDataSession?.reduce(
+                            (acc: any, obj: any) =>
+                              acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                            new Set()
+                          ),
+                          (id) =>
+                            matchDetail?.profitLossDataSession?.find(
+                              (obj: any) => obj.id === id
+                            )
+                        )
+                      : []
+                  }
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}
                   sessionData={matchDetail?.sessionBettings?.filter(
@@ -654,17 +666,21 @@ const MatchDetail = () => {
               matchDetail?.apiSession?.length > 0 && (
                 <SessionMarket
                   title={"Session Market"}
-                  allBetsData={Array.from(
-                    matchDetail?.profitLossDataSession?.reduce(
-                      (acc: any, obj: any) =>
-                        acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
-                      new Set()
-                    ),
-                    (id) =>
-                      matchDetail?.profitLossDataSession?.find(
-                        (obj: any) => obj.id === id
-                      )
-                  )}
+                  allBetsData={
+                    matchDetail?.profitLossDataSession
+                      ? Array.from(
+                          matchDetail?.profitLossDataSession?.reduce(
+                            (acc: any, obj: any) =>
+                              acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                            new Set()
+                          ),
+                          (id) =>
+                            matchDetail?.profitLossDataSession?.find(
+                              (obj: any) => obj.id === id
+                            )
+                        )
+                      : []
+                  }
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}
                   sessionData={matchDetail?.apiSession}
