@@ -102,7 +102,7 @@ export const userList = createSlice({
         state.isUrl = action.payload.isUrl
         if (domain !== undefined && domain !== null && domain !== '' && openModal) {
           state.domain = domain;
-        } else {
+        } else if(!openModal) {
           state.domain = ''
         }
         state.loading = false;
