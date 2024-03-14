@@ -36,6 +36,7 @@ import {
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../../store/actions/match/multipleMatchActions";
 import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
+import { formatToINR } from "../../../helper";
 
 const MultipleMatch = () => {
   const theme = useTheme();
@@ -361,8 +362,12 @@ const MultipleMatch = () => {
                                 <MatchOdds
                                   currentMatch={item}
                                   matchOddsLive={item?.matchOdd}
-                                  minBet={Math.floor(item?.matchOdd?.minBet)}
-                                  maxBet={Math.floor(item?.matchOdd?.maxBet)}
+                                  minBet={formatToINR(
+                                    Math.floor(item?.matchOdd?.minBet)
+                                  )}
+                                  maxBet={formatToINR(
+                                    Math.floor(item?.matchOdd?.maxBet)
+                                  )}
                                   data={
                                     item?.matchOdd?.runners?.length > 0
                                       ? item?.matchOdd?.runners
@@ -375,11 +380,15 @@ const MultipleMatch = () => {
                                 <MatchOdds
                                   currentMatch={item}
                                   typeOfBet={"Market Complete Match"}
-                                  minBet={Math.floor(
-                                    item?.marketCompleteMatch?.minBet
+                                  minBet={formatToINR(
+                                    Math.floor(
+                                      item?.marketCompleteMatch?.minBet
+                                    )
                                   )}
-                                  maxBet={Math.floor(
-                                    item?.marketCompleteMatch?.maxBet
+                                  maxBet={formatToINR(
+                                    Math.floor(
+                                      item?.marketCompleteMatch?.maxBet
+                                    )
                                   )}
                                   data={
                                     item?.marketCompleteMatch?.runners?.length >
@@ -393,11 +402,11 @@ const MultipleMatch = () => {
                                 <MatchOdds
                                   currentMatch={item}
                                   typeOfBet={"Tied Match"}
-                                  minBet={Math.floor(
-                                    item?.apiTideMatch?.minBet
+                                  minBet={formatToINR(
+                                    formatToINR(Math.floor(item?.apiTideMatch?.minBet))
                                   )}
-                                  maxBet={Math.floor(
-                                    item?.apiTideMatch?.maxBet
+                                  maxBet={formatToINR(
+                                    formatToINR(Math.floor(item?.apiTideMatch?.maxBet))
                                   )}
                                   data={
                                     item?.apiTideMatch?.runners?.length > 0
@@ -412,8 +421,8 @@ const MultipleMatch = () => {
                                     currentMatch={item}
                                     session={"manualBookMaker"}
                                     data={bookmaker}
-                                    minBet={bookmaker?.minBet || 0}
-                                    maxBet={bookmaker?.maxBet || 0}
+                                    minBet={formatToINR(bookmaker?.minBet) || 0}
+                                    maxBet={formatToINR(bookmaker?.maxBet) || 0}
                                     typeOfBet={bookmaker?.name}
                                     matchOddsData={bookmaker}
                                   />
@@ -422,8 +431,12 @@ const MultipleMatch = () => {
                               {item?.bookmaker?.isActive && (
                                 <LiveBookmaker
                                   currentMatch={item}
-                                  minBet={Math.floor(item?.bookmaker?.minBet)}
-                                  maxBet={Math.floor(item?.bookmaker?.maxBet)}
+                                  minBet={formatToINR(
+                                    formatToINR(Math.floor(item?.bookmaker?.minBet))
+                                  )}
+                                  maxBet={formatToINR(
+                                    formatToINR(Math.floor(item?.bookmaker?.maxBet))
+                                  )}
                                   bookmakerLive={item?.bookmaker}
                                   data={
                                     item?.bookmaker?.runners?.length > 0
@@ -437,11 +450,11 @@ const MultipleMatch = () => {
                                   typeOfBet={"Manual Tied Match"}
                                   currentMatch={item}
                                   session={"manualBookMaker"}
-                                  minBet={Math.floor(
-                                    item?.manualTiedMatch?.minBet
+                                  minBet={formatToINR(
+                                    Math.floor(item?.manualTiedMatch?.minBet)
                                   )}
-                                  maxBet={Math.floor(
-                                    item?.manualTiedMatch?.maxBet
+                                  maxBet={formatToINR(
+                                    Math.floor(item?.manualTiedMatch?.maxBet)
                                   )}
                                   data={item?.manualTiedMatch}
                                 />
@@ -482,8 +495,8 @@ const MultipleMatch = () => {
                                   //   sessionData={
                                   //     manualSessionHttp?.manualSessionRate
                                   //   }
-                                  max={item?.betFairSessionMaxBet}
-                                  min={item?.betFairSessionMinBet}
+                                  max={formatToINR(item?.betFairSessionMaxBet)}
+                                  min={formatToINR(item?.betFairSessionMinBet)}
                                 />
                               )}
                               {item?.apiSessionActive && (
@@ -518,8 +531,8 @@ const MultipleMatch = () => {
                                   sessionBets={sessionBetsData?.length}
                                   //   setPopData={setPopData}
                                   //   popData={popData}
-                                  max={item?.betFairSessionMaxBet}
-                                  min={item?.betFairSessionMinBet}
+                                  max={formatToINR(item?.betFairSessionMaxBet)}
+                                  min={formatToINR(item?.betFairSessionMinBet)}
                                 />
                               )}
                               {sessionProLoss?.length > 0 &&
@@ -654,8 +667,12 @@ const MultipleMatch = () => {
                               <MatchOdds
                                 currentMatch={item}
                                 // matchOddsLive={matchOddsLive}
-                                minBet={Math.floor(item?.matchOdd?.minBet)}
-                                maxBet={Math.floor(item?.matchOdd?.maxBet)}
+                                minBet={formatToINR(
+                                  Math.floor(item?.matchOdd?.minBet)
+                                )}
+                                maxBet={formatToINR(
+                                  Math.floor(item?.matchOdd?.maxBet)
+                                )}
                                 matchOddsLive={item?.matchOdd}
                                 // data={[]}
                                 data={
@@ -670,27 +687,27 @@ const MultipleMatch = () => {
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Market Complete Match"}
-                                minBet={Math.floor(
+                                minBet={formatToINR(Math.floor(
                                   item?.marketCompleteMatch?.minBet
-                                )}
-                                maxBet={Math.floor(
+                                ))}
+                                maxBet={formatToINR(Math.floor(
                                   item?.marketCompleteMatch?.maxBet
-                                )}
+                                ))}
                               />
                             )}
                             {item?.apiTideMatch && (
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Tied Match"}
-                                minBet={Math.floor(item?.apiTideMatch?.minBet)}
-                                maxBet={Math.floor(item?.apiTideMatch?.maxBet)}
+                                minBet={formatToINR(Math.floor(item?.apiTideMatch?.minBet))}
+                                maxBet={formatToINR(Math.floor(item?.apiTideMatch?.maxBet))}
                               />
                             )}
                             {item?.bookmaker && (
                               <LiveBookmaker
                                 currentMatch={item}
-                                minBet={Math.floor(item?.bookmaker?.minBet)}
-                                maxBet={Math.floor(item?.bookmaker?.maxBet)}
+                                minBet={formatToINR(Math.floor(item?.bookmaker?.minBet))}
+                                maxBet={formatToINR(Math.floor(item?.bookmaker?.maxBet))}
                                 bookmakerLive={item?.bookmaker}
                                 data={
                                   item?.bookmaker?.runners?.length > 0
@@ -705,8 +722,8 @@ const MultipleMatch = () => {
                                   currentMatch={item}
                                   session={"manualBookMaker"}
                                   data={bookmaker}
-                                  minBet={bookmaker?.minBet || 0}
-                                  maxBet={bookmaker?.maxBet || 0}
+                                  minBet={formatToINR(bookmaker?.minBet) || 0}
+                                  maxBet={formatToINR(bookmaker?.maxBet) || 0}
                                   typeOfBet={bookmaker?.name}
                                   matchOddsData={bookmaker}
                                 />
@@ -741,8 +758,8 @@ const MultipleMatch = () => {
                             {/* {item?.apiBookMakerActive && (
                               <LiveBookmaker
                                 currentMatch={item}
-                                minBet={Math.floor(item?.bookmaker?.minBet)}
-                                maxBet={Math.floor(item?.bookmaker?.maxBet)}
+                                minBet={formatToINR(Math.floor(item?.bookmaker?.minBet))}
+                                maxBet={formatToINR(Math.floor(item?.bookmaker?.maxBet))}
                                 bookmakerLive={item?.bookmakerLive}
                                 data={
                                   item?.bookmakerLive?.runners?.length > 0
@@ -757,12 +774,12 @@ const MultipleMatch = () => {
                                 currentMatch={item}
                                 session={"manualBookMaker"}
                                 data={item?.manualTiedMatch}
-                                minBet={Math.floor(
+                                minBet={formatToINR(Math.floor(
                                   item?.manualTiedMatch?.minBet
-                                )}
-                                maxBet={Math.floor(
+                                ))}
+                                maxBet={formatToINR(Math.floor(
                                   item?.manualTiedMatch?.maxBet
-                                )}
+                                ))}
                                 matchOddsData={item?.manualTiedMatch}
                               />
                             )}
@@ -791,8 +808,8 @@ const MultipleMatch = () => {
                                 currentMatch={item}
                                 sessionOffline={item?.sessionOffline}
                                 sessionBets={sessionBetsData?.length}
-                                max={item?.betFairSessionMaxBet}
-                                min={item?.betFairSessionMinBet}
+                                max={formatToINR(item?.betFairSessionMaxBet)}
+                                min={formatToINR(item?.betFairSessionMinBet)}
                               />
                             )}
                             {item?.manualSessionActive && (
@@ -820,8 +837,8 @@ const MultipleMatch = () => {
                                 sessionData={item?.apiSession}
                                 sessionOffline={item?.sessionOffline}
                                 sessionBets={sessionBetsData?.length}
-                                max={item?.betFairSessionMaxBet}
-                                min={item?.betFairSessionMaxBet}
+                                max={formatToINR(item?.betFairSessionMaxBet)}
+                                min={formatToINR(item?.betFairSessionMaxBet)}
                               />
                             )}
                             {sessionProLoss?.length > 0 &&
@@ -999,8 +1016,12 @@ const MultipleMatch = () => {
                           <MatchOdds
                             currentMatch={item}
                             matchOddsLive={item?.matchOdd}
-                            minBet={Math.floor(item?.matchOdd?.minBet)}
-                            maxBet={Math.floor(item?.matchOdd?.maxBet)}
+                            minBet={formatToINR(
+                              Math.floor(item?.matchOdd?.minBet)
+                            )}
+                            maxBet={formatToINR(
+                              Math.floor(item?.matchOdd?.maxBet)
+                            )}
                             data={
                               item.matchOdd?.runners?.length > 0
                                 ? item.matchOdd?.runners
@@ -1013,12 +1034,12 @@ const MultipleMatch = () => {
                           <MatchOdds
                             currentMatch={item}
                             typeOfBet={"Market Complete Match"}
-                            minBet={Math.floor(
+                            minBet={formatToINR(Math.floor(
                               item?.marketCompleteMatch?.minBet
-                            )}
-                            maxBet={Math.floor(
+                            ))}
+                            maxBet={formatToINR(Math.floor(
                               item?.marketCompleteMatch?.maxBet
-                            )}
+                            ))}
                             data={
                               item.marketCompleteMatch?.runners?.length > 0
                                 ? item.marketCompleteMatch?.runners
@@ -1030,8 +1051,8 @@ const MultipleMatch = () => {
                           <MatchOdds
                             currentMatch={item}
                             typeOfBet={"Tied Match"}
-                            minBet={Math.floor(item?.apiTideMatch?.minBet)}
-                            maxBet={Math.floor(item?.apiTideMatch?.maxBet)}
+                            minBet={formatToINR(Math.floor(item?.apiTideMatch?.minBet))}
+                            maxBet={formatToINR(Math.floor(item?.apiTideMatch?.maxBet))}
                             data={
                               item.apiTideMatch?.runners?.length > 0
                                 ? item.apiTideMatch?.runners
@@ -1050,8 +1071,8 @@ const MultipleMatch = () => {
                         {item?.bookmaker?.isActive && (
                           <LiveBookmaker
                             currentMatch={item}
-                            minBet={Math.floor(item?.bookmaker?.minBet)}
-                            maxBet={Math.floor(item?.bookmaker?.maxBet)}
+                            minBet={formatToINR(Math.floor(item?.bookmaker?.minBet))}
+                            maxBet={formatToINR(Math.floor(item?.bookmaker?.maxBet))}
                             bookmakerLive={item?.bookmakerLive}
                             data={
                               item?.bookmaker?.runners?.length > 0
@@ -1067,8 +1088,8 @@ const MultipleMatch = () => {
                               currentMatch={item}
                               session={"manualBookMaker"}
                               data={bookmaker}
-                              minBet={bookmaker?.minBet || 0}
-                              maxBet={bookmaker?.maxBet || 0}
+                              minBet={formatToINR(bookmaker?.minBet) || 0}
+                              maxBet={formatToINR(bookmaker?.maxBet) || 0}
                               typeOfBet={bookmaker?.name}
                               matchOddsData={bookmaker}
                             />
@@ -1078,8 +1099,8 @@ const MultipleMatch = () => {
                         {/* {item?.apiBookMakerActive && (
                           <LiveBookmaker
                             currentMatch={item}
-                            minBet={Math.floor(item?.bookmaker?.minBet)}
-                            maxBet={Math.floor(item?.bookmaker?.maxBet)}
+                            minBet={formatToINR(Math.floor(item?.bookmaker?.minBet))}
+                            maxBet={formatToINR(Math.floor(item?.bookmaker?.maxBet))}
                             bookmakerLive={item?.bookmakerLive}
                             data={
                               item?.bookmakerLive?.runners?.length > 0
@@ -1094,8 +1115,8 @@ const MultipleMatch = () => {
                             typeOfBet={"Manual Tied Match"}
                             currentMatch={item}
                             session={"manualBookMaker"}
-                            minBet={Math.floor(item?.manualTiedMatch?.minBet)}
-                            maxBet={Math.floor(item?.manualTiedMatch?.maxBet)}
+                            minBet={formatToINR(Math.floor(item?.manualTiedMatch?.minBet))}
+                            maxBet={formatToINR(Math.floor(item?.manualTiedMatch?.maxBet))}
                             matchOddsData={item?.manualTiedMatch}
                             data={item?.manualTiedMatch}
                           />
@@ -1131,8 +1152,8 @@ const MultipleMatch = () => {
                             // sessionData={manualSessionHttp?.manualSessionRate}
                             // setPopData={setPopData}
                             // popData={popData}
-                            max={item?.betFairSessionMaxBet}
-                            min={item?.betFairSessionMinBet}
+                            max={formatToINR(item?.betFairSessionMaxBet)}
+                            min={formatToINR(item?.betFairSessionMinBet)}
                           />
                         )}
                         {item?.apiSessionActive && (
@@ -1160,8 +1181,8 @@ const MultipleMatch = () => {
                             sessionData={item?.apiSession}
                             sessionOffline={item?.sessionOffline}
                             sessionBets={sessionBetsData?.length}
-                            max={item?.betFairSessionMaxBet}
-                            min={item?.betFairSessionMinBet}
+                            max={formatToINR(item?.betFairSessionMaxBet)}
+                            min={formatToINR(item?.betFairSessionMinBet)}
                           />
                         )}
                         {sessionProLoss?.length > 0 &&
