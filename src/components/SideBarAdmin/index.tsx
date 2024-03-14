@@ -24,7 +24,6 @@ const datas = [
 ];
 const SideBarAdmin = (props: any) => {
   const { handleDrawerToggle } = props;
-  const [matchData] = useState(datas);
   const [selected, setSelected] = useState({
     value: false,
     matchType: "",
@@ -99,7 +98,7 @@ const SideBarAdmin = (props: any) => {
           </Box>
         </Box>
       </Box>
-      {matchData?.map((games, index) => {
+      {datas?.map((games, index) => {
         return (
           <RenderGames
             key={index}

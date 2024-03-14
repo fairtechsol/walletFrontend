@@ -58,7 +58,7 @@ const RenderGames = ({
         under={selected?.matchType === games?.value}
         color={colors[1]}
         width={90}
-        title={games.title}
+        title={games?.title}
       />
       {selected?.value &&
         selected?.matchType === games?.value &&
@@ -69,9 +69,9 @@ const RenderGames = ({
               key={item?.competitionId}
               handleDrawerToggle={handleDrawerToggle}
               i={item}
+              colors={colors}
               selectedCompetitionId={selectedCompetitionId}
               setSelectedCompetitionId={setSelectedCompetitionId}
-              colors={colors}
             />
           );
         })}
