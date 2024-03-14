@@ -104,6 +104,13 @@ export const addUserValidation = (item: any) => {
       value: Yup.string().required("Please select an option"),
       label: Yup.string().required("Please select an option"),
     }),
+    creditRefrence: Yup.string()
+  .test({
+    name: 'creditRefrence',
+    message: 'Credit reference is required',
+    test: (value) => value != "0",
+  })
+  .required("Credit reference is required"),
     // domain: Yup.string().matches(
     //   /^http:\/\/localhost:5000$/,
     //   "Your URL should be http://107.23.165.155:5000 format for dev"
