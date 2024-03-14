@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
-import { formatNumber } from "../../../helper";
+import { formatNumber, formatToINR } from "../../../helper";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
@@ -70,7 +70,7 @@ const SeasonMarketBox = (props: any) => {
               fontWeight: "500",
             }}
           >
-            MAX: {newData?.maxBet ?? newData?.max}
+            MAX: {formatToINR(newData?.maxBet ?? newData?.max)}
           </Typography>
           </Box>
         </Box>

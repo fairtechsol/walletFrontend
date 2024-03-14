@@ -4,7 +4,7 @@ import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import Divider from "../../Inplay/Divider";
 import BetsCountBox from "./BetsCountBox";
 import SeasonMarketBox from "./SeasonMarketBox";
-import { customSort } from "../../../helper";
+import { customSort, formatToINR } from "../../../helper";
 
 const SessionMarket = ({
   blockMatch,
@@ -198,7 +198,7 @@ const SessionMarket = ({
                       marginLeft: "7px",
                     }}
                   >
-                    MIN: {min} 
+                    MIN: {formatToINR(min)} 
                     {/* MAX:
                     {max} */}
                   </Typography>

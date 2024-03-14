@@ -4,6 +4,7 @@ import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import SmallBox from "../MatchOdds/SmallBox";
 import Divider from "../../Inplay/Divider";
 import BoxComponent from "./BoxComponent";
+import { formatToINR } from "../../../helper";
 
 const LiveBookmaker = (props: any) => {
   const {
@@ -163,8 +164,8 @@ const LiveBookmaker = (props: any) => {
                     marginLeft: "7px",
                   }}
                 >
-                  MIN: {minBet} MAX:
-                  {maxBet}
+                  MIN: {formatToINR(minBet)} MAX:
+                  {formatToINR(maxBet)}
                 </Typography>
               </Box>
               <Box
