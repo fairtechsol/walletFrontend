@@ -15,7 +15,7 @@ const SeperateBox = (props: any) => {
         sx={{
           background: lock ? "#FDF21A" : color,
           border: color != "white" ? "1px solid #2626264D" : "0px solid white",
-          width: { xs: "30%", lg: width ? `${width}vw` : "4.7vw" },
+          width: { xs: "30%", lg: width ? `${width}vw` : "5vw" },
           height: "94%",
           display: "flex",
           justifyContent: "center",
