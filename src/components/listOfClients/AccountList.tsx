@@ -24,7 +24,7 @@ const AccountList = (endpoint: any) => {
   const loading = false;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { userList } = useSelector((state: RootState) => state.user.userList);
-  const { totalBalance,openModal,domain } = useSelector(
+  const { totalBalance, openModal, domain } = useSelector(
     (state: RootState) => state.user.userList
   );
 
@@ -32,16 +32,16 @@ const AccountList = (endpoint: any) => {
     dispatch(getUserList({ currentPage: currentPage, url: endpoint }));
     dispatch(getTotalBalance());
   }, [currentPage]);
- 
+
   const handleModalClose = () => {
     dispatch(
       handleModelActions({
-        url:'',
-        userId: '',
-        roleName: '',
+        url: "",
+        userId: "",
+        roleName: "",
         domain: "",
-        openModal:false,
-        isUrl:false,
+        openModal: false,
+        isUrl: false,
       })
     );
   };
@@ -174,9 +174,7 @@ const AccountList = (endpoint: any) => {
                 alignItems: "center",
               }}
             >
-              <AccountListModal
-                endpoint={ApiConstants.USER.LIST}
-              />
+              <AccountListModal endpoint={ApiConstants.USER.LIST} />
             </Box>
           </ModalMUI>
         </>

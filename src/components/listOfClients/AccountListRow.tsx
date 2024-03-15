@@ -516,7 +516,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{`${element.roleName} ${
+          <Typography variant="h5">{`${element.roleName ?? ""} ${
             element.roleName === "superAdmin"
               ? element?.isUrl
                 ? "(url)"
