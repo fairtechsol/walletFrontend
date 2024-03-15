@@ -107,7 +107,7 @@ const AccountListTable = ({ endpoint }: any) => {
           </Box>
         </Box>
 
-        <Box sx={{ overflowX: "auto" }}>
+        <Box sx={{ overflowX: "auto",maxHeight:'60vh' }}>
           <Box sx={{ display: matchesBreakPoint ? "inline-block" : "block" }}>
             <ListHeaderRow />
             <SubHeaderListRow data={totalBalance} />
