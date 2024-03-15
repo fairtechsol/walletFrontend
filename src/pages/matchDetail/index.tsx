@@ -475,7 +475,7 @@ const MatchDetail = () => {
                   (item: any) => !JSON.parse(item).selectionId
                 )}
                 min={formatToINR(matchDetail?.betFairSessionMinBet) || 0}
-                max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
+                // max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
               />
             )}
           {matchDetail?.apiSessionActive &&
@@ -501,7 +501,7 @@ const MatchDetail = () => {
                 currentMatch={matchDetail}
                 sessionData={matchDetail?.apiSession}
                 min={formatToINR(Math.floor(matchDetail?.betFairSessionMinBet))}
-                max={formatToINR(Math.floor(matchDetail?.betFairSessionMaxBet))}
+                // max={formatToINR(Math.floor(matchDetail?.betFairSessionMaxBet))}
               />
             )}
 
