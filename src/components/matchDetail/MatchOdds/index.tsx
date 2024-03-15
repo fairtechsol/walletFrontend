@@ -6,6 +6,7 @@ import TeamRowComponent from "./TeamRowComponent";
 import BoxComponent from "../LiveBookmaker/BoxComponent";
 import { useState } from "react";
 import { formatToINR } from "../../../helper";
+import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 
 const MatchOdds = (props: any) => {
   const {
@@ -21,6 +22,9 @@ const MatchOdds = (props: any) => {
     session,
     showBox,
     upcoming,
+    showUnlock,
+    handleBlock,
+    handleHide,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -39,6 +43,10 @@ const MatchOdds = (props: any) => {
 
   const handleLock = (data: any) => {
     return data?.ex?.availableToBack?.length > 0 ? false : true;
+  };
+
+  const onSubmit = (value: any) => {
+    handleBlock(value, !locked, typeOfBet);
   };
   return (
     <Box
@@ -591,16 +599,16 @@ const MatchOdds = (props: any) => {
             zIndex: 999,
           }}
         >
-          {/* <UnlockComponent
+          <UnlockComponent
             unlock={locked}
             title={(locked ? "Unlock " : "Lock ") + "Manual Bookmaker Market"}
             handleHide={handleHide}
             onSubmit={onSubmit}
-          /> */}
+          />
         </Box>
       )}
 
-      {false && (
+      {showUnlock && (
         <Box
           sx={{
             position: "absolute",
@@ -612,12 +620,12 @@ const MatchOdds = (props: any) => {
             zIndex: 999,
           }}
         >
-          {/* <UnlockComponent
+          <UnlockComponent
             unlock={locked}
             title={(locked ? "Unlock " : "Lock ") + typeOfBet + " Market"}
             handleHide={handleHide}
             onSubmit={onSubmit}
-          /> */}
+          />
         </Box>
       )}
     </Box>

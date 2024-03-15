@@ -5,6 +5,7 @@ import Divider from "../../Inplay/Divider";
 import BetsCountBox from "./BetsCountBox";
 import SeasonMarketBox from "./SeasonMarketBox";
 import { customSort, formatToINR } from "../../../helper";
+import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 
 const SessionMarket = ({
   blockMatch,
@@ -17,11 +18,17 @@ const SessionMarket = ({
   sessionData,
   allBetsData,
   currentMatch,
+  handleBlock,
+  handleHide,
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [visible, setVisible] = useState(true);
+
+  const onSubmit = (value: any) => {
+    handleBlock(value, !locked, "SESSION");
+  };
 
   return (
     <>
@@ -331,18 +338,18 @@ const SessionMarket = ({
                           newData={
                             title === "Session Market"
                               ? {
-                                ...element,
-                                noRate: element?.LayPrice1 ?? 0,
-                                noPercent: element?.LaySize1 ?? 0,
-                                yesRate: element?.BackPrice1 ?? 0,
-                                yesPercent: element?.BackSize1 ?? 0,
-                                status:
-                                  element?.GameStatus &&
+                                  ...element,
+                                  noRate: element?.LayPrice1 ?? 0,
+                                  noPercent: element?.LaySize1 ?? 0,
+                                  yesRate: element?.BackPrice1 ?? 0,
+                                  yesPercent: element?.BackSize1 ?? 0,
+                                  status:
+                                    element?.GameStatus &&
                                     element?.GameStatus !== ""
-                                    ? element?.GameStatus
-                                    : "active",
-                                matchId: currentMatch?.id,
-                              }
+                                      ? element?.GameStatus
+                                      : "active",
+                                  matchId: currentMatch?.id,
+                                }
                               : JSON.parse(element)
                           }
                           profitLossData={allBetsData?.filter(
@@ -371,12 +378,12 @@ const SessionMarket = ({
                   zIndex: 999,
                 }}
               >
-                {/* <UnlockComponent
+                <UnlockComponent
                   unlock={locked}
                   title={(locked ? "Unlock " : "Lock ") + title}
                   handleHide={handleHide}
                   onSubmit={onSubmit}
-                /> */}
+                />
               </Box>
             )}
             {showUnlock && (
