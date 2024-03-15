@@ -175,6 +175,7 @@ const DepositComponent = (props: any) => {
               showPass={showPass}
               onCancel={() => {
                 setSelected();
+                onChangeAmount(0, element?.id, "deposite");
               }}
               initialBalance={initialBalance}
               backgroundColor={backgroundColor}
@@ -450,11 +451,12 @@ const DepositComponent = (props: any) => {
                       },
                     }}
                   />
-                  {touched.transactionPassword && errors.transactionPassword && (
-                    <p style={{ color: "#fa1e1e", lineHeight: "0.8" }}>
-                      {errors.transactionPassword as string}
-                    </p>
-                  )}
+                  {touched.transactionPassword &&
+                    errors.transactionPassword && (
+                      <p style={{ color: "#fa1e1e", lineHeight: "0.8" }}>
+                        {errors.transactionPassword as string}
+                      </p>
+                    )}
                   <Box
                     onClick={() => {
                       setShowPass(!showPass);
@@ -466,9 +468,7 @@ const DepositComponent = (props: any) => {
                     />
                   </Box>
                 </Box>
-
               </Box>
-
             </Box>
 
             <Box
@@ -553,6 +553,7 @@ const DepositComponent = (props: any) => {
                   isSelected={true}
                   onClick={() => {
                     setSelected();
+                    onChangeAmount(0, element?.id, "deposite");
                   }}
                   title={"Cancel"}
                 />
@@ -595,6 +596,10 @@ const DepositComponent = (props: any) => {
                     background: "#E32A2A",
                     border: "0px",
                     height: "35px",
+                  }}
+                  onClick={() => {
+                    setSelected();
+                    onChangeAmount(0, element?.id, "deposite");
                   }}
                   isSelected={true}
                   title={"Cancel"}

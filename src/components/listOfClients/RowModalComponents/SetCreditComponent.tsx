@@ -39,8 +39,8 @@ const SetCreditComponent = (props: any) => {
   const dispatch: AppDispatch = useDispatch();
 
   const formatIndianCurrency = (amount: number) => {
-    const formatter = new Intl.NumberFormat('en-IN', {
-      currency: 'INR'
+    const formatter = new Intl.NumberFormat("en-IN", {
+      currency: "INR",
     });
     return formatter.format(amount);
   };
@@ -48,11 +48,10 @@ const SetCreditComponent = (props: any) => {
   const checkHandleChange = (event: any) => {
     let value = 0;
     if (event.target.value != "") {
-
-      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ''));
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ""));
     }
-    
-    formik.setFieldValue("amount",value);
+
+    formik.setFieldValue("amount", value);
     onChangeAmount(value, element?.id, "credit");
     // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
     // setChexckValue(event.target.value);
@@ -165,7 +164,9 @@ const SetCreditComponent = (props: any) => {
                 id={"amount"}
                 // value={formik.values.amount}
                 // onChange={formik.handleChange}
-                value={formatIndianCurrency(parseFloat(formik.values.amount?.toString()))}
+                value={formatIndianCurrency(
+                  parseFloat(formik.values.amount?.toString())
+                )}
                 onChange={(e: any) => checkHandleChange(e)}
                 onKeyDown={handleKeyDown}
                 variant="standard"
@@ -328,6 +329,7 @@ const SetCreditComponent = (props: any) => {
               isSelected={true}
               onClick={() => {
                 setSelected();
+                onChangeAmount(0, element?.id, "credit");
               }}
               title={"Cancel"}
             />

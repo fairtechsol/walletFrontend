@@ -78,7 +78,9 @@ const PlaceBetComponent = ({ newData, profitLoss }: any) => {
             }}
           >
             {" "}
-            {!profitLoss?.maxLoss ? "Profit/Loss" : profitLoss?.maxLoss?.toFixed(2)}
+            {!profitLoss?.maxLoss
+              ? "Profit/Loss"
+              : profitLoss?.maxLoss?.toFixed(2)}
           </Typography>
         </Box>
       </Box>
