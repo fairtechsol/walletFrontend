@@ -22,9 +22,10 @@ const MainLayout = () => {
   useEffect(() => {
     if (!sessionStorage.getItem("userToken")) {
       navigate("/wallet/login");
+    } else {
+      dispatch(getUsersProfile());
+      dispatch(marqueeNotification());
     }
-    dispatch(getUsersProfile());
-    dispatch(marqueeNotification());
   }, []);
 
   useEffect(() => {

@@ -3,7 +3,8 @@ import Loadable from "../utils/loadable";
 import { Navigate } from "react-router-dom";
 import { Constants } from "../utils/Constants";
 
-const MainLayout = Loadable(lazy(() => import("../layout/main")));
+import MainLayout from "../layout/main";
+
 const DepositAndWithdrawBox = Loadable(
   lazy(() => import("../components/walletSettings/DepositAndWithdrawBox"))
 );
