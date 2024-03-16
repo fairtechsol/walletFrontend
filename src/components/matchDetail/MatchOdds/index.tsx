@@ -5,6 +5,7 @@ import SmallBox from "./SmallBox";
 import TeamRowComponent from "./TeamRowComponent";
 import BoxComponent from "../LiveBookmaker/BoxComponent";
 import { useState } from "react";
+import { formatToINR } from "../../../helper";
 import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 
 const MatchOdds = (props: any) => {
@@ -214,7 +215,7 @@ const MatchOdds = (props: any) => {
                   marginLeft: "7px",
                 }}
               >
-                MIN:{minBet} MAX: {maxBet}
+                MIN:{formatToINR(minBet)} MAX: {formatToINR(maxBet)}
               </Typography>
             </Box>
             <Box

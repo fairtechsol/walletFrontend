@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import ModalMUI from "@mui/material/Modal";
 import { useFormik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +48,7 @@ const AddAccount = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(true);
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -181,17 +182,17 @@ const AddAccount = () => {
             myPartnership: values.myPartnership,
             sessionCommission:
               values.sessionCommission.value === "" ||
-              values.sessionCommission.value === "0.00"
+                values.sessionCommission.value === "0.00"
                 ? 0
                 : values.sessionCommission.value,
             matchComissionType:
               values.matchCommissionType.value === "" ||
-              values.matchCommissionType.value === "0.00"
+                values.matchCommissionType.value === "0.00"
                 ? null
                 : values.matchCommissionType.value,
             matchCommission:
               values.matchCommission.value === "" ||
-              values.matchCommission.value === "0.00"
+                values.matchCommission.value === "0.00"
                 ? 0
                 : values.matchCommission.value,
           };
@@ -208,17 +209,17 @@ const AddAccount = () => {
             myPartnership: values.myPartnership,
             sessionCommission:
               values.sessionCommission.value === "" ||
-              values.sessionCommission.value === "0.00"
+                values.sessionCommission.value === "0.00"
                 ? 0
                 : values.sessionCommission.value,
             matchComissionType:
               values.matchCommissionType.value === "" ||
-              values.matchCommissionType.value === "0.00"
+                values.matchCommissionType.value === "0.00"
                 ? null
                 : values.matchCommissionType.value,
             matchCommission:
               values.matchCommission.value === "" ||
-              values.matchCommission.value === "0.00"
+                values.matchCommission.value === "0.00"
                 ? 0
                 : values.matchCommission.value,
             transactionPassword: values.adminTransPassword,
@@ -240,17 +241,17 @@ const AddAccount = () => {
                 : values.downlinePartnership,
             sessionCommission:
               values.sessionCommission.value === "" ||
-              values.sessionCommission.value === "0.00"
+                values.sessionCommission.value === "0.00"
                 ? 0
                 : values.sessionCommission.value,
             matchComissionType:
               values.matchCommissionType.value === "" ||
-              values.matchCommissionType.value === "0.00"
+                values.matchCommissionType.value === "0.00"
                 ? null
                 : values.matchCommissionType.value,
             matchCommission:
               values.matchCommission.value === "" ||
-              values.matchCommission.value === "0.00"
+                values.matchCommission.value === "0.00"
                 ? 0
                 : values.matchCommission.value,
           };
@@ -492,7 +493,7 @@ const AddAccount = () => {
   return (
     <>
       {loading && <Loader />}
-      <Box sx={{ margin: "1%" }}>
+      <Box sx={{ margin: "1%", height: "100%" }}>
         <Typography
           sx={{
             color: "white",
@@ -1104,7 +1105,7 @@ const AddAccount = () => {
                     type={"Number"}
                     min={0}
                     value={formik.values.downlinePartnership || 0}
-                    // onChange={formik.handleChange}
+                  // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -1148,27 +1149,27 @@ const AddAccount = () => {
                       {!["", null, "0.00"].includes(
                         formik.values.matchCommissionType.value
                       ) && (
-                        <>
-                          <SelectField
-                            containerStyle={containerStyles}
-                            titleStyle={titleStyles}
-                            id={"matchCommission"}
-                            name={"matchCommission"}
-                            label={"Match Commission (%)*"}
-                            options={matchComissionArray}
-                            value={formik.values.matchCommission}
-                            onChange={(matchComissionArray: any) => {
-                              formik.setFieldValue(
-                                "matchCommission",
-                                matchComissionArray
-                              );
-                            }}
-                            onBlur={formik.handleBlur}
+                          <>
+                            <SelectField
+                              containerStyle={containerStyles}
+                              titleStyle={titleStyles}
+                              id={"matchCommission"}
+                              name={"matchCommission"}
+                              label={"Match Commission (%)*"}
+                              options={matchComissionArray}
+                              value={formik.values.matchCommission}
+                              onChange={(matchComissionArray: any) => {
+                                formik.setFieldValue(
+                                  "matchCommission",
+                                  matchComissionArray
+                                );
+                              }}
+                              onBlur={formik.handleBlur}
                             // touched={touched.matchCommission}
                             // error={errors.matchCommission}
-                          />
-                        </>
-                      )}
+                            />
+                          </>
+                        )}
 
                       <SelectField
                         containerStyle={containerStyles}
@@ -1185,8 +1186,8 @@ const AddAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        // touched={touched.sessionCommission}
-                        // error={errors.sessionCommission}
+                      // touched={touched.sessionCommission}
+                      // error={errors.sessionCommission}
                       />
                     </Box>
                   </>
@@ -1275,17 +1276,22 @@ const AddAccount = () => {
             </Box>
           </Box>
         </form>
+        <ModalMUI
+          open={showModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+            <CustomModal
+              modalTitle={`User Added sucessfully`}
+              setShowModal={setShowModal}
+              showModal={showModal}
+              buttonMessage={"Ok"}
+              functionDispatch={() => { }}
+              navigateTo={`/wallet/list_of_clients`}
+            />
+        </ModalMUI>
       </Box>
-      {showModal && (
-        <CustomModal
-          modalTitle={`User Added sucessfully`}
-          setShowModal={setShowModal}
-          showModal={showModal}
-          buttonMessage={"Ok"}
-          functionDispatch={() => {}}
-          navigateTo={`/wallet/list_of_clients`}
-        />
-      )}
+
     </>
   );
 };
