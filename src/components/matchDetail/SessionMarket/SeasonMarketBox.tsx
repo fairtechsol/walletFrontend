@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
-import { formatNumber, formatToINR } from "../../../helper";
+import { formatNumber} from "../../../helper";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
