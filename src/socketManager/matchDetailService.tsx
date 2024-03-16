@@ -22,9 +22,6 @@ export const matchSocketService = {
   getMatchRates: (matchId: any, callback: any) => {
     thirdParty.on(`liveData${matchId}`, callback);
   },
-  getMatchRatesOff: (matchId: any, callback: any) => {
-    thirdParty.off(`liveData${matchId}`, callback);
-  },
   matchResultDeclared: (callback: any) => {
     socket.on("matchResult", callback);
   },
@@ -58,34 +55,37 @@ export const matchSocketService = {
   sessionResultUnDeclare: (callback: any) => {
     socket.on("sessionResultUnDeclare", callback);
   },
-  sessionResultUnDeclareOff: (callback: any) => {
-    socket.off("sessionResultUnDeclare", callback);
+  sessionResultUnDeclareOff: () => {
+    socket.off("sessionResultUnDeclare");
   },
-  sessionResultOff: (callback: any) => {
-    socket.off("sessionResult", callback);
+  sessionResultOff: () => {
+    socket.off("sessionResult");
   },
-  userSessionBetPlacedOff: (callback: any) => {
-    socket.off("userSessionBetPlaced", callback);
+  userSessionBetPlacedOff: () => {
+    socket.off("userSessionBetPlaced");
   },
-  userMatchBetPlacedOff: (callback: any) => {
-    socket.off("userMatchBetPlaced", callback);
+  userMatchBetPlacedOff: () => {
+    socket.off("userMatchBetPlaced");
   },
-  matchResultDeclaredOff: (callback: any) => {
-    socket.off("matchResult", callback);
+  matchResultDeclaredOff: () => {
+    socket.off("matchResult");
   },
-  matchResultUnDeclaredOff: (callback: any) => {
-    socket.off("matchResultUnDeclare", callback);
+  matchResultUnDeclaredOff: () => {
+    socket.off("matchResultUnDeclare");
   },
-  matchDeleteBetOff: (callback: any) => {
-    socket.off("matchDeleteBet", callback);
+  matchDeleteBetOff: () => {
+    socket.off("matchDeleteBet");
   },
-  sessionDeleteBetOff: (callback: any) => {
-    socket.off("sessionDeleteBet", callback);
+  sessionDeleteBetOff: () => {
+    socket.off("sessionDeleteBet");
   },
-  updateUserBalanceOff: (callback: any) => {
-    socket.off("updateUserBalance", callback);
+  updateUserBalanceOff: () => {
+    socket.off("updateUserBalance");
   },
-  matchAddedOff: (callback: any) => {
-    socket.off("addMatch", callback);
+  matchAddedOff: () => {
+    socket.off("addMatch");
+  },
+  getMatchRatesOff: (matchId: any) => {
+    thirdParty.off(`liveData${matchId}`);
   },
 };

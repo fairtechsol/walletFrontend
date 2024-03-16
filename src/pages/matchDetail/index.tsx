@@ -18,6 +18,7 @@ import {
   getUserProfitLoss,
   removeRunAmount,
   resetSessionProLoss,
+  resetUserProfitLoss,
   updateBetDataOnDeclare,
   updateBetsPlaced,
   updateMatchRates,
@@ -30,6 +31,7 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
+import { formatToINR } from "../../helper";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -214,19 +216,14 @@ const MatchDetail = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName) {
-        socketService.match.getMatchRatesOff(
-          state?.matchId,
-          updateMatchDetailToRedux
-        );
-        socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
-        socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
-        socketService.match.matchResultDeclaredOff(matchResultDeclared);
-        socketService.match.matchDeleteBetOff(matchDeleteBet);
-        socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
-        socketService.match.sessionResultOff(handleSessionResultDeclare);
-        socketService.match.sessionResultUnDeclareOff(
-          handleSessionResultUnDeclare
-        );
+        socketService.match.getMatchRatesOff(state?.matchId);
+        socketService.match.userSessionBetPlacedOff();
+        socketService.match.userMatchBetPlacedOff();
+        socketService.match.matchResultDeclaredOff();
+        socketService.match.matchDeleteBetOff();
+        socketService.match.sessionDeleteBetOff();
+        socketService.match.sessionResultOff();
+        socketService.match.sessionResultUnDeclareOff();
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -253,19 +250,15 @@ const MatchDetail = () => {
   useEffect(() => {
     return () => {
       socketService.match.leaveMatchRoom(state?.matchId);
-      socketService.match.getMatchRatesOff(
-        state?.matchId,
-        updateMatchDetailToRedux
-      );
-      socketService.match.userSessionBetPlacedOff(setSessionBetsPlaced);
-      socketService.match.userMatchBetPlacedOff(setMatchBetsPlaced);
-      socketService.match.matchResultDeclaredOff(matchResultDeclared);
-      socketService.match.matchDeleteBetOff(matchDeleteBet);
-      socketService.match.sessionDeleteBetOff(handleSessionDeleteBet);
-      socketService.match.sessionResultOff(handleSessionResultDeclare);
-      socketService.match.sessionResultUnDeclareOff(
-        handleSessionResultUnDeclare
-      );
+      socketService.match.getMatchRatesOff(state?.matchId);
+      socketService.match.userSessionBetPlacedOff();
+      socketService.match.userMatchBetPlacedOff();
+      socketService.match.matchResultDeclaredOff();
+      socketService.match.matchDeleteBetOff();
+      socketService.match.sessionDeleteBetOff();
+      socketService.match.sessionResultOff();
+      socketService.match.sessionResultUnDeclareOff();
+      dispatch(resetUserProfitLoss());
     };
   }, [state?.matchId]);
 
@@ -278,10 +271,7 @@ const MatchDetail = () => {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
       } else if (document.visibilityState === "hidden") {
-        socketService.match.getMatchRatesOff(
-          state?.matchId,
-          updateMatchDetailToRedux
-        );
+        socketService.match.getMatchRatesOff(state?.matchId);
       }
     };
 
@@ -356,8 +346,8 @@ const MatchDetail = () => {
               currentMatch={matchDetail}
               typeOfBet={"Match Odds"}
               showBox={matchDetail?.matchOdd?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
-              maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
+              minBet={formatToINR(Math.floor(matchDetail?.matchOdd?.minBet))}
+              maxBet={formatToINR(Math.floor(matchDetail?.matchOdd?.maxBet))}
               data={
                 matchDetail?.matchOdd?.runners?.length > 0
                   ? matchDetail?.matchOdd?.runners
@@ -372,8 +362,12 @@ const MatchDetail = () => {
               showBox={
                 matchDetail?.marketCompleteMatch?.activeStatus === "save"
               }
-              minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
+              minBet={formatToINR(
+                Math.floor(matchDetail?.marketCompleteMatch?.minBet)
+              )}
+              maxBet={formatToINR(
+                Math.floor(matchDetail?.marketCompleteMatch?.maxBet)
+              )}
               data={
                 matchDetail?.marketCompleteMatch?.runners?.length > 0
                   ? matchDetail?.marketCompleteMatch?.runners
@@ -386,8 +380,12 @@ const MatchDetail = () => {
               currentMatch={matchDetail}
               typeOfBet={"Tied Match"}
               showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
+              minBet={formatToINR(
+                Math.floor(matchDetail?.apiTideMatch?.minBet)
+              )}
+              maxBet={formatToINR(
+                Math.floor(matchDetail?.apiTideMatch?.maxBet)
+              )}
               data={
                 matchDetail?.apiTideMatch?.runners?.length > 0
                   ? matchDetail?.apiTideMatch?.runners
@@ -399,8 +397,8 @@ const MatchDetail = () => {
             <LiveBookmaker
               currentMatch={matchDetail}
               showBox={matchDetail?.bookmaker?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
-              maxBet={Math.floor(matchDetail?.bookmaker?.maxBet)}
+              minBet={formatToINR(Math.floor(matchDetail?.bookmaker?.minBet))}
+              maxBet={formatToINR(Math.floor(matchDetail?.bookmaker?.maxBet))}
               data={
                 matchDetail?.bookmaker?.runners?.length > 0
                   ? matchDetail?.bookmaker?.runners
@@ -417,8 +415,8 @@ const MatchDetail = () => {
                   currentMatch={matchDetail}
                   session={"manualBookMaker"}
                   data={bookmaker}
-                  minBet={Math.floor(bookmaker?.minBet) || 0}
-                  maxBet={Math.floor(bookmaker?.maxBet) || 0}
+                  minBet={formatToINR(Math.floor(bookmaker?.minBet)) || 0}
+                  maxBet={formatToINR(Math.floor(bookmaker?.maxBet)) || 0}
                   typeOfBet={bookmaker?.name}
                   matchOddsData={bookmaker}
                 />
@@ -430,8 +428,12 @@ const MatchDetail = () => {
               data={matchDetail?.manualTiedMatch}
               currentMatch={matchDetail}
               session={"manualBookMaker"}
-              minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
+              minBet={formatToINR(
+                Math.floor(matchDetail?.manualTiedMatch?.minBet)
+              )}
+              maxBet={formatToINR(
+                Math.floor(matchDetail?.manualTiedMatch?.maxBet)
+              )}
             />
           )}
 
@@ -461,8 +463,8 @@ const MatchDetail = () => {
                 sessionData={matchDetail?.sessionBettings?.filter(
                   (item: any) => !JSON.parse(item).selectionId
                 )}
-                min={matchDetail?.betFairSessionMinBet || 0}
-                max={matchDetail?.betFairSessionMaxBet || 0}
+                min={formatToINR(matchDetail?.betFairSessionMinBet) || 0}
+                // max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
               />
             )}
           {matchDetail?.apiSessionActive &&
@@ -487,8 +489,8 @@ const MatchDetail = () => {
                 title={"Session Market"}
                 currentMatch={matchDetail}
                 sessionData={matchDetail?.apiSession}
-                min={Math.floor(matchDetail?.betFairSessionMinBet)}
-                max={Math.floor(matchDetail?.betFairSessionMaxBet)}
+                min={formatToINR(Math.floor(matchDetail?.betFairSessionMinBet))}
+                // max={formatToINR(Math.floor(matchDetail?.betFairSessionMaxBet))}
               />
             )}
 
@@ -627,8 +629,12 @@ const MatchDetail = () => {
                 currentMatch={matchDetail}
                 session={"manualBookMaker"}
                 data={matchDetail?.manualTiedMatch}
-                minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
-                maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
+                minBet={formatToINR(
+                  Math.floor(matchDetail?.manualTiedMatch?.minBet)
+                )}
+                maxBet={formatToINR(
+                  Math.floor(matchDetail?.manualTiedMatch?.maxBet)
+                )}
               />
             )}
             <Box sx={{ width: "150px", height: "3px" }}></Box>
@@ -658,8 +664,8 @@ const MatchDetail = () => {
                   sessionData={matchDetail?.sessionBettings?.filter(
                     (item: any) => !JSON.parse(item).selectionId
                   )}
-                  min={matchDetail?.betFairSessionMinBet || 0}
-                  max={matchDetail?.betFairSessionMaxBet || 0}
+                  min={formatToINR(matchDetail?.betFairSessionMinBet) || 0}
+                  max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
                 />
               )}
             {matchDetail?.apiSessionActive &&
@@ -684,8 +690,12 @@ const MatchDetail = () => {
                   currentMatch={matchDetail}
                   sessionExposer={"0.00"}
                   sessionData={matchDetail?.apiSession}
-                  max={Math.floor(matchDetail?.betFairSessionMaxBet)}
-                  min={Math.floor(matchDetail?.betFairSessionMinBet)}
+                  max={formatToINR(
+                    Math.floor(matchDetail?.betFairSessionMaxBet)
+                  )}
+                  min={formatToINR(
+                    Math.floor(matchDetail?.betFairSessionMinBet)
+                  )}
                 />
               )}
             {sessionProLoss?.length > 0 && (

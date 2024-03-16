@@ -99,8 +99,8 @@ const SetExposureLimit = (props: any) => {
   }, [formik.values.amount, onChangeAmount]);
 
   const formatIndianCurrency = (amount: number) => {
-    const formatter = new Intl.NumberFormat('en-IN', {
-      currency: 'INR'
+    const formatter = new Intl.NumberFormat("en-IN", {
+      currency: "INR",
     });
     return formatter.format(amount);
   };
@@ -108,11 +108,10 @@ const SetExposureLimit = (props: any) => {
   const checkHandleChange = (event: any) => {
     let value = 0;
     if (event.target.value != "") {
-
-      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ''));
+      value = parseFloat(event.target.value.replace(/[^\w\s]/gi, ""));
     }
-    
-    formik.setFieldValue("amount",value);
+
+    formik.setFieldValue("amount", value);
     onChangeAmount(value, element?.id, "exposure");
     // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
     // setChexckValue(event.target.value);
@@ -162,7 +161,9 @@ const SetExposureLimit = (props: any) => {
                 required={true}
                 id="amount"
                 name="amount"
-                value={formatIndianCurrency(parseFloat(formik.values.amount?.toString()))}
+                value={formatIndianCurrency(
+                  parseFloat(formik.values.amount?.toString())
+                )}
                 onChange={(e: any) => checkHandleChange(e)}
                 variant="standard"
                 InputProps={{
@@ -323,6 +324,7 @@ const SetExposureLimit = (props: any) => {
               isSelected={true}
               onClick={() => {
                 setSelected();
+                onChangeAmount(0, element?.id, "exposure");
               }}
               title={"Cancel"}
             />
