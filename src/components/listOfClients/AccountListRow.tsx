@@ -31,7 +31,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
     showCReport,
     showUserDetails,
     show,
-    domain
+    domain,
   } = props;
 
   const navigate = useNavigate();
@@ -53,9 +53,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
   const [exposureValue, setExposureValue] = useState(0);
   const [lockValue, setLockValue] = useState<any>(null);
   const [typeOfAmount, setTypeOfAmount] = useState<string>("");
-  const { isUrl } = useSelector(
-    (state: RootState) => state.user.userList
-  );
+  const { isUrl } = useSelector((state: RootState) => state.user.userList);
   const handleAmountChange = (amount: any, id: string, type: string) => {
     if (id === element?.id) {
       setTypeOfAmount(type);
@@ -78,21 +76,21 @@ const AccountListRow = (props: AccountListRowInterface) => {
     if (Number(baseValue) >= 0) {
       return Number(
         typeOfAmount === "deposite"
-          ? baseValue + depositeValue 
+          ? baseValue + depositeValue
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue 
+          ? baseValue - withdrawValue
           : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue 
+          ? baseValue + element?.creditRefrence - creditValue
           : baseValue
       );
     } else {
       return Number(
         typeOfAmount === "deposite"
-          ? baseValue + depositeValue 
+          ? baseValue + depositeValue
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue 
+          ? baseValue - withdrawValue
           : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue 
+          ? baseValue + element?.creditRefrence - creditValue
           : baseValue
       );
     }
@@ -157,9 +155,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
         userId: element?.id,
         roleName: element?.roleName,
         domain: element?.domain ? element?.domain : "",
-        openModal:true,
-        isUrl:element?.isUrl,
-        title:element?.userName
+        openModal: true,
+        isUrl: element?.isUrl,
+        title: element?.userName,
       })
     );
     dispatch(
@@ -168,14 +166,14 @@ const AccountListRow = (props: AccountListRowInterface) => {
         roleName: element?.roleName,
         domain: domain ? domain : element?.domain ? element?.domain : "",
       })
-    ); 
+    );
     dispatch(
       getModalUserList({
         currentPage: currentPage,
         url: ApiConstants.USER.LIST,
         userId: element?.id,
         roleName: element?.roleName,
-        domain: domain ? domain : element?.domain ? element?.domain : "" ,
+        domain: domain ? domain : element?.domain ? element?.domain : "",
       })
     );
   };
@@ -304,18 +302,14 @@ const AccountListRow = (props: AccountListRowInterface) => {
                 <span style={{ visibility: "hidden" }}>-</span>
                 {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                   typeOfAmount === "withdraw"
-                    ? Number(
-                        +element?.balance - withdrawValue || 0 - withdrawValue
-                      )
+                    ? Number(+element?.balance - withdrawValue)
                     : Number(+element?.balance || 0)
                 )}
               </>
             ) : (
               new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                 typeOfAmount === "withdraw"
-                  ? Number(
-                      +element?.balance - withdrawValue || 0 - withdrawValue
-                    )
+                  ? Number(+element?.balance - withdrawValue)
                   : Number(+element?.balance || 0)
               )
             )}
@@ -425,18 +419,18 @@ const AccountListRow = (props: AccountListRowInterface) => {
                 <span style={{ visibility: "hidden" }}>-</span>
                 {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                   typeOfAmount === "deposite"
-                    ? +element?.availableBalance + depositeValue 
+                    ? +element?.availableBalance + depositeValue
                     : typeOfAmount === "withdraw"
-                    ? +element?.availableBalance - withdrawValue 
+                    ? +element?.availableBalance - withdrawValue
                     : +element?.availableBalance || 0
                 )}
               </>
             ) : (
               new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                 typeOfAmount === "deposite"
-                  ? +element?.availableBalance + depositeValue 
+                  ? +element?.availableBalance + depositeValue
                   : typeOfAmount === "withdraw"
-                  ? +element?.availableBalance - withdrawValue 
+                  ? +element?.availableBalance - withdrawValue
                   : +element?.availableBalance || 0
               )
             )}
@@ -522,7 +516,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{`${element.roleName} ${
+          <Typography variant="h5">{`${element.roleName ?? ""} ${
             element.roleName === "superAdmin"
               ? element?.isUrl
                 ? "(url)"
@@ -562,7 +556,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
               fContainerStyle,
             ]}
           >
-            {(!element?.isUrl && !isUrl) && (
+            {!element?.isUrl && !isUrl && (
               <Box
                 sx={{
                   width: "100% ",
@@ -774,7 +768,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
           </Box>
         </Box>
       )}
-      
 
       <ModalMUI
         open={showCommissionReport?.value}

@@ -50,9 +50,9 @@ const Inplay = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName) {
-        socketService.match.matchResultDeclaredOff(getMatchListService);
-        socketService.match.matchResultUnDeclaredOff(getMatchListService);
-        socketService.match.matchAddedOff(getMatchListService);
+        socketService.match.matchResultDeclaredOff();
+        socketService.match.matchResultUnDeclaredOff();
+        socketService.match.matchAddedOff();
         matchListInplay?.matches?.map((item: any) => {
           socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
         });
@@ -70,9 +70,9 @@ const Inplay = () => {
       matchListInplay?.matches?.map((item: any) => {
         socketService.match.leaveMatchRoom(item?.id);
       });
-      socketService.match.matchResultDeclaredOff(getMatchListService);
-      socketService.match.matchResultUnDeclaredOff(getMatchListService);
-      socketService.match.matchAddedOff(getMatchListService);
+      socketService.match.matchResultDeclaredOff();
+      socketService.match.matchResultUnDeclaredOff();
+      socketService.match.matchAddedOff();
     };
   }, []);
 
