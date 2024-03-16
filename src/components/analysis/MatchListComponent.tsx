@@ -145,7 +145,7 @@ const MatchListComponent = (props: any) => {
               <Box className="wave"> </Box>
               <Typography
                 sx={{
-                  fontSize: { lg: "10px", xs: "10px" },
+                  fontSize: { lg: "10px", xs: "8px" },
                   color: "white",
                   fontStyle: "italic",
                 }}
