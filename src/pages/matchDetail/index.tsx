@@ -18,6 +18,7 @@ import {
   getUserProfitLoss,
   removeRunAmount,
   resetSessionProLoss,
+  resetUserProfitLoss,
   updateBetDataOnDeclare,
   updateBetsPlaced,
   updateMatchRates,
@@ -267,6 +268,7 @@ const MatchDetail = () => {
       socketService.match.sessionResultUnDeclareOff(
         handleSessionResultUnDeclare
       );
+      dispatch(resetUserProfitLoss());
     };
   }, [state?.matchId]);
 
