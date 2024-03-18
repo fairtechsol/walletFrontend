@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import { useDispatch,useSelector } from "react-redux";
-import { AppDispatch,RootState } from "../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
 import {
   getDomainProfitLoss,
   resetBetProfitLoss,
@@ -23,9 +23,7 @@ const RowHeaderDomain = ({
 }: any) => {
   const [visible, setVisible] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-  const { user } = useSelector(
-    (state: RootState) => state.report.reportList
-  );
+  const { user } = useSelector((state: RootState) => state.report.reportList);
   return (
     <Box
       onClick={() => {
@@ -178,10 +176,16 @@ const RowHeaderDomain = ({
             {Number(item?.totalLoss) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
-                {Number(item?.totalLoss).toFixed(2)}
+                {Number(item?.totalLoss).toFixed(2)}{" "}
+                {`(Total Deduction: 
+                  ${Number(item?.totalDeduction)})`}
               </>
             ) : (
-              Number(item?.totalLoss).toFixed(2)
+              <>
+                {Number(item?.totalLoss).toFixed(2)}{" "}
+                {`(Total Deduction: 
+                  ${Number(item?.totalDeduction)})`}
+              </>
             )}{" "}
           </Typography>
         </Box>

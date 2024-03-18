@@ -4,7 +4,10 @@ import ProfitLossTableComponent from "../../../components/report/ProfitLossRepor
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { getTotalProfitLoss, updateUserSearchId } from "../../../store/actions/reports";
+import {
+  getTotalProfitLoss,
+  updateUserSearchId,
+} from "../../../store/actions/reports";
 import moment from "moment";
 import { getSearchClientList } from "../../../store/actions/user/userAction";
 import { debounce } from "lodash";
@@ -32,7 +35,7 @@ const ProfitLossReport = () => {
   const handleClick = () => {
     try {
       let filter = "";
-      dispatch(updateUserSearchId({search}))
+      dispatch(updateUserSearchId({ search }));
       if (search?.id) {
         filter += `id=${search?.id}`;
       }
@@ -45,7 +48,6 @@ const ProfitLossReport = () => {
         filter += `endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
       }
       dispatch(getTotalProfitLoss({ filter: filter }));
-      
     } catch (error) {
       console.error("Error:", (error as Error)?.message);
     }

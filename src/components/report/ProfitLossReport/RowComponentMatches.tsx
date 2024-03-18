@@ -26,7 +26,7 @@ const RowComponentMatches = ({
   setSelectedId,
 }: any) => {
   const dispatch: AppDispatch = useDispatch();
-  const { sessionProfitLossList, betProfitLossList,user } = useSelector(
+  const { sessionProfitLossList, betProfitLossList, user } = useSelector(
     (state: RootState) => state.report.reportList
   );
   const [showBets, setShowBets] = useState(false);
@@ -175,7 +175,7 @@ const RowComponentMatches = ({
                   matchId: item?.matchId,
                   isSession: false,
                   url: domainUrl || "",
-                  id:user?.id 
+                  id: user?.id,
                 })
               );
               setShowBets(true);
@@ -243,10 +243,16 @@ const RowComponentMatches = ({
               {Number(item?.rateProfitLoss) >= 0 ? (
                 <>
                   <span style={{ visibility: "hidden" }}>-</span>
-                  {Number(item?.rateProfitLoss).toFixed(2)}
+                  {Number(item?.rateProfitLoss).toFixed(2)}{" "}
+                  {`(Total Deduction: 
+                  ${Number(item?.totalDeduction)})`}
                 </>
               ) : (
-                Number(item?.rateProfitLoss).toFixed(2)
+                <>
+                  {Number(item?.rateProfitLoss).toFixed(2)}{" "}
+                  {`(Total Deduction: 
+                  ${Number(item?.totalDeduction)})`}
+                </>
               )}{" "}
             </Typography>
             <StyledImage
@@ -285,7 +291,7 @@ const RowComponentMatches = ({
                 getSessionProfitLoss({
                   matchId: item?.matchId,
                   url: domainUrl || "",
-                  id:user?.id 
+                  id: user?.id,
                 })
               );
               setShowSessions(true);
