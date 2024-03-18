@@ -36,7 +36,6 @@ import {
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../../store/actions/match/multipleMatchActions";
 import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
-import { formatToINR } from "../../../helper";
 
 const MultipleMatch = () => {
   const theme = useTheme();
