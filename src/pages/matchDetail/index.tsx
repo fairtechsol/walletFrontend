@@ -486,7 +486,7 @@ const MatchDetail = () => {
                 // max={formatToINR(Math.floor(matchDetail?.betFairSessionMaxBet))}
               />
             )}
-          {sessionProLoss?.length > 0 && (
+          {sessionProLoss?.length > 0 && matchesMobile && (
             <Box
               sx={{
                 display: "flex",
