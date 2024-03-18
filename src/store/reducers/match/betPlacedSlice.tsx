@@ -39,7 +39,6 @@ const betsSlice = createSlice({
       .addCase(getPlacedBets.pending, (state) => {
         state.loading = false;
         state.success = false;
-        state.placedBets = [];
         state.error = null;
       })
       .addCase(getPlacedBets.fulfilled, (state, action) => {
