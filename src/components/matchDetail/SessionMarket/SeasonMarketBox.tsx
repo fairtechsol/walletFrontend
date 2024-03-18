@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
-import { formatNumber} from "../../../helper";
+import { formatNumber, formatToINR } from "../../../helper";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
@@ -51,27 +51,27 @@ const SeasonMarketBox = (props: any) => {
           }}
         >
           <Box>
-          <Typography
-            sx={{
-              color: "black",
-              fontSize: { lg: "12px", md: "11px", xs: "10px" },
-              marginLeft: "7px",
-              fontWeight: "600",
-              lineHeight:'10px'
-            }}
-          >
-            {newData?.name ?? newData?.RunnerName}
-          </Typography>
-           <Typography
-            sx={{
-              color: "black",
-              fontSize: { lg: "11px", md: "10px", xs: "9px" },
-              marginLeft: "7px",
-              fontWeight: "500",
-            }}
-          >
-            max: {newData?.maxBet ?? newData?.max}
-          </Typography>
+            <Typography
+              sx={{
+                color: "black",
+                fontSize: { lg: "12px", md: "11px", xs: "10px" },
+                marginLeft: "7px",
+                fontWeight: "600",
+                lineHeight: "10px",
+              }}
+            >
+              {newData?.name ?? newData?.RunnerName}
+            </Typography>
+            <Typography
+              sx={{
+                color: "black",
+                fontSize: { lg: "11px", md: "10px", xs: "9px" },
+                marginLeft: "7px",
+                fontWeight: "500",
+              }}
+            >
+              max: {formatToINR(newData?.maxBet || newData?.max)}
+            </Typography>
           </Box>
         </Box>
         <Box
