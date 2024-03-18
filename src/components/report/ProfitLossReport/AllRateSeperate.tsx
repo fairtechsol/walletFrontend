@@ -370,7 +370,7 @@ const AllRateSeperate = ({
                       <Box
                         sx={{
                           height: "40px",
-                          width: "30%",
+                          width: "23.5%",
                           // margin: { xs: "1px", lg: "1px" },
                           display: "flex",
                           background: "black",

@@ -493,7 +493,32 @@ const MatchDetail = () => {
                 // max={formatToINR(Math.floor(matchDetail?.betFairSessionMaxBet))}
               />
             )}
-
+            {sessionProLoss?.length > 0 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  gap: "1px",
+                  rowGap: "5px",
+                  height: "440px",
+                  overflow: "scroll",
+                  marginTop: "1.25vw",
+                }}
+              >
+                {sessionProLoss.map((v: any) => {
+                  return (
+                    <RunsBox
+                      key={v?.id}
+                      item={v}
+                      currentOdd={
+                        currentOdds?.betId === v?.id ? currentOdds : null
+                      }
+                    />
+                  );
+                })}
+              </Box>
+            )}
           {matchesMobile && (
             <UserProfitLoss
               single={"single"}
@@ -702,6 +727,7 @@ const MatchDetail = () => {
                   )}
                 />
               )}
+           
             {sessionProLoss?.length > 0 && (
               <Box
                 sx={{
@@ -728,6 +754,7 @@ const MatchDetail = () => {
                 })}
               </Box>
             )}
+            
             <UserProfitLoss
               single={"single"}
               title={"User Profit Loss"}
