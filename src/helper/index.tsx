@@ -15,9 +15,17 @@ export const customSort = (a: any, b: any) => {
   return order[a?.activeStatus] - order[b?.activeStatus];
 };
 
-export const formatToINR = (amount:any) => {
+export const formatToINR = (amount: any) => {
   const formatter = new Intl.NumberFormat("en-IN", {
-      currency: "INR"
+    currency: "INR",
   });
   return formatter.format(parseFloat(amount));
+};
+
+export const numberInputOnWheelPreventChange = (e: any) => {
+  e.target.blur();
+  e.stopPropagation();
+  setTimeout(() => {
+    e.target.focus();
+  }, 0);
 };

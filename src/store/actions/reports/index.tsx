@@ -44,7 +44,7 @@ export const getCurrentBets = createAsyncThunk<any, currentBets>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.WALLET.REPORTS.CURRENT_BETS}?&searchBy=${
+        `${ApiConstants.WALLET.REPORTS.CURRENT_BETS}?searchBy=${
           requestData?.searchBy || ""
         }&keyword=${requestData?.keyword || ""}`
       );
@@ -97,7 +97,9 @@ export const getBetProfitLoss = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}${
           requestData.betId ? `&betId=${requestData.betId}` : ""
-        }&isSession=${requestData.isSession}&url=${requestData.url}${requestData.id ? `&id=${requestData.id}` : ''}`
+        }&isSession=${requestData.isSession}&url=${requestData.url}${
+          requestData.id ? `&id=${requestData.id}` : ""
+        }`
       );
       if (resp) {
         return resp?.data?.data;
@@ -113,7 +115,11 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${requestData.matchId}&url=${requestData.url}${requestData.id ?`&id=${requestData.id}` : ''}`
+        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${
+          requestData.matchId
+        }&url=${requestData.url}${
+          requestData.id ? `&id=${requestData.id}` : ""
+        }`
       );
       if (resp) {
         return resp?.data?.data;
