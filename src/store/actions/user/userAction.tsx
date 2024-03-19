@@ -377,7 +377,7 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
         requestData.payload
       );
       if (resp) {
-        return resp?.data;
+        return {...resp?.data,requestData};
       }
     } catch (error: any) {
       const err = error as AxiosError;
