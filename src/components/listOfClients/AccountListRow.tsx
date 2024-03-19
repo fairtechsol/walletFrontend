@@ -2,22 +2,17 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
 import { AccountListRowInterface } from "../../interface/listOfClients";
-import {
-  getModalUserList,
-  getTotalBalance,
-  handleModelActions,
-} from "../../store/actions/user/userAction";
-import { AppDispatch, RootState } from "../../store/store";
+import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 import { Modal } from "../Common/Modal";
 import StyledImage from "../Common/StyledImages";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
 import RowModalComponents from "./RowModalComponents";
 import { useSelector } from "react-redux";
+import AccountListModal from "./AccountListModal";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -35,7 +30,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
   } = props;
 
   const navigate = useNavigate();
-  const dispatch: AppDispatch = useDispatch();
 
   const [userModal] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
@@ -45,7 +39,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
     value: false,
     id: "",
   });
-  const [currentPage] = useState<number>(1);
+  const [showSubUsers, setSubSusers] = useState({
+    value: false,
+    id: "",
+    title: "",
+  });
   const [selected, setSelected] = useState(null);
   const [depositeValue, setDepositeValue] = useState(0);
   const [withdrawValue, setWithdrawValue] = useState(0);
@@ -148,42 +146,35 @@ const AccountListRow = (props: AccountListRowInterface) => {
     currency: "INR",
   }).format(calculateProfitLoss());
 
-  const handleModal = () => {
-    dispatch(
-      handleModelActions({
-        url: ApiConstants.USER.LIST,
-        userId: element?.id,
-        roleName: element?.roleName,
-        domain: element?.domain ? element?.domain : "",
-        openModal: true,
-        isUrl: element?.isUrl,
-        title: element?.userName,
-      })
-    );
-    dispatch(
-      getTotalBalance({
-        userId: element?.id,
-        roleName: element?.roleName,
-        domain: domain ? domain : element?.domain ? element?.domain : "",
-      })
-    );
-    dispatch(
-      getModalUserList({
-        currentPage: currentPage,
-        url: ApiConstants.USER.LIST,
-        userId: element?.id,
-        roleName: element?.roleName,
-        domain: domain ? domain : element?.domain ? element?.domain : "",
-      })
-    );
-  };
-  const handleClear=()=>{
-    setDepositeValue(0)
-    setWithdrawValue(0)
-    setCreditValue(0)
-    setExposureValue(0)
-    setLockValue(null)
-  }
+  // const handleModal = () => {
+  // dispatch(
+  //   handleModelActions({
+  //     url: ApiConstants.USER.LIST,
+  //     userId: element?.id,
+  //     roleName: element?.roleName,
+  //     domain: element?.domain ? element?.domain : "",
+  //     openModal: true,
+  //     isUrl: element?.isUrl,
+  //     title: element?.userName,
+  //   })
+  // );
+  // dispatch(
+  //   getTotalBalance({
+  //     userId: element?.id,
+  //     roleName: element?.roleName,
+  //     domain: domain ? domain : element?.domain ? element?.domain : "",
+  //   })
+  // );
+  // dispatch(
+  //   getModalUserList({
+  //     currentPage: currentPage,
+  //     url: ApiConstants.USER.LIST,
+  //     userId: element?.id,
+  //     roleName: element?.roleName,
+  //     domain: domain ? domain : element?.domain ? element?.domain : "",
+  //   })
+  // );
+  // };
   return (
     <>
       <Box
@@ -219,7 +210,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
             onClick={(e: any) => {
               e.stopPropagation();
               if (!["user", "expert"].includes(element?.roleName)) {
-                handleModal();
+                setSubSusers({
+                  value: true,
+                  id: element?.id,
+                  title: element?.userName,
+                });
               } else {
                 return false;
               }
@@ -800,6 +795,39 @@ const AccountListRow = (props: AccountListRowInterface) => {
             id={showCommissionReport?.id}
             show={showCommissionReport?.value}
             setShow={setShowCommissionReport}
+          />
+        </Box>
+      </ModalMUI>
+
+      <ModalMUI
+        open={showSubUsers?.value}
+        onClose={() => {
+          setSubSusers({ value: false, id: "", title: "" });
+          // dispatch(setSubUserData([]));
+          // dispatch(setSubPage(1));
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            // flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <AccountListModal
+            endpoint={ApiConstants.USER.LIST}
+            id={showSubUsers?.id}
+            show={showSubUsers?.value}
+            setShow={setSubSusers}
+            title={showSubUsers?.title}
+            element={element}
+            domain={domain ? domain : element?.domain ? element?.domain : ""}
+            // handleExport={handleExport}
           />
         </Box>
       </ModalMUI>
