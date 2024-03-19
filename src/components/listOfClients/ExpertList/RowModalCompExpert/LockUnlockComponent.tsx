@@ -269,6 +269,7 @@ setSelected(false);
               isSelected={true}
               onClick={() => {
                 setSelected();
+                onChangeAmount(elementLockUnlockObj1, element?.id, "lock");
                               }}
               title={"Cancel"}
             />

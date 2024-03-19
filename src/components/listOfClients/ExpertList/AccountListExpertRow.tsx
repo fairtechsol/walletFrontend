@@ -99,6 +99,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
               onClick={() => {
                 setShowUserModal((prev) => !prev);
                 setSelected(null);
+                setLockValue(null)
                               }}
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
