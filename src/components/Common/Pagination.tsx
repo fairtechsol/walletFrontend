@@ -31,6 +31,7 @@ const Pagination = (props: PaginationInterface) => {
             justifyContent: "center",
             alignItems: "center",
             borderRadius: "5px",
+            opacity: currentPage === 1 ? 0.5 : 1,
           }}
           onClick={() => {
             setCurrentPage(+currentPage - 1 === 0 ? 1 : +currentPage - 1);
