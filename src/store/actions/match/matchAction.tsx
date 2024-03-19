@@ -272,6 +272,13 @@ export const updatePlacedbets = createAsyncThunk<any, any>(
     return data;
   }
 );
+
+export const setCurrentOdd = createAsyncThunk<any, any>(
+  "update/currentOdd",
+  async (requestData) => {
+    return requestData;
+  }
+);
 export const matchListReset = createAction("matchList/reset");
 export const resetSessionProLoss = createAction("sessionProloss/reset");
 export const resetcompetitionList = createAction("competitionList/reset");
