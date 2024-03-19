@@ -44,7 +44,7 @@ const RowHeaderMatches = ({
       >
         <Box
           sx={{
-            width: { xs: "10%", lg: "5%" },
+            width: { xs: "5%",sm:"5%", lg: "5%" },
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -62,12 +62,12 @@ const RowHeaderMatches = ({
                 ? Tennis
                 : Cricket
             }
-            sx={{ width: { lg: "35px", xs: "25px" } }}
+            sx={{ width: { lg: "35px",sm:"35px", xs: "22px" } }}
           />
         </Box>
         <Box
           sx={{
-            width: { xs: "40%", lg: "60%" },
+            width: { xs: "55%",sm:"55%", lg: "55%" },
             height: "100%",
             alignItems: "center",
             display: "flex",
@@ -78,7 +78,7 @@ const RowHeaderMatches = ({
           }}
         >
           <Typography
-            sx={{ fontSize: "15px", color: "black", fontWeight: "600" }}
+            sx={{ fontSize:  { lg: "15px",sm:"15px", xs: "12px" }, color: "black", fontWeight: "600" }}
           >
             {item?.eventType}
           </Typography>
@@ -95,7 +95,7 @@ const RowHeaderMatches = ({
           sx={{
             background: item?.totalLoss > 0 ? "#27AC1E" : "#E32A2A",
             paddingX: "2px",
-            width: { xs: "25%", lg: "30%" },
+            width: { xs: "25%",sm:"25%", lg: "25%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -114,7 +114,7 @@ const RowHeaderMatches = ({
           >
             <Typography
               sx={{
-                fontSize: { lg: "14px", xs: "12px" },
+                fontSize: { lg: "14px",sm:"14px", xs: "11px" },
                 fontWeight: "700",
                 color: "white",
               }}
@@ -158,7 +158,7 @@ const RowHeaderMatches = ({
           sx={{
             background: "#0B4F26",
             paddingX: "2px",
-            width: { xs: "25%", lg: "30%" },
+            width: { xs: "15%",sm:"15%", lg: "15%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -169,7 +169,7 @@ const RowHeaderMatches = ({
         >
           <Typography
             sx={{
-              fontSize: { lg: "14px", xs: "12px" },
+              fontSize:{ lg: "14px",sm:"14px", xs: "11px" },
               fontWeight: "700",
               color: "white",
             }}
