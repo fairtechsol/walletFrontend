@@ -21,6 +21,7 @@ import {
   updateBetsPlaced,
   updatePlacedbets,
   updateProfitLoss,
+  setCurrentOdd,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
@@ -47,7 +48,7 @@ const MultipleMatch = () => {
   const navigate = useNavigate();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
-  const [currentOdds] = useState<any>(null);
+  const { currentOdd } = useSelector((state: RootState) => state.match.matchList);
   const [storedMatchData, setStoredMatchData] = useState({
     matchId: "",
     teamA: "",
@@ -83,6 +84,13 @@ const MultipleMatch = () => {
         );
         dispatch(updateProfitLoss(event));
         dispatch(updateMaxLossForBetForMultipleMatch(event));
+        dispatch(
+          setCurrentOdd({
+            matchId: event?.jobData?.betPlaceObject?.betPlacedData?.matchId,
+            betId: event?.jobData?.betPlaceObject?.betPlacedData?.betId,
+            odds: event?.jobData?.betPlaceObject?.betPlacedData?.odds,
+          })
+        );
       }
     } catch (error) {
       console.log(error);
@@ -458,7 +466,7 @@ const MultipleMatch = () => {
                                       : []
                                   }
                                   // match={"multiple"}
-                                  //   currentOdds={currentOdds}
+                                  //   currentOdd={currentOdd}
                                   sessionData={QuicksessionData}
                                   currentMatch={item}
                                   data={[]}
@@ -497,7 +505,7 @@ const MultipleMatch = () => {
                                       : []
                                   }
                                   match={"multiple"}
-                                  //   currentOdds={currentOdds}
+                                  //   currentOdd={currentOdd}
                                   sessionData={item?.apiSession}
                                   currentMatch={item}
                                   data={[]}
@@ -540,8 +548,8 @@ const MultipleMatch = () => {
                                             key={v?.id}
                                             item={v}
                                             currentOdd={
-                                              currentOdds?.betId === v?.id
-                                                ? currentOdds
+                                              currentOdd?.betId === v?.id
+                                                ? currentOdd
                                                 : null
                                             }
                                           />
@@ -841,8 +849,8 @@ const MultipleMatch = () => {
                                           key={v?.id}
                                           item={v}
                                           currentOdd={
-                                            currentOdds?.betId === v?.id
-                                              ? currentOdds
+                                            currentOdd?.betId === v?.id
+                                              ? currentOdd
                                               : null
                                           }
                                         />
@@ -1114,7 +1122,7 @@ const MultipleMatch = () => {
                             // match={"multiple"}
                             currentMatch={item}
                             sessionData={QuicksessionData}
-                            // currentOdds={currentOdds}
+                            // currentOdd={currentOdd}
                             sessionOffline={item?.sessionOffline}
                             // sessionExposer={manualSessionHttp?.sessionExposure}
                             sessionBets={sessionBetsData?.length}
@@ -1178,8 +1186,8 @@ const MultipleMatch = () => {
                                       key={v?.id}
                                       item={v}
                                       currentOdd={
-                                        currentOdds?.betId === v?.id
-                                          ? currentOdds
+                                        currentOdd?.betId === v?.id
+                                          ? currentOdd
                                           : null
                                       }
                                     />

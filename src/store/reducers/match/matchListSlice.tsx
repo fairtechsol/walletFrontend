@@ -4,6 +4,7 @@ import {
   getMatchDetail,
   getMatchListInplay,
   matchListReset,
+  setCurrentOdd,
   updateBalance,
   updateBetDataOnDeclare,
   updateMatchListRates,
@@ -24,6 +25,7 @@ interface InitialState {
   getProfile: any;
   matchDetails: any;
   betPlaceData: any;
+  currentOdd: any;
 }
 
 const initialState: InitialState = {
@@ -35,6 +37,7 @@ const initialState: InitialState = {
   error: null,
   matchDetails: null,
   betPlaceData: [],
+  currentOdd: null,
 };
 
 const matchListSlice = createSlice({
@@ -316,6 +319,9 @@ const matchListSlice = createSlice({
             teamCRate: redisObject[action.payload?.teamCrateRedisKey] ?? "",
           };
         }
+      })
+      .addCase(setCurrentOdd.fulfilled, (state, action) => {
+        state.currentOdd = action.payload;
       });
   },
 });
