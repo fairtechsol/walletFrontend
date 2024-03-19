@@ -5,7 +5,14 @@ import { Box, Typography } from "@mui/material";
 import { AppDispatch } from "../../store/store";
 import { handleExport } from "../../store/actions/user/userAction";
 
-const ListHeader = ({ endpoint, downloadPdfExcel, title }: any) => {
+const ListHeader = ({
+  id,
+  title,
+  downloadPdfExcel,
+  domain,
+  roleName,
+  endpoint,
+}: any) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box
@@ -47,7 +54,15 @@ const ListHeader = ({ endpoint, downloadPdfExcel, title }: any) => {
                 src={Excel}
                 sx={{ height: "25px" }}
                 onClick={() =>
-                  dispatch(handleExport({ endPoint: endpoint, type: "excel" }))
+                  dispatch(
+                    handleExport({
+                      endPoint: endpoint,
+                      type: "excel",
+                      userId: id,
+                      domain: domain,
+                      roleName: roleName,
+                    })
+                  )
                 }
               />
             </Box>
@@ -67,7 +82,15 @@ const ListHeader = ({ endpoint, downloadPdfExcel, title }: any) => {
                 src={Pdf}
                 sx={{ height: "25px" }}
                 onClick={() =>
-                  dispatch(handleExport({ endPoint: endpoint, type: "pdf" }))
+                  dispatch(
+                    handleExport({
+                      endPoint: endpoint,
+                      type: "pdf",
+                      userId: id,
+                      domain: domain,
+                      roleName: roleName,
+                    })
+                  )
                 }
               />
             </Box>
