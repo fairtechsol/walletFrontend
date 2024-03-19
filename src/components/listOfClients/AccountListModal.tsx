@@ -1,5 +1,5 @@
 import { Box, useMediaQuery, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RootState } from "../../store/store";
 import AccountListRow from "./AccountListRow";
 import ListHeader from "./ListHeader";
@@ -8,39 +8,74 @@ import Pagination from "../Common/Pagination";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 import SearchInput from "../Common/SearchInput";
-import { Constants } from "../../utils/Constants";
-import { AppDispatch } from "../../store/store";
-import { useDispatch } from "react-redux";
-import {
-  getTotalBalance,
-  handleModelActions,
-} from "../../store/actions/user/userAction";
+import { ApiConstants, Constants } from "../../utils/Constants";
+import service from "../../service";
 
-const AccountListTable = ({ endpoint }: any) => {
+const AccountListTable = ({
+  endpoint,
+  id,
+  setShow,
+  title,
+  element,
+  domain,
+}: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const dispatch: AppDispatch = useDispatch();
-
-  // console.log(domain, "title", title, id);
+  const [newData, setNewData] = useState([]);
+  const [newTotalBalance, setNewTotalBalance] = useState(null);
   const { userModalList } = useSelector(
     (state: RootState) => state.user.userList
   );
-  const { totalBalance, domain, userElement } = useSelector(
-    (state: RootState) => state.user.userList
-  );
-  const handleModal = () => {
-    dispatch(getTotalBalance());
-    dispatch(
-      handleModelActions({
-        url: "",
-        userId: "",
-        roleName: "",
-        domain: "",
-        openModal: false,
-        isUrl: false,
-      })
-    );
+
+  const getUserList = async ({
+    userName,
+    currentPage,
+    userId,
+    roleName,
+    domain,
+    searchBy,
+  }: any) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.LIST}?userId=${userId}&searchBy=${searchBy}&keyword=${userName}&domain=${domain}&roleName=${roleName}&page=${currentPage}&limit=${Constants.pageLimit}`
+      );
+      if (resp) {
+        setNewData(resp?.data?.list);
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
   };
+
+  const getTotalBalance = async ({ userId, roleName, domain }: any) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.TOTAL_BALANCE}?userId=${userId}&roleName=${roleName}&domain=${domain}`
+      );
+      if (resp) {
+        setNewTotalBalance(resp?.data);
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getTotalBalance({
+      userId: id,
+      roleName: element?.roleName,
+      domain: domain ? domain : element?.domain ? element?.domain : "",
+    });
+    getUserList({
+      userId: element?.id,
+      searchBy: "",
+      domain: domain ? domain : element?.domain ? element?.domain : "",
+      roleName: element?.roleName,
+      userName: "",
+      currentPage: currentPage,
+    });
+  }, [id]);
+
   return (
     <>
       <Box
@@ -67,14 +102,12 @@ const AccountListTable = ({ endpoint }: any) => {
           }}
         >
           <ListHeader
-            id={userElement?.id}
-            title={userElement?.title}
-            searchFor={"userList"}
+            id={id}
+            title={title}
             downloadPdfExcel={true}
-            // getListOfUser={getListOfUser}
-            // setPageCount={setPageCount}
-            // matchesMobile={matchesMobile}
-            // handleExport={handleExport}
+            domain={domain ? domain : element?.domain ? element?.domain : ""}
+            roleName={element?.roleName}
+            endpoint={ApiConstants.USER.LIST}
           />
           <Box
             sx={{
@@ -90,17 +123,16 @@ const AccountListTable = ({ endpoint }: any) => {
               show={true}
               searchFor={"userModalList"}
               endpoint={endpoint}
-              userId={userElement?.id}
-              roleName={userElement?.roleName}
-              domain={
-                domain ? domain : userElement?.domain ? userElement?.domain : ""
-              }
+              userId={id}
+              roleName={element?.roleName}
+              domain={domain ? domain : element?.domain ? element?.domain : ""}
               setCurrentPage={setCurrentPage}
+              getUserListModal={getUserList}
             />
             <Button
               sx={{ color: "", fontSize: "30px" }}
               onClick={() => {
-                handleModal();
+                setShow({ value: false, id: "", title: "" });
               }}
             >
               &times;
@@ -111,8 +143,8 @@ const AccountListTable = ({ endpoint }: any) => {
         <Box sx={{ overflowX: "auto", maxHeight: "60vh" }}>
           <Box sx={{ display: matchesBreakPoint ? "inline-block" : "block" }}>
             <ListHeaderRow />
-            <SubHeaderListRow data={totalBalance} />
-            {userModalList?.list?.map((element: any, i: any) => {
+            <SubHeaderListRow data={newTotalBalance} />
+            {newData?.map((element: any, i: any) => {
               if (i % 2 === 0) {
                 return (
                   <AccountListRow
@@ -121,12 +153,15 @@ const AccountListTable = ({ endpoint }: any) => {
                     showCReport={true}
                     showUserDetails={false}
                     showOptions={true}
+                    show={true}
                     containerStyle={{ background: "#FFE094" }}
                     profit={element.profit_loss >= 0}
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
                     element={element}
-                    domain={domain}
+                    domain={
+                      domain ? domain : element?.domain ? element?.domain : ""
+                    }
                     // currentPage={currentPage}
                   />
                 );
@@ -138,6 +173,7 @@ const AccountListTable = ({ endpoint }: any) => {
                     showUserDetails={false}
                     showOptions={true}
                     showCReport={true}
+                    show={true}
                     // showChildModal={true}
                     containerStyle={{ background: "#ECECEC" }}
                     profit={element.profit_loss >= 0}

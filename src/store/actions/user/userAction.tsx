@@ -442,7 +442,11 @@ export const handleExport = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const response = await service.get(
-        `${requestData.endPoint}?type=${requestData.type}`
+        `${requestData.endPoint}?type=${requestData.type}&userId=${
+          requestData.userId ? requestData.userId : ""
+        }&domain=${requestData.domain ? requestData.domain : ""}&roleName=${
+          requestData.roleName ? requestData.roleName : ""
+        }`
       );
 
       const fileData = response?.data?.file;
