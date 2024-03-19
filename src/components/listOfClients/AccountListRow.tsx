@@ -175,6 +175,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
   //   })
   // );
   // };
+  const handleClearValue=()=>{
+    setDepositeValue(0)
+    setWithdrawValue(0)
+    setCreditValue(0)
+    setExposureValue(0)
+    setLockValue(null)
+  }
   return (
     <>
       <Box
@@ -254,7 +261,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
               onClick={() => {
                 setShowUserModal((prev) => !prev);
                 setSelected(null);
-                handleClear();
+                handleClearValue();
               }}
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
