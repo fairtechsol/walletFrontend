@@ -65,14 +65,14 @@ const RowHeaderDomain = ({
     >
       <Box
         sx={{
-          width: { xs: "10%", lg: "10%" },
+          width: { xs: "5%",sm:"5%", lg: "5%" },
           height: "100%",
           alignItems: "center",
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
           marginLeft: 0.1,
-          justifyContent: "space-between",
+          justifyContent: "center",
           borderRight: "1px solid white",
         }}
       >
@@ -84,37 +84,37 @@ const RowHeaderDomain = ({
       </Box>
       <Box
         sx={{
-          width: { xs: "40%", lg: "60%" },
+          width: { xs: "35%",sm:"30%", lg: "30%" },
           height: "100%",
           alignItems: "center",
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
-          marginLeft: 0.1,
+          // marginLeft: 0.1,
           justifyContent: "space-between",
           borderRight: "1px solid white",
         }}
       >
         <Typography
-          sx={{ fontSize: "15px", color: "black", fontWeight: "600" }}
+          sx={{ fontSize: { xs: "12px",sm:"15px", lg: "15px" }, color: "black", fontWeight: "600" }}
         >
           {item?.domainUrl}
         </Typography>
       </Box>
       <Box
         sx={{
-          width: { xs: "40%", lg: "60%" },
+          width: { xs: "20%",sm:"25%", lg: "25%" },
           height: "100%",
           alignItems: "center",
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
-          marginLeft: 0.1,
+          // marginLeft: 0.1,
           justifyContent: "space-between",
         }}
       >
         <Typography
-          sx={{ fontSize: "15px", color: "black", fontWeight: "600" }}
+          sx={{ fontSize:{ xs: "12px",sm:"15px", lg: "15px" } , color: "black", fontWeight: "600" }}
         >
           {item?.eventType}
         </Typography>
@@ -131,7 +131,7 @@ const RowHeaderDomain = ({
         sx={{
           background: item?.totalLoss > 0 ? "#27AC1E" : "#E32A2A",
           paddingX: "2px",
-          width: { xs: "25%", lg: "30%" },
+          width: { xs: "25%",sm:"25%", lg: "25%" },
           height: "100%",
           marginLeft: 0.1,
           justifyContent: "center",
@@ -150,7 +150,7 @@ const RowHeaderDomain = ({
         >
           <Typography
             sx={{
-              fontSize: { lg: "14px", xs: "12px" },
+              fontSize: { lg: "14px",sm:"14px", xs: "11px" },
               fontWeight: "700",
               color: "white",
             }}
@@ -194,7 +194,7 @@ const RowHeaderDomain = ({
         sx={{
           background: "#0B4F26",
           paddingX: "2px",
-          width: { xs: "25%", lg: "30%" },
+          width: { xs: "15%",sm:"15%", lg: "15%" },
           height: "100%",
           marginLeft: 0.1,
           justifyContent: "center",
@@ -205,7 +205,7 @@ const RowHeaderDomain = ({
       >
         <Typography
           sx={{
-            fontSize: { lg: "14px", xs: "12px" },
+            fontSize: { lg: "14px",sm:"14px", xs: "11px" },
             fontWeight: "700",
             color: "white",
           }}

@@ -7,7 +7,7 @@ import {
   getSearchClientList,
   getTotalBalance,
   getUserList,
-  handleExport,
+    handleExport,
   handleModelActions,
   handleSettleCommission,
   setCreditRefference,
@@ -30,7 +30,7 @@ interface InitialState {
   domain:any;
   userElement:any;
   isUrl : boolean;
-}
+  }
 
 const initialState: InitialState = {
   userDetail: null,
@@ -46,7 +46,7 @@ const initialState: InitialState = {
   domain:null,
   userElement:null,
   isUrl:false,
-};
+  };
 
 export const userList = createSlice({
   name: "userList",
@@ -107,7 +107,7 @@ export const userList = createSlice({
         }
         state.loading = false;
       })
-      .addCase(changeAmmountUser.pending, (state) => {
+            .addCase(changeAmmountUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -147,8 +147,17 @@ export const userList = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(setLockUnlockUser.fulfilled, (state) => {
+      .addCase(setLockUnlockUser.fulfilled, (state, action) => {
+        const {data,requestData} = action.payload
         state.success = true;
+        if (state.userList) {
+          const {list} = state.userList
+          list.forEach((item:any) => {
+              if (item.id === data.id) {
+                  item.userBlock = requestData.payload.userBlock; 
+              }
+          });
+      }
         state.loading = false;
       })
       .addCase(setLockUnlockUser.rejected, (state, action) => {

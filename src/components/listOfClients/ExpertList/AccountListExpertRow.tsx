@@ -21,7 +21,16 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [lockValue, setLockValue] = useState<any>(null);
+  
 
+  const handleAmountChange = (amount: any, id: string, type: string) => {
+    if (id === element?.id) {
+      if (type === "lock") {
+        setLockValue(amount);
+      }
+    }
+  };
   return (
     <>
       <Box
@@ -90,7 +99,8 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
               onClick={() => {
                 setShowUserModal((prev) => !prev);
                 setSelected(null);
-              }}
+                setLockValue(null)
+                              }}
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
               }
@@ -195,7 +205,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
           }}
         >
           <StyledImage
-            src={!element?.userBlock ? UnLockIcon : LockIcon}
+            src={ lockValue ? lockValue?.all_blocked ? LockIcon : UnLockIcon : !element?.userBlock ? UnLockIcon : LockIcon}
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -270,6 +280,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
               // userModal={userModal}
               // setShowSuccessModal={setShowSuccessModal}
               // setShowModalMessage={setShowModalMessage}
+              onValueChange={handleAmountChange}
             />
           </Box>
         </Box>
