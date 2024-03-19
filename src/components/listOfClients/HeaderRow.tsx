@@ -7,9 +7,15 @@ import { AppDispatch } from "../../store/store";
 import { handleExport } from "../../store/actions/user/userAction";
 import { ApiConstants } from "../../utils/Constants";
 
-const HeaderRow = ({ getListOfUser, endpoint, searchFor, downloadPdfExcel, pageLimit,
+const HeaderRow = ({
+  getListOfUser,
+  endpoint,
+  searchFor,
+  downloadPdfExcel,
+  pageLimit,
   setCurrentPage,
-  setSearchValue }: any) => {
+  setSearchValue,
+}: any) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box

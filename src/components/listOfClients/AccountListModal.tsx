@@ -95,6 +95,7 @@ const AccountListTable = ({ endpoint }: any) => {
               domain={
                 domain ? domain : userElement?.domain ? userElement?.domain : ""
               }
+              setCurrentPage={setCurrentPage}
             />
             <Button
               sx={{ color: "", fontSize: "30px" }}
@@ -107,7 +108,7 @@ const AccountListTable = ({ endpoint }: any) => {
           </Box>
         </Box>
 
-        <Box sx={{ overflowX: "auto",maxHeight:'60vh' }}>
+        <Box sx={{ overflowX: "auto", maxHeight: "60vh" }}>
           <Box sx={{ display: matchesBreakPoint ? "inline-block" : "block" }}>
             <ListHeaderRow />
             <SubHeaderListRow data={totalBalance} />
