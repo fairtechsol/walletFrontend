@@ -29,6 +29,7 @@ const ListHeaderRow = ({ getLimitEntries }: any) => {
         width={"100%"}
         placeholder={"Search..."}
         endpoint={ApiConstants.USER.LIST}
+        setCurrentPage={() => {}}
       />
     </Box>
   );

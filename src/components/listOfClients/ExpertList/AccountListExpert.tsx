@@ -57,6 +57,7 @@ const AccountListExpert = (endpoint: any) => {
               endpoint={ApiConstants.USER.EXPERTLIST}
               searchFor={"userList"}
               downloadPdfExcel={false}
+              setCurrentPage={setCurrentPage}
             />
             <Box sx={{ overflowX: "auto" }}>
               <Box
