@@ -377,7 +377,24 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
         requestData.payload
       );
       if (resp) {
-        return {...resp?.data,requestData};
+        return { ...resp?.data, requestData };
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const setLockUnlockUserExpert = createAsyncThunk<any, any>(
+  "/user/lockUnlockUserExpert",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.post(
+        `${requestData.url}`,
+        requestData.payload
+      );
+      if (resp) {
+        return { ...resp?.data, requestData };
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -409,7 +426,7 @@ export const getSearchClientList = createAsyncThunk<
 >("user/clientList", async (requestData, thunkApi) => {
   try {
     const resp = await service.get(
-      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${requestData?.userName}&createdBy:${requestData?.createdBy}`
+      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${requestData?.userName}&createdBy=${requestData?.createdBy}`
     );
     if (resp) {
       return resp?.data;

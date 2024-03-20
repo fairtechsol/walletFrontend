@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
 import {
   getUserList,
-    setLockUnlockUser,
+  setLockUnlockUserExpert,
   userListSuccessReset,
 } from "../../../../store/actions/user/userAction";
 import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
@@ -20,7 +20,7 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, endpoint,onChangeAmount } = props;
+  const { setSelected, element, endpoint, onChangeAmount } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
@@ -42,12 +42,12 @@ const LockUnlockComponent = (props: any) => {
         transactionPassword: values.transactionPassword,
       };
       dispatch(
-        setLockUnlockUser({
+        setLockUnlockUserExpert({
           url: endpoint,
           payload: payload,
         })
       );
-          },
+    },
   });
 
   const { handleSubmit, isSubmitting, setSubmitting } = formik;
@@ -59,16 +59,16 @@ const LockUnlockComponent = (props: any) => {
   useEffect(() => {
     if (success) {
       formik.resetForm();
-setSelected(false);
+      setSelected(false);
       dispatch(
         getUserList({
           currentPage: 1,
           url: { endpoint: ApiConstants.USER.EXPERTLIST },
         })
       );
-        setSubmitting(false);
-        dispatch(userListSuccessReset());
-            }
+      setSubmitting(false);
+      dispatch(userListSuccessReset());
+    }
     if (error) {
       setSubmitting(false);
     }
@@ -270,7 +270,7 @@ setSelected(false);
               onClick={() => {
                 setSelected();
                 onChangeAmount(elementLockUnlockObj1, element?.id, "lock");
-                              }}
+              }}
               title={"Cancel"}
             />
           </Box>
