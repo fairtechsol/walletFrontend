@@ -6,7 +6,8 @@ import LockUnlockComponent from "./LockUnlockComponent";
 import { memo } from "react";
 
 const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor,onValueChange } = props;
+  const { element, selected, setSelected, backgroundColor, onValueChange } =
+    props;
   const classes = {
     mainBox: {
       background: "#F8C851",
@@ -49,7 +50,7 @@ const RowModalComponents = (props: any) => {
     // alert(amount)
     onValueChange(amount, id, type);
   };
-  
+
   return (
     <Box sx={classes.mainBox}>
       {selected !== null && (
@@ -106,7 +107,7 @@ const RowModalComponents = (props: any) => {
             color={"#0B4F26"}
             onClick={() => {
               setSelected(3);
-                          }}
+            }}
             title={"Change Password"}
             isSelected={selected == 3}
             containerStyle={{
@@ -122,7 +123,7 @@ const RowModalComponents = (props: any) => {
             color={"#0B4F26"}
             onClick={() => {
               setSelected(4);
-                          }}
+            }}
             title={"Lock/Unlock"}
             containerStyle={{
               marginLeft: { lg: "10px", xs: "0" },
