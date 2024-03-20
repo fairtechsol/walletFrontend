@@ -7,12 +7,14 @@ import {
   getSearchClientList,
   getTotalBalance,
   getUserList,
-    handleExport,
+  handleDeleteUser,
+  handleExport,
   handleModelActions,
   handleSettleCommission,
   setCreditRefference,
   setExposureLimit,
   setLockUnlockUser,
+  setLockUnlockUserExpert,
   userListSuccessReset,
 } from "../../actions/user/userAction";
 
@@ -26,11 +28,11 @@ interface InitialState {
   loading: boolean;
   error: any;
   totalBalance: any;
-  openModal:boolean;
-  domain:any;
-  userElement:any;
-  isUrl : boolean;
-  }
+  openModal: boolean;
+  domain: any;
+  userElement: any;
+  isUrl: boolean;
+}
 
 const initialState: InitialState = {
   userDetail: null,
@@ -42,11 +44,11 @@ const initialState: InitialState = {
   loading: false,
   error: null,
   totalBalance: null,
-  openModal:false,
-  domain:null,
-  userElement:null,
-  isUrl:false,
-  };
+  openModal: false,
+  domain: null,
+  userElement: null,
+  isUrl: false,
+};
 
 export const userList = createSlice({
   name: "userList",
@@ -90,24 +92,29 @@ export const userList = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(handleModelActions.fulfilled, (state, action) => {
-        const {openModal,domain} = action.payload
+        const { openModal, domain } = action.payload;
         state.openModal = openModal;
         let obj = {
-          roleName : action.payload.roleName,
+          roleName: action.payload.roleName,
           id: action.payload.userId,
-          domain : domain,
-          title: action.payload.title
-        }
-        state.userElement=obj
-        state.isUrl = action.payload.isUrl
-        if (domain !== undefined && domain !== null && domain !== '' && openModal) {
+          domain: domain,
+          title: action.payload.title,
+        };
+        state.userElement = obj;
+        state.isUrl = action.payload.isUrl;
+        if (
+          domain !== undefined &&
+          domain !== null &&
+          domain !== "" &&
+          openModal
+        ) {
           state.domain = domain;
-        } else if(!openModal) {
-          state.domain = ''
+        } else if (!openModal) {
+          state.domain = "";
         }
         state.loading = false;
       })
-            .addCase(changeAmmountUser.pending, (state) => {
+      .addCase(changeAmmountUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -147,20 +154,33 @@ export const userList = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(setLockUnlockUser.fulfilled, (state, action) => {
-        const {data,requestData} = action.payload
+      .addCase(setLockUnlockUser.fulfilled, (state) => {
         state.success = true;
-        if (state.userList) {
-          const {list} = state.userList
-          list.forEach((item:any) => {
-              if (item.id === data.id) {
-                  item.userBlock = requestData.payload.userBlock; 
-              }
-          });
-      }
         state.loading = false;
       })
       .addCase(setLockUnlockUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(setLockUnlockUserExpert.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(setLockUnlockUserExpert.fulfilled, (state, action) => {
+        const { data, requestData } = action.payload;
+        state.success = true;
+        state.loading = false;
+        if (state.userList) {
+          const { list } = state.userList;
+          list.forEach((item: any) => {
+            if (item.id === data.id) {
+              item.userBlock = requestData.payload.userBlock;
+            }
+          });
+        }
+      })
+      .addCase(setLockUnlockUserExpert.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
@@ -185,6 +205,19 @@ export const userList = createSlice({
         state.loading = false;
       })
       .addCase(handleSettleCommission.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(handleDeleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(handleDeleteUser.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(handleDeleteUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })

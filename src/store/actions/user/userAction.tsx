@@ -257,7 +257,12 @@ export const getUsersProfile = createAsyncThunk(
     try {
       const resp = await service.get(`${ApiConstants.USER.PROFILE}`);
       if (resp) {
-        return resp?.data[0][0];
+        if (resp?.data[0][0].loginAt === null) {
+          window.location.replace("/wallet/login");
+          sessionStorage.clear();
+        } else {
+          return resp?.data[0][0];
+        }
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -307,6 +312,20 @@ export const handleSettleCommission = createAsyncThunk<any, any>(
         `${ApiConstants.USER.COMMISSION_SETTLEMENT}`,
         requestData
       );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const handleDeleteUser = createAsyncThunk<any, any>(
+  "deleteUser/userList",
+  async (id, thunkApi) => {
+    try {
+      const resp = await service.delete(`${ApiConstants.USER.DELETE}/${id}`);
       if (resp) {
         return resp?.data;
       }
@@ -377,7 +396,24 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
         requestData.payload
       );
       if (resp) {
-        return {...resp?.data,requestData};
+        return { ...resp?.data, requestData };
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const setLockUnlockUserExpert = createAsyncThunk<any, any>(
+  "/user/lockUnlockUserExpert",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.post(
+        `${requestData.url}`,
+        requestData.payload
+      );
+      if (resp) {
+        return { ...resp?.data, requestData };
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -409,7 +445,7 @@ export const getSearchClientList = createAsyncThunk<
 >("user/clientList", async (requestData, thunkApi) => {
   try {
     const resp = await service.get(
-      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${requestData?.userName}&createdBy:${requestData?.createdBy}`
+      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${requestData?.userName}`
     );
     if (resp) {
       return resp?.data;
