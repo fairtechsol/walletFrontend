@@ -7,6 +7,7 @@ import {
   getSearchClientList,
   getTotalBalance,
   getUserList,
+  handleDeleteUser,
   handleExport,
   handleModelActions,
   handleSettleCommission,
@@ -204,6 +205,19 @@ export const userList = createSlice({
         state.loading = false;
       })
       .addCase(handleSettleCommission.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(handleDeleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(handleDeleteUser.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(handleDeleteUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })
