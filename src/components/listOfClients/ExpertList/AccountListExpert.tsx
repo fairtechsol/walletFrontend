@@ -14,10 +14,9 @@ import ListHeaderExpertRow from "./ListHeaderExpertRow";
 const AccountListExpert = (endpoint: any) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const dispatch: AppDispatch = useDispatch();
+  const loading = false;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { userList, loading } = useSelector(
-    (state: RootState) => state.user.userList
-  );
+  const { userList } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {
     dispatch(getUserList({ currentPage: currentPage, url: endpoint }));
