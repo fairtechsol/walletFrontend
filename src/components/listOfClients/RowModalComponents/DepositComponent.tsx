@@ -39,7 +39,6 @@ const DepositComponent = (props: any) => {
     walletAccountDetail,
     element,
     backgroundColor,
-    elementToUDM,
     setSelected,
     selected,
     titleBackgroundColor,
@@ -53,7 +52,6 @@ const DepositComponent = (props: any) => {
   const [initialBalance, setInitialBalance] = useState(
     walletAccountDetail?.userBal?.currentBalance
   );
-
   const numberWithCommas = (numString: any) => {
     // console.log('numString',numString)
     let stringWithoutCommas = numString?.replace(/,/g, "");
@@ -193,7 +191,8 @@ const DepositComponent = (props: any) => {
     const value = input.value;
     const caretPos = input.selectionStart;
 
-    const allowedCharacters = /[0-9.]/;
+    
+    const allowedCharacters = !formik.values.amount && formik.values.amount.includes('.') ?  /[0-9]/ :  /[0-9.]/;
 
     // If the entered character is not allowed, or the decimal point is already present and the cursor is after the second digit of the fractional part, prevent typing
     if (
@@ -205,7 +204,17 @@ const DepositComponent = (props: any) => {
     ) {
       event.preventDefault();
     }
-  });
+});
+const handleValueChange=(v:any , type:string)=>{
+  if(type === 'amount'){
+    checkHandleChange(v)
+  }else if(type === 'pass'){
+    formik.setFieldValue("transactionPassword",v.target.value);
+  }else if(type === 'remark'){
+    formik.setFieldValue("remark",v.target.value);
+  }
+}
+// console.log(formik.values)
   return (
     <>
       {matchesMobile && matchesTablet ? (
@@ -220,15 +229,16 @@ const DepositComponent = (props: any) => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
+          
           <form onSubmit={handleSubmit}>
             <MobileViewUserDetails
-              elementToUDM={elementToUDM}
-              userName={elementToUDM?.userName}
+              elementToUDM={element}
+              userName={element?.userName}
               title={"Deposit Amount"}
               setSelected={setSelected}
               selected={selected}
               value={formik.values}
-              onChange={formik.handleChange}
+              onChange={handleValueChange}
               setShowPass={setShowPass}
               showPass={showPass}
               onCancel={() => {
@@ -239,6 +249,7 @@ const DepositComponent = (props: any) => {
               backgroundColor={backgroundColor}
               loading={loading}
               titleBackgroundColor={titleBackgroundColor}
+              type='deposite'
             />
           </form>
         </ModalMUI>
