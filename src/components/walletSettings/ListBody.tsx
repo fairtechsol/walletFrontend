@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import StyledImage from "../Common/StyledImages";
 import { LockIcon, UnLockIcon } from "../../assets";
+import { formatToINR } from "../../helper";
 
 const ListBody = (props: any) => {
   const { walletAccountDetail, fContainerStyle, fTextStyle } = props;
@@ -69,8 +70,9 @@ const ListBody = (props: any) => {
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
           {walletAccountDetail?.creditRefrence &&
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+walletAccountDetail.creditRefrence)
-          }
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              +walletAccountDetail.creditRefrence
+            )}
         </Typography>
       </Box>
       <Box
@@ -92,12 +94,15 @@ const ListBody = (props: any) => {
           {Number(walletAccountDetail?.userBal?.currentBalance || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(walletAccountDetail?.userBal?.currentBalance || 0))}
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                Number(walletAccountDetail?.userBal?.currentBalance || 0)
+              )}
             </>
           ) : (
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(walletAccountDetail?.userBal?.currentBalance || 0))
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              Number(walletAccountDetail?.userBal?.currentBalance || 0)
+            )
           )}
-
         </Typography>
       </Box>
       <Box
@@ -125,12 +130,15 @@ const ListBody = (props: any) => {
           {Number(+walletAccountDetail?.userBal?.profitLoss || 0) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(+walletAccountDetail?.userBal?.profitLoss || 0))}
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                Number(+walletAccountDetail?.userBal?.profitLoss || 0)
+              )}
             </>
           ) : (
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(+walletAccountDetail?.userBal?.profitLoss || 0))
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              Number(+walletAccountDetail?.userBal?.profitLoss || 0)
+            )
           )}
-
         </Typography>
         <StyledImage
           src={
@@ -171,12 +179,15 @@ const ListBody = (props: any) => {
           {Number(+walletAccountDetail?.userBal?.myProfitLoss) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(+walletAccountDetail?.userBal?.myProfitLoss || 0))}
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                Number(+walletAccountDetail?.userBal?.myProfitLoss || 0)
+              )}
             </>
           ) : (
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(+walletAccountDetail?.userBal?.myProfitLoss || 0))
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              Number(+walletAccountDetail?.userBal?.myProfitLoss || 0)
+            )
           )}
-
         </Typography>
         <StyledImage
           src={
@@ -209,7 +220,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-        {+walletAccountDetail?.userBal?.totalCommission || 0}
+          {formatToINR(+walletAccountDetail?.userBal?.totalCommission || 0)}
         </Typography>
       </Box>
       <Box
@@ -229,9 +240,9 @@ const ListBody = (props: any) => {
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
           {+walletAccountDetail?.userBal?.exposure &&
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+walletAccountDetail.userBal.exposure)
-          }
-
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              +walletAccountDetail.userBal.exposure
+            )}
         </Typography>
       </Box>
       <Box
@@ -253,12 +264,15 @@ const ListBody = (props: any) => {
           {Number(walletAccountDetail?.userBal?.currentBalance) >= 0 ? (
             <>
               <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(walletAccountDetail?.userBal?.currentBalance))}
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                Number(walletAccountDetail?.userBal?.currentBalance)
+              )}
             </>
           ) : (
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(walletAccountDetail?.userBal?.currentBalance))
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              Number(walletAccountDetail?.userBal?.currentBalance)
+            )
           )}
-
         </Typography>
       </Box>
       <Box
@@ -308,9 +322,9 @@ const ListBody = (props: any) => {
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
           {+walletAccountDetail?.exposureLimit &&
-            new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+walletAccountDetail.exposureLimit)
-          }
-
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              +walletAccountDetail.exposureLimit
+            )}
         </Typography>
       </Box>
       <Box
