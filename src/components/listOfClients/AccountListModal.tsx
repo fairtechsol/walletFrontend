@@ -37,7 +37,7 @@ const AccountListTable = ({
   }: any) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.LIST}?userId=${userId}&searchBy=${searchBy}&keyword=${userName}&domain=${domain}&roleName=${roleName}&page=${currentPage}&limit=${Constants.pageLimit}`
+        `${ApiConstants.USER.LIST}?userId=${userId}&searchBy=${searchBy}&keyword=${userName}&domain=${domain}&roleName=${roleName}&page=${currentPage}&limit=${Constants.pageLimit}&sort=user.userName:ASC`
       );
       if (resp) {
         setNewData(resp?.data?.list);
