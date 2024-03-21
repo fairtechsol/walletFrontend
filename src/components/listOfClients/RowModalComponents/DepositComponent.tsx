@@ -191,30 +191,27 @@ const DepositComponent = (props: any) => {
     const value = input.value;
     const caretPos = input.selectionStart;
 
-    
-    const allowedCharacters = !formik.values.amount && formik.values.amount.includes('.') ?  /[0-9]/ :  /[0-9.]/;
+
+    const allowedCharacters = !formik.values.amount && formik.values.amount.includes('.') ? /[0-9]/ : /[0-9.]/;
 
     // If the entered character is not allowed, or the decimal point is already present and the cursor is after the second digit of the fractional part, prevent typing
     if (
       !allowedCharacters.test(event.key) ||
-      (value.includes(".") &&
-        value.substring(value.indexOf(".") + 1).length >= 2 &&
-        caretPos !== null &&
-        caretPos > value.indexOf(".") + 2)
+      (value.includes('.') && value.substring(value.indexOf('.') + 1).length >= 2 && caretPos !== null && caretPos > value.indexOf('.') + 2)
     ) {
       event.preventDefault();
     }
-});
-const handleValueChange=(v:any , type:string)=>{
-  if(type === 'amount'){
-    checkHandleChange(v)
-  }else if(type === 'pass'){
-    formik.setFieldValue("transactionPassword",v.target.value);
-  }else if(type === 'remark'){
-    formik.setFieldValue("remark",v.target.value);
+  });
+  const handleValueChange = (v: any, type: string) => {
+    if (type === 'amount') {
+      checkHandleChange(v)
+    } else if (type === 'pass') {
+      formik.setFieldValue("transactionPassword", v.target.value);
+    } else if (type === 'remark') {
+      formik.setFieldValue("remark", v.target.value);
+    }
   }
-}
-// console.log(formik.values)
+  // console.log(formik.values)
   return (
     <>
       {matchesMobile && matchesTablet ? (
@@ -229,7 +226,7 @@ const handleValueChange=(v:any , type:string)=>{
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          
+
           <form onSubmit={handleSubmit}>
             <MobileViewUserDetails
               elementToUDM={element}
@@ -334,7 +331,9 @@ const handleValueChange=(v:any , type:string)=>{
                     id="amount"
                     name="amount"
                     //  value={formik.values.amount}
-                    value={numberWithCommas(formik.values.amount?.toString())}
+                    value={numberWithCommas(
+                      formik.values.amount?.toString()
+                    )}
                     variant="standard"
                     InputProps={{
                       placeholder: "Type Amount...",
@@ -518,12 +517,6 @@ const handleValueChange=(v:any , type:string)=>{
                       },
                     }}
                   />
-                  {touched.transactionPassword &&
-                    errors.transactionPassword && (
-                      <p style={{ color: "#fa1e1e", lineHeight: "0.8" }}>
-                        {errors.transactionPassword as string}
-                      </p>
-                    )}
                   <Box
                     onClick={() => {
                       setShowPass(!showPass);
@@ -536,6 +529,12 @@ const handleValueChange=(v:any , type:string)=>{
                   </Box>
                 </Box>
               </Box>
+              {touched.transactionPassword &&
+                errors.transactionPassword && (
+                  <p style={{ color: "#fa1e1e", lineHeight: "0.8", display: "flex", justifyContent: "flex-end" }}>
+                    {errors.transactionPassword as string}
+                  </p>
+                )}
             </Box>
 
             <Box
