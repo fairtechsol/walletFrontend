@@ -13,6 +13,7 @@ import RowHeaderDomain from "./RowHeaderDomain";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import RowComponentMatches from "./RowComponentMatches";
+import { formatToINR } from "../../../helper";
 
 const RowHeaderMatches = ({
   item,
@@ -44,7 +45,7 @@ const RowHeaderMatches = ({
       >
         <Box
           sx={{
-            width: { xs: "5%",sm:"5%", lg: "5%" },
+            width: { xs: "5%", sm: "5%", lg: "5%" },
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -62,12 +63,12 @@ const RowHeaderMatches = ({
                 ? Tennis
                 : Cricket
             }
-            sx={{ width: { lg: "35px",sm:"35px", xs: "22px" } }}
+            sx={{ width: { lg: "35px", sm: "35px", xs: "22px" } }}
           />
         </Box>
         <Box
           sx={{
-            width: { xs: "55%",sm:"55%", lg: "55%" },
+            width: { xs: "55%", sm: "55%", lg: "55%" },
             height: "100%",
             alignItems: "center",
             display: "flex",
@@ -78,7 +79,11 @@ const RowHeaderMatches = ({
           }}
         >
           <Typography
-            sx={{ fontSize:  { lg: "15px",sm:"15px", xs: "12px" }, color: "black", fontWeight: "600" }}
+            sx={{
+              fontSize: { lg: "15px", sm: "15px", xs: "12px" },
+              color: "black",
+              fontWeight: "600",
+            }}
           >
             {item?.eventType}
           </Typography>
@@ -95,7 +100,7 @@ const RowHeaderMatches = ({
           sx={{
             background: item?.totalLoss > 0 ? "#27AC1E" : "#E32A2A",
             paddingX: "2px",
-            width: { xs: "25%",sm:"25%", lg: "25%" },
+            width: { xs: "25%", sm: "25%", lg: "25%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -114,7 +119,7 @@ const RowHeaderMatches = ({
           >
             <Typography
               sx={{
-                fontSize: { lg: "14px",sm:"14px", xs: "11px" },
+                fontSize: { lg: "14px", sm: "14px", xs: "11px" },
                 fontWeight: "700",
                 color: "white",
               }}
@@ -140,15 +145,21 @@ const RowHeaderMatches = ({
               {Number(item?.totalLoss) >= 0 ? (
                 <>
                   <span style={{ visibility: "hidden" }}>-</span>
-                  {Number(item?.totalLoss).toFixed(2)}{" "}
+                  {formatToINR(
+                    parseFloat(item?.totalLoss || 0).toFixed(2)
+                  )}{" "}
                   {`(Total Deduction: 
-                  ${Number(item?.totalDeduction) || 0})`}
+                  ${formatToINR(
+                    parseFloat(item?.totalDeduction || 0).toFixed(2)
+                  )})`}
                 </>
               ) : (
                 <>
-                  {Number(item?.totalLoss).toFixed(2)}{" "}
+                  {formatToINR(parseFloat(item?.totalLoss || 0).toFixed(2))}{" "}
                   {`(Total Deduction: 
-                  ${Number(item?.totalDeduction) || 0})`}
+                  ${formatToINR(
+                    parseFloat(item?.totalDeduction || 0).toFixed(2)
+                  )})`}
                 </>
               )}{" "}
             </Typography>
@@ -158,7 +169,7 @@ const RowHeaderMatches = ({
           sx={{
             background: "#0B4F26",
             paddingX: "2px",
-            width: { xs: "15%",sm:"15%", lg: "15%" },
+            width: { xs: "15%", sm: "15%", lg: "15%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -169,7 +180,7 @@ const RowHeaderMatches = ({
         >
           <Typography
             sx={{
-              fontSize:{ lg: "14px",sm:"14px", xs: "11px" },
+              fontSize: { lg: "14px", sm: "14px", xs: "11px" },
               fontWeight: "700",
               color: "white",
             }}

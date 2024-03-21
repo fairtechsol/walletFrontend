@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import moment from "moment";
+import { formatToINR } from "../../../helper";
 const AllRateSeperate = ({
   profit,
   mark,
@@ -346,10 +347,10 @@ const AllRateSeperate = ({
                             {Number(i.totalLoss) >= 0 ? (
                               <>
                                 <span style={{ visibility: "hidden" }}>-</span>
-                                {Number(i.totalLoss).toFixed(2)}
+                                {formatToINR(Number(i.totalLoss).toFixed(2))}
                               </>
                             ) : (
-                              Number(i.totalLoss).toFixed(2)
+                              formatToINR(Number(i.totalLoss).toFixed(2))
                             )}
                             {/* {Number(i?.totalLoss).toFixed(2) || ""} */}
                           </Typography>
@@ -492,7 +493,10 @@ const RowComponent = ({ header, data }: any) => {
   //   return timeString;
   // };
   const getTime = (date: any) => {
-    const timeString = moment.utc(date).utcOffset('+05:30').format("hh:mm:ss A");
+    const timeString = moment
+      .utc(date)
+      .utcOffset("+05:30")
+      .format("hh:mm:ss A");
     return timeString;
   };
   const getColor = () => {
@@ -561,7 +565,7 @@ const RowComponent = ({ header, data }: any) => {
           />
           <SingleBox
             color={getColor()}
-            data={data?.amount}
+            data={formatToINR(data?.amount || 0)}
             header={header}
             width={"50%"}
             boxWidth="40%"

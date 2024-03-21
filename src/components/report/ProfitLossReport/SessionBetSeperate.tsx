@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
-import { formatNumber } from "../../../helper";
+import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import moment from "moment";
@@ -281,10 +281,10 @@ const SessionBetSeperate = ({
                             {Number(i.totalLoss) >= 0 ? (
                               <>
                                 <span style={{ visibility: "hidden" }}>-</span>
-                                {Number(i.totalLoss).toFixed(2)}
+                                {formatToINR(Number(i.totalLoss).toFixed(2))}
                               </>
                             ) : (
-                              Number(i.totalLoss).toFixed(2)
+                              formatToINR(Number(i.totalLoss).toFixed(2))
                             )}
                           </Typography>
                           {!isArrow && (
@@ -397,7 +397,10 @@ const RowComponent = ({ header, data }: any) => {
   //   return timeString;
   // };
   const getTime = (date: any) => {
-    const timeString = moment.utc(date).utcOffset('+05:30').format("hh:mm:ss A");
+    const timeString = moment
+      .utc(date)
+      .utcOffset("+05:30")
+      .format("hh:mm:ss A");
     return timeString;
   };
   const getColor = () => {
@@ -449,7 +452,7 @@ const RowComponent = ({ header, data }: any) => {
           <SingleBox color={getColor()} data={data?.betType} header={header} />
           <SingleBox
             color={getColor()}
-            data={data?.stack || data?.stake || data?.amount}
+            data={formatToINR(data?.stack || data?.stake || data?.amount)}
             header={header}
           />
         </>

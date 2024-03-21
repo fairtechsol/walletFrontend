@@ -27,6 +27,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
+import { formatToINR } from "../../helper";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -924,9 +925,11 @@ const EditAccount = () => {
                       disabled={state?.id ? true : false}
                       title={"Credit Reference*"}
                       name={"creditRefrence"}
-                      type={"Number"}
+                      // type={"Number"}
                       id="creditRefrence"
-                      value={formik.values.creditRefrence}
+                      value={formatToINR(
+                        parseFloat(formik.values.creditRefrence?.toString())
+                      )}
                       // error={touched.creditRefrence && Boolean(errors.creditRefrence)}
                       // onBlur={formik.handleBlur}
                       onChange={formik.handleChange}

@@ -16,6 +16,7 @@ import {
 import SessionComponentMatches from "./SessionComponentMatches";
 import SessionBetSeperate from "./SessionBetSeperate";
 import { useSelector } from "react-redux";
+import { formatToINR } from "../../../helper";
 
 const RowComponentMatches = ({
   item,
@@ -51,7 +52,7 @@ const RowComponentMatches = ({
       >
         <Box
           sx={{
-            width: { xs: "5%",sm:"5%", lg: "5%" },
+            width: { xs: "5%", sm: "5%", lg: "5%" },
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -67,7 +68,7 @@ const RowComponentMatches = ({
         </Box>
         <Box
           sx={{
-            width: { xs: "55%",sm:"55%", lg: "55%" },
+            width: { xs: "55%", sm: "55%", lg: "55%" },
             position: "relative",
             height: "100%",
             paddingY: "4px",
@@ -191,7 +192,7 @@ const RowComponentMatches = ({
           sx={{
             background: item?.rateProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
             paddingX: "2px",
-            width: { xs: "25%",sm:"25%", lg: "25%" },
+            width: { xs: "25%", sm: "25%", lg: "25%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -243,15 +244,21 @@ const RowComponentMatches = ({
               {Number(item?.rateProfitLoss) >= 0 ? (
                 <>
                   <span style={{ visibility: "hidden" }}>-</span>
-                  {Number(item?.rateProfitLoss).toFixed(2)}{" "}
+                  {formatToINR(
+                    Number(item?.rateProfitLoss || 0).toFixed(2)
+                  )}{" "}
                   {`(Total Deduction: 
-                  ${Number(item?.totalDeduction) || 0})`}
+                  ${formatToINR(
+                    Number(item?.totalDeduction || 0).toFixed(2)
+                  )})`}
                 </>
               ) : (
                 <>
-                  {Number(item?.rateProfitLoss).toFixed(2)}{" "}
+                  {formatToINR(Number(item?.rateProfitLoss || 0).toFixed(2))}{" "}
                   {`(Total Deduction: 
-                  ${Number(item?.totalDeduction) || 0})`}
+                  ${formatToINR(
+                    Number(item?.totalDeduction || 0).toFixed(2)
+                  )})`}
                 </>
               )}{" "}
             </Typography>
@@ -307,7 +314,7 @@ const RowComponentMatches = ({
           sx={{
             background: item?.sessionProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
             paddingX: "2px",
-            width: { xs: "15%",sm:"15%", lg: "15%" },
+            width: { xs: "15%", sm: "15%", lg: "15%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -358,10 +365,10 @@ const RowComponentMatches = ({
               {Number(item?.sessionProfitLoss) >= 0 ? (
                 <>
                   <span style={{ visibility: "hidden" }}>-</span>
-                  {Number(item?.sessionProfitLoss).toFixed(2)}
+                  {formatToINR(Number(item?.sessionProfitLoss || 0).toFixed(2))}
                 </>
               ) : (
-                Number(item?.sessionProfitLoss).toFixed(2)
+                formatToINR(Number(item?.sessionProfitLoss || 0).toFixed(2))
               )}
             </Typography>
             <StyledImage
