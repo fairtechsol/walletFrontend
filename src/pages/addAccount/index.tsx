@@ -35,6 +35,7 @@ import {
 } from "../../utils/Validations";
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import _, { debounce } from "lodash";
+import { formatToINR } from "../../helper";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -106,13 +107,6 @@ const AddAccount = () => {
   const { userAlreadyExist } = useSelector(
     (state: RootState) => state.user.userList
   );
-
-  const formatIndianCurrency = (creditRefrence: number) => {
-    const formatter = new Intl.NumberFormat("en-IN", {
-      currency: "INR",
-    });
-    return formatter.format(creditRefrence);
-  };
 
   const checkHandleChange = (event: any) => {
     let value = 0;
@@ -999,7 +993,7 @@ const AddAccount = () => {
                       name={"creditRefrence"}
                       id="creditRefrence"
                       required={true}
-                      value={formatIndianCurrency(
+                      value={formatToINR(
                         parseFloat(formik.values.creditRefrence?.toString())
                       )}
                       error={
