@@ -13,6 +13,7 @@ import CommissionReportTable from "../commisionReport/CommissionReportTable";
 import RowModalComponents from "./RowModalComponents";
 import { useSelector } from "react-redux";
 import AccountListModal from "./AccountListModal";
+import { formatToINR } from "../../helper";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -142,6 +143,18 @@ const AccountListRow = (props: AccountListRowInterface) => {
       );
     }
   };
+
+  function formatAmount(amount: string) {
+    // Splitting the string into numeric part and percentage part
+    const [numericPart, percentagePart] = amount?.split("(");
+
+    // Formatting the numeric part to INR format
+    const formattedNumericPart = formatToINR(Number(numericPart));
+
+    // Combining the formatted numeric part with the percentage part
+    return `${formattedNumericPart}(${percentagePart}`;
+  }
+
   const formattedPLValue = new Intl.NumberFormat("en-IN", {
     currency: "INR",
   }).format(calculateProfitLoss());
@@ -175,13 +188,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
   //   })
   // );
   // };
-  const handleClearValue=()=>{
-    setDepositeValue(0)
-    setWithdrawValue(0)
-    setCreditValue(0)
-    setExposureValue(0)
-    setLockValue(null)
-  }
+  const handleClearValue = () => {
+    setDepositeValue(0);
+    setWithdrawValue(0);
+    setCreditValue(0);
+    setExposureValue(0);
+    setLockValue(null);
+  };
   return (
     <>
       <Box
@@ -395,7 +408,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{element?.commission || 0}</Typography>
+          <Typography variant="h5">
+            {formatAmount(element?.commission || "0")}
+          </Typography>
         </Box>
         <Box
           sx={{

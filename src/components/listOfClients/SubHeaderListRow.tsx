@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import StyledImage from "../Common/StyledImages";
+import { formatToINR } from "../../helper";
 
 const SubHeaderListRow = (props: any) => {
   const { data } = props;
@@ -41,8 +42,9 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-   {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+data?.totalCreditReference || 0)}
-
+          {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+            +data?.totalCreditReference || 0
+          )}
         </Typography>
       </Box>
       <Box
@@ -58,15 +60,18 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-         {Number(data?.currBalance || 0) >= 0 ? (
-  <>
-    <span style={{ visibility: "hidden" }}>-</span>
-    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(data?.currBalance || 0))}
-  </>
-) : (
-  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(data?.currBalance || 0))
-)}
-
+          {Number(data?.currBalance || 0) >= 0 ? (
+            <>
+              <span style={{ visibility: "hidden" }}>-</span>
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                Number(data?.currBalance || 0)
+              )}
+            </>
+          ) : (
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              Number(data?.currBalance || 0)
+            )
+          )}
         </Typography>
       </Box>
       <Box
@@ -90,14 +95,17 @@ const SubHeaderListRow = (props: any) => {
         >
           {/* {data?userBal?.profitLoss} */}
           {Number(+data?.profitsum || 0) >= 0 ? (
-  <>
-    <span style={{ visibility: "hidden" }}>-</span>
-    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+data?.profitsum || 0)}
-  </>
-) : (
-  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+data?.profitsum || 0)
-)}
-
+            <>
+              <span style={{ visibility: "hidden" }}>-</span>
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                +data?.profitsum || 0
+              )}
+            </>
+          ) : (
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              +data?.profitsum || 0
+            )
+          )}
         </Typography>
         <StyledImage
           src={
@@ -134,14 +142,17 @@ const SubHeaderListRow = (props: any) => {
         >
           {/* {data?.percent_profit_loss} */}
           {Number(+data?.percentprofitloss || 0) >= 0 ? (
-  <>
-    <span style={{ visibility: "hidden" }}>-</span>
-    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+data?.percentprofitloss || 0)}
-  </>
-) : (
-  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+data?.percentprofitloss || 0)
-)}
-
+            <>
+              <span style={{ visibility: "hidden" }}>-</span>
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                +data?.percentprofitloss || 0
+              )}
+            </>
+          ) : (
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              +data?.percentprofitloss || 0
+            )
+          )}
         </Typography>
         <StyledImage
           src={
@@ -170,7 +181,7 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {data?.totalcommission || 0}
+          {formatToINR(data?.totalcommission || 0)}
         </Typography>
       </Box>
       <Box
@@ -186,8 +197,9 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-      {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(+data?.totalExposure || 0)}
-
+          {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+            +data?.totalExposure || 0
+          )}
         </Typography>
       </Box>
       <Box
@@ -205,14 +217,17 @@ const SubHeaderListRow = (props: any) => {
         >
           {/* {data?.availablebalancesum} */}
           {Number(data?.availableBalance || 0) >= 0 ? (
-  <>
-    <span style={{ visibility: "hidden" }}>-</span>
-    {new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(data?.availableBalance || 0))}
-  </>
-) : (
-  new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Number(data?.availableBalance || 0))
-)}
-
+            <>
+              <span style={{ visibility: "hidden" }}>-</span>
+              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+                Number(data?.availableBalance || 0)
+              )}
+            </>
+          ) : (
+            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+              Number(data?.availableBalance || 0)
+            )
+          )}
         </Typography>
       </Box>
       <Box
