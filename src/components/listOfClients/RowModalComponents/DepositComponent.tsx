@@ -26,7 +26,7 @@ import { depositAmountValidations } from "../../../utils/Validations";
 
 const initialValues: any = {
   userId: "",
-  amount: 0,
+  amount: '',
   transactionPassword: "",
   remark: "",
   transactionType: "add",
@@ -173,37 +173,48 @@ const DepositComponent = (props: any) => {
 
   const checkHandleChange = (event: any) => {
     let value = (event.target.value).toString();
-    if (event.target.value != "") {
-      value =event.target.value.replace(/[^\w\s.]/gi, "");
+if (event.target.value != "") {
+    value =event.target.value.replace(/[^\w\s.]/gi, "");
     }
     if (value.includes('.')) {
-      let parts = value.split('.');
-      
-      // If the fractional part has more than two digits, truncate it
-      if (parts[1].length > 2) {
-          parts[1] = parts[1].substring(0, 2);
-          value = parts.join('.');
-      }
-  }
-    formik.setFieldValue("amount",value);
-    onChangeAmount(parseFloat(value), element?.id, "deposite");
-  };
-  document.getElementById("amount")?.addEventListener("keypress", (event) => {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
-    const caretPos = input.selectionStart;
-
-    
-    const allowedCharacters = !formik.values.amount && formik.values.amount.includes('.') ?  /[0-9]/ :  /[0-9.]/;
-
-    // If the entered character is not allowed, or the decimal point is already present and the cursor is after the second digit of the fractional part, prevent typing
-    if (
-        !allowedCharacters.test(event.key) ||
-        (value.includes('.') && value.substring(value.indexOf('.') + 1).length >= 2 && caretPos !== null && caretPos > value.indexOf('.') + 2)
-    ) {
-        event.preventDefault();
+        let parts = value.split('.');
+        
+        // If the fractional part has more than two digits, truncate it
+        if (parts[1].length > 2) {
+            parts[1] = parts[1].substring(0, 2);
+            value = parts.join('.');
+        }
     }
+formik.setFieldValue("amount",value);
+    onChangeAmount(parseFloat(value), element?.id, "deposite");
+};
+document.getElementById("amount")?.addEventListener("keypress", (event) => {
+  const input = event.target as HTMLInputElement;
+  const value = input.value;
+  const caretPos = input.selectionStart;
+
+ 
+  let allowedCharacters;
+  
+  if (value === '' || !value.includes('.')) {
+      allowedCharacters = /[0-9.]/;
+  } else {
+      allowedCharacters = /[0-9]/;
+  }
+
+  if (
+      !allowedCharacters.test(event.key) ||
+      (value.includes('.') && value.substring(value.indexOf('.') + 1).length >= 2 && caretPos !== null && caretPos > value.indexOf('.') + 1) // Corrected the condition here
+  ) {
+      event.preventDefault();
+  }
+
+  // Allow entering decimal point again if the value is cleared (e.g., using backspace)
+  if (event.key === '.' && value === '') {
+      return;
+  }
 });
+
 const handleValueChange=(v:any , type:string)=>{
   if(type === 'amount'){
     checkHandleChange(v)
@@ -340,7 +351,7 @@ const handleValueChange=(v:any , type:string)=>{
                     InputProps={{
                       placeholder: "Type Amount...",
                       disableUnderline: true,
-                      autoComplete: "new-password",
+                      autoComplete: "off",
                       autoFocus: true,
                       inputProps: { min: "0", step: "1" },
                       style: {
