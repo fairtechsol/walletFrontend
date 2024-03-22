@@ -47,54 +47,12 @@ const DepositComponent = (props: any) => {
 
   const [showPass, setShowPass] = useState(false);
   const theme = useTheme();
+  const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [initialBalance, setInitialBalance] = useState(
     walletAccountDetail?.userBal?.currentBalance
   );
-  const numberWithCommas = (numString: any) => {
-    // console.log('numString',numString)
-    let stringWithoutCommas = numString?.replace(/,/g, "");
-    // console.log('stringWithoutCommas', stringWithoutCommas)
-    if (!stringWithoutCommas?.includes(".")) {
-      if (stringWithoutCommas?.length > 3) {
-        let mainArray = stringWithoutCommas.slice(0, -3);
-        let lastThreeDigitsArray = stringWithoutCommas.slice(-3);
-        let reversedStr = mainArray.split("").reverse().join("");
-        let result = "";
-
-        for (let i = 0; i < reversedStr.length; i += 2) {
-          result += reversedStr.substr(i, 2) + ",";
-        }
-        result = result.slice(0, -1); // Remove the last comma
-        let reversedStr1 = result.split("").reverse().join("");
-        // console.log(reversedStr1,' jnknk ',reversedStr);
-        return reversedStr1 + "," + lastThreeDigitsArray;
-      } else {
-        let data = stringWithoutCommas?.replace(/,/g, "");
-        return data;
-      }
-    } else {
-      let parts = stringWithoutCommas.split(".");
-      if (parts[0]?.length > 3) {
-        let mainArray = parts[0].slice(0, -3);
-        let lastThreeDigitsArray = parts[0].slice(-3);
-        let reversedStr = mainArray.split("").reverse().join("");
-        let result = "";
-        for (let i = 0; i < reversedStr.length; i += 2) {
-          result += reversedStr.substr(i, 2) + ",";
-        }
-        result = result.slice(0, -1); // Remove the last comma
-        let reversedStr1 = result.split("").reverse().join("");
-        // console.log(reversedStr1,' jnknk ',reversedStr);
-        return reversedStr1 + "," + lastThreeDigitsArray + "." + parts[1];
-      } else {
-        let data = stringWithoutCommas?.replace(/,/g, "");
-        return data;
-      }
-    }
-  };
-  const dispatch: AppDispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -131,6 +89,78 @@ const DepositComponent = (props: any) => {
   const { loading, success, error } = useSelector(
     (state: RootState) => state.user.userList
   );
+
+  const numberWithCommas = (numString: any) => {
+    let stringWithoutCommas = numString?.replace(/,/g, "");
+    if (!stringWithoutCommas?.includes(".")) {
+      if (stringWithoutCommas?.length > 3) {
+        let mainArray = stringWithoutCommas.slice(0, -3);
+        let lastThreeDigitsArray = stringWithoutCommas.slice(-3);
+        let reversedStr = mainArray.split("").reverse().join("");
+        let result = "";
+
+        for (let i = 0; i < reversedStr.length; i += 2) {
+          result += reversedStr.substr(i, 2) + ",";
+        }
+        result = result.slice(0, -1);
+        let reversedStr1 = result.split("").reverse().join("");
+        return reversedStr1 + "," + lastThreeDigitsArray;
+      } else {
+        let data = stringWithoutCommas?.replace(/,/g, "");
+        return data;
+      }
+    } else {
+      let parts = stringWithoutCommas.split(".");
+      if (parts[0]?.length > 3) {
+        let mainArray = parts[0].slice(0, -3);
+        let lastThreeDigitsArray = parts[0].slice(-3);
+        let reversedStr = mainArray.split("").reverse().join("");
+        let result = "";
+        for (let i = 0; i < reversedStr.length; i += 2) {
+          result += reversedStr.substr(i, 2) + ",";
+        }
+        result = result.slice(0, -1);
+        let reversedStr1 = result.split("").reverse().join("");
+        return reversedStr1 + "," + lastThreeDigitsArray + "." + parts[1];
+      } else {
+        let data = stringWithoutCommas?.replace(/,/g, "");
+        return data;
+      }
+    }
+  };
+
+  const checkHandleChange = (event: any) => {
+    let value = event.target.value;
+    if (!/^[\d.,]*$/.test(value)) {
+      return;
+    }
+
+    const dotCount = value.split(".").length - 1;
+    if (dotCount > 1) {
+      return;
+    }
+
+    value = value.replace(/[^\d.]/g, "");
+    if (value.includes(".")) {
+      let parts = value.split(".");
+      if (parts[1].length > 2) {
+        parts[1] = parts[1].substring(0, 2);
+        value = parts.join(".");
+      }
+    }
+    formik.setFieldValue("amount", value);
+    onChangeAmount(parseFloat(value), element?.id, "deposite");
+  };
+
+  const handleValueChange = (v: any, type: string) => {
+    if (type === "amount") {
+      checkHandleChange(v);
+    } else if (type === "pass") {
+      formik.setFieldValue("transactionPassword", v.target.value);
+    } else if (type === "remark") {
+      formik.setFieldValue("remark", v.target.value);
+    }
+  };
 
   useEffect(() => {
     if (success) {
@@ -169,62 +199,6 @@ const DepositComponent = (props: any) => {
     }
   }, [formik.values.amount, onChangeAmount]);
 
-  const checkHandleChange = (event: any) => {
-    let value = event.target.value.toString();
-    if (event.target.value != "") {
-      value = event.target.value.replace(/[^\w\s.]/gi, "");
-    }
-    if (value.includes(".")) {
-      let parts = value.split(".");
-
-      // If the fractional part has more than two digits, truncate it
-      if (parts[1].length > 2) {
-        parts[1] = parts[1].substring(0, 2);
-        value = parts.join(".");
-      }
-    }
-    formik.setFieldValue("amount", value);
-    onChangeAmount(parseFloat(value), element?.id, "deposite");
-  };
-  document.getElementById("amount")?.addEventListener("keypress", (event) => {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
-    const caretPos = input.selectionStart;
-
-    let allowedCharacters;
-
-    if (value === "" || !value.includes(".")) {
-      allowedCharacters = /[0-9.]/;
-    } else {
-      allowedCharacters = /[0-9]/;
-    }
-
-    if (
-      !allowedCharacters.test(event.key) ||
-      (value.includes(".") &&
-        value.substring(value.indexOf(".") + 1).length >= 2 &&
-        caretPos !== null &&
-        caretPos > value.indexOf(".") + 1) // Corrected the condition here
-    ) {
-      event.preventDefault();
-    }
-
-    // Allow entering decimal point again if the value is cleared (e.g., using backspace)
-    if (event.key === "." && value === "") {
-      return;
-    }
-  });
-
-  const handleValueChange = (v: any, type: string) => {
-    if (type === "amount") {
-      checkHandleChange(v);
-    } else if (type === "pass") {
-      formik.setFieldValue("transactionPassword", v.target.value);
-    } else if (type === "remark") {
-      formik.setFieldValue("remark", v.target.value);
-    }
-  };
-  // console.log(formik.values)
   return (
     <>
       {matchesMobile && matchesTablet ? (
@@ -345,6 +319,7 @@ const DepositComponent = (props: any) => {
                     //  value={formik.values.amount}
                     value={numberWithCommas(formik.values.amount?.toString())}
                     variant="standard"
+                    type="text"
                     InputProps={{
                       placeholder: "Type Amount...",
                       disableUnderline: true,
