@@ -162,7 +162,7 @@ const AccountListTable = ({
                     domain={
                       domain ? domain : element?.domain ? element?.domain : ""
                     }
-                    // currentPage={currentPage}
+                    currentPage={currentPage}
                   />
                 );
               } else {
@@ -182,7 +182,7 @@ const AccountListTable = ({
                     element={element}
                     domain={domain}
                     // getListOfUser={getListOfUser}
-                    // currentPage={currentPage}
+                    currentPage={currentPage}
                   />
                 );
               }
