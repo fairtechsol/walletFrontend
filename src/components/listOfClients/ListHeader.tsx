@@ -61,6 +61,7 @@ const ListHeader = ({
                       userId: id,
                       domain: domain,
                       roleName: roleName,
+                      name: title,
                     })
                   )
                 }
@@ -89,6 +90,7 @@ const ListHeader = ({
                       userId: id,
                       domain: domain,
                       roleName: roleName,
+                      name: title,
                     })
                   )
                 }
