@@ -20,7 +20,7 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, endpoint, onChangeAmount } = props;
+  const { setSelected, element, endpoint, onChangeAmount,currentPage } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
@@ -62,7 +62,7 @@ const LockUnlockComponent = (props: any) => {
       setSelected(false);
       dispatch(
         getUserList({
-          currentPage: 1,
+          currentPage: currentPage,
           url: { endpoint: ApiConstants.USER.EXPERTLIST },
         })
       );

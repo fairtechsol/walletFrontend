@@ -22,7 +22,7 @@ import { handleSettleCommission } from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 
 const ListItems = (props: any) => {
-  const { title } = props;
+  const { title,currentPage } = props;
   const navigate = useNavigate();
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
@@ -164,6 +164,7 @@ const ListItems = (props: any) => {
                   navigate={navigate}
                   titleBackgroundColor="#27AC1E"
                   onChangeAmount={handleAmountChange}
+                  currentPage={currentPage}
                 />
               )}
               {selected == 1 && (
@@ -176,6 +177,7 @@ const ListItems = (props: any) => {
                   }}
                   titleBackgroundColor="#ff0000"
                   onChangeAmount={handleAmountChange}
+                  currentPage={currentPage}
                 />
               )}
               {selected == 2 && (
@@ -187,6 +189,7 @@ const ListItems = (props: any) => {
                     setSelected(null);
                   }}
                   onChangeAmount={handleAmountChange}
+                  currentPage={currentPage}
                 />
               )}
               {selected == 4 && (
@@ -198,6 +201,7 @@ const ListItems = (props: any) => {
                   }}
                   walletAccountDetail={profileDetail}
                   onChangeAmount={handleAmountChange}
+                  currentPage={currentPage}
                 />
               )}
               {selected == 5 && (
@@ -209,6 +213,7 @@ const ListItems = (props: any) => {
                     setSelected(null);
                   }}
                   onChangeAmount={handleAmountChange}
+                  currentPage={currentPage}
                 />
               )}
             </Box>

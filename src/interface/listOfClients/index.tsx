@@ -27,6 +27,7 @@ export interface AccountListDataInterface {
   exposure_limit: string;
   role: string;
   domain:any;
+  currentPage :any
 }
 
 export interface AccountListRowInterface {
@@ -43,6 +44,7 @@ export interface AccountListRowInterface {
   getListOfUser?: (value: any) => void;
   show?: boolean;
   domain?:any;
+  currentPage? :any
 }
 
 export interface RowModalComponent {
