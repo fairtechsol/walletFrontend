@@ -25,6 +25,9 @@ const Login = () => {
     initialValues: initialValues,
     validationSchema: loginValidationSchema,
     onSubmit: (values: any) => {
+      if (loading) {
+        return;
+      }
       dispatch(login(values));
     },
   });
@@ -115,7 +118,7 @@ const Login = () => {
           type="submit"
           variant="contained"
           color="secondary"
-          disabled={isSubmitting}
+          // disabled={isSubmitting}
           sx={{
             width: "62%",
             cursor: "pointer",
