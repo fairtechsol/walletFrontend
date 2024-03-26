@@ -6,7 +6,7 @@ import LockUnlockComponent from "./LockUnlockComponent";
 import { memo } from "react";
 
 const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor, onValueChange } =
+  const { element, selected, setSelected, backgroundColor, onValueChange, currentPage } =
     props;
   const classes = {
     mainBox: {
@@ -86,6 +86,7 @@ const RowModalComponents = (props: any) => {
               }}
               backgroundColor={backgroundColor}
               onChangeAmount={handleAmountChange}
+              currentPage={currentPage}
             />
           )}
         </Box>

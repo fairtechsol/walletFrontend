@@ -86,9 +86,13 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
       const resp = await service.get(
         `${requestData?.url?.endpoint}?searchBy=${
           requestData?.searchBy ? requestData?.searchBy : ""
-        }&keyword=${requestData?.userName ? requestData?.userName : ""}&page=${
-          requestData?.currentPage
-        }&limit=${Constants.pageLimit}&sort=user.userName:ASC`
+        }&keyword=${requestData?.userName ? requestData?.userName : ""}&${
+          requestData?.url?.endpoint === ApiConstants.USER.EXPERTLIST
+            ? "offset"
+            : "page"
+        }=${requestData?.currentPage}&limit=${
+          Constants.pageLimit
+        }&sort=user.userName:ASC`
       );
       if (resp) {
         return resp?.data;
