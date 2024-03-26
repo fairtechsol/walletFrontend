@@ -44,6 +44,7 @@ const WithdrawComponent = (props: any) => {
     setSelected,
     titleBackgroundColor,
     onChangeAmount,
+    currentPage
   } = props;
 
   const [showPass, setShowPass] = useState(false);
@@ -172,7 +173,7 @@ const WithdrawComponent = (props: any) => {
       } else {
         dispatch(
           getUserList({
-            currentPage: 1,
+            currentPage: currentPage,
             url: { endpoint: ApiConstants.USER.LIST },
           })
         );
@@ -234,6 +235,7 @@ const WithdrawComponent = (props: any) => {
               loading={loading}
               titleBackgroundColor={titleBackgroundColor}
               type="withdraw"
+              currentPage={currentPage}
             />
           </form>
         </ModalMUI>

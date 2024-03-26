@@ -109,6 +109,7 @@ const AccountList = (endpoint: any) => {
                               element={element}
                               show={false}
                               domain={domain}
+                              currentPage={currentPage}
                             />
                           );
                         } else {
@@ -126,6 +127,7 @@ const AccountList = (endpoint: any) => {
                               element={element}
                               show={false}
                               domain={domain}
+                              currentPage={currentPage}
                             />
                           );
                         }
