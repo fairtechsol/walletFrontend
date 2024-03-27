@@ -86,9 +86,13 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
       const resp = await service.get(
         `${requestData?.url?.endpoint}?searchBy=${
           requestData?.searchBy ? requestData?.searchBy : ""
-        }&keyword=${requestData?.userName ? requestData?.userName : ""}&page=${
-          requestData?.currentPage
-        }&limit=${Constants.pageLimit}&sort=user.userName:ASC`
+        }&keyword=${requestData?.userName ? requestData?.userName : ""}&${
+          requestData?.url?.endpoint === ApiConstants.USER.EXPERTLIST
+            ? "offset"
+            : "page"
+        }=${requestData?.currentPage}&limit=${
+          Constants.pageLimit
+        }&sort=user.userName:ASC`
       );
       if (resp) {
         return resp?.data;
@@ -512,7 +516,9 @@ export const handleExport = createAsyncThunk<any, any>(
       // Create an <a> element and trigger the download
       const link = document.createElement("a");
       link.href = url;
-      link.download = "temp";
+      link.download = requestData?.name
+        ? `${requestData?.name}`.replace(/[^\w\s]/g, "_")
+        : "client_list";
       link.click();
       // Clean up by revoking the URL
       window.URL.revokeObjectURL(url);

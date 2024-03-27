@@ -98,6 +98,7 @@ const AccountListExpert = (endpoint: any) => {
                               fContainerStyle={{ background: "#0B4F26" }}
                               fTextStyle={{ color: "white" }}
                               element={element}
+                              currentPage={currentPage}
                             />
                           );
                         } else {
@@ -113,6 +114,7 @@ const AccountListExpert = (endpoint: any) => {
                               fContainerStyle={{ background: "#F8C851" }}
                               fTextStyle={{ color: "#0B4F26" }}
                               element={element}
+                              currentPage={currentPage}
                             />
                           );
                         }

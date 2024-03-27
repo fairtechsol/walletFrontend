@@ -20,7 +20,7 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, endpoint, onChangeAmount,currentPage } = props;
+  const { setSelected, element, endpoint, onChangeAmount, currentPage } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
