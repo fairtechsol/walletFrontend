@@ -34,12 +34,12 @@ const RowHeaderDomain = ({
             filter += `id=${user?.id}`;
           }
           if (startDate && endDate) {
-            filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+            filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
             filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
           } else if (startDate) {
-            filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+            filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
           } else if (endDate) {
-            filter += `endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+            filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
           }
           setCurrentPage(1);
           dispatch(
