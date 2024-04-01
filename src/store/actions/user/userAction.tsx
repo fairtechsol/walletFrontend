@@ -92,7 +92,7 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
             : "page"
         }=${requestData?.currentPage}&limit=${
           Constants.pageLimit
-        }&sort=user.userName:ASC`
+        }&sort=user.betBlock:ASC,user.userBlock:ASC,user.userName:ASC`
       );
       if (resp) {
         return resp?.data;
