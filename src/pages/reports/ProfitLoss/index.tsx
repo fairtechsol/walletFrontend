@@ -11,26 +11,32 @@ import {
 import moment from "moment";
 import { getSearchClientList } from "../../../store/actions/user/userAction";
 import { debounce } from "lodash";
+import service from "../../../service";
 
 const ProfitLossReport = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { profileDetail } = useSelector(
-    (state: RootState) => state.user.profile
-  );
-
-  const { searchUserList } = useSelector(
-    (state: RootState) => state.user.userList
-  );
   // const [pageLimit] = useState(10);
   const [pageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState<any>("");
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
+  const [show, setShow] = useState(false);
+  const [userProfitLoss, setUserProfitLoss] = useState([]);
 
-  const { totalProfitLossList } = useSelector(
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
+
+  const { totalProfitLossList, user } = useSelector(
     (state: RootState) => state.report.reportList
   );
+
+  const { searchUserList } = useSelector(
+    (state: RootState) => state.user.userList
+  );
+
+  console.log(typeof search, "search");
 
   const handleClick = () => {
     try {
@@ -63,6 +69,21 @@ const ProfitLossReport = () => {
       );
     }, 500);
   }, []);
+
+  const getUserProfitLoss = async (matchId: string) => {
+    try {
+      const { data } = await service.get(
+        `/user/userwise/profitLoss?matchId=${matchId}${
+          user?.id ? "&id=" + user?.id : ""
+        }`
+      );
+      if (data) {
+        setUserProfitLoss(data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -106,13 +127,16 @@ const ProfitLossReport = () => {
 
       <Box>
         <ProfitLossTableComponent
-          visible={true}
+          show={show}
+          setShow={setShow}
           startDate={startDate}
           endDate={endDate}
           eventData={totalProfitLossList && totalProfitLossList}
           currentPage={currentPage}
           pageCount={pageCount}
           setCurrentPage={setCurrentPage}
+          userProfitLoss={userProfitLoss}
+          getUserProfitLoss={getUserProfitLoss}
         />
       </Box>
     </div>

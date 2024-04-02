@@ -79,10 +79,10 @@ export const getDomainProfitLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?url=${requestData.url}&type=${requestData.type}&${requestData.filter}`
+        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?type=${requestData.type}${requestData.filter}`
       );
       if (resp) {
-        return resp?.data?.data;
+        return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -97,12 +97,12 @@ export const getBetProfitLoss = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}${
           requestData.betId ? `&betId=${requestData.betId}` : ""
-        }&isSession=${requestData.isSession}&url=${requestData.url}${
+        }&isSession=${requestData.isSession}${
           requestData.id ? `&id=${requestData.id}` : ""
         }`
       );
       if (resp) {
-        return resp?.data?.data;
+        return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -117,12 +117,35 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${
           requestData.matchId
-        }&url=${requestData.url}${
+        }${requestData.id ? `&id=${requestData.id}` : ""}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
+export const getTotalBetProfitLossForModal = createAsyncThunk<any, any>(
+  "totalbetProfitLoss/ForModal",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData?.matchId}${
+          requestData.betId ? `&betId=${requestData.betId}` : ""
+        }&isSession=${requestData.isSession}${
           requestData.id ? `&id=${requestData.id}` : ""
+        }${requestData.url ? `&url=${requestData.url}` : ""}${
+          requestData.userId
+            ? `&userId=${requestData.userId}&roleName=${requestData.roleName}`
+            : null
         }`
       );
       if (resp) {
-        return resp?.data?.data;
+        return resp?.data;
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -172,3 +195,4 @@ export const resetAccountStatement = createAction("statement/reset");
 export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");
 export const resetBetProfitLoss = createAction("betProfitLoss/reset");
 export const resetDomainProfitLoss = createAction("domainProfitLoss/reset");
+export const resetUpdateUserSearchId = createAction("updateUserSearchId/reset");

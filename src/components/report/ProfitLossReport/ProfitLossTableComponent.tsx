@@ -2,6 +2,9 @@ import { Box, Typography } from "@mui/material";
 import RowHeaderMatches from "./RowHeaderMatches";
 import Pagination from "../../Common/Pagination";
 import { useState } from "react";
+import RowComponentMatches from "./RowComponentMatches";
+import { RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
 
 const ProfitLossTableComponent = (props: any) => {
   const {
@@ -9,60 +12,112 @@ const ProfitLossTableComponent = (props: any) => {
     currentPage,
     pageCount,
     setCurrentPage,
-    visible,
     startDate,
     endDate,
+    setShow,
+    show,
+    userProfitLoss,
+    getUserProfitLoss,
   } = props;
+  const { domainProfitLossList } = useSelector(
+    (state: RootState) => state.report.reportList
+  );
 
+  const [_, setEvent] = useState("");
   const [selectedId, setSelectedId] = useState({
-    domainId: "",
     type: "",
     id: "",
     betId: "",
     sessionBet: false,
   });
 
-  return (
-    eventData?.length > 0 ?
+  const getHandleReport = (eventType: any) => {
+    setEvent(eventType);
+    if (show) {
+      setSelectedId((prev) => ({
+        ...prev,
+        type: "",
+        id: "",
+        betId: "",
+        sessionBet: false,
+      }));
+    }
+    if (!show) {
+      setSelectedId((prev) => ({
+        ...prev,
+        type: "",
+        id: "",
+        betId: "",
+        sessionBet: false,
+      }));
+    }
+    setShow(!show);
+  };
+
+  const getBetReport = (value: any) => {
+    setSelectedId({
+      type: value?.type,
+      id: value?.matchId,
+      betId: value?.betId,
+      sessionBet: value?.sessionBet,
+    });
+  };
+
+  return eventData?.length > 0 ? (
+    <Box>
+      {eventData?.map((item: any, index: any) => {
+        return (
+          <>
+            <RowHeaderMatches
+              key={index}
+              item={item}
+              show={show}
+              startDate={startDate}
+              endDate={endDate}
+              getHandleReport={getHandleReport}
+            />
+          </>
+        );
+      })}
       <Box>
-        {eventData?.map((item: any, index: any) => {
-          return (
-            <>
-              <RowHeaderMatches
+        {show &&
+          domainProfitLossList?.map((item: any, index: number) => {
+            return (
+              <RowComponentMatches
                 key={index}
                 item={item}
-                show={visible}
+                index={index + 1}
                 selectedId={selectedId}
-                setSelectedId={setSelectedId}
-                setCurrentPage={setCurrentPage}
-                startDate={startDate}
-                endDate={endDate}
+                getBetReport={getBetReport}
+                userProfitLoss={userProfitLoss}
+                getUserProfitLoss={getUserProfitLoss}
               />
-            </>
-          );
-        })}
-        {visible && (
-          <Pagination
-            getListOfUser={() => { }}
-            currentPage={currentPage}
-            pages={pageCount}
-            setCurrentPage={setCurrentPage}
-          />
-        )}
-      </Box> :
-      <Box>
-        <Typography
-          sx={{
-            color: "#fff",
-            textAlign: "center",
-            fontSize: { lg: "16px", xs: "10px" },
-            fontWeight: "600",
-            margin: "1rem",
-          }}
-        >
-          No Matching Records Found
-        </Typography>
+            );
+          })}
       </Box>
+      {show && (
+        <Pagination
+          getListOfUser={() => {}}
+          currentPage={currentPage}
+          pages={pageCount}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
+    </Box>
+  ) : (
+    <Box>
+      <Typography
+        sx={{
+          color: "#fff",
+          textAlign: "center",
+          fontSize: { lg: "16px", xs: "10px" },
+          fontWeight: "600",
+          margin: "1rem",
+        }}
+      >
+        No Matching Records Found
+      </Typography>
+    </Box>
   );
 };
 
