@@ -6,7 +6,7 @@ import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import SessionBetSeperate from "./SessionBetSeperate";
 import {
   getBetProfitLoss,
-  resetBetProfitLoss,
+  getTotalBetProfitLossForModal,
 } from "../../../store/actions/reports";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -19,45 +19,75 @@ const SessionComponentMatches = ({
   showSessionBets,
   setShowSessionBets,
   matchId,
-  domainUrl,
   selectedId,
-  setSelectedId,
+  getBetReport,
+  userDetail,
 }: any) => {
   const theme = useTheme();
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
   const { betProfitLossList, user } = useSelector(
     (state: RootState) => state.report.reportList
   );
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <Box key={index} sx={{ width: "100%" }}>
       <Box
         onClick={() => {
-          if (selectedId?.type === "session_bet" && selectedId?.sessionBet) {
-            setSelectedId((prev: any) => ({
-              ...prev,
-              betId: "",
-              sessionBet: false,
-            }));
-            dispatch(resetBetProfitLoss());
+          if (selectedId?.betId === item?.betId) {
+            setShowSessionBets((prev: any) => !prev);
+            if (!showSessionBets) {
+              if (userDetail) {
+                if (userDetail) {
+                  dispatch(
+                    getTotalBetProfitLossForModal({
+                      matchId: matchId,
+                      betId: item?.betId,
+                      isSession: true,
+                      url: item?.url || "",
+                      id: user?.id,
+                    })
+                  );
+                } else {
+                  dispatch(
+                    getBetProfitLoss({
+                      matchId: matchId,
+                      betId: item?.betId,
+                      isSession: true,
+                      url: item?.url || "",
+                      id: user?.id,
+                    })
+                  );
+                }
+              }
+            }
           } else {
-            if (selectedId?.betId === item?.betId) {
-              setShowSessionBets((prev: any) => !prev);
+            setShowSessionBets(true);
+            if (userDetail) {
+              dispatch(
+                getTotalBetProfitLossForModal({
+                  matchId: matchId,
+                  betId: item?.betId,
+                  isSession: true,
+                  url: item?.url || "",
+                  id: user?.id,
+                  userId: item?.userId,
+                  roleName: item?.roleName,
+                })
+              );
             } else {
-              setShowSessionBets(true);
               dispatch(
                 getBetProfitLoss({
                   matchId: matchId,
                   betId: item?.betId,
                   isSession: true,
-                  url: domainUrl || "",
+                  url: item?.url || "",
                   id: user?.id,
                 })
               );
-              setSelectedId({
+              getBetReport({
                 eventType: item?.eventType,
-                id: matchId,
+                matchId: matchId,
                 type: "session_bet",
                 betId: item?.betId,
                 sessionBet: true,

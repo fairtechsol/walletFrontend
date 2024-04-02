@@ -5,10 +5,12 @@ import {
   getCommissionMatch,
   getDomainProfitLoss,
   getSessionProfitLoss,
+  getTotalBetProfitLossForModal,
   getTotalProfitLoss,
   resetBetProfitLoss,
   resetDomainProfitLoss,
   resetSessionProfitLoss,
+  resetUpdateUserSearchId,
   updateUserSearchId,
 } from "../../actions/reports";
 
@@ -17,12 +19,13 @@ interface InitialState {
   domainProfitLossList: any;
   betProfitLossList: any;
   sessionProfitLossList: any;
+  totalBetProfitLossModal: any;
   commissionMatchList: any;
   commissionBetPlacedList: any;
   loading: boolean;
   success: boolean;
   error: any;
-  user:any;
+  user: any;
 }
 
 const initialState: InitialState = {
@@ -30,12 +33,13 @@ const initialState: InitialState = {
   domainProfitLossList: [],
   betProfitLossList: [],
   sessionProfitLossList: [],
+  totalBetProfitLossModal: [],
   commissionMatchList: [],
   commissionBetPlacedList: [],
   loading: false,
   success: false,
   error: null,
-  user:{},
+  user: {},
 };
 
 const profitLossReportSlice = createSlice({
@@ -88,6 +92,16 @@ const profitLossReportSlice = createSlice({
       .addCase(getBetProfitLoss.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(getTotalBetProfitLossForModal.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.totalBetProfitLossModal = [];
+      })
+      .addCase(getTotalBetProfitLossForModal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.totalBetProfitLossModal = action.payload;
       })
       .addCase(getSessionProfitLoss.pending, (state) => {
         state.loading = false;
@@ -147,6 +161,9 @@ const profitLossReportSlice = createSlice({
         state.success = true;
         state.loading = false;
         state.user = action.payload.search;
+      })
+      .addCase(resetUpdateUserSearchId, (state) => {
+        return { ...state, user: {} };
       });
   },
 });

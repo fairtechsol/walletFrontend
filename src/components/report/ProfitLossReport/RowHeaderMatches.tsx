@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import {
   ARROWDOWN,
@@ -9,31 +8,56 @@ import {
   Football,
   Tennis,
 } from "../../../assets";
-import RowHeaderDomain from "./RowHeaderDomain";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import RowComponentMatches from "./RowComponentMatches";
+import { AppDispatch, RootState } from "../../../store/store";
 import { formatToINR } from "../../../helper";
+import moment from "moment";
+import {
+  getDomainProfitLoss,
+  resetBetProfitLoss,
+  resetDomainProfitLoss,
+  resetSessionProfitLoss,
+} from "../../../store/actions/reports";
+import { useDispatch } from "react-redux";
 
 const RowHeaderMatches = ({
   item,
-  setCurrentPage,
   startDate,
   endDate,
-  selectedId,
-  setSelectedId,
+  getHandleReport,
+  show,
 }: any) => {
-  const [visible, setVisible] = useState(false);
-  const { domainProfitLossList } = useSelector(
-    (state: RootState) => state.report.reportList
-  );
-  const [showMatchList, setShowMatchList] = useState(false);
+  const { user } = useSelector((state: RootState) => state.report.reportList);
+  const dispatch: AppDispatch = useDispatch();
   return (
     <>
       <Box
         onClick={() => {
-          setCurrentPage(1);
-          setVisible((prev) => !prev);
+          if (!show) {
+            let filter = "";
+            if (user?.id) {
+              filter += `&id=${user?.id}`;
+            }
+            if (startDate && endDate) {
+              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+            } else if (startDate) {
+              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+            } else if (endDate) {
+              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+            }
+            dispatch(
+              getDomainProfitLoss({
+                url: item?.domainUrl,
+                type: item?.eventType,
+                filter: filter,
+              })
+            );
+          }
+          dispatch(resetDomainProfitLoss());
+          dispatch(resetBetProfitLoss());
+          dispatch(resetSessionProfitLoss());
+          getHandleReport(item?.eventType);
         }}
         sx={{
           width: "100%",
@@ -91,7 +115,7 @@ const RowHeaderMatches = ({
             src={ArrowDown}
             sx={{
               width: { lg: "20px", xs: "10px" },
-              transform: visible ? "rotate(180deg)" : "rotate(0deg)",
+              transform: show ? "rotate(180deg)" : "rotate(0deg)",
               height: { lg: "10px", xs: "6px" },
             }}
           />
@@ -201,38 +225,6 @@ const RowHeaderMatches = ({
           </Box>
         </Box>
       </Box>
-      {visible &&
-        item?.domainData &&
-        item?.domainData?.map((domain: any, index: number) => {
-          return (
-            <>
-              <RowHeaderDomain
-                item={domain}
-                index={index}
-                setCurrentPage={setCurrentPage}
-                startDate={startDate}
-                endDate={endDate}
-                showMatchList={showMatchList}
-                setShowMatchList={setShowMatchList}
-              />
-              <Box>
-                {showMatchList &&
-                  domainProfitLossList?.result?.map((item: any, index: any) => {
-                    return (
-                      <RowComponentMatches
-                        domainUrl={domain?.domainUrl}
-                        key={index}
-                        item={item}
-                        index={index + 1}
-                        selectedId={selectedId}
-                        setSelectedId={setSelectedId}
-                      />
-                    );
-                  })}
-              </Box>
-            </>
-          );
-        })}
     </>
   );
 };
