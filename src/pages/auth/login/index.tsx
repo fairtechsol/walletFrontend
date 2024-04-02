@@ -32,7 +32,7 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, touched, errors, setSubmitting, isSubmitting } = formik;
+  const { handleSubmit, touched, errors, setSubmitting } = formik;
 
   const {
     success,

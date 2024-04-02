@@ -28,7 +28,7 @@ const initialValues: any = {
 };
 
 const ChangePasswordComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint } = props;
+  const { setSelected, element, walletAccountDetail, endpoint, setShowUserModal } = props;
   const [showPass, setShowPass] = useState(false);
   const [showPassTransaction, setShowPassTransaction] = useState(false);
 
@@ -94,6 +94,7 @@ const ChangePasswordComponent = (props: any) => {
       formik.resetForm();
       setSelected(false);
       setSubmitting(false);
+      setShowUserModal(false);
       dispatch(userListSuccessReset());
     }
     if (error) {
