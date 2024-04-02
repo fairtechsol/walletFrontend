@@ -40,12 +40,12 @@ const ProfitLossReport = () => {
         filter += `id=${search?.id}`;
       }
       if (startDate && endDate) {
-        filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
         filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
       } else if (startDate) {
-        filter += `startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
       } else if (endDate) {
-        filter += `endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
       }
       dispatch(getTotalProfitLoss({ filter: filter }));
     } catch (error) {

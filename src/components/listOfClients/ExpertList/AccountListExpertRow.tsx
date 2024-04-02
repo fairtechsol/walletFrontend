@@ -283,7 +283,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
               element={element}
               setSelected={setSelected}
               // getListOfUser={getListOfUser}
-              // setShowUserModal={setShowUserModal}
+              setShowUserModal={setShowUserModal}
               backgroundColor={containerStyle?.background}
               // userModal={userModal}
               // setShowSuccessModal={setShowSuccessModal}

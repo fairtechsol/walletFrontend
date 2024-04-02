@@ -20,7 +20,14 @@ const initialValues: any = {
 };
 
 const LockUnlockComponent = (props: any) => {
-  const { setSelected, element, endpoint, onChangeAmount, currentPage } = props;
+  const {
+    setSelected,
+    element,
+    endpoint,
+    onChangeAmount,
+    currentPage,
+    setShowUserModal,
+  } = props;
 
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
@@ -66,6 +73,7 @@ const LockUnlockComponent = (props: any) => {
           url: { endpoint: ApiConstants.USER.EXPERTLIST },
         })
       );
+      setShowUserModal(false);
       setSubmitting(false);
       dispatch(userListSuccessReset());
     }

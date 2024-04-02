@@ -6,7 +6,7 @@ import LockUnlockComponent from "./LockUnlockComponent";
 import { memo } from "react";
 
 const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor, onValueChange, currentPage } =
+  const { element, selected, setSelected, backgroundColor, onValueChange, currentPage, setShowUserModal } =
     props;
   const classes = {
     mainBox: {
@@ -68,6 +68,7 @@ const RowModalComponents = (props: any) => {
           {selected == 3 && (
             <ChangePasswordComponent
               endpoint={ApiConstants.EXPERT.CHANGE_PASSWORD}
+              setShowUserModal={setShowUserModal}
               element={{ ...element, roleName: "expert" }}
               selected={selected == 3}
               setSelected={() => {
@@ -79,6 +80,7 @@ const RowModalComponents = (props: any) => {
           {selected == 4 && (
             <LockUnlockComponent
               endpoint={ApiConstants.EXPERT.LOCK_UNLOCK}
+              setShowUserModal={setShowUserModal}
               element={{ ...element, roleName: "expert" }}
               selected={selected == 4}
               setSelected={() => {
