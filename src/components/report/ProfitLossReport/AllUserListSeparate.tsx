@@ -50,11 +50,11 @@ const AllUserListSeparate = ({
         `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${props?.matchId}${
           props.betId ? `&betId=${props.betId}` : ""
         }&isSession=${false}${user.id ? `&id=${user.id}` : ""}${
-          props.url ? `&url=${props.url}` : null
+          props.url ? `&url=${props.url}` : ""
         }${
           props.userId
             ? `&userId=${props.userId}&roleName=${props.roleName}`
-            : null
+            : ""
         }`
       );
       if (resp) {
@@ -72,8 +72,8 @@ const AllUserListSeparate = ({
         }${
           props.userId
             ? `&userId=${props.userId}&roleName=${props.roleName}`
-            : null
-        }${props.url ? `&url=${props.url}` : null}`
+            : ""
+        }${props.url ? `&url=${props.url}` : ""}`
       );
       if (resp) {
         setSessionData(resp?.data);
