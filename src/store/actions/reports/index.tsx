@@ -141,7 +141,7 @@ export const getTotalBetProfitLossForModal = createAsyncThunk<any, any>(
         }${requestData.url ? `&url=${requestData.url}` : ""}${
           requestData.userId
             ? `&userId=${requestData.userId}&roleName=${requestData.roleName}`
-            : null
+            : ""
         }`
       );
       if (resp) {
