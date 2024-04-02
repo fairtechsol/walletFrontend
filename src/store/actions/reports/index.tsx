@@ -136,9 +136,9 @@ export const getTotalBetProfitLossForModal = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData?.matchId}${
           requestData.betId ? `&betId=${requestData.betId}` : ""
-        }&isSession=${false}${requestData.id ? `&id=${requestData.id}` : ""}${
-          requestData.url ? `&url=${requestData.url}` : null
-        }${
+        }&isSession=${requestData.isSession}${
+          requestData.id ? `&id=${requestData.id}` : ""
+        }${requestData.url ? `&url=${requestData.url}` : ""}${
           requestData.userId
             ? `&userId=${requestData.userId}&roleName=${requestData.roleName}`
             : null

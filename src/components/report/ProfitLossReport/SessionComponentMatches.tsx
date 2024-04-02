@@ -229,14 +229,7 @@ const SessionComponentMatches = ({
             <Typography
               sx={{ fontSize: "15px", fontWeight: "700", color: "white" }}
             >
-              {Number(item?.totalLoss) >= 0 ? (
-                <>
-                  <span style={{ visibility: "hidden" }}>-</span>
-                  {formatToINR(Number(item?.totalLoss).toFixed(2))}
-                </>
-              ) : (
-                formatToINR(Number(item?.totalLoss).toFixed(2))
-              )}
+              {formatToINR(Number(item?.totalLoss).toFixed(2))}
             </Typography>
             <StyledImage
               src={ArrowDown}

@@ -628,7 +628,7 @@ const AllUserListSeparate = ({
                             color: "white",
                           }}
                         >
-                          {item?.rateProfitLoss ? (
+                          {item?.sessionProfitLoss ? (
                             Number(item?.sessionProfitLoss) >= 0 ? (
                               <>
                                 <span style={{ visibility: "hidden" }}>-</span>
@@ -707,7 +707,13 @@ const AllUserListSeparate = ({
                                 return (
                                   <SessionComponentMatches
                                     key={index}
-                                    item={{ ...item1, ...item }}
+                                    item={{
+                                      ...item1,
+                                      matchId: item?.matchId,
+                                      url: item?.url,
+                                      userId: item?.userId,
+                                      roleName: item?.roleName
+                                    }}
                                     index={index + 1}
                                     userId={item?.userId}
                                     matchId={item?.matchId}
