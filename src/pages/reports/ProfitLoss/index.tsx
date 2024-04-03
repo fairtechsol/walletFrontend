@@ -14,12 +14,13 @@ import { debounce } from "lodash";
 import service from "../../../service";
 
 const ProfitLossReport = () => {
+  const defaultDate = new Date();
+  defaultDate.setDate(defaultDate.getDate() - 10);
   const dispatch: AppDispatch = useDispatch();
-  // const [pageLimit] = useState(10);
   const [pageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState<any>("");
-  const [startDate, setStartDate] = useState<any>();
+  const [startDate, setStartDate] = useState<any>(defaultDate);
   const [endDate, setEndDate] = useState<any>();
   const [show, setShow] = useState(false);
   const [userProfitLoss, setUserProfitLoss] = useState([]);
@@ -38,6 +39,7 @@ const ProfitLossReport = () => {
 
   const handleClick = () => {
     try {
+      setShow(false);
       let filter = "";
       dispatch(updateUserSearchId({ search }));
       if (search?.id) {
@@ -94,7 +96,20 @@ const ProfitLossReport = () => {
   }, [search]);
 
   useEffect(() => {
-    dispatch(getTotalProfitLoss({ filter: "" }));
+    let filter = "";
+    dispatch(updateUserSearchId({ search }));
+    if (search?.id) {
+      filter += `&id=${search?.id}`;
+    }
+    if (startDate && endDate) {
+      filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+      filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+    } else if (startDate) {
+      filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+    } else if (endDate) {
+      filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+    }
+    dispatch(getTotalProfitLoss({ filter: filter }));
   }, []);
 
   return (
