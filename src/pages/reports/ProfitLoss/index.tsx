@@ -36,8 +36,6 @@ const ProfitLossReport = () => {
     (state: RootState) => state.user.userList
   );
 
-  console.log(typeof search, "search");
-
   const handleClick = () => {
     try {
       let filter = "";

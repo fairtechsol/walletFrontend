@@ -22,11 +22,13 @@ const SessionComponentMatches = ({
   selectedId,
   getBetReport,
   userDetail,
+  selectedChildBetId,
+  setSelectedChildBetId,
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
-  const { betProfitLossList, user } = useSelector(
+  const { totalBetProfitLossModal, betProfitLossList, user } = useSelector(
     (state: RootState) => state.report.reportList
   );
 
@@ -34,31 +36,33 @@ const SessionComponentMatches = ({
     <Box key={index} sx={{ width: "100%" }}>
       <Box
         onClick={() => {
-          if (selectedId?.betId === item?.betId) {
+          if (
+            selectedId?.betId === item?.betId ||
+            selectedChildBetId === item?.betId
+          ) {
             setShowSessionBets((prev: any) => !prev);
             if (!showSessionBets) {
               if (userDetail) {
-                if (userDetail) {
-                  dispatch(
-                    getTotalBetProfitLossForModal({
-                      matchId: matchId,
-                      betId: item?.betId,
-                      isSession: true,
-                      url: item?.url || "",
-                      id: user?.id,
-                    })
-                  );
-                } else {
-                  dispatch(
-                    getBetProfitLoss({
-                      matchId: matchId,
-                      betId: item?.betId,
-                      isSession: true,
-                      url: item?.url || "",
-                      id: user?.id,
-                    })
-                  );
-                }
+                dispatch(
+                  getTotalBetProfitLossForModal({
+                    matchId: matchId,
+                    betId: item?.betId,
+                    isSession: true,
+                    url: item?.url || "",
+                    id: user?.id,
+                  })
+                );
+                setSelectedChildBetId(item?.betId);
+              } else {
+                dispatch(
+                  getBetProfitLoss({
+                    matchId: matchId,
+                    betId: item?.betId,
+                    isSession: true,
+                    url: item?.url || "",
+                    id: user?.id,
+                  })
+                );
               }
             }
           } else {
@@ -75,6 +79,7 @@ const SessionComponentMatches = ({
                   roleName: item?.roleName,
                 })
               );
+              setSelectedChildBetId(item?.betId);
             } else {
               dispatch(
                 getBetProfitLoss({
@@ -237,7 +242,9 @@ const SessionComponentMatches = ({
                 width: { lg: "20px", xs: "10px" },
                 height: { lg: "10px", xs: "6px" },
                 transform:
-                  selectedId?.betId === item?.betId && showSessionBets
+                  (selectedId?.betId === item?.betId ||
+                    selectedChildBetId === item?.betId) &&
+                  showSessionBets
                     ? "rotate(90deg)"
                     : "rotate(270deg)",
               }}
@@ -245,13 +252,22 @@ const SessionComponentMatches = ({
           </Box>
         </Box>
       </Box>
-      {selectedId?.betId === item?.betId &&
+      {(selectedId?.betId === item?.betId ||
+        selectedChildBetId === item?.betId) &&
         matchesMobile &&
         showSessionBets && (
           <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
             <SessionBetSeperate
               betHistory={false}
-              allBetsData={betProfitLossList ? betProfitLossList : []}
+              allBetsData={
+                userDetail
+                  ? totalBetProfitLossModal
+                    ? totalBetProfitLossModal
+                    : []
+                  : betProfitLossList
+                  ? betProfitLossList
+                  : []
+              }
               profit
               isArrow={true}
             />
