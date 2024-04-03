@@ -184,6 +184,7 @@ const RowModalComponents = (props: any) => {
               }}
               backgroundColor={backgroundColor}
               currentPage={currentPage}
+              setShowUserModal={() => {}}
             />
           )}
           {selected == 5 && (
