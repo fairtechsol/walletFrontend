@@ -228,6 +228,7 @@ const MatchDetail = () => {
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
         socketService.match.matchResultDeclaredOff();
+        socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
         socketService.match.sessionDeleteBetOff();
         socketService.match.sessionResultOff();
@@ -243,6 +244,7 @@ const MatchDetail = () => {
         socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);
+        socketService.match.declaredMatchResultAllUser(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
         socketService.match.sessionDeleteBet(handleSessionDeleteBet);
         socketService.match.sessionResult(handleSessionResultDeclare);
@@ -262,6 +264,7 @@ const MatchDetail = () => {
       socketService.match.userSessionBetPlacedOff();
       socketService.match.userMatchBetPlacedOff();
       socketService.match.matchResultDeclaredOff();
+      socketService.match.declaredMatchResultAllUserOff();
       socketService.match.matchDeleteBetOff();
       socketService.match.sessionDeleteBetOff();
       socketService.match.sessionResultOff();
