@@ -86,6 +86,8 @@ const Analysis = () => {
         socketService.match.matchAddedOff();
         socketService.match.matchResultDeclared(getMatchist);
         socketService.match.matchResultUnDeclared(getMatchist);
+        socketService.match.declaredMatchResultAllUser(getMatchist);
+        socketService.match.unDeclaredMatchResultAllUser(getMatchist);
         socketService.match.matchAdded(getMatchist);
       }
     } catch (error) {
@@ -97,6 +99,8 @@ const Analysis = () => {
     return () => {
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
+      socketService.match.declaredMatchResultAllUserOff();
+      socketService.match.unDeclaredMatchResultAllUserOff();
       socketService.match.matchAddedOff();
     };
   }, []);

@@ -162,6 +162,7 @@ const SetCreditComponent = (props: any) => {
                 value={formatToINR(
                   parseFloat(formik.values.amount?.toString())
                 )}
+               type="tel"
                 onChange={(e: any) => checkHandleChange(e)}
                 onKeyDown={handleKeyDown}
                 variant="standard"
@@ -295,17 +296,6 @@ const SetCreditComponent = (props: any) => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", width: "150px" }}>
-            <BoxButton
-              color={"#0B4F26"}
-              loading={loading}
-              disabled={isSubmitting}
-              containerStyle={{ width: "150px", height: "35px" }}
-              isSelected={true}
-              type="submit"
-              title={"Submit"}
-            />
-          </Box>
           <Box
             sx={{
               display: "flex",
@@ -327,6 +317,18 @@ const SetCreditComponent = (props: any) => {
                 onChangeAmount(0, element?.id, "credit");
               }}
               title={"Cancel"}
+            />
+          </Box>
+
+          <Box sx={{ display: "flex", width: "150px" }}>
+            <BoxButton
+              color={"#0B4F26"}
+              loading={loading}
+              disabled={isSubmitting}
+              containerStyle={{ width: "150px", height: "35px" }}
+              isSelected={true}
+              type="submit"
+              title={"Submit"}
             />
           </Box>
         </Box>
