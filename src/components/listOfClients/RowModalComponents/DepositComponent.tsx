@@ -321,7 +321,7 @@ const DepositComponent = (props: any) => {
                     //  value={formik.values.amount}
                     value={numberWithCommas(formik.values.amount?.toString())}
                     variant="standard"
-                    type="text"
+                    type="tel"
                     InputProps={{
                       placeholder: "Type Amount...",
                       disableUnderline: true,
