@@ -205,7 +205,7 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ fontSize: "12px", fontWeight: "700", color: "#575757" }}
+          sx={{ fontSize: {lg:"12px", xs:"9px"}, fontWeight: "700", color: "#575757" }}
         >
           {data?.betType}
         </Typography>
