@@ -33,6 +33,7 @@ const AllUserListSeparate = ({
   const [showModal, setShowModal] = useState(false);
   const [betData, setBetData] = useState([]);
   const [sessionData, setSessionData] = useState([]);
+  const [selectedChildBetId, setSelectedChildBetId] = useState("");
   const [showBets, setShowBets] = useState(false);
   const [showSessions, setShowSessions] = useState(false);
   const [showSessionBets, setShowSessionBets] = useState(false);
@@ -50,11 +51,11 @@ const AllUserListSeparate = ({
         `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${props?.matchId}${
           props.betId ? `&betId=${props.betId}` : ""
         }&isSession=${false}${user.id ? `&id=${user.id}` : ""}${
-          props.url ? `&url=${props.url}` : null
+          props.url ? `&url=${props.url}` : ""
         }${
           props.userId
             ? `&userId=${props.userId}&roleName=${props.roleName}`
-            : null
+            : ""
         }`
       );
       if (resp) {
@@ -72,8 +73,8 @@ const AllUserListSeparate = ({
         }${
           props.userId
             ? `&userId=${props.userId}&roleName=${props.roleName}`
-            : null
-        }${props.url ? `&url=${props.url}` : null}`
+            : ""
+        }${props.url ? `&url=${props.url}` : ""}`
       );
       if (resp) {
         setSessionData(resp?.data);
@@ -116,7 +117,7 @@ const AllUserListSeparate = ({
             position: "relative",
             height: "100%",
             paddingY: "4px",
-            alignItems: { lg: "center", xs: "flex-end" },
+            alignItems: "center",
             display: "flex",
             paddingX: "10px",
             background: "#0B4F26",
@@ -712,7 +713,7 @@ const AllUserListSeparate = ({
                                       matchId: item?.matchId,
                                       url: item?.url,
                                       userId: item?.userId,
-                                      roleName: item?.roleName
+                                      roleName: item?.roleName,
                                     }}
                                     index={index + 1}
                                     userId={item?.userId}
@@ -726,11 +727,16 @@ const AllUserListSeparate = ({
                                       id: item?.userId,
                                       roleName: item?.roleName,
                                     }}
+                                    selectedChildBetId={selectedChildBetId}
+                                    setSelectedChildBetId={
+                                      setSelectedChildBetId
+                                    }
                                   />
                                 );
                               })}
                           </Box>
-                          {selectedId?.betId !== "" &&
+                          {(selectedId?.betId !== "" ||
+                            selectedChildBetId !== "") &&
                             !matchesMobile &&
                             showSessionBets && (
                               <Box
@@ -746,9 +752,7 @@ const AllUserListSeparate = ({
                                   betHistory={false}
                                   allBetsData={
                                     totalBetProfitLossModal
-                                      ? Array.from(
-                                          new Set(totalBetProfitLossModal)
-                                        )
+                                      ? totalBetProfitLossModal
                                       : []
                                   }
                                   profit
