@@ -2,6 +2,7 @@ import { memo, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import BackgroundLayout from "../../components/Common/BackgroundLayout";
+import { socketService } from "../../socketManager";
 import {
   getUsersProfile,
   marqueeNotification,
@@ -9,7 +10,6 @@ import {
 } from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
 import Header from "./header";
-import { socketService } from "../../socketManager";
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const MainLayout = () => {
   };
 
   useEffect(() => {
-    if (!sessionStorage.getItem("userToken")) {
+    if (!sessionStorage.getItem("jwtWallet")) {
       navigate("/wallet/login");
       sessionStorage.clear();
     } else {
@@ -30,7 +30,7 @@ const MainLayout = () => {
   }, []);
 
   useEffect(() => {
-    if (sessionStorage.getItem("userToken")) {
+    if (sessionStorage.getItem("jwtWallet")) {
       socketService.connect();
       socketService.auth.logout();
       socketService.match.userBalanceUpdate(updateUserBalance);
@@ -38,7 +38,7 @@ const MainLayout = () => {
     return () => {
       socketService.disconnect();
     };
-  }, [sessionStorage.getItem("userToken")]);
+  }, [sessionStorage.getItem("jwtWallet")]);
 
   return (
     <>

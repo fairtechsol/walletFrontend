@@ -1,15 +1,15 @@
-import { useEffect } from "react";
 import { Box } from "@mui/material";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import AuthBackground from "../../pages/auth/AuthBackground";
-import StyledImage from "../../components/Common/StyledImages";
 import { FgLogo } from "../../assets";
+import StyledImage from "../../components/Common/StyledImages";
+import AuthBackground from "../../pages/auth/AuthBackground";
 const AuthLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (
-      sessionStorage.getItem("userToken") &&
+      sessionStorage.getItem("jwtWallet") &&
       !sessionStorage.getItem("forceChangePassword")
     ) {
       navigate("/wallet/list_of_clients");
