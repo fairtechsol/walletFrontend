@@ -1093,7 +1093,7 @@ const AddAccount = () => {
                       ...inputContainerStyle,
                       height: { lg: "45px", xs: "36px" },
                     }}
-                    title={"Downline partnership"}
+                    title={"Downline Partnership"}
                     name={"downlinePartnership"}
                     id={"downlinePartnership"}
                     type={"Number"}
