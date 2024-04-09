@@ -21,6 +21,15 @@ const Login = () => {
     loginType: "wallet",
   };
 
+  const {
+    success,
+    forceChangePassword,
+    userRole,
+    isTransPasswordCreated,
+    loading,
+    error,
+  } = useSelector((state: RootState) => state.auth);
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: loginValidationSchema,
@@ -33,15 +42,6 @@ const Login = () => {
   });
 
   const { handleSubmit, touched, errors, setSubmitting } = formik;
-
-  const {
-    success,
-    forceChangePassword,
-    userRole,
-    isTransPasswordCreated,
-    loading,
-    error,
-  } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (success) {

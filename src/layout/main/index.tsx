@@ -30,14 +30,18 @@ const MainLayout = () => {
   }, []);
 
   useEffect(() => {
-    if (sessionStorage.getItem("jwtWallet")) {
-      socketService.connect();
-      socketService.auth.logout();
-      socketService.match.userBalanceUpdate(updateUserBalance);
+    try {
+      if (sessionStorage.getItem("jwtWallet")) {
+        socketService.connect();
+        socketService.auth.logout();
+        socketService.match.userBalanceUpdate(updateUserBalance);
+        return () => {
+          socketService.disconnect();
+        };
+      }
+    } catch (error) {
+      console.error(error);
     }
-    return () => {
-      socketService.disconnect();
-    };
   }, [sessionStorage.getItem("jwtWallet")]);
 
   return (
