@@ -66,6 +66,8 @@ const BetsList = (props: any) => {
                 profit={true}
                 fContainerStyle={{ background: "#0B4F26" }}
                 fTextStyle={{ color: "white" }}
+                currentPage={currentPage}
+                pageLimit={pageLimit}
               />
             );
           })}
