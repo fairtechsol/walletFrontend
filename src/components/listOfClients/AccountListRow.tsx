@@ -528,7 +528,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   Number(exposureValue)
                 )
               : new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                  element?.exposureLimit || 0
+                  +element?.exposureLimit ? element?.exposureLimit : 0
                 )}
           </Typography>
         </Box>
