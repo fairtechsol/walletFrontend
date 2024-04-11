@@ -534,7 +534,7 @@ const RowComponent = ({ header, data }: any) => {
             //     ? "Quick Bookmaker"
             //     : data?.marketType
             // }// was showing markettype
-            data={data?.bettingName}
+            data={data?.bettingName ?? data?.marketType}
             first={true}
             header={header}
           />
