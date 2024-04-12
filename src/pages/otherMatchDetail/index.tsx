@@ -211,7 +211,7 @@ const MatchDetail = () => {
     try {
       window.scrollTo(0, 0);
       if (state?.matchId && profileDetail?.roleName) {
-        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getMatchDetail({matchId : state?.matchId , matchType : state?.matchType}));
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${state?.matchId}`));
@@ -277,7 +277,7 @@ const MatchDetail = () => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         if (state?.matchId) {
-          dispatch(getMatchDetail(state?.matchId));
+          dispatch(getMatchDetail({matchId : state?.matchId , matchType : state?.matchType}));
           dispatch(getUserProfitLoss(state?.matchId));
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -296,7 +296,7 @@ const MatchDetail = () => {
   useEffect(() => {
     if (state?.matchId) {
       const intervalId = setInterval(() => {
-        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getMatchDetail({matchId : state?.matchId , matchType : state?.matchType}));
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(getPlacedBets(`eq${state?.matchId}`));
       }, 14100 * 1000);
@@ -306,7 +306,18 @@ const MatchDetail = () => {
       };
     }
   }, []);
-
+  const convertString =(str:string)=> {
+    if(str?.includes('_')){
+      let words = str.split('_');
+      for (let i = 0; i < words.length; i++) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      return words.join(' ');
+    }else{
+      return str;
+    }
+   
+}
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -367,6 +378,20 @@ const MatchDetail = () => {
               }
             />
           )}
+          {matchDetail?.halfTime?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Half Time"}
+              showBox={matchDetail?.matchOdd?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
+              maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
+              data={
+                matchDetail?.matchOdd?.runners?.length > 0
+                  ? matchDetail?.matchOdd?.runners
+                  : []
+              }
+            />
+          )}
           {matchDetail?.marketCompleteMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
@@ -410,6 +435,38 @@ const MatchDetail = () => {
               }
             />
           )}
+          {matchDetail?.firstHalfGoal?.length >0 && matchDetail?.firstHalfGoal
+            ?.filter((item: any) => item?.isActive)
+            ?.map((bookmaker: any, index: any) => {
+              return (
+                <MatchOdds
+                  key={index}
+                  currentMatch={matchDetail}
+                  session={"firstHalfGoal"}
+                  data={bookmaker}
+                  minBet={Math.floor(bookmaker?.minBet) || 0}
+                  maxBet={Math.floor(bookmaker?.maxBet) || 0}
+                  typeOfBet={convertString(bookmaker?.name)}
+                  matchOddsData={bookmaker}
+                />
+              );
+            })}
+            {matchDetail?.overUnder?.length >0 && matchDetail?.overUnder
+            ?.filter((item: any) => item?.isActive)
+            ?.map((bookmaker: any, index: any) => {
+              return (
+                <MatchOdds
+                  key={index}
+                  currentMatch={matchDetail}
+                  session={"overUnder"}
+                  data={bookmaker}
+                  minBet={Math.floor(bookmaker?.minBet) || 0}
+                  maxBet={Math.floor(bookmaker?.maxBet) || 0}
+                  typeOfBet={convertString(bookmaker?.name)}
+                  matchOddsData={bookmaker}
+                />
+              );
+            })}
           {matchDetail?.quickBookmaker
             ?.filter((item: any) => item?.isActive)
             ?.map((bookmaker: any, index: any) => {
