@@ -1,10 +1,9 @@
-import { Box, Typography,useMediaQuery } from "@mui/material";
+import { Box, Typography,useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import moment from "moment";
-import theme from "../../../theme";
 const SessionBetSeperate = ({
   profit,
   mark,
@@ -14,6 +13,7 @@ const SessionBetSeperate = ({
   isArrow,
 }: any) => {
   const [visible, setVisible] = useState(true);
+  const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
