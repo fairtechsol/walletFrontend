@@ -1,4 +1,4 @@
-import { Box, Typography,useMediaQuery } from "@mui/material";
+import { Box, Typography,useMediaQuery, useTheme } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
 import {
   ARROWDOWN,
@@ -19,7 +19,6 @@ import {
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
 import { useDispatch } from "react-redux";
-import theme from "../../../theme";
 
 const RowHeaderMatches = ({
   item,
@@ -29,6 +28,7 @@ const RowHeaderMatches = ({
   show,
 }: any) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
+  const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
   return (
