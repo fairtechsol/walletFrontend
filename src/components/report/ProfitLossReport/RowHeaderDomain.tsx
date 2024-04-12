@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
@@ -12,6 +12,7 @@ import {
 } from "../../../store/actions/reports";
 import moment from "moment";
 import { formatToINR } from "../../../helper";
+import theme from "../../../theme";
 
 const RowHeaderDomain = ({
   item,
@@ -22,6 +23,7 @@ const RowHeaderDomain = ({
   startDate,
   endDate,
 }: any) => {
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [visible, setVisible] = useState(false);
   const dispatch: AppDispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.report.reportList);
@@ -186,7 +188,7 @@ const RowHeaderDomain = ({
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
                 {formatToINR(Number(item?.totalLoss).toFixed(2))}{" "}
-                {`(Total Deduction: 
+                {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                   ${formatToINR(
                     Number(item?.totalDeduction).toFixed(2) || 0
                   )})`}
@@ -194,7 +196,7 @@ const RowHeaderDomain = ({
             ) : (
               <>
                 {formatToINR(Number(item?.totalLoss).toFixed(2))}{" "}
-                {`(Total Deduction: 
+                {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                   ${formatToINR(
                     Number(item?.totalDeduction).toFixed(2) || 0
                   )})`}

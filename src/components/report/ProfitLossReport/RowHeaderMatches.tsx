@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,useMediaQuery } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
 import {
   ARROWDOWN,
@@ -19,6 +19,7 @@ import {
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
 import { useDispatch } from "react-redux";
+import theme from "../../../theme";
 
 const RowHeaderMatches = ({
   item,
@@ -28,6 +29,7 @@ const RowHeaderMatches = ({
   show,
 }: any) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
   return (
     <>
@@ -164,6 +166,7 @@ const RowHeaderMatches = ({
                 fontSize: { lg: "14px", xs: "10px" },
                 fontWeight: "700",
                 color: "white",
+                lineHeight: "0.9"
               }}
             >
               {Number(item?.totalLoss) >= 0 ? (
@@ -172,7 +175,7 @@ const RowHeaderMatches = ({
                   {formatToINR(
                     parseFloat(item?.totalLoss || 0).toFixed(2)
                   )}{" "}
-                  {`(Total Deduction: 
+                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                   ${formatToINR(
                     parseFloat(item?.totalDeduction || 0).toFixed(2)
                   )})`}
@@ -180,7 +183,7 @@ const RowHeaderMatches = ({
               ) : (
                 <>
                   {formatToINR(parseFloat(item?.totalLoss || 0).toFixed(2))}{" "}
-                  {`(Total Deduction: 
+                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                   ${formatToINR(
                     parseFloat(item?.totalDeduction || 0).toFixed(2)
                   )})`}

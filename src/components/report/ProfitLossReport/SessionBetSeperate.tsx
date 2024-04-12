@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import moment from "moment";
+import theme from "../../../theme";
 const SessionBetSeperate = ({
   profit,
   mark,
@@ -13,6 +14,7 @@ const SessionBetSeperate = ({
   isArrow,
 }: any) => {
   const [visible, setVisible] = useState(true);
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <>
@@ -144,7 +146,7 @@ const SessionBetSeperate = ({
                       color: "white",
                     }}
                   >
-                    {"Profit/Loss"}
+                {matchesMobile ? "P/L" : "Profit Loss"}
                   </Typography>
                 </Box>
               )}
@@ -508,11 +510,10 @@ const SingleBox = ({
         >
           {time}
         </Typography>
-        <Box sx={{ height: ".4vh" }}></Box>
         <Typography
           sx={{
             maxHeight: "1em",
-            overflow: "hidden",
+            overflow: "visible",
             lineHeight: 1,
             fontWeight: "600",
             fontSize: { lg: "12px", xs: "10px" },
@@ -618,6 +619,7 @@ const SingleBox = ({
           fontSize: "12px",
           color: "white",
           wordWrap: "break-word",
+          lineHeight: "0.9"
         }}
       >
         {data}
