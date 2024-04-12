@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
+import { IconConstants } from "../../helper/gameConstants";
 
 const HeaderRow = (props: any) => {
   const { match, timeLeft } = props;
@@ -39,6 +40,11 @@ const HeaderRow = (props: any) => {
         </Typography>{" "}
         {/* Today at 9:30 PM */}
       </Box>
+      <div style={{background: "#f1c40f",display:'flex',justifyContent:'center',alignItems:'center'}}>
+      {/* {location.pathname === '/inplay' && ( */}
+        <img className="inplayicon" src={IconConstants[match?.matchType]} alt="Inplay Icon"  width={25} height={25}  />
+      {/* )} */}
+    </div>
       <Box
         sx={{
           flex: 0.1,
