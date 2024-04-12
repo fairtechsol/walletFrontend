@@ -494,10 +494,8 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: "#F8C851",
-          // marginX: { xs: "1px", lg: "1px" },
-          display: "flex",
-          justifyContent: "center",
-          // margin: "1px"
+          display: {xs: "initial",lg:"flex"},
+          justifyContent:{ lg:"center", xs: "initial"},
         }}
       >
         <Typography
