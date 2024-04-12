@@ -445,7 +445,124 @@ const MatchOdds = (props: any) => {
                   </Box>
                 )}
               </>
-            ) : (
+            ) : session ==="overUnder" || session ==="firstHalfGoal" ?  (
+              <>
+                <BoxComponent
+                  // teamImage={currentMatch?.teamA_Image}
+                  name={
+                    data?.name
+                  }
+                  rates={
+                    typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamARate
+                        ? currentMatch?.profitLossDataMatch?.teamARate
+                        : 0
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateTie
+                        ? currentMatch?.profitLossDataMatch?.yesRateTie
+                        : 0
+                      : typeOfBet === "Market Complete Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateComplete
+                        ? currentMatch?.profitLossDataMatch?.yesRateComplete
+                        : 0
+                      : 0
+                  }
+                  color={
+                    (typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamARate
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.yesRateTie
+                      : currentMatch?.profitLossDataMatch?.yesRateComplete) < 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                  }
+                  data={data?.length > 0 ? data[0] : []}
+                  lock={handleLock(data?.length > 0 ? data[0] : [])}
+                  team={"teamA"}
+                />
+                <Divider />
+                <BoxComponent
+                  // teamImage={currentMatch?.teamB_Image}
+                  team={"teamB"}
+                  color={
+                    (typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamBRate
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateTie
+                      : currentMatch?.profitLossDataMatch?.noRateComplete) < 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                  }
+                  name={data?.name}
+                  rates={
+                    typeOfBet === "Match Odds"
+                      ? currentMatch?.profitLossDataMatch?.teamBRate
+                        ? currentMatch?.profitLossDataMatch?.teamBRate
+                        : 0
+                      : typeOfBet === "Tied Match" ||
+                        typeOfBet === "Manual Tied Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateTie
+                        ? currentMatch?.profitLossDataMatch?.noRateTie
+                        : 0
+                      : typeOfBet === "Market Complete Match"
+                      ? currentMatch?.profitLossDataMatch?.noRateComplete
+                        ? currentMatch?.profitLossDataMatch?.noRateComplete
+                        : 0
+                      : 0
+                  }
+                  data={data?.length > 0 ? data[1] : []}
+                  lock={handleLock(data?.length > 0 ? data[1] : [])}
+                  align="end"
+                />
+                {locked && (
+                  <Box
+                    sx={{
+                      background: "rgba(0,0,0,.5)",
+                      width: "100%",
+                      height: currentMatch?.teamC ? "150px" : "105px",
+                      position: "absolute",
+                      top: "-24px",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      display: "flex",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "100%",
+                        alignSelf: "flex-end",
+                        height: currentMatch?.teamC ? "150px" : "105px",
+                        position: "absolute",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        display: "flex",
+                      }}
+                    >
+                      <img
+                        src={LOCKED}
+                        style={{ width: "35px", height: "40px" }}
+                      />
+
+                      <Typography
+                        sx={{
+                          color: "white",
+                          fontWeight: "600",
+                          marginLeft: "-25px",
+                          fontSize: "20px",
+                          marginTop: "20px",
+                        }}
+                      >
+                        Locked
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
+              </>
+            ) :
+             (
               <>
                 <BoxComponent
                   // teamImage={currentMatch?.teamA_Image}

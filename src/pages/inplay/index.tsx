@@ -107,6 +107,7 @@ const Inplay = () => {
                     state: {
                       submit: true,
                       matchId: match?.id,
+                      matchType:match?.matchType
                     },
                   });
                 }}

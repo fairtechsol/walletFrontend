@@ -25,7 +25,7 @@ export const getMatchDetail = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET}/${requestData}`
+        `${ApiConstants.MATCH.GET}${requestData?.matchType != "cricket" ? `/other`:''}/${requestData?.matchId}${requestData?.matchType != "cricket"?`?matchType=${requestData?.matchType}`:''}`
       );
       if (resp) {
         return resp?.data;

@@ -260,7 +260,7 @@ const LockMatchScreen = () => {
     try {
       window.scrollTo(0, 0);
       if (state?.matchId && profileDetail?.roleName) {
-        dispatch(getMatchDetail(state?.matchId));
+        dispatch(getMatchDetail({matchId : state?.matchId}));
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${state?.matchId}`));
@@ -325,7 +325,7 @@ const LockMatchScreen = () => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         if (state?.matchId) {
-          dispatch(getMatchDetail(state?.matchId));
+          dispatch(getMatchDetail({matchId : state?.matchId}));
           dispatch(getUserProfitLoss(state?.matchId));
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
