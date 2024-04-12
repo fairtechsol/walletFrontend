@@ -71,7 +71,7 @@ const RowHeaderMatches = ({
       >
         <Box
           sx={{
-            width: { xs: "5%", sm: "5%", lg: "5%" },
+            width: { xs: "10%", sm: "5%", lg: "5%" },
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -94,7 +94,7 @@ const RowHeaderMatches = ({
         </Box>
         <Box
           sx={{
-            width: { xs: "55%", sm: "55%", lg: "55%" },
+            width: { xs: "40%", sm: "55%", lg: "55%" },
             height: "100%",
             alignItems: "center",
             display: "flex",
@@ -196,7 +196,7 @@ const RowHeaderMatches = ({
           sx={{
             background: "#0B4F26",
             paddingX: "2px",
-            width: { xs: "15%", sm: "15%", lg: "15%" },
+            width: { xs: "25%", sm: "15%", lg: "15%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
