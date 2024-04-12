@@ -177,7 +177,7 @@ const AllRateSeperate = ({
                       color: "white",
                     }}
                   >
-                    {"Profit/Loss"}
+                   {matchesMobile ? "P/L" : "Profit Loss"}
                   </Typography>
                 </Box>
               )}
@@ -371,7 +371,7 @@ const AllRateSeperate = ({
                       <Box
                         sx={{
                           height: "40px",
-                          width: "12%",
+                          // width: "12%",
                           // margin: { xs: "1px", lg: "1px" },
                           display: "flex",
                           background: "black",

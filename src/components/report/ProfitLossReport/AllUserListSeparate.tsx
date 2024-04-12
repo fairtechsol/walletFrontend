@@ -504,7 +504,7 @@ const AllUserListSeparate = ({
                             color: "white",
                           }}
                         >
-                          Rate Profit/Loss
+                          Rate {matchesMobile ? "P/L" : "Profit/Loss"}
                         </Typography>
                         <StyledImage
                           src={item?.rateProfitLoss > 0 ? ARROW_UP : ARROWDOWN}
@@ -603,7 +603,7 @@ const AllUserListSeparate = ({
                             color: "white",
                           }}
                         >
-                          Session Profit/Loss
+                          Session {matchesMobile ? "P/L" : "Profit/Loss"}
                         </Typography>
                         <StyledImage
                           src={

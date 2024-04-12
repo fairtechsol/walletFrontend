@@ -6,15 +6,17 @@ const TableHeaderList = () => {
       sx={{
         display: "flex",
         height: "35px",
+        width:{xs:'1065px', lg: "100%"},
         background: "#262626",
         alignItems: "center",
         borderTop: "2px solid white",
         borderBottom: "2px solid white",
-      }}
+              }}
     >
       <Box
         sx={{
           width: "5%",
+          minWidth: "70px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -27,6 +29,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "10%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
@@ -42,6 +45,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "10%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
@@ -56,6 +60,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "10%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
@@ -70,6 +75,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "10%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
@@ -82,6 +88,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "10%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
@@ -96,6 +103,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "7%",
+          minWidth: "100px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -110,6 +118,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "8%",
+          minWidth: "100px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -129,6 +138,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "8%",
+          minWidth: "100px",
           display: "flex",
           justifyContent: "center",
           paddingLeft: "10px",
@@ -144,6 +154,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "11%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
@@ -158,6 +169,7 @@ const TableHeaderList = () => {
       <Box
         sx={{
           width: "11%",
+          minWidth: "100px",
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
