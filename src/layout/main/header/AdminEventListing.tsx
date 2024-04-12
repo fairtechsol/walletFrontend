@@ -2,6 +2,8 @@ import { Box } from "@mui/system";
 import {
   ADDACCOUNT,
   CHECKLIST,
+  Cricket,
+  Football,
   MYACCOUNT,
   Play,
   TEAM,
@@ -16,6 +18,8 @@ import { RootState } from "../../../store/store";
 
 const data = [
   { id: 1, title: "INPLAY", image: Play, url: "live_market" },
+  { id: 1, title: "CRICKET", image: Cricket, url: "matchList/cricket" },
+  { id: 1, title: "FOOTBALL", image: Football, url: "matchList/football" },
   { id: 2, title: "Add Account", image: ADDACCOUNT, url: "add_account" },
   { id: 3, title: "Client list", image: TEAM, url: "list_of_clients" },
 
