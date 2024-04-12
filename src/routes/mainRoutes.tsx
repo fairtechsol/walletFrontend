@@ -22,6 +22,9 @@ const AccountStatement = Loadable(
 );
 const CurrentBets = Loadable(() => import("../pages/reports/CurrentBets"));
 const GeneralReport = Loadable(() => import("../pages/reports/GeneralReport"));
+const MatchList = Loadable(() => import("../pages/matchList"));
+const OtherMatchDetail = Loadable(() => import("../pages/otherMatchDetail"));
+
 const MainRoutes = {
   path: Constants.MainPaths.root,
   element: <MainLayout />,
@@ -38,6 +41,11 @@ const MainRoutes = {
       path: Constants.MainPaths.match,
       element: <LockMatchScreen />,
     },
+    
+    {
+      path: Constants.MainPaths.matchList,
+      element: <MatchList />,
+    },
     {
       path: Constants.MainPaths.liveMarket,
       element: <Inplay />,
@@ -45,6 +53,10 @@ const MainRoutes = {
     {
       path: Constants.MainPaths.liveMarketMatches,
       element: <MatchDetail />,
+    },
+    {
+      path: Constants.MainPaths.matchListMatches,
+      element: <OtherMatchDetail />,
     },
     {
       path: Constants.MainPaths.addAccount,
