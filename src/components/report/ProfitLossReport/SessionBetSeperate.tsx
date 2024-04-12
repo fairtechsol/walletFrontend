@@ -614,7 +614,7 @@ const SingleBox = ({
       <Typography
         sx={{
           fontWeight: "400",
-          fontSize: "12px",
+          fontSize: "11px",
           color: "white",
           wordWrap: "break-word",
           lineHeight: "0.9"
