@@ -466,7 +466,7 @@ const RowComponentMatches = ({
               >
                 <AllRateSeperate
                   betHistory={false}
-                  // count={betProfitLossList?.length}
+                  count={betProfitLossList?.length}
                   allBetsData={betProfitLossList ? betProfitLossList : []}
                   profit
                 />
