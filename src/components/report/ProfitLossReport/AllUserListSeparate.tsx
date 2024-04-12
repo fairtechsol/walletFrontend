@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import moment from "moment";
+// import moment from "moment";
 import { memo, useState } from "react";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import service from "../../../service";
@@ -125,7 +125,7 @@ const AllUserListSeparate = ({
             justifyContent: "space-between",
           }}
         >
-          <Typography
+          {/* <Typography
             sx={{
               fontSize: { lg: "0px", xs: "10px" },
               color: "white",
@@ -135,9 +135,9 @@ const AllUserListSeparate = ({
               top: 0,
               right: 5,
             }}
-          >
-            ({moment(item?.betDate).format("DD-MM-YYYY")})
-          </Typography>
+          > */}
+          {/* ({moment(item?.betDate).format("DD-MM-YYYY")}) */}
+          {/* </Typography> */}
 
           <Box
             onClick={(e) => {
@@ -162,7 +162,9 @@ const AllUserListSeparate = ({
                 lineClamp: 2,
               }}
             >
-              {`${item?.userName} ${item?.url ? "(" + item?.url + ")" : ""}`}
+              {/* {` */}
+              {item?.userName}
+              {/* ${item?.url ? "(" + item?.url + ")" : ""}`} */}
             </Typography>
           </Box>
           {item?.roleName !== "user" && (
