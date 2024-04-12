@@ -494,10 +494,8 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: "#F8C851",
-          // marginX: { xs: "1px", lg: "1px" },
-          display: "flex",
-          justifyContent: "center",
-          // margin: "1px"
+          display: {xs: "initial",lg:"flex"},
+          justifyContent:{ lg:"center", xs: "initial"},
         }}
       >
         <Typography
@@ -512,8 +510,8 @@ const SingleBox = ({
         </Typography>
         <Typography
           sx={{
-            maxHeight: "1em",
-            overflow: "visible",
+            maxHeight: "2em",
+            overflow: "scroll",
             lineHeight: 1,
             fontWeight: "600",
             fontSize: { lg: "12px", xs: "10px" },
