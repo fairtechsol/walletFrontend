@@ -1,12 +1,13 @@
-import Loadable from "../utils/loadable";
+// import Loadable from "../utils/loadable";
 import { Navigate } from "react-router-dom";
 import { Constants } from "../utils/Constants";
 
 import MainLayout from "../layout/main";
+import DepositAndWithdrawBox from "../components/walletSettings/DepositAndWithdrawBox";
 
-const DepositAndWithdrawBox = Loadable(
-  () => import("../components/walletSettings/DepositAndWithdrawBox")
-);
+// const DepositAndWithdrawBox = Loadable(
+//   () => import("../components/walletSettings/DepositAndWithdrawBox")
+// );
 
 const WalletRoutes = {
   path: Constants.WalletSettingsPaths.root,
