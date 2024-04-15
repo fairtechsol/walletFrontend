@@ -615,14 +615,18 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             {
                               color: "white",
                               textAlign: { lg: "left", xs: "left" },
-                              width: { lg: "100px", xs: "100px" },
+                              width: { lg: "150px", xs: "100px" },
                             },
                             fTextStyle,
                           ]}
                         >
-                          {element?.matchComissionType} Com
+                          {element?.matchComissionType} Com 
+                          {":"}{" "}
+                          {element?.matchCommission
+                            ? element?.matchCommission
+                            : 0}
                         </Typography>
-                        <Typography
+                        {/* <Typography
                           variant="h5"
                           sx={[
                             {
@@ -633,11 +637,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             fTextStyle,
                           ]}
                         >
-                          {":"}{" "}
-                          {element?.matchCommission
-                            ? element?.matchCommission
-                            : 0}
-                        </Typography>
+                         
+                        </Typography> */}
                       </>
                     ) : (
                       <>
@@ -678,14 +679,17 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           {
                             color: "white",
                             textAlign: { lg: "left", xs: "left" },
-                            width: { lg: "100px", xs: "100px" },
+                            width: { lg: "150px", xs: "100px" },
                           },
                           fTextStyle,
                         ]}
                       >
-                        Session Com
+                        Session Com     {": "}
+                        {element?.sessionCommission
+                        ? element?.sessionCommission
+                        : 0}
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="h5"
                         sx={[
                           {
@@ -696,10 +700,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           fTextStyle,
                         ]}
                       >
-                        {": "}
-                      </Typography>
+                    
+                      </Typography> */}
                     </Box>
-                    <Typography
+                    {/* <Typography
                       variant="h5"
                       sx={[
                         {
@@ -713,14 +717,14 @@ const AccountListRow = (props: AccountListRowInterface) => {
                       {element?.sessionCommission
                         ? element?.sessionCommission
                         : 0}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 </Box>
                 {showCReport && (
                   <Box
                     sx={{
                       display: "flex",
-                      marginTop: { lg: "10px", xs: "0" },
+                      marginTop: { lg: "0px", xs: "0" },
                       justifyContent: "space-between",
                       alignItems: "center",
                       cursor: "pointer",

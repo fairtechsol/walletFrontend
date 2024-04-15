@@ -9,12 +9,12 @@ const ListBody = (props: any) => {
     <Box
       sx={[
         {
-          width: "100%",
+          width: {xs: "150%", lg: "100%", md: "100%"},
           display: "flex",
           height: "45px",
           background: "#0B4F26",
           alignItems: "center",
-          overflow: "hidden",
+          // overflow: "hidden",
           borderBottom: "2px solid white",
         },
       ]}
@@ -23,9 +23,9 @@ const ListBody = (props: any) => {
         sx={[
           {
             width: {
-              lg: "11.5vw",
+              lg: "12vw",
               md: "20.5vw",
-              xs: "26.5vw",
+              xs: "18.5vw",
             },
             display: "flex",
             paddingX: "10px",
@@ -56,7 +56,7 @@ const ListBody = (props: any) => {
       <Box
         sx={{
           width: {
-            lg: "10.5vw",
+            lg: "11vw",
             md: "10.5vw",
             xs: "26.5vw",
           },
@@ -78,9 +78,9 @@ const ListBody = (props: any) => {
       <Box
         sx={{
           width: {
-            lg: "9.5vw",
+            lg: "10vw",
             md: "9.5vw",
-            xs: "26.5vw",
+            xs: "30.5vw",
           },
           display: "flex",
           paddingX: "10px",
@@ -110,7 +110,7 @@ const ListBody = (props: any) => {
           width: {
             lg: "11.5vw",
             md: "11.5vw",
-            xs: "26.5vw",
+            xs: "35.5vw",
           },
           display: "flex",
           paddingX: "10px",
@@ -159,7 +159,7 @@ const ListBody = (props: any) => {
           width: {
             lg: "11.5vw",
             md: "11.5vw",
-            xs: "26.5vw",
+            xs: "27vw",
           },
           display: "flex",
           paddingX: "10px",
@@ -208,7 +208,7 @@ const ListBody = (props: any) => {
           width: {
             lg: "9.5vw",
             md: "9.5vw",
-            xs: "26.5vw",
+            xs: "18.5vw",
           },
           display: "flex",
           justifyContent: "space-between",
@@ -228,7 +228,7 @@ const ListBody = (props: any) => {
           width: {
             lg: "9.5vw",
             md: "9.5vw",
-            xs: "26.5vw",
+            xs: "18.5vw",
           },
           display: "flex",
           paddingX: "10px",
@@ -248,9 +248,9 @@ const ListBody = (props: any) => {
       <Box
         sx={{
           width: {
-            lg: "9.5vw",
+            lg: "8.5vw",
             md: "9.5vw",
-            xs: "26.5vw",
+            xs: "30.5vw",
           },
           display: "flex",
           paddingX: "10px",
@@ -310,7 +310,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
+          width: { lg: "7.5vw", md: "8vw", xs: "26.5vw" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -329,7 +329,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "10vw", md: "10vw", xs: "26.5vw" },
+          width: { lg: "9vw", md: "10vw", xs: "24.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
