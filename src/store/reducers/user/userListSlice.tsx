@@ -72,7 +72,7 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(getUserList.fulfilled, (state, action) => {
-        state.userList = action.payload;
+        state.userList = action?.payload;
         state.loading = false;
       })
       .addCase(getUserList.rejected, (state, action) => {
@@ -84,7 +84,7 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(getModalUserList.fulfilled, (state, action) => {
-        state.userModalList = action.payload;
+        state.userModalList = action?.payload;
         state.loading = false;
       })
       .addCase(getModalUserList.rejected, (state, action) => {
@@ -92,16 +92,16 @@ export const userList = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(handleModelActions.fulfilled, (state, action) => {
-        const { openModal, domain } = action.payload;
+        const { openModal, domain } = action?.payload;
         state.openModal = openModal;
         let obj = {
-          roleName: action.payload.roleName,
-          id: action.payload.userId,
+          roleName: action?.payload?.roleName,
+          id: action?.payload?.userId,
           domain: domain,
-          title: action.payload.title,
+          title: action?.payload?.title,
         };
         state.userElement = obj;
-        state.isUrl = action.payload.isUrl;
+        state.isUrl = action?.payload?.isUrl;
         if (
           domain !== undefined &&
           domain !== null &&
@@ -168,14 +168,14 @@ export const userList = createSlice({
         state.success = false;
       })
       .addCase(setLockUnlockUserExpert.fulfilled, (state, action) => {
-        const { data, requestData } = action.payload;
+        const { data, requestData } = action?.payload;
         state.success = true;
         state.loading = false;
-        if (state.userList) {
-          const { list } = state.userList;
-          list.forEach((item: any) => {
-            if (item.id === data.id) {
-              item.userBlock = requestData.payload.userBlock;
+        if (state?.userList) {
+          const { list } = state?.userList;
+          list?.forEach((item: any) => {
+            if (item?.id === data?.id) {
+              item.userBlock = requestData?.payload?.userBlock;
             }
           });
         }
@@ -223,13 +223,11 @@ export const userList = createSlice({
       })
       .addCase(getAlreadyUserExist.pending, (state) => {
         state.loading = true;
-        state.success = false;
         state.error = null;
       })
       .addCase(getAlreadyUserExist.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
-        state.userAlreadyExist = action.payload;
+        state.userAlreadyExist = action?.payload;
       })
       .addCase(getAlreadyUserExist.rejected, (state, action) => {
         state.loading = false;
@@ -237,13 +235,11 @@ export const userList = createSlice({
       })
       .addCase(getSearchClientList.pending, (state) => {
         state.loading = true;
-        state.success = false;
         state.error = null;
       })
       .addCase(getSearchClientList.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
-        state.searchUserList = action.payload;
+        state.searchUserList = action?.payload;
       })
       .addCase(getSearchClientList.rejected, (state, action) => {
         state.loading = false;
@@ -257,7 +253,7 @@ export const userList = createSlice({
         state.error = null;
       })
       .addCase(getTotalBalance.fulfilled, (state, action) => {
-        state.totalBalance = action.payload;
+        state.totalBalance = action?.payload;
         state.loading = false;
       })
       .addCase(getTotalBalance.rejected, (state, action) => {

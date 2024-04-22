@@ -3,7 +3,8 @@ import { DataShowInterface } from "../../interface/myAccount";
 import { handleNumber } from "../../helper";
 
 const DataShow = (props: DataShowInterface) => {
-  const { title, value, containerStyle, valueContainerStyle } = props;
+  const { title, value, value2, value3, containerStyle, valueContainerStyle } =
+    props;
   return (
     <Box
       sx={[
@@ -32,7 +33,7 @@ const DataShow = (props: DataShowInterface) => {
       <Box
         sx={[
           {
-            flex: 0.5,
+            flex: 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
