@@ -128,6 +128,8 @@ const MyAccount = () => {
             <DataShow
               title={"Upper Level"}
               value={myAccountDetails?.upperLevelBalance ?? 0}
+              value2={myAccountDetails?.totalProfitLossUpperlevel ?? 0}
+              value3={myAccountDetails?.upperLevelProfitLossPercent ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -144,6 +146,7 @@ const MyAccount = () => {
             <DataShow
               title={"Down Level Profit/Loss"}
               value={myAccountDetails?.downLevelProfitLoss ?? 0}
+              value2={myAccountDetails?.totalProfitLossDownlevel ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
