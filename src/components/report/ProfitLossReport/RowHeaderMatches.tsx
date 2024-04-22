@@ -1,4 +1,4 @@
-import { Box, Typography,useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
 import {
   ARROWDOWN,
@@ -168,7 +168,7 @@ const RowHeaderMatches = ({
                 fontSize: { lg: "14px", xs: "10px" },
                 fontWeight: "700",
                 color: "white",
-                lineHeight: "0.9"
+                lineHeight: "0.9",
               }}
             >
                 {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}

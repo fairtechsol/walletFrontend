@@ -75,7 +75,7 @@ const ProfitLossReport = () => {
       const { data } = await service.get(
         `/user/userwise/profitLoss?matchId=${matchId}${
           user?.id ? "&id=" + user?.id : ""
-        }`
+        }${user?.domain ? "&url=" + user?.domain : ""}`
       );
       if (data) {
         setUserProfitLoss(data);

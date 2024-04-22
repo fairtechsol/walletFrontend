@@ -17,7 +17,7 @@ const AccountListRow = ({
         ? "Session"
         : "Match",
     betType: element?.betType,
-    stack: formatToINR(element?.stake),
+    stack: element?.stake && formatToINR(element?.stake),
     odds: element?.odds,
     isActive: element?.isActive,
     teamBet: element?.teamName,
@@ -48,7 +48,7 @@ const AccountListRow = ({
             position: "absolute",
             display: "flex",
             width: "auto",
-            overflowX: "auto"
+            overflowX: "auto",
           }}
         />
       )}
@@ -154,6 +154,7 @@ const AccountListRow = ({
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
               },
+              fTextStyle,
             ]}
           >
             {elementToUDM?.name}
@@ -170,7 +171,10 @@ const AccountListRow = ({
           }}
         >
           <Typography
-            sx={[{ fontSize: "12px", fontWeight: "600", lineHeight: "0.9" }, fTextStyle]}
+            sx={[
+              { fontSize: "12px", fontWeight: "600", lineHeight: "0.9" },
+              fTextStyle,
+            ]}
           >
             {/* {elementToUDM.teamBet} */}
             {elementToUDM?.createAt
