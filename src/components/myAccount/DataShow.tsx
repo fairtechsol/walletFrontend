@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { DataShowInterface } from "../../interface/myAccount";
+import { handleNumber } from "../../helper";
 
 const DataShow = (props: DataShowInterface) => {
   const { title, value, containerStyle, valueContainerStyle } = props;
@@ -44,7 +45,7 @@ const DataShow = (props: DataShowInterface) => {
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {value}
+          {handleNumber(parseFloat(value), 'white')}
         </Typography>
       </Box>
     </Box>
