@@ -64,7 +64,7 @@ const MyAccount = () => {
           >
             <DataShow
               title={"Upper Level Credit Reference"}
-              value={formatToINR(myAccountDetails?.userCreditReference ?? 0)}
+              value={(myAccountDetails?.userCreditReference ?? 0)}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
                 background: `${
@@ -76,7 +76,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Down level Occupy Balance"}
-              value={formatToINR(myAccountDetails?.downLevelOccupyBalance ?? 0)}
+              value={(myAccountDetails?.downLevelOccupyBalance ?? 0)}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -92,9 +92,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Down Level Credit Reference"}
-              value={formatToINR(
-                myAccountDetails?.downLevelCreditReference ?? 0
-              )}
+              value={(myAccountDetails?.downLevelCreditReference ?? 0)}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -118,7 +116,7 @@ const MyAccount = () => {
           >
             <DataShow
               title={"Total Master Balance"}
-              value={formatToINR(myAccountDetails?.totalMasterBalance ?? 0)}
+              value={(myAccountDetails?.totalMasterBalance ?? 0)}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
                 background: `${
@@ -130,13 +128,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Upper Level"}
-              value={formatToINR(myAccountDetails?.upperLevelBalance ?? 0)}
-              value2={formatToINR(
-                myAccountDetails?.totalProfitLossUpperlevel ?? 0
-              )}
-              value3={formatToINR(
-                myAccountDetails?.upperLevelProfitLossPercent ?? 0
-              )}
+              value={(myAccountDetails?.upperLevelBalance ?? 0)}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -152,10 +144,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Down Level Profit/Loss"}
-              value={formatToINR(myAccountDetails?.downLevelProfitLoss ?? 0)}
-              value2={formatToINR(
-                myAccountDetails?.totalProfitLossDownlevel ?? 0
-              )}
+              value={(myAccountDetails?.downLevelProfitLoss ?? 0)}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -180,7 +169,7 @@ const MyAccount = () => {
           >
             <DataShow
               title={"Available Balance"}
-              value={formatToINR(myAccountDetails?.availableBalance ?? 0)}
+              value={(myAccountDetails?.availableBalance ?? 0)}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
                 background: `${
@@ -192,9 +181,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"Available Balance With Profit/Loss"}
-              value={formatToINR(
-                myAccountDetails?.availableBalanceWithProfitLoss ?? 0
-              )}
+              value={(myAccountDetails?.availableBalanceWithProfitLoss ?? 0)}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -212,7 +199,7 @@ const MyAccount = () => {
             />
             <DataShow
               title={"My Profit/Loss"}
-              value={formatToINR(myAccountDetails?.profitLoss ?? 0)}
+              value={(myAccountDetails?.profitLoss ?? 0)}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",

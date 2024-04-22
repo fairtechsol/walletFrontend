@@ -14,7 +14,7 @@ import {
 import SessionComponentMatches from "./SessionComponentMatches";
 import SessionBetSeperate from "./SessionBetSeperate";
 import { useSelector } from "react-redux";
-import { formatToINR } from "../../../helper";
+import { formatToINR, handleNumber } from "../../../helper";
 import AllUserListSeparate from "./AllUserListSeparate";
 
 const RowComponentMatches = ({
@@ -24,6 +24,7 @@ const RowComponentMatches = ({
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
+  color
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -269,27 +270,11 @@ const RowComponentMatches = ({
                 lineHeight: "0.9"
               }}
             >
-              {" "}
-              {Number(item?.rateProfitLoss) >= 0 ? (
-                <>
-                  <span style={{ visibility: "hidden" }}>-</span>
-                  {formatToINR(
-                    Number(item?.rateProfitLoss || 0).toFixed(2)
-                  )}{" "}
+                {handleNumber(parseFloat(item?.rateProfitLoss || 0),color)}{" "}
                   {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                   ${formatToINR(
-                    Number(item?.totalDeduction || 0).toFixed(2)
+                    Number(item?.totalDeduction || 0)
                   )})`}
-                </>
-              ) : (
-                <>
-                  {formatToINR(Number(item?.rateProfitLoss || 0).toFixed(2))}{" "}
-                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                  ${formatToINR(
-                    Number(item?.totalDeduction || 0).toFixed(2)
-                  )})`}
-                </>
-              )}{" "}
             </Typography>
             <StyledImage
               src={ArrowDown}
@@ -388,10 +373,10 @@ const RowComponentMatches = ({
               {Number(item?.sessionProfitLoss) >= 0 ? (
                 <>
                   <span style={{ visibility: "hidden" }}>-</span>
-                  {formatToINR(Number(item?.sessionProfitLoss || 0).toFixed(2))}
+                  {handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)}
                 </>
               ) : (
-                formatToINR(Number(item?.sessionProfitLoss || 0).toFixed(2))
+                handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)
               )}
             </Typography>
             <StyledImage

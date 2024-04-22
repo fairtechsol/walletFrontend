@@ -6,8 +6,9 @@ import { AppDispatch } from "../../../store/store";
 // import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getSessionProLoss } from "../../../store/actions/match/matchAction";
+import { handleNumber } from "../../../helper";
 
-const PlaceBetComponentWeb = ({ newData, profitLoss }: any) => {
+const PlaceBetComponentWeb = ({ newData, profitLoss, color }: any) => {
   const dispatch: AppDispatch = useDispatch();
   // const { runAmount } = useSelector((state: RootState) => state.match.bets);
   // const [show, setShow] = useState(false);
@@ -15,6 +16,7 @@ const PlaceBetComponentWeb = ({ newData, profitLoss }: any) => {
   // const handleClose = () => {
   //   setAnchorEl(null);
   // };
+  const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
   return (
     <>
       <Box
@@ -84,7 +86,7 @@ const PlaceBetComponentWeb = ({ newData, profitLoss }: any) => {
             {" "}
             {!profitLoss?.maxLoss
               ? "Profit/Loss"
-              : profitLoss?.maxLoss?.toFixed(2)}
+              : profitloss}
           </Typography>
           <img
             src={UD}

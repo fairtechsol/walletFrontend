@@ -653,9 +653,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             fTextStyle,
                           ]}
                         >
-                          Match Com
+                          Match Com   : 0
                         </Typography>
-                        <Typography
+                        {/* <Typography
                           variant="h5"
                           sx={[
                             {
@@ -665,8 +665,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             fTextStyle,
                           ]}
                         >
-                          : 0
-                        </Typography>
+                        
+                        </Typography> */}
                       </>
                     )}
                   </Box>
