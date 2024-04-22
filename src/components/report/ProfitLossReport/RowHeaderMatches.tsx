@@ -10,7 +10,7 @@ import {
 } from "../../../assets";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { formatToINR } from "../../../helper";
+import { handleNumber } from "../../../helper";
 import moment from "moment";
 import {
   getDomainProfitLoss,
@@ -26,11 +26,13 @@ const RowHeaderMatches = ({
   endDate,
   getHandleReport,
   show,
+  color
 }: any) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
+
   return (
     <>
       <Box
@@ -169,26 +171,11 @@ const RowHeaderMatches = ({
                 lineHeight: "0.9",
               }}
             >
-              {Number(item?.totalLoss) >= 0 ? (
-                <>
-                  <span style={{ visibility: "hidden" }}>-</span>
-                  {formatToINR(
-                    parseFloat(item?.totalLoss || 0).toFixed(2)
-                  )}{" "}
-                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                  ${formatToINR(
-                    parseFloat(item?.totalDeduction || 0).toFixed(2)
-                  )})`}
-                </>
-              ) : (
-                <>
-                  {formatToINR(parseFloat(item?.totalLoss || 0).toFixed(2))}{" "}
-                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                  ${formatToINR(
-                    parseFloat(item?.totalDeduction || 0).toFixed(2)
-                  )})`}
-                </>
-              )}{" "}
+                {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}
+                {`${matchesMobile ? "TD(1%)" : "Total Deduction"} : `}
+                {handleNumber(parseFloat(item?.totalDeduction || 0),color)}{" "}
+                {/* {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
+                ${handleNumber(parseFloat(item?.totalDeduction || 0),color)})`} */}
             </Typography>
           </Box>
         </Box>
