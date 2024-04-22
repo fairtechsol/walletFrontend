@@ -43,11 +43,34 @@ const DataShow = (props: DataShowInterface) => {
           valueContainerStyle,
         ]}
       >
+         <Box sx={{ alignItems: "center", justifyContent: "space-around" }}>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              color: "white",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          ></Typography>
         <Typography
           sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(value), 'white')}
+          {handleNumber(parseFloat(value), 'white')} {value3 && `(${value3}%)`}
         </Typography>
+        {value2 && (
+            <Typography
+              sx={{
+                fontSize: { lg: "11px", xs: "10px" },
+                marginTop: -0.4,
+                color: "white",
+                textAlign: "center",
+                fontWeight: "600",
+              }}
+            >
+              {value2}
+            </Typography>
+          )}
+            </Box>
       </Box>
     </Box>
   );
