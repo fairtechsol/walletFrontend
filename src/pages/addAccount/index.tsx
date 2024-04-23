@@ -143,6 +143,7 @@ const AddAccount = () => {
       if (values.roleName.value !== "expert") {
         if (values.creditRefrence < 0) {
           toast.error("Credit Reference too low");
+          setSubmitLoading(false);
           return;
         } else if (values.creditRefrence > 99999999999) {
           toast.error("Credit Reference Limit Exceed", {
@@ -151,6 +152,7 @@ const AddAccount = () => {
             closeOnClick: true,
             pauseOnHover: true,
           });
+          setSubmitLoading(false);
           return;
         }
       }
