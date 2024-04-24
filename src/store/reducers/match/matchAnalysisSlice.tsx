@@ -258,7 +258,7 @@ const analysisListSlice = createSlice({
           state.multipleMatchDetail = state?.multipleMatchDetail?.map(
             (match: any) => {
               if (match?.id === action?.payload?.machId) {
-                if (["tiedMatch2", "tiedMatch"].includes(matchBetType)) {
+                if (["tiedMatch2", "tiedMatch1"].includes(matchBetType)) {
                   return {
                     ...match,
                     profitLossDataMatch: {
