@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import StyledImage from "../Common/StyledImages";
-import { formatToINR } from "../../helper";
+import { handleNumber } from "../../helper";
 
 const SubHeaderListRow = (props: any) => {
-  const { data } = props;
+  const { data, color } = props;
 
   return (
     <Box
@@ -27,7 +27,7 @@ const SubHeaderListRow = (props: any) => {
           paddingX: "10px",
         }}
       >
-        <Typography sx={{ color: "white", fontSize: "12px" }}></Typography>
+        <Typography sx={{ color: "white", fontSize: "10px" }}></Typography>
       </Box>
       <Box
         sx={{
@@ -40,11 +40,12 @@ const SubHeaderListRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+          {/* {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
             +data?.totalCreditReference || 0
-          )}
+          )} */}
+          {handleNumber(parseFloat(data?.totalCreditReference), color)}
         </Typography>
       </Box>
       <Box
@@ -58,20 +59,9 @@ const SubHeaderListRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {Number(data?.currBalance || 0) >= 0 ? (
-            <>
-              <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                Number(data?.currBalance || 0)
-              )}
-            </>
-          ) : (
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              Number(data?.currBalance || 0)
-            )
-          )}
+          {handleNumber(parseFloat(data?.currBalance || 0), color)}
         </Typography>
       </Box>
       <Box
@@ -91,21 +81,10 @@ const SubHeaderListRow = (props: any) => {
         {" "}
         {/* element.profit_loss >= 0 ? '#27AC1E' : '#E32A2A'*/}
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
           {/* {data?userBal?.profitLoss} */}
-          {Number(+data?.profitsum || 0) >= 0 ? (
-            <>
-              <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                +data?.profitsum || 0
-              )}
-            </>
-          ) : (
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              +data?.profitsum || 0
-            )
-          )}
+          {handleNumber(parseFloat(data?.profitsum || 0), color)}
         </Typography>
         <StyledImage
           src={
@@ -138,21 +117,10 @@ const SubHeaderListRow = (props: any) => {
         {" "}
         {/* element.profit_loss >= 0 ? '#27AC1E' : '#E32A2A'*/}
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
           {/* {data?.percent_profit_loss} */}
-          {Number(+data?.percentprofitloss || 0) >= 0 ? (
-            <>
-              <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                +data?.percentprofitloss || 0
-              )}
-            </>
-          ) : (
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              +data?.percentprofitloss || 0
-            )
-          )}
+          {handleNumber(parseFloat(data?.percentprofitloss || 0), color)}
         </Typography>
         <StyledImage
           src={
@@ -179,9 +147,10 @@ const SubHeaderListRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {formatToINR(data?.totalcommission || 0)}
+          {/* {formatToINR(data?.totalcommission || 0)} */}
+          {handleNumber(parseFloat(data?.totalcommission || 0), color)}
         </Typography>
       </Box>
       <Box
@@ -195,11 +164,12 @@ const SubHeaderListRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
+          {/* {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
             +data?.totalExposure || 0
-          )}
+          )} */}
+          {handleNumber(parseFloat(data?.totalExposure || 0), color)}
         </Typography>
       </Box>
       <Box
@@ -213,21 +183,10 @@ const SubHeaderListRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
           {/* {data?.availablebalancesum} */}
-          {Number(data?.availableBalance || 0) >= 0 ? (
-            <>
-              <span style={{ visibility: "hidden" }}>-</span>
-              {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                Number(data?.availableBalance || 0)
-              )}
-            </>
-          ) : (
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              Number(data?.availableBalance || 0)
-            )
-          )}
+             {handleNumber(parseFloat(data?.availableBalance || 0), color)}
         </Typography>
       </Box>
       <Box
@@ -264,7 +223,7 @@ const SubHeaderListRow = (props: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
+          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
           {/* {+data?.totalExposure || 0} */}
         </Typography>
