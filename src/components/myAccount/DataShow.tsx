@@ -51,13 +51,11 @@ const DataShow = (props: DataShowInterface) => {
               fontWeight: "700",
               textAlign: "center",
             }}
-          ></Typography>
-          <Typography
-            sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
           >
             {handleNumber(parseFloat(value), "white")}{" "}
             {value3 && `(${value3}%)`}
           </Typography>
+
           {value2 && (
             <Typography
               sx={{
