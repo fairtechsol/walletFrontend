@@ -243,7 +243,7 @@ const matchListSlice = createSlice({
       })
       .addCase(updateTeamRates.fulfilled, (state, action) => {
         const { userRedisObj, jobData } = action?.payload;
-        if (["tiedMatch2", "tiedMatch"].includes(jobData?.newBet?.marketType)) {
+        if (["tiedMatch2", "tiedMatch1"].includes(jobData?.newBet?.marketType)) {
           state.matchDetail.profitLossDataMatch = {
             ...state.matchDetail.profitLossDataMatch,
             yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
