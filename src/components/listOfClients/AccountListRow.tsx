@@ -572,7 +572,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             sx={[
               {
                 width: {
-                  lg: "11vw",
+                  lg: "9.7vw",
                   md: "25vw",
                   xs: "96vw",
                 },

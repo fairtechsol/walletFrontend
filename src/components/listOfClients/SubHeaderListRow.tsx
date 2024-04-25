@@ -45,7 +45,7 @@ const SubHeaderListRow = (props: any) => {
           {/* {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
             +data?.totalCreditReference || 0
           )} */}
-          {handleNumber(parseFloat(data?.totalCreditReference), color)}
+          {handleNumber(parseFloat(data?.totalCreditReference || 0.00), color)}
         </Typography>
       </Box>
       <Box

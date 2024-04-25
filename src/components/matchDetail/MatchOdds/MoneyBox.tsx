@@ -5,7 +5,7 @@ const MoneyBox = (props: any) => {
   const { color, rates } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  let val: any = parseFloat(rates)
+  let val: any = parseFloat(rates || 0)
 
   return (
     <Box
