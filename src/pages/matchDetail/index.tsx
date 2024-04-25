@@ -10,7 +10,7 @@ import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
-import { socketService } from "../../socketManager";
+import { socket, socketService } from "../../socketManager";
 import {
   AllBetDelete,
   getMatchDetail,
@@ -53,7 +53,9 @@ const MatchDetail = () => {
     (state: RootState) => state.match.bets
   );
 
-  const { currentOdd } = useSelector((state: RootState) => state.match.matchList);
+  const { currentOdd } = useSelector(
+    (state: RootState) => state.match.matchList
+  );
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -130,7 +132,7 @@ const MatchDetail = () => {
   };
 
   const setSessionBetsPlaced = (event: any) => {
-        try {
+    try {
       if (event?.jobData?.placedBet?.matchId === state?.matchId) {
         dispatch(
           updateBetsPlaced({
@@ -223,7 +225,7 @@ const MatchDetail = () => {
 
   useEffect(() => {
     try {
-      if (success && profileDetail?.roleName) {
+      if (success && profileDetail?.roleName && socket) {
         socketService.match.getMatchRatesOff(state?.matchId);
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
@@ -255,7 +257,7 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail?.roleName]);
+  }, [success, profileDetail?.roleName, socket]);
 
   useEffect(() => {
     return () => {
@@ -367,36 +369,6 @@ const MatchDetail = () => {
               }
             />
           )}
-          {matchDetail?.marketCompleteMatch?.isActive && (
-            <MatchOdds
-              currentMatch={matchDetail}
-              typeOfBet={"Market Complete Match"}
-              showBox={
-                matchDetail?.marketCompleteMatch?.activeStatus === "save"
-              }
-              minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
-              data={
-                matchDetail?.marketCompleteMatch?.runners?.length > 0
-                  ? matchDetail?.marketCompleteMatch?.runners
-                  : []
-              }
-            />
-          )}
-          {matchDetail?.apiTideMatch?.isActive && (
-            <MatchOdds
-              currentMatch={matchDetail}
-              typeOfBet={"Tied Match"}
-              showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
-              data={
-                matchDetail?.apiTideMatch?.runners?.length > 0
-                  ? matchDetail?.apiTideMatch?.runners
-                  : []
-              }
-            />
-          )}
           {matchDetail?.bookmaker?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
@@ -426,6 +398,21 @@ const MatchDetail = () => {
                 />
               );
             })}
+
+          {matchDetail?.apiTideMatch?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Tied Match"}
+              showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
+              maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
+              data={
+                matchDetail?.apiTideMatch?.runners?.length > 0
+                  ? matchDetail?.apiTideMatch?.runners
+                  : []
+              }
+            />
+          )}
           {matchDetail?.manualTiedMatch && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Tied Match"}
@@ -434,6 +421,22 @@ const MatchDetail = () => {
               session={"manualBookMaker"}
               minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
+            />
+          )}
+          {matchDetail?.marketCompleteMatch?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Market Complete Match"}
+              showBox={
+                matchDetail?.marketCompleteMatch?.activeStatus === "save"
+              }
+              minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
+              maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
+              data={
+                matchDetail?.marketCompleteMatch?.runners?.length > 0
+                  ? matchDetail?.marketCompleteMatch?.runners
+                  : []
+              }
             />
           )}
 
@@ -515,9 +518,7 @@ const MatchDetail = () => {
                   <RunsBox
                     key={v?.id}
                     item={v}
-                    currentOdd={
-                      currentOdd?.betId === v?.id ? currentOdd : null
-                    }
+                    currentOdd={currentOdd?.betId === v?.id ? currentOdd : null}
                   />
                 );
               })}

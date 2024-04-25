@@ -55,6 +55,7 @@ const DataShow = (props: DataShowInterface) => {
             {handleNumber(parseFloat(value), "white")}{" "}
             {value3 && `(${value3}%)`}
           </Typography>
+
           {value2 && (
             <Typography
               sx={{
