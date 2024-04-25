@@ -45,7 +45,10 @@ const SubHeaderListRow = (props: any) => {
           {/* {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
             +data?.totalCreditReference || 0
           )} */}
-          {handleNumber(parseFloat(data?.totalCreditReference), color)}
+          {handleNumber(
+            parseFloat(data?.totalCreditReference || "0.00"),
+            color
+          )}
         </Typography>
       </Box>
       <Box
@@ -186,7 +189,7 @@ const SubHeaderListRow = (props: any) => {
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
           {/* {data?.availablebalancesum} */}
-             {handleNumber(parseFloat(data?.availableBalance || 0), color)}
+          {handleNumber(parseFloat(data?.availableBalance || 0), color)}
         </Typography>
       </Box>
       <Box
