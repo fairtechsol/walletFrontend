@@ -69,7 +69,9 @@ const BoxComponent = (props: any) => {
           </Typography>
         </Box>
       </Box>
-      {!["ACTIVE", "", undefined, null].includes(status) ? (
+ 
+      {!["ACTIVE", undefined, null].includes(status) ? (
+       
         <Box
           sx={{
             // background: "rgba(0,0,0,1)",
@@ -123,7 +125,8 @@ const BoxComponent = (props: any) => {
                   fontWeight: "400",
                 }}
               >
-                suspended
+                {status === "WINNER" || status === "LOSER" ? status : 'suspended'} 
+                {/* suspended */}
               </Typography>
             </Box>
           </Box>
