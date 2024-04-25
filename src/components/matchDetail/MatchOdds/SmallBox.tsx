@@ -42,7 +42,7 @@ const SmallBox = (props: any) => {
           }}
         >
           {" "}
-          {handleNumber(parseFloat(valueA), color)}
+          {handleNumber(parseFloat(valueA || 0.00), color)}
           {/* {valueA < 0 ? ` ${valueA}` : `${valueA}`}{" "} */}
         </Typography>
       </Box>
@@ -78,7 +78,7 @@ const SmallBox = (props: any) => {
           }}
         >
           {" "}
-          {handleNumber(parseFloat(valueB), color)}
+          {handleNumber(parseFloat(valueB || 0.00), color)}
           {/* {valueB < 0 ? ` ${valueB}` : `${valueB}`}{" "} */}
         </Typography>
       </Box>
