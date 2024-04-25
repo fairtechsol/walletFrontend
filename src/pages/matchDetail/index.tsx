@@ -10,7 +10,7 @@ import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
-import { socketService } from "../../socketManager";
+import { socket, socketService } from "../../socketManager";
 import {
   AllBetDelete,
   getMatchDetail,
@@ -225,7 +225,7 @@ const MatchDetail = () => {
 
   useEffect(() => {
     try {
-      if (success && profileDetail?.roleName) {
+      if (success && profileDetail?.roleName && socket) {
         socketService.match.getMatchRatesOff(state?.matchId);
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
@@ -257,7 +257,7 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail?.roleName]);
+  }, [success, profileDetail?.roleName, socket]);
 
   useEffect(() => {
     return () => {

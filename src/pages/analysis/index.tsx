@@ -80,7 +80,7 @@ const Analysis = () => {
 
   useEffect(() => {
     try {
-      if (socket?.connected && success) {
+      if (socket && success) {
         socketService.match.matchResultDeclaredOff();
         socketService.match.matchResultUnDeclaredOff();
         socketService.match.matchAddedOff();
@@ -93,7 +93,7 @@ const Analysis = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [socket?.connected, success]);
+  }, [socket, success]);
 
   useEffect(() => {
     return () => {
