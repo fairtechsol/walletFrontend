@@ -66,7 +66,7 @@ const DataShow = (props: DataShowInterface) => {
                 fontWeight: "600",
               }}
             >
-              {value2}
+              {handleNumber(parseFloat(value2), "white")}
             </Typography>
           ) : null}
         </Box>
