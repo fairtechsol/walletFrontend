@@ -123,6 +123,7 @@ const matchListSlice = createSlice({
           matchOdd,
           quickbookmaker,
           sessionBettings,
+          setWinner,
         } = action?.payload;
         state.matchDetail = {
           ...state.matchDetail,
@@ -136,6 +137,7 @@ const matchListSlice = createSlice({
           matchOdd: matchOdd,
           quickBookmaker: quickbookmaker,
           sessionBettings: sessionBettings,
+          setWinner:setWinner,
         };
       })
       .addCase(matchListReset, (state) => {

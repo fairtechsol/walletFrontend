@@ -435,6 +435,26 @@ const MatchDetail = () => {
               }
             />
           )}
+           {matchDetail?.setWinner?.length >0 && matchDetail?.setWinner
+            ?.filter((item: any) => item?.isActive)
+            ?.map((item: any, index: any) => {
+              return (
+                <MatchOdds
+                  key={index}
+                  currentMatch={matchDetail}
+                  session={"setWinner"}
+                  minBet={Math.floor(item?.minBet) || 0}
+                  maxBet={Math.floor(item?.maxBet) || 0}
+                  typeOfBet={convertString(item?.name)}
+                  matchOddsData={item}
+                  data={
+                    item?.runners?.length > 0
+                      ? item?.runners
+                      : []
+                  }
+                />
+              );
+            })}
           {matchDetail?.firstHalfGoal?.length >0 && matchDetail?.firstHalfGoal
             ?.filter((item: any) => item?.isActive)
             ?.map((bookmaker: any, index: any) => {

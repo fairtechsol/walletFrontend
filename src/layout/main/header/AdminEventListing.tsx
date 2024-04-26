@@ -8,6 +8,7 @@ import {
   Play,
   TEAM,
   TREND,
+  Tennis,
   WALLET,
 } from "../../../assets";
 import AdminEventComponent from "./AdminEventComponent";
@@ -20,6 +21,7 @@ const data = [
   { id: 1, title: "INPLAY", image: Play, url: "live_market" },
   { id: 1, title: "CRICKET", image: Cricket, url: "matchList/cricket" },
   { id: 1, title: "FOOTBALL", image: Football, url: "matchList/football" },
+  { id: 1, title: "TENNIS", image: Tennis, url: "matchList/tennis" },
   { id: 2, title: "Add Account", image: ADDACCOUNT, url: "add_account" },
   { id: 3, title: "Client list", image: TEAM, url: "list_of_clients" },
 
