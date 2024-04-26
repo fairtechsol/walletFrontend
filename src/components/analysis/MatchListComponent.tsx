@@ -4,7 +4,6 @@ import { CHECK } from "../../assets";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import moment from "moment-timezone";
-import { formatToINR } from "../../helper";
 import { IconConstants } from "../../helper/gameConstants";
 
 const MatchListComponent = (props: any) => {

@@ -48,7 +48,16 @@ const MatchOdds = (props: any) => {
   const onSubmit = (value: any) => {
     handleBlock(value, !locked, typeOfBet);
   };
-  return (
+  
+  const handleRates = (betType:string, team:string) => {
+    const number = betType.match(/\d+$/);
+
+    const dynamicKey = `user${team}RateSetWinner${number}`;
+    
+    const rate = currentMatch?.profitLossDataMatch[dynamicKey];
+    return parseFloat(rate);
+};
+ return (
     <Box
       key="odds"
       sx={{
@@ -568,32 +577,8 @@ const MatchOdds = (props: any) => {
                   name={
                     currentMatch?.teamA
                   }
-                  rates={
-                    typeOfBet === "Match Odds"
-                      ? currentMatch?.profitLossDataMatch?.teamARate
-                        ? currentMatch?.profitLossDataMatch?.teamARate
-                        : 0
-                      : typeOfBet === "Tied Match" ||
-                        typeOfBet === "Manual Tied Match"
-                      ? currentMatch?.profitLossDataMatch?.yesRateTie
-                        ? currentMatch?.profitLossDataMatch?.yesRateTie
-                        : 0
-                      : typeOfBet === "Market Complete Match"
-                      ? currentMatch?.profitLossDataMatch?.yesRateComplete
-                        ? currentMatch?.profitLossDataMatch?.yesRateComplete
-                        : 0
-                      : 0
-                  }
-                  color={
-                    (typeOfBet === "Match Odds"
-                      ? currentMatch?.profitLossDataMatch?.teamARate
-                      : typeOfBet === "Tied Match" ||
-                        typeOfBet === "Manual Tied Match"
-                      ? currentMatch?.profitLossDataMatch?.yesRateTie
-                      : currentMatch?.profitLossDataMatch?.yesRateComplete) < 0
-                      ? "#FF4D4D"
-                      : "#319E5B"
-                  }
+                  rates={handleRates(typeOfBet,"TeamA")}
+                  color={handleRates(typeOfBet,"TeamA")<0 ? "#FF4D4D":"#319E5B"}
                   data={data?.length > 0 ? data[0] : []}
                   lock={handleLock(data?.length > 0 ? data[0] : [])}
                   team={"teamA"}
@@ -602,33 +587,9 @@ const MatchOdds = (props: any) => {
                 <BoxComponent
                   // teamImage={currentMatch?.teamB_Image}
                   team={"teamB"}
-                  color={
-                    (typeOfBet === "Match Odds"
-                      ? currentMatch?.profitLossDataMatch?.teamBRate
-                      : typeOfBet === "Tied Match" ||
-                        typeOfBet === "Manual Tied Match"
-                      ? currentMatch?.profitLossDataMatch?.noRateTie
-                      : currentMatch?.profitLossDataMatch?.noRateComplete) < 0
-                      ? "#FF4D4D"
-                      : "#319E5B"
-                  }
+                  color={handleRates(typeOfBet,"TeamB")<0 ? "#FF4D4D":"#319E5B"}
                   name={currentMatch?.teamB}
-                  rates={
-                    typeOfBet === "Match Odds"
-                      ? currentMatch?.profitLossDataMatch?.teamBRate
-                        ? currentMatch?.profitLossDataMatch?.teamBRate
-                        : 0
-                      : typeOfBet === "Tied Match" ||
-                        typeOfBet === "Manual Tied Match"
-                      ? currentMatch?.profitLossDataMatch?.noRateTie
-                        ? currentMatch?.profitLossDataMatch?.noRateTie
-                        : 0
-                      : typeOfBet === "Market Complete Match"
-                      ? currentMatch?.profitLossDataMatch?.noRateComplete
-                        ? currentMatch?.profitLossDataMatch?.noRateComplete
-                        : 0
-                      : 0
-                  }
+                  rates={handleRates(typeOfBet,"TeamB")}
                   data={data?.length > 0 ? data[1] : []}
                   lock={handleLock(data?.length > 0 ? data[1] : [])}
                   align="end"
@@ -637,35 +598,10 @@ const MatchOdds = (props: any) => {
                   <>
                     <Divider />
                     <BoxComponent
-                  // teamImage={currentMatch?.teamB_Image}
                   team={"teamC"}
-                  color={
-                    (typeOfBet === "Match Odds"
-                      ? currentMatch?.profitLossDataMatch?.teamBRate
-                      : typeOfBet === "Tied Match" ||
-                        typeOfBet === "Manual Tied Match"
-                      ? currentMatch?.profitLossDataMatch?.noRateTie
-                      : currentMatch?.profitLossDataMatch?.noRateComplete) < 0
-                      ? "#FF4D4D"
-                      : "#319E5B"
-                  }
+                  color={handleRates(typeOfBet,"TeamC")<0 ? "#FF4D4D":"#319E5B"}
                   name={currentMatch?.teamC}
-                  rates={
-                    typeOfBet === "Match Odds"
-                      ? currentMatch?.profitLossDataMatch?.teamBRate
-                        ? currentMatch?.profitLossDataMatch?.teamBRate
-                        : 0
-                      : typeOfBet === "Tied Match" ||
-                        typeOfBet === "Manual Tied Match"
-                      ? currentMatch?.profitLossDataMatch?.noRateTie
-                        ? currentMatch?.profitLossDataMatch?.noRateTie
-                        : 0
-                      : typeOfBet === "Market Complete Match"
-                      ? currentMatch?.profitLossDataMatch?.noRateComplete
-                        ? currentMatch?.profitLossDataMatch?.noRateComplete
-                        : 0
-                      : 0
-                  }
+                  rates={handleRates(typeOfBet,"TeamC")}
                   data={data?.length > 0 ? data[1] : []}
                   lock={handleLock(data?.length > 0 ? data[1] : [])}
                   align="end"
