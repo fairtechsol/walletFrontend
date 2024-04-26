@@ -135,26 +135,33 @@ export const Constants = {
   WEBSOCKET: "websocket",
   POLLING: "polling",
   PRODUCTION: "production",
-  DEVELOPMENT: "development",
 };
 
+// export const baseUrls = {
+//   socket:
+//     process.env.NODE_ENV === Constants.PRODUCTION
+//       ? Constants.apiBasePath
+//       : Constants.localPath,
+//   thirdParty:
+//     process.env.NODE_ENV === Constants.PRODUCTION
+//       ? Constants.thirdParty
+//       : Constants.localPathThird,
+//   expertSocket:
+//     process.env.NODE_ENV === Constants.PRODUCTION
+//       ? Constants.expertPath
+//       : Constants.localPathExpert,
+// };
 export const baseUrls = {
   socket:
     process.env.NODE_ENV === Constants.PRODUCTION
       ? Constants.apiBasePathLive
-      : process.env.NODE_ENV === Constants.DEVELOPMENT
-      ? Constants.apiBasePath
       : Constants.localPath,
   thirdParty:
     process.env.NODE_ENV === Constants.PRODUCTION
       ? Constants.thirdPartyLive
-      : process.env.NODE_ENV === Constants.DEVELOPMENT
-      ? Constants.thirdParty
       : Constants.localPathThird,
   expertSocket:
     process.env.NODE_ENV === Constants.PRODUCTION
       ? Constants.expertPathLive
-      : process.env.NODE_ENV === Constants.DEVELOPMENT
-      ? Constants.expertPath
       : Constants.localPathExpert,
 };
