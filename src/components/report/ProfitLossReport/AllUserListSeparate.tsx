@@ -42,7 +42,7 @@ const AllUserListSeparate = ({
   const [showSubUsers, setSubSusers] = useState({
     value: false,
     id: "",
-    roleName: item?.roleName,
+    roleName: "",
     url: null,
   });
 
@@ -177,18 +177,18 @@ const AllUserListSeparate = ({
                     showSubUsers?.id === item?.userId
                   ) {
                     setSubSusers({
-                      ...showSubUsers,
                       value: false,
                       id: "",
                       url: null,
+                      roleName: "",
                     });
                     setShowChildUserList(false);
                   } else {
                     setSubSusers({
-                      ...showSubUsers,
                       value: true,
                       id: item?.userId,
                       url: item?.url,
+                      roleName: item?.roleName,
                     });
                     setShowChildUserList(true);
                   }
