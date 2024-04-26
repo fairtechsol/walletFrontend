@@ -1,4 +1,4 @@
-import { Box, Typography,useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
 import {
   ARROWDOWN,
@@ -10,7 +10,7 @@ import {
 } from "../../../assets";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { formatToINR } from "../../../helper";
+import { handleNumber } from "../../../helper";
 import moment from "moment";
 import {
   getDomainProfitLoss,
@@ -19,7 +19,6 @@ import {
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
 import { useDispatch } from "react-redux";
-import theme from "../../../theme";
 
 const RowHeaderMatches = ({
   item,
@@ -27,10 +26,13 @@ const RowHeaderMatches = ({
   endDate,
   getHandleReport,
   show,
+  color
 }: any) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
+  const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
+
   return (
     <>
       <Box
@@ -71,7 +73,7 @@ const RowHeaderMatches = ({
       >
         <Box
           sx={{
-            width: { xs: "5%", sm: "5%", lg: "5%" },
+            width: { xs: "10%", sm: "5%", lg: "5%" },
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -94,7 +96,7 @@ const RowHeaderMatches = ({
         </Box>
         <Box
           sx={{
-            width: { xs: "55%", sm: "55%", lg: "55%" },
+            width: { xs: "40%", sm: "55%", lg: "55%" },
             height: "100%",
             alignItems: "center",
             display: "flex",
@@ -166,29 +168,14 @@ const RowHeaderMatches = ({
                 fontSize: { lg: "14px", xs: "10px" },
                 fontWeight: "700",
                 color: "white",
-                lineHeight: "0.9"
+                lineHeight: "0.9",
               }}
             >
-              {Number(item?.totalLoss) >= 0 ? (
-                <>
-                  <span style={{ visibility: "hidden" }}>-</span>
-                  {formatToINR(
-                    parseFloat(item?.totalLoss || 0).toFixed(2)
-                  )}{" "}
-                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                  ${formatToINR(
-                    parseFloat(item?.totalDeduction || 0).toFixed(2)
-                  )})`}
-                </>
-              ) : (
-                <>
-                  {formatToINR(parseFloat(item?.totalLoss || 0).toFixed(2))}{" "}
-                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                  ${formatToINR(
-                    parseFloat(item?.totalDeduction || 0).toFixed(2)
-                  )})`}
-                </>
-              )}{" "}
+                {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}
+                {`${matchesMobile ? "TD(1%)" : "Total Deduction"} : `}
+                {handleNumber(parseFloat(item?.totalDeduction || 0),color)}{" "}
+                {/* {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
+                ${handleNumber(parseFloat(item?.totalDeduction || 0),color)})`} */}
             </Typography>
           </Box>
         </Box>
@@ -196,7 +183,7 @@ const RowHeaderMatches = ({
           sx={{
             background: "#0B4F26",
             paddingX: "2px",
-            width: { xs: "15%", sm: "15%", lg: "15%" },
+            width: { xs: "25%", sm: "15%", lg: "15%" },
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",

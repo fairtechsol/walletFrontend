@@ -9,7 +9,6 @@ import { IconConstants } from "../../helper/gameConstants";
 
 const MatchListComponent = (props: any) => {
   const { team, team2, selected, mode, data, setSelected } = props;
-
   const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
@@ -293,7 +292,7 @@ const MatchListComponent = (props: any) => {
               <StockBox
                 value={
                   data?.teamARate
-                    ? formatToINR(parseFloat(data?.teamARate).toFixed(2))
+                    ? data?.teamARate
                     : 0
                 }
                 up={data?.teamARate >= 0 ? true : false}
@@ -313,7 +312,7 @@ const MatchListComponent = (props: any) => {
               <StockBox
                 value={
                   data?.teamBRate
-                    ? formatToINR(parseFloat(data?.teamBRate).toFixed(2))
+                    ? data?.teamBRate
                     : 0
                 }
                 up={data?.teamBRate >= 0 ? true : false}

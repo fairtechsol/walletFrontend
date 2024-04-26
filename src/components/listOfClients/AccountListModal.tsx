@@ -1,9 +1,7 @@
 import { Box, useMediaQuery, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { RootState } from "../../store/store";
 import AccountListRow from "./AccountListRow";
 import ListHeader from "./ListHeader";
-import { useSelector } from "react-redux";
 import Pagination from "../Common/Pagination";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
@@ -22,10 +20,8 @@ const AccountListTable = ({
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [newData, setNewData] = useState([]);
+  const [dataCount, setDataCount] = useState<any>(0);
   const [newTotalBalance, setNewTotalBalance] = useState(null);
-  const { userModalList } = useSelector(
-    (state: RootState) => state.user.userList
-  );
 
   const getUserList = async ({
     userName,
@@ -41,6 +37,7 @@ const AccountListTable = ({
       );
       if (resp) {
         setNewData(resp?.data?.list);
+        setDataCount(resp?.data?.count);
       }
     } catch (error: any) {
       console.error(error);
@@ -74,7 +71,7 @@ const AccountListTable = ({
       userName: "",
       currentPage: currentPage,
     });
-  }, [id]);
+  }, [id, currentPage]);
 
   return (
     <>
@@ -155,7 +152,7 @@ const AccountListTable = ({
                     showOptions={true}
                     show={true}
                     containerStyle={{ background: "#FFE094" }}
-                    profit={element.profit_loss >= 0}
+                    profit={(+element?.userBal?.profitLoss || 0) >= 0}
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
                     element={element}
@@ -176,7 +173,7 @@ const AccountListTable = ({
                     show={true}
                     // showChildModal={true}
                     containerStyle={{ background: "#ECECEC" }}
-                    profit={element.profit_loss >= 0}
+                    profit={(+element?.userBal?.profitLoss || 0) >= 0}
                     fContainerStyle={{ background: "#F8C851" }}
                     fTextStyle={{ color: "#0B4F26" }}
                     element={element}
@@ -191,10 +188,7 @@ const AccountListTable = ({
         </Box>
         <Pagination
           currentPage={currentPage}
-          pages={Math.ceil(
-            parseInt(userModalList?.count ? userModalList?.count : 1) /
-              Constants.pageLimit
-          )}
+          pages={Math.ceil(parseInt(dataCount) / Constants.pageLimit)}
           setCurrentPage={setCurrentPage}
         />
       </Box>

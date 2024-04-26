@@ -60,6 +60,10 @@ const FullAllBets = (props: any) => {
               color: ["NO", "YES"].includes(v?.betType) ? "#FFF" : "black",
               background: ["NO", "YES"].includes(v?.betType)
                 ? "#319E5B"
+                : v?.marketType === "completeMatch" ||
+                  v?.marketType === "tiedMatch2" ||
+                  v?.marketType === "tiedMatch1"
+                ? "#faf11b"
                 : "#F1C550",
               deleteReason: v?.deleteReason,
               id: v?.id,
@@ -76,6 +80,10 @@ const FullAllBets = (props: any) => {
               color: ["NO", "YES"].includes(v?.betType) ? "#FFF" : "black",
               background: ["NO", "YES"].includes(v?.betType)
                 ? "#319E5B"
+                : v?.marketType === "completeMatch" ||
+                  v?.marketType === "tiedMatch2" ||
+                  v?.marketType === "tiedMatch1"
+                ? "#faf11b"
                 : "#F1C550",
               deleteReason: v?.deleteReason,
             },

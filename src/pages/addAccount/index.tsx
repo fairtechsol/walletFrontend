@@ -36,6 +36,7 @@ import {
 import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import _, { debounce } from "lodash";
 import { formatToINR } from "../../helper";
+import { toast } from "react-toastify";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -139,6 +140,22 @@ const AddAccount = () => {
     validationSchema: addUserValidation(userAlreadyExist),
     onSubmit: (values: any) => {
       setSubmitLoading(true);
+      if (values.roleName.value !== "expert") {
+        if (values.creditRefrence < 0) {
+          toast.error("Credit Reference too low");
+          setSubmitLoading(false);
+          return;
+        } else if (values.creditRefrence > 99999999999) {
+          toast.error("Credit Reference Limit Exceed", {
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          setSubmitLoading(false);
+          return;
+        }
+      }
       try {
         const commonPayload = {
           userName: values.userName,

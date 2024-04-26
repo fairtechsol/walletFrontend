@@ -8,7 +8,7 @@ import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import service from "../../service";
-import { socketService } from "../../socketManager";
+import { socket, socketService } from "../../socketManager";
 import {
   getMatchDetail,
   getPlacedBets,
@@ -272,7 +272,7 @@ const LockMatchScreen = () => {
 
   useEffect(() => {
     try {
-      if (success && profileDetail?.roleName) {
+      if (success && profileDetail?.roleName && socket) {
         socketService.match.getMatchRatesOff(state?.matchId);
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
@@ -304,7 +304,7 @@ const LockMatchScreen = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail?.roleName]);
+  }, [success, profileDetail?.roleName, socket]);
 
   useEffect(() => {
     return () => {

@@ -226,8 +226,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
             fContainerStyle,
           ]}
         >
-          <Typography
-            variant="h5"
+          <Typography variant="h5"
+            
             onClick={(e: any) => {
               e.stopPropagation();
               if (!["user", "expert"].includes(element?.roleName)) {
@@ -294,7 +294,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">
+          <Typography 
+          sx={{ fontSize: "10px", fontWeight: "600"}}>
             {typeOfAmount === "credit" && creditValue > 0 ? (
               <>
                 {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
@@ -320,7 +321,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">
+          <Typography sx={{ fontSize: "10px",  fontWeight: "600"}} >
             {Number(+element?.balance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
@@ -351,7 +352,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5" sx={{ color: "white" }}>
+          <Typography  sx={{ color: "white", fontSize:"10px" , fontWeight: "600" }}>
             {formattedValue}
           </Typography>
           <StyledImage
@@ -380,7 +381,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5" sx={{ color: "white" }}>
+          <Typography  sx={{ color: "white", fontSize:"10px" , fontWeight: "600"}}>
             {formattedPLValue}
           </Typography>
           <StyledImage
@@ -409,7 +410,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">
+          <Typography sx={{ fontSize: "10px" , fontWeight: "600"}}>
             {formatAmount(element?.commission || "0")}
           </Typography>
         </Box>
@@ -423,7 +424,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">
+          <Typography sx={{ fontSize: "10px" , fontWeight: "600"}}>
             {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
               +element?.userBal?.exposure || 0
             )}
@@ -439,7 +440,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">
+          <Typography sx={{ fontSize: "10px" , fontWeight: "600"}}>
             {Number(+element?.availableBalance || 0) >= 0 ? (
               <>
                 <span style={{ visibility: "hidden" }}>-</span>
@@ -522,7 +523,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             paddingX: "10px",
           }}
         >
-          <Typography variant="h5">
+          <Typography sx={{ fontSize: "10px" , fontWeight: "600"}}>
             {typeOfAmount === "exposure" && exposureValue > 0
               ? new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                   Number(exposureValue)
@@ -542,7 +543,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography variant="h5">{`${element.roleName ?? ""} ${
+          <Typography sx={{ fontSize: "10px" , fontWeight: "600"}}>{`${element.roleName ?? ""} ${
             element.roleName === "superAdmin"
               ? element?.isUrl
                 ? "(url)"
@@ -571,7 +572,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
             sx={[
               {
                 width: {
-                  lg: "11vw",
+                  lg: "9.7vw",
                   md: "25vw",
                   xs: "96vw",
                 },
@@ -609,21 +610,26 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   >
                     {element?.matchComissionType ? (
                       <>
-                        <Typography
-                          variant="h5"
+                        <Typography variant="h5"
+                          
                           sx={[
                             {
                               color: "white",
                               textAlign: { lg: "left", xs: "left" },
-                              width: { lg: "100px", xs: "100px" },
+                              width: { lg: "150px", xs: "100px" },
+                              // fontSize: "10px"
                             },
                             fTextStyle,
                           ]}
                         >
-                          {element?.matchComissionType} Com
+                          {element?.matchComissionType} Com 
+                          {":"}{" "}
+                          {element?.matchCommission
+                            ? element?.matchCommission
+                            : 0}
                         </Typography>
-                        <Typography
-                          variant="h5"
+                        {/* <Typography
+                          
                           sx={[
                             {
                               color: "white",
@@ -633,16 +639,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             fTextStyle,
                           ]}
                         >
-                          {":"}{" "}
-                          {element?.matchCommission
-                            ? element?.matchCommission
-                            : 0}
-                        </Typography>
+                         
+                        </Typography> */}
                       </>
                     ) : (
                       <>
-                        <Typography
-                          variant="h5"
+                        <Typography variant="h5"
+                          
                           sx={[
                             {
                               color: "white",
@@ -652,10 +655,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             fTextStyle,
                           ]}
                         >
-                          Match Com
+                          Match Com   : 0
                         </Typography>
-                        <Typography
-                          variant="h5"
+                        {/* <Typography
+                          
                           sx={[
                             {
                               color: "white",
@@ -664,29 +667,32 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             fTextStyle,
                           ]}
                         >
-                          : 0
-                        </Typography>
+                        
+                        </Typography> */}
                       </>
                     )}
                   </Box>
 
                   <Box sx={{ display: "flex" }}>
                     <Box sx={{ display: "flex" }}>
-                      <Typography
-                        variant="h5"
+                      <Typography variant="h5"
+                        
                         sx={[
                           {
                             color: "white",
                             textAlign: { lg: "left", xs: "left" },
-                            width: { lg: "100px", xs: "100px" },
+                            width: { lg: "150px", xs: "100px" },
                           },
                           fTextStyle,
                         ]}
                       >
-                        Session Com
+                        Session Com     {": "}
+                        {element?.sessionCommission
+                        ? element?.sessionCommission
+                        : 0}
                       </Typography>
-                      <Typography
-                        variant="h5"
+                      {/* <Typography
+                        
                         sx={[
                           {
                             color: "white",
@@ -696,11 +702,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           fTextStyle,
                         ]}
                       >
-                        {": "}
-                      </Typography>
+                    
+                      </Typography> */}
                     </Box>
-                    <Typography
-                      variant="h5"
+                    {/* <Typography
+                      
                       sx={[
                         {
                           color: "white",
@@ -713,14 +719,14 @@ const AccountListRow = (props: AccountListRowInterface) => {
                       {element?.sessionCommission
                         ? element?.sessionCommission
                         : 0}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 </Box>
                 {showCReport && (
                   <Box
                     sx={{
                       display: "flex",
-                      marginTop: { lg: "10px", xs: "0" },
+                      marginTop: { lg: "0px", xs: "0" },
                       justifyContent: "space-between",
                       alignItems: "center",
                       cursor: "pointer",
@@ -738,8 +744,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                       }
                     }}
                   >
-                    <Typography
-                      variant="h5"
+                    <Typography variant="h5"
+                      
                       sx={[
                         {
                           color: "white",

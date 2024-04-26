@@ -11,7 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
-import { formatToINR } from "../../../helper";
+import {  handleNumber } from "../../../helper";
 
 const SessionComponentMatches = ({
   item,
@@ -24,6 +24,7 @@ const SessionComponentMatches = ({
   userDetail,
   selectedChildBetId,
   setSelectedChildBetId,
+  color
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -234,7 +235,7 @@ const SessionComponentMatches = ({
             <Typography
               sx={{ fontSize: "15px", fontWeight: "700", color: "white" }}
             >
-              {formatToINR(Number(item?.totalLoss).toFixed(2))}
+              {handleNumber(parseFloat(item?.totalLoss), color)}
             </Typography>
             <StyledImage
               src={ArrowDown}

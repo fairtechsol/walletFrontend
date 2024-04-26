@@ -2,6 +2,8 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import BoxButton from "./BoxButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const MobileViewUserDetails = (props: any) => {
   const {
@@ -69,6 +71,9 @@ const MobileViewUserDetails = (props: any) => {
     }
   };
 
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   return (
     <Box
       sx={[
@@ -185,7 +190,7 @@ const MobileViewUserDetails = (props: any) => {
                   marginLeft: "5px",
                 }}
               >
-                {elementToUDM?.userName}
+                {profileDetail?.userName}
               </Typography>
             </Box>
             <Box
@@ -211,7 +216,7 @@ const MobileViewUserDetails = (props: any) => {
                   alignItems: "center",
                 }}
               >
-                {formatIndianCurrency(parseFloat(elementToUDM?.balance))}
+                {formatIndianCurrency(parseFloat(elementToUDM?.balance || 0))}
               </Typography>
             </Box>
 
@@ -423,7 +428,7 @@ const MobileViewUserDetails = (props: any) => {
             >
               {" "}
               {formatIndianCurrency(
-                parseFloat(elementToUDM?.userBal?.profitLoss)
+                parseFloat(elementToUDM?.userBal?.profitLoss || 0)
               )}
             </Typography>
           </Box>

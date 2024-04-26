@@ -75,7 +75,31 @@ const TeamRowComponent = (props: any) => {
       </Box>
 
       {ballStatus ? (
+        <>
         <Box
+            sx={{
+              height: "40px",
+              display: "flex",
+              width: { lg: "60%", xs: "80%" },
+              justifyContent: { xs: "flex-end", lg: "flex-end" },
+              alignItems: "center",
+            }}
+          >
+            <MoneyBox color={color} rates={rates} />
+          </Box><Box
+            sx={{
+              height: "40px",
+              display: "flex",
+              width: {
+                xs: "80%",
+                lg: "27%",
+                md: "82%"
+              },
+              justifyContent: { xs: "flex-end", lg: "flex-end" },
+              alignItems: "center",
+            }}
+          ></Box>
+         <Box
           sx={{
             background: "#000",
             height: isTeamC ? "125px" : "82px",
@@ -83,7 +107,7 @@ const TeamRowComponent = (props: any) => {
             right: 0,
             top: 0,
             zIndex: 10,
-            width: { lg: "30%", xs: "40.5%" },
+            width: { lg: "21.5%", xs: "40.5%" },
             justifyContent: { xs: "center", lg: "center" },
             alignItems: "center",
             display: "flex",
@@ -91,6 +115,8 @@ const TeamRowComponent = (props: any) => {
         >
           <img src={BallStart} style={{ width: "113px", height: "32px" }} />
         </Box>
+
+        </>
       ) : (
         <>
           {status ? (

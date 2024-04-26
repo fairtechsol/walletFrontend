@@ -112,7 +112,7 @@ const SeasonMarketBox = (props: any) => {
                 // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 // right: 0,
-                width: { lg: "36.5%", md: "60%", xs: "60.5%" },
+                width: { lg: "37.5%", md: "60%", xs: "63.5%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
                 display: "flex",

@@ -1,10 +1,9 @@
-import { Box, Typography,useMediaQuery } from "@mui/material";
+import { Box, Typography,useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import moment from "moment";
-import theme from "../../../theme";
 const SessionBetSeperate = ({
   profit,
   mark,
@@ -14,6 +13,7 @@ const SessionBetSeperate = ({
   isArrow,
 }: any) => {
   const [visible, setVisible] = useState(true);
+  const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
@@ -494,10 +494,8 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: "#F8C851",
-          // marginX: { xs: "1px", lg: "1px" },
-          display: "flex",
-          justifyContent: "center",
-          // margin: "1px"
+          display: {xs: "initial",lg:"flex"},
+          justifyContent:{ lg:"center", xs: "initial"},
         }}
       >
         <Typography
@@ -512,8 +510,8 @@ const SingleBox = ({
         </Typography>
         <Typography
           sx={{
-            maxHeight: "1em",
-            overflow: "visible",
+            maxHeight: "2em",
+            overflowY: "scroll",
             lineHeight: 1,
             fontWeight: "600",
             fontSize: { lg: "12px", xs: "10px" },
@@ -616,7 +614,7 @@ const SingleBox = ({
       <Typography
         sx={{
           fontWeight: "400",
-          fontSize: "12px",
+          fontSize: "11px",
           color: "white",
           wordWrap: "break-word",
           lineHeight: "0.9"

@@ -4,7 +4,7 @@ const ListHeader = ({ userName }: any) => {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: {xs: "150%", lg: "100%", md: "100%"},
         display: "flex",
         height: "45px",
         background: "#262626",
@@ -25,14 +25,14 @@ const ListHeader = ({ userName }: any) => {
         }}
       >
         <Typography
-          sx={{ color: "white", fontSize: { lg: "12px", xs: "7px" } }}
+          sx={{ color: "white", fontSize: { lg: "12px", xs: "9px" } }}
         >
           {userName ?? "User Details"}
         </Typography>
       </Box>
       <Box
         sx={{
-          width: { lg: "10.5vw", md: "10.5vw", xs: "26.5vw" },
+          width: { lg: "10.5vw", md: "10.5vw", xs: "24.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -53,7 +53,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+          width: { lg: "11vw", md: "9.5vw", xs: "30vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -74,7 +74,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "11.5vw", xs: "27.5vw" },
+          width: { lg: "12.5vw", md: "11.5vw", xs: "35.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -95,7 +95,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "11.5vw", xs: "26.5vw" },
+          width: { lg: "11.5vw", md: "11.5vw", xs: "25vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -116,7 +116,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "18.5vw" },
+          width: { lg: "9vw", md: "9.5vw", xs: "18vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -128,7 +128,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "7px" },
+            fontSize: { lg: "12px", xs: "9px" },
             lineHeight: "1.1",
           }}
         >
@@ -137,7 +137,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "18.5vw" },
+          width: { lg: "9.5vw", md: "9.5vw", xs: "18vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -149,7 +149,7 @@ const ListHeader = ({ userName }: any) => {
         <Typography
           sx={{
             color: "white",
-            fontSize: { lg: "12px", xs: "6px" },
+            fontSize: { lg: "12px", xs: "9px" },
             lineHeight: "1.1",
           }}
         >
@@ -158,7 +158,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "9.5vw", md: "9.5vw", xs: "26.5vw" },
+          width: { lg: "10.5vw", md: "9.5vw", xs: "30.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -178,7 +178,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "5vw", md: "5vw", xs: "14vw" },
+          width: { lg: "5vw", md: "5vw", xs: "13vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "center",
@@ -222,7 +222,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "8vw", md: "8vw", xs: "18.5vw" },
+          width: { lg: "7.5vw", md: "8vw", xs: "24.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -243,7 +243,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "10vw", md: "10vw", xs: "26.5vw" },
+          width: { lg: "8.5vw", md: "10vw", xs: "23.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",

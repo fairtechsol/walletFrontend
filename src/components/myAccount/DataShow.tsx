@@ -1,8 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { DataShowInterface } from "../../interface/myAccount";
+import { handleNumber } from "../../helper";
 
 const DataShow = (props: DataShowInterface) => {
-  const { title, value, containerStyle, valueContainerStyle } = props;
+  const { title, value, value2, value3, containerStyle, valueContainerStyle } =
+    props;
   return (
     <Box
       sx={[
@@ -31,7 +33,7 @@ const DataShow = (props: DataShowInterface) => {
       <Box
         sx={[
           {
-            flex: 0.5,
+            flex: 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -41,11 +43,33 @@ const DataShow = (props: DataShowInterface) => {
           valueContainerStyle,
         ]}
       >
-        <Typography
-          sx={{ color: "white", fontSize: "12px", fontWeight: "600" }}
-        >
-          {value}
-        </Typography>
+        <Box sx={{ alignItems: "center", justifyContent: "space-around" }}>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              color: "white",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            {handleNumber(parseFloat(value), "white")}{" "}
+            {value3 && `(${value3}%)`}
+          </Typography>
+
+          {value2 && (
+            <Typography
+              sx={{
+                fontSize: { lg: "11px", xs: "10px" },
+                marginTop: -0.4,
+                color: "white",
+                textAlign: "center",
+                fontWeight: "600",
+              }}
+            >
+              {value2}
+            </Typography>
+          )}
+        </Box>
       </Box>
     </Box>
   );

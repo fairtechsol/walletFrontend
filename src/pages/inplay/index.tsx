@@ -15,7 +15,7 @@ import { getMatchListInplay } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Constants } from "../../utils/Constants";
-import { socketService } from "../../socketManager";
+import { socket, socketService } from "../../socketManager";
 import { makeStyles } from "@material-ui/core/styles";
 const Inplay = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Inplay = () => {
 
   useEffect(() => {
     try {
-      if (success && profileDetail?.roleName) {
+      if (success && profileDetail?.roleName && socket) {
         socketService.match.matchResultDeclaredOff();
         socketService.match.matchResultUnDeclaredOff();
         socketService.match.declaredMatchResultAllUserOff();
@@ -67,7 +67,7 @@ const Inplay = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail?.roleName]);
+  }, [success, profileDetail?.roleName, socket]);
 
   useEffect(() => {
     return () => {
