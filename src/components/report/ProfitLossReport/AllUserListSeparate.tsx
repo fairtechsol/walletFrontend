@@ -177,15 +177,14 @@ const AllUserListSeparate = ({
                     showSubUsers?.id === item?.userId
                   ) {
                     setSubSusers({
-                      ...showSubUsers,
                       value: false,
                       id: "",
                       url: null,
+                      roleName: "",
                     });
                     setShowChildUserList(false);
                   } else {
                     setSubSusers({
-                      ...showSubUsers,
                       value: true,
                       id: item?.userId,
                       url: item?.url,
