@@ -156,6 +156,9 @@ const SessionBetSeperate = ({
               sx={{
                 maxHeight: { xs: "200px", lg: "420px" },
                 overflowY: "auto",
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
               }}
             >
               {allBetsData?.map((i: any, k: any) => {

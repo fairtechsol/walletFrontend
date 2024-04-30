@@ -15,7 +15,7 @@ const ListHeader = ({ userName }: any) => {
     >
       <Box
         sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "18.5vw" },
+          width: { lg: "12.1vw", md: "20.5vw", xs: "18.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -32,7 +32,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "10.5vw", md: "10.5vw", xs: "24.5vw" },
+          width: { lg: "11.1vw", md: "10.5vw", xs: "24.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -74,7 +74,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "12.5vw", md: "11.5vw", xs: "35.5vw" },
+          width: { lg: "12.8vw", md: "11.5vw", xs: "35.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -158,7 +158,7 @@ const ListHeader = ({ userName }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "10.5vw", md: "9.5vw", xs: "30.5vw" },
+          width: { lg: "9.6vw", md: "9.5vw", xs: "30.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
