@@ -24,7 +24,7 @@ const RowComponentMatches = ({
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
-  color
+  color,
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
