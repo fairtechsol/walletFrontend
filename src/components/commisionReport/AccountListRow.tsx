@@ -70,7 +70,7 @@ const AccountListRow = ({
         <Box
           sx={[
             {
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+              width: { lg: "12.2%", md: "12.5%", xs: "12.5%" },
               display: "flex",
               paddingX: "10px",
               justifyContent: "space-between",
@@ -101,7 +101,7 @@ const AccountListRow = ({
         <Box
           sx={[
             {
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+              width: { lg: "12.3%", md: "12.5%", xs: "12.5%" },
               display: "flex",
               paddingX: "10px",
               justifyContent: "space-between",
@@ -129,7 +129,7 @@ const AccountListRow = ({
             {elementToUDM.commissionType}
           </Typography>
         </Box>
-        <Box
+        {/* <Box
           sx={[
             {
               width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
@@ -159,7 +159,7 @@ const AccountListRow = ({
           >
             {elementToUDM?.name}
           </Typography>
-        </Box>
+        </Box> */}
         <Box
           sx={{
             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
@@ -186,7 +186,7 @@ const AccountListRow = ({
         </Box>
         <Box
           sx={{
-            width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+            width: { lg: "24.5%", md: "12.5%", xs: "12.5%" },
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",
@@ -195,7 +195,7 @@ const AccountListRow = ({
           }}
         >
           <Typography
-            sx={[{ fontSize: "12px", fontWeight: "600" }, fTextStyle]}
+            sx={[{ fontSize: "12px", fontWeight: "600", lineHeight: "1"}, fTextStyle]}
           >
             {elementToUDM?.teamBet}
           </Typography>

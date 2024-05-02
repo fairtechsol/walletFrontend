@@ -61,7 +61,7 @@ const HeaderRowCommissionReport = () => {
           Commission Type
         </Typography>
       </Box>
-      <Box
+      {/* <Box
         sx={{
           width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
           display: "flex",
@@ -79,7 +79,7 @@ const HeaderRowCommissionReport = () => {
         >
           Name
         </Typography>
-      </Box>
+      </Box> */}
 
       <Box
         sx={{
@@ -102,7 +102,7 @@ const HeaderRowCommissionReport = () => {
       </Box>
       <Box
         sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+          width: { lg: "24.5%", md: "12.5%", xs: "12.5%" },
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
