@@ -33,6 +33,7 @@ import {
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { formatToINR } from "../../helper";
+import { ApiConstants } from "../../utils/Constants";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -53,7 +54,9 @@ const MatchDetail = () => {
     (state: RootState) => state.match.bets
   );
 
-  const { currentOdd } = useSelector((state: RootState) => state.match.matchList);
+  const { currentOdd } = useSelector(
+    (state: RootState) => state.match.matchList
+  );
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -75,7 +78,15 @@ const MatchDetail = () => {
           placeBetId: item.id,
         });
       });
-      dispatch(AllBetDelete(payload));
+      dispatch(
+        AllBetDelete({
+          url:
+            matchDetail?.matchType === "cricket"
+              ? ApiConstants.MATCH.BETDELETE
+              : ApiConstants.MATCH.BETDELETEOTHER,
+          data: payload,
+        })
+      );
     } catch (e) {
       console.log(e);
     }
@@ -93,10 +104,14 @@ const MatchDetail = () => {
   const matchResultDeclared = (event: any) => {
     try {
       if (event?.matchId === state?.matchId) {
-        if (location.pathname.includes("market_analysis")) {
-          navigate(`/wallet/market_analysis`);
+        if (event?.betType === "quickbookmaker1") {
+          if (location.pathname.includes("market_analysis")) {
+            navigate(`/wallet/market_analysis`);
+          } else {
+            navigate(`/wallet/live_market`);
+          }
         } else {
-          navigate(`/wallet/live_market`);
+          dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
       }
     } catch (e) {
@@ -130,7 +145,7 @@ const MatchDetail = () => {
   };
 
   const setSessionBetsPlaced = (event: any) => {
-        try {
+    try {
       if (event?.jobData?.placedBet?.matchId === state?.matchId) {
         dispatch(
           updateBetsPlaced({
@@ -211,7 +226,12 @@ const MatchDetail = () => {
     try {
       window.scrollTo(0, 0);
       if (state?.matchId && profileDetail?.roleName) {
-        dispatch(getMatchDetail({matchId : state?.matchId , matchType : state?.matchType}));
+        dispatch(
+          getMatchDetail({
+            matchId: state?.matchId,
+            matchType: state?.matchType,
+          })
+        );
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${state?.matchId}`));
@@ -277,7 +297,12 @@ const MatchDetail = () => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         if (state?.matchId) {
-          dispatch(getMatchDetail({matchId : state?.matchId , matchType : state?.matchType}));
+          dispatch(
+            getMatchDetail({
+              matchId: state?.matchId,
+              matchType: state?.matchType,
+            })
+          );
           dispatch(getUserProfitLoss(state?.matchId));
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -296,7 +321,12 @@ const MatchDetail = () => {
   useEffect(() => {
     if (state?.matchId) {
       const intervalId = setInterval(() => {
-        dispatch(getMatchDetail({matchId : state?.matchId , matchType : state?.matchType}));
+        dispatch(
+          getMatchDetail({
+            matchId: state?.matchId,
+            matchType: state?.matchType,
+          })
+        );
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(getPlacedBets(`eq${state?.matchId}`));
       }, 14100 * 1000);
@@ -306,18 +336,19 @@ const MatchDetail = () => {
       };
     }
   }, []);
-  const convertString =(str:string)=> {
-    if(str?.includes('_')){
-      let words = str.split('_');
+  const convertString = (str: string) => {
+    if (str?.includes("_")) {
+      let words = str.split("_");
       for (let i = 0; i < words.length; i++) {
-          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
       }
-      return words.join(' ');
-    }else{
+      return words.join(" ");
+    } else {
       return str;
     }
-   
-}
+  };
+
+  console.log(matchDetail, "urateri");
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -371,6 +402,7 @@ const MatchDetail = () => {
               showBox={matchDetail?.matchOdd?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
               maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
+              liveData={matchDetail?.matchOdd}
               data={
                 matchDetail?.matchOdd?.runners?.length > 0
                   ? matchDetail?.matchOdd?.runners
@@ -385,6 +417,7 @@ const MatchDetail = () => {
               showBox={matchDetail?.matchOdd?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
               maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
+              liveData={matchDetail?.halfTime}
               data={
                 matchDetail?.matchOdd?.runners?.length > 0
                   ? matchDetail?.matchOdd?.runners
@@ -401,6 +434,7 @@ const MatchDetail = () => {
               }
               minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
+              liveData={matchDetail?.marketCompleteMatch}
               data={
                 matchDetail?.marketCompleteMatch?.runners?.length > 0
                   ? matchDetail?.marketCompleteMatch?.runners
@@ -415,6 +449,7 @@ const MatchDetail = () => {
               showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
+              liveData={matchDetail?.apiTideMatch}
               data={
                 matchDetail?.apiTideMatch?.runners?.length > 0
                   ? matchDetail?.apiTideMatch?.runners
@@ -428,6 +463,7 @@ const MatchDetail = () => {
               showBox={matchDetail?.bookmaker?.activeStatus === "save"}
               minBet={Math.floor(matchDetail?.bookmaker?.minBet)}
               maxBet={Math.floor(matchDetail?.bookmaker?.maxBet)}
+              liveData={matchDetail?.bookmaker}
               data={
                 matchDetail?.bookmaker?.runners?.length > 0
                   ? matchDetail?.bookmaker?.runners
@@ -435,58 +471,57 @@ const MatchDetail = () => {
               }
             />
           )}
-           {matchDetail?.setWinner?.length >0 && matchDetail?.setWinner
-            ?.filter((item: any) => item?.isActive)
-            ?.map((item: any, index: any) => {
-              return (
-                <MatchOdds
-                  key={index}
-                  currentMatch={matchDetail}
-                  session={"setWinner"}
-                  minBet={Math.floor(item?.minBet) || 0}
-                  maxBet={Math.floor(item?.maxBet) || 0}
-                  typeOfBet={convertString(item?.name)}
-                  matchOddsData={item}
-                  data={
-                    item?.runners?.length > 0
-                      ? item?.runners
-                      : []
-                  }
-                />
-              );
-            })}
-          {matchDetail?.firstHalfGoal?.length >0 && matchDetail?.firstHalfGoal
-            ?.filter((item: any) => item?.isActive)
-            ?.map((bookmaker: any, index: any) => {
-              return (
-                <MatchOdds
-                  key={index}
-                  currentMatch={matchDetail}
-                  session={"firstHalfGoal"}
-                  data={bookmaker}
-                  minBet={Math.floor(bookmaker?.minBet) || 0}
-                  maxBet={Math.floor(bookmaker?.maxBet) || 0}
-                  typeOfBet={convertString(bookmaker?.name)}
-                  matchOddsData={bookmaker}
-                />
-              );
-            })}
-            {matchDetail?.overUnder?.length >0 && matchDetail?.overUnder
-            ?.filter((item: any) => item?.isActive)
-            ?.map((bookmaker: any, index: any) => {
-              return (
-                <MatchOdds
-                  key={index}
-                  currentMatch={matchDetail}
-                  session={"overUnder"}
-                  data={bookmaker}
-                  minBet={Math.floor(bookmaker?.minBet) || 0}
-                  maxBet={Math.floor(bookmaker?.maxBet) || 0}
-                  typeOfBet={convertString(bookmaker?.name)}
-                  matchOddsData={bookmaker}
-                />
-              );
-            })}
+          {matchDetail?.setWinner?.length > 0 &&
+            matchDetail?.setWinner
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any, index: any) => {
+                return (
+                  <MatchOdds
+                    key={index}
+                    currentMatch={matchDetail}
+                    session={"setWinner"}
+                    minBet={Math.floor(item?.minBet) || 0}
+                    maxBet={Math.floor(item?.maxBet) || 0}
+                    typeOfBet={convertString(item?.name)}
+                    liveData={item}
+                    data={item?.runners?.length > 0 ? item?.runners : []}
+                  />
+                );
+              })}
+          {matchDetail?.firstHalfGoal?.length > 0 &&
+            matchDetail?.firstHalfGoal
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any, index: any) => {
+                return (
+                  <MatchOdds
+                    key={index}
+                    currentMatch={matchDetail}
+                    session={"firstHalfGoal"}
+                    data={item?.runners?.length > 0 ? item?.runners : []}
+                    minBet={Math.floor(item?.minBet) || 0}
+                    maxBet={Math.floor(item?.maxBet) || 0}
+                    typeOfBet={convertString(item?.name)}
+                    liveData={item}
+                  />
+                );
+              })}
+          {matchDetail?.overUnder?.length > 0 &&
+            matchDetail?.overUnder
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any, index: any) => {
+                return (
+                  <MatchOdds
+                    key={index}
+                    currentMatch={matchDetail}
+                    session={"overUnder"}
+                    data={item?.runners?.length > 0 ? item?.runners : []}
+                    minBet={Math.floor(item?.minBet) || 0}
+                    maxBet={Math.floor(item?.maxBet) || 0}
+                    typeOfBet={convertString(item?.name)}
+                    liveData={item}
+                  />
+                );
+              })}
           {matchDetail?.quickBookmaker
             ?.filter((item: any) => item?.isActive)
             ?.map((bookmaker: any, index: any) => {
@@ -499,7 +534,7 @@ const MatchDetail = () => {
                   minBet={Math.floor(bookmaker?.minBet) || 0}
                   maxBet={Math.floor(bookmaker?.maxBet) || 0}
                   typeOfBet={bookmaker?.name}
-                  matchOddsData={bookmaker}
+                  liveData={bookmaker}
                 />
               );
             })}
@@ -511,6 +546,7 @@ const MatchDetail = () => {
               session={"manualBookMaker"}
               minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
+              liveData={matchDetail?.manualTiedMatch}
             />
           )}
 
@@ -592,9 +628,7 @@ const MatchDetail = () => {
                   <RunsBox
                     key={v?.id}
                     item={v}
-                    currentOdd={
-                      currentOdd?.betId === v?.id ? currentOdd : null
-                    }
+                    currentOdd={currentOdd?.betId === v?.id ? currentOdd : null}
                   />
                 );
               })}
@@ -737,6 +771,7 @@ const MatchDetail = () => {
                 data={matchDetail?.manualTiedMatch}
                 minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
                 maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
+                liveData={matchDetail?.manualTiedMatch}
               />
             )}
             <Box sx={{ width: "150px", height: "3px" }}></Box>

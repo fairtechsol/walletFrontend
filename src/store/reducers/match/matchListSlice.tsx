@@ -87,8 +87,8 @@ const matchListSlice = createSlice({
 
             let matchOdds =
               state?.matchListInplay?.matches[matchListIndex]?.matchOdds &&
-              state?.matchListInplay?.matches[matchListIndex]?.matchOdds.length >
-                0
+              state?.matchListInplay?.matches[matchListIndex]?.matchOdds
+                .length > 0
                 ? state.matchListInplay?.matches[matchListIndex]?.matchOdds[0]
                 : state.matchListInplay?.matches[matchListIndex]?.matchOdds;
 
@@ -124,20 +124,26 @@ const matchListSlice = createSlice({
           quickbookmaker,
           sessionBettings,
           setWinner,
+          firstHalfGoal,
+          halfTime,
+          overUnder,
         } = action?.payload;
         state.matchDetail = {
           ...state.matchDetail,
           manualSessionActive: sessionBettings?.length >= 0 ? true : false,
           apiSessionActive: apiSession?.length >= 0 ? true : false,
-          apiSession: apiSession,
+          apiSession,
           apiTideMatch: apiTiedMatch,
-          bookmaker: bookmaker,
+          bookmaker,
           manualTiedMatch: manualTideMatch,
-          marketCompleteMatch: marketCompleteMatch,
-          matchOdd: matchOdd,
+          marketCompleteMatch,
+          matchOdd,
           quickBookmaker: quickbookmaker,
-          sessionBettings: sessionBettings,
-          setWinner:setWinner,
+          sessionBettings,
+          setWinner,
+          firstHalfGoal,
+          halfTime,
+          overUnder,
         };
       })
       .addCase(matchListReset, (state) => {
@@ -148,7 +154,8 @@ const matchListSlice = createSlice({
           ...state.getProfile,
           userBal: {
             ...state?.getProfile?.userBal,
-            exposure: action?.payload?.newUserExposure ?? action?.payload?.exposure,
+            exposure:
+              action?.payload?.newUserExposure ?? action?.payload?.exposure,
           },
         };
       })
@@ -245,7 +252,9 @@ const matchListSlice = createSlice({
       })
       .addCase(updateTeamRates.fulfilled, (state, action) => {
         const { userRedisObj, jobData } = action?.payload;
-        if (["tiedMatch2", "tiedMatch1"].includes(jobData?.newBet?.marketType)) {
+        if (
+          ["tiedMatch2", "tiedMatch1"].includes(jobData?.newBet?.marketType)
+        ) {
           state.matchDetail.profitLossDataMatch = {
             ...state.matchDetail.profitLossDataMatch,
             yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
