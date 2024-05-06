@@ -188,6 +188,9 @@ const AllRateSeperate = ({
               sx={{
                 maxHeight: { xs: "200px", lg: "420px" },
                 overflowY: "auto",
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
               }}
             >
               {/* {console.warn("allBetsData :", allBetsData)} */}

@@ -42,7 +42,7 @@ const AllUserListSeparate = ({
   const [showSubUsers, setSubSusers] = useState({
     value: false,
     id: "",
-    roleName: item?.roleName,
+    roleName: "",
     url: null,
   });
 
@@ -177,18 +177,18 @@ const AllUserListSeparate = ({
                     showSubUsers?.id === item?.userId
                   ) {
                     setSubSusers({
-                      ...showSubUsers,
                       value: false,
                       id: "",
                       url: null,
+                      roleName: "",
                     });
                     setShowChildUserList(false);
                   } else {
                     setSubSusers({
-                      ...showSubUsers,
                       value: true,
                       id: item?.userId,
                       url: item?.url,
+                      roleName: item?.roleName,
                     });
                     setShowChildUserList(true);
                   }
@@ -706,6 +706,9 @@ const AllUserListSeparate = ({
                               maxHeight: "51vh",
                               overflow: "hidden",
                               overflowY: "auto",
+                              "::-webkit-scrollbar": {
+                                display: "none",
+                              },
                               marginY: { xs: ".2vh", lg: "1vh" },
                               padding: 0.2,
                             }}
