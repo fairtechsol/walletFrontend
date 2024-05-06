@@ -23,6 +23,7 @@ import {
   updateBetDataOnDeclare,
   updateBetsPlaced,
   updateMatchRates,
+  updateMatchRatesOnMarketUndeclare,
   updateMaxLossForBet,
   updateMaxLossForBetOnUndeclare,
   updateMaxLossForDeleteBet,
@@ -104,10 +105,14 @@ const MatchDetail = () => {
   const matchResultDeclared = (event: any) => {
     try {
       if (event?.matchId === state?.matchId) {
-        if (location.pathname.includes("market_analysis")) {
-          navigate(`/wallet/market_analysis`);
+        if (event?.betType === "quickbookmaker1") {
+          if (location.pathname.includes("market_analysis")) {
+            navigate(`/wallet/market_analysis`);
+          } else {
+            navigate(`/wallet/live_market`);
+          }
         } else {
-          navigate(`/wallet/live_market`);
+          dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
       }
     } catch (e) {
@@ -218,6 +223,19 @@ const MatchDetail = () => {
     }
   };
 
+  const handleMatchResultUndeclared = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        if (event?.betType !== "quickbookmaker1") {
+          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(updateMatchRatesOnMarketUndeclare(event));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       window.scrollTo(0, 0);
@@ -249,6 +267,7 @@ const MatchDetail = () => {
         socketService.match.sessionDeleteBetOff();
         socketService.match.sessionResultOff();
         socketService.match.sessionResultUnDeclareOff();
+        socketService.match.matchResultUnDeclaredOff();
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -267,6 +286,7 @@ const MatchDetail = () => {
         socketService.match.sessionResultUnDeclare(
           handleSessionResultUnDeclare
         );
+        socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
       }
     } catch (e) {
       console.log(e);
@@ -285,6 +305,7 @@ const MatchDetail = () => {
       socketService.match.sessionDeleteBetOff();
       socketService.match.sessionResultOff();
       socketService.match.sessionResultUnDeclareOff();
+      socketService.match.matchResultUnDeclaredOff();
       dispatch(resetUserProfitLoss());
     };
   }, [state?.matchId]);
