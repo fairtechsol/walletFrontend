@@ -676,7 +676,9 @@ const MatchOdds = (props: any) => {
                 <BoxComponent
                   // teamImage={currentMatch?.teamA_Image}
                   name={
-                    typeOfBet !== "Match Odds" ? "Yes" : currentMatch?.teamA
+                    typeOfBet !== ("Match Odds" || "Half Time")
+                      ? "Yes"
+                      : currentMatch?.teamA
                   }
                   rates={
                     currentMatch?.profitLossDataMatch
@@ -721,7 +723,7 @@ const MatchOdds = (props: any) => {
                         : "#319E5B"
                       : "#319E5B"
                   }
-                  name={typeOfBet !== "Match Odds" ? "No" : currentMatch?.teamB}
+                  name={typeOfBet !==("Match Odds" || "Half Time") ? "No" : currentMatch?.teamB}
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[

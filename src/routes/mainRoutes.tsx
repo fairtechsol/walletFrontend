@@ -74,7 +74,6 @@ const MainRoutes = {
       path: Constants.MainPaths.match,
       element: <LockMatchScreen />,
     },
-    
     {
       path: Constants.MainPaths.matchList,
       element: <MatchList />,

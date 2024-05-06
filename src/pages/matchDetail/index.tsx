@@ -103,14 +103,14 @@ const MatchDetail = () => {
     }
   };
   const matchResultDeclared = (event: any) => {
+    debugger;
     try {
       if (event?.matchId === state?.matchId) {
-        if (event?.betType === "quickbookmaker1") {
-          if (location.pathname.includes("market_analysis")) {
-            navigate(`/wallet/market_analysis`);
-          } else {
-            navigate(`/wallet/live_market`);
-          }
+        if (
+          event?.gameType === "cricket" ||
+          event?.betType === "quickbookmaker1"
+        ) {
+          navigate(`/wallet/${location.pathname.split("/")[2]}`);
         } else {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -364,6 +364,8 @@ const MatchDetail = () => {
       return str;
     }
   };
+
+  console.log(location.pathname.split("/")[2], "location");
   return (
     <>
       {visible && selectedBetData.length > 0 && (
