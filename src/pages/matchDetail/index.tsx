@@ -102,15 +102,17 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+
   const matchResultDeclared = (event: any) => {
-    debugger;
     try {
       if (event?.matchId === state?.matchId) {
         if (
           event?.gameType === "cricket" ||
           event?.betType === "quickbookmaker1"
         ) {
-          navigate(`/wallet/${location.pathname.split("/")[2]}`);
+          navigate(
+            `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
+          );
         } else {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -235,6 +237,12 @@ const MatchDetail = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (matchDetail && matchDetail?.stopAt) {
+      navigate(`/wallet/${location.pathname.split("/")[2]}/${state.matchType}`);
+    }
+  }, [matchDetail]);
 
   useEffect(() => {
     try {
@@ -365,7 +373,6 @@ const MatchDetail = () => {
     }
   };
 
-  console.log(location.pathname.split("/")[2], "location");
   return (
     <>
       {visible && selectedBetData.length > 0 && (

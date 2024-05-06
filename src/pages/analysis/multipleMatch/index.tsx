@@ -129,7 +129,7 @@ const MultipleMatch = () => {
           event?.gameType === "cricket" ||
           event?.betType === "quickbookmaker1"
         ) {
-          navigate(`/wallet/${location.pathname.split("/")[2]}`);
+          navigate(`/wallet/market_analysis`);
         } else {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -220,6 +220,15 @@ const MultipleMatch = () => {
       return str;
     }
   };
+
+  useEffect(() => {
+    if (
+      multipleMatchDetail &&
+      multipleMatchDetail.some((item: any) => item?.stopAt)
+    ) {
+      navigate(`/wallet/market_analysis`);
+    }
+  }, [multipleMatchDetail]);
 
   useEffect(() => {
     try {

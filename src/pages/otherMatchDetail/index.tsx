@@ -110,7 +110,7 @@ const MatchDetail = () => {
           event?.gameType === "cricket" ||
           event?.betType === "quickbookmaker1"
         ) {
-          navigate(`/wallet/${location.pathname.split("/")[2]}`);
+          navigate(`/wallet/${location.pathname.split("/")[2]}/${state.matchType}`);
         } else {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -195,19 +195,6 @@ const MatchDetail = () => {
     }
   };
 
-  const handleMatchResultUndeclared = (event: any) => {
-    try {
-      if (event?.matchId === state?.matchId) {
-        if (event?.betType !== "quickbookmaker1") {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
-          dispatch(updateMatchRatesOnMarketUndeclare(event));
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // const handleSessionResultDeclare = (event: any) => {
   //   try {
   //     if (event?.matchId === state?.matchId) {
@@ -235,6 +222,20 @@ const MatchDetail = () => {
   //     console.log(error);
   //   }
   // };
+
+  
+  const handleMatchResultUndeclared = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        if (event?.betType !== "quickbookmaker1") {
+          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(updateMatchRatesOnMarketUndeclare(event));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     try {
