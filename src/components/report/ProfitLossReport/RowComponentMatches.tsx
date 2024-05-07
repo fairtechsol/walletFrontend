@@ -220,7 +220,7 @@ const RowComponentMatches = ({
           sx={{
             background: item?.rateProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
             paddingX: "2px",
-            width: { xs: "25%", sm: "25%", lg: "25%" },
+            width: "25%",
             height: "100%",
             marginLeft: 0.1,
             justifyContent: "center",
@@ -259,7 +259,6 @@ const RowComponentMatches = ({
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-           
             }}
           >
             <Typography
@@ -267,14 +266,12 @@ const RowComponentMatches = ({
                 fontSize: { xs: "10px", lg: "14px" },
                 fontWeight: "700",
                 color: "white",
-                lineHeight: "0.9"
+                lineHeight: "0.9",
               }}
             >
-                {handleNumber(parseFloat(item?.rateProfitLoss || 0),color)}{" "}
-                  {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                  ${formatToINR(
-                    Number(item?.totalDeduction || 0)
-                  )})`}
+              {handleNumber(parseFloat(item?.rateProfitLoss || 0), color)}{" "}
+              {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
+                  ${formatToINR(Number(item?.totalDeduction || 0))})`}
             </Typography>
             <StyledImage
               src={ArrowDown}
@@ -352,7 +349,7 @@ const RowComponentMatches = ({
               sx={{
                 width: { lg: "25px", xs: "15px" },
                 height: { lg: "12px", xs: "8px" },
-                marginRight: {xs: "3px"}
+                marginRight: { xs: "3px" },
               }}
             />
           </Box>
@@ -373,7 +370,10 @@ const RowComponentMatches = ({
               {Number(item?.sessionProfitLoss) >= 0 ? (
                 <>
                   <span style={{ visibility: "hidden" }}>-</span>
-                  {handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)}
+                  {handleNumber(
+                    parseFloat(item?.sessionProfitLoss || 0),
+                    color
+                  )}
                 </>
               ) : (
                 handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)
@@ -384,7 +384,7 @@ const RowComponentMatches = ({
               sx={{
                 width: { lg: "20px", xs: "10px" },
                 height: { lg: "10px", xs: "6px" },
-                marginRight: {xs: "3px"},
+                marginRight: { xs: "3px" },
                 transform:
                   selectedId?.id === item?.matchId &&
                   selectedId?.type === "session_bet" &&
