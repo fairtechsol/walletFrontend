@@ -52,12 +52,19 @@ const MatchOdds = (props: any) => {
   };
 
   const handleRates = (betType: string, team: string) => {
-    const number = betType.match(/\d+$/);
+    try {
+      const number = betType.match(/\d+$/);
 
-    const dynamicKey = `user${team}RateSetWinner${number}`;
+      const dynamicKey = `user${team}RateSetWinner${number}`;
 
-    const rate = currentMatch?.profitLossDataMatch[dynamicKey];
-    return parseFloat(rate);
+      const rate = currentMatch?.profitLossDataMatch
+        ? currentMatch?.profitLossDataMatch[dynamicKey]
+        : 0;
+      return parseFloat(rate);
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
   };
 
   return (
@@ -723,7 +730,11 @@ const MatchOdds = (props: any) => {
                         : "#319E5B"
                       : "#319E5B"
                   }
-                  name={typeOfBet !==("Match Odds" || "Half Time") ? "No" : currentMatch?.teamB}
+                  name={
+                    typeOfBet !== ("Match Odds" || "Half Time")
+                      ? "No"
+                      : currentMatch?.teamB
+                  }
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
