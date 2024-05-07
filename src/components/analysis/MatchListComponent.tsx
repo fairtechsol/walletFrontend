@@ -289,11 +289,7 @@ const MatchListComponent = (props: any) => {
               }}
             >
               <StockBox
-                value={
-                  data?.teamARate
-                    ? data?.teamARate
-                    : 0
-                }
+                value={data?.teamARate ? data?.teamARate : 0}
                 up={data?.teamARate >= 0 ? true : false}
                 team={team}
                 mode={mode}
@@ -309,11 +305,7 @@ const MatchListComponent = (props: any) => {
               }}
             >
               <StockBox
-                value={
-                  data?.teamBRate
-                    ? data?.teamBRate
-                    : 0
-                }
+                value={data?.teamBRate ? data?.teamBRate : 0}
                 up={data?.teamBRate >= 0 ? true : false}
                 team={team2}
                 mode={mode}
@@ -335,6 +327,7 @@ const MatchListComponent = (props: any) => {
                 }
                 team={"Total Bet"}
                 mode={mode}
+                showFixed
               />
             </Box>
           </Box>

@@ -706,6 +706,9 @@ const AllUserListSeparate = ({
                               maxHeight: "51vh",
                               overflow: "hidden",
                               overflowY: "auto",
+                              "::-webkit-scrollbar": {
+                                display: "none",
+                              },
                               marginY: { xs: ".2vh", lg: "1vh" },
                               padding: 0.2,
                             }}

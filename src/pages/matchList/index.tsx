@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Loader from "../../components/Loader";
 import MatchComponent from "../../components/Inplay/MatchComponent";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getMatchListInplay } from "../../store/actions/match/matchAction";
@@ -19,7 +19,7 @@ import { socketService } from "../../socketManager";
 import { makeStyles } from "@material-ui/core/styles";
 const Inplay = () => {
   const navigate = useNavigate();
-  const {type} = useParams();
+  const { type } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { loading, matchListInplay, success } = useSelector(
@@ -38,16 +38,26 @@ const Inplay = () => {
   );
 
   const getMatchListService = () => {
-    dispatch(getMatchListInplay({ currentPage: currentPage , matchType:type }));
+    try {
+      setTimeout(() => {
+        dispatch(
+          getMatchListInplay({ currentPage: currentPage, matchType: type })
+        );
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     try {
-      dispatch(getMatchListInplay({ currentPage: currentPage , matchType:type }));
+      dispatch(
+        getMatchListInplay({ currentPage: currentPage, matchType: type })
+      );
     } catch (e) {
       console.log(e);
     }
-  }, [currentPage,type]);
+  }, [currentPage, type]);
 
   useEffect(() => {
     try {
@@ -69,7 +79,7 @@ const Inplay = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [success, profileDetail?.roleName]);
+  }, [success, profileDetail?.roleName, type]);
 
   useEffect(() => {
     return () => {
@@ -82,7 +92,7 @@ const Inplay = () => {
       socketService.match.unDeclaredMatchResultAllUserOff();
       socketService.match.matchAddedOff();
     };
-  }, []);
+  }, [type]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -95,7 +105,7 @@ const Inplay = () => {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []);
+  }, [type]);
   const classes = useStyles();
   return (
     <>
@@ -105,13 +115,16 @@ const Inplay = () => {
               <MatchComponent
                 key={match.id}
                 onClick={() => {
-                  navigate(`/wallet/matchList/${match?.matchType}/${match?.id}`, {
-                    state: {
-                      submit: true,
-                      matchId: match?.id,
-                      matchType:match?.matchType
-                    },
-                  });
+                  navigate(
+                    `/wallet/matchList/${match?.matchType}/${match?.id}`,
+                    {
+                      state: {
+                        submit: true,
+                        matchId: match?.id,
+                        matchType: match?.matchType,
+                      },
+                    }
+                  );
                 }}
                 top={true}
                 blur={false}

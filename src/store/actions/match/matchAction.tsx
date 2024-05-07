@@ -8,7 +8,13 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.INPLAY.MATCHLIST}?${requestData?.matchType ?`match.matchType=${requestData?.matchType}&`:''}page=${requestData?.currentPage}&limit=${Constants.pageLimit}&sort=match.startAt:ASC`
+        `${ApiConstants.INPLAY.MATCHLIST}?${
+          requestData?.matchType
+            ? `match.matchType=${requestData?.matchType}&`
+            : ""
+        }page=${requestData?.currentPage}&limit=${
+          Constants.pageLimit
+        }&sort=match.startAt:ASC`
       );
       if (resp) {
         return resp?.data;
@@ -25,7 +31,13 @@ export const getMatchDetail = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET}${requestData?.matchType != "cricket" ? `/other`:''}/${requestData?.matchId}${requestData?.matchType != "cricket"?`?matchType=${requestData?.matchType}`:''}`
+        `${ApiConstants.MATCH.GET}${
+          requestData?.matchType != "cricket" ? `/other` : ""
+        }/${requestData?.matchId}${
+          requestData?.matchType != "cricket"
+            ? `?matchType=${requestData?.matchType}`
+            : ""
+        }`
       );
       if (resp) {
         return resp?.data;
@@ -160,10 +172,7 @@ export const AllBetDelete = createAsyncThunk<any, any>(
   "bet/allbet",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${ApiConstants.MATCH.BETDELETE}`,
-        requestData
-      );
+      const resp = await service.post(requestData.url, requestData.data);
       if (resp) {
         return resp?.data;
       }
@@ -256,6 +265,12 @@ export const updateMaxLossForDeleteBet = createAsyncThunk<any, any>(
 );
 export const updateTeamRatesOnDelete = createAsyncThunk<any, any>(
   "/teamRates/updateOnDelete",
+  async (data) => {
+    return data;
+  }
+);
+export const updateMatchRatesOnMarketUndeclare = createAsyncThunk<any, any>(
+  "/teamRates/marketUndeclare",
   async (data) => {
     return data;
   }

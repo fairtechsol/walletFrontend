@@ -64,7 +64,9 @@ export const ApiConstants = {
   },
   MATCH: {
     GET: "match",
+    GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",
+    BETDELETEOTHER: "/bet/deleteMultipleBetForOther",
     GET_BETS: "/superadmin/bets",
     TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
     DOMAIN_PROFIT_LOSS: "/user/total/domain/profitLoss",
@@ -97,8 +99,8 @@ export const Constants = {
     walletSettings: "walletSettings",
     myAccount: "my-account",
     changePassword: "change-password",
-    matchList:"matchList/:type",
-    matchListMatches:"matchList/:type/:id",
+    matchList: "matchList/:type",
+    matchListMatches: "matchList/:type/:id",
   },
   WalletSettingsPaths: {
     root: "/wallet/walletSettings",
@@ -138,6 +140,118 @@ export const Constants = {
   POLLING: "polling",
   PRODUCTION: "production",
 };
+
+export const matchBettingType = {
+  matchOdd: "matchOdd",
+  bookmaker: "bookmaker",
+  quickbookmaker1: "quickbookmaker1",
+  quickbookmaker2: "quickbookmaker2",
+  quickbookmaker3: "quickbookmaker3",
+  tiedMatch1: "tiedMatch1",
+  tiedMatch2: "tiedMatch2",
+  completeMatch: "completeMatch",
+  completeManual: "completeManual",
+  setWinner1: "setWinner1",
+  setWinner2: "setWinner2",
+  ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
+    (prev, curr) => {
+      prev[`overUnder${curr}.5`] = `overUnder${curr}.5`;
+      return prev;
+    },
+    {}
+  ),
+  ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
+    (prev, curr) => {
+      prev[`firstHalfGoal${curr}.5`] = `firstHalfGoal${curr}.5`;
+      return prev;
+    },
+    {}
+  ),
+  halfTime: "halfTime",
+};
+
+export const profitLossDataForMatchConstants = {
+  [matchBettingType.matchOdd]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.bookmaker]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.quickbookmaker1]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.quickbookmaker2]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.quickbookmaker3]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.tiedMatch1]: {
+    A: "yesRateTie",
+    B: "noRateTie",
+  },
+  [matchBettingType.tiedMatch2]: {
+    A: "yesRateTie",
+    B: "noRateTie",
+  },
+  [matchBettingType.completeMatch]: {
+    A: "yesRateComplete",
+    B: "noRateComplete",
+  },
+  [matchBettingType.completeManual]: {
+    A: "yesRateComplete",
+    B: "noRateComplete",
+  },
+  ...Array.from({ length: 20 }, (_, index) => index).reduce(
+    (prev: any, curr) => {
+      prev[`overUnder${curr}.5`] = {
+        A: `yesRateUnderOver${curr}.5`,
+        B: `noRateUnderOver${curr}.5`,
+      };
+      return prev;
+    },
+    {}
+  ),
+  ...Array.from({ length: 20 }, (_, index) => index).reduce(
+    (prev: any, curr) => {
+      prev[`firstHalfGoal${curr}.5`] = {
+        A: `yesRateFirstHalfGoal${curr}.5`,
+        B: `noRateFirstHalfGoal${curr}.5`,
+      };
+      return prev;
+    },
+    {}
+  ),
+  [matchBettingType.halfTime]: {
+    A: "userTeamARateHalfTime",
+    B: "userTeamBRateHalfTime",
+    C: "userTeamCRateHalfTime",
+  },
+
+  ...Array.from({ length: 20 }, (_, index) => index).reduce(
+    (prev: any, curr) => {
+      prev[`setWinner${curr}`] = {
+        A: `userTeamARateSetWinner${curr}`,
+        B: `userTeamBRateSetWinner${curr}`,
+        C: `userTeamCRateSetWinner${curr}`,
+      };
+      return prev;
+    },
+    {}
+  ),
+};
+
+// use below baseUrl for testing build
 
 // export const baseUrls = {
 //   socket:
