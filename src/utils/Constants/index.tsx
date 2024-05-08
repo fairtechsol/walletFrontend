@@ -1,3 +1,5 @@
+import { Cricket, Football, Tennis } from "../../assets";
+
 export const ApiConstants = {
   AUTH: {
     LOGIN: "/auth/login",
@@ -170,6 +172,17 @@ export const matchBettingType = {
   halfTime: "halfTime",
 };
 
+export const gameConstants = {
+  cricket: "cricket",
+  football: "football",
+  tennis: "tennis",
+};
+export const gameIconConstants = {
+  [gameConstants.cricket]: Cricket,
+  [gameConstants.football]: Football,
+  [gameConstants.tennis]: Tennis,
+};
+
 export const profitLossDataForMatchConstants = {
   [matchBettingType.matchOdd]: {
     A: "teamARate",
@@ -267,6 +280,8 @@ export const profitLossDataForMatchConstants = {
 //       ? Constants.expertPath
 //       : Constants.localPathExpert,
 // };
+
+// use below baseUrl for live build
 export const baseUrls = {
   socket:
     process.env.NODE_ENV === Constants.PRODUCTION

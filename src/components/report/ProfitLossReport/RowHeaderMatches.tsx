@@ -4,9 +4,6 @@ import {
   ARROWDOWN,
   ARROW_UP,
   ArrowDown,
-  Cricket,
-  Football,
-  Tennis,
 } from "../../../assets";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -21,6 +18,7 @@ import {
 import { useDispatch } from "react-redux";
 import RowComponentMatches from "./RowComponentMatches";
 import { useEffect, useState } from "react";
+import { gameIconConstants } from "../../../utils/Constants";
 
 const RowHeaderMatches = ({
   item,
@@ -100,15 +98,7 @@ const RowHeaderMatches = ({
           }}
         >
           <StyledImage
-            src={
-              item?.eventType === "cricket"
-                ? Cricket
-                : item?.eventType === "soccer"
-                ? Football
-                : item?.eventType === "tennis"
-                ? Tennis
-                : Cricket
-            }
+            src={gameIconConstants[item?.eventType]}
             sx={{ width: { lg: "35px", sm: "35px", xs: "22px" } }}
           />
         </Box>

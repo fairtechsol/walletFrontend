@@ -169,35 +169,18 @@ const analysisListSlice = createSlice({
         state.multipleMatchDetail = state?.multipleMatchDetail.map(
           (match: any) => {
             if (match?.id === jobData?.newBet?.matchId) {
-              if (userRedisObj[jobData?.teamCrateRedisKey]) {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    [profitLossDataForMatchConstants[
-                      jobData?.newBet?.marketType
-                    ].A]: userRedisObj[jobData?.teamArateRedisKey],
-                    [profitLossDataForMatchConstants[
-                      jobData?.newBet?.marketType
-                    ].B]: userRedisObj[jobData?.teamBrateRedisKey],
-                    [profitLossDataForMatchConstants[
-                      jobData?.newBet?.marketType
-                    ].C]: userRedisObj[jobData?.teamCrateRedisKey],
-                  },
-                };
-              } else
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    [profitLossDataForMatchConstants[
-                      jobData?.newBet?.marketType
-                    ].A]: userRedisObj[jobData?.teamArateRedisKey],
-                    [profitLossDataForMatchConstants[
-                      jobData?.newBet?.marketType
-                    ].B]: userRedisObj[jobData?.teamBrateRedisKey],
-                  },
-                };
+              return {
+                ...match,
+                profitLossDataMatch: {
+                  ...match.profitLossDataMatch,
+                  [profitLossDataForMatchConstants[jobData?.newBet?.marketType]
+                    .A]: userRedisObj[jobData?.teamArateRedisKey],
+                  [profitLossDataForMatchConstants[jobData?.newBet?.marketType]
+                    .B]: userRedisObj[jobData?.teamBrateRedisKey],
+                  [profitLossDataForMatchConstants[jobData?.newBet?.marketType]
+                    .C]: userRedisObj[jobData?.teamCrateRedisKey],
+                },
+              };
             } else return match;
           }
         );

@@ -104,7 +104,11 @@ const RowComponentMatches = ({
         </Box>
         <Box
           sx={{
-            width: { xs: "40%", sm: "55%", lg: "55%" },
+            width: {
+              xs: item?.eventType === "cricket" ? "40%" : "65%",
+              sm: item?.eventType === "cricket" ? "55%" : "80%",
+              lg: item?.eventType === "cricket" ? "55%" : "80%",
+            },
             position: "relative",
             height: "100%",
             paddingY: "4px",
@@ -288,113 +292,115 @@ const RowComponentMatches = ({
             />
           </Box>
         </Box>
-        <Box
-          onClick={(e) => {
-            e.stopPropagation();
-            if (
-              selectedId?.id === item?.matchId &&
-              selectedId?.type === "session_bet"
-            ) {
-              setShowSessions((prev) => !prev);
-              setShowListOfUsers(false);
-            } else {
-              setShowListOfUsers(false);
-              setShowSessions(true);
-              getBetReport({
-                eventType: item?.eventType,
-                matchId: item?.matchId,
-                type: "session_bet",
-                betId: "",
-                sessionBet: false,
-              });
-              dispatch(
-                getSessionProfitLoss({
+        {item?.eventType === "cricket" && (
+          <Box
+            onClick={(e) => {
+              e.stopPropagation();
+              if (
+                selectedId?.id === item?.matchId &&
+                selectedId?.type === "session_bet"
+              ) {
+                setShowSessions((prev) => !prev);
+                setShowListOfUsers(false);
+              } else {
+                setShowListOfUsers(false);
+                setShowSessions(true);
+                getBetReport({
+                  eventType: item?.eventType,
                   matchId: item?.matchId,
-                  id: user?.id,
-                })
-              );
-            }
-          }}
-          sx={{
-            background: item?.sessionProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
-            paddingX: "2px",
-            width: { xs: "25%", sm: "15%", lg: "15%" },
-            height: "100%",
-            marginLeft: 0.1,
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
-            paddingLeft: "10px",
-          }}
-        >
-          <Box
+                  type: "session_bet",
+                  betId: "",
+                  sessionBet: false,
+                });
+                dispatch(
+                  getSessionProfitLoss({
+                    matchId: item?.matchId,
+                    id: user?.id,
+                  })
+                );
+              }
+            }}
             sx={{
-              width: "100%",
+              background: item?.sessionProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
+              paddingX: "2px",
+              width: { xs: "25%", sm: "15%", lg: "15%" },
+              height: "100%",
+              marginLeft: 0.1,
+              justifyContent: "center",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              paddingLeft: "10px",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                fontSize: { lg: "12px", xs: "8px" },
-                fontWeight: "500",
-                color: "white",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              Session {matchesMobile ? "P/L" : "Profit/Loss"}
-            </Typography>
-            <StyledImage
-              src={item?.sessionProfitLoss > 0 ? ARROW_UP : ARROWDOWN}
+              <Typography
+                sx={{
+                  fontSize: { lg: "12px", xs: "8px" },
+                  fontWeight: "500",
+                  color: "white",
+                }}
+              >
+                Session {matchesMobile ? "P/L" : "Profit/Loss"}
+              </Typography>
+              <StyledImage
+                src={item?.sessionProfitLoss > 0 ? ARROW_UP : ARROWDOWN}
+                sx={{
+                  width: { lg: "25px", xs: "15px" },
+                  height: { lg: "12px", xs: "8px" },
+                  marginRight: { xs: "3px" },
+                }}
+              />
+            </Box>
+            <Box
               sx={{
-                width: { lg: "25px", xs: "15px" },
-                height: { lg: "12px", xs: "8px" },
-                marginRight: { xs: "3px" },
-              }}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: { xs: "10px", lg: "14px" },
-                fontWeight: "700",
-                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              {Number(item?.sessionProfitLoss) >= 0 ? (
-                <>
-                  <span style={{ visibility: "hidden" }}>-</span>
-                  {handleNumber(
-                    parseFloat(item?.sessionProfitLoss || 0),
-                    color
-                  )}
-                </>
-              ) : (
-                handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)
-              )}
-            </Typography>
-            <StyledImage
-              src={ArrowDown}
-              sx={{
-                width: { lg: "20px", xs: "10px" },
-                height: { lg: "10px", xs: "6px" },
-                marginRight: { xs: "3px" },
-                transform:
-                  selectedId?.id === item?.matchId &&
-                  selectedId?.type === "session_bet" &&
-                  showSessions
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
-              }}
-            />
+              <Typography
+                sx={{
+                  fontSize: { xs: "10px", lg: "14px" },
+                  fontWeight: "700",
+                  color: "white",
+                }}
+              >
+                {Number(item?.sessionProfitLoss) >= 0 ? (
+                  <>
+                    <span style={{ visibility: "hidden" }}>-</span>
+                    {handleNumber(
+                      parseFloat(item?.sessionProfitLoss || 0),
+                      color
+                    )}
+                  </>
+                ) : (
+                  handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)
+                )}
+              </Typography>
+              <StyledImage
+                src={ArrowDown}
+                sx={{
+                  width: { lg: "20px", xs: "10px" },
+                  height: { lg: "10px", xs: "6px" },
+                  marginRight: { xs: "3px" },
+                  transform:
+                    selectedId?.id === item?.matchId &&
+                    selectedId?.type === "session_bet" &&
+                    showSessions
+                      ? "rotate(180deg)"
+                      : "rotate(0deg)",
+                }}
+              />
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
       {selectedId?.id === item?.matchId && (
         <>
