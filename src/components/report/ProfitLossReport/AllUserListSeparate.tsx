@@ -44,6 +44,7 @@ const AllUserListSeparate = ({
     id: "",
     roleName: "",
     url: null,
+    eventType: "",
   });
 
   const getBetDataForChildUser = async (props: any) => {
@@ -181,6 +182,7 @@ const AllUserListSeparate = ({
                       id: "",
                       url: null,
                       roleName: "",
+                      eventType: "",
                     });
                     setShowChildUserList(false);
                   } else {
@@ -189,6 +191,7 @@ const AllUserListSeparate = ({
                       id: item?.userId,
                       url: item?.url,
                       roleName: item?.roleName,
+                      eventType: item?.eventType,
                     });
                     setShowChildUserList(true);
                   }
@@ -417,7 +420,10 @@ const AllUserListSeparate = ({
                   >
                     <Box
                       sx={{
-                        width: { xs: "50%", lg: "60%" },
+                        width: {
+                          xs: item?.eventType === "cricket" ? "50%" : "75%",
+                          lg: item?.eventType === "cricket" ? "60%" : "90%",
+                        },
                         position: "relative",
                         height: "100%",
                         paddingY: "4px",
@@ -558,109 +564,113 @@ const AllUserListSeparate = ({
                         />
                       </Box>
                     </Box>
-                    <Box
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (showSessions) {
-                          setShowSessions((prev) => !prev);
-                        } else {
-                          if (showBets) {
-                            setShowBets(false);
-                          }
-                          if (showSessionBets) {
-                            setShowSessionBets(false);
-                          }
-                          setShowSessions((prev) => !prev);
-                          getSessionDataForChildUser({
-                            matchId,
-                            userId: item?.userId,
-                            roleName: item?.roleName,
-                            searchId: "",
-                            url: item?.url,
-                          });
-                        }
-                      }}
-                      sx={{
-                        background:
-                          item?.sessionProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
-                        paddingX: "2px",
-                        width: { xs: "25%", lg: "30%" },
-                        height: "100%",
-                        marginLeft: 0.1,
-                        justifyContent: "center",
-                        display: "flex",
-                        flexDirection: "column",
-                        paddingLeft: "10px",
-                      }}
-                    >
+                    {item?.eventType === "cricket" && (
                       <Box
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (showSessions) {
+                            setShowSessions((prev) => !prev);
+                          } else {
+                            if (showBets) {
+                              setShowBets(false);
+                            }
+                            if (showSessionBets) {
+                              setShowSessionBets(false);
+                            }
+                            setShowSessions((prev) => !prev);
+                            getSessionDataForChildUser({
+                              matchId,
+                              userId: item?.userId,
+                              roleName: item?.roleName,
+                              searchId: "",
+                              url: item?.url,
+                            });
+                          }
+                        }}
                         sx={{
-                          width: "100%",
+                          background:
+                            item?.sessionProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
+                          paddingX: "2px",
+                          width: { xs: "25%", lg: "30%" },
+                          height: "100%",
+                          marginLeft: 0.1,
+                          justifyContent: "center",
                           display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
+                          flexDirection: "column",
+                          paddingLeft: "10px",
                         }}
                       >
-                        <Typography
+                        <Box
                           sx={{
-                            fontSize: { lg: "12px", xs: "8px" },
-                            fontWeight: "500",
-                            color: "white",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
                           }}
                         >
-                          Session {matchesMobile ? "P/L" : "Profit/Loss"}
-                        </Typography>
-                        <StyledImage
-                          src={
-                            item?.sessionProfitLoss > 0 ? ARROW_UP : ARROWDOWN
-                          }
+                          <Typography
+                            sx={{
+                              fontSize: { lg: "12px", xs: "8px" },
+                              fontWeight: "500",
+                              color: "white",
+                            }}
+                          >
+                            Session {matchesMobile ? "P/L" : "Profit/Loss"}
+                          </Typography>
+                          <StyledImage
+                            src={
+                              item?.sessionProfitLoss > 0 ? ARROW_UP : ARROWDOWN
+                            }
+                            sx={{
+                              width: { lg: "25px", xs: "15px" },
+                              height: { lg: "12px", xs: "8px" },
+                            }}
+                          />
+                        </Box>
+                        <Box
                           sx={{
-                            width: { lg: "25px", xs: "15px" },
-                            height: { lg: "12px", xs: "8px" },
-                          }}
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: { xs: "10px", lg: "14px" },
-                            fontWeight: "700",
-                            color: "white",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
                           }}
                         >
-                          {item?.sessionProfitLoss ? (
-                            Number(item?.sessionProfitLoss) >= 0 ? (
-                              <>
-                                <span style={{ visibility: "hidden" }}>-</span>
-                                {Number(item?.sessionProfitLoss).toFixed(2)}
-                              </>
-                            ) : (
-                              formatToINR(
-                                Number(item?.sessionProfitLoss).toFixed(2)
+                          <Typography
+                            sx={{
+                              fontSize: { xs: "10px", lg: "14px" },
+                              fontWeight: "700",
+                              color: "white",
+                            }}
+                          >
+                            {item?.sessionProfitLoss ? (
+                              Number(item?.sessionProfitLoss) >= 0 ? (
+                                <>
+                                  <span style={{ visibility: "hidden" }}>
+                                    -
+                                  </span>
+                                  {Number(item?.sessionProfitLoss).toFixed(2)}
+                                </>
+                              ) : (
+                                formatToINR(
+                                  Number(item?.sessionProfitLoss).toFixed(2)
+                                )
                               )
-                            )
-                          ) : (
-                            0.0
-                          )}
-                        </Typography>
-                        <StyledImage
-                          src={ArrowDown}
-                          sx={{
-                            width: { lg: "20px", xs: "10px" },
-                            height: { lg: "10px", xs: "6px" },
-                            transform: showSessions
-                              ? "rotate(180deg)"
-                              : "rotate(0deg)",
-                          }}
-                        />
+                            ) : (
+                              0.0
+                            )}
+                          </Typography>
+                          <StyledImage
+                            src={ArrowDown}
+                            sx={{
+                              width: { lg: "20px", xs: "10px" },
+                              height: { lg: "10px", xs: "6px" },
+                              transform: showSessions
+                                ? "rotate(180deg)"
+                                : "rotate(0deg)",
+                            }}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
+                    )}
                   </Box>
                   {/* {selectedId?.id === item?.matchId && ( */}
                   <>
@@ -807,6 +817,7 @@ const AllUserListSeparate = ({
                   id={showSubUsers?.id}
                   url={showSubUsers?.url}
                   show={showSubUsers?.value}
+                  eventType={showSubUsers?.eventType}
                   setShow={showSubUsers}
                   matchId={matchId}
                   bet1Data={bet1Data}

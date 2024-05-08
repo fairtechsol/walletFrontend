@@ -430,7 +430,7 @@ const RowComponentMatches = ({
                       return (
                         <AllUserListSeparate
                           key={index}
-                          item={profitLoss}
+                          item={{ ...profitLoss, eventType: item?.eventType }}
                           index={index + 1}
                           matchId={item?.matchId}
                           userId={item?.userId}
