@@ -208,7 +208,7 @@ const UserProfitLoss = (props: any) => {
                     fontSize: {
                       lg: "13px",
                       md: "12px",
-                      xs: matchesMobile ? "8px" : "8px",
+                      xs: "10px",
                     },
                     color: "black",
                     fontWeight: "600",
@@ -237,7 +237,7 @@ const UserProfitLoss = (props: any) => {
                     fontSize: {
                       lg: "13px",
                       md: "12px",
-                      xs: matchesMobile ? "8px" : "8px",
+                      xs: "10px",
                     },
                     color: "black",
                     fontWeight: "600",
