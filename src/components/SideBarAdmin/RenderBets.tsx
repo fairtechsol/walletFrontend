@@ -4,7 +4,7 @@ import { useState } from "react";
 import RenderOdds from "./RenderOdds";
 
 const RenderBets = (props: any) => {
-  const { i, handleDrawerToggle, colors } = props;
+  const { i, handleDrawerToggle, colors,matchType } = props;
   const [selected, setSelected] = useState(false);
 
   return (
@@ -33,6 +33,7 @@ const RenderBets = (props: any) => {
           i={i}
           handleDrawerToggle={handleDrawerToggle}
           colors={colors}
+          matchType={matchType}
         />
       )}
     </Box>

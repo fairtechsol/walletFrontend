@@ -72,6 +72,7 @@ const RenderGames = ({
               colors={colors}
               selectedCompetitionId={selectedCompetitionId}
               setSelectedCompetitionId={setSelectedCompetitionId}
+              matchType={selected?.matchType}
             />
           );
         })}
