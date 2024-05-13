@@ -9,8 +9,8 @@ const RenderOdds = (props: any) => {
     <Box
       onClick={(event: any) => {
         event.stopPropagation();
-        navigate(`/wallet/matchList/${matchType}/${i?.id}`, {
-          state: { matchId: i?.id ,matchType:matchType },
+        navigate(`/wallet/match`, {
+          state: { matchId: i?.id , matchType:matchType },
         });
         handleDrawerToggle();
       }}
