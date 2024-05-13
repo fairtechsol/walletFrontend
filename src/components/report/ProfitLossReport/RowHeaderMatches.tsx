@@ -4,9 +4,6 @@ import {
   ARROWDOWN,
   ARROW_UP,
   ArrowDown,
-  Cricket,
-  Football,
-  Tennis,
 } from "../../../assets";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -19,19 +16,37 @@ import {
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
 import { useDispatch } from "react-redux";
+import RowComponentMatches from "./RowComponentMatches";
+import { useEffect, useState } from "react";
+import { gameIconConstants } from "../../../utils/Constants";
 
 const RowHeaderMatches = ({
   item,
   startDate,
   endDate,
   getHandleReport,
-  show,
-  color
+  // show,
+  color,
+  selectedId,
+  getBetReport,
+  userProfitLoss,
+  getUserProfitLoss,
+  eventType,
 }: any) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const theme = useTheme();
+  const [show, setShow] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
+  const { domainProfitLossList } = useSelector(
+    (state: RootState) => state.report.reportList
+  );
+
+  useEffect(() => {
+    if (item?.eventType !== eventType) {
+      setShow(false);
+    }
+  }, [item?.eventType, eventType]);
 
   return (
     <>
@@ -62,6 +77,7 @@ const RowHeaderMatches = ({
           dispatch(resetBetProfitLoss());
           dispatch(resetSessionProfitLoss());
           getHandleReport(item?.eventType);
+          setShow((prev: boolean) => !prev);
         }}
         sx={{
           width: "100%",
@@ -82,15 +98,7 @@ const RowHeaderMatches = ({
           }}
         >
           <StyledImage
-            src={
-              item?.eventType === "cricket"
-                ? Cricket
-                : item?.eventType === "soccer"
-                ? Football
-                : item?.eventType === "tennis"
-                ? Tennis
-                : Cricket
-            }
+            src={gameIconConstants[item?.eventType]}
             sx={{ width: { lg: "35px", sm: "35px", xs: "22px" } }}
           />
         </Box>
@@ -171,10 +179,10 @@ const RowHeaderMatches = ({
                 lineHeight: "0.9",
               }}
             >
-                {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}
-                {`${matchesMobile ? "TD(1%)" : "Total Deduction"} : `}
-                {handleNumber(parseFloat(item?.totalDeduction || 0),color)}{" "}
-                {/* {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
+              {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}
+              {`${matchesMobile ? "TD(1%)" : "Total Deduction"} : `}
+              {handleNumber(parseFloat(item?.totalDeduction || 0), color)}{" "}
+              {/* {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                 ${handleNumber(parseFloat(item?.totalDeduction || 0),color)})`} */}
             </Typography>
           </Box>
@@ -214,6 +222,23 @@ const RowHeaderMatches = ({
             </Typography>
           </Box>
         </Box>
+      </Box>
+      <Box>
+        {show &&
+          eventType === item?.eventType &&
+          domainProfitLossList?.map((item: any, index: number) => {
+            return (
+              <RowComponentMatches
+                key={index}
+                item={item}
+                index={index + 1}
+                selectedId={selectedId}
+                getBetReport={getBetReport}
+                userProfitLoss={userProfitLoss}
+                getUserProfitLoss={getUserProfitLoss}
+              />
+            );
+          })}
       </Box>
     </>
   );
