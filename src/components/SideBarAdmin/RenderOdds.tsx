@@ -3,14 +3,14 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const RenderOdds = (props: any) => {
-  const { i, handleDrawerToggle, colors } = props;
+  const { i, handleDrawerToggle, colors,matchType } = props;
   const navigate = useNavigate();
   return (
     <Box
       onClick={(event: any) => {
         event.stopPropagation();
         navigate(`/wallet/match`, {
-          state: { matchId: i?.id },
+          state: { matchId: i?.id , matchType:matchType },
         });
         handleDrawerToggle();
       }}

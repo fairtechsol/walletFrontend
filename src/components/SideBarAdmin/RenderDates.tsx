@@ -18,6 +18,7 @@ const RenderDates = (props: any) => {
     competitionId,
     selectedCompetitionDate,
     setSelectedCompertitionDate,
+    matchType
   } = props;
   const dispatch: AppDispatch = useDispatch();
 
@@ -67,6 +68,7 @@ const RenderDates = (props: any) => {
               i={value}
               key={value?.id}
               colors={colors}
+              matchType={matchType}
             />
           );
         })}
