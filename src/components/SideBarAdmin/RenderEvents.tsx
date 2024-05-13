@@ -17,6 +17,7 @@ const RenderEvents = (props: any) => {
     colors,
     selectedCompetitionId,
     setSelectedCompetitionId,
+    matchType
   } = props;
   const dispatch: AppDispatch = useDispatch();
   const [selectedCompetitionDate, setSelectedCompertitionDate] = useState({
@@ -79,6 +80,7 @@ const RenderEvents = (props: any) => {
               competitionId={i.competitionId}
               selectedCompetitionDate={selectedCompetitionDate}
               setSelectedCompertitionDate={setSelectedCompertitionDate}
+              matchType={matchType}
             />
           );
         })}
