@@ -32,6 +32,10 @@ export const ApiConstants = {
     RUN_AMOUNT: "bet/session/profitLoss",
     TOTAL_BALANCE: "user/child/totalBalance",
     DELETE: "user/delete",
+    USER_MATCH_LOCK: "/user/userMatchLock",
+    USER_MATCH_LOCK_ALL_CHILD: "/user/getMatchLockAllChild",
+    USER_DETAIL_FOR_PARENT: "/user/getUserDetailsForParent",
+    USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
