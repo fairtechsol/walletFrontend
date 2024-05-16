@@ -46,7 +46,9 @@ export const getCurrentBets = createAsyncThunk<any, currentBets>(
       const resp = await service.get(
         `${ApiConstants.WALLET.REPORTS.CURRENT_BETS}?searchBy=${
           requestData?.searchBy || ""
-        }&keyword=${requestData?.keyword || ""}`
+        }&keyword=${requestData?.keyword || ""}&result=inArr${JSON.stringify([
+          "PENDING",
+        ])}`
       );
       if (resp) {
         return resp?.data;

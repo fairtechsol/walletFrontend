@@ -92,7 +92,7 @@ const Inplay = () => {
       socketService.match.unDeclaredMatchResultAllUserOff();
       socketService.match.matchAddedOff();
     };
-  }, [type]);
+  }, [success, profileDetail?.roleName, type]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
