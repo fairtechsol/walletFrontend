@@ -557,6 +557,7 @@ const MatchOdds = (props: any) => {
                       alignItems: "center",
                       justifyContent: "flex-end",
                       display: "flex",
+                      zIndex:'9999'
                     }}
                   >
                     <Box
@@ -579,9 +580,9 @@ const MatchOdds = (props: any) => {
                         sx={{
                           color: "white",
                           fontWeight: "600",
-                          marginLeft: "-25px",
+                          marginLeft: "15px",
                           fontSize: "20px",
-                          marginTop: "20px",
+                          marginTop: "12px",
                         }}
                       >
                         Locked
@@ -859,7 +860,7 @@ const MatchOdds = (props: any) => {
         </Box>
       )}
 
-      {showUnlock && (
+      {(showUnlock && liveData?.type==='matchOdd') && (
         <Box
           sx={{
             position: "absolute",

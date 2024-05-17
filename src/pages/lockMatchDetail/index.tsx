@@ -54,11 +54,9 @@ const LockMatchScreen = () => {
     try {
       let payload = {
         matchId: state?.matchId,
-        adminTransPassword: value,
-        userId: profileDetail?.id,
+        transactionPassword: value,
         type: typeOfBet === "SESSION" ? "session" : "match",
         block: true,
-        operationToAll: true,
       };
       dispatch(updateUserMatchLock(payload));
     } catch (e: any) {
@@ -69,15 +67,7 @@ const LockMatchScreen = () => {
   const handleShowLock = async (_: any, type: any) => {
     if (type === "Match Odds") {
       setIsMatchLock(true);
-    } else if (type === "Quick Bookmaker") {
-      setIsManualLock(true);
-    } else if (type === "BOOKMAKER") {
-      setIsBookmakerLock(true);
-    } else if (type === "Session Market") {
-      setIsSessionLock(true);
-    } else if (type === "Quick Session Market") {
-      setIsQuickSessionLock(true);
-    }
+    } 
   };
   const handleHide = async () => {
     setIsMatchLock(false);
@@ -380,7 +370,7 @@ const LockMatchScreen = () => {
                       ? item?.runners
                       : []
                   }
-                  blockMatch={true}
+                  blockMatch={false}
                   locked={childStatus?.allChildMatchDeactive}
                   selft={true}
                   handleBlock={handleBlock}
@@ -423,7 +413,7 @@ const LockMatchScreen = () => {
                       ? item?.runners
                       : []
                   }
-                  blockMatch={true}
+                  blockMatch={false}
                   locked={childStatus?.allChildMatchDeactive}
                   selft={true}
                   handleBlock={handleBlock}
@@ -451,7 +441,7 @@ const LockMatchScreen = () => {
                       ? item?.runners
                       : []
                   }
-                  blockMatch={true}
+                  blockMatch={false}
                   locked={childStatus?.allChildMatchDeactive}
                   selft={true}
                   handleBlock={handleBlock}
@@ -488,7 +478,7 @@ const LockMatchScreen = () => {
                   ? matchDetail?.bookmaker?.runners
                   : []
               }
-              blockMatch={true}
+              blockMatch={false}
               locked={childStatus?.allChildMatchDeactive}
               selft={true}
               handleBlock={handleBlock}
@@ -522,7 +512,7 @@ const LockMatchScreen = () => {
               )}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
-              blockMatch={true}
+              blockMatch={false}
               locked={childStatus?.allChildMatchDeactive}
               selft={true}
               handleBlock={handleBlock}
@@ -553,7 +543,7 @@ const LockMatchScreen = () => {
               sessionData={matchDetail?.apiSession}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
-              blockMatch={true}
+              blockMatch={false}
               locked={childStatus?.allChildMatchDeactive}
               selft={true}
               handleBlock={handleBlock}
