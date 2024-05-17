@@ -298,7 +298,17 @@ const LockMatchScreen = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
-
+  const convertString = (str: string) => {
+    if (str?.includes("_")) {
+      let words = str.split("_");
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      return words.join(" ");
+    } else {
+      return str;
+    }
+  };
   return (
     <>
       <Box sx={{ paddingLeft: "0.7% " }}>
@@ -353,6 +363,105 @@ const LockMatchScreen = () => {
               liveData={matchDetail?.matchOdd}
             />
           )}
+          {matchDetail?.firstHalfGoal?.length > 0 &&
+            matchDetail?.firstHalfGoal
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any) => {
+                return (
+                  <MatchOdds
+                  currentMatch={matchDetail}
+                  session={"firstHalfGoal"}
+                  typeOfBet={convertString(item?.name)}
+                  showBox={item?.activeStatus === "save"}
+                  minBet={Math.floor(item?.minBet)}
+                  maxBet={Math.floor(item?.maxBet)}
+                  data={
+                    item?.runners?.length > 0
+                      ? item?.runners
+                      : []
+                  }
+                  blockMatch={true}
+                  locked={childStatus?.allChildMatchDeactive}
+                  selft={true}
+                  handleBlock={handleBlock}
+                  handleHide={handleHide}
+                  handleShowLock={handleShowLock}
+                  showUnlock={isMatchLock}
+                  liveData={item}
+                  />
+                );
+              })}
+          {matchDetail?.halfTime?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Half Time"}
+              showBox={matchDetail?.halfTime?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.halfTime?.minBet)}
+              maxBet={Math.floor(matchDetail?.halfTime?.maxBet)}
+              liveData={matchDetail?.halfTime}
+              data={
+                matchDetail?.halfTime?.runners?.length > 0
+                  ? matchDetail?.halfTime?.runners
+                  : []
+              }
+            />
+          )}
+          {matchDetail?.overUnder?.length > 0 &&
+            matchDetail?.overUnder
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any) => {
+                return (
+                  <MatchOdds
+                  currentMatch={matchDetail}
+                  session={"overUnder"}
+                  typeOfBet={convertString(item?.name)}
+                  showBox={item?.activeStatus === "save"}
+                  minBet={Math.floor(item?.minBet)}
+                  maxBet={Math.floor(item?.maxBet)}
+                  data={
+                    item?.runners?.length > 0
+                      ? item?.runners
+                      : []
+                  }
+                  blockMatch={true}
+                  locked={childStatus?.allChildMatchDeactive}
+                  selft={true}
+                  handleBlock={handleBlock}
+                  handleHide={handleHide}
+                  handleShowLock={handleShowLock}
+                  showUnlock={isMatchLock}
+                  liveData={item}
+                  />
+                );
+              })}
+          {matchDetail?.setWinner?.length > 0 &&
+            matchDetail?.setWinner
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any) => {
+                return (
+                  <MatchOdds
+                  currentMatch={matchDetail}
+                  session={"setWinner"}
+                  typeOfBet={convertString(item?.name)}
+                  showBox={item?.activeStatus === "save"}
+                  minBet={Math.floor(item?.minBet)}
+                  maxBet={Math.floor(item?.maxBet)}
+                  data={
+                    item?.runners?.length > 0
+                      ? item?.runners
+                      : []
+                  }
+                  blockMatch={true}
+                  locked={childStatus?.allChildMatchDeactive}
+                  selft={true}
+                  handleBlock={handleBlock}
+                  handleHide={handleHide}
+                  handleShowLock={handleShowLock}
+                  showUnlock={isMatchLock}
+                  liveData={item}
+                  />
+                );
+              })}
           {/* {true && (
             <MatchOdds
               currentMatch={matchDetail}
