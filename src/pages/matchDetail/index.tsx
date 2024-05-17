@@ -485,13 +485,13 @@ const MatchDetail = () => {
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Half Time"}
-              showBox={matchDetail?.matchOdd?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
-              maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
+              showBox={matchDetail?.halfTime?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.halfTime?.minBet)}
+              maxBet={Math.floor(matchDetail?.halfTime?.maxBet)}
               liveData={matchDetail?.halfTime}
               data={
-                matchDetail?.matchOdd?.runners?.length > 0
-                  ? matchDetail?.matchOdd?.runners
+                matchDetail?.halfTime?.runners?.length > 0
+                  ? matchDetail?.halfTime?.runners
                   : []
               }
             />
