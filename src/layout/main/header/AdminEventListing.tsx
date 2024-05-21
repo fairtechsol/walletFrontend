@@ -10,6 +10,7 @@ import {
   TREND,
   Tennis,
   WALLET,
+  HorseRacing,
 } from "../../../assets";
 import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
@@ -18,21 +19,71 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
 const data = [
-  { id: 1, title: "INPLAY", image: Play, url: "live_market" },
-  { id: 1, title: "CRICKET", image: Cricket, url: "matchList/cricket" },
-  { id: 1, title: "FOOTBALL", image: Football, url: "matchList/football" },
-  { id: 1, title: "TENNIS", image: Tennis, url: "matchList/tennis" },
-  { id: 2, title: "Add Account", image: ADDACCOUNT, url: "add_account" },
-  { id: 3, title: "Client list", image: TEAM, url: "list_of_clients" },
-
-  { id: 4, title: "Analysis", image: TREND, url: "market_analysis" },
+  { id: 1, title: "INPLAY", image: Play, url: "live_market", alt: "Inplay" },
+  {
+    id: 2,
+    title: "CRICKET",
+    image: Cricket,
+    url: "matchList/cricket",
+    alt: "Cricket",
+  },
+  {
+    id: 3,
+    title: "FOOTBALL",
+    image: Football,
+    url: "matchList/football",
+    alt: "Football",
+  },
+  {
+    id: 4,
+    title: "TENNIS",
+    image: Tennis,
+    url: "matchList/tennis",
+    alt: "Tennis",
+  },
   {
     id: 5,
+    title: "HORSE RACING",
+    image: HorseRacing,
+    url: "matchList/horseRacing",
+    alt: "Horse Racing",
+  },
+  {
+    id: 6,
+    title: "Add Account",
+    image: ADDACCOUNT,
+    url: "add_account",
+    alt: "Add Account",
+  },
+  {
+    id: 7,
+    title: "Client list",
+    image: TEAM,
+    url: "list_of_clients",
+    alt: "Client List",
+  },
+
+  {
+    id: 8,
+    title: "Analysis",
+    image: TREND,
+    url: "market_analysis",
+    alt: "Analysis",
+  },
+  {
+    id: 9,
     title: "Reports",
     image: CHECKLIST,
     url: "reports",
+    alt: "Reports",
   },
-  { id: 6, title: "My Account", image: MYACCOUNT, url: "my-account" },
+  {
+    id: 11,
+    title: "My Account",
+    image: MYACCOUNT,
+    url: "my-account",
+    alt: "My Account",
+  },
 ];
 
 const AdminEventListing = () => {
@@ -46,7 +97,7 @@ const AdminEventListing = () => {
       setNewData((prev: any) => {
         const newData = [...prev];
         const body = {
-          id: 7,
+          id: 10,
           title: "wallet",
           image: WALLET,
           url: "walletsettings",
