@@ -28,6 +28,7 @@ const AdminEventComponent = (props: any) => {
       <img
         src={data.image}
         style={{ width: "40px", height: "40px", alignSelf: "center" }}
+        alt={data.alt}
       />
       <Typography
         noWrap
