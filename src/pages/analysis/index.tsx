@@ -82,48 +82,6 @@ const Analysis = () => {
     }
   };
 
-  // const changeSelected = (match: any) => {
-  //   if (mode === "0") {
-  //     return false;
-  //   }
-  //   const x: any = [...selected];
-  //   if (selected?.length === 0) {
-  //     if (x.includes(match?.id)) {
-  //       setMatchIds((prevIds: any) =>
-  //         prevIds.filter((matchId: any) => matchId !== match?.id)
-  //       );
-  //       const updatedSelected = x.filter((id: any) => id !== match?.id);
-  //       setSelected(updatedSelected);
-  //     } else {
-  //       if (+max === selected?.length) {
-  //         toast.warn(`Only ${max} allowed`);
-  //         return;
-  //       }
-  //       setMatchIds((prevIds: any) => [...prevIds, match?.id]);
-  //       setSelected([...x, match?.id]);
-  //       setSelectedMatchType(match?.matchType);
-  //     }
-  //   } else if (selectedMatchType === match?.matchType) {
-  //     if (x.includes(match?.id)) {
-  //       setMatchIds((prevIds: any) =>
-  //         prevIds.filter((matchId: any) => matchId !== match?.id)
-  //       );
-  //       const updatedSelected = x.filter((id: any) => id !== match?.id);
-  //       setSelected(updatedSelected);
-  //     } else {
-  //       if (+max === selected?.length) {
-  //         toast.warn(`Only ${max} allowed`);
-  //         return;
-  //       }
-  //       setMatchIds((prevIds: any) => [...prevIds, match?.id]);
-  //       setSelected([...x, match?.id]);
-  //     }
-  //   } else {
-  //     toast.error("Please Select Match Of Same Category");
-  //     return;
-  //   }
-  // };
-
   const getMatchist = () => {
     setCurrentPage(1);
     dispatch(getAnalysisList({ currentPage: currentPage }));

@@ -20,6 +20,8 @@ import CurrentBets from "../pages/reports/CurrentBets";
 import AccountStatement from "../pages/reports/AccountStatement";
 import GeneralReport from "../pages/reports/GeneralReport";
 import MatchList from "../pages/matchList";
+import RacingList from "../pages/horseRacing/racingList";
+import RacingDetails from "../pages/horseRacing/racingDetails";
 
 // const ListOfClients = Loadable(() => import("../pages/listOfClients"));
 // const ChangePassword = Loadable(() => import("../pages/changePassword"));
@@ -122,6 +124,14 @@ const MainRoutes = {
     {
       path: Constants.ReportsPaths.generalReport,
       element: <GeneralReport />,
+    },
+    {
+      path: Constants.MainPaths.horseRacing,
+      element: <RacingList />,
+    },
+    {
+      path: Constants.MainPaths.horseRacingDetail,
+      element: <RacingDetails />,
     },
     {
       path: "*",
