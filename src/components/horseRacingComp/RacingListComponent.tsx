@@ -66,7 +66,13 @@ const RacingListComponent = ({ racingList }: any) => {
             ([matchName, item]: any, index: number) => {
               return (
                 <TableRow key={index}>
-                  <TableCell sx={{ border: "1px solid black", padding: "5px" }}>
+                  <TableCell
+                    sx={{
+                      border: "1px solid black",
+                      padding: "5px",
+                      width: "30%",
+                    }}
+                  >
                     {matchName}
                   </TableCell>
                   <TableCell sx={{ border: "1px solid black", padding: "5px" }}>
