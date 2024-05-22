@@ -45,7 +45,7 @@ const data = [
     id: 5,
     title: "HORSE RACING",
     image: HorseRacing,
-    url: "matchList/horseRacing",
+    url: "horse_racing",
     alt: "Horse Racing",
   },
   {
