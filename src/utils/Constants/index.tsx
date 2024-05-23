@@ -83,6 +83,7 @@ export const ApiConstants = {
     MATCH: {
       GET_COUNTRY_WISE_LIST: "/match/countryWiseList",
       GET_RACING_LIST: "/match/racing/list",
+      DELETE_BET: "/bet/deleteMultipleBetForRace",
     },
   },
 };
