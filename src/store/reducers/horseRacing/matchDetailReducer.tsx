@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  deleteHorseRacingBets,
   getMatchDetailHorseRacing,
   updateMatchRatesForHorseRacing,
   updateTeamRatesForHorseRacing,
@@ -28,6 +27,7 @@ const matchDetailSlice = createSlice({
     builder
       .addCase(getMatchDetailHorseRacing.pending, (state) => {
         state.loading = true;
+        state.success = false;
         state.error = null;
       })
       .addCase(getMatchDetailHorseRacing.fulfilled, (state, action) => {
@@ -40,12 +40,28 @@ const matchDetailSlice = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(updateMatchRatesForHorseRacing.fulfilled, (state, action) => {
-        state.matchDetail = action.payload;
+        const { matchOdd } = action.payload;
+
+        state.matchDetail = {
+          ...state.matchDetail,
+          matchOdd: {
+            ...state.matchDetail.matchOdd,
+            ...matchOdd,
+            runners: state?.matchDetail?.matchOdd?.runners?.map((item: any) => {
+              const runnersData = matchOdd?.runners?.find(
+                (items: any) => items?.selectionId == item?.selectionId
+              );
+              return {
+                ...item,
+                ...runnersData,
+              };
+            }),
+          },
+        };
       })
       .addCase(updateTeamRatesForHorseRacing.fulfilled, (state, action) => {
         state.matchDetail = action.payload;
-      })
-      ;
+      });
   },
 });
 

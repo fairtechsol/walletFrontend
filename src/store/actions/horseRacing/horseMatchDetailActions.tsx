@@ -3,15 +3,21 @@ import service from "../../../service";
 import { ApiConstants } from "../../../utils/Constants";
 import { AxiosError } from "axios";
 
-export const getMatchDetailHorseRacing = createAsyncThunk<any>(
+export const getMatchDetailHorseRacing = createAsyncThunk<any, string>(
   "horseRacing/matchDetail",
-  async (_, thunkApi) => {
+  async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.HORSERACING.MATCH.GET_COUNTRY_WISE_LIST}?racingMatch.stopAt=isNull`
+        `${ApiConstants.HORSERACING.MATCH.GET_MATCH_DETAIL}/${requestData}`
       );
       if (resp?.data) {
-        return resp?.data;
+        return {
+          ...resp.data,
+          matchOdd: {
+            ...resp.data.matchOdd,
+            runners: resp.data.runners,
+          },
+        };
       }
     } catch (error) {
       const err = error as AxiosError;

@@ -62,7 +62,6 @@ const data = [
     url: "list_of_clients",
     alt: "Client List",
   },
-
   {
     id: 8,
     title: "Analysis",
@@ -72,13 +71,20 @@ const data = [
   },
   {
     id: 9,
+    title: "Analysis-2",
+    image: TREND,
+    url: "market_analysis2",
+    alt: "Analysis",
+  },
+  {
+    id: 10,
     title: "Reports",
     image: CHECKLIST,
     url: "reports",
     alt: "Reports",
   },
   {
-    id: 11,
+    id: 12,
     title: "My Account",
     image: MYACCOUNT,
     url: "my-account",
@@ -97,7 +103,7 @@ const AdminEventListing = () => {
       setNewData((prev: any) => {
         const newData = [...prev];
         const body = {
-          id: 10,
+          id: 11,
           title: "wallet",
           image: WALLET,
           url: "walletsettings",

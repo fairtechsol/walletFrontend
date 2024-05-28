@@ -73,6 +73,7 @@ export const ApiConstants = {
     GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",
     BETDELETEOTHER: "/bet/deleteMultipleBetForOther",
+    BETDELETERACE: "/bet/deleteMultipleBetForRace",
     GET_BETS: "/superadmin/bets",
     TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
     DOMAIN_PROFIT_LOSS: "/user/total/domain/profitLoss",
@@ -84,6 +85,7 @@ export const ApiConstants = {
       GET_COUNTRY_WISE_LIST: "/match/countryWiseList",
       GET_RACING_LIST: "/match/racing/list",
       DELETE_BET: "/bet/deleteMultipleBetForRace",
+      GET_MATCH_DETAIL: "/match/racing",
     },
   },
 };
@@ -106,6 +108,7 @@ export const Constants = {
     addAccount: "add_account",
     editAccount: "edit_account",
     marketAnalysis: "market_analysis",
+    marketAnalysis2: "market_analysis2",
     marketAnalysisMatches: "market_analysis/matches",
     multipleMatch: "market_analysis/multiple_Match",
     reports: "reports",

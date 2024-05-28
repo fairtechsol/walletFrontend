@@ -1,42 +1,36 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store/store";
 import {
   AllBetDelete,
-  getMatchDetail,
   getPlacedBets,
   getUserProfitLoss,
-  removeRunAmount,
   resetSessionProLoss,
-  resetUserProfitLoss,
-  setCurrentOdd,
-  updateBetDataOnDeclare,
   updateBetsPlaced,
   updateMatchRatesOnMarketUndeclare,
-  updateMaxLossForBet,
-  updateMaxLossForBetOnUndeclare,
-  updateMaxLossForDeleteBet,
   updatePlacedbets,
-  updateProfitLoss,
   updateTeamRates,
   updateTeamRatesOnDelete,
 } from "../../../store/actions/match/matchAction";
 import { ApiConstants } from "../../../utils/Constants";
 import { socket, socketService } from "../../../socketManager";
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
-import MatchOdds from "../../../components/matchDetail/MatchOdds";
-import SessionMarket from "../../../components/matchDetail/SessionMarket";
-import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
 import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { DeleteIcon } from "../../../assets";
-import { updateMatchRatesForHorseRacing } from "../../../store/actions/horseRacing/horseMatchDetailActions";
+import {
+  getMatchDetailHorseRacing,
+  updateMatchRatesForHorseRacing,
+} from "../../../store/actions/horseRacing/horseMatchDetailActions";
+import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
+import moment from "moment";
 
 const RacingDetails = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { id } = useParams();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
@@ -47,20 +41,50 @@ const RacingDetails = () => {
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
-    (state: RootState) => state.match.matchList
+    (state: RootState) => state.horseRacing.matchDetail
   );
-  const { placedBets, loading, sessionProLoss } = useSelector(
+  const { placedBets, loading } = useSelector(
     (state: RootState) => state.match.bets
   );
+  const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
 
-  const { currentOdd } = useSelector(
-    (state: RootState) => state.match.matchList
-  );
+  function calculateTimeLeft() {
+    try {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const targetDate = moment(matchDetail?.startAt).tz(timezone);
+      const difference = targetDate.diff(moment().tz(timezone), "milliseconds");
+      let timeLeft = {};
+      if (difference > 0) {
+        timeLeft = {
+          days:
+            ("0" + Math.floor(difference / (1000 * 60 * 60 * 24))).slice(-2) ||
+            0,
+          hours:
+            ("0" + Math.floor((difference / (1000 * 60 * 60)) % 24)).slice(
+              -2
+            ) || 0,
+          minutes:
+            ("0" + Math.floor((difference / 1000 / 60) % 60)).slice(-2) || 0,
+          seconds: ("0" + Math.floor((difference / 1000) % 60)).slice(-2) || 0,
+        };
+      } else {
+        timeLeft = {
+          days: "00",
+          hours: "00",
+          minutes: "00",
+        };
+      }
+
+      return timeLeft;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   const handleDeleteBet = (value: any) => {
     try {
       let payload: any = {
-        matchId: state?.matchId,
+        matchId: id,
         deleteReason: value,
         urlData: {},
       };
@@ -79,10 +103,7 @@ const RacingDetails = () => {
       });
       dispatch(
         AllBetDelete({
-          url:
-            matchDetail?.matchType === "cricket"
-              ? ApiConstants.MATCH.BETDELETE
-              : ApiConstants.MATCH.BETDELETEOTHER,
+          url: ApiConstants.MATCH.BETDELETERACE,
           data: payload,
         })
       );
@@ -93,7 +114,7 @@ const RacingDetails = () => {
 
   const updateMatchDetailToRedux = (event: any) => {
     try {
-      if (state?.matchId === event?.id) {
+      if (id === event?.id) {
         dispatch(updateMatchRatesForHorseRacing(event));
       } else return;
     } catch (e) {
@@ -103,7 +124,7 @@ const RacingDetails = () => {
 
   const matchResultDeclared = (event: any) => {
     try {
-      if (event?.matchId === state?.matchId) {
+      if (event?.matchId === id) {
         if (
           event?.gameType === "cricket" ||
           event?.betType === "quickbookmaker1"
@@ -112,7 +133,7 @@ const RacingDetails = () => {
             `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
           );
         } else {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`eq${id}`));
         }
       }
     } catch (e) {
@@ -123,7 +144,7 @@ const RacingDetails = () => {
   const matchDeleteBet = (event: any) => {
     try {
       setMode(false);
-      if (event?.matchId === state?.matchId) {
+      if (event?.matchId === id) {
         setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
         dispatch(updateTeamRatesOnDelete(event));
@@ -132,50 +153,10 @@ const RacingDetails = () => {
       console.log(e);
     }
   };
-  const handleSessionDeleteBet = (event: any) => {
-    try {
-      setMode(false);
-      if (event?.matchId === state?.matchId) {
-        setSelectedBetData([]);
-        dispatch(updatePlacedbets(event));
-        dispatch(updateMaxLossForDeleteBet(event));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const setSessionBetsPlaced = (event: any) => {
-    try {
-      if (event?.jobData?.placedBet?.matchId === state?.matchId) {
-        dispatch(
-          updateBetsPlaced({
-            newBet: {
-              ...event?.jobData?.placedBet,
-              domain: event?.jobData?.domainUrl,
-            },
-            userName: event?.jobData?.betPlaceObject?.betPlacedData?.userName,
-            myStake: event?.jobData?.betPlaceObject?.myStack,
-          })
-        );
-        dispatch(updateProfitLoss(event));
-        dispatch(updateMaxLossForBet(event));
-        dispatch(
-          setCurrentOdd({
-            matchId: event?.jobData?.placedBet?.matchId,
-            betId: event?.jobData?.placedBet?.betId,
-            odds: event?.jobData?.placedBet?.odds,
-          })
-        );
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const setMatchBetsPlaced = (event: any) => {
     try {
-      if (event?.jobData?.newBet?.matchId === state?.matchId) {
+      if (event?.jobData?.newBet?.matchId === id) {
         dispatch(
           updateBetsPlaced({
             newBet: {
@@ -195,39 +176,11 @@ const RacingDetails = () => {
     }
   };
 
-  const handleSessionResultDeclare = (event: any) => {
-    try {
-      if (event?.matchId === state?.matchId) {
-        dispatch(
-          updateBetDataOnDeclare({
-            betId: event?.betId,
-            matchId: event?.matchId,
-          })
-        );
-        dispatch(removeRunAmount(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSessionResultUnDeclare = (event: any) => {
-    try {
-      if (event?.matchId === state?.matchId) {
-        dispatch(updateMaxLossForBetOnUndeclare(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleMatchResultUndeclared = (event: any) => {
     try {
-      if (event?.matchId === state?.matchId) {
+      if (event?.matchId === id) {
         if (event?.betType !== "quickbookmaker1") {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`eq${id}`));
           dispatch(updateMatchRatesOnMarketUndeclare(event));
         }
       }
@@ -245,53 +198,32 @@ const RacingDetails = () => {
   useEffect(() => {
     try {
       window.scrollTo(0, 0);
-      if (state?.matchId && profileDetail?.roleName) {
-        dispatch(
-          getMatchDetail({
-            matchId: state?.matchId,
-            matchType: state?.matchType,
-          })
-        );
-        dispatch(getUserProfitLoss(state?.matchId));
+      if (id && profileDetail?.roleName) {
+        dispatch(getMatchDetailHorseRacing(id));
+        dispatch(getUserProfitLoss(id));
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`eq${id}`));
       }
     } catch (e) {
       console.log(e);
     }
-  }, [state?.matchId, profileDetail?.roleName]);
+  }, [id, profileDetail?.roleName]);
 
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName && socket) {
-        socketService.match.getMatchRatesOff(state?.matchId);
-        socketService.match.userSessionBetPlacedOff();
+        socketService.match.getMatchRatesOff(id);
         socketService.match.userMatchBetPlacedOff();
         socketService.match.matchResultDeclaredOff();
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
-        socketService.match.sessionDeleteBetOff();
-        socketService.match.sessionResultOff();
-        socketService.match.sessionResultUnDeclareOff();
         socketService.match.matchResultUnDeclaredOff();
-        socketService.match.joinMatchRoom(
-          state?.matchId,
-          profileDetail?.roleName
-        );
-        socketService.match.getMatchRates(
-          state?.matchId,
-          updateMatchDetailToRedux
-        );
-        socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
+        socketService.match.joinMatchRoom(id, profileDetail?.roleName);
+        socketService.match.getMatchRates(id, updateMatchDetailToRedux);
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.declaredMatchResultAllUser(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
-        socketService.match.sessionDeleteBet(handleSessionDeleteBet);
-        socketService.match.sessionResult(handleSessionResultDeclare);
-        socketService.match.sessionResultUnDeclare(
-          handleSessionResultUnDeclare
-        );
         socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
       }
     } catch (e) {
@@ -301,37 +233,27 @@ const RacingDetails = () => {
 
   useEffect(() => {
     return () => {
-      socketService.match.leaveMatchRoom(state?.matchId);
-      socketService.match.getMatchRatesOff(state?.matchId);
-      socketService.match.userSessionBetPlacedOff();
+      socketService.match.leaveMatchRoom(id);
+      socketService.match.getMatchRatesOff(id);
       socketService.match.userMatchBetPlacedOff();
       socketService.match.matchResultDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
       socketService.match.matchDeleteBetOff();
-      socketService.match.sessionDeleteBetOff();
-      socketService.match.sessionResultOff();
-      socketService.match.sessionResultUnDeclareOff();
       socketService.match.matchResultUnDeclaredOff();
-      dispatch(resetUserProfitLoss());
     };
-  }, [state?.matchId]);
+  }, [id]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        if (state?.matchId) {
-          dispatch(
-            getMatchDetail({
-              matchId: state?.matchId,
-              matchType: state?.matchType,
-            })
-          );
-          dispatch(getUserProfitLoss(state?.matchId));
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+        if (id) {
+          dispatch(getMatchDetailHorseRacing(id));
+          dispatch(getUserProfitLoss(id));
+          dispatch(getPlacedBets(`eq${id}`));
         }
       } else if (document.visibilityState === "hidden") {
-        socketService.match.leaveMatchRoom(state?.matchId);
-        socketService.match.getMatchRatesOff(state?.matchId);
+        socketService.match.leaveMatchRoom(id);
+        socketService.match.getMatchRatesOff(id);
       }
     };
 
@@ -342,16 +264,11 @@ const RacingDetails = () => {
   }, []);
 
   useEffect(() => {
-    if (state?.matchId) {
+    if (id) {
       const intervalId = setInterval(() => {
-        dispatch(
-          getMatchDetail({
-            matchId: state?.matchId,
-            matchType: state?.matchType,
-          })
-        );
-        dispatch(getUserProfitLoss(state?.matchId));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getMatchDetailHorseRacing(id));
+        dispatch(getUserProfitLoss(id));
+        dispatch(getPlacedBets(`eq${id}`));
       }, 14100 * 1000);
 
       return () => {
@@ -370,6 +287,13 @@ const RacingDetails = () => {
   //     return str;
   //   }
   // };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <>
@@ -415,7 +339,7 @@ const RacingDetails = () => {
               alignSelf: "start",
             }}
           >
-            {`FR > Evreux`}
+            {`${matchDetail?.countryCode} > ${matchDetail?.venue}`}
           </Typography>
           <Typography
             sx={{
@@ -425,23 +349,26 @@ const RacingDetails = () => {
               alignSelf: "start",
             }}
           >
-            {`2024-05-22 20:05 | 6f Stks | 2 Hours 49 Minutes Remaining`}
+            {`${moment(matchDetail?.startAt).format("YYYY-MM-DD hh:mm")} | ${
+              matchDetail?.title
+            }`}
+            {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+              ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+              : ""}
           </Typography>
-          {matchDetail?.matchOdd?.isActive && (
-            <MatchOdds
-              currentMatch={matchDetail}
-              typeOfBet={"Match Odds"}
-              showBox={matchDetail?.matchOdd?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
-              maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
-              liveData={matchDetail?.matchOdd}
-              data={
-                matchDetail?.matchOdd?.runners?.length > 0
-                  ? matchDetail?.matchOdd?.runners
-                  : []
-              }
-            />
-          )}
+          <MatchOddsHorseRacing
+            currentMatch={matchDetail}
+            typeOfBet={"Match Odds"}
+            showBox={matchDetail?.matchOdd?.activeStatus === "save"}
+            minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
+            maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
+            liveData={matchDetail?.matchOdd}
+            data={
+              matchDetail?.matchOdd?.runners?.length > 0
+                ? matchDetail?.matchOdd?.runners
+                : []
+            }
+          />
           {matchesMobile && (
             <UserProfitLoss
               single={"single"}
@@ -565,109 +492,11 @@ const RacingDetails = () => {
                 width: "100%",
               }}
             >
-              {/* {mode && <CancelButton />} */}
               <Box sx={{ width: "2%" }}></Box>
               <Box
                 sx={{ width: "150px", marginY: ".75%", height: "15px" }}
               ></Box>
             </Box>
-            {matchDetail?.manualTiedMatch?.isActive && (
-              <MatchOdds
-                typeOfBet={"Manual Tied Match"}
-                currentMatch={matchDetail}
-                session={"manualBookMaker"}
-                data={matchDetail?.manualTiedMatch}
-                minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
-                maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
-                liveData={matchDetail?.manualTiedMatch}
-              />
-            )}
-            <Box sx={{ width: "150px", height: "3px" }}></Box>
-            {matchDetail?.manualSessionActive &&
-              matchDetail?.sessionBettings?.filter(
-                (item: any) => !JSON.parse(item).selectionId
-              )?.length > 0 && (
-                <SessionMarket
-                  title={"Quick Session Market"}
-                  allBetsData={
-                    matchDetail?.profitLossDataSession
-                      ? Array.from(
-                          matchDetail?.profitLossDataSession?.reduce(
-                            (acc: any, obj: any) =>
-                              acc.has(obj.betId)
-                                ? acc
-                                : acc.add(obj.betId) && acc,
-                            new Set()
-                          ),
-                          (id) =>
-                            matchDetail?.profitLossDataSession?.find(
-                              (obj: any) => obj.betId === id
-                            )
-                        )
-                      : []
-                  }
-                  currentMatch={matchDetail}
-                  sessionData={matchDetail?.sessionBettings?.filter(
-                    (item: any) => !JSON.parse(item).selectionId
-                  )}
-                  min={matchDetail?.betFairSessionMinBet || 0}
-                  max={matchDetail?.betFairSessionMaxBet || 0}
-                />
-              )}
-            {matchDetail?.apiSessionActive &&
-              matchDetail?.apiSession?.length > 0 && (
-                <SessionMarket
-                  title={"Session Market"}
-                  allBetsData={
-                    matchDetail?.profitLossDataSession
-                      ? Array.from(
-                          matchDetail?.profitLossDataSession?.reduce(
-                            (acc: any, obj: any) =>
-                              acc.has(obj.betId)
-                                ? acc
-                                : acc.add(obj.betId) && acc,
-                            new Set()
-                          ),
-                          (id) =>
-                            matchDetail?.profitLossDataSession?.find(
-                              (obj: any) => obj.betId === id
-                            )
-                        )
-                      : []
-                  }
-                  currentMatch={matchDetail}
-                  sessionData={matchDetail?.apiSession}
-                  max={Math.floor(matchDetail?.betFairSessionMaxBet)}
-                  min={Math.floor(matchDetail?.betFairSessionMinBet)}
-                />
-              )}
-
-            {sessionProLoss?.length > 0 && (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  gap: "1px",
-                  rowGap: "5px",
-                  height: "440px",
-                  overflow: "scroll",
-                  marginTop: "1.25vw",
-                }}
-              >
-                {sessionProLoss.map((v: any) => {
-                  return (
-                    <RunsBox
-                      key={v?.id}
-                      item={v}
-                      currentOdd={
-                        currentOdd?.betId === v?.id ? currentOdd : null
-                      }
-                    />
-                  );
-                })}
-              </Box>
-            )}
 
             <UserProfitLoss
               single={"single"}
