@@ -86,6 +86,10 @@ const MainRoutes = {
       element: <Analysis />,
     },
     {
+      path: Constants.MainPaths.marketAnalysis2,
+      element: <Analysis />,
+    },
+    {
       path: Constants.MainPaths.marketAnalysisMatches,
       element: <MatchDetail />,
     },
