@@ -349,7 +349,7 @@ const RacingDetails = () => {
               alignSelf: "start",
             }}
           >
-            {`${moment(matchDetail?.startAt).format("YYYY-MM-DD hh:mm")} | ${
+            {`${moment(matchDetail?.startAt).format("YYYY-MM-DD HH:mm")} | ${
               matchDetail?.title
             }`}
             {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0

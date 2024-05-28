@@ -29,6 +29,7 @@ const BoxComponentHorseRacing = (props: any) => {
           height: "40px",
           width: { xs: "40%", lg: "40%" },
           alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <Box
@@ -52,6 +53,31 @@ const BoxComponentHorseRacing = (props: any) => {
             }}
           >
             {name}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            flexDirection: "row",
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{ color: "black", fontSize: { lg: "12px", xs: "10px" } }}
+          >
+            <span style={{ backgroundColor: "#f1c550" }}>
+              <b>Jockey:</b>
+              <span>{data?.metadata?.JOCKEY_NAME}</span>
+            </span>{" "}
+            <span style={{ backgroundColor: "#f1c550" }}>
+              <b>Trainer:</b>
+              <span>{data?.metadata?.TRAINER_NAME}</span>
+            </span>{" "}
+            <span style={{ backgroundColor: "#f1c550" }}>
+              <b>Age:</b>
+              <span>{data?.metadata?.AGE}</span>
+            </span>
           </Typography>
         </Box>
       </Box>
