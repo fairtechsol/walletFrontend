@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../assets";
 import { profitLossDataForMatchConstants } from "../../utils/Constants";
-import SmallBox from "../matchDetail/MatchOdds/SmallBox";
 import { formatToINR } from "../../helper";
 import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import Divider from "../Inplay/Divider";
@@ -28,18 +27,6 @@ const MatchOddsHorseRacing = (props: any) => {
   } = props;
 
   const [visible, setVisible] = useState(true);
-
-  const bookRatioA = (teamARates: any, teamBRates: any) => {
-    const bookRatio = teamARates != 0 ? teamBRates / teamARates || 0 : 0;
-    const formattedRatio = Math.abs(bookRatio).toFixed(2);
-    return teamARates < 0 ? `-${formattedRatio}` : formattedRatio;
-  };
-
-  const bookRatioB = (teamARates: any, teamBRates: any) => {
-    const bookRatio = teamBRates != 0 ? teamARates / teamBRates || 0 : 0;
-    const formattedRatio = Math.abs(bookRatio).toFixed(2);
-    return teamBRates < 0 ? `-${formattedRatio}` : formattedRatio;
-  };
 
   const handleLock = (data: any) => {
     return data?.ex?.availableToBack?.length > 0 ? false : true;
@@ -126,48 +113,6 @@ const MatchOddsHorseRacing = (props: any) => {
             paddingRight: { lg: "0", xs: "0" },
           }}
         >
-          <SmallBox
-            valueA={bookRatioA(
-              currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.A
-                  ]
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.A
-                    ]
-                  : 0
-                : 0,
-              currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.B
-                  ]
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.B
-                    ]
-                  : 0
-                : 0
-            )}
-            valueB={bookRatioB(
-              currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.A
-                  ]
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.A
-                    ]
-                  : 0
-                : 0,
-              currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.B
-                  ]
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.B
-                    ]
-                  : 0
-                : 0
-            )}
-          />
           <img
             onClick={() => {
               setVisible(!visible);
