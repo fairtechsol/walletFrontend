@@ -11,8 +11,6 @@ import {
   updateBetsPlaced,
   updateMatchRatesOnMarketUndeclare,
   updatePlacedbets,
-  updateTeamRates,
-  updateTeamRatesOnDelete,
 } from "../../../store/actions/match/matchAction";
 import { ApiConstants } from "../../../utils/Constants";
 import { socket, socketService } from "../../../socketManager";
@@ -23,6 +21,8 @@ import { DeleteIcon } from "../../../assets";
 import {
   getMatchDetailHorseRacing,
   updateMatchRatesForHorseRacing,
+  updateTeamRatesForHorseRacing,
+  updateTeamRatesForHorseRacingOnDelete,
 } from "../../../store/actions/horseRacing/horseMatchDetailActions";
 import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
 import moment from "moment";
@@ -147,7 +147,7 @@ const RacingDetails = () => {
       if (event?.matchId === id) {
         setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
-        dispatch(updateTeamRatesOnDelete(event));
+        dispatch(updateTeamRatesForHorseRacingOnDelete(event));
       }
     } catch (e) {
       console.log(e);
@@ -168,8 +168,7 @@ const RacingDetails = () => {
             myStake: event?.jobData?.myStake,
           })
         );
-        // dispatch(updateBalance(event?.jobData));
-        dispatch(updateTeamRates(event));
+        dispatch(updateTeamRatesForHorseRacing(event));
       }
     } catch (e) {
       console.log(e);
@@ -276,17 +275,6 @@ const RacingDetails = () => {
       };
     }
   }, []);
-  // const convertString = (str: string) => {
-  //   if (str?.includes("_")) {
-  //     let words = str.split("_");
-  //     for (let i = 0; i < words.length; i++) {
-  //       words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-  //     }
-  //     return words.join(" ");
-  //   } else {
-  //     return str;
-  //   }
-  // };
 
   useEffect(() => {
     const timer = setInterval(() => {

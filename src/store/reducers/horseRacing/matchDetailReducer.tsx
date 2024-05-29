@@ -3,6 +3,7 @@ import {
   getMatchDetailHorseRacing,
   updateMatchRatesForHorseRacing,
   updateTeamRatesForHorseRacing,
+  updateTeamRatesForHorseRacingOnDelete,
 } from "../../actions/horseRacing/horseMatchDetailActions";
 
 interface InitialState {
@@ -60,8 +61,22 @@ const matchDetailSlice = createSlice({
         };
       })
       .addCase(updateTeamRatesForHorseRacing.fulfilled, (state, action) => {
-        state.matchDetail = action.payload;
-      });
+        const { userRedisObj } = action.payload;
+        state.matchDetail = {
+          ...state.matchDetail,
+          profitLossDataMatch: userRedisObj,
+        };
+      })
+      .addCase(
+        updateTeamRatesForHorseRacingOnDelete.fulfilled,
+        (state, action) => {
+          const { teamRate } = action.payload;
+          state.matchDetail = {
+            ...state.matchDetail,
+            profitLossDataMatch: teamRate,
+          };
+        }
+      );
   },
 });
 
