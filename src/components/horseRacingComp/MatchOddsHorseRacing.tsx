@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../assets";
-import { profitLossDataForMatchConstants } from "../../utils/Constants";
 import { formatToINR } from "../../helper";
 import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import Divider from "../Inplay/Divider";
@@ -23,7 +22,6 @@ const MatchOddsHorseRacing = (props: any) => {
     showUnlock,
     handleBlock,
     handleHide,
-    liveData,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -234,12 +232,8 @@ const MatchOddsHorseRacing = (props: any) => {
                 <BoxComponentHorseRacing
                   color={
                     currentMatch?.profitLossDataMatch
-                      ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
-                        ]
-                        ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
-                          ] < 0
+                      ? currentMatch?.profitLossDataMatch[runner?.id]
+                        ? currentMatch?.profitLossDataMatch[runner?.id] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
                         : "#319E5B"
@@ -248,12 +242,8 @@ const MatchOddsHorseRacing = (props: any) => {
                   name={runner.runnerName || runner.name}
                   rates={
                     currentMatch?.profitLossDataMatch
-                      ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
-                        ]
-                        ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
-                          ]
+                      ? currentMatch?.profitLossDataMatch[runner?.id]
+                        ? currentMatch?.profitLossDataMatch[runner?.id]
                         : 0
                       : 0
                   }
