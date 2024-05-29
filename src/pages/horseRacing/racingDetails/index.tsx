@@ -1,7 +1,7 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store/store";
 import {
   AllBetDelete,
@@ -37,7 +37,7 @@ const RacingDetails = () => {
   const [mode, setMode] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
-  const { state } = useLocation();
+  // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.horseRacing.matchDetail
