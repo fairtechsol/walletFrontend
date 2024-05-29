@@ -1,4 +1,4 @@
-import { Cricket, Football, Tennis } from "../../assets";
+import { Cricket, Football, HorseRacing, Tennis } from "../../assets";
 
 export const ApiConstants = {
   AUTH: {
@@ -192,11 +192,14 @@ export const gameConstants = {
   cricket: "cricket",
   football: "football",
   tennis: "tennis",
+  horseRacing: "horseRacing",
+  greyHound: "greyHound",
 };
 export const gameIconConstants = {
   [gameConstants.cricket]: Cricket,
   [gameConstants.football]: Football,
   [gameConstants.tennis]: Tennis,
+  [gameConstants.horseRacing]: HorseRacing,
 };
 
 export const profitLossDataForMatchConstants = {
