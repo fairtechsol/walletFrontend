@@ -1,10 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StyledImage from "../../Common/StyledImages";
-import {
-  ARROWDOWN,
-  ARROW_UP,
-  ArrowDown,
-} from "../../../assets";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { handleNumber } from "../../../helper";
@@ -18,7 +14,7 @@ import {
 import { useDispatch } from "react-redux";
 import RowComponentMatches from "./RowComponentMatches";
 import { useEffect, useState } from "react";
-import { gameIconConstants } from "../../../utils/Constants";
+import { gameConstants, gameIconConstants } from "../../../utils/Constants";
 
 const RowHeaderMatches = ({
   item,
@@ -64,6 +60,12 @@ const RowHeaderMatches = ({
               filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
             } else if (endDate) {
               filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+            }
+            if (
+              item?.eventType === gameConstants.horseRacing ||
+              item?.eventType === gameConstants.greyHound
+            ) {
+              filter += `&isRacing=true`;
             }
             dispatch(
               getDomainProfitLoss({

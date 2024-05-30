@@ -1,7 +1,7 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store/store";
 import {
   AllBetDelete,
@@ -9,7 +9,6 @@ import {
   getUserProfitLoss,
   resetSessionProLoss,
   updateBetsPlaced,
-  updateMatchRatesOnMarketUndeclare,
   updatePlacedbets,
 } from "../../../store/actions/match/matchAction";
 import { ApiConstants } from "../../../utils/Constants";
@@ -38,7 +37,7 @@ const RacingDetails = () => {
   const [mode, setMode] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
-  const { state } = useLocation();
+  // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.horseRacing.matchDetail
@@ -125,16 +124,7 @@ const RacingDetails = () => {
   const matchResultDeclared = (event: any) => {
     try {
       if (event?.matchId === id) {
-        if (
-          event?.gameType === "cricket" ||
-          event?.betType === "quickbookmaker1"
-        ) {
-          navigate(
-            `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
-          );
-        } else {
-          dispatch(getPlacedBets(`eq${id}`));
-        }
+        navigate(`/wallet/horse_racing`);
       }
     } catch (e) {
       console.log(e);
@@ -175,22 +165,9 @@ const RacingDetails = () => {
     }
   };
 
-  const handleMatchResultUndeclared = (event: any) => {
-    try {
-      if (event?.matchId === id) {
-        if (event?.betType !== "quickbookmaker1") {
-          dispatch(getPlacedBets(`eq${id}`));
-          dispatch(updateMatchRatesOnMarketUndeclare(event));
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     if (matchDetail && matchDetail?.stopAt) {
-      navigate(`/wallet/${location.pathname.split("/")[2]}/${state.matchType}`);
+      navigate(`/wallet/horse_racing`);
     }
   }, [matchDetail]);
 
@@ -216,14 +193,12 @@ const RacingDetails = () => {
         socketService.match.matchResultDeclaredOff();
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
-        socketService.match.matchResultUnDeclaredOff();
         socketService.match.joinMatchRoom(id, profileDetail?.roleName);
         socketService.match.getMatchRates(id, updateMatchDetailToRedux);
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.declaredMatchResultAllUser(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
-        socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
       }
     } catch (e) {
       console.log(e);
@@ -238,7 +213,6 @@ const RacingDetails = () => {
       socketService.match.matchResultDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
       socketService.match.matchDeleteBetOff();
-      socketService.match.matchResultUnDeclaredOff();
     };
   }, [id]);
 

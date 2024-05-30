@@ -32,7 +32,7 @@ const matchListSlice = createSlice({
       })
       .addCase(getHorseRacingCountryWiseList.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
+        // state.success = true;
         state.countryWiseList = action.payload;
       })
       .addCase(getHorseRacingCountryWiseList.rejected, (state, action) => {
@@ -41,6 +41,7 @@ const matchListSlice = createSlice({
       })
       .addCase(getHorseRacingMatchList.pending, (state) => {
         state.loading = true;
+        state.success = false;
         state.error = null;
       })
       .addCase(getHorseRacingMatchList.fulfilled, (state, action) => {
