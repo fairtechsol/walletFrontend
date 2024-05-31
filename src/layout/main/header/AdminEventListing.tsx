@@ -11,6 +11,7 @@ import {
   Tennis,
   WALLET,
   HorseRacing,
+  GreyHound,
 } from "../../../assets";
 import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
@@ -45,8 +46,15 @@ const data = [
     id: 5,
     title: "HORSE RACING",
     image: HorseRacing,
-    url: "horse_racing",
+    url: "race_list/horseRacing",
     alt: "Horse Racing",
+  },
+  {
+    id: 13,
+    title: "GREYHOUND",
+    image: GreyHound,
+    url: "race_list/greyHound",
+    alt: "Greyhound Racing",
   },
   {
     id: 6,

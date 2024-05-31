@@ -10,9 +10,11 @@ import CountryWiseListComponent from "../../../components/horseRacingComp/Countr
 import RacingListComponent from "../../../components/horseRacingComp/RacingListComponent";
 import { Box } from "@mui/material";
 import { socketService } from "../../../socketManager";
+import { useParams } from "react-router-dom";
 
 const RacingList = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { matchType } = useParams();
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const { racingList, countryWiseList, success } = useSelector(
     (state: RootState) => state.horseRacing.matchList
@@ -20,13 +22,13 @@ const RacingList = () => {
 
   const getMatchListService = () => {
     setTimeout(() => {
-      dispatch(getHorseRacingCountryWiseList());
+      dispatch(getHorseRacingCountryWiseList({ matchType: matchType }));
     }, 500);
   };
 
   useEffect(() => {
-    dispatch(getHorseRacingCountryWiseList());
-  }, []);
+    dispatch(getHorseRacingCountryWiseList({ matchType: matchType }));
+  }, [matchType]);
 
   useEffect(() => {
     if (
@@ -37,7 +39,12 @@ const RacingList = () => {
       setSelectedCountryCode(countryWiseList[0]?.countryCode);
     }
     if (selectedCountryCode !== "") {
-      dispatch(getHorseRacingMatchList({ countryCode: selectedCountryCode }));
+      dispatch(
+        getHorseRacingMatchList({
+          countryCode: selectedCountryCode,
+          matchType: matchType,
+        })
+      );
     }
   }, [selectedCountryCode, countryWiseList]);
 
@@ -76,6 +83,7 @@ const RacingList = () => {
         <CountryWiseListComponent
           countryWiseList={countryWiseList}
           setSelectedCountryCode={setSelectedCountryCode}
+          matchType={matchType}
         />
       </Box>
       <Box>

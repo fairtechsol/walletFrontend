@@ -1,35 +1,35 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "../../../store/store";
-import {
-  AllBetDelete,
-  getPlacedBets,
-  getUserProfitLoss,
-  resetSessionProLoss,
-  updateBetsPlaced,
-  updatePlacedbets,
-} from "../../../store/actions/match/matchAction";
-import { ApiConstants } from "../../../utils/Constants";
-import { socket, socketService } from "../../../socketManager";
-import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
-import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
-import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { DeleteIcon } from "../../../assets";
+import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
+import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLoss/userProfitLossRace";
+import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
+import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
+import { socket, socketService } from "../../../socketManager";
 import {
   getMatchDetailHorseRacing,
+  getUserProfitLossForRace,
   updateMatchRatesForHorseRacing,
   updateTeamRatesForHorseRacing,
   updateTeamRatesForHorseRacingOnDelete,
 } from "../../../store/actions/horseRacing/horseMatchDetailActions";
-import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
-import moment from "moment";
+import {
+  AllBetDelete,
+  getPlacedBets,
+  resetSessionProLoss,
+  updateBetsPlaced,
+  updatePlacedbets,
+} from "../../../store/actions/match/matchAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { ApiConstants } from "../../../utils/Constants";
 
 const RacingDetails = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { id } = useParams();
+  const { id, matchType } = useParams();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
@@ -167,7 +167,7 @@ const RacingDetails = () => {
 
   useEffect(() => {
     if (matchDetail && matchDetail?.stopAt) {
-      navigate(`/wallet/horse_racing`);
+      navigate(`/wallet/race_list/${matchType}`);
     }
   }, [matchDetail]);
 
@@ -176,7 +176,7 @@ const RacingDetails = () => {
       window.scrollTo(0, 0);
       if (id && profileDetail?.roleName) {
         dispatch(getMatchDetailHorseRacing(id));
-        dispatch(getUserProfitLoss(id));
+        dispatch(getUserProfitLossForRace(id));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${id}`));
       }
@@ -221,7 +221,7 @@ const RacingDetails = () => {
       if (document.visibilityState === "visible") {
         if (id) {
           dispatch(getMatchDetailHorseRacing(id));
-          dispatch(getUserProfitLoss(id));
+          dispatch(getUserProfitLossForRace(id));
           dispatch(getPlacedBets(`eq${id}`));
         }
       } else if (document.visibilityState === "hidden") {
@@ -240,7 +240,7 @@ const RacingDetails = () => {
     if (id) {
       const intervalId = setInterval(() => {
         dispatch(getMatchDetailHorseRacing(id));
-        dispatch(getUserProfitLoss(id));
+        dispatch(getUserProfitLossForRace(id));
         dispatch(getPlacedBets(`eq${id}`));
       }, 14100 * 1000);
 
@@ -287,7 +287,7 @@ const RacingDetails = () => {
       >
         <Box
           sx={{
-            flex: 1,
+            width: "50%",
             flexDirection: "column",
             minHeight: "100px",
             display: "flex",
@@ -332,7 +332,7 @@ const RacingDetails = () => {
             }
           />
           {matchesMobile && (
-            <UserProfitLoss
+            <UserProfitLossRace
               single={"single"}
               title={"User Profit Loss"}
               // matchId={matchId}
@@ -445,6 +445,7 @@ const RacingDetails = () => {
               flexDirection: "column",
               display: "flex",
               minHeight: "100px",
+              width: "50%",
             }}
           >
             <Box
@@ -460,7 +461,7 @@ const RacingDetails = () => {
               ></Box>
             </Box>
 
-            <UserProfitLoss
+            <UserProfitLossRace
               single={"single"}
               title={"User Profit Loss"}
               matchDetail={matchDetail}

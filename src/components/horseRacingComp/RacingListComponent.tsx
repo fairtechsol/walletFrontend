@@ -8,7 +8,7 @@ import {
   styled,
 } from "@mui/material";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const YellowButton = styled("button")(() => ({
   backgroundColor: "#F8C851",
@@ -26,6 +26,7 @@ const YellowButton = styled("button")(() => ({
 
 const RacingListComponent = ({ racingList }: any) => {
   const navigate = useNavigate();
+  const { matchType } = useParams();
   return (
     <TableContainer component={Paper}>
       <Table aria-label="time table">
@@ -48,7 +49,7 @@ const RacingListComponent = ({ racingList }: any) => {
                       <YellowButton
                         key={idx}
                         onClick={() =>
-                          navigate(`/wallet/horse_racing/${time.id}`)
+                          navigate(`/wallet/race_list/${matchType}/${time.id}`)
                         }
                       >
                         {moment(time.startAt).format("hh:mm")}

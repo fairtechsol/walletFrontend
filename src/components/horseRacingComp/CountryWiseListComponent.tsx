@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs, styled } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CustomTabs = styled(Tabs)({
   "& .MuiTab-root": {
@@ -14,6 +14,7 @@ const CustomTabs = styled(Tabs)({
 const CountryWiseListComponent = ({
   countryWiseList,
   setSelectedCountryCode,
+  matchType,
 }: any) => {
   const [value, setValue] = useState(0);
 
@@ -21,6 +22,13 @@ const CountryWiseListComponent = ({
     setValue(newValue);
     setSelectedCountryCode(countryWiseList[newValue].countryCode);
   };
+
+  useEffect(() => {
+    setValue(0);
+    if (countryWiseList[0]?.countryCode) {
+      setSelectedCountryCode(countryWiseList[0]?.countryCode);
+    }
+  }, [matchType, countryWiseList]);
 
   return (
     <>
