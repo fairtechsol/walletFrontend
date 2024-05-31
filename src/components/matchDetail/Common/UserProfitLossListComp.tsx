@@ -4,7 +4,7 @@ import Divider from "../../Inplay/Divider";
 import { formatToINR, handleNumber } from "../../../helper";
 
 const UserProfitLossListComp = (props: any) => {
-  const { element, showTeamC , color} = props;
+  const { element, showTeamC, color } = props;
   return (
     <>
       <Box
@@ -49,8 +49,16 @@ const UserProfitLossListComp = (props: any) => {
         >
           <>
             <SeperateBox
-              value2={handleNumber(parseFloat(element?.teamRateA || 0), color) ?? "N/A"}
-              value={handleNumber(parseFloat(element?.percentTeamRateA || 0), color) ?? "N/A"}
+              value2={
+                handleNumber(parseFloat(element?.teamRateA || 0), color) ??
+                "N/A"
+              }
+              value={
+                handleNumber(
+                  parseFloat(element?.percentTeamRateA || 0),
+                  color
+                ) ?? "N/A"
+              }
               color={"#ffffff"}
               width={10}
             />
@@ -58,28 +66,19 @@ const UserProfitLossListComp = (props: any) => {
               sx={{ width: "3px", display: "flex", background: "#ffffff" }}
             ></Box>
             <SeperateBox
-              value2={handleNumber(parseFloat(element?.teamRateB || 0),color) ?? "N/A"}
-              value={handleNumber(parseFloat(element?.percentTeamRateB || 0),color) ?? "N/A"}
+              value2={
+                handleNumber(parseFloat(element?.teamRateB || 0), color) ??
+                "N/A"
+              }
+              value={
+                handleNumber(
+                  parseFloat(element?.percentTeamRateB || 0),
+                  color
+                ) ?? "N/A"
+              }
               color={"#ffffff"}
               width={10}
             />
-            {showTeamC && (
-              <>
-                <Box
-                  sx={{
-                    width: "3px",
-                    display: "flex",
-                    background: "#ffffff",
-                  }}
-                ></Box>
-                <SeperateBox
-                  value2={formatToINR(element?.teamRateC || 0) ?? "N/A"}
-                  value={formatToINR(element?.percentTeamRateC || 0) ?? "N/A"}
-                  color={"#ffffff"}
-                  width={10}
-                />
-              </>
-            )}
           </>
           <Box
             sx={{ width: ".45%", display: "flex", background: "pink" }}

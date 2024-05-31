@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import service from "../../../service";
 import { ApiConstants } from "../../../utils/Constants";
 import { AxiosError } from "axios";
@@ -42,6 +42,24 @@ export const deleteHorseRacingBets = createAsyncThunk<any, any>(
     }
   }
 );
+
+export const getUserProfitLossForRace = createAsyncThunk<any, any>(
+  "userProfitLossData/forRace",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.HORSERACING.MATCH.GET_USER_PROFIT_LOSS}/${requestData}`
+      );
+      if (resp?.data) {
+        return resp?.data;
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
 export const updateMatchRatesForHorseRacing = createAsyncThunk<any, any>(
   "horseRacing/matchRatesUpdate",
   async (data) => {
@@ -59,4 +77,8 @@ export const updateTeamRatesForHorseRacingOnDelete = createAsyncThunk<any, any>(
   async (data) => {
     return data;
   }
+);
+
+export const resetUserProfitLossForRace = createAction(
+  "reset/userProfitLossForRace"
 );

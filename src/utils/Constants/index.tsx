@@ -86,6 +86,7 @@ export const ApiConstants = {
       GET_RACING_LIST: "/match/racing/list",
       DELETE_BET: "/bet/deleteMultipleBetForRace",
       GET_MATCH_DETAIL: "/match/racing",
+      GET_USER_PROFIT_LOSS: "/superAdmin/user/profitLossData/race",
     },
   },
 };
@@ -117,8 +118,8 @@ export const Constants = {
     changePassword: "change-password",
     matchList: "matchList/:type",
     matchListMatches: "matchList/:type/:id",
-    horseRacing: "horse_racing",
-    horseRacingDetail: "horse_racing/:id",
+    horseRacing: "race_list/:matchType",
+    horseRacingDetail: "race_list/:matchType/:id",
   },
   WalletSettingsPaths: {
     root: "/wallet/walletSettings",
