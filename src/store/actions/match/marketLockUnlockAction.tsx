@@ -9,10 +9,14 @@ export const updateUserMatchLock = createAsyncThunk<any, any>(
     try {
       const resp = await service.post(
         `${ApiConstants.USER.USER_MATCH_LOCK}`,
-        requestData
+        requestData?.payload
       );
       if (resp) {
-        return resp?.data;  
+        const response = {
+          data : resp?.data?.returnData,
+          role : requestData?.role
+        }
+        return response;  
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -59,6 +63,23 @@ export const getUserDetailsOfLock = createAsyncThunk<any, any>(
     try {
       const resp = await service.get(
         `${ApiConstants.USER.USER_CHECK_CHILD_DEACTIVATE}?matchId=${id}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
+export const getUserOfLock = createAsyncThunk<any, any>(
+  "/getUserOfLock",
+  async (id, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.USER.USER_CHECK_CHILD_ACTIVATE}?matchId=${id}`
       );
       if (resp) {
         return resp?.data;

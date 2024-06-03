@@ -117,7 +117,7 @@ const MatchOdds = (props: any) => {
           {blockMatch && (
             <img
               onClick={() =>
-                selft || selft == undefined
+                selft 
                   ? handleShowLock(true, typeOfBet)
                   : ""
               }
@@ -553,11 +553,11 @@ const MatchOdds = (props: any) => {
                       width: "100%",
                       height: currentMatch?.teamC ? "150px" : "105px",
                       position: "absolute",
-                      top: "-24px",
+                      top: "-65px",
                       alignItems: "center",
                       justifyContent: "flex-end",
                       display: "flex",
-                      zIndex:'9999'
+                      zIndex:'999'
                     }}
                   >
                     <Box
@@ -793,16 +793,17 @@ const MatchOdds = (props: any) => {
                 ) : null}
                 {locked && (
                   <Box
-                    sx={{
-                      background: "rgba(0,0,0,.5)",
-                      width: "100%",
-                      height: currentMatch?.teamC ? "150px" : "105px",
-                      position: "absolute",
-                      top: "-24px",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      display: "flex",
-                    }}
+                  sx={{
+                    background: "rgba(0,0,0,.5)",
+                    width: "100%",
+                    height: currentMatch?.teamC ? "150px" : "105px",
+                    position: "absolute",
+                    top: "-24px",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    display: "flex",
+                    zIndex:'999'
+                  }}
                   >
                     <Box
                       sx={{
@@ -824,9 +825,9 @@ const MatchOdds = (props: any) => {
                         sx={{
                           color: "white",
                           fontWeight: "600",
-                          marginLeft: "-25px",
+                          marginLeft: "15px",
                           fontSize: "20px",
-                          marginTop: "20px",
+                          marginTop: "12px",
                         }}
                       >
                         Locked
