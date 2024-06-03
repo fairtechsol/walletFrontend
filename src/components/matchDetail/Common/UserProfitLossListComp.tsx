@@ -1,10 +1,10 @@
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { Box, Typography } from "@mui/material";
 import Divider from "../../Inplay/Divider";
-import { formatToINR, handleNumber } from "../../../helper";
+import { handleNumber } from "../../../helper";
 
 const UserProfitLossListComp = (props: any) => {
-  const { element, showTeamC, color } = props;
+  const { element, color } = props;
   return (
     <>
       <Box
