@@ -323,6 +323,7 @@ const LiveBookmaker = (props: any) => {
                     alignItems: "center",
                     justifyContent: "center",
                     display: "flex",
+                    zIndex:'999'
                   }}
                 >
                   <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
@@ -331,9 +332,9 @@ const LiveBookmaker = (props: any) => {
                     sx={{
                       color: "white",
                       fontWeight: "600",
-                      marginLeft: "-25px",
+                      marginLeft: "15px",
                       fontSize: "20px",
-                      marginTop: "20px",
+                      marginTop: "12px",
                     }}
                   >
                     Locked

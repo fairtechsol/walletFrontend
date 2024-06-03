@@ -179,6 +179,49 @@ const SessionMarket = ({
               overflowY: "auto",
             }}
           >
+             {locked && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  height: title==="Session Market" ? "83%":"100%",
+                  top:  title==="Session Market" ? "17%":"1%",
+                  width: "100%",
+                  display: "flex",
+                  zIndex: "999",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  background: "rgba(0, 0, 0, .6)",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: { xs: "60%", lg: "20%", md: "60%" },
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    width: { xs: "40%", lg: "60%", md: "40%" },
+                    gap: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      margin: "12px 0px 0px 15px",
+                      fontSize: "20px",
+                      color: "#FFF",
+                    }}
+                  >
+                    {" "}
+                    Locked{" "}
+                  </Typography>
+                </Box>
+              </Box>
+            )}
             {
               <Box
                 sx={{
@@ -265,49 +308,7 @@ const SessionMarket = ({
                 </Box>
               </Box>
             }
-            {locked && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  height: "86%",
-                  top: "14%",
-                  width: "100%",
-                  display: "flex",
-                  zIndex: "999",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  background: "rgba(0, 0, 0, .6)",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: { xs: "60%", lg: "20%", md: "60%" },
-                  }}
-                ></Box>
-                <Box
-                  sx={{
-                    width: { xs: "40%", lg: "60%", md: "40%" },
-                    gap: 1,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
-                  <Typography
-                    sx={{
-                      fontWeight: "600",
-                      margin: "20px 0px 0px -25px",
-                      fontSize: "20px",
-                      color: "#FFF",
-                    }}
-                  >
-                    {" "}
-                    Locked{" "}
-                  </Typography>
-                </Box>
-              </Box>
-            )}
+           
             <Box
               sx={{
                 display: "flex",

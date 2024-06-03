@@ -19,7 +19,7 @@ const MoneyBox = (props: any) => {
         display: "flex",
         height: "25px",
         background: "#F6F6F6",
-        zIndex: 100,
+        // zIndex: 99,
       }}
     >
       <Typography
