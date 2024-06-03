@@ -4,12 +4,13 @@ import SeperateBox from "../matchDetail/MatchOdds/SeperateBox";
 import { formatNumber } from "../../helper";
 import StyledImage from "../Common/StyledImages";
 import { LockSolid } from "../../assets";
+import moment from "moment";
 
 const BoxComponentHorseRacing = (props: any) => {
   const { name, color, align, rates, data } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const { ex, status } = data ?? {};
+  const { ex, status, adjustmentFactor, removalDate } = data ?? {};
   return (
     <Box
       sx={{
@@ -104,7 +105,13 @@ const BoxComponentHorseRacing = (props: any) => {
             >
               <Typography
                 style={{
-                  fontSize: matchesMobile ? "12px" : "18px",
+                  fontSize: matchesMobile
+                    ? status === "REMOVED"
+                      ? "10px"
+                      : "12px"
+                    : status === "REMOVED"
+                    ? "10px"
+                    : "18px",
                   textTransform: "uppercase",
                   width: "100%",
                   textAlign: "center",
@@ -112,8 +119,13 @@ const BoxComponentHorseRacing = (props: any) => {
                   fontWeight: "400",
                 }}
               >
-                {status ? status : "suspended"}
-                {/* suspended */}
+                {status
+                  ? status === "REMOVED"
+                    ? `${status} - ${adjustmentFactor}%, ${moment(
+                        removalDate
+                      ).format("MM/DD/YYYY HH:mm:ss A ([IST])")}`
+                    : status
+                  : "suspended"}
               </Typography>
             </Box>
           </Box>
