@@ -94,6 +94,7 @@ export const ApiConstants = {
       DELETE_BET: "/bet/deleteMultipleBetForRace",
       GET_MATCH_DETAIL: "/match/racing",
       GET_USER_PROFIT_LOSS: "/superAdmin/user/profitLossData/race",
+      GET_RATE_MARKETANALYSIS: "/match/race/marketAnalysis"
     },
   },
 };

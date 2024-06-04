@@ -22,6 +22,7 @@ import GeneralReport from "../pages/reports/GeneralReport";
 import MatchList from "../pages/matchList";
 import RacingList from "../pages/horseRacing/racingList";
 import RacingDetails from "../pages/horseRacing/racingDetails";
+import Analysis2 from "../pages/analysis2";
 
 // const ListOfClients = Loadable(() => import("../pages/listOfClients"));
 // const ChangePassword = Loadable(() => import("../pages/changePassword"));
@@ -87,7 +88,7 @@ const MainRoutes = {
     },
     {
       path: Constants.MainPaths.marketAnalysis2,
-      element: <Analysis />,
+      element: <Analysis2 />,
     },
     {
       path: Constants.MainPaths.marketAnalysisMatches,

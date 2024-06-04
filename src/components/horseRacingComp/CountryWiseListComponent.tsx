@@ -40,9 +40,15 @@ const CountryWiseListComponent = ({
           <CustomTabs
             value={value}
             onChange={handleChange}
-            variant="fullWidth"
+            variant="scrollable"
             textColor="inherit"
             aria-label="country tabs"
+            sx={{
+              height: "30px",
+              "& .MuiTab-root": {
+                minWidth: "3rem",
+              },
+            }}
           >
             {countryWiseList &&
               countryWiseList.map((item: any, index: number) => (
