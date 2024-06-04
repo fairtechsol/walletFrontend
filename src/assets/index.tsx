@@ -48,5 +48,7 @@ export { default as ARROWDOWN } from "./images/arrowDown.png";
 export { default as Football } from "./images/football.png";
 export { default as Cricket } from "./images/cricket.png";
 export { default as Tennis } from "./images/tennis.png";
+export { default as HorseRacing } from "./images/horseRacing.png";
+export { default as GreyHound } from "./images/greyHound.png";
 export { default as CancelDark } from "./images/cancelDark.png";
 export { default as CANCEL } from "./images/cancel.png";

@@ -1,3 +1,11 @@
+import {
+  Cricket,
+  Football,
+  GreyHound,
+  HorseRacing,
+  Tennis,
+} from "../../assets";
+
 export const ApiConstants = {
   AUTH: {
     LOGIN: "/auth/login",
@@ -30,6 +38,11 @@ export const ApiConstants = {
     RUN_AMOUNT: "bet/session/profitLoss",
     TOTAL_BALANCE: "user/child/totalBalance",
     DELETE: "user/delete",
+    USER_MATCH_LOCK: "/match/lock",
+    USER_MATCH_LOCK_ALL_CHILD: "/user/getMatchLockAllChild",
+    USER_DETAIL_FOR_PARENT: "/user/getUserDetailsForParent",
+    USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
+    USER_CHECK_CHILD_ACTIVATE:'match/check/lock',
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
@@ -64,12 +77,24 @@ export const ApiConstants = {
   },
   MATCH: {
     GET: "match",
+    GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",
+    BETDELETEOTHER: "/bet/deleteMultipleBetForOther",
+    BETDELETERACE: "/bet/deleteMultipleBetForRace",
     GET_BETS: "/superadmin/bets",
     TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
     DOMAIN_PROFIT_LOSS: "/user/total/domain/profitLoss",
     BET_PROFIT_LOSS: "/user/total/bet/profitLoss",
     SESSION_PROFIT_LOSS: "/user/total/session/profitLoss",
+  },
+  HORSERACING: {
+    MATCH: {
+      GET_COUNTRY_WISE_LIST: "/match/countryWiseList",
+      GET_RACING_LIST: "/match/racing/list",
+      DELETE_BET: "/bet/deleteMultipleBetForRace",
+      GET_MATCH_DETAIL: "/match/racing",
+      GET_USER_PROFIT_LOSS: "/superAdmin/user/profitLossData/race",
+    },
   },
 };
 
@@ -91,12 +116,17 @@ export const Constants = {
     addAccount: "add_account",
     editAccount: "edit_account",
     marketAnalysis: "market_analysis",
+    marketAnalysis2: "market_analysis2",
     marketAnalysisMatches: "market_analysis/matches",
     multipleMatch: "market_analysis/multiple_Match",
     reports: "reports",
     walletSettings: "walletSettings",
     myAccount: "my-account",
     changePassword: "change-password",
+    matchList: "matchList/:type",
+    matchListMatches: "matchList/:type/:id",
+    horseRacing: "race_list/:matchType",
+    horseRacingDetail: "race_list/:matchType/:id",
   },
   WalletSettingsPaths: {
     root: "/wallet/walletSettings",
@@ -137,6 +167,133 @@ export const Constants = {
   PRODUCTION: "production",
 };
 
+export const matchBettingType = {
+  matchOdd: "matchOdd",
+  bookmaker: "bookmaker",
+  quickbookmaker1: "quickbookmaker1",
+  quickbookmaker2: "quickbookmaker2",
+  quickbookmaker3: "quickbookmaker3",
+  tiedMatch1: "tiedMatch1",
+  tiedMatch2: "tiedMatch2",
+  completeMatch: "completeMatch",
+  completeManual: "completeManual",
+  setWinner1: "setWinner1",
+  setWinner2: "setWinner2",
+  ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
+    (prev, curr) => {
+      prev[`overUnder${curr}.5`] = `overUnder${curr}.5`;
+      return prev;
+    },
+    {}
+  ),
+  ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
+    (prev, curr) => {
+      prev[`firstHalfGoal${curr}.5`] = `firstHalfGoal${curr}.5`;
+      return prev;
+    },
+    {}
+  ),
+  halfTime: "halfTime",
+};
+
+export const gameConstants = {
+  cricket: "cricket",
+  football: "football",
+  tennis: "tennis",
+  horseRacing: "horseRacing",
+  greyHound: "greyHound",
+};
+export const gameIconConstants = {
+  [gameConstants.cricket]: Cricket,
+  [gameConstants.football]: Football,
+  [gameConstants.tennis]: Tennis,
+  [gameConstants.horseRacing]: HorseRacing,
+  [gameConstants.greyHound]: GreyHound,
+};
+
+export const profitLossDataForMatchConstants = {
+  [matchBettingType.matchOdd]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.bookmaker]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.quickbookmaker1]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.quickbookmaker2]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.quickbookmaker3]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.tiedMatch1]: {
+    A: "yesRateTie",
+    B: "noRateTie",
+  },
+  [matchBettingType.tiedMatch2]: {
+    A: "yesRateTie",
+    B: "noRateTie",
+  },
+  [matchBettingType.completeMatch]: {
+    A: "yesRateComplete",
+    B: "noRateComplete",
+  },
+  [matchBettingType.completeManual]: {
+    A: "yesRateComplete",
+    B: "noRateComplete",
+  },
+  ...Array.from({ length: 20 }, (_, index) => index).reduce(
+    (prev: any, curr) => {
+      prev[`overUnder${curr}.5`] = {
+        A: `yesRateUnderOver${curr}.5`,
+        B: `noRateUnderOver${curr}.5`,
+      };
+      return prev;
+    },
+    {}
+  ),
+  ...Array.from({ length: 20 }, (_, index) => index).reduce(
+    (prev: any, curr) => {
+      prev[`firstHalfGoal${curr}.5`] = {
+        A: `yesRateFirstHalfGoal${curr}.5`,
+        B: `noRateFirstHalfGoal${curr}.5`,
+      };
+      return prev;
+    },
+    {}
+  ),
+  [matchBettingType.halfTime]: {
+    A: "userTeamARateHalfTime",
+    B: "userTeamBRateHalfTime",
+    C: "userTeamCRateHalfTime",
+  },
+
+  ...Array.from({ length: 20 }, (_, index) => index).reduce(
+    (prev: any, curr) => {
+      prev[`setWinner${curr}`] = {
+        A: `userTeamARateSetWinner${curr}`,
+        B: `userTeamBRateSetWinner${curr}`,
+        C: `userTeamCRateSetWinner${curr}`,
+      };
+      return prev;
+    },
+    {}
+  ),
+};
+
+// use below baseUrl for testing build
+
 // export const baseUrls = {
 //   socket:
 //     process.env.NODE_ENV === Constants.PRODUCTION
@@ -151,6 +308,8 @@ export const Constants = {
 //       ? Constants.expertPath
 //       : Constants.localPathExpert,
 // };
+
+// use below baseUrl for live build
 export const baseUrls = {
   socket:
     process.env.NODE_ENV === Constants.PRODUCTION

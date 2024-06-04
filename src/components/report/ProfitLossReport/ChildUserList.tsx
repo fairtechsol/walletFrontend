@@ -10,6 +10,7 @@ const ChildUserList = ({
   url,
   matchId,
   roleName,
+  eventType,
   getBetReport,
   sessionBetData,
   sessionBets,
@@ -42,7 +43,7 @@ const ChildUserList = ({
         <AllUserListSeparate
           id={profitLoss?.userId}
           key={index}
-          item={profitLoss}
+          item={{ ...profitLoss, eventType }}
           index={index + 1}
           matchId={matchId}
           getBetReport={getBetReport}

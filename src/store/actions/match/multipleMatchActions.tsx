@@ -25,7 +25,7 @@ export const getMultipleMatchDetail = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET}/${requestData}`
+        `${requestData.url}/${requestData.ids}?matchType=${requestData.matchType}`
       );
       if (resp) {
         return resp?.data;
@@ -111,6 +111,12 @@ export const updateMaxLossForDeleteBetForMultiMatch = createAsyncThunk<
   any,
   any
 >("/maxLoss/updateMaxLossForDeleteBetForMultiMatch", async (data) => {
+  return data;
+});
+export const updateMatchRatesOnMarketUndeclareForMulti = createAsyncThunk<
+  any,
+  any
+>("/maxLoss/updateMatchRatesOnMarketUndeclareForMulti", async (data) => {
   return data;
 });
 

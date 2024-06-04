@@ -13,6 +13,7 @@ const UnlockComponent = ({ onSubmit, title, unlock, handleHide }: any) => {
         height: "110px",
         borderRadius: "10px",
         background: "white",
+        zIndex:'999'
       }}
     >
       <img

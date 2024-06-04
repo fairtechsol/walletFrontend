@@ -2,9 +2,9 @@ import { Box, Typography } from "@mui/material";
 import RowHeaderMatches from "./RowHeaderMatches";
 import Pagination from "../../Common/Pagination";
 import { useState } from "react";
-import RowComponentMatches from "./RowComponentMatches";
-import { RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
+// import RowComponentMatches from "./RowComponentMatches";
+// import { RootState } from "../../../store/store";
+// import { useSelector } from "react-redux";
 
 const ProfitLossTableComponent = (props: any) => {
   const {
@@ -19,11 +19,8 @@ const ProfitLossTableComponent = (props: any) => {
     userProfitLoss,
     getUserProfitLoss,
   } = props;
-  const { domainProfitLossList } = useSelector(
-    (state: RootState) => state.report.reportList
-  );
 
-  const [_, setEvent] = useState("");
+  const [eventType, setEvent] = useState("");
   const [selectedId, setSelectedId] = useState({
     type: "",
     id: "",
@@ -75,27 +72,17 @@ const ProfitLossTableComponent = (props: any) => {
               startDate={startDate}
               endDate={endDate}
               getHandleReport={getHandleReport}
+              selectedId={selectedId}
+              getBetReport={getBetReport}
+              userProfitLoss={userProfitLoss}
+              getUserProfitLoss={getUserProfitLoss}
+              eventType={eventType}
             />
           </>
         );
       })}
-      <Box>
-        {show &&
-          domainProfitLossList?.map((item: any, index: number) => {
-            return (
-              <RowComponentMatches
-                key={index}
-                item={item}
-                index={index + 1}
-                selectedId={selectedId}
-                getBetReport={getBetReport}
-                userProfitLoss={userProfitLoss}
-                getUserProfitLoss={getUserProfitLoss}
-              />
-            );
-          })}
-      </Box>
-      {show && (
+
+      {eventType && (
         <Pagination
           getListOfUser={() => {}}
           currentPage={currentPage}

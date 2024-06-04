@@ -19,6 +19,9 @@ import ProfitLossReport from "../pages/reports/ProfitLoss";
 import CurrentBets from "../pages/reports/CurrentBets";
 import AccountStatement from "../pages/reports/AccountStatement";
 import GeneralReport from "../pages/reports/GeneralReport";
+import MatchList from "../pages/matchList";
+import RacingList from "../pages/horseRacing/racingList";
+import RacingDetails from "../pages/horseRacing/racingDetails";
 
 // const ListOfClients = Loadable(() => import("../pages/listOfClients"));
 // const ChangePassword = Loadable(() => import("../pages/changePassword"));
@@ -55,11 +58,19 @@ const MainRoutes = {
       element: <LockMatchScreen />,
     },
     {
+      path: Constants.MainPaths.matchList,
+      element: <MatchList />,
+    },
+    {
       path: Constants.MainPaths.liveMarket,
       element: <Inplay />,
     },
     {
       path: Constants.MainPaths.liveMarketMatches,
+      element: <MatchDetail />,
+    },
+    {
+      path: Constants.MainPaths.matchListMatches,
       element: <MatchDetail />,
     },
     {
@@ -72,6 +83,10 @@ const MainRoutes = {
     },
     {
       path: Constants.MainPaths.marketAnalysis,
+      element: <Analysis />,
+    },
+    {
+      path: Constants.MainPaths.marketAnalysis2,
       element: <Analysis />,
     },
     {
@@ -113,6 +128,14 @@ const MainRoutes = {
     {
       path: Constants.ReportsPaths.generalReport,
       element: <GeneralReport />,
+    },
+    {
+      path: Constants.MainPaths.horseRacing,
+      element: <RacingList />,
+    },
+    {
+      path: Constants.MainPaths.horseRacingDetail,
+      element: <RacingDetails />,
     },
     {
       path: "*",

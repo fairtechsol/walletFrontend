@@ -27,6 +27,7 @@ const Analysis = () => {
   const [mode, setMode] = useState("0");
   const [max, setMax] = useState("2");
   const [selected, setSelected] = useState<any>([]);
+  const [selectedMatchType, setSelectedMatchType] = useState<any>("");
   const [matchIds, setMatchIds] = useState<any>([]);
   // const [marketIds, setMarketIds] = useState([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -52,20 +53,32 @@ const Analysis = () => {
     if (mode === "0") {
       return false;
     }
-    const x: any = [...selected];
-    if (x.includes(match?.id)) {
-      setMatchIds((prevIds: any) =>
-        prevIds.filter((matchId: any) => matchId !== match?.id)
-      );
-      const updatedSelected = x.filter((id: any) => id !== match?.id);
-      setSelected(updatedSelected);
-    } else {
-      setMatchIds((prevIds: any) => [...prevIds, match?.id]);
-      setSelected([...x, match?.id]);
-      if (+max === selected?.length) {
-        toast.warn(`Only ${max} allowed`);
-        return;
+
+    const updatedSelected = [...selected];
+    const matchId = match?.id;
+
+    if (selected?.length === 0 || selectedMatchType === match?.matchType) {
+      const isSelected = updatedSelected.includes(matchId);
+
+      if (isSelected) {
+        setMatchIds((prevIds: any) =>
+          prevIds.filter((matchId: any) => matchId !== matchId)
+        );
+        setSelected(updatedSelected.filter((id: any) => id !== matchId));
+      } else {
+        if (+max === selected?.length) {
+          toast.warn(`Only ${max} allowed`);
+          return;
+        }
+        setMatchIds((prevIds: any) => [...prevIds, matchId]);
+        setSelected([...updatedSelected, matchId]);
+        if (!isSelected) {
+          setSelectedMatchType(match?.matchType);
+        }
       }
+    } else {
+      toast.error("Please Select Match Of Same Category");
+      return;
     }
   };
 
@@ -222,6 +235,7 @@ const Analysis = () => {
                         state: {
                           match: Number(max),
                           matchIds: matchIds,
+                          matchType: selectedMatchType,
                           // marketIds: marketIds,
                         },
                       });
@@ -230,6 +244,7 @@ const Analysis = () => {
                         state: {
                           match: Number(max),
                           matchIds: matchIds,
+                          matchType: selectedMatchType,
                           // marketIds: marketIds,
                         },
                       });

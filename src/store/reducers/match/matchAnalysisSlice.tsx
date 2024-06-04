@@ -4,6 +4,7 @@ import {
   getAnalysisList,
   getMultipleMatchDetail,
   updateBetDataOnDeclareOfMultipleMatch,
+  updateMatchRatesOnMarketUndeclareForMulti,
   updateMaxLossForBetForMultipleMatch,
   updateMaxLossForBetOnUndeclareForMultipleMatch,
   updateMaxLossForDeleteBetForMultiMatch,
@@ -12,6 +13,7 @@ import {
   updateTeamRatesOfMultipleMatch,
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../actions/match/multipleMatchActions";
+import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 
 interface InitialState {
   analysisList: any;
@@ -76,17 +78,25 @@ const analysisListSlice = createSlice({
                 matchOdd,
                 quickbookmaker,
                 sessionBettings,
+                setWinner,
+                firstHalfGoal,
+                halfTime,
+                overUnder,
               } = action?.payload;
               return {
                 ...match,
-                apiSession: apiSession,
+                apiSession,
                 apiTideMatch: apiTiedMatch,
-                bookmaker: bookmaker,
+                bookmaker,
                 manualTiedMatch: manualTideMatch,
-                marketCompleteMatch: marketCompleteMatch,
-                matchOdd: matchOdd,
+                marketCompleteMatch,
+                matchOdd,
                 quickBookmaker: quickbookmaker,
-                sessionBettings: sessionBettings,
+                sessionBettings,
+                setWinner,
+                firstHalfGoal,
+                halfTime,
+                overUnder,
               };
             } else {
               return match;
@@ -159,41 +169,18 @@ const analysisListSlice = createSlice({
         state.multipleMatchDetail = state?.multipleMatchDetail.map(
           (match: any) => {
             if (match?.id === jobData?.newBet?.matchId) {
-              if (
-                ["tiedMatch2", "tiedMatch1"].includes(
-                  jobData?.newBet?.marketType
-                )
-              ) {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    yesRateTie: userRedisObj[jobData?.teamArateRedisKey],
-                    noRateTie: userRedisObj[jobData?.teamBrateRedisKey],
-                  },
-                };
-              } else if (
-                ["completeMatch"].includes(jobData?.newBet?.marketType)
-              ) {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    yesRateComplete: userRedisObj[jobData?.teamArateRedisKey],
-                    noRateComplete: userRedisObj[jobData?.teamBrateRedisKey],
-                  },
-                };
-              } else {
-                return {
-                  ...match,
-                  profitLossDataMatch: {
-                    ...match.profitLossDataMatch,
-                    teamARate: userRedisObj[jobData?.teamArateRedisKey],
-                    teamBRate: userRedisObj[jobData?.teamBrateRedisKey],
-                    teamCRate: userRedisObj[jobData?.teamCrateRedisKey] ?? "",
-                  },
-                };
-              }
+              return {
+                ...match,
+                profitLossDataMatch: {
+                  ...match.profitLossDataMatch,
+                  [profitLossDataForMatchConstants[jobData?.newBet?.marketType]
+                    .A]: userRedisObj[jobData?.teamArateRedisKey],
+                  [profitLossDataForMatchConstants[jobData?.newBet?.marketType]
+                    .B]: userRedisObj[jobData?.teamBrateRedisKey],
+                  [profitLossDataForMatchConstants[jobData?.newBet?.marketType]
+                    .C]: userRedisObj[jobData?.teamCrateRedisKey],
+                },
+              };
             } else return match;
           }
         );
@@ -254,43 +241,40 @@ const analysisListSlice = createSlice({
       .addCase(
         updateTeamRatesOnDeleteForMultiMatch.fulfilled,
         (state, action) => {
-          const { redisObject, matchBetType } = action?.payload;
+          const {
+            redisObject,
+            matchBetType,
+            teamArateRedisKey,
+            teamBrateRedisKey,
+            teamCrateRedisKey,
+          } = action?.payload;
           state.multipleMatchDetail = state?.multipleMatchDetail?.map(
             (match: any) => {
-              if (match?.id === action?.payload?.machId) {
-                if (["tiedMatch2", "tiedMatch1"].includes(matchBetType)) {
+              if (match?.id === action?.payload?.matchId) {
+                if (redisObject[teamCrateRedisKey]) {
                   return {
                     ...match,
                     profitLossDataMatch: {
-                      ...match.profitLossDataMatch,
-                      yesRateTie:
-                        redisObject[action?.payload?.teamArateRedisKey],
-                      noRateTie: redisObject[action?.payload?.teamBrateRedisKey],
+                      ...match?.profitLossDataMatch,
+                      [profitLossDataForMatchConstants[matchBetType].A]:
+                        redisObject[teamArateRedisKey],
+                      [profitLossDataForMatchConstants[matchBetType].B]:
+                        redisObject[teamBrateRedisKey],
+                      [profitLossDataForMatchConstants[matchBetType].C]:
+                        redisObject[teamCrateRedisKey],
                     },
                   };
-                } else if (["completeMatch"].includes(matchBetType)) {
+                } else
                   return {
                     ...match,
                     profitLossDataMatch: {
-                      ...match.profitLossDataMatch,
-                      yesRateComplete:
-                        redisObject[action?.payload?.teamArateRedisKey],
-                      noRateComplete:
-                        redisObject[action?.payload?.teamBrateRedisKey],
+                      ...match?.profitLossDataMatch,
+                      [profitLossDataForMatchConstants[matchBetType].A]:
+                        redisObject[teamArateRedisKey],
+                      [profitLossDataForMatchConstants[matchBetType].B]:
+                        redisObject[teamBrateRedisKey],
                     },
                   };
-                } else {
-                  return {
-                    ...match,
-                    profitLossDataMatch: {
-                      ...match.profitLossDataMatch,
-                      teamARate: redisObject[action?.payload?.teamArateRedisKey],
-                      teamBRate: redisObject[action?.payload?.teamBrateRedisKey],
-                      teamCRate:
-                        redisObject[action?.payload?.teamCrateRedisKey] ?? "",
-                    },
-                  };
-                }
               } else return match;
             }
           );
@@ -332,6 +316,48 @@ const analysisListSlice = createSlice({
               } else {
                 return match;
               }
+            }
+          );
+        }
+      )
+      .addCase(
+        updateMatchRatesOnMarketUndeclareForMulti.fulfilled,
+        (state, action) => {
+          const {
+            profitLossData,
+            betType,
+            teamArateRedisKey,
+            teamBrateRedisKey,
+            teamCrateRedisKey,
+          } = action?.payload;
+          state.multipleMatchDetail = state?.multipleMatchDetail?.map(
+            (match: any) => {
+              if (match?.id === action?.payload?.matchId) {
+                if (profitLossData[teamCrateRedisKey]) {
+                  return {
+                    ...match,
+                    profitLossDataMatch: {
+                      ...match?.profitLossDataMatch,
+                      [profitLossDataForMatchConstants[betType].A]:
+                        profitLossData[teamArateRedisKey],
+                      [profitLossDataForMatchConstants[betType].B]:
+                        profitLossData[teamBrateRedisKey],
+                      [profitLossDataForMatchConstants[betType].C]:
+                        profitLossData[teamCrateRedisKey],
+                    },
+                  };
+                } else
+                  return {
+                    ...match,
+                    profitLossDataMatch: {
+                      ...match?.profitLossDataMatch,
+                      [profitLossDataForMatchConstants[betType].A]:
+                        profitLossData[teamArateRedisKey],
+                      [profitLossDataForMatchConstants[betType].B]:
+                        profitLossData[teamBrateRedisKey],
+                    },
+                  };
+              } else return match;
             }
           );
         }

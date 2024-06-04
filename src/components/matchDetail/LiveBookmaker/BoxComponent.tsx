@@ -6,10 +6,35 @@ import { formatNumber } from "../../../helper";
 import { LockSolid } from "../../../assets";
 
 const BoxComponent = (props: any) => {
-  const { name, color, align, rates, data } = props;
+  const { name, color, align, rates, data,team } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status } = data ?? {};
+
+  const handleName = (name: string) => {
+    if (name?.includes('.5')) {
+      let teamName = name?.split('_')
+      if (name?.includes('first')) {
+        if (team === 'teamA') {
+          const givenName = `Under ${teamName[3]}`
+          return givenName;
+        } else {
+          const givenName = `Over ${teamName[3]}`
+          return givenName;
+        }
+      } else {
+        if (team === 'teamA') {
+          const givenName = `Under ${teamName[2]}`
+          return givenName;
+        } else {
+          const givenName = `Over ${teamName[2]}`
+          return givenName;
+        }
+      }
+    } else {
+      return name;
+    }
+  }
   return (
     <Box
       sx={{
@@ -65,7 +90,7 @@ const BoxComponent = (props: any) => {
               maxWidth: "88px",
             }}
           >
-            {name}
+            {handleName(name)}
           </Typography>
         </Box>
       </Box>

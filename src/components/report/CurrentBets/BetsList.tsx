@@ -41,9 +41,6 @@ const BetsList = (props: any) => {
           backgroundColor: "white",
           border: "2px solid white",
         },
-        // (theme: any) => ({
-       
-        // }),
       ]}
     >
       <ListHeaderRow

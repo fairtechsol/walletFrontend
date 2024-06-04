@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
-import service from "../../service";
 import { socket, socketService } from "../../socketManager";
 import {
   getMatchDetail,
@@ -27,6 +26,10 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
+import {
+  getUserOfLock,
+  updateUserMatchLock,
+} from "../../store/actions/match/marketLockUnlockAction";
 const LockMatchScreen = () => {
   const dispatch: AppDispatch = useDispatch();
   const { state } = useLocation();
@@ -35,12 +38,14 @@ const LockMatchScreen = () => {
     (state: RootState) => state.user.profile
   );
 
+  const { userSessionLock, userMatchLock } = useSelector(
+    (state: RootState) => state.match.lockUnlock
+  );
+
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.match.matchList
   );
   const { placedBets } = useSelector((state: RootState) => state.match.bets);
-  const [currentMatch, setCurrentMatch] = useState<any>(null);
-  const [matchOddsLive] = useState<any>([]);
   const [mode, setMode] = useState<any>(false);
   const [isMatchLock, setIsMatchLock] = useState<any>(false);
   const [isBookmakerLock, setIsBookmakerLock] = useState<any>(false);
@@ -48,86 +53,26 @@ const LockMatchScreen = () => {
   const [isQuickSessionLock, setIsQuickSessionLock] = useState<any>(false);
   const [isSessionLock, setIsSessionLock] = useState<any>(false);
 
-  const handleBlock = async (value: any, locked: any, typeOfBet: any) => {
+  const handleBlock = async (value: any, status: any, typeOfBet: any) => {
     try {
-      let type = typeOfBet.toUpperCase();
       let payload = {
-        match_id: state?.matchId,
-        marketType: type,
-        marketLock: locked,
-        adminTransPassword: value,
+        matchId: state?.matchId,
+        transactionPassword: value,
+        type: typeOfBet === "SESSION" ? "session" : "match",
+        block: status,
       };
-      let response = await service.post(
-        `/game-match/blockMatchMarket`,
-        payload
-      );
-      console.log(response);
-      if (typeOfBet == "Match Odds") {
-        setCurrentMatch((prevState: any) => ({
-          ...prevState,
-          blockMarket: {
-            ...prevState.blockMarket,
-            MATCH_ODDS: {
-              ...prevState.blockMarket.MATCH_ODDS,
-              block: locked,
-            },
-          },
-        }));
-        setIsMatchLock(false);
-      } else if (typeOfBet == "MANUAL BOOKMAKER") {
-        setCurrentMatch((prevState: any) => ({
-          ...prevState,
-          blockMarket: {
-            ...prevState.blockMarket,
-            MANUALBOOKMAKER: {
-              ...prevState.blockMarket.MANUALBOOKMAKER,
-              block: locked,
-            },
-          },
-        }));
-        setIsManualLock(false);
-      } else if (typeOfBet == "BOOKMAKER") {
-        setCurrentMatch((prevState: any) => ({
-          ...prevState,
-          blockMarket: {
-            ...prevState.blockMarket,
-            BOOKMAKER: {
-              ...prevState.blockMarket.BOOKMAKER,
-              block: locked,
-            },
-          },
-        }));
-        setIsBookmakerLock(false);
-      } else if (typeOfBet == "SESSION") {
-        setCurrentMatch((prevState: any) => ({
-          ...prevState,
-          blockMarket: {
-            ...prevState.blockMarket,
-            SESSION: {
-              ...prevState.blockMarket.SESSION,
-              block: locked,
-            },
-          },
-        }));
-        setIsSessionLock(false);
-        setIsQuickSessionLock(false);
-      }
+      let rolename=profileDetail?.roleName
+      dispatch(updateUserMatchLock({payload:payload,role:rolename}));
+      handleHide()
     } catch (e: any) {
-      console.log(e?.message, "message");
+      console.error(e);
     }
   };
-
   const handleShowLock = async (_: any, type: any) => {
     if (type === "Match Odds") {
       setIsMatchLock(true);
-    } else if (type === "Quick Bookmaker") {
-      setIsManualLock(true);
-    } else if (type === "BOOKMAKER") {
-      setIsBookmakerLock(true);
-    } else if (type === "Session Market") {
+    }else{
       setIsSessionLock(true);
-    } else if (type === "Quick Session Market") {
-      setIsQuickSessionLock(true);
     }
   };
   const handleHide = async () => {
@@ -260,7 +205,12 @@ const LockMatchScreen = () => {
     try {
       window.scrollTo(0, 0);
       if (state?.matchId && profileDetail?.roleName) {
-        dispatch(getMatchDetail(state?.matchId));
+        dispatch(
+          getMatchDetail({
+            matchId: state?.matchId,
+            matchType: state?.matchType,
+          })
+        );
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`eq${state?.matchId}`));
@@ -325,7 +275,12 @@ const LockMatchScreen = () => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         if (state?.matchId) {
-          dispatch(getMatchDetail(state?.matchId));
+          dispatch(
+            getMatchDetail({
+              matchId: state?.matchId,
+              matchType: state?.matchType,
+            })
+          );
           dispatch(getUserProfitLoss(state?.matchId));
           dispatch(getPlacedBets(`eq${state?.matchId}`));
         }
@@ -339,6 +294,26 @@ const LockMatchScreen = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  const convertString = (str: string) => {
+    if (str?.includes("_")) {
+      let words = str.split("_");
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      return words.join(" ");
+    } else {
+      return str;
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getUserOfLock(state?.matchId));
+  }, []);
+
+useEffect(() => {
+ 
+}, [userMatchLock,userSessionLock])
 
   return (
     <>
@@ -384,16 +359,130 @@ const LockMatchScreen = () => {
                   ? matchDetail?.matchOdd?.runners
                   : []
               }
-              matchOddsLive={matchOddsLive}
               blockMatch={true}
-              locked={currentMatch?.blockMarket?.MATCH_ODDS?.block}
-              selft={currentMatch?.blockMarket?.MATCH_ODDS?.selft}
+              locked={profileDetail?.roleName === "fairGameAdmin"
+              ? userMatchLock?.parentBlock
+                ? true
+                : false
+              : userMatchLock?.selfBlock}
+              selft={
+                profileDetail?.roleName === "fairGameAdmin"
+                  ? userMatchLock?.parentBlock
+                    ? false
+                    : true
+                  : true
+              }
               handleBlock={handleBlock}
               handleHide={handleHide}
               handleShowLock={handleShowLock}
               showUnlock={isMatchLock}
+              liveData={matchDetail?.matchOdd}
             />
           )}
+          {matchDetail?.firstHalfGoal?.length > 0 &&
+            matchDetail?.firstHalfGoal
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any) => {
+                return (
+                  <MatchOdds
+                    currentMatch={matchDetail}
+                    session={"firstHalfGoal"}
+                    typeOfBet={convertString(item?.name)}
+                    showBox={item?.activeStatus === "save"}
+                    minBet={Math.floor(item?.minBet)}
+                    maxBet={Math.floor(item?.maxBet)}
+                    data={item?.runners?.length > 0 ? item?.runners : []}
+                    blockMatch={false}
+                    locked={profileDetail?.roleName === "fairGameAdmin"
+                    ? userMatchLock?.parentBlock
+                      ? true
+                      : false
+                    : userMatchLock?.selfBlock}
+                    selft={true}
+                    handleBlock={handleBlock}
+                    handleHide={handleHide}
+                    handleShowLock={handleShowLock}
+                    showUnlock={isMatchLock}
+                    liveData={item}
+                  />
+                );
+              })}
+          {matchDetail?.halfTime?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Half Time"}
+              showBox={matchDetail?.halfTime?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.halfTime?.minBet)}
+              maxBet={Math.floor(matchDetail?.halfTime?.maxBet)}
+              liveData={matchDetail?.halfTime}
+              locked={profileDetail?.roleName === "fairGameAdmin"
+              ? userMatchLock?.parentBlock
+                ? true
+                : false
+              : userMatchLock?.selfBlock}
+              data={
+                matchDetail?.halfTime?.runners?.length > 0
+                  ? matchDetail?.halfTime?.runners
+                  : []
+              }
+            />
+          )}
+          {matchDetail?.overUnder?.length > 0 &&
+            matchDetail?.overUnder
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any) => {
+                return (
+                  <MatchOdds
+                    currentMatch={matchDetail}
+                    session={"overUnder"}
+                    typeOfBet={convertString(item?.name)}
+                    showBox={item?.activeStatus === "save"}
+                    minBet={Math.floor(item?.minBet)}
+                    maxBet={Math.floor(item?.maxBet)}
+                    data={item?.runners?.length > 0 ? item?.runners : []}
+                    blockMatch={false}
+                    locked={profileDetail?.roleName === "fairGameAdmin"
+                    ? userMatchLock?.parentBlock
+                      ? true
+                      : false
+                    : userMatchLock?.selfBlock}
+                    selft={true}
+                    handleBlock={handleBlock}
+                    handleHide={handleHide}
+                    handleShowLock={handleShowLock}
+                    showUnlock={isMatchLock}
+                    liveData={item}
+                  />
+                );
+              })}
+          {matchDetail?.setWinner?.length > 0 &&
+            matchDetail?.setWinner
+              ?.filter((item: any) => item?.isActive)
+              ?.map((item: any) => {
+                return (
+                  <MatchOdds
+                    currentMatch={matchDetail}
+                    session={"setWinner"}
+                    typeOfBet={convertString(item?.name)}
+                    showBox={item?.activeStatus === "save"}
+                    minBet={Math.floor(item?.minBet)}
+                    maxBet={Math.floor(item?.maxBet)}
+                    data={item?.runners?.length > 0 ? item?.runners : []}
+                    blockMatch={false}
+                    locked={profileDetail?.roleName === "fairGameAdmin"
+                    ? userMatchLock?.parentBlock
+                      ? true
+                      : false
+                    : userMatchLock?.selfBlock}
+                    selft={true}
+                    handleBlock={handleBlock}
+                    handleHide={handleHide}
+                    handleShowLock={handleShowLock}
+                    showUnlock={isMatchLock}
+                    liveData={item}
+                  />
+                );
+              })}
           {/* {true && (
             <MatchOdds
               currentMatch={matchDetail}
@@ -420,9 +509,13 @@ const LockMatchScreen = () => {
                   ? matchDetail?.bookmaker?.runners
                   : []
               }
-              blockMatch={true}
-              locked={currentMatch?.blockMarket?.BOOKMAKER?.block}
-              selft={currentMatch?.blockMarket?.BOOKMAKER?.selft}
+              blockMatch={false}
+              locked={profileDetail?.roleName === "fairGameAdmin"
+              ? userMatchLock?.parentBlock
+                ? true
+                : false
+              : userMatchLock?.selfBlock}
+              selft={true}
               handleBlock={handleBlock}
               handleHide={handleHide}
               handleShowLock={handleShowLock}
@@ -454,9 +547,13 @@ const LockMatchScreen = () => {
               )}
               min={matchDetail?.betFairSessionMinBet || 0}
               max={matchDetail?.betFairSessionMaxBet || 0}
-              blockMatch={true}
-              locked={currentMatch?.blockMarket?.SESSION?.block}
-              selft={currentMatch?.blockMarket?.SESSION?.selft}
+              blockMatch={false}
+              locked={profileDetail?.roleName === "fairGameAdmin"
+              ? userSessionLock?.parentBlock
+                ? true
+                : false
+              : userSessionLock?.selfBlock}
+              selft={true}
               handleBlock={handleBlock}
               handleHide={handleHide}
               handleShowLock={handleShowLock}
@@ -486,8 +583,18 @@ const LockMatchScreen = () => {
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
               max={Math.floor(matchDetail?.betFairSessionMaxBet)}
               blockMatch={true}
-              locked={currentMatch?.blockMarket?.SESSION?.block}
-              selft={currentMatch?.blockMarket?.SESSION?.selft}
+              locked={profileDetail?.roleName === "fairGameAdmin"
+              ? userSessionLock?.parentBlock
+                ? true
+                : false
+              : userSessionLock?.selfBlock}
+              selft={
+                profileDetail?.roleName === "fairGameAdmin"
+                  ? userSessionLock?.parentBlock
+                    ? false
+                    : true
+                  : true
+              }
               handleBlock={handleBlock}
               handleHide={handleHide}
               handleShowLock={handleShowLock}
