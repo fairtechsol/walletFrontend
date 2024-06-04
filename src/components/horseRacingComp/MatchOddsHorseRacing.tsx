@@ -227,7 +227,7 @@ const MatchOddsHorseRacing = (props: any) => {
               ></Box>
             )}
 
-            {data?.map((runner: any) => (
+            {data?.map((runner: any, index: number) => (
               <>
                 <BoxComponentHorseRacing
                   color={
@@ -249,6 +249,7 @@ const MatchOddsHorseRacing = (props: any) => {
                   }
                   data={runner}
                   lock={handleLock(runner)}
+                  index={index}
                   // align="end"
                 />
                 <Divider />
