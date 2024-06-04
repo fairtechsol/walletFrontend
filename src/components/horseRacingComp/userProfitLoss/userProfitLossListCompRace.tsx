@@ -7,21 +7,23 @@ const UserProfitLossListCompRace = (props: any) => {
   const { element, color, matchDetail } = props;
   return (
     <>
-      <Box sx={{ display: "flex", overflowX: "auto" }}>
+      <Box sx={{ display: "flex", }}>
         <Box
           sx={{
             display: "flex",
             height: "38px",
             alignItems: "center",
-            width: "10rem",
           }}
         >
           <Typography
             sx={{
               color: "black",
-              fontSize: { lg: "11px", md: "10px", xs: "8px" },
-              margin: "7px",
+              fontSize: { lg: "12px", md: "10px", xs: "8px" },
+              padding: "2px",
+              margin: "8px",
               fontWeight: "600",
+              textOverflow: "ellipsis",
+              lineHeight: "0.9",
             }}
           >
             {element?.userName}

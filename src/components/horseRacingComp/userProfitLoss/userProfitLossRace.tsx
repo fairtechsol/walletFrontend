@@ -36,6 +36,7 @@ const UserProfitLossRace = (props: any) => {
     <>
       <Box
         sx={{
+          top: "2.5%",
           display: "flex",
           position: "relative",
           background: "white",
@@ -153,57 +154,50 @@ const UserProfitLossRace = (props: any) => {
             alignItems: "center",
             display: "flex",
             flexDirection: "column",
-            overflowx: "auto",
+            width: "100%",
+            overflowX: "auto",
           }}
         >
           <Box
             sx={{
               display: "flex",
               background: "#319E5B",
-              height: "25px",
               alignSelf: "center",
+              // overflowX: "scroll",
+              // overflow: "hidden",
+              width: "100%",
+              height: "25px"
             }}
           >
-            <Box
+              <Box
               sx={{
                 display: "flex",
-                background: "'#319E5B'",
-                height: "25px",
-                width: "30%",
+                justifyContent: "center",
                 alignItems: "center",
-              }}
-            >
+                borderRight: "2px solid #fff",
+              }}>
               <Typography
                 sx={{
                   color: "white",
-                  fontSize: { lg: "11px", xs: "9px" },
-                  marginLeft: "7px",
+                  fontSize: { lg: "12px", xs: "9px" },
+                 padding: "4px"
                 }}
               >
                 Username
               </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                background: "#319E5B",
-                // overflowX: "auto",
-                height: "25px",
-                // width: "70%",
-                // justifyContent: "flex-end",
-              }}
-            >
+              </Box>
               {matchDetail?.matchOdd?.runners?.map((runner: any) => {
                 return (
                   <>
                     <Box
                       sx={{
                         background: "#f1c550",
-                        border: "1px solid #2626264D",
-                        height: "100%",
+                        border: "2px solid #fff",
+                        // height: "100%",
                         display: "flex",
-                        // justifyContent: "center",
                         alignItems: "center",
+                        width: "100vw",
+                        textAlign: "center"
                       }}
                     >
                       <Typography
@@ -216,22 +210,15 @@ const UserProfitLossRace = (props: any) => {
                           color: "black",
                           fontWeight: "600",
                           lineHeight: "0.9",
+                          width: "10vw"
                         }}
                       >
                         {runner?.runnerName}
                       </Typography>
                     </Box>
-                    <Box
-                      sx={{
-                        width: "3px",
-                        display: "flex",
-                        background: "white",
-                      }}
-                    ></Box>
                   </>
                 );
               })}
-            </Box>
           </Box>
           <Box
             sx={{
@@ -248,7 +235,7 @@ const UserProfitLossRace = (props: any) => {
                   <Box
                     key={index}
                     sx={{
-                      width: "100%",
+                      // width: "100%",
                       display: element?.betStatus === 2 ? "none" : "block",
                     }}
                   >
