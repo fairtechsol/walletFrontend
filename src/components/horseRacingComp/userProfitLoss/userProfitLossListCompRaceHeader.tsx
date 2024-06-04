@@ -3,7 +3,7 @@ import Divider from "../../Inplay/Divider";
 import { handleNumber } from "../../../helper";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
-const UserProfitLossListCompRace = (props: any) => {
+const UserProfitLossListCompRaceHeader = (props: any) => {
   const { element, color, matchDetail } = props;
   return (
     <>
@@ -13,6 +13,7 @@ const UserProfitLossListCompRace = (props: any) => {
             display: "flex",
             // height: "38px",
             alignItems: "center",
+            backgroundColor: "#319E5B"
             // width:"100%"
           }}
         >
@@ -20,32 +21,25 @@ const UserProfitLossListCompRace = (props: any) => {
             sx={{
               color: "black",
               fontSize: { lg: "12px", md: "10px", xs: "8px" },
-              padding: "2px",
+            //   padding: "2px",
               margin: "8px",
               fontWeight: "600",
               textOverflow: "ellipsis",
               lineHeight: "0.9",
-              width: "4rem"
+              width: "4rem",
             }}
           >
-            {element?.userName}
+            Username
           </Typography>
         </Box>
         <Box sx={{ display: "flex"}}>
           {matchDetail?.matchOdd?.runners?.map((runner: any) => (
             <>
               <SeperateBox
-                value2={
-                  handleNumber(parseFloat(element[runner?.id] || 0), color) ??
-                  "N/A"
-                }
                 value={
-                  handleNumber(
-                    parseFloat(element[runner?.id + "_percent"] || 0),
-                    color
-                  ) ?? "N/A"
+                  runner.runnerName
                 }
-                color={"#ffffff"}
+                color={"#f1c550"}
                 width={10}
               />
               <Box
@@ -64,4 +58,4 @@ const UserProfitLossListCompRace = (props: any) => {
   );
 };
 
-export default UserProfitLossListCompRace;
+export default UserProfitLossListCompRaceHeader;
