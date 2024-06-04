@@ -116,6 +116,7 @@ const CustomModal = ({
               <Button
                 type="submit"
                 ref={buttonRef}
+                onKeyDown={handleEnterPress}
                 sx={{
                   backgroundColor: "#004a25",
                   color: "#fff",
@@ -123,7 +124,6 @@ const CustomModal = ({
                   display: "flex",
                   justifyContent: "center",
                 }}
-                onKeyDown={handleEnterPress}
               >
                 {buttonMessage}
               </Button>
