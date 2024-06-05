@@ -1,10 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import Divider from "../../Inplay/Divider";
-import { handleNumber } from "../../../helper";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
 const UserProfitLossListCompRaceHeader = (props: any) => {
-  const { element, color, matchDetail } = props;
+  const { matchDetail } = props;
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -13,7 +12,8 @@ const UserProfitLossListCompRaceHeader = (props: any) => {
             display: "flex",
             // height: "38px",
             alignItems: "center",
-            backgroundColor: "#319E5B"
+            backgroundColor: "#319E5B",
+            overflow: "hidden"
             // width:"100%"
           }}
         >
@@ -25,8 +25,9 @@ const UserProfitLossListCompRaceHeader = (props: any) => {
               margin: "8px",
               fontWeight: "600",
               textOverflow: "ellipsis",
-              lineHeight: "0.9",
+              lineHeight: "1",
               width: "4rem",
+              
             }}
           >
             Username

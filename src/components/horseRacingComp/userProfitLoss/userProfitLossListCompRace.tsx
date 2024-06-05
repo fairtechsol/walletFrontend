@@ -31,7 +31,7 @@ const UserProfitLossListCompRace = (props: any) => {
             {element?.userName}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex"}}>
+        <Box sx={{ display: "flex", width: "100%"}}>
           {matchDetail?.matchOdd?.runners?.map((runner: any) => (
             <>
               <SeperateBox
