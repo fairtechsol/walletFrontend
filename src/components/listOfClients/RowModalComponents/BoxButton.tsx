@@ -39,7 +39,7 @@ const BoxButton = (props: any) => {
     mainBoxTypography: [
       {
         fontSize: {
-          xs: "3.5vw",
+          // xs: "3.5vw",
           lg: "11px",
           md: "0.9vw",
           desktop2XL: "12px",
