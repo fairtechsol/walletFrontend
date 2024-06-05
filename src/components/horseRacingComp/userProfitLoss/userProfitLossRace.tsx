@@ -1,6 +1,12 @@
 import {
   Box,
   Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
   useMediaQuery,
   useTheme,
@@ -15,6 +21,7 @@ import {
 import { AppDispatch, RootState } from "../../../store/store";
 import Divider from "../../Inplay/Divider";
 import UserProfitLossListCompRace from "./userProfitLossListCompRace";
+import UserProfitLossListCompRaceHeader from "./userProfitLossListCompRaceHeader";
 
 const UserProfitLossRace = (props: any) => {
   const { title, matchData, setShowUserProfitLoss, single, matchDetail } =
@@ -149,106 +156,36 @@ const UserProfitLossRace = (props: any) => {
             )}
           </Box>
         </Box>
-        <Box
-          sx={{
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            overflowX: "auto",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              background: "#319E5B",
-              alignSelf: "center",
-              // overflowX: "scroll",
-              // overflow: "hidden",
-              width: "100%",
-              height: "25px"
-            }}
-          >
-              <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRight: "2px solid #fff",
-              }}>
-              <Typography
-                sx={{
-                  color: "white",
-                  fontSize: { lg: "12px", xs: "9px" },
-                 padding: "4px"
-                }}
-              >
-                Username
-              </Typography>
-              </Box>
-              {matchDetail?.matchOdd?.runners?.map((runner: any) => {
-                return (
-                  <>
-                    <Box
-                      sx={{
-                        background: "#f1c550",
-                        border: "2px solid #fff",
-                        // height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100vw",
-                        textAlign: "center"
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: {
-                            lg: "13px",
-                            md: "12px",
-                            xs: "10px",
-                          },
-                          color: "black",
-                          fontWeight: "600",
-                          lineHeight: "0.9",
-                          width: "10vw"
-                        }}
-                      >
-                        {runner?.runnerName}
-                      </Typography>
-                    </Box>
-                  </>
-                );
-              })}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              maxHeight: single === "single" ? "400" : "160px",
-              width: "100%",
-              position: "relative",
-            }}
-          >
+
+<Box sx={{ width: '100%' }}>
+      <TableContainer sx={{ maxHeight: single === 'single' ? 400 : 160, overflowY: 'auto' }}>
+        <Table>
+          <TableHead>
+              {userProfitLossData?.length > 0 &&
+              userProfitLossData?.map((element:any, index:any) => (
+                <UserProfitLossListCompRaceHeader
+                  key={index}
+                  element={element}
+                  matchDetail={matchDetail}
+                />
+              ))}
+
+          </TableHead>
+          <TableBody>
             {userProfitLossData?.length > 0 &&
-              userProfitLossData?.map((element: any, index: number) => {
-                return (
-                  <Box
-                    key={index}
-                    sx={{
-                      // width: "100%",
-                      display: element?.betStatus === 2 ? "none" : "block",
-                    }}
-                  >
-                    <UserProfitLossListCompRace
-                      element={element}
-                      matchDetail={matchDetail}
-                    />
-                    <Divider />
-                  </Box>
-                );
-              })}
-          </Box>
-        </Box>
+              userProfitLossData?.map((element:any, index:any) => (
+                <UserProfitLossListCompRace
+                  key={index}
+                  element={element}
+                  matchDetail={matchDetail}
+                 
+                />
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+ 
       </Box>
     </>
   );
