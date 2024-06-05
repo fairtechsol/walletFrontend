@@ -9,12 +9,10 @@ import { socket } from "../../socketManager";
 import { AppDispatch, RootState } from "../../store/store";
 import "./index.css";
 import CountryWiseListComponent from "../../components/horseRacingComp/CountryWiseListComponent";
-import RacingListComponent from "../../components/horseRacingComp/RacingListComponent";
 import {
   getHorseRacingCountryWiseList,
   getHorseRacingMatchList,
 } from "../../store/actions/horseRacing/horseMatchListAction";
-import RaceListAnalysisComp from "../../components/analysis2/raceListAnalysisComp";
 import RacingListComponentAnalysis from "../../components/analysis2/raceListAnalysisComp";
 
 function TabPanel(props: any) {

@@ -56,8 +56,6 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
     }
   };
 
-  console.log(raceMatchChilds);
-
   return (
     <TableContainer component={Paper}>
       <Table aria-label="time table">
@@ -111,7 +109,7 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                     selectedRace?.matchName === matchName &&
                     raceMatchChilds && (
                       <TableRow>
-                        <TableCell colSpan={2}>
+                        <TableCell colSpan={2} sx={{ background: "#004A25" }}>
                           <Box
                             sx={{
                               display: "flex",
@@ -124,16 +122,20 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                                 <Button
                                   sx={{
                                     backgroundColor:
-                                      item?.profitLoss >= 0
+                                      item?.profitLoss >= 0 || !item?.profitLoss
                                         ? "#27AC1E"
                                         : "#E32A2A",
                                     borderRadius: 0,
-                                    // margin: "0.5rem",
-                                    border: "1px solid #fff",
+                                    padding: "0.5rem",
+                                    border: "1px solid #000",
                                     color: "#fff",
                                     fontWeight: "700",
                                     "&:hover": {
-                                      backgroundColor: "#F8C851",
+                                      backgroundColor:
+                                        item?.profitLoss >= 0 ||
+                                        !item?.profitLoss
+                                          ? "#27AC1E"
+                                          : "#E32A2A",
                                     },
                                   }}
                                 >
@@ -153,8 +155,10 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                               sx={{
                                 backgroundColor: "#0B4F26",
                                 color: "#fff",
-                                margin: "0.5rem",
+                                padding: "0.5rem",
                                 fontWeight: "700",
+                                borderRadius: 0,
+                                border: "1px solid #000",
                                 "&:hover": {
                                   backgroundColor: "#0B4F26",
                                 },

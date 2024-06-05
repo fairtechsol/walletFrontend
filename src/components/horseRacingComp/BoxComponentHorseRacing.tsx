@@ -7,7 +7,7 @@ import { LockSolid } from "../../assets";
 import moment from "moment";
 
 const BoxComponentHorseRacing = (props: any) => {
-  const { name, color, align, rates, data, index } = props;
+  const { name, color, align, rates, data } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status, adjustmentFactor, removalDate } = data ?? {};
@@ -54,11 +54,7 @@ const BoxComponentHorseRacing = (props: any) => {
               maxWidth: "88px",
             }}
           >
-            {`${index + 1}. ${
-              name?.split(".")?.[1]?.trim()
-                ? name?.split(".")?.[1]?.trim()
-                : name
-            }`}
+            {name}
           </Typography>
         </Box>
       </Box>
