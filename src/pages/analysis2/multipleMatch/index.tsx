@@ -6,7 +6,6 @@ import {
   Button,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -26,6 +25,8 @@ import {
   updateTeamRatesOnDeleteForMultiMatchRace,
 } from "../../../store/actions/horseRacing/multiplematchDetailAction";
 import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
+import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLoss/userProfitLossRace";
+import moment from "moment";
 
 const MultipleMatchHorseRacing = () => {
   const theme = useTheme();
@@ -39,9 +40,7 @@ const MultipleMatchHorseRacing = () => {
   const dispatch: AppDispatch = useDispatch();
   const [storedMatchData, setStoredMatchData] = useState({
     matchId: "",
-    teamA: "",
-    teamB: "",
-    teamC: "",
+    match: null,
   });
   const [showUserProfitLoss, setShowUserProfitLoss] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
@@ -97,9 +96,7 @@ const MultipleMatchHorseRacing = () => {
       setStoredMatchData(() => {
         return {
           matchId: item?.matchId,
-          teamA: item?.teamA,
-          teamB: item?.teamB,
-          teamC: item?.teamC,
+          match: item?.match,
         };
       });
       setShowUserProfitLoss(true);
@@ -251,15 +248,13 @@ const MultipleMatchHorseRacing = () => {
                                   alignSelf: "start",
                                 }}
                               >
-                                {item?.teamA} V/S {item?.teamB}
+                                {`${item?.countryCode} > ${item?.venue}`}
                                 <Button
                                   onClick={(e) => {
                                     e.preventDefault();
                                     handleClicked({
                                       matchId: item?.id,
-                                      teamA: item?.teamA,
-                                      teamB: item?.teamB,
-                                      teamC: item?.teamC,
+                                      match: item,
                                     });
                                   }}
                                   sx={{
@@ -278,6 +273,21 @@ const MultipleMatchHorseRacing = () => {
                                 >
                                   User Profit Loss
                                 </Button>
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  color: "white",
+                                  fontWeight: "700",
+                                  alignSelf: "start",
+                                }}
+                              >
+                                {`${moment(item?.startAt).format(
+                                  "YYYY-MM-DD HH:mm"
+                                )} | ${item?.title}`}
+                                {/* {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+                            ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                            : ""} */}
                               </Typography>
                               <MatchOddsHorseRacing
                                 currentMatch={item}
@@ -359,14 +369,12 @@ const MultipleMatchHorseRacing = () => {
                                 alignSelf: "start",
                               }}
                             >
-                              {item?.teamA} V/S {item?.teamB}
+                              {`${item?.countryCode} > ${item?.venue}`}
                               <Button
                                 onClick={() =>
                                   handleClicked({
                                     matchId: item?.id,
-                                    teamA: item?.teamA,
-                                    teamB: item?.teamB,
-                                    teamC: item?.teamC,
+                                    match: item,
                                   })
                                 }
                                 sx={{
@@ -383,6 +391,21 @@ const MultipleMatchHorseRacing = () => {
                               >
                                 User Profit Loss
                               </Button>
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                color: "white",
+                                fontWeight: "700",
+                                alignSelf: "start",
+                              }}
+                            >
+                              {`${moment(item?.startAt).format(
+                                "YYYY-MM-DD HH:mm"
+                              )} | ${item?.title}`}
+                              {/* {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+                            ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                            : ""} */}
                             </Typography>
                             <MatchOddsHorseRacing
                               currentMatch={item}
@@ -442,7 +465,7 @@ const MultipleMatchHorseRacing = () => {
                   width: { xs: "90%", lg: "50%" },
                 }}
               >
-                <UserProfitLoss
+                <UserProfitLossRace
                   title={"User Profit Loss"}
                   matchData={storedMatchData}
                   setShowUserProfitLoss={setShowUserProfitLoss}
@@ -494,14 +517,12 @@ const MultipleMatchHorseRacing = () => {
                             alignSelf: "start",
                           }}
                         >
-                          {item?.teamA} V/S {item?.teamB}
+                          {`${item?.countryCode} > ${item?.venue}`}
                           <Button
                             onClick={() =>
                               handleClicked({
                                 matchId: item?.id,
-                                teamA: item?.teamA,
-                                teamB: item?.teamB,
-                                teamC: item?.teamC,
+                                match: item,
                               })
                             }
                             sx={{
@@ -518,6 +539,21 @@ const MultipleMatchHorseRacing = () => {
                           >
                             User Profit Loss
                           </Button>
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: "12px",
+                            color: "white",
+                            fontWeight: "700",
+                            alignSelf: "start",
+                          }}
+                        >
+                          {`${moment(item?.startAt).format(
+                            "YYYY-MM-DD HH:mm"
+                          )} | ${item?.title}`}
+                          {/* {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+                            ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                            : ""} */}
                         </Typography>
                         <MatchOddsHorseRacing
                           currentMatch={item}
@@ -572,11 +608,12 @@ const MultipleMatchHorseRacing = () => {
                   width: { xs: "90%", lg: "50%" },
                 }}
               >
-                <UserProfitLoss
+                <UserProfitLossRace
                   title={"User Profit Loss"}
                   matchData={storedMatchData}
                   setShowUserProfitLoss={setShowUserProfitLoss}
                   single={"multiple"}
+                  matchDetail={storedMatchData?.match}
                 />
               </Box>
             </Box>
