@@ -287,7 +287,7 @@ const RacingDetails = () => {
       >
         <Box
           sx={{
-            width: {lg: "50%"},
+            width: { lg: "50%" },
             flexDirection: "column",
             minHeight: "100px",
             display: "flex",

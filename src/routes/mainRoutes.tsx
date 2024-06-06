@@ -23,6 +23,7 @@ import MatchList from "../pages/matchList";
 import RacingList from "../pages/horseRacing/racingList";
 import RacingDetails from "../pages/horseRacing/racingDetails";
 import Analysis2 from "../pages/analysis2";
+import MultipleMatchHorseRacing from "../pages/analysis2/multipleMatch";
 
 // const ListOfClients = Loadable(() => import("../pages/listOfClients"));
 // const ChangePassword = Loadable(() => import("../pages/changePassword"));
@@ -97,6 +98,10 @@ const MainRoutes = {
     {
       path: Constants.MainPaths.multipleMatch,
       element: <MultipleMatch />,
+    },
+    {
+      path: Constants.MainPaths.multipleMatch2,
+      element: <MultipleMatchHorseRacing />,
     },
     {
       path: Constants.MainPaths.reports,

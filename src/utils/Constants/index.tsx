@@ -42,7 +42,7 @@ export const ApiConstants = {
     USER_MATCH_LOCK_ALL_CHILD: "/user/getMatchLockAllChild",
     USER_DETAIL_FOR_PARENT: "/user/getUserDetailsForParent",
     USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
-    USER_CHECK_CHILD_ACTIVATE:'match/check/lock',
+    USER_CHECK_CHILD_ACTIVATE: "match/check/lock",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
@@ -94,7 +94,7 @@ export const ApiConstants = {
       DELETE_BET: "/bet/deleteMultipleBetForRace",
       GET_MATCH_DETAIL: "/match/racing",
       GET_USER_PROFIT_LOSS: "/superAdmin/user/profitLossData/race",
-      GET_RATE_MARKETANALYSIS: "/match/race/marketAnalysis"
+      GET_RATE_MARKETANALYSIS: "/match/race/marketAnalysis",
     },
   },
 };
@@ -117,9 +117,10 @@ export const Constants = {
     addAccount: "add_account",
     editAccount: "edit_account",
     marketAnalysis: "market_analysis",
-    marketAnalysis2: "market_analysis2",
+    marketAnalysis2: "market_analysis2/:raceType",
     marketAnalysisMatches: "market_analysis/matches",
     multipleMatch: "market_analysis/multiple_Match",
+    multipleMatch2: "market_analysis2/multiple_Match",
     reports: "reports",
     walletSettings: "walletSettings",
     myAccount: "my-account",

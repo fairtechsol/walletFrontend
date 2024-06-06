@@ -4,6 +4,7 @@ import { matchDetailReducer } from "./matchDetailReducer";
 import { betPlacedReducer } from "./betPlacedHorseRacing";
 import { userProfitLossRaceReducer } from "./userProfitLossRace";
 import { analysisRaceReducers } from "./analysisReducer";
+import { multipleMatchDetailReducer } from "./multipleMatchDetailReducer";
 
 export const horseRacingReducer = combineReducers({
   matchList: matchListReducer,
@@ -11,4 +12,5 @@ export const horseRacingReducer = combineReducers({
   betPlaced: betPlacedReducer,
   userProfitLoss: userProfitLossRaceReducer,
   analysisRace: analysisRaceReducers,
+  multipleMatch: multipleMatchDetailReducer,
 });

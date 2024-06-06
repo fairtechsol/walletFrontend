@@ -8,11 +8,12 @@ import {
   styled,
   Box,
   Button,
+  Radio,
 } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch } from "react-redux";
@@ -34,7 +35,13 @@ const YellowButton = styled("button")(() => ({
   },
 }));
 
-const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
+const RacingListComponentAnalysis = ({
+  racingList,
+  matchType,
+  mode,
+  handleRadioButtonSelect,
+  selected,
+}: any) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
@@ -63,8 +70,8 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
           {Object.entries(racingList).map(
             ([matchName, item]: any, index: number) => {
               return (
-                <>
-                  <TableRow key={index}>
+                <React.Fragment key={index}>
+                  <TableRow>
                     <TableCell
                       sx={{
                         border: "1px solid black",
@@ -100,6 +107,21 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                                 handleRaceClick(time, matchName);
                               }}
                             />
+                            {mode === "1" && (
+                              <Radio
+                                checked={selected.includes(time?.id)}
+                                onClick={(e: any) => {
+                                  e.stopPropagation();
+                                  handleRadioButtonSelect({
+                                    id: e.target.value,
+                                    matchType: time?.matchType,
+                                  });
+                                }}
+                                value={time?.id}
+                                name="radio-buttons"
+                                inputProps={{ "aria-label": "A" }}
+                              />
+                            )}
                           </YellowButton>
                         </>
                       ))}
@@ -170,7 +192,7 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                         </TableCell>
                       </TableRow>
                     )}
-                </>
+                </React.Fragment>
               );
             }
           )}
