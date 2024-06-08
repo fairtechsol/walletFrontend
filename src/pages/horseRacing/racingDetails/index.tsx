@@ -25,6 +25,7 @@ import {
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
+import { getTimeLeft } from "../../../helper";
 
 const RacingDetails = () => {
   const navigate = useNavigate();
@@ -45,40 +46,11 @@ const RacingDetails = () => {
   const { placedBets, loading } = useSelector(
     (state: RootState) => state.match.bets
   );
-  const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
-
-  function calculateTimeLeft() {
-    try {
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const targetDate = moment(matchDetail?.startAt).tz(timezone);
-      const difference = targetDate.diff(moment().tz(timezone), "milliseconds");
-      let timeLeft = {};
-      if (difference > 0) {
-        timeLeft = {
-          days:
-            ("0" + Math.floor(difference / (1000 * 60 * 60 * 24))).slice(-2) ||
-            0,
-          hours:
-            ("0" + Math.floor((difference / (1000 * 60 * 60)) % 24)).slice(
-              -2
-            ) || 0,
-          minutes:
-            ("0" + Math.floor((difference / 1000 / 60) % 60)).slice(-2) || 0,
-          seconds: ("0" + Math.floor((difference / 1000) % 60)).slice(-2) || 0,
-        };
-      } else {
-        timeLeft = {
-          days: "00",
-          hours: "00",
-          minutes: "00",
-        };
-      }
-
-      return timeLeft;
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const [timeLeft, setTimeLeft] = useState<any>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+  });
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -248,14 +220,15 @@ const RacingDetails = () => {
         clearInterval(intervalId);
       };
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      let timeLeft = getTimeLeft(matchDetail?.startAt);
+      setTimeLeft(timeLeft);
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [id, matchDetail]);
 
   return (
     <>
@@ -287,7 +260,7 @@ const RacingDetails = () => {
       >
         <Box
           sx={{
-            width: {lg: "50%"},
+            width: { lg: "50%" },
             flexDirection: "column",
             minHeight: "100px",
             display: "flex",
@@ -314,7 +287,7 @@ const RacingDetails = () => {
             {`${moment(matchDetail?.startAt).format("YYYY-MM-DD HH:mm")} | ${
               matchDetail?.title
             }`}
-            {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+            {timeLeft.hours !== 0 || timeLeft.minutes !== 0
               ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
               : ""}
           </Typography>

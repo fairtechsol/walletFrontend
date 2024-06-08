@@ -1,11 +1,11 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import CustomBox from "../../components/analysis/CustomBox";
-import { socket } from "../../socketManager";
+import { socket, socketService } from "../../socketManager";
 import { AppDispatch, RootState } from "../../store/store";
 import "./index.css";
 import CountryWiseListComponent from "../../components/horseRacingComp/CountryWiseListComponent";
@@ -15,36 +15,15 @@ import {
 } from "../../store/actions/horseRacing/horseMatchListAction";
 import RacingListComponentAnalysis from "../../components/analysis2/raceListAnalysisComp";
 
-function TabPanel(props: any) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      className="p-0"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-      sx={{
-        padding: 0,
-      }}
-    >
-      {value === index && <Box sx={{ mt: 2 }}>{children}</Box>}
-    </div>
-  );
-}
-
 const Analysis2 = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [mode, setMode] = useState("0");
   const [max, setMax] = useState("2");
   const [selected, setSelected] = useState<any>([]);
-  const [selectedMatchType] = useState<any>("");
+  const { raceType } = useParams();
+  const [selectedMatchType, setSelectedMatchType] = useState<any>("");
   const [matchIds, setMatchIds] = useState<any>([]);
-  // const [marketIds, setMarketIds] = useState([]);
-  // const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [value, setValue] = useState("horseRacing");
   const { racingList, countryWiseList, success } = useSelector(
@@ -56,6 +35,7 @@ const Analysis2 = () => {
 
   const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+    navigate(`/wallet/market_analysis2/${newValue}`);
   };
 
   const handleClick = (value: string) => {
@@ -63,47 +43,55 @@ const Analysis2 = () => {
     setMode("1");
   };
 
-  // const changeSelected = (match: any) => {
-  //   if (mode === "0") {
-  //     return false;
-  //   }
-
-  //   const updatedSelected = [...selected];
-  //   const matchId = match?.id;
-
-  //   if (selected?.length === 0 || selectedMatchType === match?.matchType) {
-  //     const isSelected = updatedSelected.includes(matchId);
-
-  //     if (isSelected) {
-  //       setMatchIds((prevIds: any) =>
-  //         prevIds.filter((matchId: any) => matchId !== matchId)
-  //       );
-  //       setSelected(updatedSelected.filter((id: any) => id !== matchId));
+  // const handleRadioButtonSelect = (event: any) => {
+  //   const value = event.target.value;
+  //   setSelected((prevValues: any) => {
+  //     if (prevValues.includes(value)) {
+  //       return prevValues.filter((val: any) => val !== value);
   //     } else {
-  //       if (+max === selected?.length) {
-  //         toast.warn(`Only ${max} allowed`);
-  //         return;
-  //       }
-  //       setMatchIds((prevIds: any) => [...prevIds, matchId]);
-  //       setSelected([...updatedSelected, matchId]);
-  //       if (!isSelected) {
-  //         setSelectedMatchType(match?.matchType);
-  //       }
+  //       return [...prevValues, value];
   //     }
-  //   } else {
-  //     toast.error("Please Select Match Of Same Category");
-  //     return;
-  //   }
+  //   });
   // };
 
-  // const getMatchist = () => {
-  //   setCurrentPage(1);
-  //   dispatch(getAnalysisList({ currentPage: currentPage }));
-  // };
+  const handleRadioButtonSelect = (match: any) => {
+    if (mode === "0") {
+      return false;
+    }
 
-  // useEffect(() => {
-  //   dispatch(getAnalysisList({ currentPage: currentPage }));
-  // }, [currentPage]);
+    const updatedSelected = [...selected];
+    const matchId = match?.id;
+
+    if (selected?.length === 0 || selectedMatchType === match?.matchType) {
+      const isSelected = updatedSelected.includes(matchId);
+
+      if (isSelected) {
+        setMatchIds((prevIds: any) =>
+          prevIds.filter((matchId: any) => matchId !== matchId)
+        );
+        setSelected(updatedSelected.filter((id: any) => id !== matchId));
+      } else {
+        if (+max === selected?.length) {
+          toast.warn(`Only ${max} allowed`);
+          return;
+        }
+        setMatchIds((prevIds: any) => [...prevIds, matchId]);
+        setSelected([...updatedSelected, matchId]);
+        if (!isSelected) {
+          setSelectedMatchType(match?.matchType);
+        }
+      }
+    } else {
+      toast.error("Please Select Match Of Same Category");
+      return;
+    }
+  };
+
+  const getMatchist = (event: any) => {
+    if (event?.gameType === value) {
+      dispatch(getHorseRacingCountryWiseList({ matchType: value }));
+    }
+  };
 
   useEffect(() => {
     dispatch(getHorseRacingCountryWiseList({ matchType: value }));
@@ -130,14 +118,14 @@ const Analysis2 = () => {
   useEffect(() => {
     try {
       if (socket && success) {
-        // socketService.match.matchResultDeclaredOff();
-        // socketService.match.matchResultUnDeclaredOff();
-        // socketService.match.matchAddedOff();
-        // socketService.match.matchResultDeclared(getMatchist);
-        // socketService.match.matchResultUnDeclared(getMatchist);
-        // socketService.match.declaredMatchResultAllUser(getMatchist);
-        // socketService.match.unDeclaredMatchResultAllUser(getMatchist);
-        // socketService.match.matchAdded(getMatchist);
+        socketService.match.matchResultDeclaredOff();
+        socketService.match.matchResultUnDeclaredOff();
+        socketService.match.matchAddedOff();
+        socketService.match.matchResultDeclared(getMatchist);
+        socketService.match.matchResultUnDeclared(getMatchist);
+        socketService.match.declaredMatchResultAllUser(getMatchist);
+        socketService.match.unDeclaredMatchResultAllUser(getMatchist);
+        socketService.match.matchAdded(getMatchist);
       }
     } catch (error) {
       console.log(error);
@@ -146,13 +134,19 @@ const Analysis2 = () => {
 
   useEffect(() => {
     return () => {
-      // socketService.match.matchResultDeclaredOff();
-      // socketService.match.matchResultUnDeclaredOff();
-      // socketService.match.declaredMatchResultAllUserOff();
-      // socketService.match.unDeclaredMatchResultAllUserOff();
-      // socketService.match.matchAddedOff();
+      socketService.match.matchResultDeclaredOff();
+      socketService.match.matchResultUnDeclaredOff();
+      socketService.match.declaredMatchResultAllUserOff();
+      socketService.match.unDeclaredMatchResultAllUserOff();
+      socketService.match.matchAddedOff();
     };
   }, []);
+
+  useEffect(() => {
+    if (raceType) {
+      setValue(raceType);
+    }
+  }, [raceType]);
 
   return (
     <>
@@ -267,7 +261,7 @@ const Analysis2 = () => {
                       setMatchIds([]);
                     }
                     if (max == "3") {
-                      navigate(`/wallet/market_analysis/multiple_Match`, {
+                      navigate(`/wallet/market_analysis2/multiple_Match`, {
                         state: {
                           match: Number(max),
                           matchIds: matchIds,
@@ -276,7 +270,7 @@ const Analysis2 = () => {
                         },
                       });
                     } else {
-                      navigate(`/wallet/market_analysis/multiple_Match`, {
+                      navigate(`/wallet/market_analysis2/multiple_Match`, {
                         state: {
                           match: Number(max),
                           matchIds: matchIds,
@@ -312,78 +306,38 @@ const Analysis2 = () => {
             label="Greyhound Racing"
           />
         </Tabs>
-
-        <TabPanel value={value} index="horseRacing"></TabPanel>
-        <TabPanel value={value} index="greyHound"></TabPanel>
-        {
-          loading ? (
-            <Box
-              sx={{
-                height: "60vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Loader />
+        {loading ? (
+          <Box
+            sx={{
+              height: "60vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Loader />
+          </Box>
+        ) : (
+          <>
+            <Box sx={{ margin: "1rem" }}>
+              <CountryWiseListComponent
+                countryWiseList={countryWiseList}
+                setSelectedCountryCode={setSelectedCountryCode}
+                matchType={value}
+                mode={mode}
+              />
             </Box>
-          ) : (
-            <>
-              <Box sx={{ margin: "1rem" }}>
-                <CountryWiseListComponent
-                  countryWiseList={countryWiseList}
-                  setSelectedCountryCode={setSelectedCountryCode}
-                  matchType={value}
-                />
-              </Box>
-              <Box>
-                <RacingListComponentAnalysis
-                  racingList={racingList}
-                  matchType={value}
-                />
-              </Box>
-            </>
-          )
-          //  : []?.length > 0 ? (
-          //   <>
-          //     {[]?.map((match: any) => {
-          //       return (
-          //         <MatchListComponent
-          //           key={match?.id}
-          //           data={match}
-          //           setSelected={() => changeSelected(match)}
-          //           mode={mode}
-          //           selected={!selected.includes(match.id as never)}
-          //           team={match?.teamA}
-          //           team2={match?.teamB}
-          //         />
-          //       );
-          //     })}
-          //     <Pagination
-          //       page={currentPage}
-          //       className={`${classes.whiteTextPagination} d-flex justify-content-center`}
-          //       count={Math.ceil(
-          //         parseInt(analysisList?.count ? analysisList?.count : 1) /
-          //           Constants.pageLimit
-          //       )}
-          //       color="primary"
-          //       onChange={(_: any, value: number) => {
-          //         setCurrentPage(value);
-          //       }}
-          //     />
-          //   </>
-          // ) : (
-          //   <Table>
-          //     <TableBody>
-          //       <TableRow>
-          //         <TableCell style={{ color: "white", textAlign: "center" }}>
-          //           No Record Found...
-          //         </TableCell>
-          //       </TableRow>
-          //     </TableBody>
-          //   </Table>
-          // )
-        }
+            <Box>
+              <RacingListComponentAnalysis
+                racingList={racingList}
+                matchType={value}
+                mode={mode}
+                handleRadioButtonSelect={handleRadioButtonSelect}
+                selected={selected}
+              />
+            </Box>
+          </>
+        )}
       </Box>
     </>
   );

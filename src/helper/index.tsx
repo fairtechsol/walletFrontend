@@ -1,3 +1,5 @@
+import moment from "moment-timezone";
+
 export const formatNumber = (value?: any, isRound?: any) => {
   if (value >= 1000) {
     // return (value / 1000).toFixed(1) + "k";
@@ -45,4 +47,28 @@ export const handleNumber = (num: any, color: any) => {
       <span style={{ fontSize: "0.8em", color: color }}>{value[1]}</span>
     </>
   ) : null;
+};
+
+export const getTimeLeft = (matchStartDate: string | any) => {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const targetDate = moment(matchStartDate).tz(timezone);
+
+  const difference = targetDate.diff(moment().tz(timezone), "milliseconds");
+  if (difference <= 0) {
+    return {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  }
+
+  const hours = Math.floor(difference / (1000 * 60 * 60));
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+  return {
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds,
+  };
 };

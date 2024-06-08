@@ -8,11 +8,12 @@ import {
   styled,
   Box,
   Button,
+  Radio,
 } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch } from "react-redux";
@@ -29,20 +30,27 @@ const YellowButton = styled("button")(() => ({
   fontWeight: "bold",
   alignItems: "center",
   display: "flex",
+  position: "relative",
   "&:hover": {
     backgroundColor: "#FFC107",
   },
 }));
 
-const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
+const RacingListComponentAnalysis = ({
+  racingList,
+  matchType,
+  mode,
+  handleRadioButtonSelect,
+  selected,
+}: any) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+
+  const [selectedRace, setSelectedRace] = useState<any>(null);
 
   const { raceMatchChilds } = useSelector(
     (state: RootState) => state.horseRacing.analysisRace
   );
-
-  const [selectedRace, setSelectedRace] = useState<any>(null);
 
   const handleRaceClick = (race: any, matchName: any) => {
     if (selectedRace && selectedRace?.id === race?.id) {
@@ -63,8 +71,26 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
           {Object.entries(racingList).map(
             ([matchName, item]: any, index: number) => {
               return (
-                <>
-                  <TableRow key={index}>
+                <React.Fragment key={index}>
+                  <TableRow sx={{ position: "relative" }}>
+                    {mode === "1" && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: item?.some((time: any) =>
+                            selected?.includes(time?.id)
+                          )
+                            ? ""
+                            : "rgba(0, 0, 0, 0.6)",
+                          zIndex: 1,
+                          pointerEvents: "none",
+                        }}
+                      ></div>
+                    )}
                     <TableCell
                       sx={{
                         border: "1px solid black",
@@ -82,26 +108,56 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                         flexWrap: "wrap",
                       }}
                     >
-                      {item?.map((time: any, idx: any) => (
-                        <>
-                          <YellowButton
-                            key={idx}
-                            onClick={() =>
+                      {item?.map((time: any) => (
+                        <YellowButton
+                          key={time?.id}
+                          onClick={() => {
+                            if (mode === "1") {
+                              handleRadioButtonSelect({
+                                id: time?.id,
+                                matchType: time?.matchType,
+                              });
+                            } else {
                               navigate(
                                 `/wallet/race_list/${matchType}/${time.id}`
-                              )
+                              );
                             }
-                          >
-                            {moment(time.startAt).format("hh:mm")}
-                            <ExpandMoreIcon
-                              sx={{ cursor: "pointer" }}
-                              onClick={(e) => {
+                          }}
+                        >
+                          {mode === "1" && (
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                backgroundColor: selected.includes(time?.id)
+                                  ? ""
+                                  : "rgba(0, 0, 0, 0.3)",
+                                zIndex: 1,
+                                pointerEvents: "none",
+                              }}
+                            ></div>
+                          )}
+                          {moment(time.startAt).format("hh:mm")}
+                          <ExpandMoreIcon
+                            sx={{ cursor: "pointer" }}
+                            onClick={(e) => {
+                              if (mode !== "1") {
                                 e.stopPropagation();
                                 handleRaceClick(time, matchName);
-                              }}
+                              }
+                            }}
+                          />
+                          {mode === "1" && (
+                            <Radio
+                              checked={selected.includes(time?.id)}
+                              value={time?.id}
+                              name="radio-buttons"
                             />
-                          </YellowButton>
-                        </>
+                          )}
+                        </YellowButton>
                       ))}
                     </TableCell>
                   </TableRow>
@@ -117,40 +173,37 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                               alignItems: "center",
                             }}
                           >
-                            {raceMatchChilds &&
-                              raceMatchChilds?.profitLoss?.map((item: any) => (
-                                <Button
-                                  sx={{
+                            {raceMatchChilds?.profitLoss?.map((item: any) => (
+                              <Button
+                                key={item?.id}
+                                sx={{
+                                  backgroundColor:
+                                    item?.profitLoss >= 0 || !item?.profitLoss
+                                      ? "#27AC1E"
+                                      : "#E32A2A",
+                                  borderRadius: 0,
+                                  padding: "0.5rem",
+                                  border: "1px solid #000",
+                                  color: "#fff",
+                                  fontWeight: "700",
+                                  "&:hover": {
                                     backgroundColor:
                                       item?.profitLoss >= 0 || !item?.profitLoss
                                         ? "#27AC1E"
                                         : "#E32A2A",
-                                    borderRadius: 0,
-                                    padding: "0.5rem",
-                                    border: "1px solid #000",
-                                    color: "#fff",
-                                    fontWeight: "700",
-                                    "&:hover": {
-                                      backgroundColor:
-                                        item?.profitLoss >= 0 ||
-                                        !item?.profitLoss
-                                          ? "#27AC1E"
-                                          : "#E32A2A",
-                                    },
+                                  },
+                                }}
+                              >
+                                {item?.name} :{" "}
+                                <span
+                                  style={{
+                                    marginLeft: "5px",
                                   }}
                                 >
-                                  {item?.name} :{" "}
-                                  <span
-                                    style={{
-                                      marginLeft: "5px",
-                                    }}
-                                  >
-                                    {item?.profitLoss
-                                      ? item?.profitLoss
-                                      : "0.00"}
-                                  </span>
-                                </Button>
-                              ))}
+                                  {item?.profitLoss ? item?.profitLoss : "0.00"}
+                                </span>
+                              </Button>
+                            ))}
                             <Button
                               sx={{
                                 backgroundColor: "#0B4F26",
@@ -170,7 +223,7 @@ const RacingListComponentAnalysis = ({ racingList, matchType }: any) => {
                         </TableCell>
                       </TableRow>
                     )}
-                </>
+                </React.Fragment>
               );
             }
           )}

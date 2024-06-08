@@ -3,10 +3,8 @@ import {
   Button,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
-  TableRow,
   Typography,
   useMediaQuery,
   useTheme,
@@ -19,7 +17,6 @@ import {
   resetUserProfitLossForRace,
 } from "../../../store/actions/horseRacing/horseMatchDetailActions";
 import { AppDispatch, RootState } from "../../../store/store";
-import Divider from "../../Inplay/Divider";
 import UserProfitLossListCompRace from "./userProfitLossListCompRace";
 import UserProfitLossListCompRaceHeader from "./userProfitLossListCompRaceHeader";
 
@@ -157,35 +154,37 @@ const UserProfitLossRace = (props: any) => {
           </Box>
         </Box>
 
-<Box sx={{ width: '100%' }}>
-      <TableContainer sx={{ maxHeight: single === 'single' ? 400 : 160, overflowY: 'auto' }}>
-        <Table>
-          <TableHead>
-              {userProfitLossData?.length > 0 &&
-              userProfitLossData?.map((element:any, index:any) => (
-                <UserProfitLossListCompRaceHeader
-                  key={index}
-                  element={element}
-                  matchDetail={matchDetail}
-                />
-              ))}
-
-          </TableHead>
-          <TableBody>
-            {userProfitLossData?.length > 0 &&
-              userProfitLossData?.map((element:any, index:any) => (
-                <UserProfitLossListCompRace
-                  key={index}
-                  element={element}
-                  matchDetail={matchDetail}
-                 
-                />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
- 
+        <Box sx={{ width: "100%" }}>
+          <TableContainer
+            sx={{
+              maxHeight: single === "single" ? 400 : 160,
+              overflowY: "auto",
+            }}
+          >
+            <Table>
+              <TableHead>
+                {userProfitLossData?.length > 0 &&
+                  userProfitLossData?.map((element: any, index: any) => (
+                    <UserProfitLossListCompRaceHeader
+                      key={index}
+                      element={element}
+                      matchDetail={matchDetail}
+                    />
+                  ))}
+              </TableHead>
+              <TableBody>
+                {userProfitLossData?.length > 0 &&
+                  userProfitLossData?.map((element: any, index: any) => (
+                    <UserProfitLossListCompRace
+                      key={index}
+                      element={element}
+                      matchDetail={matchDetail}
+                    />
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
     </>
   );

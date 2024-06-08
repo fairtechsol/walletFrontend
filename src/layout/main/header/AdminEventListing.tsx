@@ -81,7 +81,7 @@ const data = [
     id: 9,
     title: "Analysis-2",
     image: TREND,
-    url: "market_analysis2",
+    url: "market_analysis2/horseRacing",
     alt: "Analysis",
   },
   {
