@@ -27,6 +27,7 @@ import {
 import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
 import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLoss/userProfitLossRace";
 import moment from "moment";
+import { getTimeLeft } from "../../../helper";
 
 const MultipleMatchHorseRacing = () => {
   const theme = useTheme();
@@ -218,6 +219,7 @@ const MultipleMatchHorseRacing = () => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any, index: any) => {
+                  let timeLeft = getTimeLeft(item?.startAt);
                   return (
                     <>
                       {index === 0 ? (
@@ -285,9 +287,10 @@ const MultipleMatchHorseRacing = () => {
                                 {`${moment(item?.startAt).format(
                                   "YYYY-MM-DD HH:mm"
                                 )} | ${item?.title}`}
-                                {/* {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
-                            ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
-                            : ""} */}
+                                {+timeLeft.hours !== 0 ||
+                                +timeLeft.minutes !== 0
+                                  ? ` | ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                                  : ""}
                               </Typography>
                               <MatchOddsHorseRacing
                                 currentMatch={item}
@@ -403,9 +406,9 @@ const MultipleMatchHorseRacing = () => {
                               {`${moment(item?.startAt).format(
                                 "YYYY-MM-DD HH:mm"
                               )} | ${item?.title}`}
-                              {/* {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
-                            ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
-                            : ""} */}
+                              {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+                                ? ` | ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                                : ""}
                             </Typography>
                             <MatchOddsHorseRacing
                               currentMatch={item}
@@ -498,6 +501,7 @@ const MultipleMatchHorseRacing = () => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any, index: number) => {
+                  let timeLeft = getTimeLeft(item?.startAt);
                   return (
                     <>
                       <Box
@@ -551,9 +555,9 @@ const MultipleMatchHorseRacing = () => {
                           {`${moment(item?.startAt).format(
                             "YYYY-MM-DD HH:mm"
                           )} | ${item?.title}`}
-                          {/* {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
-                            ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
-                            : ""} */}
+                          {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
+                            ? ` | ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                            : ""}
                         </Typography>
                         <MatchOddsHorseRacing
                           currentMatch={item}
