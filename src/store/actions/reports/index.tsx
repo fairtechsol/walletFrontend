@@ -48,7 +48,7 @@ export const getCurrentBets = createAsyncThunk<any, currentBets>(
           requestData?.searchBy || ""
         }&keyword=${requestData?.keyword || ""}&result=inArr${JSON.stringify([
           "PENDING",
-        ])}`
+        ])}&sort=betPlaced.createdAt:DESC`
       );
       if (resp) {
         return resp?.data;
