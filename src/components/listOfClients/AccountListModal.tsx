@@ -168,6 +168,7 @@ const AccountListTable = ({
                         : ""
                     }
                     currentPage={currentPage}
+                    showDownIcon={element?.isUrl || newElement?.isUrl}
                   />
                 );
               } else {
@@ -198,6 +199,7 @@ const AccountListTable = ({
                     }
                     // getListOfUser={getListOfUser}
                     currentPage={currentPage}
+                    showDownIcon={element?.isUrl || newElement?.isUrl}
                   />
                 );
               }
