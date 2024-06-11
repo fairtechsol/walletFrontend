@@ -250,7 +250,9 @@ const MultipleMatchHorseRacing = () => {
                                   alignSelf: "start",
                                 }}
                               >
-                                {`${item?.countryCode} > ${item?.venue}`}
+                                {`${
+                                  item?.countryCode ? item?.countryCode : ""
+                                } > ${item?.venue ? item?.venue : ""}`}
                                 <Button
                                   onClick={(e) => {
                                     e.preventDefault();
@@ -286,7 +288,7 @@ const MultipleMatchHorseRacing = () => {
                               >
                                 {`${moment(item?.startAt).format(
                                   "YYYY-MM-DD HH:mm"
-                                )} | ${item?.title}`}
+                                )} | ${item?.title ? item?.title : ""}`}
                                 {+timeLeft.hours !== 0 ||
                                 +timeLeft.minutes !== 0
                                   ? ` | ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
@@ -372,7 +374,9 @@ const MultipleMatchHorseRacing = () => {
                                 alignSelf: "start",
                               }}
                             >
-                              {`${item?.countryCode} > ${item?.venue}`}
+                              {`${
+                                item?.countryCode ? item?.countryCode : ""
+                              } > ${item?.venue ? item?.venue : ""}`}
                               <Button
                                 onClick={() =>
                                   handleClicked({
@@ -405,7 +409,7 @@ const MultipleMatchHorseRacing = () => {
                             >
                               {`${moment(item?.startAt).format(
                                 "YYYY-MM-DD HH:mm"
-                              )} | ${item?.title}`}
+                              )} | ${item?.title ? item?.title : ""}`}
                               {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
                                 ? ` | ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
                                 : ""}
@@ -521,7 +525,9 @@ const MultipleMatchHorseRacing = () => {
                             alignSelf: "start",
                           }}
                         >
-                          {`${item?.countryCode} > ${item?.venue}`}
+                          {`${item?.countryCode ? item?.countryCode : ""} > ${
+                            item?.venue ? item?.venue : ""
+                          }`}
                           <Button
                             onClick={() =>
                               handleClicked({
@@ -554,7 +560,7 @@ const MultipleMatchHorseRacing = () => {
                         >
                           {`${moment(item?.startAt).format(
                             "YYYY-MM-DD HH:mm"
-                          )} | ${item?.title}`}
+                          )} | ${item?.title ? item?.title : ""}`}
                           {+timeLeft.hours !== 0 || +timeLeft.minutes !== 0
                             ? ` | ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
                             : ""}
