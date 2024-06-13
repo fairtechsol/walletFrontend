@@ -66,7 +66,7 @@ const RacingListComponentAnalysis = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="time table">
+      <Table aria-label="time table" sx={{ borderCollapse: "collapse" }}>
         <TableBody>
           {Object.entries(racingList).map(
             ([matchName, item]: any, index: number) => {

@@ -274,7 +274,9 @@ const RacingDetails = () => {
               alignSelf: "start",
             }}
           >
-            {`${matchDetail?.countryCode} > ${matchDetail?.venue}`}
+            {`${matchDetail?.countryCode ? matchDetail?.countryCode : ""} > ${
+              matchDetail?.venue ? matchDetail?.venue : ""
+            }`}
           </Typography>
           <Typography
             sx={{
@@ -285,7 +287,7 @@ const RacingDetails = () => {
             }}
           >
             {`${moment(matchDetail?.startAt).format("YYYY-MM-DD HH:mm")} | ${
-              matchDetail?.title
+              matchDetail?.title ? matchDetail?.title : ""
             }`}
             {timeLeft.hours !== 0 || timeLeft.minutes !== 0
               ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`

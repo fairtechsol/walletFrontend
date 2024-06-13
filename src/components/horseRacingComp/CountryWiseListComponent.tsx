@@ -9,6 +9,10 @@ const CustomTabs = styled(Tabs)({
   "& .Mui-selected": {
     backgroundColor: "#F8C851",
   },
+  "& .MuiTabs-indicator": {
+    height: 0,
+    backgroundColor: "#F8C851",
+  },
 });
 
 const CountryWiseListComponent = ({
@@ -46,7 +50,8 @@ const CountryWiseListComponent = ({
             sx={{
               height: "30px",
               "& .MuiTab-root": {
-                minWidth: "3rem",
+                minWidth: "2.5rem",
+                minHeight: "1rem",
               },
             }}
           >
