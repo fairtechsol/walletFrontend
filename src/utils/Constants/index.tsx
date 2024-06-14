@@ -85,6 +85,9 @@ export const ApiConstants = {
     TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
     DOMAIN_PROFIT_LOSS: "/user/total/domain/profitLoss",
     BET_PROFIT_LOSS: "/user/total/bet/profitLoss",
+    TOTAL_PROFIT_LOSS_CARD: "/user/card/total/profitLoss",
+    DOMAIN_PROFIT_LOSS_CARD: "/user/card/total/domain/profitLoss",
+    BET_PROFIT_LOSS_CARD: "/user/card/total/bet/profitLoss",
     SESSION_PROFIT_LOSS: "/user/total/session/profitLoss",
   },
   HORSERACING: {
@@ -139,6 +142,7 @@ export const Constants = {
   ReportsPaths: {
     root: "/wallet/reports",
     profitLoss: "/wallet/reports/profit_loss",
+    profitLossCards: "/wallet/reports/profit_loss_cards",
     accountStatement: "/wallet/reports/account_statement",
     currentBet: "/wallet/reports/current_bet",
     generalReport: "/wallet/reports/general_report",

@@ -24,6 +24,7 @@ import RacingList from "../pages/horseRacing/racingList";
 import RacingDetails from "../pages/horseRacing/racingDetails";
 import Analysis2 from "../pages/analysis2";
 import MultipleMatchHorseRacing from "../pages/analysis2/multipleMatch";
+import ProfitLossReportCards from "../pages/reports/ProfitLossCards";
 
 // const ListOfClients = Loadable(() => import("../pages/listOfClients"));
 // const ChangePassword = Loadable(() => import("../pages/changePassword"));
@@ -122,6 +123,10 @@ const MainRoutes = {
     {
       path: Constants.ReportsPaths.profitLoss,
       element: <ProfitLossReport />,
+    },
+    {
+      path: Constants.ReportsPaths.profitLossCards,
+      element: <ProfitLossReportCards />,
     },
     {
       path: Constants.ReportsPaths.accountStatement,
