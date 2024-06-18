@@ -32,8 +32,8 @@ const RowHeaderMatches = ({
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const [show, setShow] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-  const { domainProfitLossList } = useSelector(
-    (state: RootState) => state.report.reportList
+  const { domainProfitLossListCard } = useSelector(
+    (state: RootState) => state.report.cardReport
   );
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const RowHeaderMatches = ({
         >
           <StyledImage
             src={gameIconConstants[item?.type]}
-            sx={{ width: { lg: "35px", sm: "35px", xs: "22px" } }}
+            sx={{ width: { lg: "3rem", xs: "2rem" } }}
           />
         </Box>
         <Box
@@ -215,7 +215,7 @@ const RowHeaderMatches = ({
       <Box>
         {show &&
           type === item?.type &&
-          domainProfitLossList?.map((item: any, index: number) => {
+          domainProfitLossListCard?.map((item: any, index: number) => {
             return (
               <RowComponentMatches
                 key={index}

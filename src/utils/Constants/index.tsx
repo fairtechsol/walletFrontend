@@ -1,9 +1,14 @@
 import {
+  AndarBahar2,
   Cricket,
+  DragonTiger20,
   Football,
   GreyHound,
   HorseRacing,
+  Lucky7A,
+  Teenpatti20,
   Tennis,
+  Thirty2CardsA,
 } from "../../assets";
 
 export const ApiConstants = {
@@ -209,12 +214,27 @@ export const gameConstants = {
   horseRacing: "horseRacing",
   greyHound: "greyHound",
 };
+
+export const cardGamesTypeConstants: any = {
+  dragonTiger20: "dt20",
+  andarBahar2: "abj",
+  teen20: "teen20",
+  card32: "card32",
+  lucky7: "lucky7",
+};
+
+
 export const gameIconConstants = {
   [gameConstants.cricket]: Cricket,
   [gameConstants.football]: Football,
   [gameConstants.tennis]: Tennis,
   [gameConstants.horseRacing]: HorseRacing,
   [gameConstants.greyHound]: GreyHound,
+  [cardGamesTypeConstants.dragonTiger20]: DragonTiger20,
+  [cardGamesTypeConstants.andarBahar2]: AndarBahar2,
+  [cardGamesTypeConstants.teen20]: Teenpatti20,
+  [cardGamesTypeConstants.card32]: Thirty2CardsA,
+  [cardGamesTypeConstants.lucky7]: Lucky7A,
 };
 
 export const profitLossDataForMatchConstants = {

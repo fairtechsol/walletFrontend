@@ -3,7 +3,6 @@ import { useState } from "react";
 import Pagination from "../../Common/Pagination";
 import RowHeaderMatches from "./RowHeaderMatches";
 
-
 const ProfitLossTableComponent = (props: any) => {
   const {
     eventData,
@@ -74,7 +73,7 @@ const ProfitLossTableComponent = (props: any) => {
               getBetReport={getBetReport}
               userProfitLoss={userProfitLoss}
               getUserProfitLoss={getUserProfitLoss}
-              eventType={eventType}
+              type={eventType}
             />
           </>
         );

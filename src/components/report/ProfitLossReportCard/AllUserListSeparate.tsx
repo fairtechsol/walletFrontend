@@ -50,7 +50,7 @@ const AllUserListSeparate = ({
   const getBetDataForChildUser = async (props: any) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS_CARD}?matchId=${props?.matchId}${
+        `${ApiConstants.MATCH.BET_PROFIT_LOSS_CARD}?runnerId=${props?.matchId}${
           props.betId ? `&betId=${props.betId}` : ""
         }&isSession=${false}${user.id ? `&id=${user.id}` : ""}${
           props.url ? `&url=${props.url}` : ""

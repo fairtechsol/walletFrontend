@@ -52,3 +52,8 @@ export { default as HorseRacing } from "./images/horseRacing.png";
 export { default as GreyHound } from "./images/greyHound.png";
 export { default as CancelDark } from "./images/cancelDark.png";
 export { default as CANCEL } from "./images/cancel.png";
+export { default as AndarBahar2 } from "./images/andarBahar.png";
+export { default as DragonTiger20 } from "./images/dragonTiger.png";
+export { default as Lucky7A } from "./images/lucky7A.png";
+export { default as Teenpatti20 } from "./images/teenpatti.png";
+export { default as Thirty2CardsA } from "./images/32Cards.png";

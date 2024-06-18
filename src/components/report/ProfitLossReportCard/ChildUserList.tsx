@@ -21,7 +21,7 @@ const ChildUserList = ({
   const getChildUserList = async () => {
     try {
       const { data } = await service.get(
-        `/user/userwise/profitLoss?matchId=${matchId}${
+        `/user/userwise/profitLoss?runnerId=${matchId}${
           id ? "&userId=" + id + "&roleName=" + roleName : ""
         }${url ? "&url=" + url : ""}`
       );

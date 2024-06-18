@@ -75,7 +75,7 @@ const ProfitLossReportCards = () => {
   const getUserProfitLoss = async (matchId: string) => {
     try {
       const { data } = await service.get(
-        `/user/userwise/profitLoss?matchId=${matchId}${
+        `/user/userwise/profitLoss?runnerId=${matchId}${
           user?.id ? "&id=" + user?.id : ""
         }${user?.domain ? "&url=" + user?.domain : ""}`
       );

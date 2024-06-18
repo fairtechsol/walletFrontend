@@ -225,8 +225,8 @@ export const getBetProfitLossCard = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS_CARD}?matchId=${
-          requestData.matchId
+        `${ApiConstants.MATCH.BET_PROFIT_LOSS_CARD}?runnerId=${
+          requestData.runnerId
         }${requestData.betId ? `&betId=${requestData.betId}` : ""}&isSession=${
           requestData.isSession
         }${requestData.id ? `&id=${requestData.id}` : ""}`
