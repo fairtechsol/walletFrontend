@@ -4,7 +4,7 @@ import Divider from "../../Inplay/Divider";
 import { handleNumber } from "../../../helper";
 
 const UserProfitLossListComp = (props: any) => {
-  const { element, color } = props;
+  const { element, color, showTeamC } = props;
   return (
     <>
       <Box
@@ -79,6 +79,27 @@ const UserProfitLossListComp = (props: any) => {
               color={"#ffffff"}
               width={10}
             />
+            {showTeamC && (
+              <>
+                <Box
+                  sx={{ width: "3px", display: "flex", background: "#ffffff" }}
+                ></Box>
+                <SeperateBox
+                  value2={
+                    handleNumber(parseFloat(element?.teamRateC || 0), color) ??
+                    "N/A"
+                  }
+                  value={
+                    handleNumber(
+                      parseFloat(element?.percentTeamRateC || 0),
+                      color
+                    ) ?? "N/A"
+                  }
+                  color={"#ffffff"}
+                  width={10}
+                />
+              </>
+            )}
           </>
           <Box
             sx={{ width: ".45%", display: "flex", background: "pink" }}

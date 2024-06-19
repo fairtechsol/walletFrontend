@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { useState } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import moment from "moment";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import AllRateSeperate from "./AllRateSeperate";
