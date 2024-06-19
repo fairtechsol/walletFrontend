@@ -39,7 +39,6 @@ const SeperateBox = (props: any) => {
             <Typography
               sx={{
                 fontSize: { lg: "10px", xs: "9px" },
-                marginTop: -0.4,
                 color: color == "white" ? "white" : "black",
                 textAlign: "center",
                 fontWeight: "600",
