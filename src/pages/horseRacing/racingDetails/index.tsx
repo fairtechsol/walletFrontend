@@ -290,7 +290,11 @@ const RacingDetails = () => {
               matchDetail?.title ? matchDetail?.title : ""
             }`}
             {timeLeft.hours !== 0 || timeLeft.minutes !== 0
-              ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+              ? timeLeft?.hours > 0
+                ? `| ${timeLeft?.hours} hours ${timeLeft?.minutes} Minutes Remaining`
+                : timeLeft?.minutes > 0
+                ? `| ${timeLeft?.minutes} Minutes Remaining`
+                : ""
               : ""}
           </Typography>
           <MatchOddsHorseRacing
