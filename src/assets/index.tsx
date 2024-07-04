@@ -57,3 +57,4 @@ export { default as DragonTiger20 } from "./images/dragonTiger.png";
 export { default as Lucky7A } from "./images/lucky7A.png";
 export { default as Teenpatti20 } from "./images/teenpatti.png";
 export { default as Thirty2CardsA } from "./images/32Cards.png";
+export { default as TeenPatti1Day } from "./images/teenpatti1day.png";
