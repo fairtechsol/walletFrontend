@@ -264,6 +264,8 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.lucky7]: Lucky7A,
   [cardGamesTypeConstants.lucky7eu]: Lucky7A,
   [cardGamesTypeConstants.teen]: TeenPatti1Day,
+  [cardGamesTypeConstants.ab20]: AndarBahar2,
+  [cardGamesTypeConstants.teen8]: Teenpatti20,
 };
 
 export const profitLossDataForMatchConstants = {
