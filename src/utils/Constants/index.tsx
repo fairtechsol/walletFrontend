@@ -6,6 +6,7 @@ import {
   GreyHound,
   HorseRacing,
   Lucky7A,
+  TeenPatti1Day,
   Teenpatti20,
   Tennis,
   Thirty2CardsA,
@@ -221,6 +222,29 @@ export const cardGamesTypeConstants: any = {
   teen20: "teen20",
   card32: "card32",
   lucky7: "lucky7",
+  dt202: "dt202",
+  dtl20: "dtl20",
+  dt6: "dt6",
+  lucky7eu: "lucky7eu",
+  teen: "teen",
+  teen9:"teen9",
+  teen8:"teen8",
+  poker: "poker",
+  poker20: "poker20",
+  poker6:"poker6",
+  baccarat:"baccarat",
+  baccarat2:"baccarat2",
+  card32eu: "card32eu",
+  ab20:"ab20",
+  "3cardj":"3cardj",
+  war:"war",
+  worli2:"worli2",
+  superover:"superover",
+  cmatch20:"cmatch20",
+  aaa: "aaa",
+  btable: "btable",
+  race20:"race20",
+  cricketv3:"cricketv3"
 };
 
 
@@ -231,10 +255,15 @@ export const gameIconConstants = {
   [gameConstants.horseRacing]: HorseRacing,
   [gameConstants.greyHound]: GreyHound,
   [cardGamesTypeConstants.dragonTiger20]: DragonTiger20,
+  [cardGamesTypeConstants.dt202]: DragonTiger20,
+  [cardGamesTypeConstants.dtl20]: DragonTiger20,
+  [cardGamesTypeConstants.dt6]: DragonTiger20,
   [cardGamesTypeConstants.andarBahar2]: AndarBahar2,
   [cardGamesTypeConstants.teen20]: Teenpatti20,
   [cardGamesTypeConstants.card32]: Thirty2CardsA,
   [cardGamesTypeConstants.lucky7]: Lucky7A,
+  [cardGamesTypeConstants.lucky7eu]: Lucky7A,
+  [cardGamesTypeConstants.teen]: TeenPatti1Day,
 };
 
 export const profitLossDataForMatchConstants = {
