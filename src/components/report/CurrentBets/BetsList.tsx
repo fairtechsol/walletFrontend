@@ -54,21 +54,24 @@ const BetsList = (props: any) => {
         <TableHeaderList />
 
         {currentPageData &&
-          currentPageData?.map((item: any, index: any) => {
-            return (
-              <TableDataRow
-                key={item?.id}
-                data={item}
-                index={index}
-                containerStyle={{ background: "#FFE094" }}
-                profit={true}
-                fContainerStyle={{ background: "#0B4F26" }}
-                fTextStyle={{ color: "white" }}
-                currentPage={currentPage}
-                pageLimit={pageLimit}
-              />
-            );
-          })}
+          currentPageData
+            ?.slice()
+            .sort((a: any, b: any) => a.createdAt - b.createdAt)
+            .map((item: any, index: any) => {
+              return (
+                <TableDataRow
+                  key={item?.id}
+                  data={item}
+                  index={index}
+                  containerStyle={{ background: "#FFE094" }}
+                  profit={true}
+                  fContainerStyle={{ background: "#0B4F26" }}
+                  fTextStyle={{ color: "white" }}
+                  currentPage={currentPage}
+                  pageLimit={pageLimit}
+                />
+              );
+            })}
         {(!betHistory || betHistory.length === 0) && (
           <EmptyRow containerStyle={{ background: "#FFE094" }} />
         )}
