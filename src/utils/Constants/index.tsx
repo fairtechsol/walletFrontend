@@ -1,5 +1,6 @@
 import {
   AndarBahar2,
+  CasinoWar,
   Cricket,
   DragonTiger20,
   Five5,
@@ -237,7 +238,7 @@ export const cardGamesTypeConstants: any = {
   poker6: "poker6",
   baccarat: "baccarat",
   baccarat2: "baccarat2",
-  card32eu: "card32eu",
+  card32B: "card32eu",
   ab20: "ab20",
   "3cardj": "3cardj",
   war: "war",
@@ -271,6 +272,8 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.superover]: SuperOver,
   [cardGamesTypeConstants.race20]: Race2020,
   [cardGamesTypeConstants.cricketv3]: Five5,
+  [cardGamesTypeConstants.card32B]: Thirty2CardsA,
+  [cardGamesTypeConstants.war]: CasinoWar,
 };
 
 export const profitLossDataForMatchConstants = {
