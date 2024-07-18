@@ -93,7 +93,7 @@ const RacingListComponentAnalysis = ({
                     )}
                     <TableCell
                       sx={{
-                        border: "1px solid black",
+                        borderRight: "1px solid rgba(224, 224, 224, 1)",
                         padding: "5px",
                         width: "30%",
                       }}
@@ -102,7 +102,6 @@ const RacingListComponentAnalysis = ({
                     </TableCell>
                     <TableCell
                       sx={{
-                        border: "1px solid black",
                         padding: "5px",
                         display: "flex",
                         flexWrap: "wrap",

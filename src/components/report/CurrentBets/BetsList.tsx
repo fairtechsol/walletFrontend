@@ -16,10 +16,17 @@ const BetsList = (props: any) => {
     --pageNumber;
     const startIndex = pageNumber * pageSize;
     const endIndex = startIndex + pageSize;
-    return array.slice(startIndex, endIndex);
+    return array?.slice(startIndex, endIndex);
   }
 
-  const currentPageData = paginate(betHistory, currentPage, pageLimit);
+  const sortedBetHistory = betHistory
+    ?.slice()
+    ?.sort(
+      (a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+  const currentPageData = paginate(sortedBetHistory, currentPage, pageLimit);
 
   return (
     <Box
@@ -54,24 +61,21 @@ const BetsList = (props: any) => {
         <TableHeaderList />
 
         {currentPageData &&
-          currentPageData
-            ?.slice()
-            .sort((a: any, b: any) => a.createdAt - b.createdAt)
-            .map((item: any, index: any) => {
-              return (
-                <TableDataRow
-                  key={item?.id}
-                  data={item}
-                  index={index}
-                  containerStyle={{ background: "#FFE094" }}
-                  profit={true}
-                  fContainerStyle={{ background: "#0B4F26" }}
-                  fTextStyle={{ color: "white" }}
-                  currentPage={currentPage}
-                  pageLimit={pageLimit}
-                />
-              );
-            })}
+          currentPageData?.map((item: any, index: any) => {
+            return (
+              <TableDataRow
+                key={item?.id}
+                data={item}
+                index={index}
+                containerStyle={{ background: "#FFE094" }}
+                profit={true}
+                fContainerStyle={{ background: "#0B4F26" }}
+                fTextStyle={{ color: "white" }}
+                currentPage={currentPage}
+                pageLimit={pageLimit}
+              />
+            );
+          })}
         {(!betHistory || betHistory.length === 0) && (
           <EmptyRow containerStyle={{ background: "#FFE094" }} />
         )}
