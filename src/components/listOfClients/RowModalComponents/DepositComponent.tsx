@@ -243,7 +243,7 @@ const DepositComponent = (props: any) => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", md: "row", lg: "row" },
+              flexDirection: { xs: "column", md: "column", lg: "row" },
               gap: 2,
               borderRadius: "5px",
             }}
@@ -252,7 +252,7 @@ const DepositComponent = (props: any) => {
               sx={{
                 width: { xs: "100%", lg: "100%", md: "100%" },
                 gap: "1%",
-                display: { xs: "flex", lg: "block" },
+                display: { xs: "flex", lg: "block", md: "block" },
                 flexDirection: "row-reverse",
                 justifyContent: "flex-end",
               }}
@@ -535,7 +535,7 @@ const DepositComponent = (props: any) => {
                 overflow: "hidden",
                 width: "100%",
                 gap: "1%",
-                display: { xs: "flex", lg: "block" },
+                display: { xs: "flex", lg: "block", md: "block" },
                 justifyContent: "flex-end",
                 flexDirection: "row-reverse",
               }}
