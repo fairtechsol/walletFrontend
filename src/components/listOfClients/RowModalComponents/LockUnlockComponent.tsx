@@ -149,7 +149,7 @@ const LockUnlockComponent = (props: any) => {
             </Typography>
             <Box
               sx={{
-                width: { xs: "100%", lg: "65%", md: "65%" },
+                width: { xs: "100%", lg: "63%", md: "65%" },
                 height: "45px",
                 // background: "white",
                 display: "flex",
@@ -211,7 +211,7 @@ const LockUnlockComponent = (props: any) => {
             </Typography>
             <Box
               sx={{
-                width: { xs: "100%", lg: "65%", md: "65%" },
+                width: { xs: "100%", lg: "62%", md: "65%" },
                 height: "45px",
                 background: "white",
                 display: "flex",
