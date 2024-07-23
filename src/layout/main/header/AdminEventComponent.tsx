@@ -35,7 +35,7 @@ const AdminEventComponent = (props: any) => {
         sx={{
           marginTop: { xs: "5px", lg: ".8vh" },
           textTransform: "uppercase",
-          fontSize: { lg: "10px", xs: "10px" },
+          fontSize: { lg: "9px", xs: "9px" },
           fontWeight: { xs: "500", md: "500" },
           color: "#000",
         }}

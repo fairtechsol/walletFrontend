@@ -79,7 +79,7 @@ const data = [
   },
   {
     id: 9,
-    title: "Analysis-2",
+    title: "Race Analysis",
     image: TREND,
     url: "market_analysis2/horseRacing",
     alt: "Analysis",

@@ -649,7 +649,7 @@ const LargeBox = ({ item, k }: any) => {
         alignItems: k == 1 || k == 0 ? "center" : "center",
         paddingLeft: k == 1 || k == 0 ? { xs: "0", md: "5px", lg: "5px" } : 0,
         display: "flex",
-        flexDirection: "column",
+        // flexDirection: "column",
       }}
     >
       <Typography
@@ -661,12 +661,20 @@ const LargeBox = ({ item, k }: any) => {
           wordWrap: "break-word",
           textAlign: "center",
           lineHeight: 1,
-          whiteSpace: { xs: "nowrap", lg: "inherit" },
+          whiteSpace: "inherit",
           textOverflow: "ellipsis",
           maxWidth: { xs: "43px", lg: "initial" },
         }}
       >
         {item?.name}
+        <Typography
+          sx={{
+            fontSize: matchesMobile ? "8px" : ".5vw",
+            overflow: "wrap",
+          }}
+        >
+          {item?.domain}
+        </Typography>
       </Typography>
       {item?.time && (
         <Typography
