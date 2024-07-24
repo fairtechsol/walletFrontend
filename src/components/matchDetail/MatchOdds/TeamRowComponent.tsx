@@ -102,14 +102,18 @@ const TeamRowComponent = (props: any) => {
          <Box
           sx={{
             background: "#000",
-            height: isTeamC ? "125px" : "82px",
+            height: isTeamC
+            ? name === "No" || name === "Yes"
+              ? "82px"
+              : "125px"
+            : "82px",
             position: "absolute",
             right: 0,
             top: 0,
             zIndex: 10,
             width: { lg: "21.5%", xs: "40.5%" },
             justifyContent: { xs: "center", lg: "center" },
-            alignItems: "center",
+            alignItems: isTeamC ? "center" : "center",
             display: "flex",
           }}
         >
