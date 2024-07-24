@@ -654,16 +654,18 @@ const LargeBox = ({ item, k }: any) => {
     >
       <Typography
         sx={{
-          fontSize: matchesMobile ? "8px" : ".6vw",
+          fontSize: matchesMobile ? "8px" : ".5vw",
           fontWeight: "600",
           color: item?.color,
           textTransform: "capitalize",
           wordWrap: "break-word",
           textAlign: "center",
           lineHeight: 1,
-          whiteSpace: { xs: "nowrap", lg: "inherit" },
+          overflowWrap: "anywhere",
+          whiteSpace: "inherit",
           textOverflow: "ellipsis",
-          maxWidth: { xs: "43px", lg: "initial" },
+          maxWidth: { xs: "auto", lg: "initial" },
+          padding: "5px"
         }}
       >
         {item?.name}
