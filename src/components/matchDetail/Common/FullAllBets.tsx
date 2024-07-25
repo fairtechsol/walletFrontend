@@ -665,13 +665,14 @@ const LargeBox = ({ item, k }: any) => {
           whiteSpace: "inherit",
           textOverflow: "ellipsis",
           maxWidth: { xs: "auto", lg: "initial" },
-          padding: "5px"
+          padding: "5px",
         }}
       >
         {item?.name}
         <Typography
           sx={{
             fontSize: matchesMobile ? "8px" : ".5vw",
+            textTransform: "none",
             overflow: "wrap",
           }}
         >
