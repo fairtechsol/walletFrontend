@@ -8,6 +8,7 @@ import {
   GreyHound,
   HorseRacing,
   Lucky7A,
+  Poker,
   Race2020,
   SuperOver,
   TeenPatti1Day,
@@ -274,6 +275,9 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.cricketv3]: Five5,
   [cardGamesTypeConstants.card32B]: Thirty2CardsA,
   [cardGamesTypeConstants.war]: CasinoWar,
+  [cardGamesTypeConstants.poker]: Poker,
+  [cardGamesTypeConstants.poker6]: Poker,
+  [cardGamesTypeConstants.poker20]: Poker,
 };
 
 export const profitLossDataForMatchConstants = {
