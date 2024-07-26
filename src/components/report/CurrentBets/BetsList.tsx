@@ -16,10 +16,17 @@ const BetsList = (props: any) => {
     --pageNumber;
     const startIndex = pageNumber * pageSize;
     const endIndex = startIndex + pageSize;
-    return array.slice(startIndex, endIndex);
+    return array?.slice(startIndex, endIndex);
   }
 
-  const currentPageData = paginate(betHistory, currentPage, pageLimit);
+  const sortedBetHistory = betHistory
+    ?.slice()
+    ?.sort(
+      (a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+  const currentPageData = paginate(sortedBetHistory, currentPage, pageLimit);
 
   return (
     <Box
@@ -41,9 +48,6 @@ const BetsList = (props: any) => {
           backgroundColor: "white",
           border: "2px solid white",
         },
-        // (theme: any) => ({
-       
-        // }),
       ]}
     >
       <ListHeaderRow

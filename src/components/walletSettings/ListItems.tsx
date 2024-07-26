@@ -131,7 +131,6 @@ const ListItems = (props: any) => {
             <Box
               sx={{
                 background: isSliderVisible ? "#F8C851" : "transparent",
-                marginLeft: "6px",
                 padding: "10px",
                 width: isSliderVisible ? "calc(100% + 400px)" : "100%",
               }}
@@ -233,7 +232,7 @@ const ListItems = (props: any) => {
                 justifyContent: "center",
                 width: { xs: "78vw", lg: "100%", md: "100%" },
                 padding: "0 15px 0 9px",
-                marginLeft: "5px",
+                margin: "15px 0px 0px 5px",
               }}
             >
               <BoxButton

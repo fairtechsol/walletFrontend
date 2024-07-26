@@ -26,7 +26,6 @@ const CustomModal = ({
   }, []);
 
   const handleEnterPress = (e: any) => {
-    debugger;
     if (e?.key === "Enter") {
       handleSubmit();
     }

@@ -27,10 +27,11 @@ const SeperateBox = (props: any) => {
           <Box sx={{ alignItems: "center", justifyContent: "space-around" }}>
             <Typography
               sx={{
-                fontSize: "13px",
+                fontSize: { lg: "13px", xs: "10px" },
                 color: color == "white" ? "white" : "black",
                 fontWeight: "700",
                 textAlign: "center",
+                lineHeight: "0.9",
               }}
             >
               {value}
@@ -38,7 +39,6 @@ const SeperateBox = (props: any) => {
             <Typography
               sx={{
                 fontSize: { lg: "10px", xs: "9px" },
-                marginTop: -0.4,
                 color: color == "white" ? "white" : "black",
                 textAlign: "center",
                 fontWeight: "600",

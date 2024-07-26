@@ -19,6 +19,12 @@ import ProfitLossReport from "../pages/reports/ProfitLoss";
 import CurrentBets from "../pages/reports/CurrentBets";
 import AccountStatement from "../pages/reports/AccountStatement";
 import GeneralReport from "../pages/reports/GeneralReport";
+import MatchList from "../pages/matchList";
+import RacingList from "../pages/horseRacing/racingList";
+import RacingDetails from "../pages/horseRacing/racingDetails";
+import Analysis2 from "../pages/analysis2";
+import MultipleMatchHorseRacing from "../pages/analysis2/multipleMatch";
+import ProfitLossReportCards from "../pages/reports/ProfitLossCards";
 
 // const ListOfClients = Loadable(() => import("../pages/listOfClients"));
 // const ChangePassword = Loadable(() => import("../pages/changePassword"));
@@ -55,11 +61,19 @@ const MainRoutes = {
       element: <LockMatchScreen />,
     },
     {
+      path: Constants.MainPaths.matchList,
+      element: <MatchList />,
+    },
+    {
       path: Constants.MainPaths.liveMarket,
       element: <Inplay />,
     },
     {
       path: Constants.MainPaths.liveMarketMatches,
+      element: <MatchDetail />,
+    },
+    {
+      path: Constants.MainPaths.matchListMatches,
       element: <MatchDetail />,
     },
     {
@@ -75,12 +89,20 @@ const MainRoutes = {
       element: <Analysis />,
     },
     {
+      path: Constants.MainPaths.marketAnalysis2,
+      element: <Analysis2 />,
+    },
+    {
       path: Constants.MainPaths.marketAnalysisMatches,
       element: <MatchDetail />,
     },
     {
       path: Constants.MainPaths.multipleMatch,
       element: <MultipleMatch />,
+    },
+    {
+      path: Constants.MainPaths.multipleMatch2,
+      element: <MultipleMatchHorseRacing />,
     },
     {
       path: Constants.MainPaths.reports,
@@ -103,6 +125,10 @@ const MainRoutes = {
       element: <ProfitLossReport />,
     },
     {
+      path: Constants.ReportsPaths.profitLossCards,
+      element: <ProfitLossReportCards />,
+    },
+    {
       path: Constants.ReportsPaths.accountStatement,
       element: <AccountStatement />,
     },
@@ -113,6 +139,14 @@ const MainRoutes = {
     {
       path: Constants.ReportsPaths.generalReport,
       element: <GeneralReport />,
+    },
+    {
+      path: Constants.MainPaths.horseRacing,
+      element: <RacingList />,
+    },
+    {
+      path: Constants.MainPaths.horseRacingDetail,
+      element: <RacingDetails />,
     },
     {
       path: "*",

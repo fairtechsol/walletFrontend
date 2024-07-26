@@ -141,7 +141,7 @@ const AccountListTable = ({
           <Box sx={{ display: matchesBreakPoint ? "inline-block" : "block" }}>
             <ListHeaderRow />
             <SubHeaderListRow data={newTotalBalance} />
-            {newData?.map((element: any, i: any) => {
+            {newData?.map((newElement: any, i: any) => {
               if (i % 2 === 0) {
                 return (
                   <AccountListRow
@@ -152,14 +152,23 @@ const AccountListTable = ({
                     showOptions={true}
                     show={true}
                     containerStyle={{ background: "#FFE094" }}
-                    profit={(+element?.userBal?.profitLoss || 0) >= 0}
+                    profit={(+newElement?.userBal?.profitLoss || 0) >= 0}
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
-                    element={element}
+                    element={
+                      element?.isUrl
+                        ? { ...newElement, isUrl: element?.isUrl }
+                        : newElement
+                    }
                     domain={
-                      domain ? domain : element?.domain ? element?.domain : ""
+                      domain
+                        ? domain
+                        : newElement?.domain
+                        ? newElement?.domain
+                        : ""
                     }
                     currentPage={currentPage}
+                    showDownIcon={element?.isUrl || newElement?.isUrl}
                   />
                 );
               } else {
@@ -173,13 +182,24 @@ const AccountListTable = ({
                     show={true}
                     // showChildModal={true}
                     containerStyle={{ background: "#ECECEC" }}
-                    profit={(+element?.userBal?.profitLoss || 0) >= 0}
+                    profit={(+newElement?.userBal?.profitLoss || 0) >= 0}
                     fContainerStyle={{ background: "#F8C851" }}
                     fTextStyle={{ color: "#0B4F26" }}
-                    element={element}
-                    domain={domain}
+                    element={
+                      element?.isUrl
+                        ? { ...newElement, isUrl: element?.isUrl }
+                        : newElement
+                    }
+                    domain={
+                      domain
+                        ? domain
+                        : newElement?.domain
+                        ? newElement?.domain
+                        : ""
+                    }
                     // getListOfUser={getListOfUser}
                     currentPage={currentPage}
+                    showDownIcon={element?.isUrl || newElement?.isUrl}
                   />
                 );
               }

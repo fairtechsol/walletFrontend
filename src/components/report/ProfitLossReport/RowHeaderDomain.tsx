@@ -1,4 +1,4 @@
-import { Box, Typography,useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
@@ -13,6 +13,7 @@ import {
 import moment from "moment";
 import { formatToINR } from "../../../helper";
 import theme from "../../../theme";
+import { gameConstants } from "../../../utils/Constants";
 
 const RowHeaderDomain = ({
   item,
@@ -42,6 +43,12 @@ const RowHeaderDomain = ({
             filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
           } else if (endDate) {
             filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+          }
+          if (
+            item?.eventType === gameConstants.horseRacing ||
+            item?.eventType === gameConstants.greyHound
+          ) {
+            filter += `&isRacing=true`;
           }
           setCurrentPage(1);
           dispatch(

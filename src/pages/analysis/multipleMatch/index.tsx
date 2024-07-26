@@ -29,6 +29,7 @@ import { socket, socketService } from "../../../socketManager";
 import {
   getMultipleMatchDetail,
   updateBetDataOnDeclareOfMultipleMatch,
+  updateMatchRatesOnMarketUndeclareForMulti,
   updateMaxLossForBetForMultipleMatch,
   updateMaxLossForBetOnUndeclareForMultipleMatch,
   updateMaxLossForDeleteBetForMultiMatch,
@@ -37,6 +38,7 @@ import {
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../../store/actions/match/multipleMatchActions";
 import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
+import { ApiConstants } from "../../../utils/Constants";
 
 const MultipleMatch = () => {
   const theme = useTheme();
@@ -65,7 +67,6 @@ const MultipleMatch = () => {
   const { placedBets, sessionProLoss } = useSelector(
     (state: RootState) => state.match.bets
   );
-  const sessionBets: any = [];
 
   const updateMatchDetailToRedux = (event: any) => {
     dispatch(updateMultipleMatchDetail(event));
@@ -123,7 +124,14 @@ const MultipleMatch = () => {
   const matchMultiResultDeclared = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
-        navigate(`/wallet/market_analysis`);
+        if (
+          event?.gameType === "cricket" ||
+          event?.betType === "quickbookmaker1"
+        ) {
+          navigate(`/wallet/market_analysis`);
+        } else {
+          dispatch(getPlacedBets(`eq${state?.matchId}`));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -171,6 +179,19 @@ const MultipleMatch = () => {
     }
   };
 
+  const handleMatchResultUndeclared = (event: any) => {
+    try {
+      if (event?.matchId === state?.matchId) {
+        if (event?.betType !== "quickbookmaker1") {
+          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(updateMatchRatesOnMarketUndeclareForMulti(event));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleClicked = (item: any) => {
     try {
       setStoredMatchData(() => {
@@ -187,10 +208,40 @@ const MultipleMatch = () => {
     }
   };
 
+  const convertString = (str: string) => {
+    if (str?.includes("_")) {
+      let words = str.split("_");
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      return words.join(" ");
+    } else {
+      return str;
+    }
+  };
+
+  useEffect(() => {
+    if (
+      multipleMatchDetail &&
+      multipleMatchDetail.some((item: any) => item?.stopAt)
+    ) {
+      navigate(`/wallet/market_analysis`);
+    }
+  }, [multipleMatchDetail]);
+
   useEffect(() => {
     try {
       if (state?.matchIds) {
-        dispatch(getMultipleMatchDetail(state?.matchIds));
+        dispatch(
+          getMultipleMatchDetail({
+            url:
+              state.matchType === "cricket"
+                ? ApiConstants.MATCH.GET
+                : ApiConstants.MATCH.GET_OTHER,
+            ids: state?.matchIds,
+            matchType: state.matchType,
+          })
+        );
         dispatch(resetSessionProLoss());
         dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
       }
@@ -231,6 +282,7 @@ const MultipleMatch = () => {
         socketService.match.sessionResultUnDeclare(
           handleMultiMatchSessionResultUnDeclare
         );
+        socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
       }
     } catch (e) {
       console.log(e);
@@ -258,7 +310,16 @@ const MultipleMatch = () => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         if (state?.matchIds) {
-          dispatch(getMultipleMatchDetail(state?.matchIds));
+          dispatch(
+            getMultipleMatchDetail({
+              url:
+                state.matchType === "cricket"
+                  ? ApiConstants.MATCH.GET
+                  : ApiConstants.MATCH.GET_OTHER,
+              ids: state?.matchIds,
+              matchType: state.matchType,
+            })
+          );
           dispatch(resetSessionProLoss());
           dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
         }
@@ -297,9 +358,6 @@ const MultipleMatch = () => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any, index: any) => {
-                  let sessionBetsData = sessionBets?.filter(
-                    (element: any) => element?.match_id === item?.id
-                  );
 
                   const QuicksessionData = item?.sessionBettings?.filter(
                     (item: any) => !JSON.parse(item).selectionId
@@ -374,6 +432,7 @@ const MultipleMatch = () => {
                                       : []
                                   }
                                   typeOfBet={"Match Odds"}
+                                  liveData={item?.matchOdd}
                                 />
                               )}
                               {item?.bookmaker?.isActive && (
@@ -387,21 +446,105 @@ const MultipleMatch = () => {
                                       ? item?.bookmaker?.runners
                                       : []
                                   }
+                                  liveData={item?.bookmaker}
                                 />
                               )}
-                              {item?.quickBookmaker?.map((bookmaker: any) => {
-                                return (
-                                  <MatchOdds
-                                    currentMatch={item}
-                                    session={"manualBookMaker"}
-                                    data={bookmaker}
-                                    minBet={bookmaker?.minBet || 0}
-                                    maxBet={bookmaker?.maxBet || 0}
-                                    typeOfBet={bookmaker?.name}
-                                    matchOddsData={bookmaker}
-                                  />
-                                );
-                              })}
+                              {item?.quickBookmaker
+                                ?.filter((match: any) => match?.isActive)
+                                ?.map((bookmaker: any) => {
+                                  return (
+                                    <MatchOdds
+                                      currentMatch={item}
+                                      session={"manualBookMaker"}
+                                      data={bookmaker}
+                                      minBet={bookmaker?.minBet || 0}
+                                      maxBet={bookmaker?.maxBet || 0}
+                                      typeOfBet={bookmaker?.name}
+                                      matchOddsData={bookmaker}
+                                      liveData={bookmaker}
+                                    />
+                                  );
+                                })}{" "}
+                              {item?.firstHalfGoal?.length > 0 &&
+                                item?.firstHalfGoal
+                                  ?.filter((match: any) => match?.isActive)
+                                  ?.map((match: any, index: any) => {
+                                    return (
+                                      <MatchOdds
+                                        key={index}
+                                        currentMatch={item}
+                                        session={"firstHalfGoal"}
+                                        data={
+                                          match?.runners?.length > 0
+                                            ? match?.runners
+                                            : []
+                                        }
+                                        minBet={Math.floor(match?.minBet) || 0}
+                                        maxBet={Math.floor(match?.maxBet) || 0}
+                                        typeOfBet={convertString(match?.name)}
+                                        liveData={match}
+                                      />
+                                    );
+                                  })}
+                              {item?.halfTime?.isActive && (
+                                <MatchOdds
+                                  currentMatch={item}
+                                  typeOfBet={"Half Time"}
+                                  showBox={
+                                    item?.halfTime?.activeStatus === "save"
+                                  }
+                                  minBet={Math.floor(item?.halfTime?.minBet)}
+                                  maxBet={Math.floor(item?.halfTime?.maxBet)}
+                                  liveData={item?.halfTime}
+                                  data={
+                                    item?.halfTime?.runners?.length > 0
+                                      ? item?.halfTime?.runners
+                                      : []
+                                  }
+                                />
+                              )}
+                              {item?.overUnder?.length > 0 &&
+                                item?.overUnder
+                                  ?.filter((match: any) => match?.isActive)
+                                  ?.map((match: any, index: any) => {
+                                    return (
+                                      <MatchOdds
+                                        key={index}
+                                        currentMatch={item}
+                                        session={"overUnder"}
+                                        data={
+                                          match?.runners?.length > 0
+                                            ? match?.runners
+                                            : []
+                                        }
+                                        minBet={Math.floor(match?.minBet) || 0}
+                                        maxBet={Math.floor(match?.maxBet) || 0}
+                                        typeOfBet={convertString(match?.name)}
+                                        liveData={match}
+                                      />
+                                    );
+                                  })}{" "}
+                              {item?.setWinner?.length > 0 &&
+                                item?.setWinner
+                                  ?.filter((match: any) => match?.isActive)
+                                  ?.map((match: any, index: any) => {
+                                    return (
+                                      <MatchOdds
+                                        key={index}
+                                        currentMatch={item}
+                                        session={"setWinner"}
+                                        minBet={Math.floor(match?.minBet) || 0}
+                                        maxBet={Math.floor(match?.maxBet) || 0}
+                                        typeOfBet={convertString(match?.name)}
+                                        liveData={match}
+                                        data={
+                                          match?.runners?.length > 0
+                                            ? match?.runners
+                                            : []
+                                        }
+                                      />
+                                    );
+                                  })}
                               {item?.apiTideMatch?.isActive && (
                                 <MatchOdds
                                   currentMatch={item}
@@ -417,6 +560,7 @@ const MultipleMatch = () => {
                                       ? item?.apiTideMatch?.runners
                                       : []
                                   }
+                                  liveData={item?.apiTideMatch}
                                 />
                               )}
                               {item?.manualTiedMatch?.isActive && (
@@ -431,6 +575,7 @@ const MultipleMatch = () => {
                                     item?.manualTiedMatch?.maxBet
                                   )}
                                   data={item?.manualTiedMatch}
+                                  liveData={item?.manualTiedMatch}
                                 />
                               )}
                               {item?.marketCompleteMatch?.isActive && (
@@ -449,9 +594,9 @@ const MultipleMatch = () => {
                                       ? item?.marketCompleteMatch?.runners
                                       : []
                                   }
+                                  liveData={item?.marketCompleteMatch}
                                 />
                               )}
-
                               {item?.manualSessionActive && (
                                 <SessionMarket
                                   title={"Quick Session Market"}
@@ -472,21 +617,9 @@ const MultipleMatch = () => {
                                         )
                                       : []
                                   }
-                                  // match={"multiple"}
-                                  //   currentOdd={currentOdd}
                                   sessionData={QuicksessionData}
                                   currentMatch={item}
-                                  data={[]}
                                   sessionOffline={item?.sessionOffline}
-                                  //   sessionExposer={
-                                  //     manualSessionHttp?.sessionExposure
-                                  //   }
-                                  sessionBets={sessionBetsData?.length}
-                                  //   setPopData={setPopData}
-                                  //   popData={popData}
-                                  //   sessionData={
-                                  //     manualSessionHttp?.manualSessionRate
-                                  //   }
                                   max={item?.betFairSessionMaxBet}
                                   min={item?.betFairSessionMinBet}
                                 />
@@ -511,18 +644,8 @@ const MultipleMatch = () => {
                                         )
                                       : []
                                   }
-                                  match={"multiple"}
-                                  //   currentOdd={currentOdd}
                                   sessionData={item?.apiSession}
                                   currentMatch={item}
-                                  data={[]}
-                                  sessionOffline={item?.sessionOffline}
-                                  //   sessionExposer={
-                                  //     manualSessionHttp?.sessionExposure
-                                  //   }
-                                  sessionBets={sessionBetsData?.length}
-                                  //   setPopData={setPopData}
-                                  //   popData={popData}
                                   max={item?.betFairSessionMaxBet}
                                   min={item?.betFairSessionMinBet}
                                 />
@@ -658,17 +781,16 @@ const MultipleMatch = () => {
                             {item?.matchOdd && (
                               <MatchOdds
                                 currentMatch={item}
-                                // matchOddsLive={matchOddsLive}
                                 minBet={Math.floor(item?.matchOdd?.minBet)}
                                 maxBet={Math.floor(item?.matchOdd?.maxBet)}
                                 matchOddsLive={item?.matchOdd}
-                                // data={[]}
                                 data={
                                   item?.matchOdd?.runners?.length > 0
                                     ? item?.matchOdd?.runners
                                     : []
                                 }
                                 typeOfBet={"Match Odds"}
+                                liveData={item?.matchOdd}
                               />
                             )}
                             {item?.bookmaker && (
@@ -682,6 +804,7 @@ const MultipleMatch = () => {
                                     ? item?.bookmaker?.runners
                                     : []
                                 }
+                                liveData={item?.bookmaker}
                               />
                             )}
                             {item?.quickBookmaker?.map((bookmaker: any) => {
@@ -694,54 +817,97 @@ const MultipleMatch = () => {
                                   maxBet={bookmaker?.maxBet || 0}
                                   typeOfBet={bookmaker?.name}
                                   matchOddsData={bookmaker}
+                                  liveData={bookmaker}
                                 />
                               );
                             })}
-                            {/* {item?.manualBookMakerActive && (
-                              <Odds
-                                currentMatch={item}
-                                data={item}
-                                manualBookmakerData={matchOddsDataTemp}
-                                typeOfBet={"Quick Bookmaker"}
-                                // data={matchOddsLive?.length > 0 ? matchOddsLive[0] : []}
-                              />
-                            )} */}
-                            {/* {manualSessionHttp?.manualBookRate?.map(
-                              (bookmaker: any) => {
-                                if (bookmaker.betStatus === 1) {
+                            {item?.firstHalfGoal?.length > 0 &&
+                              item?.firstHalfGoal
+                                ?.filter((match: any) => match?.isActive)
+                                ?.map((match: any, index: any) => {
                                   return (
                                     <MatchOdds
+                                      key={index}
                                       currentMatch={item}
-                                      session={"manualBookMaker"}
-                                      data={bookmaker}
-                                      minBet={bookmaker?.min_bet || 0}
-                                      maxBet={bookmaker?.max_bet || 0}
-                                      typeOfBet={bookmaker?.marketName}
-                                      matchOddsData={bookmaker}
+                                      session={"firstHalfGoal"}
+                                      data={
+                                        match?.runners?.length > 0
+                                          ? match?.runners
+                                          : []
+                                      }
+                                      minBet={Math.floor(match?.minBet) || 0}
+                                      maxBet={Math.floor(match?.maxBet) || 0}
+                                      typeOfBet={convertString(match?.name)}
+                                      liveData={match}
                                     />
                                   );
-                                }
-                              }
-                            )} */}
-                            {/* {item?.apiBookMakerActive && (
-                              <LiveBookmaker
+                                })}
+                            {item?.halfTime?.isActive && (
+                              <MatchOdds
                                 currentMatch={item}
-                                minBet={Math.floor(item?.bookmaker?.minBet))}
-                                maxBet={Math.floor(item?.bookmaker?.maxBet))}
-                                bookmakerLive={item?.bookmakerLive}
+                                typeOfBet={"Half Time"}
+                                showBox={
+                                  item?.halfTime?.activeStatus === "save"
+                                }
+                                minBet={Math.floor(item?.halfTime?.minBet)}
+                                maxBet={Math.floor(item?.halfTime?.maxBet)}
+                                liveData={item?.halfTime}
                                 data={
-                                  item?.bookmakerLive?.runners?.length > 0
-                                    ? item?.bookmakerLive?.runners
+                                  item?.halfTime?.runners?.length > 0
+                                    ? item?.halfTime?.runners
                                     : []
                                 }
                               />
-                            )} */}{" "}
+                            )}{" "}
+                            {item?.overUnder?.length > 0 &&
+                              item?.overUnder
+                                ?.filter((match: any) => match?.isActive)
+                                ?.map((match: any, index: any) => {
+                                  return (
+                                    <MatchOdds
+                                      key={index}
+                                      currentMatch={item}
+                                      session={"overUnder"}
+                                      data={
+                                        match?.runners?.length > 0
+                                          ? match?.runners
+                                          : []
+                                      }
+                                      minBet={Math.floor(match?.minBet) || 0}
+                                      maxBet={Math.floor(match?.maxBet) || 0}
+                                      typeOfBet={convertString(match?.name)}
+                                      liveData={match}
+                                    />
+                                  );
+                                })}
+                            {item?.setWinner?.length > 0 &&
+                              item?.setWinner
+                                ?.filter((match: any) => match?.isActive)
+                                ?.map((match: any, index: any) => {
+                                  return (
+                                    <MatchOdds
+                                      key={index}
+                                      currentMatch={item}
+                                      session={"setWinner"}
+                                      minBet={Math.floor(match?.minBet) || 0}
+                                      maxBet={Math.floor(match?.maxBet) || 0}
+                                      typeOfBet={convertString(match?.name)}
+                                      liveData={match}
+                                      data={
+                                        match?.runners?.length > 0
+                                          ? match?.runners
+                                          : []
+                                      }
+                                    />
+                                  );
+                                })}
                             {item?.apiTideMatch && (
                               <MatchOdds
                                 currentMatch={item}
                                 typeOfBet={"Tied Match"}
                                 minBet={Math.floor(item?.apiTideMatch?.minBet)}
                                 maxBet={Math.floor(item?.apiTideMatch?.maxBet)}
+                                liveData={item?.apiTideMatch}
                               />
                             )}
                             {item?.manualTiedMatch && (
@@ -757,6 +923,7 @@ const MultipleMatch = () => {
                                   item?.manualTiedMatch?.maxBet
                                 )}
                                 matchOddsData={item?.manualTiedMatch}
+                                liveData={item?.manualTiedMatch}
                               />
                             )}
                             {item?.marketCompleteMatch && (
@@ -769,6 +936,7 @@ const MultipleMatch = () => {
                                 maxBet={Math.floor(
                                   item?.marketCompleteMatch?.maxBet
                                 )}
+                                liveData={item?.marketCompleteMatch}
                               />
                             )}
                             {item?.apiSessionActive && (
@@ -793,8 +961,6 @@ const MultipleMatch = () => {
                                 }
                                 sessionData={item?.sessionBettings}
                                 currentMatch={item}
-                                sessionOffline={item?.sessionOffline}
-                                sessionBets={sessionBetsData?.length}
                                 max={item?.betFairSessionMaxBet}
                                 min={item?.betFairSessionMinBet}
                               />
@@ -819,11 +985,8 @@ const MultipleMatch = () => {
                                       )
                                     : []
                                 }
-                                match={"multiple"}
                                 currentMatch={item}
                                 sessionData={item?.apiSession}
-                                sessionOffline={item?.sessionOffline}
-                                sessionBets={sessionBetsData?.length}
                                 max={item?.betFairSessionMaxBet}
                                 min={item?.betFairSessionMaxBet}
                               />
@@ -942,17 +1105,10 @@ const MultipleMatch = () => {
             >
               {multipleMatchDetail?.length > 0 &&
                 multipleMatchDetail?.map((item: any, index: number) => {
-                  let sessionBetsData = sessionBets?.filter(
-                    (element: any) => element?.match_id === item?.id
-                  );
 
                   const QuicksessionData = item?.sessionBettings?.filter(
                     (item: any) => !JSON.parse(item).selectionId
                   );
-
-                  // const sessionData = item?.sessionBettings?.filter(
-                  //   (item: any) => JSON.parse(item).selectionId
-                  // );
 
                   return (
                     <>
@@ -998,7 +1154,6 @@ const MultipleMatch = () => {
                             User Profit Loss
                           </Button>
                         </Typography>
-
                         {item?.matchOdd?.isActive && (
                           <MatchOdds
                             currentMatch={item}
@@ -1011,17 +1166,9 @@ const MultipleMatch = () => {
                                 : []
                             }
                             typeOfBet={"Match Odds"}
+                            liveData={item?.matchOdd}
                           />
                         )}
-
-                        {/* {item?.manualBookMakerActive && (
-                          <Odds
-                            currentMatch={item}
-                            data={item}
-                            manualBookmakerData={matchOddsDataTemp}
-                            typeOfBet={"Quick Bookmaker"}
-                          />
-                        )} */}
                         {item?.bookmaker?.isActive && (
                           <LiveBookmaker
                             currentMatch={item}
@@ -1033,36 +1180,103 @@ const MultipleMatch = () => {
                                 ? item?.bookmaker?.runners
                                 : []
                             }
+                            liveData={item?.bookmaker}
                           />
                         )}
-                        {item?.quickBookmaker?.map((bookmaker: any) => {
-                          return (
-                            <MatchOdds
-                              key={bookmaker?.id}
-                              currentMatch={item}
-                              session={"manualBookMaker"}
-                              data={bookmaker}
-                              minBet={bookmaker?.minBet || 0}
-                              maxBet={bookmaker?.maxBet || 0}
-                              typeOfBet={bookmaker?.name}
-                              matchOddsData={bookmaker}
-                            />
-                          );
-                        })}
-
-                        {/* {item?.apiBookMakerActive && (
-                          <LiveBookmaker
+                        {item?.quickBookmaker
+                          ?.filter((match: any) => match?.isActive)
+                          ?.map((bookmaker: any) => {
+                            return (
+                              <MatchOdds
+                                key={bookmaker?.id}
+                                currentMatch={item}
+                                session={"manualBookMaker"}
+                                data={bookmaker}
+                                minBet={bookmaker?.minBet || 0}
+                                maxBet={bookmaker?.maxBet || 0}
+                                typeOfBet={bookmaker?.name}
+                                liveData={bookmaker}
+                              />
+                            );
+                          })}
+                        {item?.firstHalfGoal?.length > 0 &&
+                          item?.firstHalfGoal
+                            ?.filter((match: any) => match?.isActive)
+                            ?.map((match: any, index: any) => {
+                              return (
+                                <MatchOdds
+                                  key={index}
+                                  currentMatch={item}
+                                  session={"firstHalfGoal"}
+                                  data={
+                                    match?.runners?.length > 0
+                                      ? match?.runners
+                                      : []
+                                  }
+                                  minBet={Math.floor(match?.minBet) || 0}
+                                  maxBet={Math.floor(match?.maxBet) || 0}
+                                  typeOfBet={convertString(match?.name)}
+                                  liveData={match}
+                                />
+                              );
+                            })}
+                        {item?.halfTime?.isActive && (
+                          <MatchOdds
                             currentMatch={item}
-                            minBet={Math.floor(item?.bookmaker?.minBet))}
-                            maxBet={Math.floor(item?.bookmaker?.maxBet))}
-                            bookmakerLive={item?.bookmakerLive}
+                            typeOfBet={"Half Time"}
+                            showBox={item?.halfTime?.activeStatus === "save"}
+                            minBet={Math.floor(item?.halfTime?.minBet)}
+                            maxBet={Math.floor(item?.halfTime?.maxBet)}
+                            liveData={item?.halfTime}
                             data={
-                              item?.bookmakerLive?.runners?.length > 0
-                                ? item?.bookmakerLive?.runners
+                              item?.halfTime?.runners?.length > 0
+                                ? item?.halfTime?.runners
                                 : []
                             }
                           />
-                        )} */}
+                        )}{" "}
+                        {item?.overUnder?.length > 0 &&
+                          item?.overUnder
+                            ?.filter((match: any) => match?.isActive)
+                            ?.map((match: any, index: any) => {
+                              return (
+                                <MatchOdds
+                                  key={index}
+                                  currentMatch={item}
+                                  session={"overUnder"}
+                                  data={
+                                    match?.runners?.length > 0
+                                      ? match?.runners
+                                      : []
+                                  }
+                                  minBet={Math.floor(match?.minBet) || 0}
+                                  maxBet={Math.floor(match?.maxBet) || 0}
+                                  typeOfBet={convertString(match?.name)}
+                                  liveData={match}
+                                />
+                              );
+                            })}
+                        {item?.setWinner?.length > 0 &&
+                          item?.setWinner
+                            ?.filter((match: any) => match?.isActive)
+                            ?.map((match: any, index: any) => {
+                              return (
+                                <MatchOdds
+                                  key={index}
+                                  currentMatch={item}
+                                  session={"setWinner"}
+                                  minBet={Math.floor(match?.minBet) || 0}
+                                  maxBet={Math.floor(match?.maxBet) || 0}
+                                  typeOfBet={convertString(match?.name)}
+                                  liveData={match}
+                                  data={
+                                    match?.runners?.length > 0
+                                      ? match?.runners
+                                      : []
+                                  }
+                                />
+                              );
+                            })}
                         {item?.apiTideMatch?.isActive && (
                           <MatchOdds
                             currentMatch={item}
@@ -1074,6 +1288,7 @@ const MultipleMatch = () => {
                                 ? item.apiTideMatch?.runners
                                 : []
                             }
+                            liveData={item?.apiTideMatch}
                           />
                         )}
                         {item?.manualTiedMatch?.isActive && (
@@ -1085,6 +1300,7 @@ const MultipleMatch = () => {
                             maxBet={Math.floor(item?.manualTiedMatch?.maxBet)}
                             matchOddsData={item?.manualTiedMatch}
                             data={item?.manualTiedMatch}
+                            liveData={item?.manualTiedMatch}
                           />
                         )}
                         {item?.marketCompleteMatch?.isActive && (
@@ -1102,6 +1318,7 @@ const MultipleMatch = () => {
                                 ? item.marketCompleteMatch?.runners
                                 : []
                             }
+                            liveData={item?.marketCompleteMatch}
                           />
                         )}
                         {item?.apiSessionActive && (
@@ -1124,16 +1341,8 @@ const MultipleMatch = () => {
                                   )
                                 : []
                             }
-                            // match={"multiple"}
                             currentMatch={item}
                             sessionData={QuicksessionData}
-                            // currentOdd={currentOdd}
-                            sessionOffline={item?.sessionOffline}
-                            // sessionExposer={manualSessionHttp?.sessionExposure}
-                            sessionBets={sessionBetsData?.length}
-                            // sessionData={manualSessionHttp?.manualSessionRate}
-                            // setPopData={setPopData}
-                            // popData={popData}
                             max={item?.betFairSessionMaxBet}
                             min={item?.betFairSessionMinBet}
                           />
@@ -1158,11 +1367,8 @@ const MultipleMatch = () => {
                                   )
                                 : []
                             }
-                            match={"multiple"}
                             currentMatch={item}
                             sessionData={item?.apiSession}
-                            sessionOffline={item?.sessionOffline}
-                            sessionBets={sessionBetsData?.length}
                             max={item?.betFairSessionMaxBet}
                             min={item?.betFairSessionMinBet}
                           />

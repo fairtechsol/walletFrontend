@@ -80,7 +80,7 @@ const Inplay = () => {
       socketService.match.unDeclaredMatchResultAllUserOff();
       socketService.match.matchAddedOff();
     };
-  }, []);
+  }, [success, profileDetail?.roleName, socket]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -107,6 +107,7 @@ const Inplay = () => {
                     state: {
                       submit: true,
                       matchId: match?.id,
+                      matchType: match?.matchType,
                     },
                   });
                 }}

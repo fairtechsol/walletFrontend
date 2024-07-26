@@ -3,6 +3,7 @@ import { authReducer } from "./reducers/auth/authReducer";
 import { userReducer } from "./reducers/user";
 import { matchReducer } from "./reducers/match";
 import { reportReducer } from "./reducers/reports";
+import { horseRacingReducer } from "./reducers/horseRacing";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     user: userReducer,
     match: matchReducer,
     report: reportReducer,
+    horseRacing: horseRacingReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

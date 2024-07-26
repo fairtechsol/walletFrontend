@@ -28,13 +28,14 @@ const AdminEventComponent = (props: any) => {
       <img
         src={data.image}
         style={{ width: "40px", height: "40px", alignSelf: "center" }}
+        alt={data.alt}
       />
       <Typography
         noWrap
         sx={{
           marginTop: { xs: "5px", lg: ".8vh" },
           textTransform: "uppercase",
-          fontSize: { lg: "10px", xs: "10px" },
+          fontSize: { lg: "9px", xs: "9px" },
           fontWeight: { xs: "500", md: "500" },
           color: "#000",
         }}
