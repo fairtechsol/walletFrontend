@@ -57,7 +57,7 @@ export { default as DragonTiger20 } from "./images/dragonTiger.png";
 export { default as Lucky7A } from "./images/lucky7A.png";
 export { default as Teenpatti20 } from "./images/teenpatti.png";
 export { default as Thirty2CardsA } from "./images/32Cards.png";
-export { default as TeenPatti1Day } from "./images/teenpatti1day.png";
+export { default as TeenPatti1Day } from "./images/teenpatti1Day.png";
 export { default as SuperOver } from "./images/superOver.png";
 export { default as Five5 } from "./images/five5.png";
 export { default as Race2020 } from "./images/race20.png";
