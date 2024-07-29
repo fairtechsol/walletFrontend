@@ -33,7 +33,7 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { formatToINR } from "../../helper";
+import { customSortOnName, formatToINR } from "../../helper";
 import { ApiConstants } from "../../utils/Constants";
 
 const MatchDetail = () => {
@@ -467,6 +467,8 @@ const MatchDetail = () => {
           {matchDetail?.firstHalfGoal?.length > 0 &&
             matchDetail?.firstHalfGoal
               ?.filter((item: any) => item?.isActive)
+              ?.slice()
+              ?.sort(customSortOnName)
               ?.map((item: any, index: any) => {
                 return (
                   <MatchOdds
@@ -499,6 +501,8 @@ const MatchDetail = () => {
           {matchDetail?.overUnder?.length > 0 &&
             matchDetail?.overUnder
               ?.filter((item: any) => item?.isActive)
+              ?.slice()
+              ?.sort(customSortOnName)
               ?.map((item: any, index: any) => {
                 return (
                   <MatchOdds
@@ -516,6 +520,8 @@ const MatchDetail = () => {
           {matchDetail?.setWinner?.length > 0 &&
             matchDetail?.setWinner
               ?.filter((item: any) => item?.isActive)
+              ?.slice()
+              ?.sort(customSortOnName)
               ?.map((item: any, index: any) => {
                 return (
                   <MatchOdds

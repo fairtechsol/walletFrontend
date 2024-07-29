@@ -62,3 +62,4 @@ export { default as SuperOver } from "./images/superOver.png";
 export { default as Five5 } from "./images/five5.png";
 export { default as Race2020 } from "./images/race20.png";
 export { default as CasinoWar } from "./images/casinoWar.png";
+export { default as Poker } from "./images/poker.png";
