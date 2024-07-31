@@ -79,7 +79,7 @@ const RowComponentMatches = ({
       >
         <Box
           sx={{
-            width: { xs: "10%", sm: "5%", lg: "5%" },
+            width: { xs: "10%", sm: "5%", lg: "4.4%" },
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -98,7 +98,7 @@ const RowComponentMatches = ({
             width: {
               xs: item?.eventType === "cricket" ? "40%" : "65%",
               sm: item?.eventType === "cricket" ? "55%" : "80%",
-              lg: item?.eventType === "cricket" ? "55%" : "80%",
+              lg: item?.eventType === "cricket" ? "56%" : "80%",
             },
             position: "relative",
             height: "100%",
