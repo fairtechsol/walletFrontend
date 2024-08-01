@@ -54,6 +54,7 @@ export const ApiConstants = {
     USER_DETAIL_FOR_PARENT: "/user/getUserDetailsForParent",
     USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
     USER_CHECK_CHILD_ACTIVATE: "match/check/lock",
+    CHANGE_DELETE_REASON: "/bet/change/deleteReason",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
