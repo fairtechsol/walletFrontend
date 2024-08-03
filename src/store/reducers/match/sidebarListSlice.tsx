@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   AllBetDelete,
+  editBetDeleteReason,
   getCompetitionDates,
   getCompetitionList,
   getCompetitionMatches,
@@ -76,6 +77,15 @@ const sidebarListSlice = createSlice({
       .addCase(AllBetDelete.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(editBetDeleteReason.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editBetDeleteReason.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(editBetDeleteReason.rejected, (state) => {
+        state.loading = false;
       })
       .addCase(getCompetitionMatches.pending, (state) => {
         state.loading = false;

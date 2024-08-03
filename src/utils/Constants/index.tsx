@@ -2,6 +2,7 @@ import {
   AndarBahar2,
   CasinoWar,
   Cricket,
+  CriketMatch2020,
   DragonTiger20,
   Five5,
   Football,
@@ -54,6 +55,7 @@ export const ApiConstants = {
     USER_DETAIL_FOR_PARENT: "/user/getUserDetailsForParent",
     USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
     USER_CHECK_CHILD_ACTIVATE: "match/check/lock",
+    CHANGE_DELETE_REASON: "/bet/change/deleteReason",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
@@ -278,6 +280,8 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.poker]: Poker,
   [cardGamesTypeConstants.poker6]: Poker,
   [cardGamesTypeConstants.poker20]: Poker,
+  [cardGamesTypeConstants.teen9]: Teenpatti20,
+  [cardGamesTypeConstants.cmatch20]: CriketMatch2020,
 };
 
 export const profitLossDataForMatchConstants = {
