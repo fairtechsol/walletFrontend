@@ -1,7 +1,7 @@
 {
   "name": "old-fair-game-admin",
   "private": true,
-  "version": "1.0.9",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
