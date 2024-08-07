@@ -177,7 +177,7 @@ const AllRateSeperate = ({
                       color: "white",
                     }}
                   >
-                   {matchesMobile ? "P/L" : "Profit Loss"}
+                    {matchesMobile ? "P/L" : "Profit Loss"}
                   </Typography>
                 </Box>
               )}
@@ -544,8 +544,10 @@ const RowComponent = ({ header, data }: any) => {
           <SingleBox
             color={getColor()}
             data={data?.username || data?.userName || data?.user?.userName}
+            domain={data?.domain}
             header={header}
             boxWidth="100%"
+            down={true}
           />
           <SingleBox
             color={getColor()}
@@ -721,6 +723,8 @@ const SingleBox = ({
   header,
   color,
   up,
+  down,
+  domain,
   first,
   time,
   width,
@@ -803,6 +807,43 @@ const SingleBox = ({
           }}
         >
           {data.teamName}
+        </Typography>
+      </Box>
+    ) : down ? (
+      <Box
+        sx={{
+          width: "100%",
+          height: "40px",
+          flexDirection: "column",
+          background: color,
+          // marginX: { xs: "1px", lg: "1px" },
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: "600",
+            fontSize: { lg: "12px", md: "10px", xs: "10px" },
+            color: "black",
+            textAlign: "center",
+            textTransform: "uppercase",
+            maxHeight: "1em",
+            overflow: "hidden",
+            lineHeight: 1,
+          }}
+        >
+          {data}
+        </Typography>
+        <Typography
+          sx={{
+            fontWeight: "700",
+            fontSize: { lg: "11px", md: "9px", xs: "9px" },
+            color: "black",
+            textAlign: "center",
+          }}
+        >
+          {domain}
         </Typography>
       </Box>
     ) : (
