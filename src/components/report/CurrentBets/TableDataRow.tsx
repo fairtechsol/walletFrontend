@@ -109,11 +109,13 @@ const TableDataRow = (props: any) => {
           width: "10%",
           minWidth: "100px",
           display: "flex",
-          paddingLeft: "10px",
+          // paddingLeft: "10px",
           background: flag ? "#ECECEC" : "#FFE094",
           alignItems: "center",
+          justifyContent: "center",
           height: "45px",
           borderRight: "2px solid white",
+          flexDirection: "column",
         }}
       >
         <Typography
@@ -124,6 +126,15 @@ const TableDataRow = (props: any) => {
           }}
         >
           {data?.user?.userName}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: { xs: "9px", md: "9px", lg: "10px" },
+            fontWeight: "600",
+            color: "black",
+          }}
+        >
+          {data?.domain}
         </Typography>
       </Box>
       <Box
