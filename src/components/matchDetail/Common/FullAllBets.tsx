@@ -151,6 +151,7 @@ const FullAllBets = (props: any) => {
     }
   }, [IObets]);
 
+
   // console.log(newData, "abc");
 
   useEffect(() => {
@@ -649,12 +650,12 @@ const LargeBox = ({ item, k }: any) => {
         alignItems: k == 1 || k == 0 ? "center" : "center",
         paddingLeft: k == 1 || k == 0 ? { xs: "0", md: "5px", lg: "5px" } : 0,
         display: "flex",
-        // flexDirection: "column",
+        flexDirection: "column",
       }}
     >
       <Typography
         sx={{
-          fontSize: matchesMobile ? "8px" : ".5vw",
+          fontSize: matchesMobile ? "8px" : "8px",
           fontWeight: "600",
           color: item?.color,
           textTransform: "capitalize",
@@ -665,24 +666,25 @@ const LargeBox = ({ item, k }: any) => {
           whiteSpace: "inherit",
           textOverflow: "ellipsis",
           maxWidth: { xs: "auto", lg: "initial" },
-          padding: "5px",
+          // padding: "5px",
         }}
       >
         {item?.name}
         <Typography
           sx={{
-            fontSize: matchesMobile ? "8px" : ".5vw",
+            fontSize: matchesMobile ? "8px" : "8px",
             textTransform: "none",
             overflow: "wrap",
+            lineHeight: 1
           }}
         >
-          {item?.domain}
+          {item?.domain?.replace(/https?:\/\//, '')}
         </Typography>
       </Typography>
       {item?.time && (
         <Typography
           sx={{
-            fontSize: matchesMobile ? "8px" : ".6vw",
+            fontSize: matchesMobile ? "8px" : "10px",
             fontWeight: "600",
             color: item?.color,
           }}
