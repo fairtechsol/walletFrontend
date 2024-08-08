@@ -1,5 +1,7 @@
 import {
+  AmarAkbarAnthony,
   AndarBahar2,
+  BollywoodCasino,
   CasinoWar,
   Cricket,
   CriketMatch2020,
@@ -8,6 +10,7 @@ import {
   Football,
   GreyHound,
   HorseRacing,
+  InstantWorli,
   Lucky7A,
   Poker,
   Race2020,
@@ -282,6 +285,10 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.poker20]: Poker,
   [cardGamesTypeConstants.teen9]: Teenpatti20,
   [cardGamesTypeConstants.cmatch20]: CriketMatch2020,
+  [cardGamesTypeConstants.aaa]: AmarAkbarAnthony,
+  [cardGamesTypeConstants.btable]: BollywoodCasino,
+  [cardGamesTypeConstants.worli2]: InstantWorli,
+  [cardGamesTypeConstants["3cardj"]]: Race2020,
 };
 
 export const profitLossDataForMatchConstants = {

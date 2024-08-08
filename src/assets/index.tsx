@@ -64,3 +64,6 @@ export { default as Race2020 } from "./images/race20.png";
 export { default as CasinoWar } from "./images/casinoWar.png";
 export { default as Poker } from "./images/poker.png";
 export { default as CriketMatch2020 } from "./images/cricketMatch2020.png";
+export { default as AmarAkbarAnthony } from "./images/amarAkbarAnthony.png";
+export { default as BollywoodCasino } from "./images/bollywoodCasino.png";
+export { default as InstantWorli } from "./images/instantWorli.png";
