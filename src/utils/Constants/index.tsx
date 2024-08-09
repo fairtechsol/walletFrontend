@@ -1,6 +1,7 @@
 import {
   AmarAkbarAnthony,
   AndarBahar2,
+  Baccarat,
   BollywoodCasino,
   CasinoWar,
   Cricket,
@@ -289,6 +290,8 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.btable]: BollywoodCasino,
   [cardGamesTypeConstants.worli2]: InstantWorli,
   [cardGamesTypeConstants["3cardj"]]: Race2020,
+  [cardGamesTypeConstants.baccarat]: Baccarat,
+  [cardGamesTypeConstants.baccarat2]: Baccarat,
 };
 
 export const profitLossDataForMatchConstants = {
