@@ -151,7 +151,6 @@ const FullAllBets = (props: any) => {
     }
   }, [IObets]);
 
-
   // console.log(newData, "abc");
 
   useEffect(() => {
@@ -159,7 +158,7 @@ const FullAllBets = (props: any) => {
     if (setSelectedBetData !== undefined) {
       setSelectedBetData([]);
     }
-  }, [mode]);
+  }, [mode?.value]);
 
   return (
     <Box
@@ -272,7 +271,7 @@ const FullAllBets = (props: any) => {
       </Box>
       {visible && (
         <>
-          <HeaderRow mode={mode} tag={tag} />
+          <HeaderRow mode={mode?.value} tag={tag} />
           <div
             className="myScroll"
             style={{ maxHeight: "80vh", overflowY: "auto" }}
@@ -301,32 +300,55 @@ const FullAllBets = (props: any) => {
                       x = updatedX;
                       setSelectedData(updatedX);
                     } else {
-                      if (!i?.values[0].deleteReason) {
-                        setSelectedBetData([
-                          ...selectedBetData,
-                          {
+                      if (mode?.type == "edit") {
+                        if (i?.values[0].deleteReason) {
+                          setSelectedBetData([
+                            ...selectedBetData,
+                            {
+                              id: i?.values[0].id,
+                              betId: i?.values[0].betId,
+                              matchId: i?.values[0].matchId,
+                              userId: i?.values[0].userId,
+                              domain: i?.values[0].domain,
+                            },
+                          ]);
+                          x.push({
                             id: i?.values[0].id,
                             betId: i?.values[0].betId,
                             matchId: i?.values[0].matchId,
                             userId: i?.values[0].userId,
                             domain: i?.values[0].domain,
-                          },
-                        ]);
-                        x.push({
-                          id: i?.values[0].id,
-                          betId: i?.values[0].betId,
-                          matchId: i?.values[0].matchId,
-                          userId: i?.values[0].userId,
-                          domain: i?.values[0].domain,
-                        });
-                        setSelectedData([...x]);
+                          });
+                          setSelectedData([...x]);
+                        }
+                      } else if (mode?.type === "delete") {
+                        if (!i?.values[0].deleteReason) {
+                          setSelectedBetData([
+                            ...selectedBetData,
+                            {
+                              id: i?.values[0].id,
+                              betId: i?.values[0].betId,
+                              matchId: i?.values[0].matchId,
+                              userId: i?.values[0].userId,
+                              domain: i?.values[0].domain,
+                            },
+                          ]);
+                          x.push({
+                            id: i?.values[0].id,
+                            betId: i?.values[0].betId,
+                            matchId: i?.values[0].matchId,
+                            userId: i?.values[0].userId,
+                            domain: i?.values[0].domain,
+                          });
+                          setSelectedData([...x]);
+                        }
                       }
                     }
                   }}
                 >
                   <Box
                     sx={{
-                      width: mode ? "7%" : "5.3%",
+                      width: mode?.value ? "7%" : "5.3%",
                       border: "1px solid white",
                       background: "black",
                       height: "35px",
@@ -335,7 +357,7 @@ const FullAllBets = (props: any) => {
                       display: "flex",
                     }}
                   >
-                    {!mode && (
+                    {!mode?.value && (
                       <Typography
                         sx={{
                           fontSize: !tag ? { xs: "8px", lg: "11px" } : "13px",
@@ -346,7 +368,7 @@ const FullAllBets = (props: any) => {
                         {formattedNum}
                       </Typography>
                     )}
-                    {mode &&
+                    {mode?.value &&
                       !selectedData.some(
                         (item: any) => item?.id === i?.values[0].id
                       ) && (
@@ -359,7 +381,7 @@ const FullAllBets = (props: any) => {
                           }}
                         ></Box>
                       )}
-                    {mode &&
+                    {mode?.value &&
                       selectedData.some(
                         (item: any) => item?.id === i?.values[0].id
                       ) && (
@@ -675,10 +697,10 @@ const LargeBox = ({ item, k }: any) => {
             fontSize: matchesMobile ? "8px" : "8px",
             textTransform: "none",
             overflow: "wrap",
-            lineHeight: 1
+            lineHeight: 1,
           }}
         >
-          {item?.domain?.replace(/https?:\/\//, '')}
+          {item?.domain?.replace(/https?:\/\//, "")}
         </Typography>
       </Typography>
       {item?.time && (

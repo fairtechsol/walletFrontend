@@ -11,8 +11,10 @@ import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import { socket, socketService } from "../../socketManager";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   AllBetDelete,
+  editBetDeleteReason,
   getMatchDetail,
   getPlacedBets,
   getUserProfitLoss,
@@ -43,8 +45,9 @@ const MatchDetail = () => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
-  const [mode, setMode] = useState(false);
+  const [mode, setMode] = useState({ type: "", value: false });
   const [visible, setVisible] = useState(false);
+  const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
@@ -92,6 +95,26 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+  const handleEditDeleteBetReason = (value: any) => {
+    try {
+      let payload: any = {
+        deleteReason: value,
+        betData: {},
+      };
+      selectedBetData.forEach((item: any) => {
+        const { domain } = item;
+
+        if (!payload.betData[domain]) {
+          payload.betData[domain] = [];
+        }
+
+        payload.betData[domain].push(item.id);
+      });
+      dispatch(editBetDeleteReason(payload));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const updateMatchDetailToRedux = (event: any) => {
     try {
@@ -124,7 +147,7 @@ const MatchDetail = () => {
 
   const matchDeleteBet = (event: any) => {
     try {
-      setMode(false);
+      setMode({ type: "", value: false });
       if (event?.matchId === state?.matchId) {
         setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
@@ -136,7 +159,7 @@ const MatchDetail = () => {
   };
   const handleSessionDeleteBet = (event: any) => {
     try {
-      setMode(false);
+      setMode({ type: "", value: false });
       if (event?.matchId === state?.matchId) {
         setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
@@ -387,7 +410,24 @@ const MatchDetail = () => {
             onClick={(e: any) => {
               e.stopPropagation();
               setVisible(false);
-              setMode(false);
+              setMode({ type: "", value: false });
+            }}
+          />
+        </>
+      )}
+      {visibleEdit && selectedBetData.length > 0 && (
+        <>
+          <AddNotificationModal
+            value={""}
+            title={"Edit Remark"}
+            visible={visibleEdit}
+            loadingDeleteBet={loading}
+            setVisible={setVisibleEdit}
+            onDone={handleEditDeleteBetReason}
+            onClick={(e: any) => {
+              e.stopPropagation();
+              setVisibleEdit(false);
+              setMode({ type: "", value: false });
             }}
           />
         </>
@@ -679,10 +719,16 @@ const MatchDetail = () => {
               width: "100%",
             }}
           >
-            {mode && (
+            {mode.value && (
               <Box
                 onClick={() => {
-                  setMode(!mode);
+                  setMode((prev: any) => {
+                    return {
+                      ...prev,
+                      type: "",
+                      value: !mode.value,
+                    };
+                  });
                 }}
                 sx={{
                   width: "150px",
@@ -711,40 +757,100 @@ const MatchDetail = () => {
               </Box>
             )}
             <Box sx={{ width: "2%" }}></Box>
-            <Box
-              onClick={() => {
-                if (mode) {
-                  setVisible(true);
-                } else {
-                  setMode(!mode);
-                }
-              }}
-              sx={{
-                width: "150px",
-                marginY: ".75%",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "5px",
-                background: "#E32A2A",
-                height: "35px",
-                border: "1.5px solid white",
-                display: "flex",
-                alignSelf: "flex-end",
-                cursor: "pointer",
-              }}
-            >
-              <Typography
-                style={{
-                  fontWeight: "600",
-                  fontSize: "13px",
-                  color: "white",
-                  marginRight: "10px",
+            {mode?.type !== "edit" && (
+              <Box
+                onClick={() => {
+                  if (mode.value && mode?.type === "delete") {
+                    setVisible(true);
+                  } else {
+                    setMode((prev: any) => {
+                      return {
+                        ...prev,
+                        type: "delete",
+                        value: !mode.value,
+                      };
+                    });
+                  }
+                }}
+                sx={{
+                  width: "150px",
+                  marginY: ".75%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: "5px",
+                  background: "#E32A2A",
+                  height: "35px",
+                  border: "1.5px solid white",
+                  display: "flex",
+                  alignSelf: "flex-end",
+                  cursor: "pointer",
                 }}
               >
-                {!mode ? "Delete Bet" : "Delete"}
-              </Typography>
-              <img src={DeleteIcon} style={{ width: "17px", height: "20px" }} />
-            </Box>
+                <Typography
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "13px",
+                    color: "white",
+                    marginRight: "10px",
+                  }}
+                >
+                  {!mode.value ? "Delete Bet" : "Delete"}
+                </Typography>
+                <img
+                  src={DeleteIcon}
+                  style={{ width: "17px", height: "20px" }}
+                />
+              </Box>
+            )}
+            <Box sx={{ width: "2%" }}></Box>
+            {mode?.type !== "delete" && (
+              <Box
+                onClick={() => {
+                  if (mode.value && mode?.type === "edit") {
+                    setVisibleEdit(true);
+                  } else {
+                    setMode((prev: any) => {
+                      return {
+                        ...prev,
+                        type: "edit",
+                        value: !mode.value,
+                      };
+                    });
+                  }
+                }}
+                sx={{
+                  width: "150px",
+                  marginY: ".75%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: "5px",
+                  background: "#004A25",
+                  height: "35px",
+                  border: "1.5px solid white",
+                  display: "flex",
+                  alignSelf: "flex-end",
+                  cursor: "pointer",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "13px",
+                    color: "white",
+                    marginRight: "10px",
+                  }}
+                >
+                  {!mode.value ? "Edit Reason" : "Edit"}
+                </Typography>
+                <EditOutlinedIcon
+                  fontSize="small"
+                  sx={{
+                    color: "#FFFFFF",
+                    cursor: "pointer",
+                  }}
+                />
+              </Box>
+            )}
           </Box>
           {placedBets?.length > 0 && (
             <Box sx={{ mt: 0 }}>
