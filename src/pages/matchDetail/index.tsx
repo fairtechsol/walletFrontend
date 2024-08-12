@@ -313,6 +313,7 @@ const MatchDetail = () => {
         socketService.match.sessionResultOff();
         socketService.match.sessionResultUnDeclareOff();
         socketService.match.matchResultUnDeclaredOff();
+        socketService.match.updateDeleteReasonOff();
         socketService.match.joinMatchRoom(
           state?.matchId,
           profileDetail?.roleName
@@ -772,100 +773,104 @@ const MatchDetail = () => {
                 </Typography>
               </Box>
             )}
-            <Box sx={{ width: "2%" }}></Box>
             {mode?.type !== "edit" && (
-              <Box
-                onClick={() => {
-                  if (mode.value && mode?.type === "delete") {
-                    setVisible(true);
-                  } else {
-                    setMode((prev: any) => {
-                      return {
-                        ...prev,
-                        type: "delete",
-                        value: !mode.value,
-                      };
-                    });
-                  }
-                }}
-                sx={{
-                  width: "150px",
-                  marginY: ".75%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "#E32A2A",
-                  height: "35px",
-                  border: "1.5px solid white",
-                  display: "flex",
-                  alignSelf: "flex-end",
-                  cursor: "pointer",
-                }}
-              >
-                <Typography
-                  style={{
-                    fontWeight: "600",
-                    fontSize: "13px",
-                    color: "white",
-                    marginRight: "10px",
+              <>
+                <Box sx={{ width: "2%" }}></Box>
+                <Box
+                  onClick={() => {
+                    if (mode.value && mode?.type === "delete") {
+                      setVisible(true);
+                    } else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "delete",
+                          value: !mode.value,
+                        };
+                      });
+                    }
                   }}
-                >
-                  {!mode.value ? "Delete Bet" : "Delete"}
-                </Typography>
-                <img
-                  src={DeleteIcon}
-                  style={{ width: "17px", height: "20px" }}
-                />
-              </Box>
-            )}
-            <Box sx={{ width: "2%" }}></Box>
-            {mode?.type !== "delete" && (
-              <Box
-                onClick={() => {
-                  if (mode.value && mode?.type === "edit") {
-                    setVisibleEdit(true);
-                  } else {
-                    setMode((prev: any) => {
-                      return {
-                        ...prev,
-                        type: "edit",
-                        value: !mode.value,
-                      };
-                    });
-                  }
-                }}
-                sx={{
-                  width: "150px",
-                  marginY: ".75%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "#004A25",
-                  height: "35px",
-                  border: "1.5px solid white",
-                  display: "flex",
-                  alignSelf: "flex-end",
-                  cursor: "pointer",
-                }}
-              >
-                <Typography
-                  style={{
-                    fontWeight: "600",
-                    fontSize: "13px",
-                    color: "white",
-                    marginRight: "10px",
-                  }}
-                >
-                  {!mode.value ? "Edit Reason" : "Edit"}
-                </Typography>
-                <EditOutlinedIcon
-                  fontSize="small"
                   sx={{
-                    color: "#FFFFFF",
+                    width: "150px",
+                    marginY: ".75%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    background: "#E32A2A",
+                    height: "35px",
+                    border: "1.5px solid white",
+                    display: "flex",
+                    alignSelf: "flex-end",
                     cursor: "pointer",
                   }}
-                />
-              </Box>
+                >
+                  <Typography
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "13px",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {!mode.value ? "Delete Bet" : "Delete"}
+                  </Typography>
+                  <img
+                    src={DeleteIcon}
+                    style={{ width: "17px", height: "20px" }}
+                  />
+                </Box>
+              </>
+            )}
+            {mode?.type !== "delete" && (
+              <>
+                <Box sx={{ width: "2%" }}></Box>
+                <Box
+                  onClick={() => {
+                    if (mode.value && mode?.type === "edit") {
+                      setVisibleEdit(true);
+                    } else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "edit",
+                          value: !mode.value,
+                        };
+                      });
+                    }
+                  }}
+                  sx={{
+                    width: "150px",
+                    marginY: ".75%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    background: "#004A25",
+                    height: "35px",
+                    border: "1.5px solid white",
+                    display: "flex",
+                    alignSelf: "flex-end",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "13px",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {!mode.value ? "Edit Reason" : "Edit"}
+                  </Typography>
+                  <EditOutlinedIcon
+                    fontSize="small"
+                    sx={{
+                      color: "#FFFFFF",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Box>
+              </>
             )}
           </Box>
           {placedBets?.length > 0 && (
