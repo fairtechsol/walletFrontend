@@ -30,6 +30,7 @@ import {
   updateMaxLossForBetOnUndeclare,
   updateMaxLossForDeleteBet,
   updatePlacedbets,
+  updatePlacedbetsDeleteReason,
   updateProfitLoss,
   updateTeamRates,
   updateTeamRatesOnDelete,
@@ -98,6 +99,7 @@ const MatchDetail = () => {
   const handleEditDeleteBetReason = (value: any) => {
     try {
       let payload: any = {
+        matchId: state?.matchId,
         deleteReason: value,
         betData: {},
       };
@@ -157,6 +159,18 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+  const handleDeleteReasonUpdate = (event: any) => {
+    try {
+      setMode({ type: "", value: false });
+      if (event?.matchId === state?.matchId) {
+        setSelectedBetData([]);
+        dispatch(updatePlacedbetsDeleteReason(event));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleSessionDeleteBet = (event: any) => {
     try {
       setMode({ type: "", value: false });
@@ -318,6 +332,7 @@ const MatchDetail = () => {
           handleSessionResultUnDeclare
         );
         socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
+        socketService.match.updateDeleteReason(handleDeleteReasonUpdate);
       }
     } catch (e) {
       console.log(e);
@@ -337,6 +352,7 @@ const MatchDetail = () => {
       socketService.match.sessionResultOff();
       socketService.match.sessionResultUnDeclareOff();
       socketService.match.matchResultUnDeclaredOff();
+      socketService.match.updateDeleteReasonOff();
       dispatch(resetUserProfitLoss());
     };
   }, [state?.matchId]);
