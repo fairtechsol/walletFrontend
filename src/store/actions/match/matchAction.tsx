@@ -304,6 +304,12 @@ export const updatePlacedbets = createAsyncThunk<any, any>(
     return data;
   }
 );
+export const updatePlacedbetsDeleteReason = createAsyncThunk<any, any>(
+  "/maxLoss/updatePlacedbetsDeleteReason",
+  async (data) => {
+    return data;
+  }
+);
 
 export const setCurrentOdd = createAsyncThunk<any, any>(
   "update/currentOdd",
