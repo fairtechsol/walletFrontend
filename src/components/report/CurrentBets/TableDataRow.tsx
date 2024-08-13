@@ -63,6 +63,7 @@ const TableDataRow = (props: any) => {
             paddingLeft: "10px",
             paddingRight: "10px",
             alignItems: "center",
+            justifyContent: "center",
             height: "45px",
             borderRight: "2px solid white",
           },
@@ -89,6 +90,7 @@ const TableDataRow = (props: any) => {
           paddingLeft: "10px",
           background: flag ? "#ECECEC" : "#FFE094",
           alignItems: "center",
+          justifyContent: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
@@ -148,6 +150,7 @@ const TableDataRow = (props: any) => {
               ? "#A7DCFF"
               : "#FFB5B5",
           alignItems: "center",
+          justifyContent: "center",
           height: "45px",
           borderRight: "2px solid white",
         }}
@@ -277,6 +280,7 @@ const TableDataRow = (props: any) => {
           paddingLeft: "10px",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
           background: flag ? "#ECECEC" : "#FFE094",
@@ -312,6 +316,7 @@ const TableDataRow = (props: any) => {
           paddingLeft: "10px",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
           height: "45px",
           borderRight: "2px solid white",
           background: flag ? "#ECECEC" : "#FFE094",

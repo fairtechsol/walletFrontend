@@ -48,28 +48,26 @@ const SmallDropDown = ({ setPageLimit, pageLimit, setCurrentPage }: any) => {
             zIndex: 22,
           }}
         >
-          {Array.from({ length: 15 }, (_, i) => i + 1).map(
-            (item: any, idx: any) => {
-              return (
-                <>
-                  <Typography
-                    key={idx}
-                    onClick={() => {
-                      setPageLimit(+item);
-                      setCurrentPage(1);
-                      setOpen(false);
-                    }}
-                    sx={{ textAlign: "center", paddingY: "1px" }}
-                  >
-                    {item}
-                  </Typography>
-                  <Box
-                    sx={{ width: "100%", height: "1px", background: "#DEDEDE" }}
-                  ></Box>
-                </>
-              );
-            }
-          )}
+          {[5, 10, 15, 20, 50, 100].map((item: any, idx: any) => {
+            return (
+              <>
+                <Typography
+                  key={idx}
+                  onClick={() => {
+                    setPageLimit(+item);
+                    setCurrentPage(1);
+                    setOpen(false);
+                  }}
+                  sx={{ textAlign: "center", paddingY: "1px" }}
+                >
+                  {item}
+                </Typography>
+                <Box
+                  sx={{ width: "100%", height: "1px", background: "#DEDEDE" }}
+                ></Box>
+              </>
+            );
+          })}
         </Box>
       )}
     </Box>
