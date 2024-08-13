@@ -14,6 +14,7 @@ import {
   getPlacedBets,
   updateBetsPlaced,
   updatePlacedbets,
+  updatePlacedbetsDeleteReason,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
@@ -106,6 +107,16 @@ const MultipleMatchHorseRacing = () => {
     }
   };
 
+  const handleDeleteReasonUpdate = (event: any) => {
+    try {
+      if (state?.matchIds.includes(event?.matchId)) {
+        dispatch(updatePlacedbetsDeleteReason(event));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     if (
       multipleMatchDetail &&
@@ -141,6 +152,7 @@ const MultipleMatchHorseRacing = () => {
         socketService.match.matchResultDeclaredOff();
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
+        socketService.match.updateDeleteReasonOff();
         state?.matchIds?.map((item: any) => {
           socketService.match.joinMatchRoom(item, profileDetail?.roleName);
         });
@@ -153,6 +165,7 @@ const MultipleMatchHorseRacing = () => {
           matchMultiResultDeclared
         );
         socketService.match.matchDeleteBet(handleMultiMatchDeleteBet);
+        socketService.match.updateDeleteReason(handleDeleteReasonUpdate);
       }
     } catch (e) {
       console.log(e);
@@ -169,6 +182,7 @@ const MultipleMatchHorseRacing = () => {
       socketService.match.matchResultDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
       socketService.match.matchDeleteBetOff();
+      socketService.match.updateDeleteReasonOff();
     };
   }, []);
 

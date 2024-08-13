@@ -287,6 +287,7 @@ const RacingDetails = () => {
               setVisible(false);
               setMode({ type: "", value: false });
             }}
+            buttonText="Delete"
           />
         </>
       )}
@@ -304,6 +305,7 @@ const RacingDetails = () => {
               setVisibleEdit(false);
               setMode({ type: "", value: false });
             }}
+            buttonText="Edit"
           />
         </>
       )}
