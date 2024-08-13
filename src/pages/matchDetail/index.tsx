@@ -429,6 +429,7 @@ const MatchDetail = () => {
               setVisible(false);
               setMode({ type: "", value: false });
             }}
+            buttonText="Delete"
           />
         </>
       )}
@@ -446,6 +447,7 @@ const MatchDetail = () => {
               setVisibleEdit(false);
               setMode({ type: "", value: false });
             }}
+             buttonText="Edit"
           />
         </>
       )}
