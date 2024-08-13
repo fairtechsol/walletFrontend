@@ -447,7 +447,7 @@ const MatchDetail = () => {
               setVisibleEdit(false);
               setMode({ type: "", value: false });
             }}
-             buttonText="Edit"
+            buttonText="Edit"
           />
         </>
       )}

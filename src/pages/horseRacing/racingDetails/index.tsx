@@ -462,7 +462,7 @@ const RacingDetails = () => {
                       marginRight: "10px",
                     }}
                   >
-                    {!mode ? "Delete Bet" : "Delete"}
+                    {!mode.value ? "Delete Bet" : "Delete"}
                   </Typography>
                   <img
                     src={DeleteIcon}

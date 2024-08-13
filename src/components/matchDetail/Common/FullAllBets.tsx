@@ -15,6 +15,26 @@ const FullAllBets = (props: any) => {
   const [newData, setNewBets] = useState([]);
   const [visible, setVisible] = useState(true);
   const [selectedData, setSelectedData] = useState<any>([]);
+
+  const renderCheckBox = (isSelected: any) =>
+    isSelected ? (
+      <Box sx={{}}>
+        <img src={CHECK} style={{ width: "20px", height: "20px" }} />
+      </Box>
+    ) : (
+      <Box
+        sx={{
+          width: "15px",
+          height: "15px",
+          border: "1px solid white",
+          borderRadius: "10px",
+        }}
+      ></Box>
+    );
+
+  const shouldRenderCheckBox = (mode: any, values: any, selectedData: any) =>
+    mode?.value && selectedData.some((item: any) => item?.id === values[0]?.id);
+
   useEffect(() => {
     if (IObets) {
       // console.log("IObets", IObets);
@@ -368,29 +388,67 @@ const FullAllBets = (props: any) => {
                         {formattedNum}
                       </Typography>
                     )}
-                    {mode?.value &&
-                      !selectedData.some(
-                        (item: any) => item?.id === i?.values[0].id
-                      ) && (
-                        <Box
-                          sx={{
-                            width: "15px",
-                            height: "15px",
-                            border: "1px solid white",
-                            borderRadius: "10px",
-                          }}
-                        ></Box>
-                      )}
-                    {mode?.value &&
-                      selectedData.some(
-                        (item: any) => item?.id === i?.values[0].id
-                      ) && (
-                        <Box sx={{}}>
-                          <img
-                            src={CHECK}
-                            style={{ width: "20px", height: "20px" }}
-                          />
-                        </Box>
+                    {/* {mode?.type === "delete" && !i?.values[0]?.deleteReason && (
+                      <>
+                        {mode?.value &&
+                          !selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box
+                              sx={{
+                                width: "15px",
+                                height: "15px",
+                                border: "1px solid white",
+                                borderRadius: "10px",
+                              }}
+                            ></Box>
+                          )}
+                        {mode?.value &&
+                          selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box sx={{}}>
+                              <img
+                                src={CHECK}
+                                style={{ width: "20px", height: "20px" }}
+                              />
+                            </Box>
+                          )}
+                      </>
+                    )}
+                    {mode?.type === "edit" && i?.values[0]?.deleteReason && (
+                      <>
+                        {mode?.value &&
+                          !selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box
+                              sx={{
+                                width: "15px",
+                                height: "15px",
+                                border: "1px solid white",
+                                borderRadius: "10px",
+                              }}
+                            ></Box>
+                          )}
+                        {mode?.value &&
+                          selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box sx={{}}>
+                              <img
+                                src={CHECK}
+                                style={{ width: "20px", height: "20px" }}
+                              />
+                            </Box>
+                          )}
+                      </>
+                    )} */}
+                    {((mode?.type === "delete" &&
+                      !i?.values[0]?.deleteReason) ||
+                      (mode?.type === "edit" && i?.values[0]?.deleteReason)) &&
+                      renderCheckBox(
+                        shouldRenderCheckBox(mode, i?.values, selectedData)
                       )}
                   </Box>
                   <Row index={k} values={i.values} />
