@@ -9,6 +9,7 @@ import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLo
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { socket, socketService } from "../../../socketManager";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -18,10 +19,12 @@ import {
 } from "../../../store/actions/horseRacing/horseMatchDetailActions";
 import {
   AllBetDelete,
+  editBetDeleteReason,
   getPlacedBets,
   resetSessionProLoss,
   updateBetsPlaced,
   updatePlacedbets,
+  updatePlacedbetsDeleteReason,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
@@ -35,8 +38,9 @@ const RacingDetails = () => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
-  const [mode, setMode] = useState(false);
+  const [mode, setMode] = useState({ type: "", value: false });
   const [visible, setVisible] = useState(false);
+  const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
@@ -83,6 +87,28 @@ const RacingDetails = () => {
     }
   };
 
+  const handleEditDeleteBetReason = (value: any) => {
+    try {
+      let payload: any = {
+        matchId: id,
+        deleteReason: value,
+        betData: {},
+      };
+      selectedBetData.forEach((item: any) => {
+        const { domain } = item;
+
+        if (!payload.betData[domain]) {
+          payload.betData[domain] = [];
+        }
+
+        payload.betData[domain].push(item.id);
+      });
+      dispatch(editBetDeleteReason(payload));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const updateMatchDetailToRedux = (event: any) => {
     try {
       if (id === event?.id) {
@@ -105,11 +131,23 @@ const RacingDetails = () => {
 
   const matchDeleteBet = (event: any) => {
     try {
-      setMode(false);
+      setMode({ type: "", value: false });
       if (event?.matchId === id) {
         setSelectedBetData([]);
         dispatch(updatePlacedbets(event));
         dispatch(updateTeamRatesForHorseRacingOnDelete(event));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeleteReasonUpdate = (event: any) => {
+    try {
+      setMode({ type: "", value: false });
+      if (event?.matchId === id) {
+        setSelectedBetData([]);
+        dispatch(updatePlacedbetsDeleteReason(event));
       }
     } catch (e) {
       console.log(e);
@@ -165,12 +203,14 @@ const RacingDetails = () => {
         socketService.match.matchResultDeclaredOff();
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
+        socketService.match.updateDeleteReasonOff();
         socketService.match.joinMatchRoom(id, profileDetail?.roleName);
         socketService.match.getMatchRates(id, updateMatchDetailToRedux);
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);
         socketService.match.declaredMatchResultAllUser(matchResultDeclared);
         socketService.match.matchDeleteBet(matchDeleteBet);
+        socketService.match.updateDeleteReason(handleDeleteReasonUpdate);
       }
     } catch (e) {
       console.log(e);
@@ -185,6 +225,7 @@ const RacingDetails = () => {
       socketService.match.matchResultDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
       socketService.match.matchDeleteBetOff();
+      socketService.match.updateDeleteReasonOff();
     };
   }, [id]);
 
@@ -244,8 +285,27 @@ const RacingDetails = () => {
             onClick={(e: any) => {
               e.stopPropagation();
               setVisible(false);
-              setMode(false);
+              setMode({ type: "", value: false });
             }}
+            buttonText="Delete"
+          />
+        </>
+      )}
+      {visibleEdit && selectedBetData.length > 0 && (
+        <>
+          <AddNotificationModal
+            value={""}
+            title={"Edit Remark"}
+            visible={visibleEdit}
+            loadingDeleteBet={loading}
+            setVisible={setVisibleEdit}
+            onDone={handleEditDeleteBetReason}
+            onClick={(e: any) => {
+              e.stopPropagation();
+              setVisibleEdit(false);
+              setMode({ type: "", value: false });
+            }}
+            buttonText="Edit"
           />
         </>
       )}
@@ -326,10 +386,16 @@ const RacingDetails = () => {
               width: "100%",
             }}
           >
-            {mode && (
+            {mode.value && (
               <Box
                 onClick={() => {
-                  setMode(!mode);
+                  setMode((prev: any) => {
+                    return {
+                      ...prev,
+                      type: "",
+                      value: !mode.value,
+                    };
+                  });
                 }}
                 sx={{
                   width: "150px",
@@ -357,41 +423,105 @@ const RacingDetails = () => {
                 </Typography>
               </Box>
             )}
-            <Box sx={{ width: "2%" }}></Box>
-            <Box
-              onClick={() => {
-                if (mode) {
-                  setVisible(true);
-                } else {
-                  setMode(!mode);
-                }
-              }}
-              sx={{
-                width: "150px",
-                marginY: ".75%",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "5px",
-                background: "#E32A2A",
-                height: "35px",
-                border: "1.5px solid white",
-                display: "flex",
-                alignSelf: "flex-end",
-                cursor: "pointer",
-              }}
-            >
-              <Typography
-                style={{
-                  fontWeight: "600",
-                  fontSize: "13px",
-                  color: "white",
-                  marginRight: "10px",
-                }}
-              >
-                {!mode ? "Delete Bet" : "Delete"}
-              </Typography>
-              <img src={DeleteIcon} style={{ width: "17px", height: "20px" }} />
-            </Box>
+            {mode?.type !== "edit" && (
+              <>
+                <Box sx={{ width: "2%" }}></Box>
+                <Box
+                  onClick={() => {
+                    if (mode.value && mode?.type === "delete") {
+                      setVisible(true);
+                    } else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "delete",
+                          value: !mode.value,
+                        };
+                      });
+                    }
+                  }}
+                  sx={{
+                    width: "150px",
+                    marginY: ".75%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    background: "#E32A2A",
+                    height: "35px",
+                    border: "1.5px solid white",
+                    display: "flex",
+                    alignSelf: "flex-end",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "13px",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {!mode.value ? "Delete Bet" : "Delete"}
+                  </Typography>
+                  <img
+                    src={DeleteIcon}
+                    style={{ width: "17px", height: "20px" }}
+                  />
+                </Box>
+              </>
+            )}
+            {mode?.type !== "delete" && (
+              <>
+                <Box sx={{ width: "2%" }}></Box>
+                <Box
+                  onClick={() => {
+                    if (mode.value && mode?.type === "edit") {
+                      setVisibleEdit(true);
+                    } else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "edit",
+                          value: !mode.value,
+                        };
+                      });
+                    }
+                  }}
+                  sx={{
+                    width: "150px",
+                    marginY: ".75%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    background: "#004A25",
+                    height: "35px",
+                    border: "1.5px solid white",
+                    display: "flex",
+                    alignSelf: "flex-end",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "13px",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {!mode.value ? "Edit Reason" : "Edit"}
+                  </Typography>
+                  <EditOutlinedIcon
+                    fontSize="small"
+                    sx={{
+                      color: "#FFFFFF",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Box>
+              </>
+            )}
           </Box>
           {placedBets?.length > 0 && (
             <Box sx={{ mt: 0 }}>

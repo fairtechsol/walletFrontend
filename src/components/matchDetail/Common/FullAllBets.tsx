@@ -15,6 +15,26 @@ const FullAllBets = (props: any) => {
   const [newData, setNewBets] = useState([]);
   const [visible, setVisible] = useState(true);
   const [selectedData, setSelectedData] = useState<any>([]);
+
+  const renderCheckBox = (isSelected: any) =>
+    isSelected ? (
+      <Box sx={{}}>
+        <img src={CHECK} style={{ width: "20px", height: "20px" }} />
+      </Box>
+    ) : (
+      <Box
+        sx={{
+          width: "15px",
+          height: "15px",
+          border: "1px solid white",
+          borderRadius: "10px",
+        }}
+      ></Box>
+    );
+
+  const shouldRenderCheckBox = (mode: any, values: any, selectedData: any) =>
+    mode?.value && selectedData.some((item: any) => item?.id === values[0]?.id);
+
   useEffect(() => {
     if (IObets) {
       // console.log("IObets", IObets);
@@ -158,7 +178,7 @@ const FullAllBets = (props: any) => {
     if (setSelectedBetData !== undefined) {
       setSelectedBetData([]);
     }
-  }, [mode]);
+  }, [mode?.value]);
 
   return (
     <Box
@@ -271,7 +291,7 @@ const FullAllBets = (props: any) => {
       </Box>
       {visible && (
         <>
-          <HeaderRow mode={mode} tag={tag} />
+          <HeaderRow mode={mode?.value} tag={tag} />
           <div
             className="myScroll"
             style={{ maxHeight: "80vh", overflowY: "auto" }}
@@ -300,32 +320,55 @@ const FullAllBets = (props: any) => {
                       x = updatedX;
                       setSelectedData(updatedX);
                     } else {
-                      if (!i?.values[0].deleteReason) {
-                        setSelectedBetData([
-                          ...selectedBetData,
-                          {
+                      if (mode?.type == "edit") {
+                        if (i?.values[0].deleteReason) {
+                          setSelectedBetData([
+                            ...selectedBetData,
+                            {
+                              id: i?.values[0].id,
+                              betId: i?.values[0].betId,
+                              matchId: i?.values[0].matchId,
+                              userId: i?.values[0].userId,
+                              domain: i?.values[0].domain,
+                            },
+                          ]);
+                          x.push({
                             id: i?.values[0].id,
                             betId: i?.values[0].betId,
                             matchId: i?.values[0].matchId,
                             userId: i?.values[0].userId,
                             domain: i?.values[0].domain,
-                          },
-                        ]);
-                        x.push({
-                          id: i?.values[0].id,
-                          betId: i?.values[0].betId,
-                          matchId: i?.values[0].matchId,
-                          userId: i?.values[0].userId,
-                          domain: i?.values[0].domain,
-                        });
-                        setSelectedData([...x]);
+                          });
+                          setSelectedData([...x]);
+                        }
+                      } else if (mode?.type === "delete") {
+                        if (!i?.values[0].deleteReason) {
+                          setSelectedBetData([
+                            ...selectedBetData,
+                            {
+                              id: i?.values[0].id,
+                              betId: i?.values[0].betId,
+                              matchId: i?.values[0].matchId,
+                              userId: i?.values[0].userId,
+                              domain: i?.values[0].domain,
+                            },
+                          ]);
+                          x.push({
+                            id: i?.values[0].id,
+                            betId: i?.values[0].betId,
+                            matchId: i?.values[0].matchId,
+                            userId: i?.values[0].userId,
+                            domain: i?.values[0].domain,
+                          });
+                          setSelectedData([...x]);
+                        }
                       }
                     }
                   }}
                 >
                   <Box
                     sx={{
-                      width: mode ? "7%" : "5.3%",
+                      width: mode?.value ? "7%" : "5.3%",
                       border: "1px solid white",
                       background: "black",
                       height: "35px",
@@ -334,7 +377,7 @@ const FullAllBets = (props: any) => {
                       display: "flex",
                     }}
                   >
-                    {!mode && (
+                    {!mode?.value && (
                       <Typography
                         sx={{
                           fontSize: !tag ? { xs: "8px", lg: "11px" } : "13px",
@@ -345,29 +388,67 @@ const FullAllBets = (props: any) => {
                         {formattedNum}
                       </Typography>
                     )}
-                    {mode &&
-                      !selectedData.some(
-                        (item: any) => item?.id === i?.values[0].id
-                      ) && (
-                        <Box
-                          sx={{
-                            width: "15px",
-                            height: "15px",
-                            border: "1px solid white",
-                            borderRadius: "10px",
-                          }}
-                        ></Box>
-                      )}
-                    {mode &&
-                      selectedData.some(
-                        (item: any) => item?.id === i?.values[0].id
-                      ) && (
-                        <Box sx={{}}>
-                          <img
-                            src={CHECK}
-                            style={{ width: "20px", height: "20px" }}
-                          />
-                        </Box>
+                    {/* {mode?.type === "delete" && !i?.values[0]?.deleteReason && (
+                      <>
+                        {mode?.value &&
+                          !selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box
+                              sx={{
+                                width: "15px",
+                                height: "15px",
+                                border: "1px solid white",
+                                borderRadius: "10px",
+                              }}
+                            ></Box>
+                          )}
+                        {mode?.value &&
+                          selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box sx={{}}>
+                              <img
+                                src={CHECK}
+                                style={{ width: "20px", height: "20px" }}
+                              />
+                            </Box>
+                          )}
+                      </>
+                    )}
+                    {mode?.type === "edit" && i?.values[0]?.deleteReason && (
+                      <>
+                        {mode?.value &&
+                          !selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box
+                              sx={{
+                                width: "15px",
+                                height: "15px",
+                                border: "1px solid white",
+                                borderRadius: "10px",
+                              }}
+                            ></Box>
+                          )}
+                        {mode?.value &&
+                          selectedData.some(
+                            (item: any) => item?.id === i?.values[0].id
+                          ) && (
+                            <Box sx={{}}>
+                              <img
+                                src={CHECK}
+                                style={{ width: "20px", height: "20px" }}
+                              />
+                            </Box>
+                          )}
+                      </>
+                    )} */}
+                    {((mode?.type === "delete" &&
+                      !i?.values[0]?.deleteReason) ||
+                      (mode?.type === "edit" && i?.values[0]?.deleteReason)) &&
+                      renderCheckBox(
+                        shouldRenderCheckBox(mode, i?.values, selectedData)
                       )}
                   </Box>
                   <Row index={k} values={i.values} />
@@ -654,24 +735,36 @@ const LargeBox = ({ item, k }: any) => {
     >
       <Typography
         sx={{
-          fontSize: matchesMobile ? "8px" : ".6vw",
+          fontSize: matchesMobile ? "8px" : "8px",
           fontWeight: "600",
           color: item?.color,
           textTransform: "capitalize",
           wordWrap: "break-word",
           textAlign: "center",
           lineHeight: 1,
-          whiteSpace: { xs: "nowrap", lg: "inherit" },
+          overflowWrap: "anywhere",
+          whiteSpace: "inherit",
           textOverflow: "ellipsis",
-          maxWidth: { xs: "43px", lg: "initial" },
+          maxWidth: { xs: "auto", lg: "initial" },
+          // padding: "5px",
         }}
       >
         {item?.name}
+        <Typography
+          sx={{
+            fontSize: matchesMobile ? "8px" : "8px",
+            textTransform: "none",
+            overflow: "wrap",
+            lineHeight: 1,
+          }}
+        >
+          {item?.domain?.replace(/https?:\/\//, "")}
+        </Typography>
       </Typography>
       {item?.time && (
         <Typography
           sx={{
-            fontSize: matchesMobile ? "8px" : ".6vw",
+            fontSize: matchesMobile ? "8px" : "10px",
             fontWeight: "600",
             color: item?.color,
           }}

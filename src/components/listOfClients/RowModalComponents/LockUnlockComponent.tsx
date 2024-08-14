@@ -134,10 +134,10 @@ const LockUnlockComponent = (props: any) => {
               overflow: "hidden",
             }}
           >
-            <Typography
+               <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
-                width: { xs: "100%", lg: "35%", md: "35%" },
+                width: { xs: "100%", lg: "15%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
 
@@ -147,9 +147,10 @@ const LockUnlockComponent = (props: any) => {
             >
               Dummy
             </Typography>
-            <Box
+         
+            {/* <Box
               sx={{
-                width: { xs: "100%", lg: "65%", md: "65%" },
+                width: { xs: "100%", lg: "63%", md: "65%" },
                 height: "45px",
                 // background: "white",
                 display: "flex",
@@ -158,8 +159,8 @@ const LockUnlockComponent = (props: any) => {
                 // border: "2px solid #26262633",
                 // paddingX: "20px",
               }}
-            >
-              <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>
+            > */}
+              <Box sx={{ width: "50%", display: "flex", alignItems: "center" }}>
                 <BoxButtonWithSwitch
                   title={"User"}
                   name={"all_blocked"}
@@ -171,7 +172,7 @@ const LockUnlockComponent = (props: any) => {
               </Box>
               <Box
                 sx={{
-                  width: "48%",
+                  width: "50%",
                   display: "flex",
                   alignItems: "center",
                   marginLeft: "20px",
@@ -187,7 +188,7 @@ const LockUnlockComponent = (props: any) => {
                 />
               </Box>
             </Box>
-          </Box>
+          {/* </Box> */}
           <Box
             sx={{
               display: "flex",
@@ -202,7 +203,7 @@ const LockUnlockComponent = (props: any) => {
             <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
-                width: { xs: "100%", lg: "35%", md: "35%" },
+                // width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
               }}
@@ -211,7 +212,7 @@ const LockUnlockComponent = (props: any) => {
             </Typography>
             <Box
               sx={{
-                width: { xs: "100%", lg: "65%", md: "65%" },
+                width: { xs: "100%", lg: "86%", md: "65%" },
                 height: "45px",
                 background: "white",
                 display: "flex",
@@ -257,6 +258,7 @@ const LockUnlockComponent = (props: any) => {
         <Box
           sx={{
             display: "flex",
+            marginRight: "14px",
             flexDirection: {
               xs: "row-reverse",
               md: "column-reverse",

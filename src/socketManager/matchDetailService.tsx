@@ -61,6 +61,9 @@ export const matchSocketService = {
   sessionResultUnDeclare: (callback: any) => {
     socket?.on("sessionResultUnDeclare", callback);
   },
+  updateDeleteReason: (callback: any) => {
+    socket?.on("updateDeleteReason", callback);
+  },
   sessionResultUnDeclareOff: () => {
     socket?.off("sessionResultUnDeclare");
   },
@@ -99,5 +102,8 @@ export const matchSocketService = {
   },
   getMatchRatesOff: (matchId: any) => {
     thirdParty?.off(`liveData${matchId}`);
+  },
+  updateDeleteReasonOff: () => {
+    socket?.off("updateDeleteReason");
   },
 };

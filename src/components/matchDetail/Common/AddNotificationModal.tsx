@@ -10,6 +10,7 @@ const AddNotificationModal = ({
   title,
   onDone,
   loadingDeleteBet,
+  buttonText,
 }: any) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
@@ -48,7 +49,7 @@ const AddNotificationModal = ({
         <form onSubmit={handleDone}>
           <Box
             sx={{
-              width: {lg:"500px", xs: "20rem"},
+              width: { lg: "500px", xs: "20rem" },
               height: "270px",
               padding: 0.2,
               borderRadius: 2,
@@ -147,14 +148,14 @@ const AddNotificationModal = ({
               }}
             >
               <DeleteBetButton
-                type={"submit"}
+                type="submit"
                 loading={loadingDeleteBet}
                 buttonStyle={{
                   backgroundColor: "#0B4F26",
                   color: "white",
                   "&:hover": { backgroundColor: "#0B4F26" },
                 }}
-                title={"Delete"}
+                title={buttonText}
               />
             </Box>
           </Box>

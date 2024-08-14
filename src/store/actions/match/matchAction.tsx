@@ -182,6 +182,23 @@ export const AllBetDelete = createAsyncThunk<any, any>(
     }
   }
 );
+export const editBetDeleteReason = createAsyncThunk<any, any>(
+  "bet/allBetDeleteReason",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.post(
+        ApiConstants.USER.CHANGE_DELETE_REASON,
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
 
 export const updateMatchListRates = createAsyncThunk<any, any>(
   "/matchList/rates",
@@ -283,6 +300,12 @@ export const getSessionProfitLossMatchDetailFilter = createAsyncThunk<any, any>(
 );
 export const updatePlacedbets = createAsyncThunk<any, any>(
   "/maxLoss/updatePlacedbets",
+  async (data) => {
+    return data;
+  }
+);
+export const updatePlacedbetsDeleteReason = createAsyncThunk<any, any>(
+  "/maxLoss/updatePlacedbetsDeleteReason",
   async (data) => {
     return data;
   }

@@ -8,6 +8,7 @@ const TableHeaderList = () => {
         height: "35px",
         background: "#262626",
         alignItems: "center",
+        justifyContent: "center",
         width: { xs: "222vw", md: "100%", lg: "100%" },
         borderTop: "2px solid white",
         borderBottom: "2px solid white",
@@ -19,6 +20,7 @@ const TableHeaderList = () => {
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
+          justifyContent: "center",
           height: "35px",
           borderRight: "2px solid white",
         }}
@@ -31,6 +33,7 @@ const TableHeaderList = () => {
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
+          justifyContent: "center",
           height: "35px",
           borderRight: "2px solid white",
         }}
@@ -45,6 +48,7 @@ const TableHeaderList = () => {
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
+          justifyContent: "center",
           height: "35px",
           borderRight: "2px solid white",
         }}
@@ -57,6 +61,7 @@ const TableHeaderList = () => {
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
+          justifyContent: "center",
           height: "35px",
           borderRight: "2px solid white",
         }}
@@ -71,6 +76,7 @@ const TableHeaderList = () => {
           display: "flex",
           paddingLeft: "10px",
           alignItems: "center",
+          justifyContent: "center",
           height: "35px",
           borderRight: "2px solid white",
         }}

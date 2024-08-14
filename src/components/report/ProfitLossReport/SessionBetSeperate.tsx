@@ -1,4 +1,4 @@
-import { Box, Typography,useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
@@ -146,7 +146,7 @@ const SessionBetSeperate = ({
                       color: "white",
                     }}
                   >
-                {matchesMobile ? "P/L" : "Profit Loss"}
+                    {matchesMobile ? "P/L" : "Profit Loss"}
                   </Typography>
                 </Box>
               )}
@@ -445,7 +445,9 @@ const RowComponent = ({ header, data }: any) => {
           <SingleBox
             color={getColor()}
             data={data?.username || data?.userName || data?.user?.userName}
+            isPercent={true}
             header={header}
+            rate={data?.domain}
           />
           <SingleBox
             color={getColor()}
@@ -497,8 +499,8 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: "#F8C851",
-          display: {xs: "initial",lg:"flex"},
-          justifyContent:{ lg:"center", xs: "initial"},
+          display: { xs: "initial", lg: "flex" },
+          justifyContent: { lg: "center", xs: "initial" },
         }}
       >
         <Typography
@@ -620,7 +622,7 @@ const SingleBox = ({
           fontSize: "11px",
           color: "white",
           wordWrap: "break-word",
-          lineHeight: "0.9"
+          lineHeight: "0.9",
         }}
       >
         {data}

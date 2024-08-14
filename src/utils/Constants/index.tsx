@@ -1,13 +1,19 @@
 import {
+  AmarAkbarAnthony,
   AndarBahar2,
+  Baccarat,
+  BollywoodCasino,
   CasinoWar,
   Cricket,
+  CriketMatch2020,
   DragonTiger20,
   Five5,
   Football,
   GreyHound,
   HorseRacing,
+  InstantWorli,
   Lucky7A,
+  Poker,
   Race2020,
   SuperOver,
   TeenPatti1Day,
@@ -53,6 +59,7 @@ export const ApiConstants = {
     USER_DETAIL_FOR_PARENT: "/user/getUserDetailsForParent",
     USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
     USER_CHECK_CHILD_ACTIVATE: "match/check/lock",
+    CHANGE_DELETE_REASON: "/bet/change/deleteReason",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
@@ -274,6 +281,17 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.cricketv3]: Five5,
   [cardGamesTypeConstants.card32B]: Thirty2CardsA,
   [cardGamesTypeConstants.war]: CasinoWar,
+  [cardGamesTypeConstants.poker]: Poker,
+  [cardGamesTypeConstants.poker6]: Poker,
+  [cardGamesTypeConstants.poker20]: Poker,
+  [cardGamesTypeConstants.teen9]: Teenpatti20,
+  [cardGamesTypeConstants.cmatch20]: CriketMatch2020,
+  [cardGamesTypeConstants.aaa]: AmarAkbarAnthony,
+  [cardGamesTypeConstants.btable]: BollywoodCasino,
+  [cardGamesTypeConstants.worli2]: InstantWorli,
+  [cardGamesTypeConstants["3cardj"]]: Race2020,
+  [cardGamesTypeConstants.baccarat]: Baccarat,
+  [cardGamesTypeConstants.baccarat2]: Baccarat,
 };
 
 export const profitLossDataForMatchConstants = {
@@ -359,33 +377,33 @@ export const profitLossDataForMatchConstants = {
 
 // use below baseUrl for testing build
 
-// export const baseUrls = {
-//   socket:
-//     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.apiBasePath
-//       : Constants.localPath,
-//   thirdParty:
-//     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.thirdParty
-//       : Constants.localPathThird,
-//   expertSocket:
-//     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.expertPath
-//       : Constants.localPathExpert,
-// };
-
-// use below baseUrl for live build
 export const baseUrls = {
   socket:
     process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.apiBasePathLive
+      ? Constants.apiBasePath
       : Constants.localPath,
   thirdParty:
     process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.thirdPartyLive
+      ? Constants.thirdParty
       : Constants.localPathThird,
   expertSocket:
     process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.expertPathLive
+      ? Constants.expertPath
       : Constants.localPathExpert,
 };
+
+// use below baseUrl for live build
+// export const baseUrls = {
+//   socket:
+//     process.env.NODE_ENV === Constants.PRODUCTION
+//       ? Constants.apiBasePathLive
+//       : Constants.localPath,
+//   thirdParty:
+//     process.env.NODE_ENV === Constants.PRODUCTION
+//       ? Constants.thirdPartyLive
+//       : Constants.localPathThird,
+//   expertSocket:
+//     process.env.NODE_ENV === Constants.PRODUCTION
+//       ? Constants.expertPathLive
+//       : Constants.localPathExpert,
+// };
