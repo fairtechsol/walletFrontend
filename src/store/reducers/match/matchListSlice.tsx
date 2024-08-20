@@ -129,6 +129,7 @@ const matchListSlice = createSlice({
           firstHalfGoal,
           halfTime,
           overUnder,
+          completeManual,
         } = action?.payload;
         state.matchDetail = {
           ...state.matchDetail,
@@ -146,6 +147,7 @@ const matchListSlice = createSlice({
           firstHalfGoal,
           halfTime,
           overUnder,
+          manualCompleteMatch: completeManual,
         };
       })
       .addCase(matchListReset, (state) => {
