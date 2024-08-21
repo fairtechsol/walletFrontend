@@ -117,7 +117,7 @@ const TableDataRow = (props: any) => {
           justifyContent: "center",
           height: "45px",
           borderRight: "2px solid white",
-          flexDirection: "column",
+          flexDirection: "column"
         }}
       >
         <Typography
@@ -134,9 +134,11 @@ const TableDataRow = (props: any) => {
             fontSize: { xs: "9px", md: "9px", lg: "10px" },
             fontWeight: "600",
             color: "black",
+            overflowWrap: "anywhere",
+            paddingX: "5px"
           }}
         >
-          {data?.domain}
+          {data?.domain?.replace(/https?:\/\//, '')}
         </Typography>
       </Box>
       <Box
