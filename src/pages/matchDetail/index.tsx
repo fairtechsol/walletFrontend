@@ -412,7 +412,7 @@ const MatchDetail = () => {
       return str;
     }
   };
-  console.log("match", matchDetail);
+  
   return (
     <>
       {visible && selectedBetData.length > 0 && (
