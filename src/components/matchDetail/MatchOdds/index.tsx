@@ -306,7 +306,7 @@ const MatchOdds = (props: any) => {
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
                   name={
-                    typeOfBet !== "Manual Tied Match"
+                    typeOfBet !== "Manual Tied Match" && typeOfBet !== "Complete Manual"
                       ? currentMatch?.teamA
                       : "Yes"
                   }
@@ -348,7 +348,7 @@ const MatchOdds = (props: any) => {
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
                   name={
-                    typeOfBet !== "Manual Tied Match"
+                    typeOfBet !== "Manual Tied Match" && typeOfBet !== "Complete Manual"
                       ? currentMatch?.teamB
                       : "No"
                   }
@@ -386,7 +386,7 @@ const MatchOdds = (props: any) => {
                   status={data?.statusTeamB !== "active" ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
-                {currentMatch?.teamC && typeOfBet !== "Manual Tied Match" ? (
+                {currentMatch?.teamC && typeOfBet !== "Manual Tied Match" && typeOfBet !== "Complete Manual" ? (
                   <>
                     <Divider />
                     <TeamRowComponent
@@ -754,7 +754,8 @@ const MatchOdds = (props: any) => {
                 {currentMatch?.teamC &&
                 typeOfBet !== "Tied Match" &&
                 typeOfBet !== "Manual Tied Match" &&
-                typeOfBet !== "Market Complete Match" ? (
+                typeOfBet !== "Market Complete Match" 
+                && typeOfBet !== "Complete Manual"? (
                   <>
                     <Divider />
                     <BoxComponent

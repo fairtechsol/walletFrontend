@@ -412,7 +412,7 @@ const MatchDetail = () => {
       return str;
     }
   };
-
+  
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -638,6 +638,19 @@ const MatchDetail = () => {
               }
             />
           )}
+
+          {matchDetail?.manualCompleteMatch?.isActive && (
+            <MatchOdds
+            typeOfBet={"Complete Manual"}
+            data={matchDetail?.manualCompleteMatch}
+            currentMatch={matchDetail}
+            session={"manualBookMaker"}
+            minBet={Math.floor(matchDetail?.manualCompleteMatch?.minBet)}
+            maxBet={Math.floor(matchDetail?.manualCompleteMatch?.maxBet)}
+            liveData={matchDetail?.manualCompleteMatch}
+            />
+          )}
+
           {matchDetail?.manualSessionActive &&
             matchesMobile &&
             matchDetail?.sessionBettings?.filter(

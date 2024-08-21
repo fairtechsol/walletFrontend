@@ -156,6 +156,7 @@ const MatchListComponent = (props: any) => {
           height: "55px",
           flexDirection: { xs: "column", lg: "row" },
           marginX: ".5%",
+          
         }}
       >
         <Box sx={{ display: "flex", width: "100%", position: "relative" }}>

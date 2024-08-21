@@ -272,6 +272,7 @@ const Analysis = () => {
           <>
             {analysisList?.matches?.map((match: any) => {
               return (
+                <div style={{marginTop:"15px"}}>
                 <MatchListComponent
                   key={match?.id}
                   data={match}
@@ -281,8 +282,10 @@ const Analysis = () => {
                   team={match?.teamA}
                   team2={match?.teamB}
                 />
+                </div>
               );
             })}
+            <div style={{marginTop:"15px"}}>
             <Pagination
               page={currentPage}
               className={`${classes.whiteTextPagination} d-flex justify-content-center`}
@@ -295,6 +298,7 @@ const Analysis = () => {
                 setCurrentPage(value);
               }}
             />
+            </div>
           </>
         ) : (
           <Table>
