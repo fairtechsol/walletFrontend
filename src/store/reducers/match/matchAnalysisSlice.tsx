@@ -82,6 +82,7 @@ const analysisListSlice = createSlice({
                 firstHalfGoal,
                 halfTime,
                 overUnder,
+                completeManual,
               } = action?.payload;
               return {
                 ...match,
@@ -97,6 +98,7 @@ const analysisListSlice = createSlice({
                 firstHalfGoal,
                 halfTime,
                 overUnder,
+                manualCompleteMatch: completeManual,
               };
             } else {
               return match;
