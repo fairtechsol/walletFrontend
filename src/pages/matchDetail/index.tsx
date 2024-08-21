@@ -412,7 +412,7 @@ const MatchDetail = () => {
       return str;
     }
   };
-  
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -641,13 +641,13 @@ const MatchDetail = () => {
 
           {matchDetail?.manualCompleteMatch?.isActive && (
             <MatchOdds
-            typeOfBet={"Complete Manual"}
-            data={matchDetail?.manualCompleteMatch}
-            currentMatch={matchDetail}
-            session={"manualBookMaker"}
-            minBet={Math.floor(matchDetail?.manualCompleteMatch?.minBet)}
-            maxBet={Math.floor(matchDetail?.manualCompleteMatch?.maxBet)}
-            liveData={matchDetail?.manualCompleteMatch}
+              typeOfBet={"Manual Complete Match"}
+              data={matchDetail?.manualCompleteMatch}
+              currentMatch={matchDetail}
+              session={"manualBookMaker"}
+              minBet={Math.floor(matchDetail?.manualCompleteMatch?.minBet)}
+              maxBet={Math.floor(matchDetail?.manualCompleteMatch?.maxBet)}
+              liveData={matchDetail?.manualCompleteMatch}
             />
           )}
 
@@ -943,6 +943,17 @@ const MatchDetail = () => {
                 minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
                 maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
                 liveData={matchDetail?.manualTiedMatch}
+              />
+            )}
+            {matchDetail?.manualCompleteMatch?.isActive && (
+              <MatchOdds
+                typeOfBet={"Manual Complete Match"}
+                currentMatch={matchDetail}
+                session={"manualBookMaker"}
+                data={matchDetail?.manualCompleteMatch}
+                minBet={Math.floor(matchDetail?.manualCompleteMatch?.minBet)}
+                maxBet={Math.floor(matchDetail?.manualCompleteMatch?.maxBet)}
+                liveData={matchDetail?.manualCompleteMatch}
               />
             )}
             <Box sx={{ width: "150px", height: "3px" }}></Box>

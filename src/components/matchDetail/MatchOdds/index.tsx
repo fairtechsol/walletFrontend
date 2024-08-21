@@ -116,11 +116,7 @@ const MatchOdds = (props: any) => {
           </Typography>
           {blockMatch && (
             <img
-              onClick={() =>
-                selft 
-                  ? handleShowLock(true, typeOfBet)
-                  : ""
-              }
+              onClick={() => (selft ? handleShowLock(true, typeOfBet) : "")}
               src={locked ? LOCKED : LOCKOPEN}
               style={{ width: "14px", height: "20px" }}
             />
@@ -306,7 +302,8 @@ const MatchOdds = (props: any) => {
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
                   name={
-                    typeOfBet !== "Manual Tied Match" && typeOfBet !== "Complete Manual"
+                    typeOfBet !== "Manual Tied Match" &&
+                    typeOfBet !== "Manual Complete Match"
                       ? currentMatch?.teamA
                       : "Yes"
                   }
@@ -348,7 +345,8 @@ const MatchOdds = (props: any) => {
                 <TeamRowComponent
                   // teamImage={currentMatch?.teamA_Image}
                   name={
-                    typeOfBet !== "Manual Tied Match" && typeOfBet !== "Complete Manual"
+                    typeOfBet !== "Manual Tied Match" &&
+                    typeOfBet !== "Manual Complete Match"
                       ? currentMatch?.teamB
                       : "No"
                   }
@@ -386,7 +384,9 @@ const MatchOdds = (props: any) => {
                   status={data?.statusTeamB !== "active" ? true : false}
                   isTeamC={currentMatch?.teamC}
                 />
-                {currentMatch?.teamC && typeOfBet !== "Manual Tied Match" && typeOfBet !== "Complete Manual" ? (
+                {currentMatch?.teamC &&
+                typeOfBet !== "Manual Tied Match" &&
+                typeOfBet !== "Manual Complete Match" ? (
                   <>
                     <Divider />
                     <TeamRowComponent
@@ -557,7 +557,7 @@ const MatchOdds = (props: any) => {
                       alignItems: "center",
                       justifyContent: "flex-end",
                       display: "flex",
-                      zIndex:'999'
+                      zIndex: "999",
                     }}
                   >
                     <Box
@@ -754,8 +754,8 @@ const MatchOdds = (props: any) => {
                 {currentMatch?.teamC &&
                 typeOfBet !== "Tied Match" &&
                 typeOfBet !== "Manual Tied Match" &&
-                typeOfBet !== "Market Complete Match" 
-                && typeOfBet !== "Complete Manual"? (
+                typeOfBet !== "Market Complete Match" &&
+                typeOfBet !== "Manual Complete Match" ? (
                   <>
                     <Divider />
                     <BoxComponent
@@ -794,17 +794,17 @@ const MatchOdds = (props: any) => {
                 ) : null}
                 {locked && (
                   <Box
-                  sx={{
-                    background: "rgba(0,0,0,.5)",
-                    width: "100%",
-                    height: currentMatch?.teamC ? "150px" : "105px",
-                    position: "absolute",
-                    top: "-24px",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                    display: "flex",
-                    zIndex:'999'
-                  }}
+                    sx={{
+                      background: "rgba(0,0,0,.5)",
+                      width: "100%",
+                      height: currentMatch?.teamC ? "150px" : "105px",
+                      position: "absolute",
+                      top: "-24px",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      display: "flex",
+                      zIndex: "999",
+                    }}
                   >
                     <Box
                       sx={{
@@ -862,7 +862,7 @@ const MatchOdds = (props: any) => {
         </Box>
       )}
 
-      {(showUnlock && liveData?.type==='matchOdd') && (
+      {showUnlock && liveData?.type === "matchOdd" && (
         <Box
           sx={{
             position: "absolute",

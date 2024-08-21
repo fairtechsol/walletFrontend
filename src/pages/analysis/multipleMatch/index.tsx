@@ -610,6 +610,21 @@ const MultipleMatch = () => {
                                   liveData={item?.marketCompleteMatch}
                                 />
                               )}
+                              {item?.manualCompleteMatch?.isActive && (
+                                <MatchOdds
+                                  typeOfBet={"Manual Complete Match"}
+                                  currentMatch={item}
+                                  session={"manualBookMaker"}
+                                  minBet={Math.floor(
+                                    item?.manualCompleteMatch?.minBet
+                                  )}
+                                  maxBet={Math.floor(
+                                    item?.manualCompleteMatch?.maxBet
+                                  )}
+                                  data={item?.manualCompleteMatch}
+                                  liveData={item?.manualCompleteMatch}
+                                />
+                              )}
                               {item?.manualSessionActive && (
                                 <SessionMarket
                                   title={"Quick Session Market"}
@@ -950,6 +965,22 @@ const MultipleMatch = () => {
                                   item?.marketCompleteMatch?.maxBet
                                 )}
                                 liveData={item?.marketCompleteMatch}
+                              />
+                            )}
+                            {item?.manualCompleteMatch?.isActive && (
+                              <MatchOdds
+                                typeOfBet={"Manual Complete Match"}
+                                currentMatch={item}
+                                session={"manualBookMaker"}
+                                minBet={Math.floor(
+                                  item?.manualCompleteMatch?.minBet
+                                )}
+                                maxBet={Math.floor(
+                                  item?.manualCompleteMatch?.maxBet
+                                )}
+                                data={item?.manualCompleteMatch}
+                                matchOddsData={item?.manualTiedMatch}
+                                liveData={item?.manualCompleteMatch}
                               />
                             )}
                             {item?.apiSessionActive && (
@@ -1331,6 +1362,22 @@ const MultipleMatch = () => {
                                 : []
                             }
                             liveData={item?.marketCompleteMatch}
+                          />
+                        )}
+                        {item?.manualCompleteMatch?.isActive && (
+                          <MatchOdds
+                            typeOfBet={"Manual Complete Match"}
+                            currentMatch={item}
+                            session={"manualBookMaker"}
+                            minBet={Math.floor(
+                              item?.manualCompleteMatch?.minBet
+                            )}
+                            maxBet={Math.floor(
+                              item?.manualCompleteMatch?.maxBet
+                            )}
+                            data={item?.manualCompleteMatch}
+                            matchOddsData={item?.manualTiedMatch}
+                            liveData={item?.manualCompleteMatch}
                           />
                         )}
                         {item?.apiSessionActive && (
