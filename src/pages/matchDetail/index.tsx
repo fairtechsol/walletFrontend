@@ -639,7 +639,7 @@ const MatchDetail = () => {
             />
           )}
 
-          {matchDetail?.manualCompleteMatch?.isActive && (
+          {matchDetail?.manualCompleteMatch?.isActive && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Complete Match"}
               data={matchDetail?.manualCompleteMatch}
