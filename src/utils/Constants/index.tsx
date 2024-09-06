@@ -294,6 +294,15 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.baccarat2]: Baccarat,
 };
 
+export const sessionBettingType = {
+  session: "session",
+  fancy1: "fancy1",
+  overByOver: "overByover",
+  ballByBall: "ballByBall",
+  oddEven: "oddEven",
+  cricketCasino: "cricketCasino",
+};
+
 export const profitLossDataForMatchConstants = {
   [matchBettingType.matchOdd]: {
     A: "teamARate",
