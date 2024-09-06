@@ -1,31 +1,29 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
-import Divider from "../../Inplay/Divider";
 import BetsCountBox from "./BetsCountBox";
-import SeasonMarketBox from "./SeasonMarketBox";
-import { customSort, formatToINR } from "../../../helper";
+import Divider from "../../Inplay/Divider";
+import { useState } from "react";
+import CricketCasinoMarketBox from "./CricketCasinoMarketBox";
 import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
-import { sessionBettingType } from "../../../utils/Constants";
 
-const SessionMarket = ({
-  blockMatch,
-  showUnlock,
-  locked,
-  handleShowLock,
-  selft,
-  title,
-  min,
-  sessionData,
-  allBetsData,
-  currentMatch,
-  handleBlock,
-  handleHide,
-  type,
-}: any) => {
+const CricketCasinoMarket = (props: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
+  const {
+    blockMatch,
+    showUnlock,
+    locked,
+    handleShowLock,
+    selft,
+    title,
+    min,
+    sessionData,
+    allBetsData,
+    currentMatch,
+    handleBlock,
+    handleHide,
+    type,
+  } = props;
   const [visible, setVisible] = useState(true);
 
   const onSubmit = (value: any) => {
@@ -122,7 +120,7 @@ const SessionMarket = ({
                       )?.type == type
                   )
                   ?.reduce((acc: number, bet: any) => {
-                    return acc + (bet?.totalBet || 0);
+                    return acc + +bet?.totalBet;
                   }, 0)}
               />
               {/* static code */}
@@ -156,20 +154,28 @@ const SessionMarket = ({
                     lineHeight: 1,
                   }}
                 >
+                  {/* {allBetsData?.reduce((acc: number, bet: any) => {
+                    let total = Number(acc) + Number(bet?.maxLoss);
+                    return Number(total)?.toFixed(2);
+                  }, 0)} */}
                   {new Intl.NumberFormat("en-IN").format(
-                    allBetsData
-                      ?.filter(
-                        (item: any) =>
-                          JSON.parse(
-                            currentMatch?.sessionBettings?.find(
-                              (items: any) =>
-                                JSON.parse(items)?.id == item?.betId
-                            ) || "{}"
-                          )?.type == type
-                      )
-                      ?.reduce((accumulator: any, bet: any) => {
-                        return accumulator + (+bet?.maxLoss || 0);
-                      }, 0)
+                    parseFloat(
+                      allBetsData
+                        ?.filter(
+                          (item: any) =>
+                            JSON.parse(
+                              currentMatch?.sessionBettings?.find(
+                                (items: any) =>
+                                  JSON.parse(items)?.id == item?.betId
+                              ) || "{}"
+                            )?.type == type
+                        )
+
+                        ?.reduce((acc: number, bet: any) => {
+                          return acc + (Number(bet?.maxLoss) || 0);
+                        }, 0)
+                        .toFixed(2)
+                    )
                   )}
                 </Typography>
               </Box>
@@ -200,49 +206,6 @@ const SessionMarket = ({
               overflowY: "auto",
             }}
           >
-            {locked && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  height: title === "Session Market" ? "83%" : "100%",
-                  top: title === "Session Market" ? "17%" : "1%",
-                  width: "100%",
-                  display: "flex",
-                  zIndex: "999",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  background: "rgba(0, 0, 0, .6)",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: { xs: "60%", lg: "20%", md: "60%" },
-                  }}
-                ></Box>
-                <Box
-                  sx={{
-                    width: { xs: "40%", lg: "60%", md: "40%" },
-                    gap: 1,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
-                  <Typography
-                    sx={{
-                      fontWeight: "600",
-                      margin: "12px 0px 0px 15px",
-                      fontSize: "20px",
-                      color: "#FFF",
-                    }}
-                  >
-                    {" "}
-                    Locked{" "}
-                  </Typography>
-                </Box>
-              </Box>
-            )}
             {
               <Box
                 sx={{
@@ -269,7 +232,7 @@ const SessionMarket = ({
                       marginLeft: "7px",
                     }}
                   >
-                    MIN: {formatToINR(min)}
+                    MIN: {min}
                     {/* MAX:
                     {max} */}
                   </Typography>
@@ -283,33 +246,6 @@ const SessionMarket = ({
                     justifyContent: { lg: "flex-end", xs: "flex-end" },
                   }}
                 >
-                  <Box
-                    sx={{
-                      background: "#FF9292",
-                      width: { lg: "5.02vw", xs: "30.06%" },
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: "12px",
-                        color: "black",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {sessionBettingType.oddEven == type
-                        ? "BACK"
-                        : sessionBettingType.fancy1 == type
-                        ? "LAY"
-                        : "NO"}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{ width: "3px", display: "flex", background: "white" }}
-                  ></Box>
                   <Box
                     sx={{
                       background: "#00C0F9",
@@ -327,18 +263,55 @@ const SessionMarket = ({
                         fontWeight: "600",
                       }}
                     >
-                      {[
-                        sessionBettingType.oddEven,
-                        sessionBettingType.fancy1,
-                      ].includes(type)
-                        ? "BACK"
-                        : "YES"}
+                      BACK
                     </Typography>
                   </Box>
                 </Box>
               </Box>
             }
-
+            {locked && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  height: "86%",
+                  top: "14%",
+                  width: "100%",
+                  display: "flex",
+                  zIndex: "999",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  background: "rgba(0, 0, 0, .6)",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: { xs: "60%", lg: "20%", md: "60%" },
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    width: { xs: "40%", lg: "60%", md: "40%" },
+                    gap: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      margin: "20px 0px 0px -25px",
+                      fontSize: "20px",
+                      color: "#FFF",
+                    }}
+                  >
+                    {" "}
+                    Locked{" "}
+                  </Typography>
+                </Box>
+              </Box>
+            )}
             <Box
               sx={{
                 display: "flex",
@@ -348,7 +321,39 @@ const SessionMarket = ({
                 position: "relative",
               }}
             >
-              {sessionData?.length > 0 &&
+              {Array.from({ length: 10 }, (_, index) => index)?.map(
+                (element: any, index: any) => {
+                  const currSessionItem =
+                    sessionData?.section?.find(
+                      (item: any) => parseInt(item?.sid) == element + 1
+                    ) || {};
+                  return (
+                    <Box
+                      key={
+                        title === "Session Market" ? element?.id : element?.id
+                      }
+                      sx={{
+                        width: "100%",
+                        display: element?.betStatus === 2 ? "none" : "block",
+                      }}
+                    >
+                      <CricketCasinoMarketBox
+                        newData={currSessionItem}
+                        profitLossData={
+                          currentMatch?.profitLossDataSession &&
+                          currentMatch?.profitLossDataSession?.filter(
+                            (item: any) => item?.betId === sessionData?.id
+                          )
+                        }
+                        index={index}
+                        sessionData={sessionData}
+                      />
+                      <Divider />
+                    </Box>
+                  );
+                }
+              )}
+              {/* {sessionData?.length > 0 &&
                 sessionData
                   ?.slice()
                   .sort(customSort)
@@ -363,7 +368,7 @@ const SessionMarket = ({
                           display: element?.betStatus === 2 ? "none" : "block",
                         }}
                       >
-                        <SeasonMarketBox
+                        <CricketCasinoMarketBox
                           newData={
                             title === "Quick Session Market"
                               ? JSON.parse(element)
@@ -377,12 +382,11 @@ const SessionMarket = ({
                                 : element?.id)
                           )}
                           index={index}
-                          type={type}
                         />
                         <Divider />
                       </Box>
                     );
-                  })}
+                  })} */}
             </Box>
             {showUnlock && (
               <Box
@@ -416,12 +420,12 @@ const SessionMarket = ({
                   zIndex: 999,
                 }}
               >
-                {/* <UnlockComponent
+                <UnlockComponent
                   unlock={locked}
                   title={(locked ? "Unlock " : "Lock ") + title}
                   handleHide={handleHide}
                   onSubmit={onSubmit}
-                /> */}
+                />
               </Box>
             )}
           </Box>
@@ -431,4 +435,4 @@ const SessionMarket = ({
   );
 };
 
-export default SessionMarket;
+export default CricketCasinoMarket;

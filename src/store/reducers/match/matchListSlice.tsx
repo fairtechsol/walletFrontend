@@ -17,6 +17,7 @@ import {
   updateTeamRatesOnDelete,
 } from "../../actions/match/matchAction";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
+import { convertData, updateSessionBettingsItem } from "../../../helper";
 
 interface InitialState {
   matchListInplay: any;
@@ -131,10 +132,32 @@ const matchListSlice = createSlice({
           overUnder,
           completeManual,
         } = action?.payload;
+
+        const parsedSessionBettings =
+          state.matchDetail?.sessionBettings?.map(JSON.parse) || [];
+        const apiParsedSessionBettings = sessionBettings?.map(JSON.parse) || [];
+
+        apiParsedSessionBettings.forEach((apiItem: any) => {
+          const index = parsedSessionBettings.findIndex(
+            (parsedItem: any) => parsedItem.id === apiItem.id
+          );
+          if (index !== -1) {
+            parsedSessionBettings[index] = {
+              ...parsedSessionBettings[index],
+              ...apiItem,
+            };
+          } else {
+            parsedSessionBettings.push(apiItem);
+          }
+        });
+        const stringifiedSessionBetting = parsedSessionBettings.map(
+          JSON.stringify
+        );
+
         state.matchDetail = {
           ...state.matchDetail,
-          manualSessionActive: sessionBettings?.length >= 0 ? true : false,
-          apiSessionActive: apiSession?.length >= 0 ? true : false,
+          // manualSessionActive: sessionBettings?.length >= 0 ? true : false,
+          // apiSessionActive: apiSession?.length >= 0 ? true : false,
           apiSession,
           apiTideMatch: apiTiedMatch,
           bookmaker,
@@ -142,12 +165,16 @@ const matchListSlice = createSlice({
           marketCompleteMatch,
           matchOdd,
           quickBookmaker: quickbookmaker,
-          sessionBettings,
+          sessionBettings: stringifiedSessionBetting,
           setWinner,
           firstHalfGoal,
           halfTime,
           overUnder,
           manualCompleteMatch: completeManual,
+          updatedSessionBettings: updateSessionBettingsItem(
+            convertData(parsedSessionBettings),
+            apiSession
+          ),
         };
       })
       .addCase(matchListReset, (state) => {
