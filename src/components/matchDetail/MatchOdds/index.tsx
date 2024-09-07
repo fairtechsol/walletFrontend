@@ -27,6 +27,7 @@ const MatchOdds = (props: any) => {
     handleBlock,
     handleHide,
     liveData,
+    title,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -112,7 +113,11 @@ const MatchOdds = (props: any) => {
               marginLeft: "7px",
             }}
           >
-            {typeOfBet === "MANUAL BOOKMAKER" ? "QUICK BOOKMAKER" : typeOfBet}
+            {typeOfBet === "MANUAL BOOKMAKER"
+              ? "QUICK BOOKMAKER"
+              : title
+              ? title
+              : typeOfBet}
           </Typography>
           {blockMatch && (
             <img

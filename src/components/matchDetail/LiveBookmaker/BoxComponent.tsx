@@ -6,35 +6,35 @@ import { formatNumber } from "../../../helper";
 import { LockSolid } from "../../../assets";
 
 const BoxComponent = (props: any) => {
-  const { name, color, align, rates, data,team } = props;
+  const { name, color, align, rates, data, team } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status } = data ?? {};
 
   const handleName = (name: string) => {
-    if (name?.includes('.5')) {
-      let teamName = name?.split('_')
-      if (name?.includes('first')) {
-        if (team === 'teamA') {
-          const givenName = `Under ${teamName[3]}`
+    if (name?.includes(".5")) {
+      let teamName = name?.split("_");
+      if (name?.includes("first")) {
+        if (team === "teamA") {
+          const givenName = `Under ${teamName[3]}`;
           return givenName;
         } else {
-          const givenName = `Over ${teamName[3]}`
+          const givenName = `Over ${teamName[3]}`;
           return givenName;
         }
       } else {
-        if (team === 'teamA') {
-          const givenName = `Under ${teamName[2]}`
+        if (team === "teamA") {
+          const givenName = `Under ${teamName[2]}`;
           return givenName;
         } else {
-          const givenName = `Over ${teamName[2]}`
+          const givenName = `Over ${teamName[2]}`;
           return givenName;
         }
       }
     } else {
       return name;
     }
-  }
+  };
   return (
     <Box
       sx={{
@@ -94,9 +94,8 @@ const BoxComponent = (props: any) => {
           </Typography>
         </Box>
       </Box>
- 
+
       {!["ACTIVE", undefined, null].includes(status) ? (
-       
         <Box
           sx={{
             // background: "rgba(0,0,0,1)",
@@ -150,7 +149,7 @@ const BoxComponent = (props: any) => {
                   fontWeight: "400",
                 }}
               >
-                {status ? status : 'suspended'} 
+                {status ? status : "suspended"}
                 {/* suspended */}
               </Typography>
             </Box>
@@ -170,17 +169,21 @@ const BoxComponent = (props: any) => {
           <MoneyBox color={color} rates={rates} />
 
           {ex?.availableToBack?.length > 0 &&
-          ![0, "0"].includes(ex?.availableToBack[0]?.price) ? (
+          ![0, "0"].includes(
+            ex?.availableToBack[ex?.availableToBack?.length > 1 ? 2 : 0]?.price
+          ) ? (
             <SeperateBox
               align={align}
               value={
                 ex?.availableToBack?.length > 0
-                  ? ex?.availableToBack[0]?.price
+                  ? ex?.availableToBack[ex?.availableToBack?.length > 1 ? 2 : 0]
+                      ?.price
                   : 0
               }
               value2={formatNumber(
                 ex?.availableToBack?.length > 0
-                  ? ex?.availableToBack[0]?.size
+                  ? ex?.availableToBack[ex?.availableToBack?.length > 1 ? 2 : 0]
+                      ?.size
                   : 0,
                 false
               )}
