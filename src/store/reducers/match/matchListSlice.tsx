@@ -131,6 +131,7 @@ const matchListSlice = createSlice({
           halfTime,
           overUnder,
           completeManual,
+          apiTiedMatch2,
         } = action?.payload;
 
         const parsedSessionBettings =
@@ -160,6 +161,7 @@ const matchListSlice = createSlice({
           // apiSessionActive: apiSession?.length >= 0 ? true : false,
           apiSession,
           apiTideMatch: apiTiedMatch,
+          apiTideMatch2: apiTiedMatch2,
           bookmaker,
           manualTiedMatch: manualTideMatch,
           marketCompleteMatch,
