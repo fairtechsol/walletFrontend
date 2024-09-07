@@ -14,6 +14,7 @@ import {
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../actions/match/multipleMatchActions";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
+import { convertData, updateSessionBettingsItem } from "../../../helper";
 
 interface InitialState {
   analysisList: any;
@@ -84,6 +85,27 @@ const analysisListSlice = createSlice({
                 overUnder,
                 completeManual,
               } = action?.payload;
+              const parsedSessionBettings =
+                match?.sessionBettings?.map(JSON.parse) || [];
+              const apiParsedSessionBettings =
+                sessionBettings?.map(JSON.parse) || [];
+
+              apiParsedSessionBettings.forEach((apiItem: any) => {
+                const index = parsedSessionBettings.findIndex(
+                  (parsedItem: any) => parsedItem.id === apiItem.id
+                );
+                if (index !== -1) {
+                  parsedSessionBettings[index] = {
+                    ...parsedSessionBettings[index],
+                    ...apiItem,
+                  };
+                } else {
+                  parsedSessionBettings.push(apiItem);
+                }
+              });
+              const stringifiedSessionBetting = parsedSessionBettings.map(
+                JSON.stringify
+              );
               return {
                 ...match,
                 apiSession,
@@ -93,12 +115,16 @@ const analysisListSlice = createSlice({
                 marketCompleteMatch,
                 matchOdd,
                 quickBookmaker: quickbookmaker,
-                sessionBettings,
+                sessionBettings: stringifiedSessionBetting,
                 setWinner,
                 firstHalfGoal,
                 halfTime,
                 overUnder,
                 manualCompleteMatch: completeManual,
+                updatedSessionBettings: updateSessionBettingsItem(
+                  convertData(parsedSessionBettings),
+                  apiSession
+                ),
               };
             } else {
               return match;
@@ -138,6 +164,7 @@ const analysisListSlice = createSlice({
                         ...item,
                         maxLoss: profitLoss?.maxLoss,
                         totalBet: profitLoss?.totalBet,
+                        profitLoss: profitLoss?.betPlaced,
                       };
                     }
                     return item;
@@ -150,6 +177,7 @@ const analysisListSlice = createSlice({
                   updatedProfitLossDataSession?.push({
                     betId: jobData?.placedBet?.betId,
                     maxLoss: profitLoss?.maxLoss,
+                    profitLoss: profitLoss?.betPlaced,
                     totalBet: 1,
                   });
                 }
@@ -205,6 +233,9 @@ const analysisListSlice = createSlice({
                       totalBet: JSON.parse(
                         parentRedisUpdateObj[`${betId}_profitLoss`]
                       )?.totalBet,
+                      profitLoss: JSON.parse(
+                        parentRedisUpdateObj[`${betId}_profitLoss`]
+                      )?.betPlaced,
                     },
                   ])
                 );
@@ -296,6 +327,7 @@ const analysisListSlice = createSlice({
                         ...item,
                         maxLoss: profitLoss?.maxLoss,
                         totalBet: profitLoss?.totalBet,
+                        profitLoss: profitLoss?.betPlaced,
                       };
                     }
                     return item;
@@ -308,6 +340,7 @@ const analysisListSlice = createSlice({
                   updatedProfitLossDataSession?.push({
                     betId: betId,
                     maxLoss: profitLoss?.maxLoss,
+                    profitLoss: profitLoss?.betPlaced,
                     totalBet: 1,
                   });
                 }
