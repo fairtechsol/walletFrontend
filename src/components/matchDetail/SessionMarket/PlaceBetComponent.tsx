@@ -4,7 +4,7 @@ import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { handleNumber } from "../../../helper";
 
-const PlaceBetComponent = ({ newData, profitLoss, color }: any) => {
+const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   const dispatch: AppDispatch = useDispatch();
   const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
 
@@ -16,16 +16,18 @@ const PlaceBetComponent = ({ newData, profitLoss, color }: any) => {
       <Box
         // ref={innerRef}
         onClick={() => {
-          dispatch(
-            getSessionProLoss({
-              matchId: newData?.matchId,
-              id: newData?.id,
-              name: newData?.name ?? newData?.RunnerName,
-              type: !newData?.isManual
-                ? "Session Market"
-                : "Quick Session Market",
-            })
-          );
+          if (type === "session") {
+            dispatch(
+              getSessionProLoss({
+                matchId: newData?.matchId,
+                id: newData?.id,
+                name: newData?.name ?? newData?.RunnerName,
+                type: !newData?.isManual
+                  ? "Session Market"
+                  : "Quick Session Market",
+              })
+            );
+          }
         }}
         sx={{
           background: "#0B4F26",
@@ -81,9 +83,7 @@ const PlaceBetComponent = ({ newData, profitLoss, color }: any) => {
             }}
           >
             {" "}
-            {!profitLoss?.maxLoss
-              ? "Profit/Loss"
-              : profitloss}
+            {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
           </Typography>
         </Box>
       </Box>

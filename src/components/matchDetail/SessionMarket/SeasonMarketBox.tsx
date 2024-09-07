@@ -90,14 +90,14 @@ const SeasonMarketBox = (props: any) => {
         >
           {matchesMobile ? (
             <PlaceBetComponent
-              // amount={index == 2}
+              type={type}
               newData={newData}
               profitLoss={profitLossData && profitLossData[0]}
               setData={setData}
             />
           ) : (
             <PlaceBetComponentWeb
-              // amount={index == 2}
+              type={type}
               newData={newData}
               profitLoss={profitLossData && profitLossData[0]}
               setData={setData}
@@ -230,7 +230,13 @@ const SeasonMarketBox = (props: any) => {
       </Box>
       <Divider />
       {Array.from(
-        { length: newData?.ex?.availableToLay?.length - 1 },
+        {
+          length:
+            Math.max(
+              newData?.ex?.availableToLay?.length ?? 0,
+              newData?.ex?.availableToBack?.length ?? 0
+            ) - 1,
+        },
         (_, i) => i + 1
       )?.map((item: number) => (
         <>
@@ -278,14 +284,14 @@ const SeasonMarketBox = (props: any) => {
             >
               {matchesMobile ? (
                 <PlaceBetComponent
-                  // amount={index == 2}
+                  type={type}
                   newData={newData}
                   profitLoss={profitLossData && profitLossData[0]}
                   setData={setData}
                 />
               ) : (
                 <PlaceBetComponentWeb
-                  // amount={index == 2}
+                  type={type}
                   newData={newData}
                   profitLoss={profitLossData && profitLossData[0]}
                   setData={setData}
