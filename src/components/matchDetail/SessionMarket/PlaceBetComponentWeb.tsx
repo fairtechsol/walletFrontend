@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { handleNumber } from "../../../helper";
 
-const PlaceBetComponentWeb = ({ newData, profitLoss, color }: any) => {
+const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
   const dispatch: AppDispatch = useDispatch();
   // const { runAmount } = useSelector((state: RootState) => state.match.bets);
   // const [show, setShow] = useState(false);
@@ -21,16 +21,18 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color }: any) => {
     <>
       <Box
         onClick={() => {
-          dispatch(
-            getSessionProLoss({
-              id: newData?.id,
-              matchId: newData?.matchId,
-              name: newData?.name ?? newData?.RunnerName,
-              type: !newData?.isManual
-                ? "Session Market"
-                : "Quick Session Market",
-            })
-          );
+          if (type === "session") {
+            dispatch(
+              getSessionProLoss({
+                id: newData?.id,
+                matchId: newData?.matchId,
+                name: newData?.name ?? newData?.RunnerName,
+                type: !newData?.isManual
+                  ? "Session Market"
+                  : "Quick Session Market",
+              })
+            );
+          }
         }}
         sx={{
           background: "#0B4F26",
@@ -84,9 +86,7 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color }: any) => {
             }}
           >
             {" "}
-            {!profitLoss?.maxLoss
-              ? "Profit/Loss"
-              : profitloss}
+            {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
           </Typography>
           <img
             src={UD}
