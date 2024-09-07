@@ -206,6 +206,9 @@ const matchListSlice = createSlice({
                   totalBet: JSON.parse(
                     parentRedisUpdateObj[`${betId}_profitLoss`]
                   )?.totalBet,
+                  profitLoss: JSON.parse(
+                    parentRedisUpdateObj[`${betId}_profitLoss`]
+                  )?.betPlaced,
                 },
               ])
             ),
@@ -236,6 +239,7 @@ const matchListSlice = createSlice({
                   ...item,
                   maxLoss: profitLoss?.maxLoss,
                   totalBet: profitLoss?.totalBet,
+                  profitLoss: profitLoss?.betPlaced,
                 };
               }
               return item;
@@ -248,6 +252,7 @@ const matchListSlice = createSlice({
             updatedProfitLossDataSession?.push({
               betId: jobData?.placedBet?.betId,
               maxLoss: profitLoss?.maxLoss,
+              profitLoss: profitLoss?.betPlaced,
               totalBet: 1,
             });
           }
@@ -299,6 +304,7 @@ const matchListSlice = createSlice({
                   ...item,
                   maxLoss: profitLoss?.maxLoss,
                   totalBet: profitLoss?.totalBet,
+                  profitLoss: profitLoss?.betPlaced,
                 };
               }
               return item;
@@ -311,6 +317,7 @@ const matchListSlice = createSlice({
             updatedProfitLossDataSession?.push({
               betId: betId,
               maxLoss: profitLoss?.maxLoss,
+              profitLoss: profitLoss?.betPlaced,
               totalBet: 1,
             });
           }
