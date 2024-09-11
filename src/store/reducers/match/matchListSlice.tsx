@@ -370,37 +370,66 @@ const matchListSlice = createSlice({
         } = action?.payload;
 
         if (matchBetType === "other") {
-          state.matchDetail.profitLossDataMatch = {
-            ...state.matchDetail.profitLossDataMatch,
-            [profitLossDataForMatchConstants[matchBetType].A +
-            "_" +
-            betId +
-            "_" +
-            state.matchDetail?.id]: redisObject[teamArateRedisKey],
-            [profitLossDataForMatchConstants[matchBetType].B +
-            "_" +
-            betId +
-            "_" +
-            state.matchDetail?.id]: redisObject[teamBrateRedisKey],
-            [profitLossDataForMatchConstants[matchBetType].C +
-            "_" +
-            betId +
-            "_" +
-            state.matchDetail?.id]: redisObject[teamCrateRedisKey],
-          };
-        } else
-          state.matchDetail.profitLossDataMatch = {
-            ...state.matchDetail.profitLossDataMatch,
-            [profitLossDataForMatchConstants[matchBetType].A +
-            "_" +
-            state.matchDetail?.id]: redisObject[teamArateRedisKey],
-            [profitLossDataForMatchConstants[matchBetType].B +
-            "_" +
-            state.matchDetail?.id]: redisObject[teamBrateRedisKey],
-            [profitLossDataForMatchConstants[matchBetType].C +
-            "_" +
-            state.matchDetail?.id]: redisObject[teamCrateRedisKey],
-          };
+          if (redisObject[teamCrateRedisKey]) {
+            state.matchDetail.profitLossDataMatch = {
+              ...state.matchDetail.profitLossDataMatch,
+              [profitLossDataForMatchConstants[matchBetType].A +
+              "_" +
+              betId +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamArateRedisKey],
+              [profitLossDataForMatchConstants[matchBetType].B +
+              "_" +
+              betId +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamBrateRedisKey],
+              [profitLossDataForMatchConstants[matchBetType].C +
+              "_" +
+              betId +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamCrateRedisKey],
+            };
+          } else {
+            state.matchDetail.profitLossDataMatch = {
+              ...state.matchDetail.profitLossDataMatch,
+              [profitLossDataForMatchConstants[matchBetType].A +
+              "_" +
+              betId +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamArateRedisKey],
+              [profitLossDataForMatchConstants[matchBetType].B +
+              "_" +
+              betId +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamBrateRedisKey],
+            };
+          }
+        } else {
+          if (redisObject[teamCrateRedisKey]) {
+            state.matchDetail.profitLossDataMatch = {
+              ...state.matchDetail.profitLossDataMatch,
+              [profitLossDataForMatchConstants[matchBetType].A +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamArateRedisKey],
+              [profitLossDataForMatchConstants[matchBetType].B +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamBrateRedisKey],
+              [profitLossDataForMatchConstants[matchBetType].C +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamCrateRedisKey],
+            };
+          } else {
+            state.matchDetail.profitLossDataMatch = {
+              ...state.matchDetail.profitLossDataMatch,
+              [profitLossDataForMatchConstants[matchBetType].A +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamArateRedisKey],
+              [profitLossDataForMatchConstants[matchBetType].B +
+              "_" +
+              state.matchDetail?.id]: redisObject[teamBrateRedisKey],
+            };
+          }
+        }
 
         // if (redisObject[teamCrateRedisKey]) {
         //   state.matchDetail.profitLossDataMatch = {
