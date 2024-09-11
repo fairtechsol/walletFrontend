@@ -121,7 +121,7 @@ const SeasonMarketBox = (props: any) => {
                 // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 // right: 0,
-                width: { lg: "36.5%", md: "60%", xs: "60.5%" },
+                width: { lg: "38%", md: "60%", xs: "60.5%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
                 display: "flex",
@@ -137,7 +137,7 @@ const SeasonMarketBox = (props: any) => {
               ) : (
                 <Typography
                   sx={{
-                    fontSize: { xs: "12px", lg: "18px" },
+                    fontSize: { xs: "12px", lg: "16px" },
                     textTransform: "uppercase",
                     textAlign: "center",
                     width: "100%",
@@ -311,7 +311,7 @@ const SeasonMarketBox = (props: any) => {
                     // position: "absolute",
                     marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                     // right: 0,
-                    width: { lg: "36.5%", md: "60%", xs: "60.5%" },
+                    width: { lg: "36%", md: "60%", xs: "60.5%" },
                     justifyContent: { xs: "center", lg: "center" },
                     alignItems: "center",
                     display: "flex",
@@ -327,7 +327,7 @@ const SeasonMarketBox = (props: any) => {
                   ) : (
                     <Typography
                       sx={{
-                        fontSize: { xs: "12px", lg: "18px" },
+                        fontSize: { xs: "12px", lg: "16px" },
                         textTransform: "uppercase",
                         textAlign: "center",
                         width: "100%",
