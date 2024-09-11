@@ -506,8 +506,25 @@ const MatchDetail = () => {
                   ? matchDetail?.bookmaker?.runners
                   : []
               }
+              title={matchDetail?.bookmaker?.name}
             />
           )}
+          {matchDetail?.marketBookmaker2?.isActive && (
+            <LiveBookmaker
+              currentMatch={matchDetail}
+              showBox={matchDetail?.marketBookmaker2?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.marketBookmaker2?.minBet)}
+              maxBet={Math.floor(matchDetail?.marketBookmaker2?.maxBet)}
+              liveData={matchDetail?.marketBookmaker2}
+              data={
+                matchDetail?.marketBookmaker2?.runners?.length > 0
+                  ? matchDetail?.marketBookmaker2?.runners
+                  : []
+              }
+              title={matchDetail?.marketBookmaker2?.name}
+            />
+          )}
+
           {matchDetail?.quickBookmaker
             ?.filter((item: any) => item?.isActive)
             ?.map((bookmaker: any, index: any) => {
@@ -524,6 +541,18 @@ const MatchDetail = () => {
                 />
               );
             })}
+          {matchDetail?.other &&
+            matchDetail?.other?.map((match: any) => (
+              <LiveBookmaker
+                currentMatch={matchDetail}
+                showBox={match?.activeStatus === "save"}
+                minBet={Math.floor(match?.minBet)}
+                maxBet={Math.floor(match?.maxBet)}
+                liveData={match}
+                data={match?.runners?.length > 0 ? match?.runners : []}
+                title={match?.name}
+              />
+            ))}
           {matchDetail?.firstHalfGoal?.length > 0 &&
             matchDetail?.firstHalfGoal
               ?.filter((item: any) => item?.isActive)
@@ -637,6 +666,7 @@ const MatchDetail = () => {
               minBet={Math.floor(matchDetail?.manualTiedMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
               liveData={matchDetail?.manualTiedMatch}
+              title={matchDetail?.manualTiedMatch?.name}
             />
           )}
           {matchDetail?.marketCompleteMatch?.isActive && (
@@ -654,6 +684,25 @@ const MatchDetail = () => {
                   ? matchDetail?.marketCompleteMatch?.runners
                   : []
               }
+              title={matchDetail?.marketCompleteMatch?.name}
+            />
+          )}
+          {matchDetail?.marketCompleteMatch1?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Market Complete Match"}
+              showBox={
+                matchDetail?.marketCompleteMatch1?.activeStatus === "save"
+              }
+              minBet={Math.floor(matchDetail?.marketCompleteMatch1?.minBet)}
+              maxBet={Math.floor(matchDetail?.marketCompleteMatch1?.maxBet)}
+              liveData={matchDetail?.marketCompleteMatch1}
+              data={
+                matchDetail?.marketCompleteMatch1?.runners?.length > 0
+                  ? matchDetail?.marketCompleteMatch1?.runners
+                  : []
+              }
+              title={matchDetail?.marketCompleteMatch1?.name}
             />
           )}
 
@@ -666,6 +715,7 @@ const MatchDetail = () => {
               minBet={Math.floor(matchDetail?.manualCompleteMatch?.minBet)}
               maxBet={Math.floor(matchDetail?.manualCompleteMatch?.maxBet)}
               liveData={matchDetail?.manualCompleteMatch}
+              title={matchDetail?.manualCompleteMatch?.name}
             />
           )}
 

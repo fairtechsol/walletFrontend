@@ -121,8 +121,10 @@ const matchListSlice = createSlice({
           apiSession,
           apiTiedMatch,
           bookmaker,
+          bookmaker2,
           manualTideMatch,
           marketCompleteMatch,
+          marketCompleteMatch1,
           matchOdd,
           quickbookmaker,
           sessionBettings,
@@ -132,6 +134,7 @@ const matchListSlice = createSlice({
           overUnder,
           completeManual,
           apiTiedMatch2,
+          other
         } = action?.payload;
 
         const parsedSessionBettings =
@@ -163,8 +166,10 @@ const matchListSlice = createSlice({
           apiTideMatch: apiTiedMatch,
           apiTideMatch2: apiTiedMatch2,
           bookmaker,
+          marketBookmaker2: bookmaker2,
           manualTiedMatch: manualTideMatch,
           marketCompleteMatch,
+          marketCompleteMatch1,
           matchOdd,
           quickBookmaker: quickbookmaker,
           sessionBettings: stringifiedSessionBetting,
@@ -177,6 +182,7 @@ const matchListSlice = createSlice({
             convertData(parsedSessionBettings),
             apiSession
           ),
+          other
         };
       })
       .addCase(matchListReset, (state) => {
