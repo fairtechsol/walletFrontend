@@ -22,6 +22,7 @@ const LiveBookmaker = (props: any) => {
     showBox,
     handleBlock,
     handleHide,
+    title,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -83,7 +84,7 @@ const LiveBookmaker = (props: any) => {
               marginLeft: "7px",
             }}
           >
-            Bookmaker Market
+            {title}
           </Typography>
           {blockMatch && (
             <img
@@ -323,7 +324,7 @@ const LiveBookmaker = (props: any) => {
                     alignItems: "center",
                     justifyContent: "center",
                     display: "flex",
-                    zIndex:'999'
+                    zIndex: "999",
                   }}
                 >
                   <img src={LOCKED} style={{ width: "35px", height: "40px" }} />

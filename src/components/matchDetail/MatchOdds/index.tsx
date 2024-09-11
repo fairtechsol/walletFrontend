@@ -149,19 +149,27 @@ const MatchOdds = (props: any) => {
             valueA={bookRatioA(
               currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.A
+                    profitLossDataForMatchConstants[liveData?.type]?.A +
+                      "_" +
+                      currentMatch?.id
                   ]
                   ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.A
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        currentMatch?.id
                     ]
                   : 0
                 : 0,
               currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.B
+                    profitLossDataForMatchConstants[liveData?.type]?.B +
+                      "_" +
+                      currentMatch?.id
                   ]
                   ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.B
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        currentMatch?.id
                     ]
                   : 0
                 : 0
@@ -169,19 +177,27 @@ const MatchOdds = (props: any) => {
             valueB={bookRatioB(
               currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.A
+                    profitLossDataForMatchConstants[liveData?.type]?.A +
+                      "_" +
+                      currentMatch?.id
                   ]
                   ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.A
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        currentMatch?.id
                     ]
                   : 0
                 : 0,
               currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[
-                    profitLossDataForMatchConstants[liveData?.type]?.B
+                    profitLossDataForMatchConstants[liveData?.type]?.B +
+                      "_" +
+                      currentMatch?.id
                   ]
                   ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.B
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        currentMatch?.id
                     ]
                   : 0
                 : 0
@@ -315,10 +331,14 @@ const MatchOdds = (props: any) => {
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.A
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.A
+                            profitLossDataForMatchConstants[liveData?.type]?.A +
+                              "_" +
+                              currentMatch?.id
                           ]
                         : 0
                       : 0
@@ -326,10 +346,14 @@ const MatchOdds = (props: any) => {
                   color={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.A
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.A
+                            profitLossDataForMatchConstants[liveData?.type]?.A +
+                              "_" +
+                              currentMatch?.id
                           ] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
@@ -358,10 +382,14 @@ const MatchOdds = (props: any) => {
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
+                            profitLossDataForMatchConstants[liveData?.type]?.B +
+                              "_" +
+                              currentMatch?.id
                           ]
                         : 0
                       : 0
@@ -369,10 +397,14 @@ const MatchOdds = (props: any) => {
                   color={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
+                            profitLossDataForMatchConstants[liveData?.type]?.B +
+                              "_" +
+                              currentMatch?.id
                           ] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
@@ -404,11 +436,16 @@ const MatchOdds = (props: any) => {
                       rates={
                         currentMatch?.profitLossDataMatch
                           ? currentMatch?.profitLossDataMatch[
-                              profitLossDataForMatchConstants[liveData?.type]?.C
+                              profitLossDataForMatchConstants[liveData?.type]
+                                ?.C +
+                                "_" +
+                                currentMatch?.id
                             ]
                             ? currentMatch?.profitLossDataMatch[
                                 profitLossDataForMatchConstants[liveData?.type]
-                                  ?.C
+                                  ?.C +
+                                  "_" +
+                                  currentMatch?.id
                               ]
                             : 0
                           : 0
@@ -416,11 +453,16 @@ const MatchOdds = (props: any) => {
                       color={
                         currentMatch?.profitLossDataMatch
                           ? currentMatch?.profitLossDataMatch[
-                              profitLossDataForMatchConstants[liveData?.type]?.C
+                              profitLossDataForMatchConstants[liveData?.type]
+                                ?.C +
+                                "_" +
+                                currentMatch?.id
                             ]
                             ? currentMatch?.profitLossDataMatch[
                                 profitLossDataForMatchConstants[liveData?.type]
-                                  ?.C
+                                  ?.C +
+                                  "_" +
+                                  currentMatch?.id
                               ] < 0
                               ? "#FF4D4D"
                               : "#319E5B"
@@ -493,10 +535,14 @@ const MatchOdds = (props: any) => {
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.A
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.A
+                            profitLossDataForMatchConstants[liveData?.type]?.A +
+                              "_" +
+                              currentMatch?.id
                           ]
                         : 0
                       : 0
@@ -504,10 +550,14 @@ const MatchOdds = (props: any) => {
                   color={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.A
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.A
+                            profitLossDataForMatchConstants[liveData?.type]?.A +
+                              "_" +
+                              currentMatch?.id
                           ] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
@@ -525,10 +575,14 @@ const MatchOdds = (props: any) => {
                   color={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
+                            profitLossDataForMatchConstants[liveData?.type]?.B +
+                              "_" +
+                              currentMatch?.id
                           ] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
@@ -539,10 +593,14 @@ const MatchOdds = (props: any) => {
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
+                            profitLossDataForMatchConstants[liveData?.type]?.B +
+                              "_" +
+                              currentMatch?.id
                           ]
                         : 0
                       : 0
@@ -696,10 +754,14 @@ const MatchOdds = (props: any) => {
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.A
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.A
+                            profitLossDataForMatchConstants[liveData?.type]?.A +
+                              "_" +
+                              currentMatch?.id
                           ]
                         : 0
                       : 0
@@ -707,10 +769,14 @@ const MatchOdds = (props: any) => {
                   color={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.A
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.A
+                            profitLossDataForMatchConstants[liveData?.type]?.A +
+                              "_" +
+                              currentMatch?.id
                           ] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
@@ -726,10 +792,14 @@ const MatchOdds = (props: any) => {
                   color={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
+                            profitLossDataForMatchConstants[liveData?.type]?.B +
+                              "_" +
+                              currentMatch?.id
                           ] < 0
                           ? "#FF4D4D"
                           : "#319E5B"
@@ -744,10 +814,14 @@ const MatchOdds = (props: any) => {
                   rates={
                     currentMatch?.profitLossDataMatch
                       ? currentMatch?.profitLossDataMatch[
-                          profitLossDataForMatchConstants[liveData?.type]?.B
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            currentMatch?.id
                         ]
                         ? currentMatch?.profitLossDataMatch[
-                            profitLossDataForMatchConstants[liveData?.type]?.B
+                            profitLossDataForMatchConstants[liveData?.type]?.B +
+                              "_" +
+                              currentMatch?.id
                           ]
                         : 0
                       : 0
@@ -767,11 +841,16 @@ const MatchOdds = (props: any) => {
                       color={
                         currentMatch?.profitLossDataMatch
                           ? currentMatch?.profitLossDataMatch[
-                              profitLossDataForMatchConstants[liveData?.type]?.C
+                              profitLossDataForMatchConstants[liveData?.type]
+                                ?.C +
+                                "_" +
+                                currentMatch?.id
                             ]
                             ? currentMatch?.profitLossDataMatch[
                                 profitLossDataForMatchConstants[liveData?.type]
-                                  ?.C
+                                  ?.C +
+                                  "_" +
+                                  currentMatch?.id
                               ] < 0
                               ? "#FF4D4D"
                               : "#319E5B"
@@ -782,11 +861,16 @@ const MatchOdds = (props: any) => {
                       rates={
                         currentMatch?.profitLossDataMatch
                           ? currentMatch?.profitLossDataMatch[
-                              profitLossDataForMatchConstants[liveData?.type]?.C
+                              profitLossDataForMatchConstants[liveData?.type]
+                                ?.C +
+                                "_" +
+                                currentMatch?.id
                             ]
                             ? currentMatch?.profitLossDataMatch[
                                 profitLossDataForMatchConstants[liveData?.type]
-                                  ?.C
+                                  ?.C +
+                                  "_" +
+                                  currentMatch?.id
                               ]
                             : 0
                           : 0
