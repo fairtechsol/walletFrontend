@@ -506,7 +506,7 @@ const SingleBox = ({
         <Typography
           sx={{
             fontWeight: "700",
-            fontSize: { xs: "9px", lg: "11px" },
+            fontSize: { xs: "9px", lg: "0.6vw" },
             color: "black",
             textAlign: "center",
           }}
@@ -516,10 +516,10 @@ const SingleBox = ({
         <Typography
           sx={{
             maxHeight: "2em",
-            overflowY: "scroll",
+            // overflowY: "scroll",
             lineHeight: 1,
             fontWeight: "600",
-            fontSize: { lg: "12px", xs: "10px" },
+            fontSize: { lg: "0.6vw", xs: "10px" },
             color: "black",
             textAlign: "center",
           }}
