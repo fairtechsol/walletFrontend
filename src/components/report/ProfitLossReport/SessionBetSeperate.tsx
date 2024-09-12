@@ -419,6 +419,7 @@ const RowComponent = ({ header, data }: any) => {
       return "#F2CBCB";
     }
   };
+ 
   return (
     <Box
       sx={{
@@ -447,7 +448,7 @@ const RowComponent = ({ header, data }: any) => {
             data={data?.username || data?.userName || data?.user?.userName}
             isPercent={true}
             header={header}
-            rate={data?.domain}
+            domain={data?.domain}
           />
           <SingleBox
             color={getColor()}
@@ -490,7 +491,14 @@ const SingleBox = ({
   time,
   isPercent,
   rate,
+  domain
 }: any) => {
+  const handleUrl=(url:any)=>{
+    const address = url?.split("//");
+    const part = address?.[1]?.split(".")
+    // console.log('first',part)
+    return part[0]+'.'+part[1]
+  }
   return !header ? (
     first ? (
       <Box
@@ -513,7 +521,7 @@ const SingleBox = ({
         >
           {time}
         </Typography>
-        <Typography
+        {/* <Typography
           sx={{
             maxHeight: "2em",
             // overflowY: "scroll",
@@ -525,7 +533,7 @@ const SingleBox = ({
           }}
         >
           {data}
-        </Typography>
+        </Typography> */}
       </Box>
     ) : up ? (
       <Box
@@ -599,7 +607,7 @@ const SingleBox = ({
               fontWeight: "bold",
             }}
           >
-            {rate}
+            {rate || handleUrl(domain)}
           </Typography>
         )}
       </Box>
