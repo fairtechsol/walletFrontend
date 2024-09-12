@@ -22,7 +22,6 @@ const CricketCasinoMarket = (props: any) => {
     currentMatch,
     handleBlock,
     handleHide,
-    type,
   } = props;
   const [visible, setVisible] = useState(true);
 
