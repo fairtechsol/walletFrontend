@@ -408,6 +408,11 @@ export const profitLossDataForMatchConstants = {
 
 // use below baseUrl for testing build
 
+export const serviceUrl =
+  process.env.NODE_ENV === Constants.PRODUCTION
+    ? Constants.apiBasePath
+    : Constants.localPath;
+
 export const baseUrls = {
   socket:
     process.env.NODE_ENV === Constants.PRODUCTION
@@ -424,6 +429,12 @@ export const baseUrls = {
 };
 
 // use below baseUrl for live build
+
+// export const serviceUrl =
+//   process.env.NODE_ENV === Constants.PRODUCTION
+//     ? Constants.apiBasePathLive
+//     : Constants.localPath;
+
 // export const baseUrls = {
 //   socket:
 //     process.env.NODE_ENV === Constants.PRODUCTION
