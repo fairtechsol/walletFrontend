@@ -1,28 +1,22 @@
 import { Box, Typography } from "@mui/material";
 import Divider from "../../Inplay/Divider";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
-import BoxComponent from "../LiveBookmaker/BoxComponent";
 import { useState } from "react";
 import { formatToINR } from "../../../helper";
-import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import SmallBox from "../MatchOdds/SmallBox";
+import BoxComponent from "./BoxComponent";
 
 const TournamentOdds = (props: any) => {
   const {
     currentMatch,
     minBet,
     maxBet,
-    typeOfBet,
     locked,
     blockMatch,
-    handleShowLock,
     selft,
     showBox,
     upcoming,
-    showUnlock,
-    handleBlock,
-    handleHide,
     liveData,
     title,
   } = props;
@@ -45,10 +39,6 @@ const TournamentOdds = (props: any) => {
     return data?.ex?.availableToBack?.length > 0 ? false : true;
   };
 
-  const onSubmit = (value: any) => {
-    handleBlock(value, !locked, typeOfBet);
-  };
-
   return (
     <Box
       key="odds"
@@ -59,8 +49,8 @@ const TournamentOdds = (props: any) => {
         padding: 0.2,
         flexDirection: "column",
         width: "100%",
-        marginTop: typeOfBet == "Quick Bookmaker" ? "0" : "3px",
-        marginBottom: typeOfBet == "Quick Bookmaker" ? "3px" : "0",
+        marginTop: "3px",
+        marginBottom: "0",
         alignSelf: {
           xs: "center",
           md: "center",
@@ -94,15 +84,11 @@ const TournamentOdds = (props: any) => {
               marginLeft: "7px",
             }}
           >
-            {typeOfBet === "MANUAL BOOKMAKER"
-              ? "QUICK BOOKMAKER"
-              : title
-              ? title
-              : typeOfBet}
+            {title}
           </Typography>
           {blockMatch && (
             <img
-              onClick={() => (selft ? handleShowLock(true, typeOfBet) : "")}
+              onClick={() => (selft ? "" : "")}
               src={locked ? LOCKED : LOCKOPEN}
               style={{ width: "14px", height: "20px" }}
             />
@@ -341,91 +327,6 @@ const TournamentOdds = (props: any) => {
                 <Divider />
               </>
             ))}
-
-            {/* <BoxComponent
-              name={
-                typeOfBet !== ("Match Odds" || "Half Time")
-                  ? "Yes"
-                  : currentMatch?.teamA
-              }
-              rates={
-                currentMatch?.profitLossDataMatch
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.A +
-                        "_" +
-                        currentMatch?.id
-                    ]
-                    ? currentMatch?.profitLossDataMatch[
-                        profitLossDataForMatchConstants[liveData?.type]?.A +
-                          "_" +
-                          currentMatch?.id
-                      ]
-                    : 0
-                  : 0
-              }
-              color={
-                currentMatch?.profitLossDataMatch
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.A +
-                        "_" +
-                        currentMatch?.id
-                    ]
-                    ? currentMatch?.profitLossDataMatch[
-                        profitLossDataForMatchConstants[liveData?.type]?.A +
-                          "_" +
-                          currentMatch?.id
-                      ] < 0
-                      ? "#FF4D4D"
-                      : "#319E5B"
-                    : "#319E5B"
-                  : "#319E5B"
-              }
-              data={liveData?.length > 0 ? liveData[0] : []}
-              lock={handleLock(liveData?.length > 0 ? liveData[0] : [])}
-            />
-            <Divider />
-            <BoxComponent
-              color={
-                currentMatch?.profitLossDataMatch
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.B +
-                        "_" +
-                        currentMatch?.id
-                    ]
-                    ? currentMatch?.profitLossDataMatch[
-                        profitLossDataForMatchConstants[liveData?.type]?.B +
-                          "_" +
-                          currentMatch?.id
-                      ] < 0
-                      ? "#FF4D4D"
-                      : "#319E5B"
-                    : "#319E5B"
-                  : "#319E5B"
-              }
-              name={
-                typeOfBet !== ("Match Odds" || "Half Time")
-                  ? "No"
-                  : currentMatch?.teamB
-              }
-              rates={
-                currentMatch?.profitLossDataMatch
-                  ? currentMatch?.profitLossDataMatch[
-                      profitLossDataForMatchConstants[liveData?.type]?.B +
-                        "_" +
-                        currentMatch?.id
-                    ]
-                    ? currentMatch?.profitLossDataMatch[
-                        profitLossDataForMatchConstants[liveData?.type]?.B +
-                          "_" +
-                          currentMatch?.id
-                      ]
-                    : 0
-                  : 0
-              }
-              data={liveData?.length > 0 ? liveData[1] : []}
-              lock={handleLock(liveData?.length > 0 ? liveData[1] : [])}
-              align="end"
-            /> */}
             {locked && (
               <Box
                 sx={{
@@ -469,47 +370,6 @@ const TournamentOdds = (props: any) => {
             )}
           </Box>
         </>
-      )}
-      {false && (
-        <Box
-          sx={{
-            position: "absolute",
-            width: { xs: "90%", lg: "100%" },
-            background: "transparent",
-            alignSelf: "center",
-            marginTop: "38px",
-            left: { xs: "10%", lg: "20%" },
-            zIndex: 999,
-          }}
-        >
-          <UnlockComponent
-            unlock={locked}
-            title={(locked ? "Unlock " : "Lock ") + "Manual Bookmaker Market"}
-            handleHide={handleHide}
-            onSubmit={onSubmit}
-          />
-        </Box>
-      )}
-
-      {showUnlock && liveData?.type === "matchOdd" && (
-        <Box
-          sx={{
-            position: "absolute",
-            width: { xs: "90%", lg: "100%" },
-            background: "transparent",
-            alignSelf: "center",
-            marginTop: "38px",
-            left: { xs: "10%", lg: "20%" },
-            zIndex: 999,
-          }}
-        >
-          <UnlockComponent
-            unlock={locked}
-            title={(locked ? "Unlock " : "Lock ") + typeOfBet + " Market"}
-            handleHide={handleHide}
-            onSubmit={onSubmit}
-          />
-        </Box>
       )}
     </Box>
   );
