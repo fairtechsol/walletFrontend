@@ -84,6 +84,7 @@ const analysisListSlice = createSlice({
                 halfTime,
                 overUnder,
                 completeManual,
+                tournament,
               } = action?.payload;
               const parsedSessionBettings =
                 match?.sessionBettings?.map(JSON.parse) || [];
@@ -125,6 +126,7 @@ const analysisListSlice = createSlice({
                   convertData(parsedSessionBettings),
                   apiSession
                 ),
+                tournament,
               };
             } else {
               return match;
@@ -227,6 +229,15 @@ const analysisListSlice = createSlice({
                     match?.id]: userRedisObj[jobData?.teamCrateRedisKey],
                   },
                 };
+              } else if (jobData?.newBet?.marketType === "tournament") {
+                return {
+                  ...match,
+                  profitLossDataMatch: {
+                    ...match.profitLossDataMatch,
+                    [jobData?.betId + "_" + "profitLoss" + "_" + match?.id]:
+                      JSON.stringify(userRedisObj),
+                  },
+                };
               } else {
                 return {
                   ...match,
@@ -316,6 +327,7 @@ const analysisListSlice = createSlice({
           const {
             redisObject,
             betId,
+            teamRate,
             matchBetType,
             teamArateRedisKey,
             teamBrateRedisKey,
@@ -365,6 +377,15 @@ const analysisListSlice = createSlice({
                       },
                     };
                   }
+                } else if (matchBetType === "tournament") {
+                  return {
+                    ...match,
+                    profitLossDataMatch: {
+                      ...match?.profitLossDataMatch,
+                      [betId + "_" + "profitLoss" + "_" + match?.id]:
+                        JSON.stringify(teamRate),
+                    },
+                  };
                 } else {
                   if (redisObject[teamCrateRedisKey]) {
                     return {
