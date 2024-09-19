@@ -562,7 +562,7 @@ const MatchDetail = () => {
                   currentMatch={matchDetail}
                   minBet={Math.floor(market?.minBet) || 0}
                   maxBet={Math.floor(market?.maxBet) || 0}
-                  typeOfBet={market?.name}
+                  title={market?.name}
                   liveData={market}
                 />
               );
