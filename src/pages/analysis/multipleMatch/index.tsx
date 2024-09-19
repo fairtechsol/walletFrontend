@@ -481,6 +481,32 @@ const MultipleMatch = () => {
                                     />
                                   );
                                 })}
+                              {item?.other
+                                ?.filter(
+                                  (item: any) =>
+                                    item?.activeStatus === "live" &&
+                                    item?.isActive
+                                )
+                                ?.map((bookmaker: any) => {
+                                  return (
+                                    <LiveBookmaker
+                                      liveData={bookmaker}
+                                      currentMatch={item}
+                                      minBet={formatToINR(
+                                        Math.floor(bookmaker?.minBet)
+                                      )}
+                                      maxBet={formatToINR(
+                                        Math.floor(bookmaker?.maxBet)
+                                      )}
+                                      title={bookmaker?.name}
+                                      data={
+                                        bookmaker?.runners?.length > 0
+                                          ? bookmaker?.runners
+                                          : []
+                                      }
+                                    />
+                                  );
+                                })}
                               {item?.tournament &&
                                 item?.tournament?.map(
                                   (market: any, index: any) => {
@@ -929,6 +955,32 @@ const MultipleMatch = () => {
                                     typeOfBet={bookmaker?.name}
                                     matchOddsData={bookmaker}
                                     liveData={bookmaker}
+                                  />
+                                );
+                              })}
+                            {item?.other
+                              ?.filter(
+                                (item: any) =>
+                                  item?.activeStatus === "live" &&
+                                  item?.isActive
+                              )
+                              ?.map((bookmaker: any) => {
+                                return (
+                                  <LiveBookmaker
+                                    liveData={bookmaker}
+                                    currentMatch={item}
+                                    minBet={formatToINR(
+                                      Math.floor(bookmaker?.minBet)
+                                    )}
+                                    maxBet={formatToINR(
+                                      Math.floor(bookmaker?.maxBet)
+                                    )}
+                                    title={bookmaker?.name}
+                                    data={
+                                      bookmaker?.runners?.length > 0
+                                        ? bookmaker?.runners
+                                        : []
+                                    }
                                   />
                                 );
                               })}
@@ -1398,7 +1450,32 @@ const MultipleMatch = () => {
                                 liveData={bookmaker}
                               />
                             );
-                          })}{" "}
+                          })}
+                        {item?.other
+                          ?.filter(
+                            (item: any) =>
+                              item?.activeStatus === "live" && item?.isActive
+                          )
+                          ?.map((bookmaker: any) => {
+                            return (
+                              <LiveBookmaker
+                                liveData={bookmaker}
+                                currentMatch={item}
+                                minBet={formatToINR(
+                                  Math.floor(bookmaker?.minBet)
+                                )}
+                                maxBet={formatToINR(
+                                  Math.floor(bookmaker?.maxBet)
+                                )}
+                                title={bookmaker?.name}
+                                data={
+                                  bookmaker?.runners?.length > 0
+                                    ? bookmaker?.runners
+                                    : []
+                                }
+                              />
+                            );
+                          })}
                         {item?.tournament &&
                           item?.tournament?.map((market: any, index: any) => {
                             return (
