@@ -42,6 +42,7 @@ import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
 import { ApiConstants, sessionBettingType } from "../../../utils/Constants";
 import { formatToINR } from "../../../helper";
 import CricketCasinoMarket from "../../../components/matchDetail/CricketCasinoMarket";
+import TournamentOdds from "../../../components/matchDetail/TournamentOdds";
 
 const MultipleMatch = () => {
   const theme = useTheme();
@@ -479,7 +480,22 @@ const MultipleMatch = () => {
                                       liveData={bookmaker}
                                     />
                                   );
-                                })}{" "}
+                                })}
+                              {item?.tournament &&
+                                item?.tournament?.map(
+                                  (market: any, index: any) => {
+                                    return (
+                                      <TournamentOdds
+                                        key={index}
+                                        currentMatch={item}
+                                        minBet={Math.floor(market?.minBet) || 0}
+                                        maxBet={Math.floor(market?.maxBet) || 0}
+                                        typeOfBet={market?.name}
+                                        liveData={market}
+                                      />
+                                    );
+                                  }
+                                )}
                               {item?.firstHalfGoal?.length > 0 &&
                                 item?.firstHalfGoal
                                   ?.filter((match: any) => match?.isActive)
@@ -900,20 +916,37 @@ const MultipleMatch = () => {
                                 liveData={item?.bookmaker}
                               />
                             )}
-                            {item?.quickBookmaker?.map((bookmaker: any) => {
-                              return (
-                                <MatchOdds
-                                  currentMatch={item}
-                                  session={"manualBookMaker"}
-                                  data={bookmaker}
-                                  minBet={bookmaker?.minBet || 0}
-                                  maxBet={bookmaker?.maxBet || 0}
-                                  typeOfBet={bookmaker?.name}
-                                  matchOddsData={bookmaker}
-                                  liveData={bookmaker}
-                                />
-                              );
-                            })}
+                            {item?.quickBookmaker
+                              ?.filter((match: any) => match?.isActive)
+                              ?.map((bookmaker: any) => {
+                                return (
+                                  <MatchOdds
+                                    currentMatch={item}
+                                    session={"manualBookMaker"}
+                                    data={bookmaker}
+                                    minBet={bookmaker?.minBet || 0}
+                                    maxBet={bookmaker?.maxBet || 0}
+                                    typeOfBet={bookmaker?.name}
+                                    matchOddsData={bookmaker}
+                                    liveData={bookmaker}
+                                  />
+                                );
+                              })}
+                            {item?.tournament &&
+                              item?.tournament?.map(
+                                (market: any, index: any) => {
+                                  return (
+                                    <TournamentOdds
+                                      key={index}
+                                      currentMatch={item}
+                                      minBet={Math.floor(market?.minBet) || 0}
+                                      maxBet={Math.floor(market?.maxBet) || 0}
+                                      typeOfBet={market?.name}
+                                      liveData={market}
+                                    />
+                                  );
+                                }
+                              )}
                             {item?.firstHalfGoal?.length > 0 &&
                               item?.firstHalfGoal
                                 ?.filter((match: any) => match?.isActive)
@@ -1363,6 +1396,19 @@ const MultipleMatch = () => {
                                 maxBet={bookmaker?.maxBet || 0}
                                 typeOfBet={bookmaker?.name}
                                 liveData={bookmaker}
+                              />
+                            );
+                          })}{" "}
+                        {item?.tournament &&
+                          item?.tournament?.map((market: any, index: any) => {
+                            return (
+                              <TournamentOdds
+                                key={index}
+                                currentMatch={item}
+                                minBet={Math.floor(market?.minBet) || 0}
+                                maxBet={Math.floor(market?.maxBet) || 0}
+                                typeOfBet={market?.name}
+                                liveData={market}
                               />
                             );
                           })}
