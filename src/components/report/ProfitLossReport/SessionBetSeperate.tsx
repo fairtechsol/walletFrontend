@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
-import { formatNumber, formatToINR } from "../../../helper";
+import { formatNumber, formatToINR, stripUrl } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import moment from "moment";
@@ -419,7 +419,7 @@ const RowComponent = ({ header, data }: any) => {
       return "#F2CBCB";
     }
   };
- 
+
   return (
     <Box
       sx={{
@@ -491,14 +491,8 @@ const SingleBox = ({
   time,
   isPercent,
   rate,
-  domain
+  domain,
 }: any) => {
-  const handleUrl=(url:any)=>{
-    const address = url?.split("//");
-    const part = address?.[1]?.split(".")
-    // console.log('first',part)
-    return part[0]+'.'+part[1]
-  }
   return !header ? (
     first ? (
       <Box
@@ -607,7 +601,7 @@ const SingleBox = ({
               fontWeight: "bold",
             }}
           >
-            {rate || handleUrl(domain)}
+            {rate || stripUrl(domain)}
           </Typography>
         )}
       </Box>
