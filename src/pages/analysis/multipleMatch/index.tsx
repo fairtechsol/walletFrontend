@@ -745,46 +745,54 @@ const MultipleMatch = () => {
                                     );
                                   })}
                               {item?.apiSessionActive &&
-                                (
-                                  item?.apiSession?.cricketCasino?.section || []
-                                )?.map((item: any) => {
-                                  return (
-                                    <CricketCasinoMarket
-                                      key={item?.selectionId}
-                                      title={item?.RunnerName}
-                                      allBetsData={
-                                        item?.profitLossDataSession
-                                          ? Array.from(
-                                              item?.profitLossDataSession?.reduce(
-                                                (acc: any, obj: any) =>
-                                                  acc.has(obj.betId)
-                                                    ? acc
-                                                    : acc.add(obj.betId) && acc,
-                                                new Set()
-                                              ),
-                                              (id) =>
-                                                item?.profitLossDataSession?.find(
-                                                  (obj: any) => obj.betId === id
-                                                )
-                                            )
-                                          : []
-                                      }
-                                      currentMatch={item}
-                                      sessionData={item}
-                                      min={
-                                        formatToINR(
-                                          item?.betFairSessionMinBet
-                                        ) || 0
-                                      }
-                                      max={
-                                        formatToINR(
-                                          item?.betFairSessionMaxBet
-                                        ) || 0
-                                      }
-                                      type={sessionBettingType.cricketCasino}
-                                    />
-                                  );
-                                })}
+                                (item?.apiSession?.cricketCasino?.section || [])
+                                  ?.filter(
+                                    (item: any) =>
+                                      !(
+                                        item?.activeStatus === "unSave" ||
+                                        item?.activeStatus === "result"
+                                      )
+                                  )
+                                  ?.map((item: any) => {
+                                    return (
+                                      <CricketCasinoMarket
+                                        key={item?.selectionId}
+                                        title={item?.RunnerName}
+                                        allBetsData={
+                                          item?.profitLossDataSession
+                                            ? Array.from(
+                                                item?.profitLossDataSession?.reduce(
+                                                  (acc: any, obj: any) =>
+                                                    acc.has(obj.betId)
+                                                      ? acc
+                                                      : acc.add(obj.betId) &&
+                                                        acc,
+                                                  new Set()
+                                                ),
+                                                (id) =>
+                                                  item?.profitLossDataSession?.find(
+                                                    (obj: any) =>
+                                                      obj.betId === id
+                                                  )
+                                              )
+                                            : []
+                                        }
+                                        currentMatch={item}
+                                        sessionData={item}
+                                        min={
+                                          formatToINR(
+                                            item?.betFairSessionMinBet
+                                          ) || 0
+                                        }
+                                        max={
+                                          formatToINR(
+                                            item?.betFairSessionMaxBet
+                                          ) || 0
+                                        }
+                                        type={sessionBettingType.cricketCasino}
+                                      />
+                                    );
+                                  })}
                               {sessionProLoss?.length > 0 &&
                                 sessionProLoss.filter(
                                   (runAmount: any) =>
@@ -1206,44 +1214,52 @@ const MultipleMatch = () => {
                                   );
                                 })}
                             {item?.apiSessionActive &&
-                              (
-                                item?.apiSession?.cricketCasino?.section || []
-                              )?.map((item: any) => {
-                                return (
-                                  <CricketCasinoMarket
-                                    key={item?.selectionId}
-                                    title={item?.RunnerName}
-                                    allBetsData={
-                                      item?.profitLossDataSession
-                                        ? Array.from(
-                                            item?.profitLossDataSession?.reduce(
-                                              (acc: any, obj: any) =>
-                                                acc.has(obj.betId)
-                                                  ? acc
-                                                  : acc.add(obj.betId) && acc,
-                                              new Set()
-                                            ),
-                                            (id) =>
-                                              item?.profitLossDataSession?.find(
-                                                (obj: any) => obj.betId === id
-                                              )
-                                          )
-                                        : []
-                                    }
-                                    currentMatch={item}
-                                    sessionData={item}
-                                    min={
-                                      formatToINR(item?.betFairSessionMinBet) ||
-                                      0
-                                    }
-                                    max={
-                                      formatToINR(item?.betFairSessionMaxBet) ||
-                                      0
-                                    }
-                                    type={sessionBettingType.cricketCasino}
-                                  />
-                                );
-                              })}
+                              (item?.apiSession?.cricketCasino?.section || [])
+                                ?.filter(
+                                  (item: any) =>
+                                    !(
+                                      item?.activeStatus === "unSave" ||
+                                      item?.activeStatus === "result"
+                                    )
+                                )
+                                ?.map((item: any) => {
+                                  return (
+                                    <CricketCasinoMarket
+                                      key={item?.selectionId}
+                                      title={item?.RunnerName}
+                                      allBetsData={
+                                        item?.profitLossDataSession
+                                          ? Array.from(
+                                              item?.profitLossDataSession?.reduce(
+                                                (acc: any, obj: any) =>
+                                                  acc.has(obj.betId)
+                                                    ? acc
+                                                    : acc.add(obj.betId) && acc,
+                                                new Set()
+                                              ),
+                                              (id) =>
+                                                item?.profitLossDataSession?.find(
+                                                  (obj: any) => obj.betId === id
+                                                )
+                                            )
+                                          : []
+                                      }
+                                      currentMatch={item}
+                                      sessionData={item}
+                                      min={
+                                        formatToINR(
+                                          item?.betFairSessionMinBet
+                                        ) || 0
+                                      }
+                                      max={
+                                        formatToINR(
+                                          item?.betFairSessionMaxBet
+                                        ) || 0
+                                      }
+                                      type={sessionBettingType.cricketCasino}
+                                    />
+                                  );
+                                })}
                             {sessionProLoss?.length > 0 &&
                               sessionProLoss.filter(
                                 (runAmount: any) =>
@@ -1696,8 +1712,15 @@ const MultipleMatch = () => {
                               );
                             })}
                         {item?.apiSessionActive &&
-                          (item?.apiSession?.cricketCasino?.section || [])?.map(
-                            (item: any) => {
+                          (item?.apiSession?.cricketCasino?.section || [])
+                            ?.filter(
+                              (item: any) =>
+                                !(
+                                  item?.activeStatus === "unSave" ||
+                                  item?.activeStatus === "result"
+                                )
+                            )
+                            ?.map((item: any) => {
                               return (
                                 <CricketCasinoMarket
                                   key={item?.selectionId}
@@ -1730,8 +1753,7 @@ const MultipleMatch = () => {
                                   type={sessionBettingType.cricketCasino}
                                 />
                               );
-                            }
-                          )}
+                            })}
                         {sessionProLoss?.length > 0 &&
                           sessionProLoss.filter(
                             (runAmount: any) => runAmount?.matchId === item?.id

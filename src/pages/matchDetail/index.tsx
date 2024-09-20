@@ -804,8 +804,15 @@ const MatchDetail = () => {
                 );
               })}
           {matchDetail?.apiSessionActive &&
-            (matchDetail?.apiSession?.cricketCasino?.section || [])?.map(
-              (item: any) => {
+            (matchDetail?.apiSession?.cricketCasino?.section || [])
+              ?.filter(
+                (item: any) =>
+                  !(
+                    item?.activeStatus === "unSave" ||
+                    item?.activeStatus === "result"
+                  )
+              )
+              ?.map((item: any) => {
                 return (
                   <CricketCasinoMarket
                     key={item?.selectionId}
@@ -834,8 +841,7 @@ const MatchDetail = () => {
                     type={sessionBettingType.cricketCasino}
                   />
                 );
-              }
-            )}
+              })}
           {/* {matchDetail?.apiSessionActive &&
             matchesMobile &&
             matchDetail?.apiSession?.length > 0 && (
@@ -1141,33 +1147,43 @@ const MatchDetail = () => {
                   max={matchDetail?.betFairSessionMaxBet || 0}
                 />
               )}
-            {matchDetail?.apiSessionActive &&
-              matchDetail?.apiSession?.length > 0 && (
-                <SessionMarket
-                  title={"Session Market"}
-                  allBetsData={
-                    matchDetail?.profitLossDataSession
-                      ? Array.from(
-                          matchDetail?.profitLossDataSession?.reduce(
-                            (acc: any, obj: any) =>
-                              acc.has(obj.betId)
-                                ? acc
-                                : acc.add(obj.betId) && acc,
-                            new Set()
-                          ),
-                          (id) =>
-                            matchDetail?.profitLossDataSession?.find(
-                              (obj: any) => obj.betId === id
+            {/* {matchDetail?.apiSessionActive &&
+              Object.entries(matchDetail?.apiSession || {})
+                ?.filter(
+                  ([key, value]: any) =>
+                    value?.section?.length > 0 &&
+                    key != sessionBettingType.cricketCasino
+                )
+                ?.map(([key, value]: any) => {
+                  return (
+                    <SessionMarket
+                      key={key}
+                      title={value?.mname || key}
+                      allBetsData={
+                        matchDetail?.profitLossDataSession
+                          ? Array.from(
+                              matchDetail?.profitLossDataSession?.reduce(
+                                (acc: any, obj: any) =>
+                                  acc.has(obj.betId)
+                                    ? acc
+                                    : acc.add(obj.betId) && acc,
+                                new Set()
+                              ),
+                              (id) =>
+                                matchDetail?.profitLossDataSession?.find(
+                                  (obj: any) => obj.betId === id
+                                )
                             )
-                        )
-                      : []
-                  }
-                  currentMatch={matchDetail}
-                  sessionData={matchDetail?.apiSession}
-                  max={Math.floor(matchDetail?.betFairSessionMaxBet)}
-                  min={Math.floor(matchDetail?.betFairSessionMinBet)}
-                />
-              )}
+                          : []
+                      }
+                      currentMatch={matchDetail}
+                      sessionData={value?.section}
+                      min={formatToINR(matchDetail?.betFairSessionMinBet) || 0}
+                      max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
+                      type={key || value?.gtype}
+                    />
+                  );
+                })} */}
 
             {sessionProLoss?.length > 0 && (
               <Box
