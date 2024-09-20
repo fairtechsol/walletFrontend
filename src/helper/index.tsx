@@ -166,16 +166,16 @@ export const updateSessionBettingsItem = (
 };
 
 export const stripUrl = (url: any) => {
-  url = url.replace(/^(?:https?:\/\/)/, "");
+  url = url?.replace(/^(?:https?:\/\/)/, "");
 
-  const parts = url.split(".");
+  const parts = url?.split(".");
 
-  if (parts.length > 2) {
-    parts.pop();
-    url = parts.join(".");
-  } else if (parts.length === 2) {
-    url = parts[0];
+  if (parts?.length > 2) {
+    parts?.pop();
+    url = parts?.join(".");
+  } else if (parts?.length === 2) {
+    url = parts?.[0];
   }
 
-  return url;
+  return url || "";
 };

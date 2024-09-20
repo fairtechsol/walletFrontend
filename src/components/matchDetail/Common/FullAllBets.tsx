@@ -5,7 +5,7 @@ import moment from "moment";
 import { CHECK } from "../../../assets";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { formatToINR } from "../../../helper";
+import { formatToINR, stripUrl } from "../../../helper";
 
 const FullAllBets = (props: any) => {
   const { tag, mode, IObets, selectedBetData, setSelectedBetData } = props;
@@ -758,7 +758,7 @@ const LargeBox = ({ item, k }: any) => {
             lineHeight: 1,
           }}
         >
-          {item?.domain?.replace(/https?:\/\//, "")}
+          {stripUrl(item?.domain)}
         </Typography>
       </Typography>
       {item?.time && (
