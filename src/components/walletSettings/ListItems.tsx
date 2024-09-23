@@ -99,8 +99,10 @@ const ListItems = (props: any) => {
   useEffect(() => {
     if (success) {
       setSettlementUserModal(false);
-      dispatch(getUsersProfile());
       dispatch(userListSuccessReset());
+      setTimeout(() => {
+        dispatch(getUsersProfile());
+      }, 300);
     }
   }, [success]);
   return (
