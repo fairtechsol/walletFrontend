@@ -18,18 +18,24 @@ import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
 import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { handleSettleCommission } from "../../store/actions/user/userAction";
+import {
+  getUsersProfile,
+  handleSettleCommission,
+  userListSuccessReset,
+} from "../../store/actions/user/userAction";
 import { useDispatch } from "react-redux";
 
 const ListItems = (props: any) => {
-  const { title,currentPage } = props;
+  const { title, currentPage } = props;
   const navigate = useNavigate();
+  const [isSliderVisible, setIsSliderVisible] = useState(false);
+  const [selected, setSelected] = useState<any>(null);
+  const [settlementUserModal, setSettlementUserModal] = useState(false);
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
   const dispatch: AppDispatch = useDispatch();
-
-  const [isSliderVisible, setIsSliderVisible] = useState(false);
+  const { success } = useSelector((state: RootState) => state.user.userList);
 
   useEffect(() => {
     const handleResize = () => {
@@ -47,8 +53,6 @@ const ListItems = (props: any) => {
     };
   }, []);
 
-  const [selected, setSelected] = useState<any>(null);
-  const [settlementUserModal, setSettlementUserModal] = useState(false);
   const classes = {
     Menusx: {
       marginTop: { xs: "15px", lg: "30px", md: "18px" },
@@ -91,6 +95,14 @@ const ListItems = (props: any) => {
   const handleAmountChange = () => {
     console.log("");
   };
+
+  useEffect(() => {
+    if (success) {
+      setSettlementUserModal(false);
+      dispatch(getUsersProfile());
+      dispatch(userListSuccessReset());
+    }
+  }, [success]);
   return (
     <>
       <Box sx={{ width: "100%" }}>
