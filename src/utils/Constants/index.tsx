@@ -2,7 +2,10 @@ import {
   AmarAkbarAnthony,
   AndarBahar2,
   Baccarat,
+  BallByBall,
   BollywoodCasino,
+  CasinoMeter,
+  CasinoQueen,
   CasinoWar,
   Cricket,
   CriketMatch2020,
@@ -20,6 +23,7 @@ import {
   Teenpatti20,
   Tennis,
   Thirty2CardsA,
+  WorliMatka,
 } from "../../assets";
 
 export const ApiConstants = {
@@ -260,6 +264,10 @@ export const cardGamesTypeConstants: any = {
   btable: "btable",
   race20: "race20",
   cricketv3: "cricketv3",
+  ballbyball: "ballbyball",
+  cmeter: "cmeter",
+  queen: "queen",
+  worli: "worli",
 };
 
 export const gameIconConstants = {
@@ -296,6 +304,10 @@ export const gameIconConstants = {
   [cardGamesTypeConstants["3cardj"]]: Race2020,
   [cardGamesTypeConstants.baccarat]: Baccarat,
   [cardGamesTypeConstants.baccarat2]: Baccarat,
+  [cardGamesTypeConstants.ballbyball]: BallByBall,
+  [cardGamesTypeConstants.cmeter]: CasinoMeter,
+  [cardGamesTypeConstants.queen]: CasinoQueen,
+  [cardGamesTypeConstants.worli]: WorliMatka,
 };
 
 export const sessionBettingType = {
