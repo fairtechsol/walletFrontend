@@ -420,44 +420,44 @@ export const profitLossDataForMatchConstants = {
 
 // use below baseUrl for testing build
 
-export const serviceUrl =
-  process.env.NODE_ENV === Constants.PRODUCTION
-    ? Constants.apiBasePath
-    : Constants.localPath;
-
-export const baseUrls = {
-  socket:
-    process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.apiBasePath
-      : Constants.localPath,
-  thirdParty:
-    process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.thirdParty
-      : Constants.localPathThird,
-  expertSocket:
-    process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.expertPath
-      : Constants.localPathExpert,
-};
-
-// use below baseUrl for live build
-
 // export const serviceUrl =
 //   process.env.NODE_ENV === Constants.PRODUCTION
-//     ? Constants.apiBasePathLive
+//     ? Constants.apiBasePath
 //     : Constants.localPath;
 
 // export const baseUrls = {
 //   socket:
 //     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.apiBasePathLive
+//       ? Constants.apiBasePath
 //       : Constants.localPath,
 //   thirdParty:
 //     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.thirdPartyLive
+//       ? Constants.thirdParty
 //       : Constants.localPathThird,
 //   expertSocket:
 //     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.expertPathLive
+//       ? Constants.expertPath
 //       : Constants.localPathExpert,
 // };
+
+// use below baseUrl for live build
+
+export const serviceUrl =
+  process.env.NODE_ENV === Constants.PRODUCTION
+    ? Constants.apiBasePathLive
+    : Constants.localPath;
+
+export const baseUrls = {
+  socket:
+    process.env.NODE_ENV === Constants.PRODUCTION
+      ? Constants.apiBasePathLive
+      : Constants.localPath,
+  thirdParty:
+    process.env.NODE_ENV === Constants.PRODUCTION
+      ? Constants.thirdPartyLive
+      : Constants.localPathThird,
+  expertSocket:
+    process.env.NODE_ENV === Constants.PRODUCTION
+      ? Constants.expertPathLive
+      : Constants.localPathExpert,
+};
