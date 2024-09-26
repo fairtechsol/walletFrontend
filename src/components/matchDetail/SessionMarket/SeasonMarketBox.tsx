@@ -1,10 +1,4 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
 import { formatNumber, formatToINR } from "../../../helper";
