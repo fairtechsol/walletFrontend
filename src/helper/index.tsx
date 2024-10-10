@@ -170,12 +170,13 @@ export const stripUrl = (url: any) => {
 
   const parts = url?.split(".");
 
-  if (parts?.length > 2) {
-    parts?.pop();
-    url = parts?.join(".");
-  } else if (parts?.length === 2) {
-    url = parts?.[0];
-  }
+  url = parts?.[parts.length-2]
+  // if (parts?.length > 2) {
+  //   parts?.pop();
+  //   url = parts?.join(".");
+  // } else if (parts?.length === 2) {
+  //   url = parts?.[0];
+  // }
 
   return url || "";
 };
