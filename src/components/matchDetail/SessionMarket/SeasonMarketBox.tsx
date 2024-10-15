@@ -10,7 +10,7 @@ const SeasonMarketBox = (props: any) => {
   const { newData, setData, profitLossData, index, type } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
+// console.log('first',type)
   return (
     <>
       <Box
@@ -196,7 +196,7 @@ const SeasonMarketBox = (props: any) => {
                     lock={
                       [null, 0, "0"].includes(
                         Math.floor(newData.ex?.availableToLay[0]?.price ?? 0)
-                      )
+                      ) || type==="khado"
                         ? true
                         : false
                     }
