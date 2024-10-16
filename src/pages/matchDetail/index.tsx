@@ -36,7 +36,7 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { customSortOnName, formatToINR } from "../../helper";
+import { customSortBySessionMarketName, customSortOnName, formatToINR } from "../../helper";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
 import CricketCasinoMarket from "../../components/matchDetail/CricketCasinoMarket";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
@@ -510,6 +510,31 @@ const MatchDetail = () => {
               title={matchDetail?.bookmaker?.name}
             />
           )}
+          {matchDetail?.other &&
+            matchDetail?.other?.map((match: any) => (
+              <LiveBookmaker
+                currentMatch={matchDetail}
+                showBox={match?.activeStatus === "save"}
+                minBet={Math.floor(match?.minBet)}
+                maxBet={Math.floor(match?.maxBet)}
+                liveData={match}
+                data={match?.runners?.length > 0 ? match?.runners : []}
+                title={match?.name}
+              />
+            ))}
+            {matchDetail?.tournament &&
+            matchDetail?.tournament?.map((market: any, index: any) => {
+              return (
+                <TournamentOdds
+                  key={index}
+                  currentMatch={matchDetail}
+                  minBet={Math.floor(market?.minBet) || 0}
+                  maxBet={Math.floor(market?.maxBet) || 0}
+                  title={market?.name}
+                  liveData={market}
+                />
+              );
+            })}
           {matchDetail?.marketBookmaker2?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
@@ -542,31 +567,8 @@ const MatchDetail = () => {
                 />
               );
             })}
-          {matchDetail?.other &&
-            matchDetail?.other?.map((match: any) => (
-              <LiveBookmaker
-                currentMatch={matchDetail}
-                showBox={match?.activeStatus === "save"}
-                minBet={Math.floor(match?.minBet)}
-                maxBet={Math.floor(match?.maxBet)}
-                liveData={match}
-                data={match?.runners?.length > 0 ? match?.runners : []}
-                title={match?.name}
-              />
-            ))}
-          {matchDetail?.tournament &&
-            matchDetail?.tournament?.map((market: any, index: any) => {
-              return (
-                <TournamentOdds
-                  key={index}
-                  currentMatch={matchDetail}
-                  minBet={Math.floor(market?.minBet) || 0}
-                  maxBet={Math.floor(market?.maxBet) || 0}
-                  title={market?.name}
-                  liveData={market}
-                />
-              );
-            })}
+          
+          
           {matchDetail?.firstHalfGoal?.length > 0 &&
             matchDetail?.firstHalfGoal
               ?.filter((item: any) => item?.isActive)
@@ -639,22 +641,7 @@ const MatchDetail = () => {
                   />
                 );
               })}
-          {matchDetail?.apiTideMatch?.isActive && (
-            <MatchOdds
-              currentMatch={matchDetail}
-              typeOfBet={"Tied Match"}
-              title={matchDetail?.apiTideMatch?.name}
-              showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
-              liveData={matchDetail?.apiTideMatch}
-              data={
-                matchDetail?.apiTideMatch?.runners?.length > 0
-                  ? matchDetail?.apiTideMatch?.runners
-                  : []
-              }
-            />
-          )}
+         
           {matchDetail?.apiTideMatch2?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
@@ -671,7 +658,7 @@ const MatchDetail = () => {
               }
             />
           )}
-          {matchDetail?.manualTiedMatch && matchesMobile && (
+           {matchDetail?.manualTiedMatch && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Tied Match"}
               data={matchDetail?.manualTiedMatch}
@@ -681,24 +668,6 @@ const MatchDetail = () => {
               maxBet={Math.floor(matchDetail?.manualTiedMatch?.maxBet)}
               liveData={matchDetail?.manualTiedMatch}
               title={matchDetail?.manualTiedMatch?.name}
-            />
-          )}
-          {matchDetail?.marketCompleteMatch?.isActive && (
-            <MatchOdds
-              currentMatch={matchDetail}
-              typeOfBet={"Market Complete Match"}
-              showBox={
-                matchDetail?.marketCompleteMatch?.activeStatus === "save"
-              }
-              minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
-              maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
-              liveData={matchDetail?.marketCompleteMatch}
-              data={
-                matchDetail?.marketCompleteMatch?.runners?.length > 0
-                  ? matchDetail?.marketCompleteMatch?.runners
-                  : []
-              }
-              title={matchDetail?.marketCompleteMatch?.name}
             />
           )}
           {matchDetail?.marketCompleteMatch1?.isActive && (
@@ -732,6 +701,9 @@ const MatchDetail = () => {
               title={matchDetail?.manualCompleteMatch?.name}
             />
           )}
+
+
+          
 
           {matchDetail?.manualSessionActive &&
             matchesMobile &&
@@ -773,6 +745,8 @@ const MatchDetail = () => {
                   value?.section?.length > 0 &&
                   key != sessionBettingType.cricketCasino
               )
+              ?.slice()
+              ?.sort(customSortBySessionMarketName)
               ?.map(([key, value]: any) => {
                 return (
                   <SessionMarket
@@ -842,6 +816,41 @@ const MatchDetail = () => {
                   />
                 );
               })}
+              {matchDetail?.apiTideMatch?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Tied Match"}
+              title={matchDetail?.apiTideMatch?.name}
+              showBox={matchDetail?.apiTideMatch?.activeStatus === "save"}
+              minBet={Math.floor(matchDetail?.apiTideMatch?.minBet)}
+              maxBet={Math.floor(matchDetail?.apiTideMatch?.maxBet)}
+              liveData={matchDetail?.apiTideMatch}
+              data={
+                matchDetail?.apiTideMatch?.runners?.length > 0
+                  ? matchDetail?.apiTideMatch?.runners
+                  : []
+              }
+            />
+          )}
+         
+          {matchDetail?.marketCompleteMatch?.isActive && (
+            <MatchOdds
+              currentMatch={matchDetail}
+              typeOfBet={"Market Complete Match"}
+              showBox={
+                matchDetail?.marketCompleteMatch?.activeStatus === "save"
+              }
+              minBet={Math.floor(matchDetail?.marketCompleteMatch?.minBet)}
+              maxBet={Math.floor(matchDetail?.marketCompleteMatch?.maxBet)}
+              liveData={matchDetail?.marketCompleteMatch}
+              data={
+                matchDetail?.marketCompleteMatch?.runners?.length > 0
+                  ? matchDetail?.marketCompleteMatch?.runners
+                  : []
+              }
+              title={matchDetail?.marketCompleteMatch?.name}
+            />
+          )}
           {/* {matchDetail?.apiSessionActive &&
             matchesMobile &&
             matchDetail?.apiSession?.length > 0 && (
