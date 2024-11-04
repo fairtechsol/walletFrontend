@@ -17,6 +17,7 @@ import {
   InstantWorli,
   Lucky7A,
   Poker,
+  Politics,
   Race2020,
   SuperOver,
   TeenPatti1Day,
@@ -233,6 +234,7 @@ export const gameConstants = {
   tennis: "tennis",
   horseRacing: "horseRacing",
   greyHound: "greyHound",
+  politics: "politics",
 };
 
 export const cardGamesTypeConstants: any = {
@@ -276,6 +278,7 @@ export const gameIconConstants = {
   [gameConstants.tennis]: Tennis,
   [gameConstants.horseRacing]: HorseRacing,
   [gameConstants.greyHound]: GreyHound,
+  [gameConstants.politics]: Politics,
   [cardGamesTypeConstants.dragonTiger20]: DragonTiger20,
   [cardGamesTypeConstants.dt202]: DragonTiger20,
   [cardGamesTypeConstants.dtl20]: DragonTiger20,
