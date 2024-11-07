@@ -279,6 +279,7 @@ const Analysis = () => {
                   setSelected={() => changeSelected(match)}
                   mode={mode}
                   selected={!selected.includes(match.id as never)}
+                  title={match?.title}
                   team={match?.teamA}
                   team2={match?.teamB}
                 />
