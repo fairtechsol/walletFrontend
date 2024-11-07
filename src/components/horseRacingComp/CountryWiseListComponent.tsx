@@ -37,7 +37,7 @@ const CountryWiseListComponent = ({
   return (
     <>
       {countryWiseList && countryWiseList?.length === 0 && (
-        <span>No Record Found</span>
+        <span style={{ color: "#fff" }}>No Record Found</span>
       )}
       {countryWiseList && countryWiseList?.length > 0 && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
