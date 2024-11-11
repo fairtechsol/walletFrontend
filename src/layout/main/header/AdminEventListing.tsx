@@ -12,6 +12,7 @@ import {
   WALLET,
   HorseRacing,
   GreyHound,
+  Politics,
 } from "../../../assets";
 import AdminEventComponent from "./AdminEventComponent";
 import { NavLink } from "react-router-dom";
@@ -41,6 +42,13 @@ const data = [
     image: Tennis,
     url: "matchList/tennis",
     alt: "Tennis",
+  },
+  {
+    id: 14,
+    title: "POLITICS",
+    image: Politics,
+    url: "matchList/politics",
+    alt: "Politics",
   },
   {
     id: 5,

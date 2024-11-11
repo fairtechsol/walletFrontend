@@ -36,7 +36,11 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { customSortBySessionMarketName, customSortOnName, formatToINR } from "../../helper";
+import {
+  customSortBySessionMarketName,
+  customSortOnName,
+  formatToINR,
+} from "../../helper";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
 import CricketCasinoMarket from "../../components/matchDetail/CricketCasinoMarket";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
@@ -87,10 +91,9 @@ const MatchDetail = () => {
       });
       dispatch(
         AllBetDelete({
-          url:
-            matchDetail?.matchType === "cricket"
-              ? ApiConstants.MATCH.BETDELETE
-              : ApiConstants.MATCH.BETDELETEOTHER,
+          url: ["cricket", "politics"].includes(matchDetail?.matchType)
+            ? ApiConstants.MATCH.BETDELETE
+            : ApiConstants.MATCH.BETDELETEOTHER,
           data: payload,
         })
       );
@@ -522,7 +525,7 @@ const MatchDetail = () => {
                 title={match?.name}
               />
             ))}
-            {matchDetail?.tournament &&
+          {matchDetail?.tournament &&
             matchDetail?.tournament?.map((market: any, index: any) => {
               return (
                 <TournamentOdds
@@ -567,8 +570,7 @@ const MatchDetail = () => {
                 />
               );
             })}
-          
-          
+
           {matchDetail?.firstHalfGoal?.length > 0 &&
             matchDetail?.firstHalfGoal
               ?.filter((item: any) => item?.isActive)
@@ -641,7 +643,7 @@ const MatchDetail = () => {
                   />
                 );
               })}
-         
+
           {matchDetail?.apiTideMatch2?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
@@ -658,7 +660,7 @@ const MatchDetail = () => {
               }
             />
           )}
-           {matchDetail?.manualTiedMatch && matchesMobile && (
+          {matchDetail?.manualTiedMatch && matchesMobile && (
             <MatchOdds
               typeOfBet={"Manual Tied Match"}
               data={matchDetail?.manualTiedMatch}
@@ -701,9 +703,6 @@ const MatchDetail = () => {
               title={matchDetail?.manualCompleteMatch?.name}
             />
           )}
-
-
-          
 
           {matchDetail?.manualSessionActive &&
             matchesMobile &&
@@ -816,7 +815,7 @@ const MatchDetail = () => {
                   />
                 );
               })}
-              {matchDetail?.apiTideMatch?.isActive && (
+          {matchDetail?.apiTideMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
               typeOfBet={"Tied Match"}
@@ -832,7 +831,7 @@ const MatchDetail = () => {
               }
             />
           )}
-         
+
           {matchDetail?.marketCompleteMatch?.isActive && (
             <MatchOdds
               currentMatch={matchDetail}
