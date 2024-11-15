@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import moment from "moment";
-import { formatToINR } from "../../../helper";
+import { formatToINR, stripUrl } from "../../../helper";
 const AllRateSeperate = ({
   profit,
   mark,
@@ -499,7 +499,7 @@ const RowComponent = ({ header, data }: any) => {
     const timeString = moment
       .utc(date)
       .utcOffset("+05:30")
-      .format("hh:mm:ss A");
+      .format("DD-MM-YYYY hh:mm:ss A");
     return timeString;
   };
   const getColor = () => {
@@ -843,7 +843,7 @@ const SingleBox = ({
             textAlign: "center",
           }}
         >
-          {domain}
+          {stripUrl(domain)}
         </Typography>
       </Box>
     ) : (

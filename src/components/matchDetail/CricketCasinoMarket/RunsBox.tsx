@@ -123,9 +123,7 @@ const RunsBox = ({ item, currentOdd }: any) => {
           </Typography>
         </Box>
       </Box>
-      <Box ref={containerRef} sx={{ height: "350px", overflowY: "scroll", "::-webkit-scrollbar": {
-              display: "none",
-            }, }}>
+      <Box ref={containerRef} sx={{ height: "350px", overflowY: "scroll" }}>
         {JSON.parse(item?.proLoss)?.betPlaced?.length > 0 ? (
           JSON.parse(item?.proLoss)?.betPlaced?.map((v: any) => {
             const getColor = (value: any) => {

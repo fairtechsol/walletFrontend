@@ -32,9 +32,11 @@ export const getMatchDetail = createAsyncThunk<any, any>(
     try {
       const resp = await service.get(
         `${ApiConstants.MATCH.GET}${
-          requestData?.matchType != "cricket" ? `/other` : ""
+          !["cricket", "politics"].includes(requestData?.matchType)
+            ? `/other`
+            : ""
         }/${requestData?.matchId}${
-          requestData?.matchType != "cricket"
+          !["cricket", "politics"].includes(requestData?.matchType)
             ? `?matchType=${requestData?.matchType}`
             : ""
         }`

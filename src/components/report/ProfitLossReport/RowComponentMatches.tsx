@@ -105,9 +105,15 @@ const RowComponentMatches = ({
         <Box
           sx={{
             width: {
-              xs: item?.eventType === "cricket" ? "40%" : "65%",
-              sm: item?.eventType === "cricket" ? "55%" : "80%",
-              lg: item?.eventType === "cricket" ? "56%" : "80%",
+              xs: ["cricket", "politics"].includes(item?.eventType)
+                ? "40%"
+                : "65%",
+              sm: ["cricket", "politics"].includes(item?.eventType)
+                ? "55%"
+                : "80%",
+              lg: ["cricket", "politics"].includes(item?.eventType)
+                ? "56%"
+                : "80%",
             },
             position: "relative",
             height: "100%",
@@ -292,7 +298,7 @@ const RowComponentMatches = ({
             />
           </Box>
         </Box>
-        {item?.eventType === "cricket" && (
+        {["cricket", "politics"].includes(item?.eventType) && (
           <Box
             onClick={(e) => {
               e.stopPropagation();

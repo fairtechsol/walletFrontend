@@ -1,13 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
+import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { handleNumber } from "../../../helper";
 
-const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
+const PlaceBetComponent = ({ newData, profitLoss, color, index }: any) => {
   const dispatch: AppDispatch = useDispatch();
-  const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
-
+  // const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
   return (
     <Box
       //   onClick={handleClick}
@@ -16,18 +15,16 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
       <Box
         // ref={innerRef}
         onClick={() => {
-          if (type === "session") {
-            dispatch(
-              getSessionProLoss({
-                matchId: newData?.matchId,
-                id: newData?.id,
-                name: newData?.name ?? newData?.RunnerName,
-                type: !newData?.isManual
-                  ? "Session Market"
-                  : "Quick Session Market",
-              })
-            );
-          }
+          dispatch(
+            getSessionProLoss({
+              matchId: newData?.matchId,
+              id: newData?.id,
+              name: newData?.name ?? newData?.RunnerName,
+              type: !newData?.isManual
+                ? "Session Market"
+                : "Quick Session Market",
+            })
+          );
         }}
         sx={{
           background: "#0B4F26",
@@ -44,7 +41,7 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
           zIndex: 100,
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             background: "#FDF21A",
             borderRadius: "3px",
@@ -65,10 +62,10 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
           >
             Total Bet :{" "}
             <span style={{ color: "#0B4F26" }}>
-              {profitLoss?.totalBet || 0}
+              {Math.floor(profitLoss?.totalBet) || 0}
             </span>
           </Typography>
-        </Box>
+        </Box> */}
         <Box sx={{ zIndex: 100, display: "flex", flexDirection: "column" }}>
           <Typography
             sx={{
@@ -82,8 +79,12 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
               color: "white",
             }}
           >
-            {" "}
-            {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
+            {!profitLoss?.profitLoss
+              ? "Profit/Loss"
+              : handleNumber(
+                  parseFloat(profitLoss?.profitLoss[index]).toFixed(2),
+                  color
+                )}
           </Typography>
         </Box>
       </Box>

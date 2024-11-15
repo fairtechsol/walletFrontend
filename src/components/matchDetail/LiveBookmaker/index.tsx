@@ -6,6 +6,7 @@ import Divider from "../../Inplay/Divider";
 import BoxComponent from "./BoxComponent";
 import { formatToINR } from "../../../helper";
 import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
+import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 
 const LiveBookmaker = (props: any) => {
   const {
@@ -22,6 +23,8 @@ const LiveBookmaker = (props: any) => {
     showBox,
     handleBlock,
     handleHide,
+    title,
+    liveData,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -83,7 +86,7 @@ const LiveBookmaker = (props: any) => {
               marginLeft: "7px",
             }}
           >
-            Bookmaker Market
+            {title}
           </Typography>
           {blockMatch && (
             <img
@@ -116,14 +119,126 @@ const LiveBookmaker = (props: any) => {
           }}
         >
           <SmallBox
-            color={"#FF4D4D"}
+            // color={"#FF4D4D"}
             valueA={bookRatioA(
-              currentMatch?.profitLossDataMatch?.teamARate,
-              currentMatch?.profitLossDataMatch?.teamBRate
+              currentMatch?.profitLossDataMatch
+                ? liveData?.type === "other"
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        liveData?.id +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    : 0
+                  : currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  : 0
+                : 0,
+              currentMatch?.profitLossDataMatch
+                ? liveData?.type === "other"
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        liveData?.id +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    : 0
+                  : currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  : 0
+                : 0
             )}
             valueB={bookRatioB(
-              currentMatch?.profitLossDataMatch?.teamARate,
-              currentMatch?.profitLossDataMatch?.teamBRate
+              currentMatch?.profitLossDataMatch
+                ? liveData?.type === "other"
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        liveData?.id +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    : 0
+                  : currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.A +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  : 0
+                : 0,
+              currentMatch?.profitLossDataMatch
+                ? liveData?.type === "other"
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        liveData?.id +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    : 0
+                  : currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  ? currentMatch?.profitLossDataMatch[
+                      profitLossDataForMatchConstants[liveData?.type]?.B +
+                        "_" +
+                        currentMatch?.id
+                    ]
+                  : 0
+                : 0
             )}
           />
           <img
@@ -244,13 +359,69 @@ const LiveBookmaker = (props: any) => {
               teamImage={currentMatch?.teamA_Image}
               name={currentMatch?.teamA}
               rates={
-                currentMatch?.profitLossDataMatch?.teamARate
-                  ? currentMatch?.profitLossDataMatch?.teamARate
+                currentMatch?.profitLossDataMatch
+                  ? liveData?.type === "other"
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                      ? currentMatch?.profitLossDataMatch[
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            liveData?.id +
+                            "_" +
+                            currentMatch?.id
+                        ]
+                      : 0
+                    : currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    : 0
                   : 0
               }
               color={
-                currentMatch?.profitLossDataMatch?.teamARate <= 0
-                  ? "#FF4D4D"
+                currentMatch?.profitLossDataMatch
+                  ? liveData?.type === "other"
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                      ? currentMatch?.profitLossDataMatch[
+                          profitLossDataForMatchConstants[liveData?.type]?.A +
+                            "_" +
+                            liveData?.id +
+                            "_" +
+                            currentMatch?.id
+                        ] < 0
+                        ? "#FF4D4D"
+                        : "#319E5B"
+                      : "#319E5B"
+                    : currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.A +
+                          "_" +
+                          currentMatch?.id
+                      ] < 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                    : "#319E5B"
                   : "#319E5B"
               }
               data={data?.length > 0 ? data[0] : []}
@@ -263,13 +434,69 @@ const LiveBookmaker = (props: any) => {
               teamImage={currentMatch?.teamB_Image}
               name={currentMatch?.teamB}
               rates={
-                currentMatch?.profitLossDataMatch?.teamBRate
-                  ? currentMatch?.profitLossDataMatch?.teamBRate
+                currentMatch?.profitLossDataMatch
+                  ? liveData?.type === "other"
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                      ? currentMatch?.profitLossDataMatch[
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            liveData?.id +
+                            "_" +
+                            currentMatch?.id
+                        ]
+                      : 0
+                    : currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    : 0
                   : 0
               }
               color={
-                currentMatch?.profitLossDataMatch?.teamBRate <= 0
-                  ? "#FF4D4D"
+                currentMatch?.profitLossDataMatch
+                  ? liveData?.type === "other"
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          liveData?.id +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                      ? currentMatch?.profitLossDataMatch[
+                          profitLossDataForMatchConstants[liveData?.type]?.B +
+                            "_" +
+                            liveData?.id +
+                            "_" +
+                            currentMatch?.id
+                        ] < 0
+                        ? "#FF4D4D"
+                        : "#319E5B"
+                      : "#319E5B"
+                    : currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          currentMatch?.id
+                      ]
+                    ? currentMatch?.profitLossDataMatch[
+                        profitLossDataForMatchConstants[liveData?.type]?.B +
+                          "_" +
+                          currentMatch?.id
+                      ] < 0
+                      ? "#FF4D4D"
+                      : "#319E5B"
+                    : "#319E5B"
                   : "#319E5B"
               }
               data={data?.length > 0 ? data[1] : []}
@@ -285,14 +512,72 @@ const LiveBookmaker = (props: any) => {
                   }
                   // color={"#FF4D4D"}
                   color={
-                    currentMatch?.profitLossDataMatch?.teamCRate <= 0
-                      ? "#FF4D4D"
+                    currentMatch?.profitLossDataMatch
+                      ? liveData?.type === "other"
+                        ? currentMatch?.profitLossDataMatch[
+                            profitLossDataForMatchConstants[liveData?.type]?.C +
+                              "_" +
+                              liveData?.id +
+                              "_" +
+                              currentMatch?.id
+                          ]
+                          ? currentMatch?.profitLossDataMatch[
+                              profitLossDataForMatchConstants[liveData?.type]
+                                ?.C +
+                                "_" +
+                                liveData?.id +
+                                "_" +
+                                currentMatch?.id
+                            ] < 0
+                            ? "#FF4D4D"
+                            : "#319E5B"
+                          : "#319E5B"
+                        : currentMatch?.profitLossDataMatch[
+                            profitLossDataForMatchConstants[liveData?.type]?.C +
+                              "_" +
+                              currentMatch?.id
+                          ]
+                        ? currentMatch?.profitLossDataMatch[
+                            profitLossDataForMatchConstants[liveData?.type]?.C +
+                              "_" +
+                              currentMatch?.id
+                          ] < 0
+                          ? "#FF4D4D"
+                          : "#319E5B"
+                        : "#319E5B"
                       : "#319E5B"
                   }
                   name={currentMatch?.teamC}
                   rates={
-                    currentMatch?.profitLossDataMatch?.teamCRate
-                      ? currentMatch?.profitLossDataMatch?.teamCRate
+                    currentMatch?.profitLossDataMatch
+                      ? liveData?.type === "other"
+                        ? currentMatch?.profitLossDataMatch[
+                            profitLossDataForMatchConstants[liveData?.type]?.C +
+                              "_" +
+                              liveData?.id +
+                              "_" +
+                              currentMatch?.id
+                          ]
+                          ? currentMatch?.profitLossDataMatch[
+                              profitLossDataForMatchConstants[liveData?.type]
+                                ?.C +
+                                "_" +
+                                liveData?.id +
+                                "_" +
+                                currentMatch?.id
+                            ]
+                          : 0
+                        : currentMatch?.profitLossDataMatch[
+                            profitLossDataForMatchConstants[liveData?.type]?.C +
+                              "_" +
+                              currentMatch?.id
+                          ]
+                        ? currentMatch?.profitLossDataMatch[
+                            profitLossDataForMatchConstants[liveData?.type]?.C +
+                              "_" +
+                              currentMatch?.id
+                          ]
+                        : 0
                       : 0
                   }
                   data={data?.length > 0 ? data[2] : []}
@@ -323,7 +608,7 @@ const LiveBookmaker = (props: any) => {
                     alignItems: "center",
                     justifyContent: "center",
                     display: "flex",
-                    zIndex:'999'
+                    zIndex: "999",
                   }}
                 >
                   <img src={LOCKED} style={{ width: "35px", height: "40px" }} />

@@ -1,38 +1,33 @@
 import { Box, Typography } from "@mui/material";
 import { UD } from "../../../assets";
-// import { useState } from "react";
-// import DropdownMenu from "./DropDownMenu";
-import { AppDispatch } from "../../../store/store";
-// import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
 import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { handleNumber } from "../../../helper";
 
-const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
+const PlaceBetComponentWeb = ({
+  newData,
+  profitLoss,
+  color,
+  // sessionData,
+  index,
+}: any) => {
   const dispatch: AppDispatch = useDispatch();
-  // const { runAmount } = useSelector((state: RootState) => state.match.bets);
-  // const [show, setShow] = useState(false);
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-  const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
+  // const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
   return (
     <>
       <Box
         onClick={() => {
-          if (type === "session") {
-            dispatch(
-              getSessionProLoss({
-                id: newData?.id,
-                matchId: newData?.matchId,
-                name: newData?.name ?? newData?.RunnerName,
-                type: !newData?.isManual
-                  ? "Session Market"
-                  : "Quick Session Market",
-              })
-            );
-          }
+          dispatch(
+            getSessionProLoss({
+              matchId: newData?.matchId,
+              id: newData?.id,
+              name: newData?.name ?? newData?.RunnerName,
+              type: !newData?.isManual
+                ? "Session Market"
+                : "Quick Session Market",
+            })
+          );
         }}
         sx={{
           background: "#0B4F26",
@@ -47,7 +42,7 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
           position: "absolute",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             background: "#FDF21A",
             borderRadius: "3px",
@@ -67,9 +62,9 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
           <Typography
             sx={{ fontSize: ".6vw", fontWeight: "bold", color: "#0B4F26" }}
           >
-            {profitLoss?.totalBet || 0}
+            {Math.floor(profitLoss?.totalBet) || 0}
           </Typography>
-        </Box>
+        </Box> */}
         <Box
           sx={{
             width: "100%",
@@ -85,23 +80,18 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
               color: "white",
             }}
           >
-            {" "}
-            {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
+            {!profitLoss?.profitLoss
+              ? "Profit/Loss"
+              : handleNumber(
+                  parseFloat(profitLoss?.profitLoss[index]).toFixed(2),
+                  color
+                )}
           </Typography>
           <img
             src={UD}
             style={{ width: "12px", height: "12px", marginLeft: "5px" }}
           />
         </Box>
-        {/* {show && (
-          <DropdownMenu
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            list={runAmount && runAmount}
-            // list={profitLoss?.betData}
-            handleClose={handleClose}
-          />
-        )} */}
       </Box>
     </>
   );

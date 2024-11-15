@@ -68,3 +68,8 @@ export { default as AmarAkbarAnthony } from "./images/amarAkbarAnthony.png";
 export { default as BollywoodCasino } from "./images/bollywoodCasino.png";
 export { default as InstantWorli } from "./images/instantWorli.png";
 export { default as Baccarat } from "./images/baccarat.png";
+export { default as CasinoQueen } from "./images/casinoQueen.png";
+export { default as CasinoMeter } from "./images/casinoMeter.png";
+export { default as BallByBall } from "./images/snooker.webp";
+export { default as WorliMatka } from "./images/worliMatka.png";
+export { default as Politics } from "./images/politics.png";

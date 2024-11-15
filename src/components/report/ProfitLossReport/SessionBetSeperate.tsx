@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
-import { formatNumber, formatToINR } from "../../../helper";
+import { formatNumber, formatToINR, stripUrl } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import moment from "moment";
@@ -125,7 +125,7 @@ const SessionBetSeperate = ({
               </Box>
               <RowComponent
                 header={true}
-                data={["Matched Bet", "Username", "Odds", "Yes/No", "Stake"]}
+                data={["Place Time", "Username", "Odds", "Yes/No", "Stake"]}
               />
               {profit && (
                 <Box
@@ -419,6 +419,7 @@ const RowComponent = ({ header, data }: any) => {
       return "#F2CBCB";
     }
   };
+
   return (
     <Box
       sx={{
@@ -447,7 +448,7 @@ const RowComponent = ({ header, data }: any) => {
             data={data?.username || data?.userName || data?.user?.userName}
             isPercent={true}
             header={header}
-            rate={data?.domain}
+            domain={data?.domain}
           />
           <SingleBox
             color={getColor()}
@@ -490,6 +491,7 @@ const SingleBox = ({
   time,
   isPercent,
   rate,
+  domain,
 }: any) => {
   return !header ? (
     first ? (
@@ -506,26 +508,26 @@ const SingleBox = ({
         <Typography
           sx={{
             fontWeight: "700",
-            fontSize: { xs: "9px", lg: "11px" },
+            fontSize: { xs: "9px", lg: "0.6vw" },
             color: "black",
             textAlign: "center",
           }}
         >
           {time}
         </Typography>
-        <Typography
+        {/* <Typography
           sx={{
             maxHeight: "2em",
-            overflowY: "scroll",
+            // overflowY: "scroll",
             lineHeight: 1,
             fontWeight: "600",
-            fontSize: { lg: "12px", xs: "10px" },
+            fontSize: { lg: "0.6vw", xs: "10px" },
             color: "black",
             textAlign: "center",
           }}
         >
           {data}
-        </Typography>
+        </Typography> */}
       </Box>
     ) : up ? (
       <Box
@@ -599,7 +601,7 @@ const SingleBox = ({
               fontWeight: "bold",
             }}
           >
-            {rate}
+            {rate || stripUrl(domain)}
           </Typography>
         )}
       </Box>

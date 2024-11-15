@@ -218,6 +218,7 @@ const TableDataRow = (props: any) => {
           }}
         >
           {data?.odds}
+          {data?.marketType==="session"?<><br/>{data?.rate}</>:""}
         </Typography>
       </Box>
       <Box

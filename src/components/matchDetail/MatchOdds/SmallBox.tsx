@@ -30,8 +30,7 @@ const SmallBox = (props: any) => {
         <Typography
           sx={{ color: "#FF4D4D", fontSize: "8px", fontWeight: "bold" }}
         >
-          {" "}
-          Book{" "}
+          Book
         </Typography>
         <Typography
           sx={{
@@ -41,8 +40,7 @@ const SmallBox = (props: any) => {
             color: valueA < 0 ? `#FF4D4D` : `#319E5B`,
           }}
         >
-          {" "}
-          {handleNumber(parseFloat(valueA || 0.00), color)}
+          {handleNumber(parseFloat(valueA || 0.0), color)}
           {/* {valueA < 0 ? ` ${valueA}` : `${valueA}`}{" "} */}
         </Typography>
       </Box>
@@ -65,8 +63,7 @@ const SmallBox = (props: any) => {
         <Typography
           sx={{ color: "#FF4D4D", fontSize: "8px", fontWeight: "bold" }}
         >
-          {" "}
-          Book{" "}
+          Book
         </Typography>
 
         <Typography
@@ -77,8 +74,7 @@ const SmallBox = (props: any) => {
             color: valueB < 0 ? `#FF4D4D` : `#319E5B`,
           }}
         >
-          {" "}
-          {handleNumber(parseFloat(valueB || 0.00), color)}
+          {handleNumber(parseFloat(valueB || 0.0), color)}
           {/* {valueB < 0 ? ` ${valueB}` : `${valueB}`}{" "} */}
         </Typography>
       </Box>
