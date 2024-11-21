@@ -7,7 +7,7 @@ import moment from "moment-timezone";
 import { IconConstants } from "../../helper/gameConstants";
 
 const MatchListComponent = (props: any) => {
-  const { team, team2, selected, mode, data, setSelected } = props;
+  const { team, team2, selected, mode, data, setSelected, title } = props;
   const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
@@ -140,7 +140,11 @@ const MatchListComponent = (props: any) => {
         onClick={() => {
           if (mode == "0") {
             navigate(`/wallet/market_analysis/matches`, {
-              state: { submit: true, matchId: data?.id , matchType: data?.matchType },
+              state: {
+                submit: true,
+                matchId: data?.id,
+                matchType: data?.matchType,
+              },
             });
           }
           setSelected();
@@ -156,7 +160,6 @@ const MatchListComponent = (props: any) => {
           height: "55px",
           flexDirection: { xs: "column", lg: "row" },
           marginX: ".5%",
-          
         }}
       >
         <Box sx={{ display: "flex", width: "100%", position: "relative" }}>
@@ -189,10 +192,22 @@ const MatchListComponent = (props: any) => {
               minHeight: "30px",
             }}
           >
-            <div style={{ background: "#f1c40f", display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '5px' }}>
-
-              <img className="inplayicon" src={IconConstants[data?.matchType]} alt="Inplay Icon" width={25} height={25} />
-
+            <div
+              style={{
+                background: "#f1c40f",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: "5px",
+              }}
+            >
+              <img
+                className="inplayicon"
+                src={IconConstants[data?.matchType]}
+                alt="Inplay Icon"
+                width={25}
+                height={25}
+              />
             </div>
 
             <Typography
@@ -207,7 +222,7 @@ const MatchListComponent = (props: any) => {
                 WebkitBoxOrient: "vertical",
               }}
             >
-              {team} Vs {team2}
+              {title}
             </Typography>
             {upcoming && (
               <Box

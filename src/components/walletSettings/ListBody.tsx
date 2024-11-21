@@ -69,10 +69,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-          {walletAccountDetail?.creditRefrence &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              +walletAccountDetail.creditRefrence
-            )}
+          {formatToINR(walletAccountDetail?.creditRefrence || 0)}
         </Typography>
       </Box>
       <Box
@@ -91,10 +88,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {Number(walletAccountDetail?.userBal?.currentBalance) &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              Number(walletAccountDetail?.userBal?.currentBalance || 0)
-            )}
+          {formatToINR(walletAccountDetail?.userBal?.currentBalance || 0)}
         </Typography>
       </Box>
       <Box
@@ -119,10 +113,7 @@ const ListBody = (props: any) => {
         <Typography
           sx={{ fontSize: "10px", fontWeight: "600", color: "white" }}
         >
-          {Number(+walletAccountDetail?.userBal?.profitLoss) &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              Number(+walletAccountDetail?.userBal?.profitLoss || 0)
-            )}
+          {formatToINR(walletAccountDetail?.userBal?.profitLoss || 0)}
         </Typography>
         <StyledImage
           src={
@@ -149,7 +140,7 @@ const ListBody = (props: any) => {
           paddingX: "10px",
           justifyContent: "space-between",
           background:
-            Number(+walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0
+            Number(walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0
               ? "#27AC1E"
               : "#E32A2A",
           alignItems: "center",
@@ -160,14 +151,11 @@ const ListBody = (props: any) => {
         <Typography
           sx={{ fontSize: "10px", fontWeight: "600", color: "white" }}
         >
-          {Number(+walletAccountDetail?.userBal?.myProfitLoss) &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              Number(+walletAccountDetail?.userBal?.myProfitLoss || 0)
-            )}
+          {formatToINR(walletAccountDetail?.userBal?.myProfitLoss || 0)}
         </Typography>
         <StyledImage
           src={
-            Number(+walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0
+            Number(walletAccountDetail?.userBal?.myProfitLoss || 0) >= 0
               ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
               : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
           }
@@ -196,7 +184,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-          {formatToINR(+walletAccountDetail?.userBal?.totalCommission || 0)}
+          {formatToINR(walletAccountDetail?.userBal?.totalCommission || 0)}
         </Typography>
       </Box>
       <Box
@@ -215,10 +203,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-          {+walletAccountDetail?.userBal?.exposure &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              +walletAccountDetail.userBal.exposure
-            )}
+          {formatToINR(walletAccountDetail?.userBal?.exposure || 0)}
         </Typography>
       </Box>
       <Box
@@ -237,10 +222,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-          {Number(walletAccountDetail?.userBal?.currentBalance) &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              Number(walletAccountDetail?.userBal?.currentBalance)
-            )}
+          {formatToINR(walletAccountDetail?.userBal?.currentBalance || 0)}
         </Typography>
       </Box>
       <Box
@@ -289,10 +271,7 @@ const ListBody = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-          {+walletAccountDetail?.exposureLimit &&
-            new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-              +walletAccountDetail.exposureLimit
-            )}
+          {formatToINR(walletAccountDetail?.exposureLimit || 0)}
         </Typography>
       </Box>
       <Box

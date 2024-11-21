@@ -1,10 +1,4 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
 import { formatNumber, formatToINR } from "../../../helper";
@@ -16,7 +10,7 @@ const SeasonMarketBox = (props: any) => {
   const { newData, setData, profitLossData, index, type } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
+// console.log('first',type)
   return (
     <>
       <Box
@@ -121,7 +115,7 @@ const SeasonMarketBox = (props: any) => {
                 // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 // right: 0,
-                width: { lg: "36.5%", md: "60%", xs: "60.5%" },
+                width: { lg: "38%", md: "60%", xs: "60.5%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
                 display: "flex",
@@ -130,14 +124,19 @@ const SeasonMarketBox = (props: any) => {
             >
               {newData?.status == "Ball Running" ||
               newData?.status === "ball start" ? (
-                <img
-                  src={BallStart}
-                  style={{ width: "113px", height: "32px" }}
-                />
+                Math.max(
+                  newData?.ex?.availableToLay?.length ?? 0,
+                  newData?.ex?.availableToBack?.length ?? 0
+                ) <= 1 && (
+                  <img
+                    src={BallStart}
+                    style={{ width: "113px", height: "32px" }}
+                  />
+                )
               ) : (
                 <Typography
                   sx={{
-                    fontSize: { xs: "12px", lg: "18px" },
+                    fontSize: { xs: "12px", lg: "16px" },
                     textTransform: "uppercase",
                     textAlign: "center",
                     width: "100%",
@@ -145,11 +144,15 @@ const SeasonMarketBox = (props: any) => {
                     fontWeight: "400",
                   }}
                 >
-                  {newData?.isManual
-                    ? newData?.status
-                    : !newData?.GameStatus
-                    ? "SUSPENDED"
-                    : newData?.GameStatus}
+                  {Math.max(
+                    newData?.ex?.availableToLay?.length ?? 0,
+                    newData?.ex?.availableToBack?.length ?? 0
+                  ) <= 1 &&
+                    (newData?.isManual
+                      ? newData?.status
+                      : !newData?.GameStatus
+                      ? "SUSPENDED"
+                      : newData?.GameStatus)}
                 </Typography>
               )}
             </Box>
@@ -193,7 +196,7 @@ const SeasonMarketBox = (props: any) => {
                     lock={
                       [null, 0, "0"].includes(
                         Math.floor(newData.ex?.availableToLay[0]?.price ?? 0)
-                      )
+                      ) || type==="khado"
                         ? true
                         : false
                     }
@@ -228,7 +231,6 @@ const SeasonMarketBox = (props: any) => {
           ></Box>
         </Box>
       </Box>
-      <Divider />
       {Array.from(
         {
           length:
@@ -241,6 +243,7 @@ const SeasonMarketBox = (props: any) => {
       )?.map((item: number) => (
         <>
           <Box
+            key={item}
             sx={{
               display: "flex",
               background: "white",
@@ -282,22 +285,6 @@ const SeasonMarketBox = (props: any) => {
                 alignItems: "center",
               }}
             >
-              {/* {matchesMobile ? (
-                <PlaceBetComponent
-                  type={type}
-                  newData={newData}
-                  profitLoss={profitLossData && profitLossData[0]}
-                  setData={setData}
-                />
-              ) : (
-                <PlaceBetComponentWeb
-                  type={type}
-                  newData={newData}
-                  profitLoss={profitLossData && profitLossData[0]}
-                  setData={setData}
-                />
-              )} */}
-
               {!["ACTIVE", "active", "", undefined, null, ""].includes(
                 newData?.GameStatus
               ) ||
@@ -311,7 +298,7 @@ const SeasonMarketBox = (props: any) => {
                     // position: "absolute",
                     marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                     // right: 0,
-                    width: { lg: "36.5%", md: "60%", xs: "60.5%" },
+                    width: { lg: "36%", md: "60%", xs: "60.5%" },
                     justifyContent: { xs: "center", lg: "center" },
                     alignItems: "center",
                     display: "flex",
@@ -320,14 +307,16 @@ const SeasonMarketBox = (props: any) => {
                 >
                   {newData?.status == "Ball Running" ||
                   newData?.status === "ball start" ? (
-                    <img
-                      src={BallStart}
-                      style={{ width: "113px", height: "32px" }}
-                    />
+                    item === 1 && (
+                      <img
+                        src={BallStart}
+                        style={{ width: "113px", height: "32px" }}
+                      />
+                    )
                   ) : (
                     <Typography
                       sx={{
-                        fontSize: { xs: "12px", lg: "18px" },
+                        fontSize: { xs: "12px", lg: "16px" },
                         textTransform: "uppercase",
                         textAlign: "center",
                         width: "100%",
@@ -335,11 +324,12 @@ const SeasonMarketBox = (props: any) => {
                         fontWeight: "400",
                       }}
                     >
-                      {newData?.isManual
-                        ? newData?.status
-                        : !newData?.GameStatus
-                        ? "SUSPENDED"
-                        : newData?.GameStatus}
+                      {item === 1 &&
+                        (newData?.isManual
+                          ? newData?.status
+                          : !newData?.GameStatus
+                          ? "SUSPENDED"
+                          : newData?.GameStatus)}
                     </Typography>
                   )}
                 </Box>
@@ -349,11 +339,23 @@ const SeasonMarketBox = (props: any) => {
                     key={index}
                     session={true}
                     back={true}
-                    value={newData.ex?.availableToLay[item]?.price ?? 0}
-                    value2={newData.ex?.availableToLay[item]?.size ?? 0}
+                    value={
+                      sessionBettingType.oddEven === type
+                        ? newData.ex?.availableToBack[item]?.price ?? 0
+                        : newData.ex?.availableToLay[item]?.price ?? 0
+                    }
+                    value2={
+                      sessionBettingType.oddEven === type
+                        ? newData.ex?.availableToBack[item]?.size ?? 0
+                        : newData.ex?.availableToLay[item]?.size ?? 0
+                    }
                     lock={
                       [null, 0, "0"].includes(
-                        Math.floor(newData.ex?.availableToLay[item]?.price ?? 0)
+                        Math.floor(
+                          sessionBettingType.oddEven === type
+                            ? newData.ex?.availableToBack[item]?.price ?? 0
+                            : newData.ex?.availableToLay[item]?.price ?? 0
+                        )
                       )
                         ? true
                         : false
@@ -372,12 +374,22 @@ const SeasonMarketBox = (props: any) => {
                   <SeperateBox
                     key={index}
                     session={true}
-                    value={newData.ex?.availableToBack[item]?.price ?? 0}
-                    value2={newData.ex?.availableToBack[item]?.size ?? 0}
+                    value={
+                      sessionBettingType.oddEven === type
+                        ? newData.ex?.availableToLay[item]?.price ?? 0
+                        : newData.ex?.availableToBack[item]?.price ?? 0
+                    }
+                    value2={
+                      sessionBettingType.oddEven === type
+                        ? newData.ex?.availableToLay[item]?.size ?? 0
+                        : newData.ex?.availableToBack[item]?.size ?? 0
+                    }
                     lock={
                       [null, 0, "0"].includes(
                         Math.floor(
-                          newData.ex?.availableToBack[item]?.price ?? 0
+                          sessionBettingType.oddEven === type
+                            ? newData.ex?.availableToLay[item]?.price ?? 0
+                            : newData.ex?.availableToBack[item]?.price ?? 0
                         )
                       )
                         ? true
@@ -393,7 +405,6 @@ const SeasonMarketBox = (props: any) => {
               ></Box>
             </Box>
           </Box>
-          <Divider />
         </>
       ))}
     </>

@@ -64,10 +64,13 @@ const RunsBox = ({ item, currentOdd }: any) => {
       >
         <Typography
           sx={{
-            fontSize: matchesMobile ? "8px" : "12px",
+            fontSize: matchesMobile ? "8px" : "10px",
             color: "white",
             fontWeight: "600",
             lineHeight: "1",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           {item?.name}

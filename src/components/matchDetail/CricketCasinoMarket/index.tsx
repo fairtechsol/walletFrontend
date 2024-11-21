@@ -22,7 +22,6 @@ const CricketCasinoMarket = (props: any) => {
     currentMatch,
     handleBlock,
     handleHide,
-    type,
   } = props;
   const [visible, setVisible] = useState(true);
 
@@ -113,11 +112,7 @@ const CricketCasinoMarket = (props: any) => {
                 total={allBetsData
                   ?.filter(
                     (item: any) =>
-                      JSON.parse(
-                        currentMatch?.sessionBettings?.find(
-                          (items: any) => JSON.parse(items)?.id == item?.betId
-                        ) || "{}"
-                      )?.type == type
+                      sessionData?.id == item?.betId
                   )
                   ?.reduce((acc: number, bet: any) => {
                     return acc + +bet?.totalBet;
@@ -163,12 +158,9 @@ const CricketCasinoMarket = (props: any) => {
                       allBetsData
                         ?.filter(
                           (item: any) =>
-                            JSON.parse(
-                              currentMatch?.sessionBettings?.find(
-                                (items: any) =>
-                                  JSON.parse(items)?.id == item?.betId
-                              ) || "{}"
-                            )?.type == type
+                            
+                                  sessionData?.id == item?.betId
+                             
                         )
 
                         ?.reduce((acc: number, bet: any) => {

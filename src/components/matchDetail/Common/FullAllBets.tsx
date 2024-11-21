@@ -5,7 +5,7 @@ import moment from "moment";
 import { CHECK } from "../../../assets";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { formatToINR } from "../../../helper";
+import { formatToINR, stripUrl } from "../../../helper";
 
 const FullAllBets = (props: any) => {
   const { tag, mode, IObets, selectedBetData, setSelectedBetData } = props;
@@ -126,7 +126,12 @@ const FullAllBets = (props: any) => {
               deleteReason: v?.deleteReason,
             },
             {
-              name: v?.betType,
+              name:
+                v?.marketType === "oddEven"
+                  ? v?.teamName
+                      ?.match(/[-_](odd|even)$/i)?.[1]
+                      ?.toUpperCase() || v?.betType
+                  : v?.betType,
               color: "black",
               background: ["YES", "BACK"].includes(v?.betType)
                 ? "#B3E0FF"
@@ -758,7 +763,7 @@ const LargeBox = ({ item, k }: any) => {
             lineHeight: 1,
           }}
         >
-          {item?.domain?.replace(/https?:\/\//, "")}
+          {stripUrl(item?.domain)}
         </Typography>
       </Typography>
       {item?.time && (

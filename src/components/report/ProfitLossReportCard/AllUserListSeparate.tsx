@@ -12,7 +12,7 @@ import SessionComponentMatches from "./SessionComponentMatches";
 import { ApiConstants } from "../../../utils/Constants";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { formatToINR } from "../../../helper";
+import { formatToINR, stripUrl } from "../../../helper";
 
 const AllUserListSeparate = ({
   item,
@@ -166,7 +166,7 @@ const AllUserListSeparate = ({
             >
               {item?.userName}
               {`
-              ${item?.url ? "(" + item?.url + ")" : ""}`}
+              ${item?.url ? "(" + stripUrl(item?.url) + ")" : ""}`}
             </Typography>
           </Box>
           {item?.roleName !== "user" && (

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import moment from "moment";
-import { formatToINR } from "../../../helper";
+import { formatToINR, stripUrl } from "../../../helper";
 const AllRateSeperate = ({
   profit,
   mark,
@@ -748,7 +748,7 @@ const SingleBox = ({
           <Typography
             sx={{
               fontWeight: "700",
-              fontSize: { xs: "8px", md: "10px", lg: ".5vw" },
+              fontSize: { xs: "8px", md: "10px", lg: ".8vw" },
               color: "black",
               textAlign: "center",
             }}
@@ -843,7 +843,7 @@ const SingleBox = ({
             textAlign: "center",
           }}
         >
-          {domain}
+          {stripUrl(domain)}
         </Typography>
       </Box>
     ) : (

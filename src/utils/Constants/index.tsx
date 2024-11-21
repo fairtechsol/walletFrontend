@@ -2,7 +2,10 @@ import {
   AmarAkbarAnthony,
   AndarBahar2,
   Baccarat,
+  BallByBall,
   BollywoodCasino,
+  CasinoMeter,
+  CasinoQueen,
   CasinoWar,
   Cricket,
   CriketMatch2020,
@@ -14,12 +17,14 @@ import {
   InstantWorli,
   Lucky7A,
   Poker,
+  Politics,
   Race2020,
   SuperOver,
   TeenPatti1Day,
   Teenpatti20,
   Tennis,
   Thirty2CardsA,
+  WorliMatka,
 } from "../../assets";
 
 export const ApiConstants = {
@@ -193,15 +198,19 @@ export const Constants = {
 export const matchBettingType = {
   matchOdd: "matchOdd",
   bookmaker: "bookmaker",
+  bookmaker2: "bookmaker2",
   quickbookmaker1: "quickbookmaker1",
   quickbookmaker2: "quickbookmaker2",
   quickbookmaker3: "quickbookmaker3",
   tiedMatch1: "tiedMatch1",
   tiedMatch2: "tiedMatch2",
+  tiedMatch3: "tiedMatch3",
   completeMatch: "completeMatch",
+  completeMatch1: "completeMatch1",
   completeManual: "completeManual",
   setWinner1: "setWinner1",
   setWinner2: "setWinner2",
+  other: "other",
   ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
     (prev, curr) => {
       prev[`overUnder${curr}.5`] = `overUnder${curr}.5`;
@@ -225,6 +234,7 @@ export const gameConstants = {
   tennis: "tennis",
   horseRacing: "horseRacing",
   greyHound: "greyHound",
+  politics: "politics",
 };
 
 export const cardGamesTypeConstants: any = {
@@ -256,6 +266,10 @@ export const cardGamesTypeConstants: any = {
   btable: "btable",
   race20: "race20",
   cricketv3: "cricketv3",
+  ballbyball: "ballbyball",
+  cmeter: "cmeter",
+  queen: "queen",
+  worli: "worli",
 };
 
 export const gameIconConstants = {
@@ -264,6 +278,7 @@ export const gameIconConstants = {
   [gameConstants.tennis]: Tennis,
   [gameConstants.horseRacing]: HorseRacing,
   [gameConstants.greyHound]: GreyHound,
+  [gameConstants.politics]: Politics,
   [cardGamesTypeConstants.dragonTiger20]: DragonTiger20,
   [cardGamesTypeConstants.dt202]: DragonTiger20,
   [cardGamesTypeConstants.dtl20]: DragonTiger20,
@@ -292,6 +307,10 @@ export const gameIconConstants = {
   [cardGamesTypeConstants["3cardj"]]: Race2020,
   [cardGamesTypeConstants.baccarat]: Baccarat,
   [cardGamesTypeConstants.baccarat2]: Baccarat,
+  [cardGamesTypeConstants.ballbyball]: BallByBall,
+  [cardGamesTypeConstants.cmeter]: CasinoMeter,
+  [cardGamesTypeConstants.queen]: CasinoQueen,
+  [cardGamesTypeConstants.worli]: WorliMatka,
 };
 
 export const sessionBettingType = {
@@ -310,6 +329,11 @@ export const profitLossDataForMatchConstants = {
     C: "teamCRate",
   },
   [matchBettingType.bookmaker]: {
+    A: "teamARate",
+    B: "teamBRate",
+    C: "teamCRate",
+  },
+  [matchBettingType.bookmaker2]: {
     A: "teamARate",
     B: "teamBRate",
     C: "teamCRate",
@@ -337,13 +361,26 @@ export const profitLossDataForMatchConstants = {
     A: "yesRateTie",
     B: "noRateTie",
   },
+  [matchBettingType.tiedMatch3]: {
+    A: "yesRateTie",
+    B: "noRateTie",
+  },
   [matchBettingType.completeMatch]: {
+    A: "yesRateComplete",
+    B: "noRateComplete",
+  },
+  [matchBettingType.completeMatch1]: {
     A: "yesRateComplete",
     B: "noRateComplete",
   },
   [matchBettingType.completeManual]: {
     A: "yesRateComplete",
     B: "noRateComplete",
+  },
+  [matchBettingType.other]: {
+    A: "userTeamARateOther",
+    B: "userTeamBRateOther",
+    C: "userTeamCRateOther",
   },
   ...Array.from({ length: 20 }, (_, index) => index).reduce(
     (prev: any, curr) => {
@@ -386,6 +423,11 @@ export const profitLossDataForMatchConstants = {
 
 // use below baseUrl for testing build
 
+export const serviceUrl =
+  process.env.NODE_ENV === Constants.PRODUCTION
+    ? Constants.apiBasePath
+    : Constants.localPath;
+
 export const baseUrls = {
   socket:
     process.env.NODE_ENV === Constants.PRODUCTION
@@ -402,6 +444,12 @@ export const baseUrls = {
 };
 
 // use below baseUrl for live build
+
+// export const serviceUrl =
+//   process.env.NODE_ENV === Constants.PRODUCTION
+//     ? Constants.apiBasePathLive
+//     : Constants.localPath;
+
 // export const baseUrls = {
 //   socket:
 //     process.env.NODE_ENV === Constants.PRODUCTION
