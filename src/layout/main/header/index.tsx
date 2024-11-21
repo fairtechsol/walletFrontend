@@ -150,8 +150,11 @@ const Header = () => {
             <Box sx={classes.BoxCont1sub1sub1}>
               <StyledImage
                 src={Draw}
-                onClick={() => setMobileOpen((prev) => !prev)}
-                sx={classes.BoxCont1sub1sub1StyleImg}
+                //onClick={() => setMobileOpen((prev) => !prev)}
+                sx={{
+                  ...classes.BoxCont1sub1sub1StyleImg,
+                  cursor: "default",
+                }}
               />
               <StyledImage
                 src={FgLogo}
