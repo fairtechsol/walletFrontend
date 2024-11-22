@@ -151,7 +151,7 @@ const AllRateSeperate = ({
                   "Market",
                   "Username",
                   "Favourite",
-                  "B/Lay",
+                  "Type",
                   "Odds",
                   "Stake",
                 ]}
