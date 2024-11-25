@@ -1,9 +1,16 @@
-import { Box, MenuItem, Typography } from "@mui/material";
+import { Box, MenuItem, Modal, Typography } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DirectUserBlock from "./DirectUserBlock";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { resetSearchUserList } from "../../store/actions/user/userAction";
 
 const ListItems = (props: any) => {
   const { menutItems1, title } = props;
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const [userBlockModal, setUserBlockModal] = useState(false);
   const classes = {
     Menusx: {
       marginTop: { xs: "15px", lg: "30px", md: "18px" },
@@ -45,6 +52,11 @@ const ListItems = (props: any) => {
     },
   };
 
+  const handleClose = () => {
+    setUserBlockModal(false);
+    dispatch(resetSearchUserList());
+  };
+
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -80,7 +92,11 @@ const ListItems = (props: any) => {
               dense={true}
               sx={classes.MenuItemsx}
               onClick={() => {
-                navigate(x.link);
+                if (x?.link) {
+                  navigate(x.link);
+                } else {
+                  setUserBlockModal(true);
+                }
               }}
             >
               {x.title}
@@ -88,6 +104,25 @@ const ListItems = (props: any) => {
           ))}
         </Box>
       </Box>
+      <Modal
+        open={userBlockModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <DirectUserBlock setShow={handleClose} />
+        </Box>
+      </Modal>
     </>
   );
 };

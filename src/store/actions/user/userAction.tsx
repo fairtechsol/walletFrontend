@@ -15,7 +15,7 @@ interface RequestData {
 
 interface SearchUsers {
   userName?: string;
-  createdBy: string;
+  isUser?: boolean;
 }
 
 export const changePassword = createAsyncThunk<any, any>(
@@ -439,7 +439,9 @@ export const getSearchClientList = createAsyncThunk<
 >("user/clientList", async (requestData, thunkApi) => {
   try {
     const resp = await service.get(
-      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${requestData?.userName}`
+      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${
+        requestData?.userName
+      }${requestData?.isUser ? "&isUser=true" : ""}`
     );
     if (resp) {
       return resp?.data;
@@ -537,3 +539,4 @@ export const updateReset = createAction("update/reset");
 export const updateUserReset = createAction("updateUser/reset");
 export const addReset = createAction("add/reset");
 export const userListSuccessReset = createAction("userList/reset");
+export const resetSearchUserList = createAction("searchUserList/reset");

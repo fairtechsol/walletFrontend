@@ -11,6 +11,7 @@ import {
   handleExport,
   handleModelActions,
   handleSettleCommission,
+  resetSearchUserList,
   setCreditRefference,
   setExposureLimit,
   setLockUnlockUser,
@@ -259,6 +260,9 @@ export const userList = createSlice({
       .addCase(getTotalBalance.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(resetSearchUserList, (state) => {
+        state.searchUserList = [];
       });
   },
 });

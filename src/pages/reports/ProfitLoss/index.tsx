@@ -64,7 +64,6 @@ const ProfitLossReport = () => {
       dispatch(
         getSearchClientList({
           userName: value,
-          createdBy: profileDetail && profileDetail?.id,
         })
       );
     }, 500);
