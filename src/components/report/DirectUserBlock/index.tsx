@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import ListHeaderModal from "./ListHeader";
 import {
   getSearchClientList,
+  resetSearchUserList,
   setLockUnlockUser,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
@@ -85,7 +86,10 @@ const DirectUserBlock = ({ setShow }: any) => {
     setUsers(searchUserList?.users || []);
   }, [searchUserList]);
 
-  console.log(users, "abc");
+  useEffect(() => {
+    dispatch(resetSearchUserList());
+  }, []);
+
   return (
     <>
       <Box
@@ -121,7 +125,6 @@ const DirectUserBlock = ({ setShow }: any) => {
               variant="outlined"
               required
               size="small"
-              fullWidth
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -135,7 +138,6 @@ const DirectUserBlock = ({ setShow }: any) => {
               required
               variant="outlined"
               size="small"
-              fullWidth
               value={transactionPassword}
               onChange={(e) => setTransactionPassword(e.target.value)}
             />
@@ -145,15 +147,26 @@ const DirectUserBlock = ({ setShow }: any) => {
             component={Paper}
             sx={{ maxHeight: 400, overflowY: "auto" }}
           >
-            <Table stickyHeader>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>User Name</TableCell>
-                  <TableCell align="center">User Block</TableCell>
-                  <TableCell align="center">Bet Block</TableCell>
+                  <TableCell sx={{ fontWeight: "600" }}>User Name</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "600" }}>
+                    User Block
+                  </TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "600" }}>
+                    Bet Block
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
+                {users?.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center">
+                      No Record Found
+                    </TableCell>
+                  </TableRow>
+                )}
                 {users?.map((user: any) => (
                   <TableRow key={user.id}>
                     <TableCell>{user.userName}</TableCell>
