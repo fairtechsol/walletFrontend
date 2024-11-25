@@ -163,7 +163,7 @@ const DirectUserBlock = ({ setShow }: any) => {
                 {users?.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      No Record Found
+                      No Record Found!
                     </TableCell>
                   </TableRow>
                 )}
