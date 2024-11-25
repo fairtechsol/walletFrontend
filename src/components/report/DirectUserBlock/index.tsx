@@ -125,6 +125,7 @@ const DirectUserBlock = ({ setShow }: any) => {
               variant="outlined"
               required
               size="small"
+              fullWidth
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -138,6 +139,7 @@ const DirectUserBlock = ({ setShow }: any) => {
               required
               variant="outlined"
               size="small"
+              fullWidth
               value={transactionPassword}
               onChange={(e) => setTransactionPassword(e.target.value)}
             />
