@@ -26,10 +26,6 @@ const ProfitLossReportCards = () => {
   const [show, setShow] = useState(false);
   const [userProfitLoss, setUserProfitLoss] = useState([]);
 
-  const { profileDetail } = useSelector(
-    (state: RootState) => state.user.profile
-  );
-
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const { totalProfitLossListCard } = useSelector(
     (state: RootState) => state.report.cardReport

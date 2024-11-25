@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 
-const ListHeaderModal = ({ title, setShow, userName }: any) => {
+const ListHeaderModal = ({ title, setShow }: any) => {
   return (
     <Box
       display={"flex"}
