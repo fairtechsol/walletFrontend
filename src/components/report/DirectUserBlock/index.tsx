@@ -85,7 +85,6 @@ const DirectUserBlock = ({ setShow }: any) => {
     setUsers(searchUserList?.users || []);
   }, [searchUserList]);
 
-  console.log(users, "abc");
   return (
     <>
       <Box
@@ -121,7 +120,6 @@ const DirectUserBlock = ({ setShow }: any) => {
               variant="outlined"
               required
               size="small"
-              fullWidth
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -135,7 +133,6 @@ const DirectUserBlock = ({ setShow }: any) => {
               required
               variant="outlined"
               size="small"
-              fullWidth
               value={transactionPassword}
               onChange={(e) => setTransactionPassword(e.target.value)}
             />
@@ -145,7 +142,7 @@ const DirectUserBlock = ({ setShow }: any) => {
             component={Paper}
             sx={{ maxHeight: 400, overflowY: "auto" }}
           >
-            <Table stickyHeader>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>User Name</TableCell>
