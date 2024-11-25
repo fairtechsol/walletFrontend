@@ -6,6 +6,7 @@ const Reports = () => {
     { title: "Profit/Loss Cards", link: `/wallet/reports/profit_loss_cards` },
     { title: "Account Statement", link: `/wallet/reports/account_statement` },
     { title: "Current Bet", link: `/wallet/reports/current_bet` },
+    { title: "Direct User Block", link: "" },
     //{ title: "General Report", link: `/wallet/reports/general_report` },
   ];
 
