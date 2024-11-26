@@ -61,6 +61,7 @@ const DirectUserBlock = ({ setShow }: any) => {
               ? !userDetail?.userBlock
               : userDetail?.userBlock,
           transactionPassword: transactionPassword,
+          userDomain: userDetail?.domain
         };
 
         const resp: any = await service.post(
