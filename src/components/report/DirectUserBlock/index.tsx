@@ -18,7 +18,6 @@ import ListHeaderModal from "./ListHeader";
 import {
   getSearchClientList,
   resetSearchUserList,
-  setLockUnlockUser,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
