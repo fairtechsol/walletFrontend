@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { ApiConstants } from "../../../utils/Constants";
 import { toast } from "react-toastify";
 import service from "../../../service";
+import { stripUrl } from "../../../helper";
 
 const DirectUserBlock = ({ setShow }: any) => {
   const theme = useTheme();
@@ -155,6 +156,7 @@ const DirectUserBlock = ({ setShow }: any) => {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: "600" }}>User Name</TableCell>
+                  <TableCell sx={{ fontWeight: "600" }}>Domain</TableCell>
                   <TableCell align="center" sx={{ fontWeight: "600" }}>
                     User Block
                   </TableCell>
@@ -166,7 +168,7 @@ const DirectUserBlock = ({ setShow }: any) => {
               <TableBody>
                 {users?.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={3} align="center">
+                    <TableCell colSpan={4} align="center">
                       No Record Found!
                     </TableCell>
                   </TableRow>
@@ -174,6 +176,7 @@ const DirectUserBlock = ({ setShow }: any) => {
                 {users?.map((user: any) => (
                   <TableRow key={user.id}>
                     <TableCell>{user.userName}</TableCell>
+                    <TableCell>{stripUrl(user.domain)}</TableCell>
                     <TableCell align="center">
                       <Checkbox
                         checked={user?.userBlock}
