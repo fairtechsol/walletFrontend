@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ApiConstants } from "../../../utils/Constants";
 import { toast } from "react-toastify";
+import service from "../../../service";
 
 const DirectUserBlock = ({ setShow }: any) => {
   const theme = useTheme();
@@ -48,16 +49,9 @@ const DirectUserBlock = ({ setShow }: any) => {
     );
   };
 
-  const handleToggle = (userDetail: any, field: any) => {
+  const handleToggle = async (userDetail: any, field: any) => {
     try {
       if (transactionPassword) {
-        setUsers((prevUsers: any) =>
-          prevUsers.map((user: any) =>
-            user.id === userDetail?.id
-              ? { ...user, [field]: !user[field] }
-              : user
-          )
-        );
         const payload = {
           userId: userDetail?.id,
           betBlock:
@@ -68,12 +62,20 @@ const DirectUserBlock = ({ setShow }: any) => {
               : userDetail?.userBlock,
           transactionPassword: transactionPassword,
         };
-        dispatch(
-          setLockUnlockUser({
-            url: ApiConstants.SUPERADMIN.LOCK_UNLOCK_USER,
-            payload: payload,
-          })
+
+        const resp: any = await service.post(
+          ApiConstants.SUPERADMIN.LOCK_UNLOCK_USER,
+          payload
         );
+        if (resp?.status === "success") {
+          setUsers((prevUsers: any) =>
+            prevUsers.map((user: any) =>
+              user.id === userDetail?.id
+                ? { ...user, [field]: !user[field] }
+                : user
+            )
+          );
+        }
       } else {
         toast.error("Transaction Code is Required");
       }
