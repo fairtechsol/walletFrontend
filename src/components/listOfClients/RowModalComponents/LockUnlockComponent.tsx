@@ -21,6 +21,14 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
+interface lockUnlockInterface {
+  userId: string;
+  betBlock: boolean;
+  userBlock: boolean;
+  transactionPassword: string | number;
+  userDomain?: string;
+}
+
 const LockUnlockComponent = (props: any) => {
   const {
     setSelected,
@@ -29,7 +37,7 @@ const LockUnlockComponent = (props: any) => {
     endpoint,
     isWallet,
     onChangeAmount,
-    currentPage
+    currentPage,
   } = props;
 
   let elementLockUnlockObj1 = {
@@ -58,12 +66,15 @@ const LockUnlockComponent = (props: any) => {
         : walletAccountDetail?.id
         ? walletAccountDetail?.id
         : "";
-      const payload = {
+      let payload: lockUnlockInterface = {
         userId: id,
         betBlock: lockUnlockObj.bet_blocked,
         userBlock: lockUnlockObj.all_blocked,
         transactionPassword: values.transactionPassword,
       };
+      if (element?.isUrl) {
+        payload.userDomain = element?.domain;
+      }
       dispatch(
         setLockUnlockUser({
           url: isWallet ? ApiConstants.WALLET.LOCKUNLOCK : endpoint,
@@ -134,7 +145,7 @@ const LockUnlockComponent = (props: any) => {
               overflow: "hidden",
             }}
           >
-               <Typography
+            <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
                 width: { xs: "100%", lg: "15%", md: "35%" },
@@ -147,7 +158,7 @@ const LockUnlockComponent = (props: any) => {
             >
               Dummy
             </Typography>
-         
+
             {/* <Box
               sx={{
                 width: { xs: "100%", lg: "63%", md: "65%" },
@@ -160,34 +171,34 @@ const LockUnlockComponent = (props: any) => {
                 // paddingX: "20px",
               }}
             > */}
-              <Box sx={{ width: "50%", display: "flex", alignItems: "center" }}>
-                <BoxButtonWithSwitch
-                  title={"User"}
-                  name={"all_blocked"}
-                  val={lockUnlockObj?.all_blocked}
-                  showLockUnlock={true}
-                  setLockUnlockObj={setLockUnlockObj}
-                  lockUnlockObj={lockUnlockObj}
-                />
-              </Box>
-              <Box
-                sx={{
-                  width: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: "20px",
-                }}
-              >
-                <BoxButtonWithSwitch
-                  title={"Bet"}
-                  name={"bet_blocked"}
-                  val={lockUnlockObj?.bet_blocked}
-                  showLockUnlock={true}
-                  setLockUnlockObj={setLockUnlockObj}
-                  lockUnlockObj={lockUnlockObj}
-                />
-              </Box>
+            <Box sx={{ width: "50%", display: "flex", alignItems: "center" }}>
+              <BoxButtonWithSwitch
+                title={"User"}
+                name={"all_blocked"}
+                val={lockUnlockObj?.all_blocked}
+                showLockUnlock={true}
+                setLockUnlockObj={setLockUnlockObj}
+                lockUnlockObj={lockUnlockObj}
+              />
             </Box>
+            <Box
+              sx={{
+                width: "50%",
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "20px",
+              }}
+            >
+              <BoxButtonWithSwitch
+                title={"Bet"}
+                name={"bet_blocked"}
+                val={lockUnlockObj?.bet_blocked}
+                showLockUnlock={true}
+                setLockUnlockObj={setLockUnlockObj}
+                lockUnlockObj={lockUnlockObj}
+              />
+            </Box>
+          </Box>
           {/* </Box> */}
           <Box
             sx={{
