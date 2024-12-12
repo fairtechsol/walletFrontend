@@ -7,7 +7,7 @@ import { logout } from "../../../store/actions/auth/authAction";
 import { AppDispatch } from "../../../store/store";
 
 const menutItems = [
-  { title: "Secure Auth Verification" },
+  // { title: "Secure Auth Verification" },
   { title: "Change Password", link: `/wallet/change-password` },
 ];
 const BoxDropDownMenu = (props: any) => {

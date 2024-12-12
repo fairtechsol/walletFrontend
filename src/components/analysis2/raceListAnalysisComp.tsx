@@ -68,7 +68,7 @@ const RacingListComponentAnalysis = ({
     <TableContainer component={Paper}>
       <Table aria-label="time table" sx={{ borderCollapse: "collapse" }}>
         <TableBody>
-          {Object.entries(racingList).map(
+          {Object.entries(racingList || {})?.map(
             ([matchName, item]: any, index: number) => {
               return (
                 <React.Fragment key={index}>
