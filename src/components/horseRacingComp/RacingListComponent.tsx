@@ -31,7 +31,7 @@ const RacingListComponent = ({ racingList }: any) => {
     <TableContainer component={Paper}>
       <Table aria-label="time table">
         <TableBody>
-          {Object.entries(racingList).map(
+          {Object.entries(racingList || {})?.map(
             ([matchName, item]: any, index: number) => {
               return (
                 <TableRow key={index}>
