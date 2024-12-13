@@ -12,10 +12,7 @@ const AccountListRow = ({
   const prevElement = {
     name: element?.matchName,
     commissionAmount: formatToINR(element?.commissionAmount),
-    commissionType:
-      element?.betType === "NO" || element?.betType === "YES"
-        ? "Session"
-        : "Match",
+    commissionType: element?.matchType === "SESSION" ? "Session" : "Match",
     betType: element?.betType,
     stack: element?.stake && formatToINR(element?.stake),
     odds: element?.odds,
@@ -195,7 +192,10 @@ const AccountListRow = ({
           }}
         >
           <Typography
-            sx={[{ fontSize: "12px", fontWeight: "600", lineHeight: "1"}, fTextStyle]}
+            sx={[
+              { fontSize: "12px", fontWeight: "600", lineHeight: "1" },
+              fTextStyle,
+            ]}
           >
             {elementToUDM?.teamBet}
           </Typography>
