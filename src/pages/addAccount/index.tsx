@@ -78,10 +78,10 @@ const AddAccount = () => {
       label: "0.00",
       value: "",
     },
-    // sessionCommission: {
-    //   label: "0.00",
-    //   value: "",
-    // },
+    sessionCommission: {
+      label: "0.00",
+      value: "",
+    },
     remarks: "",
     adminTransPassword: "",
     logo: "",
@@ -191,11 +191,11 @@ const AddAccount = () => {
             footerColor: values.footerColor,
             transactionPassword: values.adminTransPassword,
             myPartnership: values.myPartnership,
-            // sessionCommission:
-            //   values.sessionCommission.value === "" ||
-            //   values.sessionCommission.value === "0.00"
-            //     ? 0
-            //     : values.sessionCommission.value,
+            sessionCommission:
+              values.sessionCommission.value === "" ||
+              values.sessionCommission.value === "0.00"
+                ? 0
+                : values.sessionCommission.value,
             matchComissionType:
               values.matchCommissionType.value === "" ||
               values.matchCommissionType.value === "0.00"
@@ -218,11 +218,11 @@ const AddAccount = () => {
             maxBetLimit: values.maxBetLimit,
             minBetLimit: values.minBetLimit,
             myPartnership: values.myPartnership,
-            // sessionCommission:
-            //   values.sessionCommission.value === "" ||
-            //   values.sessionCommission.value === "0.00"
-            //     ? 0
-            //     : values.sessionCommission.value,
+            sessionCommission:
+              values.sessionCommission.value === "" ||
+              values.sessionCommission.value === "0.00"
+                ? 0
+                : values.sessionCommission.value,
             matchComissionType:
               values.matchCommissionType.value === "" ||
               values.matchCommissionType.value === "0.00"
@@ -250,11 +250,11 @@ const AddAccount = () => {
               values.roleName.value !== "user"
                 ? values.myPartnership
                 : values.downlinePartnership,
-            // sessionCommission:
-            //   values.sessionCommission.value === "" ||
-            //   values.sessionCommission.value === "0.00"
-            //     ? 0
-            //     : values.sessionCommission.value,
+            sessionCommission:
+              values.sessionCommission.value === "" ||
+              values.sessionCommission.value === "0.00"
+                ? 0
+                : values.sessionCommission.value,
             matchComissionType:
               values.matchCommissionType.value === "" ||
               values.matchCommissionType.value === "0.00"
@@ -493,10 +493,10 @@ const AddAccount = () => {
           label: "0.00",
           value: "0.00",
         },
-        // sessionCommission: {
-        //   label: "0.00",
-        //   value: "0.00",
-        // },
+        sessionCommission: {
+          label: "0.00",
+          value: "0.00",
+        },
       });
     }
   }, [formik.values.matchCommissionType.value]);
@@ -1181,7 +1181,7 @@ const AddAccount = () => {
                           />
                         </>
                       )}
-                      {/*
+                      
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
@@ -1199,7 +1199,7 @@ const AddAccount = () => {
                         onBlur={formik.handleBlur}
                         // touched={touched.sessionCommission}
                         // error={errors.sessionCommission}
-                      /> */}
+                      />
                     </Box>
                   </>
                 )}
