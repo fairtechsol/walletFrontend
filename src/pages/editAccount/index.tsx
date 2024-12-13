@@ -69,10 +69,10 @@ const formDataSchema = {
     label: "",
     value: "",
   },
-  // sessionCommission: {
-  //   label: "",
-  //   value: "",
-  // },
+  sessionCommission: {
+    label: "",
+    value: "",
+  },
   remarks: "",
   adminTransPassword: "",
   logo: "",
@@ -162,7 +162,7 @@ const EditAccount = () => {
       } else if (values.roleName.value === "fairGameAdmin") {
         payload = {
           ...commonPayload,
-          // sessionCommission: values.sessionCommission.value,
+          sessionCommission: values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
           matchCommission: values.matchCommission.value,
         };
@@ -171,7 +171,7 @@ const EditAccount = () => {
         payload = {
           ...commonPayload,
           isOldFairGame: true,
-          // sessionCommission: values.sessionCommission.value,
+          sessionCommission: values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
           matchCommission: values.matchCommission.value,
         };
@@ -443,10 +443,10 @@ const EditAccount = () => {
             label: userDetail?.matchCommission,
             value: userDetail?.matchCommission,
           },
-          // sessionCommission: {
-          //   label: userDetail?.sessionCommission,
-          //   value: userDetail?.sessionCommission,
-          // },
+          sessionCommission: {
+            label: userDetail?.sessionCommission,
+            value: userDetail?.sessionCommission,
+          },
           remarks: "",
           adminTransPassword: "",
         });
@@ -1096,7 +1096,7 @@ const EditAccount = () => {
                       </>
                     )}
 
-                    {/* <SelectField
+                    <SelectField
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}
                       id={"sessionCommission"}
@@ -1113,7 +1113,7 @@ const EditAccount = () => {
                       onBlur={formik.handleBlur}
                       // touched={touched.sessionCommission}
                       // error={errors.sessionCommission}
-                    /> */}
+                    />
                   </Box>
                 </>
               )}
