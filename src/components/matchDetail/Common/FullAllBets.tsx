@@ -91,6 +91,7 @@ const FullAllBets = (props: any) => {
               betId: v?.betId,
               matchId: v?.matchId,
               domain: v?.domain,
+              isCommissionActive: v?.isCommissionActive,
             },
             {
               name:
@@ -738,7 +739,59 @@ const LargeBox = ({ item, k }: any) => {
         flexDirection: "column",
       }}
     >
-      <Typography
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          textAlign: "left",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          {item?.isCommissionActive && (
+            <Box
+              sx={{
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                backgroundColor: "green",
+              }}
+            />
+          )}
+          <Typography
+            sx={{
+              fontSize: matchesMobile ? "8px" : "8px",
+              fontWeight: "600",
+              color: item?.color,
+              textTransform: "capitalize",
+              wordWrap: "break-word",
+              lineHeight: 1,
+              overflowWrap: "anywhere",
+              whiteSpace: "inherit",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {item?.name}
+          </Typography>
+        </Box>
+        <Typography
+          sx={{
+            fontSize: matchesMobile ? "8px" : "8px",
+            textTransform: "none",
+            overflow: "wrap",
+            lineHeight: 1,
+          }}
+        >
+          {stripUrl(item?.domain)}
+        </Typography>
+      </Box>
+      {/* <Typography
         sx={{
           fontSize: matchesMobile ? "8px" : "8px",
           fontWeight: "600",
@@ -751,9 +804,21 @@ const LargeBox = ({ item, k }: any) => {
           whiteSpace: "inherit",
           textOverflow: "ellipsis",
           maxWidth: { xs: "auto", lg: "initial" },
+          display: "flex",
           // padding: "5px",
         }}
       >
+        {item?.isCommissionActive && (
+          <Box
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              backgroundColor: "green",
+              marginRight: "5px",
+            }}
+          />
+        )}
         {item?.name}
         <Typography
           sx={{
@@ -765,7 +830,7 @@ const LargeBox = ({ item, k }: any) => {
         >
           {stripUrl(item?.domain)}
         </Typography>
-      </Typography>
+      </Typography> */}
       {item?.time && (
         <Typography
           sx={{
