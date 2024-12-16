@@ -754,16 +754,6 @@ const LargeBox = ({ item, k }: any) => {
             gap: "5px",
           }}
         >
-          {item?.isCommissionActive && (
-            <Box
-              sx={{
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-                backgroundColor: "#74ee15",
-              }}
-            />
-          )}
           <Typography
             sx={{
               fontSize: matchesMobile ? "8px" : "8px",
@@ -779,6 +769,16 @@ const LargeBox = ({ item, k }: any) => {
           >
             {item?.name}
           </Typography>
+          {item?.isCommissionActive && (
+            <Box
+              sx={{
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                backgroundColor: "#74ee15",
+              }}
+            />
+          )}
         </Box>
         <Typography
           sx={{
