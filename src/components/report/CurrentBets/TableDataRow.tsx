@@ -117,7 +117,7 @@ const TableDataRow = (props: any) => {
           justifyContent: "center",
           height: "45px",
           borderRight: "2px solid white",
-          flexDirection: "column"
+          flexDirection: "column",
         }}
       >
         <Typography
@@ -125,8 +125,21 @@ const TableDataRow = (props: any) => {
             fontSize: { xs: "9px", md: "9px", lg: "12px" },
             fontWeight: "600",
             color: "black",
+            display: "flex",
+            alignItems: "center",
           }}
         >
+          {data?.isCommissionActive && (
+            <Box
+              sx={{
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                backgroundColor: "green",
+                marginRight: "5px",
+              }}
+            />
+          )}
           {data?.user?.userName}
         </Typography>
         <Typography
@@ -135,10 +148,10 @@ const TableDataRow = (props: any) => {
             fontWeight: "600",
             color: "black",
             overflowWrap: "anywhere",
-            paddingX: "5px"
+            paddingX: "5px",
           }}
         >
-          {data?.domain?.replace(/https?:\/\//, '')}
+          {data?.domain?.replace(/https?:\/\//, "")}
         </Typography>
       </Box>
       <Box
@@ -218,7 +231,14 @@ const TableDataRow = (props: any) => {
           }}
         >
           {data?.odds}
-          {data?.marketType==="session"?<><br/>{data?.rate}</>:""}
+          {data?.marketType === "session" ? (
+            <>
+              <br />
+              {data?.rate}
+            </>
+          ) : (
+            ""
+          )}
         </Typography>
       </Box>
       <Box
