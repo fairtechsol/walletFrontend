@@ -5,12 +5,13 @@ import { formatNumber, formatToINR } from "../../../helper";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 import { sessionBettingType } from "../../../utils/Constants";
+import CommissionDot from "../../Common/CommissionDot";
 
 const SeasonMarketBox = (props: any) => {
   const { newData, setData, profitLossData, index, type } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-// console.log('first',type)
+  // console.log('first',type)
   return (
     <>
       <Box
@@ -82,6 +83,16 @@ const SeasonMarketBox = (props: any) => {
             background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
           }}
         >
+          {newData?.isCommissionActive && (
+            <Box
+              sx={{
+                position: "absolute",
+                right: { xs: "60vw", sm: "53vw", lg: "22vw", md: "50vw" },
+              }}
+            >
+              <CommissionDot />
+            </Box>
+          )}
           {matchesMobile ? (
             <PlaceBetComponent
               type={type}
@@ -97,7 +108,6 @@ const SeasonMarketBox = (props: any) => {
               setData={setData}
             />
           )}
-
           {(
             !newData?.isManual
               ? !["ACTIVE", "active", "", undefined, null, ""].includes(
@@ -196,7 +206,7 @@ const SeasonMarketBox = (props: any) => {
                     lock={
                       [null, 0, "0"].includes(
                         Math.floor(newData.ex?.availableToLay[0]?.price ?? 0)
-                      ) || type==="khado"
+                      ) || type === "khado"
                         ? true
                         : false
                     }
@@ -225,7 +235,6 @@ const SeasonMarketBox = (props: any) => {
               )}
             </>
           )}
-
           <Box
             sx={{ width: ".45%", display: "flex", background: "pink" }}
           ></Box>
