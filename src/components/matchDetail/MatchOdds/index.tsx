@@ -8,6 +8,7 @@ import { useState } from "react";
 import { formatToINR } from "../../../helper";
 import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
+import CommissionDot from "../../Common/CommissionDot";
 
 const MatchOdds = (props: any) => {
   const {
@@ -118,7 +119,8 @@ const MatchOdds = (props: any) => {
               : title
               ? title
               : typeOfBet}
-          </Typography>
+          </Typography>{" "}
+          {liveData?.isCommissionActive && <CommissionDot />}
           {blockMatch && (
             <img
               onClick={() => (selft ? handleShowLock(true, typeOfBet) : "")}

@@ -7,6 +7,7 @@ import BoxComponent from "./BoxComponent";
 import { formatToINR } from "../../../helper";
 import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
+import CommissionDot from "../../Common/CommissionDot";
 
 const LiveBookmaker = (props: any) => {
   const {
@@ -88,6 +89,7 @@ const LiveBookmaker = (props: any) => {
           >
             {title}
           </Typography>
+          {liveData?.isCommissionActive && <CommissionDot />}
           {blockMatch && (
             <img
               onClick={() =>
