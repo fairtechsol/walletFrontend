@@ -304,7 +304,7 @@ const AddAccount = () => {
     } else if (formik.values.matchCommissionType.label === "Total Loss") {
       matchComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
     } else {
-      if (i <= 1.5) {
+      if (i <= 1) {
         matchComissionArray.push({
           label: i?.toFixed(2),
           value: i?.toFixed(2),
@@ -314,7 +314,7 @@ const AddAccount = () => {
   }
 
   const sessionComissionArray = [];
-  for (let i = 0.0; i <= 3.5; i += 0.25) {
+  for (let i = 0.0; i <= 3; i += 0.25) {
     sessionComissionArray.push({ label: i?.toFixed(2), value: i?.toFixed(2) });
   }
 
