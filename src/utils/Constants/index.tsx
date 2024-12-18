@@ -65,6 +65,7 @@ export const ApiConstants = {
     USER_CHECK_CHILD_DEACTIVATE: "/user/checkChildDeactivate",
     USER_CHECK_CHILD_ACTIVATE: "match/check/lock",
     CHANGE_DELETE_REASON: "/bet/change/deleteReason",
+    USER_WISE_EVENTWISE_EXPOSURE: "/match/eventWise/exposure",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",

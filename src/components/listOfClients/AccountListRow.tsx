@@ -14,6 +14,7 @@ import RowModalComponents from "./RowModalComponents";
 import { useSelector } from "react-redux";
 import AccountListModal from "./AccountListModal";
 import { formatToINR } from "../../helper";
+import EventWiseExposureModal from "./eventWiseExposureModal";
 
 const AccountListRow = (props: AccountListRowInterface) => {
   const {
@@ -46,6 +47,12 @@ const AccountListRow = (props: AccountListRowInterface) => {
     value: false,
     id: "",
     title: "",
+  });
+  const [showUserWiseExposureModal, setShowUserWiseExposureModal] =
+    useState(false);
+  const [userWiseExposureName, setUserWiseExposureName] = useState({
+    name: "",
+    id: "",
   });
   const [selected, setSelected] = useState(null);
   const [depositeValue, setDepositeValue] = useState(0);
@@ -426,6 +433,10 @@ const AccountListRow = (props: AccountListRowInterface) => {
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setShowUserWiseExposureModal(true);
           }}
         >
           <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
@@ -680,7 +691,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   </Box>
 
                   {/* <Box sx={{ display: "flex" }}> */}
-                    {/* <Box sx={{ display: "flex" }}>
+                  {/* <Box sx={{ display: "flex" }}>
                       <Typography
                         variant="h5"
                         sx={[
@@ -697,7 +708,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
                           ? element?.sessionCommission
                           : 0}
                       </Typography> */}
-                      {/* <Typography
+                  {/* <Typography
                         
                         sx={[
                           {
@@ -710,8 +721,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                       >
                     
                       </Typography> */}
-                    {/* </Box> */}
-                    {/* <Typography
+                  {/* </Box> */}
+                  {/* <Typography
                       
                       sx={[
                         {
@@ -834,6 +845,21 @@ const AccountListRow = (props: AccountListRowInterface) => {
             currentPage={currentPage}
           />
         </Box>
+      </ModalMUI>
+      <ModalMUI
+        open={showUserWiseExposureModal}
+        onClose={() => {
+          setShowUserWiseExposureModal(false);
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <EventWiseExposureModal
+          setShowUserWiseExposureModal={setShowUserWiseExposureModal}
+          userName={element?.userName}
+          userId={element?.id}
+          domain={domain ? domain : element?.domain ? element?.domain : ""}
+        />
       </ModalMUI>
 
       <ModalMUI
