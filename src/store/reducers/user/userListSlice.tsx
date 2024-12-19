@@ -7,11 +7,13 @@ import {
   getSearchClientList,
   getTotalBalance,
   getUserList,
+  getUserWiseExposure,
   handleDeleteUser,
   handleExport,
   handleModelActions,
   handleSettleCommission,
   resetSearchUserList,
+  resetUserWiseExposureList,
   setCreditRefference,
   setExposureLimit,
   setLockUnlockUser,
@@ -33,6 +35,7 @@ interface InitialState {
   domain: any;
   userElement: any;
   isUrl: boolean;
+  userWiseExposureList: any;
 }
 
 const initialState: InitialState = {
@@ -49,6 +52,7 @@ const initialState: InitialState = {
   domain: null,
   userElement: null,
   isUrl: false,
+  userWiseExposureList: {},
 };
 
 export const userList = createSlice({
@@ -260,6 +264,21 @@ export const userList = createSlice({
       .addCase(getTotalBalance.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(getUserWiseExposure.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserWiseExposure.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userWiseExposureList = action?.payload;
+      })
+      .addCase(getUserWiseExposure.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(resetUserWiseExposureList, (state) => {
+        state.userWiseExposureList = {};
       })
       .addCase(resetSearchUserList, (state) => {
         state.searchUserList = [];
