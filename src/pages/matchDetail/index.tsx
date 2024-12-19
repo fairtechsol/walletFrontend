@@ -1,4 +1,13 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,11 +23,13 @@ import { socket, socketService } from "../../socketManager";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   AllBetDelete,
+  AllBetDeletePermanent,
   editBetDeleteReason,
   getMatchDetail,
   getPlacedBets,
   getUserProfitLoss,
   removeRunAmount,
+  resetPermanentDeleteSuccess,
   resetSessionProLoss,
   resetUserProfitLoss,
   setCurrentOdd,
@@ -56,6 +67,7 @@ const MatchDetail = () => {
   const [visible, setVisible] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
+  const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
@@ -68,7 +80,9 @@ const MatchDetail = () => {
   const { currentOdd } = useSelector(
     (state: RootState) => state.match.matchList
   );
-
+  const { permanentDeleteSuccess } = useSelector(
+    (state: RootState) => state.match.sideBarList
+  );
   const handleDeleteBet = (value: any) => {
     try {
       let payload: any = {
@@ -94,6 +108,38 @@ const MatchDetail = () => {
           url: ["cricket", "politics"].includes(matchDetail?.matchType)
             ? ApiConstants.MATCH.BETDELETE
             : ApiConstants.MATCH.BETDELETEOTHER,
+          data: payload,
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeleteBetPermanent = () => {
+    try {
+      let payload: any = {
+        matchId: state?.matchId,
+        urlData: {},
+      };
+      selectedBetData.forEach((item: any) => {
+        const { userId, betId, domain } = item;
+
+        if (!payload.urlData[domain]) {
+          payload.urlData[domain] = [];
+        }
+
+        payload.urlData[domain].push({
+          userId,
+          betId,
+          placeBetId: item.id,
+        });
+      });
+      dispatch(
+        AllBetDeletePermanent({
+          url: ["cricket", "politics"].includes(matchDetail?.matchType)
+            ? ApiConstants.MATCH.BET_DELETE_PERMANENT
+            : ApiConstants.MATCH.BET_DELETE_OTHER_PERMANENT,
           data: payload,
         })
       );
@@ -418,6 +464,14 @@ const MatchDetail = () => {
     }
   };
 
+  useEffect(() => {
+    if (permanentDeleteSuccess) {
+      setPermanentDeletePopShow(false);
+      setMode({ type: "", value: false });
+      dispatch(resetPermanentDeleteSuccess());
+    }
+  }, [permanentDeleteSuccess]);
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -456,6 +510,29 @@ const MatchDetail = () => {
           />
         </>
       )}
+      <Dialog
+        open={selectedBetData.length > 0 && permanentDeletePopShow}
+        onClose={() => setPermanentDeletePopShow((prev) => !prev)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Are you sure want to delete these Bets?
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setPermanentDeletePopShow((prev) => !prev)}>
+            No
+          </Button>
+          <Button
+            sx={{ color: "#E32A2A" }}
+            onClick={() => {
+              handleDeleteBetPermanent();
+            }}
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box
         sx={{
           display: "flex",
@@ -955,7 +1032,55 @@ const MatchDetail = () => {
                 </Typography>
               </Box>
             )}
-            {mode?.type !== "edit" && (
+            {!["edit", "delete"].includes(mode?.type) && (
+              <>
+                <Box sx={{ width: "2%" }}></Box>
+                <Box
+                  onClick={() => {
+                    if (mode.value && mode?.type === "deletePermanent") {
+                      setPermanentDeletePopShow(true);
+                    } else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "deletePermanent",
+                          value: !mode.value,
+                        };
+                      });
+                    }
+                  }}
+                  sx={{
+                    width: "150px",
+                    marginY: ".75%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    background: "#E32A2A",
+                    height: "35px",
+                    border: "1.5px solid white",
+                    display: "flex",
+                    alignSelf: "flex-end",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "13px",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {!mode.value ? "Delete Permanent" : "Delete"}
+                  </Typography>
+                  <img
+                    src={DeleteIcon}
+                    style={{ width: "17px", height: "20px" }}
+                  />
+                </Box>
+              </>
+            )}
+            {!["edit", "deletePermanent"].includes(mode?.type) && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box
@@ -1003,7 +1128,7 @@ const MatchDetail = () => {
                 </Box>
               </>
             )}
-            {mode?.type !== "delete" && (
+            {!["delete", "deletePermanent"].includes(mode?.type) && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box

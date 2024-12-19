@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Divider from "../../Inplay/Divider";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { formatToINR } from "../../../helper";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import SmallBox from "../MatchOdds/SmallBox";
@@ -41,7 +41,6 @@ const TournamentOdds = (props: any) => {
 
   return (
     <Box
-      key="odds"
       sx={{
         position: "relative",
         display: "flex",
@@ -285,8 +284,8 @@ const TournamentOdds = (props: any) => {
                 }}
               ></Box>
             )}
-            {liveData?.runners?.map((runner: any) => (
-              <>
+            {liveData?.runners?.map((runner: any, index: number) => (
+              <Fragment key={index}>
                 <BoxComponent
                   name={runner?.nat || runner?.runnerName}
                   rates={
@@ -325,7 +324,7 @@ const TournamentOdds = (props: any) => {
                   lock={handleLock(runner)}
                 />
                 <Divider />
-              </>
+              </Fragment>
             ))}
             {locked && (
               <Box

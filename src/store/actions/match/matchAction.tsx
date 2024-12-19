@@ -184,6 +184,20 @@ export const AllBetDelete = createAsyncThunk<any, any>(
     }
   }
 );
+export const AllBetDeletePermanent = createAsyncThunk<any, any>(
+  "bet/allbetpermanent",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.post(requestData.url, requestData.data);
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
 export const editBetDeleteReason = createAsyncThunk<any, any>(
   "bet/allBetDeleteReason",
   async (requestData, thunkApi) => {
@@ -325,3 +339,4 @@ export const resetcompetitionList = createAction("competitionList/reset");
 export const resetCompetitionDates = createAction("competitionDates/reset");
 export const resetCompetitionMatches = createAction("competitionMatches/reset");
 export const resetUserProfitLoss = createAction("userProfitLoss/reset");
+export const resetPermanentDeleteSuccess = createAction("permanentDeleteSuccess/reset");

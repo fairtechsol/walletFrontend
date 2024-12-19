@@ -1,4 +1,13 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,8 +28,10 @@ import {
 } from "../../../store/actions/horseRacing/horseMatchDetailActions";
 import {
   AllBetDelete,
+  AllBetDeletePermanent,
   editBetDeleteReason,
   getPlacedBets,
+  resetPermanentDeleteSuccess,
   resetSessionProLoss,
   updateBetsPlaced,
   updatePlacedbets,
@@ -42,6 +53,7 @@ const RacingDetails = () => {
   const [visible, setVisible] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
+  const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
   // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
@@ -49,6 +61,9 @@ const RacingDetails = () => {
   );
   const { placedBets, loading } = useSelector(
     (state: RootState) => state.match.bets
+  );
+  const { permanentDeleteSuccess } = useSelector(
+    (state: RootState) => state.match.sideBarList
   );
   const [timeLeft, setTimeLeft] = useState<any>({
     days: 0,
@@ -87,6 +102,35 @@ const RacingDetails = () => {
     }
   };
 
+  const handleDeleteBetPermanent = () => {
+    try {
+      let payload: any = {
+        matchId: id,
+        urlData: {},
+      };
+      selectedBetData.forEach((item: any) => {
+        const { userId, betId, domain } = item;
+
+        if (!payload.urlData[domain]) {
+          payload.urlData[domain] = [];
+        }
+
+        payload.urlData[domain].push({
+          userId,
+          betId,
+          placeBetId: item.id,
+        });
+      });
+      dispatch(
+        AllBetDeletePermanent({
+          url: ApiConstants.MATCH.BET_DELETE_RACE_PERMANENT,
+          data: payload,
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const handleEditDeleteBetReason = (value: any) => {
     try {
       let payload: any = {
@@ -271,6 +315,14 @@ const RacingDetails = () => {
     return () => clearInterval(timer);
   }, [id, matchDetail]);
 
+  useEffect(() => {
+    if (permanentDeleteSuccess) {
+      setPermanentDeletePopShow(false);
+      setMode({ type: "", value: false });
+      dispatch(resetPermanentDeleteSuccess());
+    }
+  }, [permanentDeleteSuccess]);
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -309,6 +361,29 @@ const RacingDetails = () => {
           />
         </>
       )}
+      <Dialog
+        open={selectedBetData.length > 0 && permanentDeletePopShow}
+        onClose={() => setPermanentDeletePopShow((prev) => !prev)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Are you sure want to delete these Bets?
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setPermanentDeletePopShow((prev) => !prev)}>
+            No
+          </Button>
+          <Button
+            sx={{ color: "#E32A2A" }}
+            onClick={() => {
+              handleDeleteBetPermanent();
+            }}
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box
         sx={{
           display: "flex",
@@ -423,7 +498,55 @@ const RacingDetails = () => {
                 </Typography>
               </Box>
             )}
-            {mode?.type !== "edit" && (
+            {!["edit", "delete"].includes(mode?.type) && (
+              <>
+                <Box sx={{ width: "2%" }}></Box>
+                <Box
+                  onClick={() => {
+                    if (mode.value && mode?.type === "deletePermanent") {
+                      setPermanentDeletePopShow(true);
+                    } else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "deletePermanent",
+                          value: !mode.value,
+                        };
+                      });
+                    }
+                  }}
+                  sx={{
+                    width: "150px",
+                    marginY: ".75%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    background: "#E32A2A",
+                    height: "35px",
+                    border: "1.5px solid white",
+                    display: "flex",
+                    alignSelf: "flex-end",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "13px",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {!mode.value ? "Delete Permanent" : "Delete"}
+                  </Typography>
+                  <img
+                    src={DeleteIcon}
+                    style={{ width: "17px", height: "20px" }}
+                  />
+                </Box>
+              </>
+            )}
+            {!["edit", "deletePermanent"].includes(mode?.type) && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box
@@ -471,7 +594,7 @@ const RacingDetails = () => {
                 </Box>
               </>
             )}
-            {mode?.type !== "delete" && (
+            {!["delete", "deletePermanent"].includes(mode?.type) && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box
