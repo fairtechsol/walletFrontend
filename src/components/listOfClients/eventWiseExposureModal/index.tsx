@@ -161,7 +161,7 @@ const EventWiseExposureModal = ({
                           fontSize: "1rem",
                         }}
                       >
-                        Profit/Loss
+                        Exposure
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -183,7 +183,9 @@ const EventWiseExposureModal = ({
                               borderRight: "1px solid #fff",
                             }}
                           >
-                            {value}
+                            {new Intl.NumberFormat("en-IN", {
+                              currency: "INR",
+                            }).format(+value || 0)}
                           </TableCell>
                         </TableRow>
                       )
