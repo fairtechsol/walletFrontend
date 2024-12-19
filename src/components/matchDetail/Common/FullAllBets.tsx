@@ -347,7 +347,10 @@ const FullAllBets = (props: any) => {
                           });
                           setSelectedData([...x]);
                         }
-                      } else if (mode?.type === "delete") {
+                      } else if (
+                        mode?.type === "delete" ||
+                        mode?.type === "deletePermanent"
+                      ) {
                         if (!i?.values[0].deleteReason) {
                           setSelectedBetData([
                             ...selectedBetData,
@@ -450,7 +453,8 @@ const FullAllBets = (props: any) => {
                           )}
                       </>
                     )} */}
-                    {((mode?.type === "delete" &&
+                    {(((mode?.type === "delete" ||
+                      mode?.type === "deletePermanent") &&
                       !i?.values[0]?.deleteReason) ||
                       (mode?.type === "edit" && i?.values[0]?.deleteReason)) &&
                       renderCheckBox(

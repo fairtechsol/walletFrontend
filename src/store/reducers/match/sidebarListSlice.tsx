@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   AllBetDelete,
+  AllBetDeletePermanent,
   editBetDeleteReason,
   getCompetitionDates,
   getCompetitionList,
   getCompetitionMatches,
   resetCompetitionDates,
   resetCompetitionMatches,
+  resetPermanentDeleteSuccess,
   resetcompetitionList,
 } from "../../actions/match/matchAction";
 
@@ -18,6 +20,7 @@ interface InitialState {
   loading: boolean;
   success: boolean;
   error: any;
+  permanentDeleteSuccess: boolean;
 }
 
 const initialState: InitialState = {
@@ -28,6 +31,7 @@ const initialState: InitialState = {
   loading: false,
   success: false,
   error: null,
+  permanentDeleteSuccess: false,
 };
 
 const sidebarListSlice = createSlice({
@@ -77,6 +81,21 @@ const sidebarListSlice = createSlice({
       .addCase(AllBetDelete.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(AllBetDeletePermanent.pending, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(AllBetDeletePermanent.fulfilled, (state) => {
+        state.permanentDeleteSuccess = true;
+        state.loading = false;
+      })
+      .addCase(AllBetDeletePermanent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(resetPermanentDeleteSuccess, (state) => {
+        state.permanentDeleteSuccess = false;
       })
       .addCase(editBetDeleteReason.pending, (state) => {
         state.loading = true;
