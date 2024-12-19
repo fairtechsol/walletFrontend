@@ -50,10 +50,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
   });
   const [showUserWiseExposureModal, setShowUserWiseExposureModal] =
     useState(false);
-  const [userWiseExposureName, setUserWiseExposureName] = useState({
-    name: "",
-    id: "",
-  });
   const [selected, setSelected] = useState(null);
   const [depositeValue, setDepositeValue] = useState(0);
   const [withdrawValue, setWithdrawValue] = useState(0);
