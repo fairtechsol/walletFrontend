@@ -8,36 +8,17 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import {
-  getUserWiseExposure,
-  resetUserWiseExposureList,
-} from "../../../store/actions/user/userAction";
-import { useEffect } from "react";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { formatToINR } from "../../../helper";
+// import { useNavigate } from "react-router-dom";
+// import { Constants } from "../../../utils/Constants";
 
-const EventWiseExposureModal = ({
-  setShowUserWiseExposureModal,
-  userName,
-  userId,
-  domain,
+const EventWiseMatchListModal = ({
   setShowUserWiseMatchListModal,
-}: any) => {
-  const dispatch: AppDispatch = useDispatch();
-
-  const { userWiseExposureList, loading } = useSelector(
-    (state: RootState) => state.user.userList
-  );
-
-  useEffect(() => {
-    dispatch(
-      getUserWiseExposure(domain ? `${userId}?domain=${domain}` : userId)
-    );
-    return () => {
-      dispatch(resetUserWiseExposureList());
-    };
-  }, []);
+  userName,
+  data,
+}: // userId,
+any) => {
+  // const navigate = useNavigate();
   return (
     <>
       <Box
@@ -53,7 +34,6 @@ const EventWiseExposureModal = ({
         <Box
           sx={{
             width: "100%",
-            height: "100%",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
@@ -71,7 +51,7 @@ const EventWiseExposureModal = ({
                 sx={[
                   {
                     width: { xs: "96%", lg: "100%", md: "100%" },
-                    minHeight: "200px",
+                    // minHeight: "200px",
                     display: "flex",
                     flexDirection: "column",
                     borderRadius: "10px",
@@ -117,7 +97,7 @@ const EventWiseExposureModal = ({
                           },
                         }}
                       >
-                        {userName} EventWise Exposure
+                        {userName} Match Wise Exposure
                       </Typography>
                     </Box>
                     <Typography
@@ -128,13 +108,16 @@ const EventWiseExposureModal = ({
                       }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setShowUserWiseExposureModal(false);
+                        setShowUserWiseMatchListModal({
+                          status: false,
+                          value: {},
+                        });
                       }}
                     >
                       &times;
                     </Typography>
                   </Box>
-                </Box>{" "}
+                </Box>
                 <TableContainer sx={{ maxHeight: 600 }}>
                   <Table
                     sx={{
@@ -154,7 +137,7 @@ const EventWiseExposureModal = ({
                             fontSize: "1rem",
                           }}
                         >
-                          User
+                          Match Name
                         </TableCell>
                         <TableCell
                           sx={{
@@ -169,57 +152,40 @@ const EventWiseExposureModal = ({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {loading ? (
-                        <TableRow>
+                      {Object.entries(data || {}).map(([key, value]: any) => (
+                        <TableRow
+                          sx={{
+                            cursor: "pointer",
+                          }}
+                          key={key}
+                          onClick={() => {
+                            // navigate(`${Constants.oldAdmin}live_market/matches`, {
+                            //   state: {
+                            //     submit: true,
+                            //     matchId: key,
+                            //     userId: userId,
+                            //   },
+                            // });
+                          }}
+                        >
                           <TableCell
-                            colSpan={2}
                             sx={{
                               color: "#fff",
                               borderRight: "1px solid #fff",
-                              alignItems: "center",
-                              textAlign: "center",
                             }}
                           >
-                            Loading...
+                            {value?.name}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              color: "#fff",
+                              borderRight: "1px solid #fff",
+                            }}
+                          >
+                            {formatToINR(value?.exposure || 0)}
                           </TableCell>
                         </TableRow>
-                      ) : (
-                        Object.entries(userWiseExposureList || {}).map(
-                          ([key, value]: any) => (
-                            <TableRow
-                              key={value}
-                              style={{ cursor: "pointer" }}
-                              onClick={() => {
-                                if (value?.match) {
-                                  setShowUserWiseMatchListModal({
-                                    status: true,
-                                    value: value?.match,
-                                  });
-                                }
-                              }}
-                            >
-                              <TableCell
-                                sx={{
-                                  color: "#fff",
-                                  borderRight: "1px solid #fff",
-                                }}
-                              >
-                                {key}
-                              </TableCell>
-                              <TableCell
-                                sx={{
-                                  color: "#fff",
-                                  borderRight: "1px solid #fff",
-                                }}
-                              >
-                                {new Intl.NumberFormat("en-IN", {
-                                  currency: "INR",
-                                }).format(+value?.exposure || 0)}
-                              </TableCell>
-                            </TableRow>
-                          )
-                        )
-                      )}
+                      ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -232,4 +198,4 @@ const EventWiseExposureModal = ({
   );
 };
 
-export default EventWiseExposureModal;
+export default EventWiseMatchListModal;
