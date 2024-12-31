@@ -26,6 +26,7 @@ const LiveBookmaker = (props: any) => {
     handleHide,
     title,
     liveData,
+    profitLossFromAnalysis,
   } = props;
 
   const [visible, setVisible] = useState(true);
@@ -361,7 +362,9 @@ const LiveBookmaker = (props: any) => {
               teamImage={currentMatch?.teamA_Image}
               name={currentMatch?.teamA}
               rates={
-                currentMatch?.profitLossDataMatch
+                profitLossFromAnalysis
+                  ? profitLossFromAnalysis?.profitLoss?.a
+                  : currentMatch?.profitLossDataMatch
                   ? liveData?.type === "other"
                     ? currentMatch?.profitLossDataMatch[
                         profitLossDataForMatchConstants[liveData?.type]?.A +
@@ -392,7 +395,11 @@ const LiveBookmaker = (props: any) => {
                   : 0
               }
               color={
-                currentMatch?.profitLossDataMatch
+                profitLossFromAnalysis
+                  ? profitLossFromAnalysis?.profitLoss?.a < 0
+                    ? "#FF4D4D"
+                    : "#319E5B"
+                  : currentMatch?.profitLossDataMatch
                   ? liveData?.type === "other"
                     ? currentMatch?.profitLossDataMatch[
                         profitLossDataForMatchConstants[liveData?.type]?.A +
@@ -436,7 +443,9 @@ const LiveBookmaker = (props: any) => {
               teamImage={currentMatch?.teamB_Image}
               name={currentMatch?.teamB}
               rates={
-                currentMatch?.profitLossDataMatch
+                profitLossFromAnalysis
+                  ? profitLossFromAnalysis?.profitLoss?.b
+                  : currentMatch?.profitLossDataMatch
                   ? liveData?.type === "other"
                     ? currentMatch?.profitLossDataMatch[
                         profitLossDataForMatchConstants[liveData?.type]?.B +
@@ -467,7 +476,11 @@ const LiveBookmaker = (props: any) => {
                   : 0
               }
               color={
-                currentMatch?.profitLossDataMatch
+                profitLossFromAnalysis
+                  ? profitLossFromAnalysis?.profitLoss?.b < 0
+                    ? "#FF4D4D"
+                    : "#319E5B"
+                  : currentMatch?.profitLossDataMatch
                   ? liveData?.type === "other"
                     ? currentMatch?.profitLossDataMatch[
                         profitLossDataForMatchConstants[liveData?.type]?.B +
@@ -514,7 +527,11 @@ const LiveBookmaker = (props: any) => {
                   }
                   // color={"#FF4D4D"}
                   color={
-                    currentMatch?.profitLossDataMatch
+                    profitLossFromAnalysis
+                      ? profitLossFromAnalysis?.profitLoss?.c < 0
+                        ? "#FF4D4D"
+                        : "#319E5B"
+                      : currentMatch?.profitLossDataMatch
                       ? liveData?.type === "other"
                         ? currentMatch?.profitLossDataMatch[
                             profitLossDataForMatchConstants[liveData?.type]?.C +
@@ -551,7 +568,9 @@ const LiveBookmaker = (props: any) => {
                   }
                   name={currentMatch?.teamC}
                   rates={
-                    currentMatch?.profitLossDataMatch
+                    profitLossFromAnalysis
+                      ? profitLossFromAnalysis?.profitLoss?.c
+                      : currentMatch?.profitLossDataMatch
                       ? liveData?.type === "other"
                         ? currentMatch?.profitLossDataMatch[
                             profitLossDataForMatchConstants[liveData?.type]?.C +

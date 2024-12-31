@@ -115,6 +115,7 @@ export const ApiConstants = {
     DOMAIN_PROFIT_LOSS_CARD: "/user/card/total/domain/profitLoss",
     BET_PROFIT_LOSS_CARD: "/user/card/total/bet/profitLoss",
     SESSION_PROFIT_LOSS: "/user/total/session/profitLoss",
+    GET_MATCH_MARKET_ANALYSIS: "/match/marketAnalysis",
   },
   HORSERACING: {
     MATCH: {

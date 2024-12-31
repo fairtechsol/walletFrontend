@@ -9,16 +9,17 @@ import {
   Typography,
 } from "@mui/material";
 import { formatToINR } from "../../../helper";
-// import { useNavigate } from "react-router-dom";
-// import { Constants } from "../../../utils/Constants";
+import { useNavigate } from "react-router-dom";
+import { Constants } from "../../../utils/Constants";
 
 const EventWiseMatchListModal = ({
   setShowUserWiseMatchListModal,
   userName,
   data,
-}: // userId,
-any) => {
-  // const navigate = useNavigate();
+  userId,
+  matchType,
+}: any) => {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -111,6 +112,7 @@ any) => {
                         setShowUserWiseMatchListModal({
                           status: false,
                           value: {},
+                          matchType: "",
                         });
                       }}
                     >
@@ -159,13 +161,19 @@ any) => {
                           }}
                           key={key}
                           onClick={() => {
-                            // navigate(`${Constants.oldAdmin}live_market/matches`, {
-                            //   state: {
-                            //     submit: true,
-                            //     matchId: key,
-                            //     userId: userId,
-                            //   },
-                            // });
+                            if (matchType !== "card") {
+                              navigate(
+                                `/${Constants.wallet}/market_analysis/matches`,
+                                {
+                                  state: {
+                                    submit: true,
+                                    matchId: key,
+                                    userId: userId,
+                                    matchType: matchType,
+                                  },
+                                }
+                              );
+                            }
                           }}
                         >
                           <TableCell

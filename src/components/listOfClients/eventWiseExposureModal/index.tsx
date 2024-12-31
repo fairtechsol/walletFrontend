@@ -187,13 +187,14 @@ const EventWiseExposureModal = ({
                         Object.entries(userWiseExposureList || {}).map(
                           ([key, value]: any) => (
                             <TableRow
-                              key={value}
+                              key={key}
                               style={{ cursor: "pointer" }}
                               onClick={() => {
                                 if (value?.match) {
                                   setShowUserWiseMatchListModal({
                                     status: true,
                                     value: value?.match,
+                                    matchType: key,
                                   });
                                 }
                               }}

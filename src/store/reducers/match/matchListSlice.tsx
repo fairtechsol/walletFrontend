@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   betDataFromSocket,
   getMatchDetail,
+  getMatchDetailMarketAnalysis,
   getMatchListInplay,
   matchListReset,
   setCurrentOdd,
@@ -29,6 +30,7 @@ interface InitialState {
   matchDetails: any;
   betPlaceData: any;
   currentOdd: any;
+  marketAnalysis: any;
 }
 
 const initialState: InitialState = {
@@ -41,6 +43,7 @@ const initialState: InitialState = {
   matchDetails: null,
   betPlaceData: [],
   currentOdd: null,
+  marketAnalysis: null,
 };
 
 const matchListSlice = createSlice({
@@ -76,6 +79,19 @@ const matchListSlice = createSlice({
         state.success = true;
       })
       .addCase(getMatchDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+      .addCase(getMatchDetailMarketAnalysis.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.marketAnalysis = null;
+      })
+      .addCase(getMatchDetailMarketAnalysis.fulfilled, (state, action) => {
+        state.loading = false;
+        state.marketAnalysis = action?.payload;
+      })
+      .addCase(getMatchDetailMarketAnalysis.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
       })

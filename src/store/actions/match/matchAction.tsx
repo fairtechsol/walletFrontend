@@ -50,6 +50,22 @@ export const getMatchDetail = createAsyncThunk<any, any>(
     }
   }
 );
+export const getMatchDetailMarketAnalysis = createAsyncThunk<any, any>(
+  "match/detailMarketAnalysis",
+  async ({ matchId, userId }, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS}?matchId=${matchId}&userId=${userId}`
+      );
+      if (resp) {
+        return resp?.data?.[0];
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
 
 export const getPlacedBets = createAsyncThunk<any, any>(
   "get/placedBets",
@@ -339,4 +355,6 @@ export const resetcompetitionList = createAction("competitionList/reset");
 export const resetCompetitionDates = createAction("competitionDates/reset");
 export const resetCompetitionMatches = createAction("competitionMatches/reset");
 export const resetUserProfitLoss = createAction("userProfitLoss/reset");
-export const resetPermanentDeleteSuccess = createAction("permanentDeleteSuccess/reset");
+export const resetPermanentDeleteSuccess = createAction(
+  "permanentDeleteSuccess/reset"
+);
