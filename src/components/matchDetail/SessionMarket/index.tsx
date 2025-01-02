@@ -1,12 +1,14 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
+import { customSort, formatToINR } from "../../../helper";
+import { RootState } from "../../../store/store";
+import { sessionBettingType } from "../../../utils/Constants";
 import Divider from "../../Inplay/Divider";
+import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import BetsCountBox from "./BetsCountBox";
 import SeasonMarketBox from "./SeasonMarketBox";
-import { customSort, formatToINR } from "../../../helper";
-import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
-import { sessionBettingType } from "../../../utils/Constants";
 
 const SessionMarket = ({
   blockMatch,
@@ -25,7 +27,9 @@ const SessionMarket = ({
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
+  const { marketAnalysis } = useSelector(
+    (state: RootState) => state.match.matchList
+  );
   const [visible, setVisible] = useState(true);
 
   const onSubmit = (value: any) => {
@@ -112,18 +116,28 @@ const SessionMarket = ({
           >
             <Box sx={{ gap: "4px", display: "flex" }}>
               <BetsCountBox
-                total={allBetsData
-                  ?.filter(
-                    (item: any) =>
-                      JSON.parse(
-                        currentMatch?.sessionBettings?.find(
-                          (items: any) => JSON.parse(items)?.id == item?.betId
-                        ) || "{}"
-                      )?.type == type
-                  )
-                  ?.reduce((acc: number, bet: any) => {
-                    return acc + (bet?.totalBet || 0);
-                  }, 0)}
+                total={
+                  marketAnalysis?.betType
+                    ? marketAnalysis?.betType?.session
+                        ?.filter((item: any) => item.type == type)
+                        ?.reduce((prev: number, session: any) => {
+                          prev += session?.profitLoss?.totalBet || 0;
+                          return prev;
+                        }, 0)
+                    : allBetsData
+                        ?.filter(
+                          (item: any) =>
+                            JSON.parse(
+                              currentMatch?.sessionBettings?.find(
+                                (items: any) =>
+                                  JSON.parse(items)?.id == item?.betId
+                              ) || "{}"
+                            )?.type == type
+                        )
+                        ?.reduce((acc: number, bet: any) => {
+                          return acc + (bet?.totalBet || 0);
+                        }, 0)
+                }
               />
               {/* static code */}
               <Box
@@ -157,19 +171,26 @@ const SessionMarket = ({
                   }}
                 >
                   {new Intl.NumberFormat("en-IN").format(
-                    allBetsData
-                      ?.filter(
-                        (item: any) =>
-                          JSON.parse(
-                            currentMatch?.sessionBettings?.find(
-                              (items: any) =>
-                                JSON.parse(items)?.id == item?.betId
-                            ) || "{}"
-                          )?.type == type
-                      )
-                      ?.reduce((accumulator: any, bet: any) => {
-                        return accumulator + (+bet?.maxLoss || 0);
-                      }, 0)
+                    marketAnalysis?.betType
+                      ? marketAnalysis?.betType?.session
+                          ?.filter((item: any) => item.type == type)
+                          ?.reduce((prev: number, session: any) => {
+                            prev += +session?.profitLoss?.maxLoss || 0;
+                            return prev;
+                          }, 0)
+                      : allBetsData
+                          ?.filter(
+                            (item: any) =>
+                              JSON.parse(
+                                currentMatch?.sessionBettings?.find(
+                                  (items: any) =>
+                                    JSON.parse(items)?.id == item?.betId
+                                ) || "{}"
+                              )?.type == type
+                          )
+                          ?.reduce((accumulator: any, bet: any) => {
+                            return accumulator + (+bet?.maxLoss || 0);
+                          }, 0)
                   )}
                 </Typography>
               </Box>
@@ -369,13 +390,19 @@ const SessionMarket = ({
                               ? JSON.parse(element)
                               : element
                           }
-                          profitLossData={allBetsData?.filter(
-                            (item: any) =>
-                              item?.betId ===
-                              (title === "Quick Session Market"
-                                ? JSON.parse(element)?.id
-                                : element?.id)
-                          )}
+                          profitLossData={
+                            marketAnalysis?.betType
+                              ? [marketAnalysis?.betType?.session?.find(
+                                  (item: any) => item.betId == element?.id
+                                )?.profitLoss]
+                              : allBetsData?.filter(
+                                  (item: any) =>
+                                    item?.betId ===
+                                    (title === "Quick Session Market"
+                                      ? JSON.parse(element)?.id
+                                      : element?.id)
+                                )
+                          }
                           index={index}
                           type={type}
                         />

@@ -1,8 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
-import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { handleNumber } from "../../../helper";
+import { AppDispatch } from "../../../store/store";
 
 const PlaceBetComponent = ({ newData, profitLoss, color, index }: any) => {
   const dispatch: AppDispatch = useDispatch();
@@ -15,16 +14,16 @@ const PlaceBetComponent = ({ newData, profitLoss, color, index }: any) => {
       <Box
         // ref={innerRef}
         onClick={() => {
-          dispatch(
-            getSessionProLoss({
-              matchId: newData?.matchId,
-              id: newData?.id,
-              name: newData?.name ?? newData?.RunnerName,
-              type: !newData?.isManual
-                ? "Session Market"
-                : "Quick Session Market",
-            })
-          );
+          // dispatch(
+          //   getSessionProLoss({
+          //     matchId: newData?.matchId,
+          //     id: newData?.id,
+          //     name: newData?.name ?? newData?.RunnerName,
+          //     type: !newData?.isManual
+          //       ? "Session Market"
+          //       : "Quick Session Market",
+          //   })
+          // );
         }}
         sx={{
           background: "#0B4F26",

@@ -1,3 +1,4 @@
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   Box,
   Button,
@@ -15,12 +16,18 @@ import { DeleteIcon } from "../../assets";
 import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
+import CricketCasinoMarket from "../../components/matchDetail/CricketCasinoMarket";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
+import TournamentOdds from "../../components/matchDetail/TournamentOdds";
+import {
+  customSortBySessionMarketName,
+  customSortOnName,
+  formatToINR,
+} from "../../helper";
 import { socket, socketService } from "../../socketManager";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
@@ -48,14 +55,7 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  customSortBySessionMarketName,
-  customSortOnName,
-  formatToINR,
-} from "../../helper";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
-import CricketCasinoMarket from "../../components/matchDetail/CricketCasinoMarket";
-import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 
 const MatchDetail = () => {
   const navigate = useNavigate();
@@ -80,7 +80,6 @@ const MatchDetail = () => {
   const { placedBets, loading, sessionProLoss } = useSelector(
     (state: RootState) => state.match.bets
   );
-
   const { currentOdd } = useSelector(
     (state: RootState) => state.match.matchList
   );
