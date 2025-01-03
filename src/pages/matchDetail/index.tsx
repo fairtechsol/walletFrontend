@@ -24,8 +24,7 @@ import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import {
   customSortBySessionMarketName,
-  customSortOnName,
-  formatToINR,
+  formatToINR
 } from "../../helper";
 import { socket, socketService } from "../../socketManager";
 import {
@@ -471,18 +470,6 @@ const MatchDetail = () => {
       };
     }
   }, []);
-  const convertString = (str: string) => {
-    if (str?.includes("_")) {
-      let words = str.split("_");
-      for (let i = 0; i < words.length; i++) {
-        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-      }
-      return words.join(" ");
-    } else {
-      return str;
-    }
-  };
-
   useEffect(() => {
     if (permanentDeleteSuccess) {
       setPermanentDeletePopShow(false);
@@ -715,78 +702,7 @@ const MatchDetail = () => {
               );
             })}
 
-          {matchDetail?.firstHalfGoal?.length > 0 &&
-            matchDetail?.firstHalfGoal
-              ?.filter((item: any) => item?.isActive)
-              ?.slice()
-              ?.sort(customSortOnName)
-              ?.map((item: any, index: any) => {
-                return (
-                  <MatchOdds
-                    key={index}
-                    currentMatch={matchDetail}
-                    session={"firstHalfGoal"}
-                    data={item?.runners?.length > 0 ? item?.runners : []}
-                    minBet={Math.floor(item?.minBet) || 0}
-                    maxBet={Math.floor(item?.maxBet) || 0}
-                    typeOfBet={convertString(item?.name)}
-                    liveData={item}
-                  />
-                );
-              })}
-          {matchDetail?.halfTime?.isActive && (
-            <MatchOdds
-              currentMatch={matchDetail}
-              typeOfBet={"Half Time"}
-              showBox={matchDetail?.halfTime?.activeStatus === "save"}
-              minBet={Math.floor(matchDetail?.halfTime?.minBet)}
-              maxBet={Math.floor(matchDetail?.halfTime?.maxBet)}
-              liveData={matchDetail?.halfTime}
-              data={
-                matchDetail?.halfTime?.runners?.length > 0
-                  ? matchDetail?.halfTime?.runners
-                  : []
-              }
-            />
-          )}
-          {matchDetail?.overUnder?.length > 0 &&
-            matchDetail?.overUnder
-              ?.filter((item: any) => item?.isActive)
-              ?.slice()
-              ?.sort(customSortOnName)
-              ?.map((item: any, index: any) => {
-                return (
-                  <MatchOdds
-                    key={index}
-                    currentMatch={matchDetail}
-                    session={"overUnder"}
-                    data={item?.runners?.length > 0 ? item?.runners : []}
-                    minBet={Math.floor(item?.minBet) || 0}
-                    maxBet={Math.floor(item?.maxBet) || 0}
-                    typeOfBet={convertString(item?.name)}
-                    liveData={item}
-                  />
-                );
-              })}
-          {matchDetail?.setWinner?.length > 0 &&
-            matchDetail?.setWinner
-              ?.filter((item: any) => item?.isActive)
-              ?.slice()
-              ?.sort(customSortOnName)
-              ?.map((item: any, index: any) => {
-                return (
-                  <MatchOdds
-                    key={index}
-                    currentMatch={matchDetail}
-                    session={"setWinner"}
-                    minBet={Math.floor(item?.minBet) || 0}
-                    maxBet={Math.floor(item?.maxBet) || 0}
-                    typeOfBet={convertString(item?.name)}
-                    liveData={item}
-                    data={item?.runners?.length > 0 ? item?.runners : []}
-                  />
-                );
-              })}
+        
 
           {matchDetail?.apiTideMatch2?.isActive && (
             <MatchOdds

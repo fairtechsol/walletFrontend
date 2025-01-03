@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
-import SmallBox from "../MatchOdds/SmallBox";
-import Divider from "../../Inplay/Divider";
-import BoxComponent from "./BoxComponent";
 import { formatToINR } from "../../../helper";
-import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import CommissionDot from "../../Common/CommissionDot";
+import Divider from "../../Inplay/Divider";
+import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
+import SmallBox from "../MatchOdds/SmallBox";
+import BoxComponent from "./BoxComponent";
 
 const LiveBookmaker = (props: any) => {
   const {
@@ -124,7 +124,9 @@ const LiveBookmaker = (props: any) => {
           <SmallBox
             // color={"#FF4D4D"}
             valueA={bookRatioA(
-              currentMatch?.profitLossDataMatch
+              profitLossFromAnalysis
+                ? profitLossFromAnalysis?.profitLoss?.a
+                : currentMatch?.profitLossDataMatch
                 ? liveData?.type === "other"
                   ? currentMatch?.profitLossDataMatch[
                       profitLossDataForMatchConstants[liveData?.type]?.A +
@@ -153,7 +155,9 @@ const LiveBookmaker = (props: any) => {
                     ]
                   : 0
                 : 0,
-              currentMatch?.profitLossDataMatch
+              profitLossFromAnalysis
+                ? profitLossFromAnalysis?.profitLoss?.b
+                : currentMatch?.profitLossDataMatch
                 ? liveData?.type === "other"
                   ? currentMatch?.profitLossDataMatch[
                       profitLossDataForMatchConstants[liveData?.type]?.B +
@@ -184,7 +188,9 @@ const LiveBookmaker = (props: any) => {
                 : 0
             )}
             valueB={bookRatioB(
-              currentMatch?.profitLossDataMatch
+              profitLossFromAnalysis
+                ? profitLossFromAnalysis?.profitLoss?.a
+                : currentMatch?.profitLossDataMatch
                 ? liveData?.type === "other"
                   ? currentMatch?.profitLossDataMatch[
                       profitLossDataForMatchConstants[liveData?.type]?.A +
@@ -213,7 +219,9 @@ const LiveBookmaker = (props: any) => {
                     ]
                   : 0
                 : 0,
-              currentMatch?.profitLossDataMatch
+              profitLossFromAnalysis
+                ? profitLossFromAnalysis?.profitLoss?.b
+                : currentMatch?.profitLossDataMatch
                 ? liveData?.type === "other"
                   ? currentMatch?.profitLossDataMatch[
                       profitLossDataForMatchConstants[liveData?.type]?.B +
