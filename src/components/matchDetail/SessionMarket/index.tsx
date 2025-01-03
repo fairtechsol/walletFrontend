@@ -393,7 +393,9 @@ const SessionMarket = ({
                           profitLossData={
                             marketAnalysis?.betType
                               ? [marketAnalysis?.betType?.session?.find(
-                                  (item: any) => item.betId == element?.id
+                                  (item: any) => item.betId == (title === "Quick Session Market"
+                                    ? JSON.parse(element)?.id
+                                    : element?.id)
                                 )?.profitLoss]
                               : allBetsData?.filter(
                                   (item: any) =>

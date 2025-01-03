@@ -78,10 +78,13 @@ const PlaceBetComponent = ({ newData, profitLoss, color, index }: any) => {
               color: "white",
             }}
           >
-            {!profitLoss?.profitLoss
+            {!profitLoss?.profitLoss && !profitLoss?.betPlaced
               ? "Profit/Loss"
               : handleNumber(
-                  parseFloat(profitLoss?.profitLoss[index]).toFixed(2),
+                  parseFloat(
+                    profitLoss?.betPlaced[index] ??
+                      profitLoss?.profitLoss[index]
+                  ).toFixed(2),
                   color
                 )}
           </Typography>
