@@ -1,10 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { handleNumber } from "../../../helper";
-import { AppDispatch } from "../../../store/store";
 
-const PlaceBetComponent = ({ newData, profitLoss, color, index }: any) => {
-  const dispatch: AppDispatch = useDispatch();
+const PlaceBetComponent = ({ profitLoss, color, index }: any) => {
   // const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
   return (
     <Box
