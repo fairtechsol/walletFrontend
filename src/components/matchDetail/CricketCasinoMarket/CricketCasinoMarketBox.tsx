@@ -5,9 +5,9 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
 import { formatToINR } from "../../../helper";
+import SeperateBox from "../MatchOdds/SeperateBox";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 

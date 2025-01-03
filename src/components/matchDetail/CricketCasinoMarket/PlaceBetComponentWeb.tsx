@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { UD } from "../../../assets";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store/store";
-import { getSessionProLoss } from "../../../store/actions/match/matchAction";
+import { UD } from "../../../assets";
 import { handleNumber } from "../../../helper";
+import { getSessionProLoss } from "../../../store/actions/match/matchAction";
+import { AppDispatch } from "../../../store/store";
 
 const PlaceBetComponentWeb = ({
   newData,
@@ -80,10 +80,13 @@ const PlaceBetComponentWeb = ({
               color: "white",
             }}
           >
-            {!profitLoss?.profitLoss
+            {!profitLoss?.profitLoss && !profitLoss?.betPlaced
               ? "Profit/Loss"
               : handleNumber(
-                  parseFloat(profitLoss?.profitLoss[index]).toFixed(2),
+                  parseFloat(
+                    profitLoss?.betPlaced[index] ??
+                      profitLoss?.profitLoss[index]
+                  ).toFixed(2),
                   color
                 )}
           </Typography>

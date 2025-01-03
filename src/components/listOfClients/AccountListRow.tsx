@@ -54,6 +54,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
   const [showUserWiseMatchListModal, setShowUserWiseMatchListModal] = useState({
     status: false,
     value: {},
+    matchType: "",
   });
   const [selected, setSelected] = useState(null);
   const [depositeValue, setDepositeValue] = useState(0);
@@ -866,7 +867,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
       <ModalMUI
         open={showUserWiseMatchListModal?.status}
         onClose={() => {
-          setShowUserWiseMatchListModal({ status: false, value: {} });
+          setShowUserWiseMatchListModal({ status: false, value: {}, matchType: "" });
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -876,6 +877,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           userName={element?.userName}
           data={showUserWiseMatchListModal?.value}
           userId={element?.id}
+          matchType={showUserWiseMatchListModal?.matchType}
         />
       </ModalMUI>
 

@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import service from "../../../service";
 import { AxiosError } from "axios";
+import service from "../../../service";
 import { ApiConstants, Constants } from "../../../utils/Constants";
 
 export const getMatchListInplay = createAsyncThunk<any, any>(
@@ -43,6 +43,22 @@ export const getMatchDetail = createAsyncThunk<any, any>(
       );
       if (resp) {
         return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+export const getMatchDetailMarketAnalysis = createAsyncThunk<any, any>(
+  "match/detailMarketAnalysis",
+  async ({ matchId, userId }, thunkApi) => {
+    try {
+      const resp = await service.get(
+        `${ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS}?matchId=${matchId}&userId=${userId}`
+      );
+      if (resp) {
+        return resp?.data?.[0];
       }
     } catch (error: any) {
       const err = error as AxiosError;
@@ -240,6 +256,13 @@ export const updateProfitLoss = createAsyncThunk<any, any>(
     return profitLoss;
   }
 );
+
+export const addRunAmount = createAsyncThunk<any, any>(
+  "/placed/addRunAmount",
+  async (profitLoss) => {
+    return profitLoss;
+  }
+);
 export const removeRunAmount = createAsyncThunk<any, any>(
   "/remove/runAmount",
   async (profitLoss) => {
@@ -339,4 +362,6 @@ export const resetcompetitionList = createAction("competitionList/reset");
 export const resetCompetitionDates = createAction("competitionDates/reset");
 export const resetCompetitionMatches = createAction("competitionMatches/reset");
 export const resetUserProfitLoss = createAction("userProfitLoss/reset");
-export const resetPermanentDeleteSuccess = createAction("permanentDeleteSuccess/reset");
+export const resetPermanentDeleteSuccess = createAction(
+  "permanentDeleteSuccess/reset"
+);
