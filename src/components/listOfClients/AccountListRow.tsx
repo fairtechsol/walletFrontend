@@ -2,18 +2,18 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
+import { formatToINR } from "../../helper";
 import { AccountListRowInterface } from "../../interface/listOfClients";
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 import { Modal } from "../Common/Modal";
 import StyledImage from "../Common/StyledImages";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
-import RowModalComponents from "./RowModalComponents";
-import { useSelector } from "react-redux";
 import AccountListModal from "./AccountListModal";
-import { formatToINR } from "../../helper";
+import RowModalComponents from "./RowModalComponents";
 import EventWiseExposureModal from "./eventWiseExposureModal";
 import EventWiseMatchListModal from "./eventWiseMatchListModal";
 
@@ -49,8 +49,9 @@ const AccountListRow = (props: AccountListRowInterface) => {
     id: "",
     title: "",
   });
-  const [showUserWiseExposureModal, setShowUserWiseExposureModal] =
-    useState(false);
+  const [showUserWiseExposureModal, setShowUserWiseExposureModal] = useState(
+    false
+  );
   const [showUserWiseMatchListModal, setShowUserWiseMatchListModal] = useState({
     status: false,
     value: {},
@@ -867,7 +868,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
       <ModalMUI
         open={showUserWiseMatchListModal?.status}
         onClose={() => {
-          setShowUserWiseMatchListModal({ status: false, value: {}, matchType: "" });
+          setShowUserWiseMatchListModal({
+            status: false,
+            value: {},
+            matchType: "",
+          });
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -878,6 +883,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           data={showUserWiseMatchListModal?.value}
           userId={element?.id}
           matchType={showUserWiseMatchListModal?.matchType}
+          domain={element?.domain || domain}
         />
       </ModalMUI>
 

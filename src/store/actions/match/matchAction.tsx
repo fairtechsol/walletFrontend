@@ -19,7 +19,7 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
       if (resp) {
         return resp?.data;
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       throw thunkApi.rejectWithValue(err.response?.status);
     }
@@ -44,7 +44,7 @@ export const getMatchDetail = createAsyncThunk<any, any>(
       if (resp) {
         return resp?.data;
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       throw thunkApi.rejectWithValue(err.response?.status);
     }
@@ -52,15 +52,19 @@ export const getMatchDetail = createAsyncThunk<any, any>(
 );
 export const getMatchDetailMarketAnalysis = createAsyncThunk<any, any>(
   "match/detailMarketAnalysis",
-  async ({ matchId, userId }, thunkApi) => {
+  async ({ matchId, userId, domain }, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS}?matchId=${matchId}&userId=${userId}`
+        `${
+          ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS
+        }?matchId=${matchId}&userId=${userId}${
+          domain ? `&domain=${domain}` : ""
+        }`
       );
       if (resp) {
         return resp?.data?.[0];
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       throw thunkApi.rejectWithValue(err.response?.status);
     }
@@ -112,7 +116,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
           proLoss: [JSON.stringify({ betPlaced: [] })],
         };
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       return thunkApi.rejectWithValue(err.response?.status);
     }
@@ -194,7 +198,7 @@ export const AllBetDelete = createAsyncThunk<any, any>(
       if (resp) {
         return resp?.data;
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       return thunkApi.rejectWithValue(err.response?.status);
     }
@@ -208,7 +212,7 @@ export const AllBetDeletePermanent = createAsyncThunk<any, any>(
       if (resp) {
         return resp?.data;
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       return thunkApi.rejectWithValue(err.response?.status);
     }
@@ -225,7 +229,7 @@ export const editBetDeleteReason = createAsyncThunk<any, any>(
       if (resp) {
         return resp?.data;
       }
-    } catch (error: any) {
+    } catch (error) {
       const err = error as AxiosError;
       return thunkApi.rejectWithValue(err.response?.status);
     }

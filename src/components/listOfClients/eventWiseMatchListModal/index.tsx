@@ -8,8 +8,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { formatToINR } from "../../../helper";
 import { useNavigate } from "react-router-dom";
+import { formatToINR } from "../../../helper";
 import { Constants } from "../../../utils/Constants";
 
 const EventWiseMatchListModal = ({
@@ -18,6 +18,7 @@ const EventWiseMatchListModal = ({
   data,
   userId,
   matchType,
+  domain,
 }: any) => {
   const navigate = useNavigate();
   return (
@@ -170,6 +171,7 @@ const EventWiseMatchListModal = ({
                                     matchId: key,
                                     userId: userId,
                                     matchType: matchType,
+                                    domain: domain,
                                   },
                                 }
                               );

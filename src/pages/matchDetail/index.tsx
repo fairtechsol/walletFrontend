@@ -22,10 +22,7 @@ import MatchOdds from "../../components/matchDetail/MatchOdds";
 import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
-import {
-  customSortBySessionMarketName,
-  formatToINR
-} from "../../helper";
+import { customSortBySessionMarketName, formatToINR } from "../../helper";
 import { socket, socketService } from "../../socketManager";
 import {
   AllBetDelete,
@@ -349,6 +346,7 @@ const MatchDetail = () => {
             getMatchDetailMarketAnalysis({
               matchId: state?.matchId,
               userId: state?.userId,
+              domain: state?.domain,
             })
           );
         }
@@ -434,6 +432,7 @@ const MatchDetail = () => {
               getMatchDetailMarketAnalysis({
                 matchId: state?.matchId,
                 userId: state?.userId,
+                domain: state?.domain,
               })
             );
           }
@@ -489,16 +488,16 @@ const MatchDetail = () => {
         "quickbookmaker3",
       ].includes(item?.marketType)
   );
-  let profitLossFromAnalysisForTiedMarket =
-    marketAnalysis?.betType?.match?.filter((item: any) =>
+  let profitLossFromAnalysisForTiedMarket = marketAnalysis?.betType?.match?.filter(
+    (item: any) =>
       ["tiedMatch1", "tiedMatch2", "tiedMatch3"].includes(item?.marketType)
-    );
-  let profitLossFromAnalysisForCompleteMarket =
-    marketAnalysis?.betType?.match?.filter((item: any) =>
+  );
+  let profitLossFromAnalysisForCompleteMarket = marketAnalysis?.betType?.match?.filter(
+    (item: any) =>
       ["completeMatch", "completeMatch1", "completeManual"].includes(
         item?.marketType
       )
-    );
+  );
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -701,8 +700,6 @@ const MatchDetail = () => {
                 />
               );
             })}
-
-        
 
           {matchDetail?.apiTideMatch2?.isActive && (
             <MatchOdds
