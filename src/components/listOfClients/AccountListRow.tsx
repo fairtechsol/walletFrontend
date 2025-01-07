@@ -884,6 +884,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           userId={element?.id}
           matchType={showUserWiseMatchListModal?.matchType}
           domain={element?.domain || domain}
+          roleName={element?.roleName}
         />
       </ModalMUI>
 

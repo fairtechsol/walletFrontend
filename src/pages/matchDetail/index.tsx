@@ -189,7 +189,11 @@ const MatchDetail = () => {
             `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
           );
         } else {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`eq${state?.matchId}${
+            state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
+          }${state.domain ? `&domain=${state.domain}` : ""}`));
         }
       }
     } catch (e) {
@@ -294,7 +298,11 @@ const MatchDetail = () => {
           })
         );
         dispatch(removeRunAmount(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`eq${state?.matchId}${
+          state.userId
+            ? `&userId=${state.userId}&roleName=${state?.roleName}`
+            : ""
+        }${state.domain ? `&domain=${state.domain}` : ""}`));
       }
     } catch (error) {
       console.log(error);
@@ -305,7 +313,11 @@ const MatchDetail = () => {
     try {
       if (event?.matchId === state?.matchId) {
         dispatch(updateMaxLossForBetOnUndeclare(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`eq${state?.matchId}${
+          state.userId
+            ? `&userId=${state.userId}&roleName=${state?.roleName}`
+            : ""
+        }${state.domain ? `&domain=${state.domain}` : ""}`));
       }
     } catch (error) {
       console.log(error);
@@ -316,7 +328,11 @@ const MatchDetail = () => {
     try {
       if (event?.matchId === state?.matchId) {
         if (event?.betType !== "quickbookmaker1") {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`eq${state?.matchId}${
+            state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
+          }${state.domain ? `&domain=${state.domain}` : ""}`));
           dispatch(updateMatchRatesOnMarketUndeclare(event));
         }
       }
@@ -352,7 +368,15 @@ const MatchDetail = () => {
         }
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(
+          getPlacedBets(
+            `eq${state?.matchId}${
+              state.userId
+                ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                : ""
+            }${state.domain ? `&domain=${state.domain}` : ""}`
+          )
+        );
       }
     } catch (e) {
       console.log(e);
@@ -381,18 +405,21 @@ const MatchDetail = () => {
           state?.matchId,
           updateMatchDetailToRedux
         );
-        socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
-        socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
-        socketService.match.matchResultDeclared(matchResultDeclared);
-        socketService.match.declaredMatchResultAllUser(matchResultDeclared);
-        socketService.match.matchDeleteBet(matchDeleteBet);
-        socketService.match.sessionDeleteBet(handleSessionDeleteBet);
-        socketService.match.sessionResult(handleSessionResultDeclare);
-        socketService.match.sessionResultUnDeclare(
-          handleSessionResultUnDeclare
-        );
-        socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
-        socketService.match.updateDeleteReason(handleDeleteReasonUpdate);
+        if(!state.userId){
+          socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
+          socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
+          socketService.match.matchResultDeclared(matchResultDeclared);
+          socketService.match.declaredMatchResultAllUser(matchResultDeclared);
+          socketService.match.matchDeleteBet(matchDeleteBet);
+          socketService.match.sessionDeleteBet(handleSessionDeleteBet);
+          socketService.match.sessionResult(handleSessionResultDeclare);
+          socketService.match.sessionResultUnDeclare(
+            handleSessionResultUnDeclare
+          );
+          socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
+          socketService.match.updateDeleteReason(handleDeleteReasonUpdate);
+        }
+       
       }
     } catch (e) {
       console.log(e);
@@ -437,7 +464,11 @@ const MatchDetail = () => {
             );
           }
           dispatch(getUserProfitLoss(state?.matchId));
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`eq${state?.matchId}${
+            state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
+          }${state.domain ? `&domain=${state.domain}` : ""}`));
         }
       } else if (document.visibilityState === "hidden") {
         socketService.match.leaveMatchRoom(state?.matchId);
@@ -461,7 +492,11 @@ const MatchDetail = () => {
           })
         );
         dispatch(getUserProfitLoss(state?.matchId));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`eq${state?.matchId}${
+          state.userId
+            ? `&userId=${state.userId}&roleName=${state?.roleName}`
+            : ""
+        }${state.domain ? `&domain=${state.domain}` : ""}`));
       }, 14100 * 1000);
 
       return () => {

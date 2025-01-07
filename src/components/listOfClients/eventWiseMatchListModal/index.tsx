@@ -19,6 +19,7 @@ const EventWiseMatchListModal = ({
   userId,
   matchType,
   domain,
+  roleName,
 }: any) => {
   const navigate = useNavigate();
   return (
@@ -172,6 +173,7 @@ const EventWiseMatchListModal = ({
                                     userId: userId,
                                     matchType: matchType,
                                     domain: domain,
+                                    roleName: roleName,
                                   },
                                 }
                               );
