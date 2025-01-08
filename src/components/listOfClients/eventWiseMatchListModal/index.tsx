@@ -163,6 +163,9 @@ const EventWiseMatchListModal = ({
                           }}
                           key={key}
                           onClick={() => {
+                            if (matchType === "virtual") {
+                              return;
+                            }
                             if (matchType !== "card") {
                               navigate(
                                 `/${Constants.wallet}/market_analysis/matches`,
