@@ -190,6 +190,7 @@ const EventWiseMatchListModal = ({
                             }}
                           >
                             {value?.name}
+                            {value?.type ? ` (${value?.type})` : ""}
                           </TableCell>
                           <TableCell
                             sx={{
