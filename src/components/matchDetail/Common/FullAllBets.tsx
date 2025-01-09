@@ -7,7 +7,14 @@ import { formatToINR, stripUrl } from "../../../helper";
 import { RootState } from "../../../store/store";
 
 const FullAllBets = (props: any) => {
-  const { tag, mode, IObets, selectedBetData, setSelectedBetData } = props;
+  const {
+    tag,
+    mode,
+    IObets,
+    selectedBetData,
+    setSelectedBetData,
+    role,
+  } = props;
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -44,7 +51,7 @@ const FullAllBets = (props: any) => {
 
       const result = Object.values<Record<string, any>>(uniqueData);
       const body: any = result?.map((v: any) => {
-        const roleName = profileDetail?.roleName;
+        const roleName = role || profileDetail?.roleName;
         let partnership = 0;
         switch (roleName) {
           case "fairGameAdmin":

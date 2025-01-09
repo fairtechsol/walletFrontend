@@ -1248,6 +1248,7 @@ const MatchDetail = () => {
                 tag={false}
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
+                role={state.roleName}
               />
             </Box>
           )}
