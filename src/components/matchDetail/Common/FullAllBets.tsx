@@ -1,11 +1,14 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, CHECK } from "../../../assets";
 import { formatToINR, stripUrl } from "../../../helper";
 import { RootState } from "../../../store/store";
 
+const ITEMS_PER_PAGE = 200;
+const BUFFER_SIZE = 100;
+const ROW_HEIGHT = 30;
 const FullAllBets = (props: any) => {
   const {
     tag,
@@ -21,6 +24,11 @@ const FullAllBets = (props: any) => {
   const [newData, setNewBets] = useState([]);
   const [visible, setVisible] = useState(true);
   const [selectedData, setSelectedData] = useState<any>([]);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [visibleRange, setVisibleRange] = useState({
+    start: 0,
+    end: ITEMS_PER_PAGE,
+  });
 
   const renderCheckBox = (isSelected: any) =>
     isSelected ? (
@@ -41,7 +49,27 @@ const FullAllBets = (props: any) => {
   const shouldRenderCheckBox = (mode: any, values: any, selectedData: any) =>
     mode?.value && selectedData.some((item: any) => item?.id === values[0]?.id);
 
-  useEffect(() => {
+  const handleScroll = useCallback(() => {
+    if (scrollRef.current) {
+      const { scrollTop, clientHeight } = scrollRef.current;
+
+      // Calculate visible range based on scroll position
+      const start = Math.floor(scrollTop / ROW_HEIGHT);
+      const visibleCount = Math.ceil(clientHeight / ROW_HEIGHT);
+
+      setVisibleRange({
+        start: Math.max(0, start - BUFFER_SIZE),
+        end: Math.min(newData.length, start + visibleCount + BUFFER_SIZE),
+      });
+      // console.log(visibleRange);
+      // // Load more data when reaching bottom
+      // if (scrollHeight - scrollTop - clientHeight < ROW_HEIGHT * BUFFER_SIZE) {
+      //   processNextChunk();
+      // }
+    }
+  }, [newData.length]);
+
+  const processNextChunk = useCallback(() => {
     if (IObets) {
       // console.log("IObets", IObets);
       const uniqueData: any = {};
@@ -194,6 +222,27 @@ const FullAllBets = (props: any) => {
     }
   }, [mode?.value]);
 
+  useEffect(() => {
+    setNewBets([]);
+    if (IObets?.length) {
+      processNextChunk();
+    }
+  }, [IObets, processNextChunk]);
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener("scroll", handleScroll);
+      return () => {
+        scrollElement.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [handleScroll]);
+  // Calculate visible items
+  const visibleItems = useMemo(() => {
+    return newData.slice(visibleRange.start, visibleRange.end);
+  }, [newData, visibleRange]);
+
   return (
     <Box
       sx={{
@@ -307,16 +356,23 @@ const FullAllBets = (props: any) => {
         <>
           <HeaderRow mode={mode?.value} tag={tag} />
           <div
+            ref={scrollRef}
             className="myScroll"
             style={{ maxHeight: "80vh", overflowY: "auto" }}
           >
-            {newData?.map((i: any, k: number) => {
-              const num = newData.length - k;
+            <div style={{ height: visibleRange.start * ROW_HEIGHT }} />
+
+            {visibleItems?.map((i: any, k: number) => {
+              const num = IObets.length - (k + visibleRange.start);
               const formattedNum = num < 10 ? "0" + num : num.toString();
               return (
                 <div
-                  key={k}
-                  style={{ display: "flex", position: "relative" }}
+                  key={i.id}
+                  style={{
+                    display: "flex",
+                    position: "relative",
+                    height: ROW_HEIGHT,
+                  }}
                   onClick={(e) => {
                     e.stopPropagation();
                     let x: any = [...selectedData];
@@ -469,7 +525,7 @@ const FullAllBets = (props: any) => {
                         shouldRenderCheckBox(mode, i?.values, selectedData)
                       )}
                   </Box>
-                  <Row index={k} values={i.values} />
+                  <Row index={k + visibleRange.start} values={i.values} />
                   {/* {i?.values[0].id  */}
                   {i?.values[0]?.deleteReason && (
                     <Box
@@ -511,6 +567,11 @@ const FullAllBets = (props: any) => {
                 </div>
               );
             })}
+            <div
+              style={{
+                height: (IObets.length - visibleRange.end) * ROW_HEIGHT,
+              }}
+            />
           </div>
         </>
       )}

@@ -118,12 +118,12 @@ const SessionMarket = ({
               <BetsCountBox
                 total={
                   marketAnalysis?.betType
-                    ? marketAnalysis?.betType?.session
+                    ? (marketAnalysis?.betType?.session || [])
                         ?.filter((item: any) => item.type == type)
                         ?.reduce((prev: number, session: any) => {
-                          prev += (session?.profitLoss?.totalBet || 0);
+                          prev += session?.profitLoss?.totalBet || 0;
                           return prev;
-                        }, 0)
+                        }, 0) ?? 0
                     : allBetsData
                         ?.filter(
                           (item: any) =>
@@ -172,12 +172,12 @@ const SessionMarket = ({
                 >
                   {new Intl.NumberFormat("en-IN").format(
                     marketAnalysis?.betType
-                      ? marketAnalysis?.betType?.session
+                      ? (marketAnalysis?.betType?.session || [])
                           ?.filter((item: any) => item.type == type)
                           ?.reduce((prev: number, session: any) => {
                             prev += +(session?.profitLoss?.maxLoss || 0);
                             return prev;
-                          }, 0)
+                          }, 0) ?? 0
                       : allBetsData
                           ?.filter(
                             (item: any) =>
@@ -392,11 +392,15 @@ const SessionMarket = ({
                           }
                           profitLossData={
                             marketAnalysis?.betType
-                              ? [marketAnalysis?.betType?.session?.find(
-                                  (item: any) => item.betId == (title === "Quick Session Market"
-                                    ? JSON.parse(element)?.id
-                                    : element?.id)
-                                )?.profitLoss]
+                              ? [
+                                  marketAnalysis?.betType?.session?.find(
+                                    (item: any) =>
+                                      item.betId ==
+                                      (title === "Quick Session Market"
+                                        ? JSON.parse(element)?.id
+                                        : element?.id)
+                                  )?.profitLoss,
+                                ]
                               : allBetsData?.filter(
                                   (item: any) =>
                                     item?.betId ===
