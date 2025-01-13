@@ -6,6 +6,7 @@ import {
   getSessionProfitLossMatchDetailFilter,
   removeRunAmount,
   resetSessionProLoss,
+  updateBetDataOnDeclare,
   updateBetsPlaced,
   updatePlacedbets,
   updatePlacedbetsDeleteReason,
@@ -83,9 +84,15 @@ const betsSlice = createSlice({
           state.sessionProLoss = updatedSessionProLoss;
         }
       })
+      .addCase(updateBetDataOnDeclare.fulfilled, (state, action) => {
+        const { betId } = action?.payload;
+        state.placedBets = state.placedBets?.filter(
+          (items: any) => items?.betId != betId
+        );
+      })
       .addCase(addRunAmount.fulfilled, (state, action) => {
         const data = action?.payload;
-        let idToAdd=data.id
+        let idToAdd = data.id;
         if (
           idToAdd &&
           !state?.sessionProLoss?.find((item: any) => item?.id === idToAdd)

@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { convertData, updateSessionBettingsItem } from "../../../helper";
+import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import {
   betDataFromSocket,
   getMatchDetail,
@@ -17,8 +19,6 @@ import {
   updateTeamRates,
   updateTeamRatesOnDelete,
 } from "../../actions/match/matchAction";
-import { profitLossDataForMatchConstants } from "../../../utils/Constants";
-import { convertData, updateSessionBettingsItem } from "../../../helper";
 
 interface InitialState {
   matchListInplay: any;
@@ -254,6 +254,7 @@ const matchListSlice = createSlice({
             profitLossDataSession: updatedProfitLossDataSession,
           };
         }
+        
       })
       .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
         const { jobData, profitLoss } = action?.payload;

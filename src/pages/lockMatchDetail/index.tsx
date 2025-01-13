@@ -9,6 +9,10 @@ import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
 import { socket, socketService } from "../../socketManager";
 import {
+  getUserOfLock,
+  updateUserMatchLock,
+} from "../../store/actions/match/marketLockUnlockAction";
+import {
   getMatchDetail,
   getPlacedBets,
   getUserProfitLoss,
@@ -26,10 +30,6 @@ import {
   updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  getUserOfLock,
-  updateUserMatchLock,
-} from "../../store/actions/match/marketLockUnlockAction";
 const LockMatchScreen = () => {
   const dispatch: AppDispatch = useDispatch();
   const { state } = useLocation();
@@ -183,7 +183,7 @@ const LockMatchScreen = () => {
           })
         );
         dispatch(removeRunAmount(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        // dispatch(getPlacedBets(`eq${state?.matchId}`));
       }
     } catch (error) {
       console.log(error);

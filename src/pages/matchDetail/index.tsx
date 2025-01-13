@@ -298,11 +298,11 @@ const MatchDetail = () => {
           })
         );
         dispatch(removeRunAmount(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}${
-          state.userId
-            ? `&userId=${state.userId}&roleName=${state?.roleName}`
-            : ""
-        }${state.domain ? `&domain=${state.domain}` : ""}`));
+        // dispatch(getPlacedBets(`eq${state?.matchId}${
+        //   state.userId
+        //     ? `&userId=${state.userId}&roleName=${state?.roleName}`
+        //     : ""
+        // }${state.domain ? `&domain=${state.domain}` : ""}`));
       }
     } catch (error) {
       console.log(error);
