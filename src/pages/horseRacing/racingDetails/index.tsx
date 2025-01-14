@@ -1,3 +1,4 @@
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   Box,
   Button,
@@ -17,8 +18,8 @@ import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsH
 import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLoss/userProfitLossRace";
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
+import { getTimeLeft } from "../../../helper";
 import { socket, socketService } from "../../../socketManager";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -39,7 +40,6 @@ import {
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
-import { getTimeLeft } from "../../../helper";
 
 const RacingDetails = () => {
   const navigate = useNavigate();
@@ -498,22 +498,12 @@ const RacingDetails = () => {
                 </Typography>
               </Box>
             )}
-            {!["edit", "delete"].includes(mode?.type) && (
+           {!["edit", "delete"].includes(mode?.type) && mode.value && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box
                   onClick={() => {
-                    if (mode.value && mode?.type === "deletePermanent") {
-                      setPermanentDeletePopShow(true);
-                    } else {
-                      setMode((prev: any) => {
-                        return {
-                          ...prev,
-                          type: "deletePermanent",
-                          value: !mode.value,
-                        };
-                      });
-                    }
+                    setPermanentDeletePopShow(true);
                   }}
                   sx={{
                     width: "150px",
@@ -537,7 +527,7 @@ const RacingDetails = () => {
                       marginRight: "10px",
                     }}
                   >
-                    {!mode.value ? "Delete Permanent" : "Delete"}
+                    {"Delete"}
                   </Typography>
                   <img
                     src={DeleteIcon}
@@ -665,6 +655,15 @@ const RacingDetails = () => {
                 tag={false}
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
+                deletePermanent={() => {
+                  setMode((prev: any) => {
+                    return {
+                      ...prev,
+                      type: "deletePermanent",
+                      value: !mode.value,
+                    };
+                  });
+                }}
               />
             </Box>
           )}

@@ -189,11 +189,15 @@ const MatchDetail = () => {
             `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
           );
         } else {
-          dispatch(getPlacedBets(`eq${state?.matchId}${
-            state.userId
-              ? `&userId=${state.userId}&roleName=${state?.roleName}`
-              : ""
-          }${state.domain ? `&domain=${state.domain}` : ""}`));
+          dispatch(
+            getPlacedBets(
+              `eq${state?.matchId}${
+                state.userId
+                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                  : ""
+              }${state.domain ? `&domain=${state.domain}` : ""}`
+            )
+          );
         }
       }
     } catch (e) {
@@ -313,11 +317,15 @@ const MatchDetail = () => {
     try {
       if (event?.matchId === state?.matchId) {
         dispatch(updateMaxLossForBetOnUndeclare(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}${
-          state.userId
-            ? `&userId=${state.userId}&roleName=${state?.roleName}`
-            : ""
-        }${state.domain ? `&domain=${state.domain}` : ""}`));
+        dispatch(
+          getPlacedBets(
+            `eq${state?.matchId}${
+              state.userId
+                ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                : ""
+            }${state.domain ? `&domain=${state.domain}` : ""}`
+          )
+        );
       }
     } catch (error) {
       console.log(error);
@@ -328,11 +336,15 @@ const MatchDetail = () => {
     try {
       if (event?.matchId === state?.matchId) {
         if (event?.betType !== "quickbookmaker1") {
-          dispatch(getPlacedBets(`eq${state?.matchId}${
-            state.userId
-              ? `&userId=${state.userId}&roleName=${state?.roleName}`
-              : ""
-          }${state.domain ? `&domain=${state.domain}` : ""}`));
+          dispatch(
+            getPlacedBets(
+              `eq${state?.matchId}${
+                state.userId
+                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                  : ""
+              }${state.domain ? `&domain=${state.domain}` : ""}`
+            )
+          );
           dispatch(updateMatchRatesOnMarketUndeclare(event));
         }
       }
@@ -405,7 +417,7 @@ const MatchDetail = () => {
           state?.matchId,
           updateMatchDetailToRedux
         );
-        if(!state.userId){
+        if (!state.userId) {
           socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
           socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
           socketService.match.matchResultDeclared(matchResultDeclared);
@@ -416,10 +428,11 @@ const MatchDetail = () => {
           socketService.match.sessionResultUnDeclare(
             handleSessionResultUnDeclare
           );
-          socketService.match.matchResultUnDeclared(handleMatchResultUndeclared);
+          socketService.match.matchResultUnDeclared(
+            handleMatchResultUndeclared
+          );
           socketService.match.updateDeleteReason(handleDeleteReasonUpdate);
         }
-       
       }
     } catch (e) {
       console.log(e);
@@ -464,11 +477,15 @@ const MatchDetail = () => {
             );
           }
           dispatch(getUserProfitLoss(state?.matchId));
-          dispatch(getPlacedBets(`eq${state?.matchId}${
-            state.userId
-              ? `&userId=${state.userId}&roleName=${state?.roleName}`
-              : ""
-          }${state.domain ? `&domain=${state.domain}` : ""}`));
+          dispatch(
+            getPlacedBets(
+              `eq${state?.matchId}${
+                state.userId
+                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                  : ""
+              }${state.domain ? `&domain=${state.domain}` : ""}`
+            )
+          );
         }
       } else if (document.visibilityState === "hidden") {
         socketService.match.leaveMatchRoom(state?.matchId);
@@ -492,11 +509,15 @@ const MatchDetail = () => {
           })
         );
         dispatch(getUserProfitLoss(state?.matchId));
-        dispatch(getPlacedBets(`eq${state?.matchId}${
-          state.userId
-            ? `&userId=${state.userId}&roleName=${state?.roleName}`
-            : ""
-        }${state.domain ? `&domain=${state.domain}` : ""}`));
+        dispatch(
+          getPlacedBets(
+            `eq${state?.matchId}${
+              state.userId
+                ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                : ""
+            }${state.domain ? `&domain=${state.domain}` : ""}`
+          )
+        );
       }, 14100 * 1000);
 
       return () => {
@@ -1081,22 +1102,12 @@ const MatchDetail = () => {
                 </Typography>
               </Box>
             )}
-            {!["edit", "delete"].includes(mode?.type) && (
+            {!["edit", "delete"].includes(mode?.type) && mode.value && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box
                   onClick={() => {
-                    if (mode.value && mode?.type === "deletePermanent") {
-                      setPermanentDeletePopShow(true);
-                    } else {
-                      setMode((prev: any) => {
-                        return {
-                          ...prev,
-                          type: "deletePermanent",
-                          value: !mode.value,
-                        };
-                      });
-                    }
+                    setPermanentDeletePopShow(true);
                   }}
                   sx={{
                     width: "150px",
@@ -1120,7 +1131,7 @@ const MatchDetail = () => {
                       marginRight: "10px",
                     }}
                   >
-                    {!mode.value ? "Delete Permanent" : "Delete"}
+                    {"Delete"}
                   </Typography>
                   <img
                     src={DeleteIcon}
@@ -1249,6 +1260,15 @@ const MatchDetail = () => {
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
                 role={state.roleName}
+                deletePermanent={() => {
+                  setMode((prev: any) => {
+                    return {
+                      ...prev,
+                      type: "deletePermanent",
+                      value: !mode.value,
+                    };
+                  });
+                }}
               />
             </Box>
           )}

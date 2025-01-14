@@ -17,6 +17,7 @@ const FullAllBets = (props: any) => {
     selectedBetData,
     setSelectedBetData,
     role,
+    deletePermanent
   } = props;
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
@@ -313,6 +314,9 @@ const FullAllBets = (props: any) => {
               display: "flex",
               flexDirection: "column",
               marginRight: "2px",
+            }}
+            onDoubleClick={()=>{
+              deletePermanent()
             }}
           >
             <Typography
