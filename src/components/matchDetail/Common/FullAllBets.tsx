@@ -6,8 +6,8 @@ import { ARROWUP, CHECK } from "../../../assets";
 import { formatToINR, stripUrl } from "../../../helper";
 import { RootState } from "../../../store/store";
 
-const ITEMS_PER_PAGE = 200;
-const BUFFER_SIZE = 100;
+const ITEMS_PER_PAGE = 100;
+const BUFFER_SIZE = 30;
 const ROW_HEIGHT = 30;
 const FullAllBets = (props: any) => {
   const {
