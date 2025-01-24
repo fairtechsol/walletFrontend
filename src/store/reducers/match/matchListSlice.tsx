@@ -7,6 +7,7 @@ import {
   getMatchDetailMarketAnalysis,
   getMatchListInplay,
   matchListReset,
+  resetMarketAnalysys,
   setCurrentOdd,
   updateBalance,
   updateBetDataOnDeclare,
@@ -94,6 +95,9 @@ const matchListSlice = createSlice({
       .addCase(getMatchDetailMarketAnalysis.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
+      })
+      .addCase(resetMarketAnalysys, (state) => {
+        state.marketAnalysis = null;
       })
       .addCase(updateMatchListRates.fulfilled, (state, action) => {
         const { id, matchOdd } = action?.payload;
@@ -244,23 +248,21 @@ const matchListSlice = createSlice({
       .addCase(updateBetDataOnDeclare.fulfilled, (state, action) => {
         const { betId, matchId } = action?.payload;
         if (state?.matchDetail?.id === matchId) {
-          const updatedProfitLossDataSession =
-            state.matchDetail?.profitLossDataSession?.filter(
-              (item: any) => item?.betId !== betId
-            );
+          const updatedProfitLossDataSession = state.matchDetail?.profitLossDataSession?.filter(
+            (item: any) => item?.betId !== betId
+          );
 
           state.matchDetail = {
             ...state.matchDetail,
             profitLossDataSession: updatedProfitLossDataSession,
           };
         }
-        
       })
       .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
         const { jobData, profitLoss } = action?.payload;
         if (state?.matchDetail?.id === jobData?.placedBet?.matchId) {
-          const updatedProfitLossDataSession =
-            state?.matchDetail?.profitLossDataSession?.map((item: any) => {
+          const updatedProfitLossDataSession = state?.matchDetail?.profitLossDataSession?.map(
+            (item: any) => {
               if (item?.betId === jobData?.placedBet?.betId) {
                 return {
                   ...item,
@@ -270,7 +272,8 @@ const matchListSlice = createSlice({
                 };
               }
               return item;
-            });
+            }
+          );
 
           const betIndex = updatedProfitLossDataSession?.findIndex(
             (item: any) => item?.betId === jobData?.placedBet?.betId
@@ -333,8 +336,11 @@ const matchListSlice = createSlice({
         } else if (jobData?.newBet?.marketType === "tournament") {
           state.matchDetail.profitLossDataMatch = {
             ...state.matchDetail.profitLossDataMatch,
-            [jobData?.betId + "_" + "profitLoss" + "_" + state.matchDetail?.id]:
-              JSON.stringify(userRedisObj),
+            [jobData?.betId +
+            "_" +
+            "profitLoss" +
+            "_" +
+            state.matchDetail?.id]: JSON.stringify(userRedisObj),
           };
         } else {
           state.matchDetail.profitLossDataMatch = {
@@ -354,8 +360,8 @@ const matchListSlice = createSlice({
       .addCase(updateMaxLossForDeleteBet.fulfilled, (state, action) => {
         const { matchId, betId, profitLoss } = action?.payload;
         if (state?.matchDetail?.id === matchId) {
-          const updatedProfitLossDataSession =
-            state?.matchDetail?.profitLossDataSession?.map((item: any) => {
+          const updatedProfitLossDataSession = state?.matchDetail?.profitLossDataSession?.map(
+            (item: any) => {
               if (betId === item?.betId) {
                 return {
                   ...item,
@@ -365,7 +371,8 @@ const matchListSlice = createSlice({
                 };
               }
               return item;
-            });
+            }
+          );
 
           const betIndex = updatedProfitLossDataSession.findIndex(
             (item: any) => item?.betId === betId
@@ -433,8 +440,11 @@ const matchListSlice = createSlice({
         } else if (matchBetType === "tournament") {
           state.matchDetail.profitLossDataMatch = {
             ...state.matchDetail.profitLossDataMatch,
-            [betId + "_" + "profitLoss" + "_" + state.matchDetail?.id]:
-              JSON.stringify(teamRate),
+            [betId +
+            "_" +
+            "profitLoss" +
+            "_" +
+            state.matchDetail?.id]: JSON.stringify(teamRate),
           };
         } else {
           if (redisObject[teamCrateRedisKey]) {

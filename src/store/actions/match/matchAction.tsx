@@ -366,6 +366,7 @@ export const resetcompetitionList = createAction("competitionList/reset");
 export const resetCompetitionDates = createAction("competitionDates/reset");
 export const resetCompetitionMatches = createAction("competitionMatches/reset");
 export const resetUserProfitLoss = createAction("userProfitLoss/reset");
+export const resetMarketAnalysys = createAction("marketAnalysis/reset");
 export const resetPermanentDeleteSuccess = createAction(
   "permanentDeleteSuccess/reset"
 );

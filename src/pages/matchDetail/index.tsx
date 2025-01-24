@@ -33,6 +33,7 @@ import {
   getPlacedBets,
   getUserProfitLoss,
   removeRunAmount,
+  resetMarketAnalysys,
   resetPermanentDeleteSuccess,
   resetSessionProLoss,
   resetUserProfitLoss,
@@ -554,6 +555,14 @@ const MatchDetail = () => {
         item?.marketType
       )
   );
+
+  
+  useEffect(() => {
+    return () => {
+      dispatch(resetMarketAnalysys());
+    };
+  }, []);
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
