@@ -431,44 +431,10 @@ export const profitLossDataForMatchConstants = {
 
 // use below baseUrl for testing build
 
-export const serviceUrl =
-  process.env.NODE_ENV === Constants.PRODUCTION
-    ? Constants.apiBasePath
-    : Constants.localPath;
+export const serviceUrl = import.meta.env.BASE_URL;
 
 export const baseUrls = {
-  socket:
-    process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.apiBasePath
-      : Constants.localPath,
-  thirdParty:
-    process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.thirdParty
-      : Constants.localPathThird,
-  expertSocket:
-    process.env.NODE_ENV === Constants.PRODUCTION
-      ? Constants.expertPath
-      : Constants.localPathExpert,
+  socket: import.meta.env.BASE_URL,
+  thirdParty: import.meta.env.THIRD_PARTY_BASE_URL,
+  expertSocket: import.meta.env.EXPERT_BASE_URL,
 };
-
-// use below baseUrl for live build
-
-// export const serviceUrl =
-//   process.env.NODE_ENV === Constants.PRODUCTION
-//     ? Constants.apiBasePathLive
-//     : Constants.localPath;
-
-// export const baseUrls = {
-//   socket:
-//     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.apiBasePathLive
-//       : Constants.localPath,
-//   thirdParty:
-//     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.thirdPartyLive
-//       : Constants.localPathThird,
-//   expertSocket:
-//     process.env.NODE_ENV === Constants.PRODUCTION
-//       ? Constants.expertPathLive
-//       : Constants.localPathExpert,
-// };
