@@ -431,10 +431,10 @@ export const profitLossDataForMatchConstants = {
 
 // use below baseUrl for testing build
 
-export const serviceUrl = import.meta.env.BASE_URL;
+export const serviceUrl = import.meta.env.VITE_BASE_URL;
 
 export const baseUrls = {
-  socket: import.meta.env.BASE_URL,
-  thirdParty: import.meta.env.THIRD_PARTY_BASE_URL,
-  expertSocket: import.meta.env.EXPERT_BASE_URL,
+  socket: import.meta.env.VITE_BASE_URL,
+  thirdParty: import.meta.env.VITE_THIRD_PARTY_BASE_URL,
+  expertSocket: import.meta.env.VITE_EXPERT_BASE_URL,
 };
