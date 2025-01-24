@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import { RootState } from "../../../store/store";
@@ -37,7 +37,6 @@ const MatchOdds = (props: any) => {
     (state: RootState) => state.match.matchList
   );
   const [visible, setVisible] = useState(true);
-  const dispatch = useDispatch();
   const bookRatioA = (teamARates: any, teamBRates: any) => {
     const bookRatio = teamARates != 0 ? teamBRates / teamARates || 0 : 0;
     const formattedRatio = Math.abs(bookRatio).toFixed(2);
