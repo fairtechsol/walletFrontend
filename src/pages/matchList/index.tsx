@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Pagination,
@@ -6,17 +7,16 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import Loader from "../../components/Loader";
-import MatchComponent from "../../components/Inplay/MatchComponent";
-import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getMatchListInplay } from "../../store/actions/match/matchAction";
-import { AppDispatch, RootState } from "../../store/store";
-import { useSelector } from "react-redux";
-import { Constants } from "../../utils/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import MatchComponent from "../../components/Inplay/MatchComponent";
+import Loader from "../../components/Loader";
 import { socketService } from "../../socketManager";
-import { makeStyles } from "@material-ui/core/styles";
+import { getMatchListInplay, updateMatchRatesFromApiOnList } from "../../store/actions/match/matchAction";
+import { AppDispatch, RootState } from "../../store/store";
+import { Constants, marketApiConst } from "../../utils/Constants";
 const Inplay = () => {
   const navigate = useNavigate();
   const { type } = useParams();
@@ -36,6 +36,19 @@ const Inplay = () => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
+
+  const getMatchListMarket = async (matchType: string) => {
+    try {
+      const resp: any = await axios.get(marketApiConst[matchType]||"", {
+        timeout: 2000,
+      });
+      if (resp?.status) {
+        dispatch(updateMatchRatesFromApiOnList(resp?.data));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getMatchListService = () => {
     try {
@@ -67,9 +80,9 @@ const Inplay = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
-        matchListInplay?.matches?.map((item: any) => {
-          socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
-        });
+        // matchListInplay?.matches?.map((item: any) => {
+        //   socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+        // });
         socketService.match.matchResultDeclared(getMatchListService);
         socketService.match.matchResultUnDeclared(getMatchListService);
         socketService.match.declaredMatchResultAllUser(getMatchListService);
@@ -83,9 +96,9 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      matchListInplay?.matches?.map((item: any) => {
-        socketService.match.leaveMatchRoom(item?.id);
-      });
+      // matchListInplay?.matches?.map((item: any) => {
+      //   socketService.match.leaveMatchRoom(item?.id);
+      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
@@ -107,6 +120,15 @@ const Inplay = () => {
     };
   }, [type]);
   const classes = useStyles();
+
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getMatchListMarket("cricket");
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <>
       {matchListInplay && matchListInplay?.matches?.length > 0

@@ -360,6 +360,14 @@ export const setCurrentOdd = createAsyncThunk<any, any>(
     return requestData;
   }
 );
+
+export const updateMatchRatesFromApiOnList = createAsyncThunk<any, any>(
+  "/updateMatchRatesFromApiOnList/rates",
+  async (data) => {
+    return data;
+  }
+);
+
 export const matchListReset = createAction("matchList/reset");
 export const resetSessionProLoss = createAction("sessionProloss/reset");
 export const resetcompetitionList = createAction("competitionList/reset");

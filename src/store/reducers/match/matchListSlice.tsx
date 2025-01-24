@@ -13,6 +13,7 @@ import {
   updateBetDataOnDeclare,
   updateMatchListRates,
   updateMatchRates,
+  updateMatchRatesFromApiOnList,
   updateMatchRatesOnMarketUndeclare,
   updateMaxLossForBet,
   updateMaxLossForBetOnUndeclare,
@@ -219,6 +220,22 @@ const matchListSlice = createSlice({
               action?.payload?.newUserExposure ?? action?.payload?.exposure,
           },
         };
+      })
+      .addCase(updateMatchRatesFromApiOnList.fulfilled, (state, action) => {
+        let matchListFromApi = action.payload;
+        if (state.matchListInplay?.matches?.length > 0) {
+          state.matchListInplay.matches = state.matchListInplay?.matches?.map((items: any) => {
+            const itemToUpdate = matchListFromApi?.find(
+              (item: any) =>
+                +item?.gameId === +items?.eventId ||
+                +item?.gmid === +items?.eventId
+            );
+            return {
+              ...items,
+              ...itemToUpdate,
+            };
+          });
+        }
       })
       .addCase(updateMaxLossForBetOnUndeclare.fulfilled, (state, action) => {
         const { betId, matchId, parentRedisUpdateObj } = action?.payload;
