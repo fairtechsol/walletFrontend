@@ -371,7 +371,7 @@ const FullAllBets = (props: any) => {
               const formattedNum = num < 10 ? "0" + num : num.toString();
               return (
                 <div
-                  key={i.id}
+                  key={k + visibleRange.start}
                   style={{
                     display: "flex",
                     position: "relative",
