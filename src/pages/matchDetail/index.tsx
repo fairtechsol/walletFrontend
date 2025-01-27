@@ -181,7 +181,7 @@ const MatchDetail = () => {
 
   const matchResultDeclared = (event: any) => {
     try {
-      if (event?.matchId === state?.matchId) {
+      if (event?.matchId === state?.matchId && event.isMatchDeclare) {
         if (
           event?.gameType === "cricket" ||
           event?.betType === "quickbookmaker1"
@@ -556,7 +556,6 @@ const MatchDetail = () => {
       )
   );
 
-  
   useEffect(() => {
     return () => {
       dispatch(resetMarketAnalysys());
