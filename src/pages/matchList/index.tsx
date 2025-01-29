@@ -14,7 +14,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import MatchComponent from "../../components/Inplay/MatchComponent";
 import Loader from "../../components/Loader";
 import { socketService } from "../../socketManager";
-import { getMatchListInplay, updateMatchRatesFromApiOnList } from "../../store/actions/match/matchAction";
+import {
+  getMatchListInplay,
+  updateMatchRatesFromApiOnList,
+} from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { Constants, marketApiConst } from "../../utils/Constants";
 const Inplay = () => {
@@ -39,7 +42,7 @@ const Inplay = () => {
 
   const getMatchListMarket = async (matchType: string) => {
     try {
-      const resp: any = await axios.get(marketApiConst[matchType]||"", {
+      const resp: any = await axios.get(marketApiConst[matchType], {
         timeout: 2000,
       });
       if (resp?.status) {
@@ -120,7 +123,6 @@ const Inplay = () => {
     };
   }, [type]);
   const classes = useStyles();
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
