@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import { RootState } from "../../../store/store";
+import CommissionDot from "../../Common/CommissionDot";
 import Divider from "../../Inplay/Divider";
 import SmallBox from "../MatchOdds/SmallBox";
 import BoxComponent from "./BoxComponent";
@@ -89,6 +90,7 @@ const TournamentOdds = (props: any) => {
           >
             {title}
           </Typography>
+          {liveData?.isCommissionActive && <CommissionDot />}
           {blockMatch && (
             <img
               onClick={() => (selft ? "" : "")}

@@ -706,7 +706,12 @@ const MatchDetail = () => {
               />
             ))}
           {matchDetail?.tournament &&
-            matchDetail?.tournament?.map((market: any, index: any) => {
+            matchDetail?.tournament ?.filter(
+              (items: any) =>
+                items.activeStatus === "live" &&
+                items.isActive 
+            )
+            ?.sort((a: any, b: any) => a.sNo - b.sNo)?.map((market: any, index: any) => {
               return (
                 <TournamentOdds
                   key={index}
