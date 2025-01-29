@@ -14,7 +14,7 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   const { marketAnalysis } = useSelector(
     (state: RootState) => state.match.matchList
   );
-
+  console.log(type);
   return (
     <Box
       //   onClick={handleClick}
@@ -24,9 +24,13 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
         // ref={innerRef}
         onClick={() => {
           if (marketAnalysis?.betType) {
-            const currBetPL = marketAnalysis?.betType?.session?.find(
-              (item: any) => item.betId === newData?.id
-            );
+            const currBetPL = [
+              ...(marketAnalysis?.betType?.session || []),
+              ...(marketAnalysis?.betType?.khado || []),
+              ...(marketAnalysis?.betType?.meter || []),
+              ...(marketAnalysis?.betType?.overByover || []),
+              ...(marketAnalysis?.betType?.ballByBall || []),
+            ]?.find((item: any) => item.betId === newData?.id);
             if (currBetPL) {
               dispatch(
                 addRunAmount({
@@ -41,7 +45,7 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
               );
             }
           } else {
-            if (type === "session") {
+            if (["session", "khado", "meter", "overByover","ballByBall"].includes(type)) {
               dispatch(
                 getSessionProLoss({
                   matchId: newData?.matchId,

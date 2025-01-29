@@ -2,36 +2,71 @@ import { Box, Typography } from "@mui/material";
 import { UD } from "../../../assets";
 // import { useState } from "react";
 // import DropdownMenu from "./DropDownMenu";
-import { AppDispatch } from "../../../store/store";
+import { AppDispatch, RootState } from "../../../store/store";
 // import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { getSessionProLoss } from "../../../store/actions/match/matchAction";
+import { useDispatch, useSelector } from "react-redux";
 import { handleNumber } from "../../../helper";
+import { addRunAmount, getSessionProLoss } from "../../../store/actions/match/matchAction";
 
 const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
-  const dispatch: AppDispatch = useDispatch();
   // const { runAmount } = useSelector((state: RootState) => state.match.bets);
   // const [show, setShow] = useState(false);
   // const [anchorEl, setAnchorEl] = useState(null);
   // const handleClose = () => {
   //   setAnchorEl(null);
   // };
+  const dispatch: AppDispatch = useDispatch();
   const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
+
+  const { marketAnalysis } = useSelector(
+    (state: RootState) => state.match.matchList
+  );
   return (
     <>
       <Box
         onClick={() => {
-          if (type === "session") {
-            dispatch(
-              getSessionProLoss({
-                id: newData?.id,
-                matchId: newData?.matchId,
-                name: newData?.name ?? newData?.RunnerName,
-                type: !newData?.isManual
-                  ? "Session Market"
-                  : "Quick Session Market",
-              })
-            );
+          if (marketAnalysis?.betType) {
+            const currBetPL = [
+              ...(marketAnalysis?.betType?.session || []),
+              ...(marketAnalysis?.betType?.khado || []),
+              ...(marketAnalysis?.betType?.meter || []),
+              ...(marketAnalysis?.betType?.overByover || []),
+              ...(marketAnalysis?.betType?.ballByBall || []),
+            ]?.find((item: any) => item.betId === newData?.id);
+            if (currBetPL) {
+              dispatch(
+                addRunAmount({
+                  id: newData?.id,
+                  name: newData?.name,
+                  type: !newData?.isManual
+                    ? "Session Market"
+                    : "Quick Session Market",
+                  matchId: newData?.matchId,
+                  proLoss: JSON.stringify(currBetPL?.profitLoss),
+                })
+              );
+            }
+          } else {
+            if (
+              [
+                "session",
+                "khado",
+                "meter",
+                "overByover",
+                "ballByBall",
+              ].includes(type)
+            ) {
+              dispatch(
+                getSessionProLoss({
+                  matchId: newData?.matchId,
+                  id: newData?.id,
+                  name: newData?.name ?? newData?.RunnerName,
+                  type: !newData?.isManual
+                    ? "Session Market"
+                    : "Quick Session Market",
+                })
+              );
+            }
           }
         }}
         sx={{
