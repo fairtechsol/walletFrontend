@@ -706,26 +706,26 @@ const MatchDetail = () => {
               />
             ))}
           {matchDetail?.tournament &&
-            matchDetail?.tournament ?.filter(
-              (items: any) =>
-                items.activeStatus === "live" &&
-                items.isActive 
-            )
-            ?.sort((a: any, b: any) => a.sNo - b.sNo)?.map((market: any, index: any) => {
-              return (
-                <TournamentOdds
-                  key={index}
-                  currentMatch={matchDetail}
-                  minBet={Math.floor(market?.minBet) || 0}
-                  maxBet={Math.floor(market?.maxBet) || 0}
-                  title={market?.name}
-                  liveData={market}
-                  profitLossFromAnalysis={marketAnalysis?.betType?.match?.find(
-                    (item: any) => item?.betId === market?.id
-                  )}
-                />
-              );
-            })}
+            matchDetail?.tournament
+              ?.filter(
+                (items: any) => items.activeStatus === "live" && items.isActive
+              )
+              ?.sort((a: any, b: any) => a.sNo - b.sNo)
+              ?.map((market: any, index: any) => {
+                return (
+                  <TournamentOdds
+                    key={index}
+                    currentMatch={matchDetail}
+                    minBet={Math.floor(market?.minBet) || 0}
+                    maxBet={Math.floor(market?.maxBet) || 0}
+                    title={market?.name}
+                    liveData={market}
+                    profitLossFromAnalysis={marketAnalysis?.betType?.match?.find(
+                      (item: any) => item?.betId === market?.id
+                    )}
+                  />
+                );
+              })}
           {matchDetail?.marketBookmaker2?.isActive && (
             <LiveBookmaker
               currentMatch={matchDetail}
@@ -1361,6 +1361,7 @@ const MatchDetail = () => {
                   )}
                   min={matchDetail?.betFairSessionMinBet || 0}
                   max={matchDetail?.betFairSessionMaxBet || 0}
+                  type="session"
                 />
               )}
             {/* {matchDetail?.apiSessionActive &&
