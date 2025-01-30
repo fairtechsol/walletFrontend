@@ -6,7 +6,10 @@ import { AppDispatch, RootState } from "../../../store/store";
 // import { useSelector } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import { handleNumber } from "../../../helper";
-import { addRunAmount, getSessionProLoss } from "../../../store/actions/match/matchAction";
+import {
+  addRunAmount,
+  getSessionProLoss,
+} from "../../../store/actions/match/matchAction";
 
 const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
   // const { runAmount } = useSelector((state: RootState) => state.match.bets);
@@ -80,6 +83,7 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
           height: "32px",
           right: "11vw",
           position: "absolute",
+          cursor: "pointer",
         }}
       >
         <Box

@@ -14,11 +14,15 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   const { marketAnalysis } = useSelector(
     (state: RootState) => state.match.matchList
   );
-  console.log(type);
   return (
     <Box
       //   onClick={handleClick}
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
+      }}
     >
       <Box
         // ref={innerRef}
@@ -45,7 +49,15 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
               );
             }
           } else {
-            if (["session", "khado", "meter", "overByover","ballByBall"].includes(type)) {
+            if (
+              [
+                "session",
+                "khado",
+                "meter",
+                "overByover",
+                "ballByBall",
+              ].includes(type)
+            ) {
               dispatch(
                 getSessionProLoss({
                   matchId: newData?.matchId,
