@@ -1,20 +1,35 @@
 import { socket, thirdParty } from ".";
-
+let currSocket: any = [];
 export const matchSocketService = {
   joinMatchRoom: (matchId: any, roleName: any) => {
     socket?.emit("matchRoom", {
       id: matchId,
     });
-
     thirdParty.emit("initCricketData", {
       matchId: matchId,
       roleName: roleName,
     });
+    currSocket.push(
+      setInterval(() => {
+        thirdParty.emit("initCricketData", {
+          matchId: matchId,
+          roleName: roleName,
+        });
+      }, 120000)
+    );
   },
   leaveAllRooms: () => {
+    for (let item of currSocket) {
+      clearInterval(item);
+    }
+    currSocket = [];
     socket?.emit("leaveAll");
   },
   leaveMatchRoom: (matchId: any) => {
+    for (let item of currSocket) {
+      clearInterval(item);
+    }
+    currSocket = [];
     thirdParty?.emit("disconnectCricketData", {
       matchId: matchId,
     });
@@ -101,6 +116,10 @@ export const matchSocketService = {
     socket?.off("addMatch");
   },
   getMatchRatesOff: (matchId: any) => {
+    for (let item of currSocket) {
+      clearInterval(item);
+    }
+    currSocket = [];
     thirdParty?.off(`liveData${matchId}`);
   },
   updateDeleteReasonOff: () => {

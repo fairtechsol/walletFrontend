@@ -147,7 +147,6 @@ const betsSlice = createSlice({
           betId,
           isPermanentDelete,
         } = action?.payload;
-
         const updateDeleteReason = (bet: any) => {
           if (betPlacedId?.includes(bet?.id)) {
             bet.deleteReason = deleteReason;
