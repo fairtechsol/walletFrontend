@@ -1,9 +1,10 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import moment from "moment";
 import { useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import moment from "moment";
 import { formatToINR, stripUrl } from "../../../helper";
+import CommissionDot from "../../Common/CommissionDot";
+import StyledImage from "../../Common/StyledImages";
 const AllRateSeperate = ({
   profit,
   mark,
@@ -540,6 +541,7 @@ const RowComponent = ({ header, data }: any) => {
             data={data?.bettingName ?? data?.marketType}
             first={true}
             header={header}
+            isCommissionActive={data?.isCommissionActive}
           />
           <SingleBox
             color={getColor()}
@@ -729,6 +731,7 @@ const SingleBox = ({
   time,
   width,
   boxWidth,
+  isCommissionActive,
 }: any) => {
   return !header ? (
     first ? (
@@ -744,6 +747,7 @@ const SingleBox = ({
           alignItems: "center",
         }}
       >
+        {isCommissionActive && <CommissionDot />}
         {data === "Bookmaker" ? (
           <Typography
             sx={{
@@ -821,6 +825,7 @@ const SingleBox = ({
           justifyContent: "center",
         }}
       >
+        {isCommissionActive && <CommissionDot />}
         <Typography
           sx={{
             fontWeight: "600",
@@ -859,6 +864,7 @@ const SingleBox = ({
           alignItems: "center",
         }}
       >
+        {isCommissionActive && <CommissionDot />}
         <Typography
           sx={{
             fontWeight: "700",
@@ -890,6 +896,7 @@ const SingleBox = ({
           alignItems: "center",
         }}
       >
+        {isCommissionActive && <CommissionDot />}
         <Typography
           sx={{
             fontWeight: "400",
