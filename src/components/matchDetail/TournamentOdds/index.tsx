@@ -283,7 +283,10 @@ const TournamentOdds = (props: any) => {
           </Box>
 
           <Box sx={{ position: "relative", width: "99.8%", background: "red" }}>
-            {(upcoming || showBox) && (
+          {(upcoming ||
+              showBox ||
+              (!["ACTIVE", "OPEN", ""].includes(liveData?.status) &&
+                liveData?.gtype == "match")) && (
               <Box
                 sx={{
                   position: "absolute",
@@ -294,9 +297,25 @@ const TournamentOdds = (props: any) => {
                   zIndex: "999",
                   justifyContent: "center",
                   alignItems: "center",
-                  background: "rgba(0, 0, 0, .5)",
+                  background: "rgba(0, 0, 0, .71)",
                 }}
-              ></Box>
+              >
+                <Typography
+                  sx={{
+                    fontSize: { xs: "12px", lg: "22px" },
+                    textTransform: "uppercase",
+                    width: "100%",
+                    textAlign: "center",
+                    color: "white",
+                    fontWeight: "400",
+                  }}
+                >
+                  {!["ACTIVE", "OPEN", ""].includes(liveData?.status) &&
+                  liveData?.gtype == "match"
+                    ? liveData?.status
+                    : ""}
+                </Typography>
+              </Box>
             )}
             {liveData?.runners?.map((runner: any, index: number) => (
               <Fragment key={index}>
@@ -356,6 +375,7 @@ const TournamentOdds = (props: any) => {
                   }
                   data={runner}
                   lock={handleLock(runner)}
+                  marketDetails={liveData}
                 />
                 <Divider />
               </Fragment>
