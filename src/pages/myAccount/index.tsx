@@ -1,16 +1,17 @@
-import { useEffect } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import BoxButton from "../../components/listOfClients/RowModalComponents/BoxButton";
+import ChangeDeleteCode from "../../components/myAccount/ChangeDeleteCode";
 import DataShow from "../../components/myAccount/DataShow";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
 import { getMyAccountDetails } from "../../store/actions/user/userAction";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
 
 const MyAccount = () => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
-
+  const [openChangePassword, setOpenChangePassword] = useState(false);
   const { myAccountDetails } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -216,6 +217,29 @@ const MyAccount = () => {
             />
           </Box>
         </Box>
+        <BoxButton
+          color={"#0B4F26"}
+          onClick={() => {
+            setOpenChangePassword(!openChangePassword);
+          }}
+          title={"Change permanent delete password"}
+          isSelected={openChangePassword}
+          containerStyle={{
+            // marginLeft: { lg: "8px", xs: "0" },
+            flex: 1,
+            borderColor: "white",
+          }}
+          titleStyle={{
+            fontSize: { xs: "12px" },
+          }}
+          labelStyle={{}}
+        />
+        {openChangePassword && (
+          <ChangeDeleteCode
+            open={openChangePassword}
+            setOpen={setOpenChangePassword}
+          />
+        )}
       </Box>
     </>
   );

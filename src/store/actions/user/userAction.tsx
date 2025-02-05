@@ -536,6 +536,25 @@ export const getUserWiseExposure = createAsyncThunk<any, any>(
     }
   }
 );
+
+export const changeDeletePassword = createAsyncThunk<any, any>(
+  "user/changeDeletePasswordRow",
+  async (requestData, thunkApi) => {
+    try {
+      const resp = await service.post(
+        `${ApiConstants.USER.CHANGE_DELETE_PASSWORD}`,
+        requestData
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      throw thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
+);
+
 export const updateBalanceOfLoggedUser = createAsyncThunk<any, any>(
   "/loggedUserBalance/update",
   async (data) => {
@@ -548,6 +567,7 @@ export const handleModelActions = createAsyncThunk<any, any>(
     return data;
   }
 );
+export const resetDeleteChangePassword = createAction("delete/changePassword/reset");
 export const changePasswordReset = createAction("changePassword/reset");
 export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");

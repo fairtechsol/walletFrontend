@@ -67,7 +67,7 @@ export const changePasswordValidation = (item: any) => {
           if (value) {
             try {
               return item;
-            } catch (error: any) {
+            } catch (error) {
               console.log(error);
             }
           }
@@ -104,7 +104,7 @@ export const addUserValidation = (item: any) => {
           if (value) {
             try {
               return !item;
-            } catch (error: any) {
+            } catch (error) {
               console.log(error);
             }
           }
@@ -230,3 +230,27 @@ export const FgAdminValidation = Yup.object({
   // session: Yup.boolean(),
   // bookmaker: Yup.boolean(),
 });
+
+export const changeDeleteCodeValidation = () => {
+  return Yup.object({
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters long")
+      .matches(
+        /^(?=.*[A-Z])/,
+        "Password must contain at least one uppercase letter"
+      )
+      .matches(
+        /^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])/,
+        "Password must contain at least four alphabet letters"
+      )
+      .matches(
+        /^(?=.*\d.*\d.*\d.*\d)/,
+        "Password must contain at least four numbers"
+      ),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), ""], "Passwords must match")
+      .required("Confirm Password is required"),
+    code: Yup.string().required("Parent Transaction Password is required"),
+  });
+};

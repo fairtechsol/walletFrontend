@@ -12,7 +12,9 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DeleteIcon } from "../../assets";
+import { toast } from "react-toastify";
+import { DeleteIcon, EyeIcon, EyeSlash } from "../../assets";
+import Input from "../../components/login/Input";
 import AddNotificationModal from "../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import UserProfitLoss from "../../components/matchDetail/Common/UserProfitLoss";
@@ -54,6 +56,23 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
 
+const containerStyles = {
+  marginTop: { xs: "2px", lg: "10px" },
+};
+const titleStyles = {
+  color: "#202020",
+  fontSize: { xs: "10px", lg: "12px" },
+  fontWeight: "600",
+  marginLeft: "0px",
+};
+const inputStyle = {
+  fontSize: { xs: "10px", lg: "14px", fontWeight: "600" },
+};
+const inputContainerStyle = {
+  borderRadius: "5px",
+  border: "1px solid #DEDEDE",
+};
+
 const MatchDetail = () => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -69,6 +88,7 @@ const MatchDetail = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
+  const [deleteCode, setDeleteCode] = useState("");
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
@@ -118,9 +138,14 @@ const MatchDetail = () => {
 
   const handleDeleteBetPermanent = () => {
     try {
+      if (!deleteCode) {
+        toast.error("Please enter permanent delete password");
+        return;
+      }
       let payload: any = {
         matchId: state?.matchId,
         urlData: {},
+        password: deleteCode,
       };
       selectedBetData.forEach((item: any) => {
         const { userId, betId, domain } = item;
@@ -607,11 +632,30 @@ const MatchDetail = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Are you sure want to delete these Bets?
+          <Input
+            containerStyle={containerStyles}
+            img={EyeIcon}
+            img1={EyeSlash}
+            titleStyle={titleStyles}
+            inputStyle={inputStyle}
+            inputContainerStyle={{
+              ...inputContainerStyle,
+              height: { lg: "45px", xs: "36px" },
+            }}
+            title={"Password*"}
+            fullWidth={true}
+            name={"password"}
+            id={"password"}
+            type={"password"}
+            placeholder={"Ex : Abc@12"}
+            required={true}
+            value={deleteCode}
+            onChange={(e: any) => setDeleteCode(e.target.value)}
+          />
         </DialogTitle>
         <DialogActions>
           <Button onClick={() => setPermanentDeletePopShow((prev) => !prev)}>
-            No
+            Cancel
           </Button>
           <Button
             sx={{ color: "#E32A2A" }}
@@ -619,7 +663,7 @@ const MatchDetail = () => {
               handleDeleteBetPermanent();
             }}
           >
-            Yes
+            Submit
           </Button>
         </DialogActions>
       </Dialog>

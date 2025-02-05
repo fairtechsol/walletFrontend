@@ -6,8 +6,8 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { InputInterface } from "../../interface/common";
 import { numberInputOnWheelPreventChange } from "../../helper";
+import { InputInterface } from "../../interface/common";
 
 const Input: React.FC<InputInterface> = (props: any) => {
   const {
@@ -33,6 +33,7 @@ const Input: React.FC<InputInterface> = (props: any) => {
     name,
     max,
     min,
+    fullWidth,
   } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
@@ -81,6 +82,7 @@ const Input: React.FC<InputInterface> = (props: any) => {
           onBlur={onBlur}
           onWheel={numberInputOnWheelPreventChange}
           error={error}
+          fullWidth={fullWidth}
           InputProps={{
             autoComplete: "new-password",
             inputProps: {
