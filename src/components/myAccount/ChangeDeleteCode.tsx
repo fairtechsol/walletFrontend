@@ -41,7 +41,7 @@ const ChangeDeleteCode = (props: any) => {
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const { success, loading } = useSelector(
+  const { success } = useSelector(
     (state: RootState) => state.user.userList
   );
 
@@ -64,8 +64,6 @@ const ChangeDeleteCode = (props: any) => {
     handleSubmit,
     touched,
     errors,
-    isSubmitting,
-    setSubmitting,
     values,
   } = formik;
   return (
