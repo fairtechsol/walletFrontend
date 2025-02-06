@@ -752,7 +752,7 @@ const MatchDetail = () => {
           {matchDetail?.tournament &&
             matchDetail?.tournament
               ?.filter(
-                (items: any) => items.activeStatus === "live" && items.isActive
+                (items: any) => items.activeStatus === "live" 
               )
               ?.sort((a: any, b: any) => a.sNo - b.sNo)
               ?.map((market: any, index: any) => {
