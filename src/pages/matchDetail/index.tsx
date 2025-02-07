@@ -69,7 +69,6 @@ const MatchDetail = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
-  const [deleteCode, setDeleteCode] = useState("");
   const [rateInterval, setRateInterval] = useState<any>({ intervalData: [] });
 
   const { state } = useLocation();
