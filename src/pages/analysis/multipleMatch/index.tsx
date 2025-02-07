@@ -1,48 +1,47 @@
 import {
-  Typography,
   Box,
+  Button,
+  Typography,
   useMediaQuery,
   useTheme,
-  Button,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import MatchOdds from "../../../components/matchDetail/MatchOdds";
-import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
-import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
-import SessionMarket from "../../../components/matchDetail/SessionMarket";
-import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
+import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
+import CricketCasinoMarket from "../../../components/matchDetail/CricketCasinoMarket";
+import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
+import MatchOdds from "../../../components/matchDetail/MatchOdds";
+import SessionMarket from "../../../components/matchDetail/SessionMarket";
+import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
+import TournamentOdds from "../../../components/matchDetail/TournamentOdds";
+import { formatToINR } from "../../../helper";
+import { socket, socketService } from "../../../socketManager";
 import {
   getPlacedBets,
   removeRunAmount,
   resetSessionProLoss,
+  setCurrentOdd,
   updateBetsPlaced,
   updatePlacedbets,
-  updateProfitLoss,
-  setCurrentOdd,
   updatePlacedbetsDeleteReason,
+  updateProfitLoss,
 } from "../../../store/actions/match/matchAction";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import { socket, socketService } from "../../../socketManager";
 import {
   getMultipleMatchDetail,
+  getMultipleMatchRates,
   updateBetDataOnDeclareOfMultipleMatch,
   updateMatchRatesOnMarketUndeclareForMulti,
   updateMaxLossForBetForMultipleMatch,
   updateMaxLossForBetOnUndeclareForMultipleMatch,
   updateMaxLossForDeleteBetForMultiMatch,
-  updateMultipleMatchDetail,
   updateTeamRatesOfMultipleMatch,
-  updateTeamRatesOnDeleteForMultiMatch,
+  updateTeamRatesOnDeleteForMultiMatch
 } from "../../../store/actions/match/multipleMatchActions";
-import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
+import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants, sessionBettingType } from "../../../utils/Constants";
-import { formatToINR } from "../../../helper";
-import CricketCasinoMarket from "../../../components/matchDetail/CricketCasinoMarket";
-import TournamentOdds from "../../../components/matchDetail/TournamentOdds";
 
 const MultipleMatch = () => {
   const theme = useTheme();
@@ -65,6 +64,8 @@ const MultipleMatch = () => {
   });
   const [showUserProfitLoss, setShowUserProfitLoss] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
+  const [rateInterval, setRateInterval] = useState<any>({ intervalData: [] });
+
   const { multipleMatchDetail, success } = useSelector(
     (state: RootState) => state.match.analysisList
   );
@@ -72,9 +73,9 @@ const MultipleMatch = () => {
     (state: RootState) => state.match.bets
   );
 
-  const updateMatchDetailToRedux = (event: any) => {
-    dispatch(updateMultipleMatchDetail(event));
-  };
+  // const updateMatchDetailToRedux = (event: any) => {
+  //   dispatch(updateMultipleMatchDetail(event));
+  // };
 
   const setMultiSessionBetsPlaced = (event: any) => {
     try {
@@ -267,9 +268,9 @@ const MultipleMatch = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName && socket) {
-        state?.matchIds?.map((item: any) => {
-          socketService.match.getMatchRatesOff(item);
-        });
+        // state?.matchIds?.map((item: any) => {
+        //   socketService.match.getMatchRatesOff(item);
+        // });
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
         socketService.match.matchResultDeclaredOff();
@@ -282,9 +283,9 @@ const MultipleMatch = () => {
         state?.matchIds?.map((item: any) => {
           socketService.match.joinMatchRoom(item, profileDetail?.roleName);
         });
-        state?.matchIds?.map((item: any) => {
-          socketService.match.getMatchRates(item, updateMatchDetailToRedux);
-        });
+        // state?.matchIds?.map((item: any) => {
+        //   socketService.match.getMatchRates(item, updateMatchDetailToRedux);
+        // });
         socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
         socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchMultiResultDeclared);
@@ -309,7 +310,7 @@ const MultipleMatch = () => {
     return () => {
       state?.matchIds?.map((item: any) => {
         socketService.match.leaveMatchRoom(item);
-        socketService.match.getMatchRatesOff(item);
+        // socketService.match.getMatchRatesOff(item);
       });
       socketService.match.userSessionBetPlacedOff();
       socketService.match.userMatchBetPlacedOff();
@@ -323,35 +324,124 @@ const MultipleMatch = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        if (state?.matchIds) {
-          dispatch(
-            getMultipleMatchDetail({
-              url:
-                state.matchType === "cricket"
-                  ? ApiConstants.MATCH.GET
-                  : ApiConstants.MATCH.GET_OTHER,
-              ids: state?.matchIds,
-              matchType: state.matchType,
-            })
-          );
-          dispatch(resetSessionProLoss());
-          dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
-        }
-      } else if (document.visibilityState === "hidden") {
-        state?.matchIds?.map((item: any) => {
-          socketService.match.getMatchRatesOff(item);
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const handleVisibilityChange = () => {
+  //     if (document.visibilityState === "visible") {
+  //       if (state?.matchIds) {
+  //         dispatch(
+  //           getMultipleMatchDetail({
+  //             url:
+  //               state.matchType === "cricket"
+  //                 ? ApiConstants.MATCH.GET
+  //                 : ApiConstants.MATCH.GET_OTHER,
+  //             ids: state?.matchIds,
+  //             matchType: state.matchType,
+  //           })
+  //         );
+  //         dispatch(resetSessionProLoss());
+  //         dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+  //       }
+  //     } else if (document.visibilityState === "hidden") {
+  //       // state?.matchIds?.map((item: any) => {
+  //       //   socketService.match.getMatchRatesOff(item);
+  //       // });
+  //     }
+  //   };
 
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+  //   return () => {
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    try {
+      if (state?.matchIds?.length) {
+        const currRateInt = handleRateInterval();
+
+        return () => {
+          if (currRateInt) {
+            clearInterval(currRateInt);
+            setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+          }
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [state?.matchIds]);
+
+  const handleRateInterval = useCallback(() => {
+    if (rateInterval?.intervalData?.length) {
+      for (let items of rateInterval?.intervalData) {
+        clearInterval(items);
+      }
+      setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+    }
+    let rateIntervalData = setInterval(() => {
+      for (let item of state?.matchIds) {
+        dispatch(getMultipleMatchRates(item));
+      }
+    }, 500);
+
+    setRateInterval((prev: any) => ({
+      ...prev,
+      intervalData: [...prev.intervalData, rateIntervalData],
+    }));
+
+    return rateInterval;
+  }, [rateInterval?.intervalData, state.matchIds]);
+
+  const handleVisibilityChange = useCallback(() => {
+    if (document.visibilityState === "visible") {
+      if (state?.matchIds) {
+        dispatch(
+          getMultipleMatchDetail({
+            url:
+              state.matchType === "cricket"
+                ? ApiConstants.MATCH.GET
+                : ApiConstants.MATCH.GET_OTHER,
+            ids: state?.matchIds,
+            matchType: state.matchType,
+          })
+        );
+        dispatch(resetSessionProLoss());
+        dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        handleRateInterval();
+      }
+    } else if (document.visibilityState === "hidden") {
+      state?.matchIds?.map((item: any) => {
+        socketService.match.leaveMatchRoom(item);
+      });
+      if (rateInterval?.intervalData?.length) {
+        for (let items of rateInterval?.intervalData) {
+          clearInterval(items);
+        }
+        setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+      }
+    }
+  }, [
+    state.matchIds,
+    state.userId,
+    dispatch,
+    rateInterval,
+    setRateInterval,
+    socketService,
+  ]);
+
+  useEffect(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (rateInterval?.intervalData?.length) {
+        for (let items of rateInterval?.intervalData) {
+          clearInterval(items);
+        }
+        setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+      }
     };
-  }, []);
+  }, [handleVisibilityChange, rateInterval, setRateInterval]);
 
   return (
     <>
