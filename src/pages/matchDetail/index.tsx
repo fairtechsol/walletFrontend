@@ -51,7 +51,7 @@ import {
   updatePlacedbetsDeleteReason,
   updateProfitLoss,
   updateTeamRates,
-  updateTeamRatesOnDelete
+  updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
@@ -90,6 +90,7 @@ const MatchDetail = () => {
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
   const [deleteCode, setDeleteCode] = useState("");
   const [rateInterval, setRateInterval] = useState<any>({ intervalData: [] });
+  const [submitting, setSubmitting] = useState(false);
 
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
@@ -140,7 +141,9 @@ const MatchDetail = () => {
 
   const handleDeleteBetPermanent = () => {
     try {
+      setSubmitting(true);
       if (!deleteCode) {
+        setSubmitting(false);
         toast.error("Please enter permanent delete password");
         return;
       }
@@ -173,6 +176,7 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
+    setSubmitting(false);
   };
   const handleEditDeleteBetReason = (value: any) => {
     try {
@@ -589,7 +593,6 @@ const MatchDetail = () => {
     };
   }, []);
 
-  
   useEffect(() => {
     try {
       if (state?.matchId && thirdParty) {
@@ -627,7 +630,7 @@ const MatchDetail = () => {
 
   const handleRateInterval = useCallback(() => {
     if (rateInterval?.intervalData?.length) {
-      for(let items of rateInterval?.intervalData){
+      for (let items of rateInterval?.intervalData) {
         clearInterval(items);
       }
       setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
@@ -644,7 +647,6 @@ const MatchDetail = () => {
     return rateInterval;
   }, [rateInterval?.intervalData, state.matchId]);
 
-  
   const handleVisibilityChange = useCallback(() => {
     if (document.visibilityState === "visible") {
       if (state?.matchId) {
@@ -678,7 +680,7 @@ const MatchDetail = () => {
     } else if (document.visibilityState === "hidden") {
       socketService.match.leaveMatchRoom(state?.matchId);
       if (rateInterval?.intervalData?.length) {
-        for(let items of rateInterval?.intervalData){
+        for (let items of rateInterval?.intervalData) {
           clearInterval(items);
         }
         setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
@@ -699,14 +701,13 @@ const MatchDetail = () => {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (rateInterval?.intervalData?.length) {
-        for(let items of rateInterval?.intervalData){
+        for (let items of rateInterval?.intervalData) {
           clearInterval(items);
         }
         setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
       }
     };
   }, [handleVisibilityChange, rateInterval, setRateInterval]);
-
 
   return (
     <>
@@ -775,11 +776,12 @@ const MatchDetail = () => {
           />
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => setPermanentDeletePopShow((prev) => !prev)}>
+          <Button onClick={() => setPermanentDeletePopShow(false)}>
             Cancel
           </Button>
           <Button
             sx={{ color: "#E32A2A" }}
+            disabled={submitting}
             onClick={() => {
               handleDeleteBetPermanent();
             }}
@@ -872,9 +874,7 @@ const MatchDetail = () => {
             ))}
           {matchDetail?.tournament &&
             matchDetail?.tournament
-              ?.filter(
-                (items: any) => items.activeStatus === "live" 
-              )
+              ?.filter((items: any) => items.activeStatus === "live")
               ?.sort((a: any, b: any) => a.sNo - b.sNo)
               ?.map((market: any, index: any) => {
                 return (
@@ -1439,13 +1439,15 @@ const MatchDetail = () => {
                 selectedBetData={selectedBetData}
                 role={state.roleName}
                 deletePermanent={() => {
-                  setMode((prev: any) => {
-                    return {
-                      ...prev,
-                      type: "deletePermanent",
-                      value: !mode.value,
-                    };
-                  });
+                  if (profileDetail?.roleName == "fairGameWallet") {
+                    setMode((prev: any) => {
+                      return {
+                        ...prev,
+                        type: "deletePermanent",
+                        value: !mode.value,
+                      };
+                    });
+                  }
                 }}
               />
             </Box>

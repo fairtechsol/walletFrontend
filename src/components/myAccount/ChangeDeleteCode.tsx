@@ -4,7 +4,10 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../assets";
-import { changeDeletePassword, resetDeleteChangePassword } from "../../store/actions/user/userAction";
+import {
+  changeDeletePassword,
+  resetDeleteChangePassword,
+} from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { changeDeleteCodeValidation } from "../../utils/Validations";
 import CustomErrorMessage from "../Common/CustomErrorMessage";
@@ -41,9 +44,7 @@ const ChangeDeleteCode = (props: any) => {
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const { success } = useSelector(
-    (state: RootState) => state.user.userList
-  );
+  const { success } = useSelector((state: RootState) => state.user.userList);
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -56,19 +57,13 @@ const ChangeDeleteCode = (props: any) => {
   useEffect(() => {
     if (success) {
       setOpen(false);
-      dispatch(resetDeleteChangePassword())
+      dispatch(resetDeleteChangePassword());
     }
   }, [success]);
 
-  const {
-    handleSubmit,
-    touched,
-    errors,
-    values,
-  } = formik;
+  const { handleSubmit, touched, errors, values } = formik;
   return (
     <>
-    
       {matchesMobile && matchesTablet ? (
         <ModalMUI
           sx={{
@@ -339,6 +334,7 @@ const ChangeDeleteCode = (props: any) => {
                 <BoxButton
                   color={"#0B4F26"}
                   //   loading={loading}
+                  type="submit"
                   containerStyle={{ height: "35px", width: "100%" }}
                   isSelected={true}
                   title={"Submit"}
