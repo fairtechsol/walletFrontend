@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { convertData, updateSessionBettingsItem } from "../../../helper";
+import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import {
   analysisListReset,
   getAnalysisList,
   getMultipleMatchDetail,
+  getMultipleMatchRates,
   updateBetDataOnDeclareOfMultipleMatch,
   updateMatchRatesOnMarketUndeclareForMulti,
   updateMaxLossForBetForMultipleMatch,
@@ -13,8 +16,6 @@ import {
   updateTeamRatesOfMultipleMatch,
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../actions/match/multipleMatchActions";
-import { profitLossDataForMatchConstants } from "../../../utils/Constants";
-import { convertData, updateSessionBettingsItem } from "../../../helper";
 
 interface InitialState {
   analysisList: any;
@@ -67,6 +68,82 @@ const analysisListSlice = createSlice({
         state.error = action?.error?.message;
       })
       .addCase(updateMultipleMatchDetail.fulfilled, (state, action) => {
+        state.multipleMatchDetail = state?.multipleMatchDetail?.map(
+          (match: any) => {
+            if (match?.id === action?.payload?.id) {
+              const {
+                apiSession,
+                apiTiedMatch,
+                apiTiedMatch2,
+                bookmaker,
+                bookmaker2,
+                manualTideMatch,
+                marketCompleteMatch,
+                marketCompleteMatch1,
+                matchOdd,
+                quickbookmaker,
+                sessionBettings,
+                setWinner,
+                firstHalfGoal,
+                halfTime,
+                overUnder,
+                completeManual,
+                other,
+                tournament,
+              } = action?.payload;
+              const parsedSessionBettings =
+                match?.sessionBettings?.map(JSON.parse) || [];
+              const apiParsedSessionBettings =
+                sessionBettings?.map(JSON.parse) || [];
+
+              apiParsedSessionBettings.forEach((apiItem: any) => {
+                const index = parsedSessionBettings.findIndex(
+                  (parsedItem: any) => parsedItem.id === apiItem.id
+                );
+                if (index !== -1) {
+                  parsedSessionBettings[index] = {
+                    ...parsedSessionBettings[index],
+                    ...apiItem,
+                  };
+                } else {
+                  parsedSessionBettings.push(apiItem);
+                }
+              });
+              const stringifiedSessionBetting = parsedSessionBettings.map(
+                JSON.stringify
+              );
+              return {
+                ...match,
+                apiSession,
+                apiTideMatch: apiTiedMatch,
+                apiTideMatch2: apiTiedMatch2,
+                bookmaker,
+                marketBookmaker2: bookmaker2,
+                manualTiedMatch: manualTideMatch,
+                marketCompleteMatch,
+                marketCompleteMatch1,
+                matchOdd,
+                quickBookmaker: quickbookmaker,
+                sessionBettings: stringifiedSessionBetting,
+                setWinner,
+                firstHalfGoal,
+                halfTime,
+                overUnder,
+                manualCompleteMatch: completeManual,
+                updatedSessionBettings: updateSessionBettingsItem(
+                  convertData(parsedSessionBettings),
+                  apiSession
+                ),
+                other,
+                tournament,
+              };
+            } else {
+              return match;
+            }
+          }
+        );
+      })
+      .addCase(getMultipleMatchRates.fulfilled, (state, action) => {
         state.multipleMatchDetail = state?.multipleMatchDetail?.map(
           (match: any) => {
             if (match?.id === action?.payload?.id) {

@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DeleteIcon } from "../../assets";
@@ -23,13 +23,14 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { socket, socketService } from "../../socketManager";
+import { socket, socketService, thirdParty } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
   editBetDeleteReason,
   getMatchDetail,
   getMatchDetailMarketAnalysis,
+  getMatchRates,
   getPlacedBets,
   getUserProfitLoss,
   removeRunAmount,
@@ -40,7 +41,6 @@ import {
   setCurrentOdd,
   updateBetDataOnDeclare,
   updateBetsPlaced,
-  updateMatchRates,
   updateMatchRatesOnMarketUndeclare,
   updateMaxLossForBet,
   updateMaxLossForBetOnUndeclare,
@@ -49,7 +49,7 @@ import {
   updatePlacedbetsDeleteReason,
   updateProfitLoss,
   updateTeamRates,
-  updateTeamRatesOnDelete,
+  updateTeamRatesOnDelete
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
@@ -69,6 +69,9 @@ const MatchDetail = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
+  const [deleteCode, setDeleteCode] = useState("");
+  const [rateInterval, setRateInterval] = useState<any>({ intervalData: [] });
+
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
@@ -169,15 +172,15 @@ const MatchDetail = () => {
     }
   };
 
-  const updateMatchDetailToRedux = (event: any) => {
-    try {
-      if (state?.matchId === event?.id) {
-        dispatch(updateMatchRates(event));
-      } else return;
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const updateMatchDetailToRedux = (event: any) => {
+  //   try {
+  //     if (state?.matchId === event?.id) {
+  //       dispatch(updateMatchRates(event));
+  //     } else return;
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   const matchResultDeclared = (event: any) => {
     try {
@@ -399,7 +402,7 @@ const MatchDetail = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName && socket) {
-        socketService.match.getMatchRatesOff(state?.matchId);
+        // socketService.match.getMatchRatesOff(state?.matchId);
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
         socketService.match.matchResultDeclaredOff();
@@ -414,10 +417,10 @@ const MatchDetail = () => {
           state?.matchId,
           profileDetail?.roleName
         );
-        socketService.match.getMatchRates(
-          state?.matchId,
-          updateMatchDetailToRedux
-        );
+        // socketService.match.getMatchRates(
+        //   state?.matchId,
+        //   updateMatchDetailToRedux
+        // );
         if (!state.userId) {
           socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
           socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
@@ -443,7 +446,7 @@ const MatchDetail = () => {
   useEffect(() => {
     return () => {
       socketService.match.leaveMatchRoom(state?.matchId);
-      socketService.match.getMatchRatesOff(state?.matchId);
+      // socketService.match.getMatchRatesOff(state?.matchId);
       socketService.match.userSessionBetPlacedOff();
       socketService.match.userMatchBetPlacedOff();
       socketService.match.matchResultDeclaredOff();
@@ -458,47 +461,47 @@ const MatchDetail = () => {
     };
   }, [state?.matchId]);
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        if (state?.matchId) {
-          dispatch(
-            getMatchDetail({
-              matchId: state?.matchId,
-              matchType: state?.matchType,
-            })
-          );
-          if (state?.userId) {
-            dispatch(
-              getMatchDetailMarketAnalysis({
-                matchId: state?.matchId,
-                userId: state?.userId,
-                domain: state?.domain,
-              })
-            );
-          }
-          dispatch(getUserProfitLoss(state?.matchId));
-          dispatch(
-            getPlacedBets(
-              `eq${state?.matchId}${
-                state.userId
-                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                  : ""
-              }${state.domain ? `&domain=${state.domain}` : ""}`
-            )
-          );
-        }
-      } else if (document.visibilityState === "hidden") {
-        socketService.match.leaveMatchRoom(state?.matchId);
-        socketService.match.getMatchRatesOff(state?.matchId);
-      }
-    };
+  // useEffect(() => {
+  //   const handleVisibilityChange = () => {
+  //     if (document.visibilityState === "visible") {
+  //       if (state?.matchId) {
+  //         dispatch(
+  //           getMatchDetail({
+  //             matchId: state?.matchId,
+  //             matchType: state?.matchType,
+  //           })
+  //         );
+  //         if (state?.userId) {
+  //           dispatch(
+  //             getMatchDetailMarketAnalysis({
+  //               matchId: state?.matchId,
+  //               userId: state?.userId,
+  //               domain: state?.domain,
+  //             })
+  //           );
+  //         }
+  //         dispatch(getUserProfitLoss(state?.matchId));
+  //         dispatch(
+  //           getPlacedBets(
+  //             `eq${state?.matchId}${
+  //               state.userId
+  //                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
+  //                 : ""
+  //             }${state.domain ? `&domain=${state.domain}` : ""}`
+  //           )
+  //         );
+  //       }
+  //     } else if (document.visibilityState === "hidden") {
+  //       socketService.match.leaveMatchRoom(state?.matchId);
+  //       // socketService.match.getMatchRatesOff(state?.matchId);
+  //     }
+  //   };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [state]);
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+  //   return () => {
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  //   };
+  // }, [state]);
 
   useEffect(() => {
     if (state?.matchId) {
@@ -561,6 +564,125 @@ const MatchDetail = () => {
       dispatch(resetMarketAnalysys());
     };
   }, []);
+
+  
+  useEffect(() => {
+    try {
+      if (state?.matchId && thirdParty) {
+        let currInitRateInt = setInterval(() => {
+          socketService.match.joinMatchRoom(state?.matchId, "user");
+        }, 60000);
+
+        return () => {
+          if (currInitRateInt) {
+            clearInterval(currInitRateInt);
+          }
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [state?.matchId]);
+
+  useEffect(() => {
+    try {
+      if (state?.matchId) {
+        const currRateInt = handleRateInterval();
+
+        return () => {
+          if (currRateInt) {
+            clearInterval(currRateInt);
+            setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+          }
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [state?.matchId]);
+
+  const handleRateInterval = useCallback(() => {
+    if (rateInterval?.intervalData?.length) {
+      for(let items of rateInterval?.intervalData){
+        clearInterval(items);
+      }
+      setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+    }
+    let rateIntervalData = setInterval(() => {
+      dispatch(getMatchRates(state?.matchId));
+    }, 500);
+
+    setRateInterval((prev: any) => ({
+      ...prev,
+      intervalData: [...prev.intervalData, rateIntervalData],
+    }));
+
+    return rateInterval;
+  }, [rateInterval?.intervalData, state.matchId]);
+
+  
+  const handleVisibilityChange = useCallback(() => {
+    if (document.visibilityState === "visible") {
+      if (state?.matchId) {
+        dispatch(
+          getMatchDetail({
+            matchId: state?.matchId,
+            matchType: state?.matchType,
+          })
+        );
+        if (state?.userId) {
+          dispatch(
+            getMatchDetailMarketAnalysis({
+              matchId: state?.matchId,
+              userId: state?.userId,
+              domain: state?.domain,
+            })
+          );
+        }
+        dispatch(getUserProfitLoss(state?.matchId));
+        dispatch(
+          getPlacedBets(
+            `eq${state?.matchId}${
+              state.userId
+                ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                : ""
+            }${state.domain ? `&domain=${state.domain}` : ""}`
+          )
+        );
+        handleRateInterval();
+      }
+    } else if (document.visibilityState === "hidden") {
+      socketService.match.leaveMatchRoom(state?.matchId);
+      if (rateInterval?.intervalData?.length) {
+        for(let items of rateInterval?.intervalData){
+          clearInterval(items);
+        }
+        setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+      }
+    }
+  }, [
+    state.matchId,
+    state.userId,
+    dispatch,
+    rateInterval,
+    setRateInterval,
+    socketService,
+  ]);
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (rateInterval?.intervalData?.length) {
+        for(let items of rateInterval?.intervalData){
+          clearInterval(items);
+        }
+        setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+      }
+    };
+  }, [handleVisibilityChange, rateInterval, setRateInterval]);
+
 
   return (
     <>

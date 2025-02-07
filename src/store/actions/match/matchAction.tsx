@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import service from "../../../service";
-import { ApiConstants, Constants } from "../../../utils/Constants";
+import { ApiConstants, baseUrls, Constants } from "../../../utils/Constants";
 
 export const getMatchListInplay = createAsyncThunk<any, any>(
   "matchList/inplay",
@@ -246,6 +246,23 @@ export const updateMatchRates = createAsyncThunk<any, any>(
   "/match/rates",
   async (matchDetails) => {
     return matchDetails;
+  }
+);
+
+export const getMatchRates = createAsyncThunk<any, any>(
+  "/third/match/rates",
+  async (matchId,thunkApi) => {
+    try {
+      const resp = await axios.get(
+        `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
   }
 );
 export const updateBetsPlaced = createAsyncThunk<any, any>(
