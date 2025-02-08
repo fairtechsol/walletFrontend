@@ -15,6 +15,9 @@ const MyAccount = () => {
   const { myAccountDetails } = useSelector(
     (state: RootState) => state.user.profile
   );
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
   const classes = {
     mainBoxSX: { position: "relative", margin: "1%" },
   };
@@ -234,7 +237,7 @@ const MyAccount = () => {
           }}
           labelStyle={{}}
         />
-        {openChangePassword && (
+        {profileDetail?.roleName == "fairGameWallet" && openChangePassword && (
           <ChangeDeleteCode
             open={openChangePassword}
             setOpen={setOpenChangePassword}
