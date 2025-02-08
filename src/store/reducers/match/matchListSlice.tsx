@@ -6,6 +6,7 @@ import {
   getMatchDetail,
   getMatchDetailMarketAnalysis,
   getMatchListInplay,
+  getMatchRates,
   matchListReset,
   resetMarketAnalysys,
   setCurrentOdd,
@@ -138,6 +139,77 @@ const matchListSlice = createSlice({
         return state;
       })
       .addCase(updateMatchRates.fulfilled, (state, action) => {
+        const {
+          apiSession,
+          apiTiedMatch,
+          bookmaker,
+          bookmaker2,
+          manualTideMatch,
+          marketCompleteMatch,
+          marketCompleteMatch1,
+          matchOdd,
+          quickbookmaker,
+          sessionBettings,
+          setWinner,
+          firstHalfGoal,
+          halfTime,
+          overUnder,
+          completeManual,
+          apiTiedMatch2,
+          other,
+          tournament,
+        } = action?.payload;
+
+        const parsedSessionBettings =
+          state.matchDetail?.sessionBettings?.map(JSON.parse) || [];
+        const apiParsedSessionBettings = sessionBettings?.map(JSON.parse) || [];
+
+        apiParsedSessionBettings.forEach((apiItem: any) => {
+          const index = parsedSessionBettings.findIndex(
+            (parsedItem: any) => parsedItem.id === apiItem.id
+          );
+          if (index !== -1) {
+            parsedSessionBettings[index] = {
+              ...parsedSessionBettings[index],
+              ...apiItem,
+            };
+          } else {
+            parsedSessionBettings.push(apiItem);
+          }
+        });
+        const stringifiedSessionBetting = parsedSessionBettings.map(
+          JSON.stringify
+        );
+
+        state.matchDetail = {
+          ...state.matchDetail,
+          // manualSessionActive: sessionBettings?.length >= 0 ? true : false,
+          // apiSessionActive: apiSession?.length >= 0 ? true : false,
+          apiSession,
+          apiTideMatch: apiTiedMatch,
+          apiTideMatch2: apiTiedMatch2,
+          bookmaker,
+          marketBookmaker2: bookmaker2,
+          manualTiedMatch: manualTideMatch,
+          marketCompleteMatch,
+          marketCompleteMatch1,
+          matchOdd,
+          quickBookmaker: quickbookmaker,
+          sessionBettings: stringifiedSessionBetting,
+          setWinner,
+          firstHalfGoal,
+          halfTime,
+          overUnder,
+          manualCompleteMatch: completeManual,
+          updatedSessionBettings: updateSessionBettingsItem(
+            convertData(parsedSessionBettings),
+            apiSession
+          ),
+          other,
+          tournament,
+        };
+      })
+      .addCase(getMatchRates.fulfilled, (state, action) => {
         const {
           apiSession,
           apiTiedMatch,

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   changeAmmountUser,
+  changeDeletePassword,
   changePasswordRow,
   getAlreadyUserExist,
   getModalUserList,
@@ -12,13 +13,14 @@ import {
   handleExport,
   handleModelActions,
   handleSettleCommission,
+  resetDeleteChangePassword,
   resetSearchUserList,
   resetUserWiseExposureList,
   setCreditRefference,
   setExposureLimit,
   setLockUnlockUser,
   setLockUnlockUserExpert,
-  userListSuccessReset,
+  userListSuccessReset
 } from "../../actions/user/userAction";
 
 interface InitialState {
@@ -201,6 +203,19 @@ export const userList = createSlice({
         state.loading = false;
         state.error = action?.error?.message;
       })
+      .addCase(changeDeletePassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changeDeletePassword.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(changeDeletePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message;
+      })
+
       .addCase(handleSettleCommission.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -279,6 +294,9 @@ export const userList = createSlice({
       })
       .addCase(resetUserWiseExposureList, (state) => {
         state.userWiseExposureList = {};
+      })
+      .addCase(resetDeleteChangePassword, (state) => {
+        state.success = false;
       })
       .addCase(resetSearchUserList, (state) => {
         state.searchUserList = [];

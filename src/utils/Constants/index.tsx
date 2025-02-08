@@ -66,6 +66,7 @@ export const ApiConstants = {
     USER_CHECK_CHILD_ACTIVATE: "match/check/lock",
     CHANGE_DELETE_REASON: "/bet/change/deleteReason",
     USER_WISE_EVENTWISE_EXPOSURE: "/match/eventWise/exposure",
+    CHANGE_DELETE_PASSWORD: "/user/generate/permanentDelete",
   },
   SUPERADMIN: {
     ADD: "/superadmin/add",
@@ -99,6 +100,7 @@ export const ApiConstants = {
     MATCHLIST: "match/list",
   },
   MATCH: {
+    RATES:"/getUserRateDetails/",
     GET: "match",
     GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",

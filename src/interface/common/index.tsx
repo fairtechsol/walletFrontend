@@ -23,6 +23,7 @@ export interface InputInterface {
   okButtonRef?: string;
   onChange?: (value: any) => void;
   name?: string;
+  fullWidth?: boolean;
 }
 
 export interface LoaderInterface {

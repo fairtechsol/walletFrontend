@@ -1,32 +1,34 @@
 import {
-  Typography,
   Box,
+  Button,
+  Typography,
   useMediaQuery,
   useTheme,
-  Button,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import MatchOdds from "../../../components/matchDetail/MatchOdds";
-import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
-import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
-import SessionMarket from "../../../components/matchDetail/SessionMarket";
-import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
+import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
+import CricketCasinoMarket from "../../../components/matchDetail/CricketCasinoMarket";
+import LiveBookmaker from "../../../components/matchDetail/LiveBookmaker";
+import MatchOdds from "../../../components/matchDetail/MatchOdds";
+import SessionMarket from "../../../components/matchDetail/SessionMarket";
+import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
+import TournamentOdds from "../../../components/matchDetail/TournamentOdds";
+import { formatToINR } from "../../../helper";
+import { socket, socketService } from "../../../socketManager";
 import {
   getPlacedBets,
   removeRunAmount,
   resetSessionProLoss,
+  setCurrentOdd,
   updateBetsPlaced,
   updatePlacedbets,
-  updateProfitLoss,
-  setCurrentOdd,
   updatePlacedbetsDeleteReason,
+  updateProfitLoss,
 } from "../../../store/actions/match/matchAction";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import { socket, socketService } from "../../../socketManager";
 import {
   getMultipleMatchDetail,
   updateBetDataOnDeclareOfMultipleMatch,
@@ -38,11 +40,8 @@ import {
   updateTeamRatesOfMultipleMatch,
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../../store/actions/match/multipleMatchActions";
-import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
+import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants, sessionBettingType } from "../../../utils/Constants";
-import { formatToINR } from "../../../helper";
-import CricketCasinoMarket from "../../../components/matchDetail/CricketCasinoMarket";
-import TournamentOdds from "../../../components/matchDetail/TournamentOdds";
 
 const MultipleMatch = () => {
   const theme = useTheme();
