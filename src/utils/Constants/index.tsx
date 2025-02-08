@@ -100,6 +100,7 @@ export const ApiConstants = {
     MATCHLIST: "match/list",
   },
   MATCH: {
+    RATES:"/getUserRateDetails/",
     GET: "match",
     GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",

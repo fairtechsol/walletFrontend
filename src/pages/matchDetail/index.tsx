@@ -25,7 +25,7 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { socket, socketService } from "../../socketManager";
+import { socket, socketService, thirdParty } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
@@ -51,7 +51,7 @@ import {
   updatePlacedbetsDeleteReason,
   updateProfitLoss,
   updateTeamRates,
-  updateTeamRatesOnDelete,
+  updateTeamRatesOnDelete
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
@@ -89,6 +89,9 @@ const MatchDetail = () => {
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
   const [deleteCode, setDeleteCode] = useState("");
+  const [rateInterval, setRateInterval] = useState<any>({ intervalData: [] });
+  const [submitting, setSubmitting] = useState(false);
+
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
@@ -138,7 +141,9 @@ const MatchDetail = () => {
 
   const handleDeleteBetPermanent = () => {
     try {
+      setSubmitting(true);
       if (!deleteCode) {
+        setSubmitting(false);
         toast.error("Please enter permanent delete password");
         return;
       }
@@ -171,6 +176,7 @@ const MatchDetail = () => {
     } catch (e) {
       console.log(e);
     }
+    setSubmitting(false);
   };
   const handleEditDeleteBetReason = (value: any) => {
     try {
@@ -587,6 +593,122 @@ const MatchDetail = () => {
     };
   }, []);
 
+  useEffect(() => {
+    try {
+      if (state?.matchId && thirdParty) {
+        let currInitRateInt = setInterval(() => {
+          socketService.match.joinMatchRoom(state?.matchId, "user");
+        }, 60000);
+
+        return () => {
+          if (currInitRateInt) {
+            clearInterval(currInitRateInt);
+          }
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [state?.matchId]);
+
+  // useEffect(() => {
+  //   try {
+  //     if (state?.matchId) {
+  //       const currRateInt = handleRateInterval();
+
+  //       return () => {
+  //         if (currRateInt) {
+  //           clearInterval(currRateInt);
+  //           setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+  //         }
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [state?.matchId]);
+
+  // const handleRateInterval = useCallback(() => {
+  //   if (rateInterval?.intervalData?.length) {
+  //     for (let items of rateInterval?.intervalData) {
+  //       clearInterval(items);
+  //     }
+  //     setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+  //   }
+  //   let rateIntervalData = setInterval(() => {
+  //     dispatch(getMatchRates(state?.matchId));
+  //   }, 500);
+
+  //   setRateInterval((prev: any) => ({
+  //     ...prev,
+  //     intervalData: [...prev.intervalData, rateIntervalData],
+  //   }));
+
+  //   return rateInterval;
+  // }, [rateInterval?.intervalData, state.matchId]);
+
+  // const handleVisibilityChange = useCallback(() => {
+  //   if (document.visibilityState === "visible") {
+  //     if (state?.matchId) {
+  //       dispatch(
+  //         getMatchDetail({
+  //           matchId: state?.matchId,
+  //           matchType: state?.matchType,
+  //         })
+  //       );
+  //       if (state?.userId) {
+  //         dispatch(
+  //           getMatchDetailMarketAnalysis({
+  //             matchId: state?.matchId,
+  //             userId: state?.userId,
+  //             domain: state?.domain,
+  //           })
+  //         );
+  //       }
+  //       dispatch(getUserProfitLoss(state?.matchId));
+  //       dispatch(
+  //         getPlacedBets(
+  //           `eq${state?.matchId}${
+  //             state.userId
+  //               ? `&userId=${state.userId}&roleName=${state?.roleName}`
+  //               : ""
+  //           }${state.domain ? `&domain=${state.domain}` : ""}`
+  //         )
+  //       );
+  //       handleRateInterval();
+  //     }
+  //   } else if (document.visibilityState === "hidden") {
+  //     socketService.match.leaveMatchRoom(state?.matchId);
+  //     if (rateInterval?.intervalData?.length) {
+  //       for (let items of rateInterval?.intervalData) {
+  //         clearInterval(items);
+  //       }
+  //       setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+  //     }
+  //   }
+  // }, [
+  //   state.matchId,
+  //   state.userId,
+  //   dispatch,
+  //   rateInterval,
+  //   setRateInterval,
+  //   socketService,
+  // ]);
+
+  // useEffect(() => {
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  //   return () => {
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  //     if (rateInterval?.intervalData?.length) {
+  //       for (let items of rateInterval?.intervalData) {
+  //         clearInterval(items);
+  //       }
+  //       setRateInterval((prev: any) => ({ ...prev, intervalData: [] }));
+  //     }
+  //   };
+  // }, [handleVisibilityChange, rateInterval, setRateInterval]);
+
   return (
     <>
       {visible && selectedBetData.length > 0 && (
@@ -654,11 +776,12 @@ const MatchDetail = () => {
           />
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => setPermanentDeletePopShow((prev) => !prev)}>
+          <Button onClick={() => setPermanentDeletePopShow(false)}>
             Cancel
           </Button>
           <Button
             sx={{ color: "#E32A2A" }}
+            disabled={submitting}
             onClick={() => {
               handleDeleteBetPermanent();
             }}
@@ -751,9 +874,7 @@ const MatchDetail = () => {
             ))}
           {matchDetail?.tournament &&
             matchDetail?.tournament
-              ?.filter(
-                (items: any) => items.activeStatus === "live" 
-              )
+              ?.filter((items: any) => items.activeStatus === "live")
               ?.sort((a: any, b: any) => a.sNo - b.sNo)
               ?.map((market: any, index: any) => {
                 return (
@@ -1318,13 +1439,15 @@ const MatchDetail = () => {
                 selectedBetData={selectedBetData}
                 role={state.roleName}
                 deletePermanent={() => {
-                  setMode((prev: any) => {
-                    return {
-                      ...prev,
-                      type: "deletePermanent",
-                      value: !mode.value,
-                    };
-                  });
+                  if (profileDetail?.roleName == "fairGameWallet") {
+                    setMode((prev: any) => {
+                      return {
+                        ...prev,
+                        type: "deletePermanent",
+                        value: !mode.value,
+                      };
+                    });
+                  }
                 }}
               />
             </Box>

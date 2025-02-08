@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import service from "../../../service";
-import { ApiConstants, Constants } from "../../../utils/Constants";
+import { ApiConstants, baseUrls, Constants } from "../../../utils/Constants";
 
 export const getAnalysisList = createAsyncThunk<any, any>(
   "analysis/list",
@@ -69,6 +69,23 @@ export const getSessionProLossForMultipleMatch = createAsyncThunk<any, any>(
 export const updateMultipleMatchDetail = createAsyncThunk<any, any>(
   "multipleMatch/update",
   async (data) => data
+);
+
+export const getMultipleMatchRates = createAsyncThunk<any, any>(
+  "third/multipleMatch/update",
+  async (matchId,thunkApi) => {
+    try {
+      const resp = await axios.get(
+        `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`
+      );
+      if (resp) {
+        return resp?.data;
+      }
+    } catch (error: any) {
+      const err = error as AxiosError;
+      return thunkApi.rejectWithValue(err.response?.status);
+    }
+  }
 );
 
 export const updateProfitLossForMultipleMatch = createAsyncThunk<any, any>(
