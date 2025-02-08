@@ -220,7 +220,7 @@ const MyAccount = () => {
             />
           </Box>
         </Box>
-        <BoxButton
+       {profileDetail?.roleName == "fairGameWallet" &&  <BoxButton
           color={"#0B4F26"}
           onClick={() => {
             setOpenChangePassword(!openChangePassword);
@@ -236,8 +236,8 @@ const MyAccount = () => {
             fontSize: { xs: "12px" },
           }}
           labelStyle={{}}
-        />
-        {profileDetail?.roleName == "fairGameWallet" && openChangePassword && (
+        />}
+        {openChangePassword && (
           <ChangeDeleteCode
             open={openChangePassword}
             setOpen={setOpenChangePassword}
