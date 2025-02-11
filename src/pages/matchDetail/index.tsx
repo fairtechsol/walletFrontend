@@ -51,7 +51,7 @@ import {
   updatePlacedbetsDeleteReason,
   updateProfitLoss,
   updateTeamRates,
-  updateTeamRatesOnDelete
+  updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
@@ -886,7 +886,8 @@ const MatchDetail = () => {
                     title={market?.name}
                     liveData={market}
                     profitLossFromAnalysis={marketAnalysis?.betType?.match?.find(
-                      (item: any) => item?.betId === market?.id
+                      (item: any) =>
+                        item?.betId === (market?.parentBetId || market?.id)
                     )}
                   />
                 );
