@@ -13,6 +13,28 @@ export const initialiseSocket = () => {
       token: `${sessionStorage.getItem("jwtWallet")}`,
     },
   });
+  // thirdParty = io(baseUrls.thirdParty, {
+  //   transports: [
+  //     // process.env.NODE_ENV === "production"
+  //     //   ? `${Constants.POLLING}`
+  //     //   :
+  //     `${Constants.WEBSOCKET}`,
+  //     `${Constants.POLLING}`,
+  //   ],
+  //   auth: {
+  //     token: `${sessionStorage.getItem("jwtWallet")}`,
+  //   },
+  // });
+};
+
+// export const socket = io(baseUrls.socket, {
+//   transports: ["websocket"],
+//   auth: {
+//     token: `${sessionStorage.getItem("jwtWallet")}`,
+//   },
+// });
+
+export const initialiseMatchSocket = () => {
   thirdParty = io(baseUrls.thirdParty, {
     transports: [
       // process.env.NODE_ENV === "production"
@@ -27,30 +49,33 @@ export const initialiseSocket = () => {
   });
 };
 
-// export const socket = io(baseUrls.socket, {
-//   transports: ["websocket"],
-//   auth: {
-//     token: `${sessionStorage.getItem("jwtWallet")}`,
-//   },
-// });
-
 export const socketService = {
   connect: () => {
     initialiseSocket();
     // Connect to the socket server
     socket?.connect();
-    thirdParty?.connect();
+    // thirdParty?.connect();
     // expertSocket.connect();
   },
 
   disconnect: () => {
     // Disconnect from the socket server
     socket?.disconnect();
-    thirdParty?.disconnect();
+    // thirdParty?.disconnect();
     // expertSocket.disconnect();
   },
   auth: { ...authSocketService },
   match: { ...matchSocketService },
 
   // Add other socket-related methods as needed
+};
+
+export const matchService = {
+  connect: () => {
+    initialiseMatchSocket();
+    thirdParty?.connect();
+  },
+  disconnect: () => {
+    thirdParty?.disconnect();
+  },
 };

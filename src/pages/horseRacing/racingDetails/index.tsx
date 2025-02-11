@@ -19,7 +19,7 @@ import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLo
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { getTimeLeft } from "../../../helper";
-import { socket, socketService } from "../../../socketManager";
+import { socket, socketService, matchService } from "../../../socketManager";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -70,6 +70,13 @@ const RacingDetails = () => {
     hours: 0,
     minutes: 0,
   });
+
+  useEffect(() => {
+    matchService.connect();
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, []);
 
   const handleDeleteBet = (value: any) => {
     try {

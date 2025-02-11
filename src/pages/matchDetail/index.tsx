@@ -25,7 +25,7 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { socket, socketService, thirdParty } from "../../socketManager";
+import { socket, socketService, thirdParty, matchService } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
@@ -106,6 +106,14 @@ const MatchDetail = () => {
   const { permanentDeleteSuccess } = useSelector(
     (state: RootState) => state.match.sideBarList
   );
+
+  useEffect(() => {
+    matchService.connect();
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, []);
+
   const handleDeleteBet = (value: any) => {
     try {
       let payload: any = {
