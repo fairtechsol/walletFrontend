@@ -1439,15 +1439,42 @@ const MatchDetail = () => {
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
                 role={state.roleName}
+
+                // onClick={() => {
+                //   if (mode.value && mode?.type === "delete") {
+                //     alert(1)
+                //     setVisible(true);
+                //   } else {
+                //     alert(2)
+                //     setMode((prev: any) => {
+                //       return {
+                //         ...prev,
+                //         type: "delete",
+                //         value: !mode.value,
+                //       };
+                //     });
+                //   }
+                // }}
+
                 deletePermanent={() => {
                   if (profileDetail?.roleName == "fairGameWallet") {
-                    setMode((prev: any) => {
-                      return {
-                        ...prev,
-                        type: "deletePermanent",
-                        value: !mode.value,
-                      };
-                    });
+                    if (mode.value) {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "deletePermanent",
+                          value: mode.value,
+                        };
+                      });
+                    }else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "deletePermanent",
+                          value: !mode.value,
+                        };
+                      });
+                    }
                   }
                 }}
               />
