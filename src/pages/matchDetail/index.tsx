@@ -51,7 +51,7 @@ import {
   updatePlacedbetsDeleteReason,
   updateProfitLoss,
   updateTeamRates,
-  updateTeamRatesOnDelete
+  updateTeamRatesOnDelete,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { ApiConstants, sessionBettingType } from "../../utils/Constants";
@@ -886,7 +886,8 @@ const MatchDetail = () => {
                     title={market?.name}
                     liveData={market}
                     profitLossFromAnalysis={marketAnalysis?.betType?.match?.find(
-                      (item: any) => item?.betId === market?.id
+                      (item: any) =>
+                        item?.betId === (market?.parentBetId || market?.id)
                     )}
                   />
                 );
@@ -1438,15 +1439,42 @@ const MatchDetail = () => {
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
                 role={state.roleName}
+
+                // onClick={() => {
+                //   if (mode.value && mode?.type === "delete") {
+                //     alert(1)
+                //     setVisible(true);
+                //   } else {
+                //     alert(2)
+                //     setMode((prev: any) => {
+                //       return {
+                //         ...prev,
+                //         type: "delete",
+                //         value: !mode.value,
+                //       };
+                //     });
+                //   }
+                // }}
+
                 deletePermanent={() => {
                   if (profileDetail?.roleName == "fairGameWallet") {
-                    setMode((prev: any) => {
-                      return {
-                        ...prev,
-                        type: "deletePermanent",
-                        value: !mode.value,
-                      };
-                    });
+                    if (mode.value) {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "deletePermanent",
+                          value: mode.value,
+                        };
+                      });
+                    }else {
+                      setMode((prev: any) => {
+                        return {
+                          ...prev,
+                          type: "deletePermanent",
+                          value: !mode.value,
+                        };
+                      });
+                    }
                   }
                 }}
               />

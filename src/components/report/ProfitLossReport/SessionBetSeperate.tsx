@@ -3,6 +3,7 @@ import { useState } from "react";
 import { formatNumber, formatToINR, stripUrl } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
+import CommissionDot from "../../Common/CommissionDot";
 import moment from "moment";
 const SessionBetSeperate = ({
   profit,
@@ -442,7 +443,9 @@ const RowComponent = ({ header, data }: any) => {
             first={true}
             header={header}
             time={getTime(data.createdAt)}
-          />
+            isCommissionActive={data?.isCommissionActive}
+          /> 
+          {/* // iscomision */}
           <SingleBox
             color={getColor()}
             data={data?.username || data?.userName || data?.user?.userName}
@@ -492,6 +495,7 @@ const SingleBox = ({
   isPercent,
   rate,
   domain,
+  isCommissionActive
 }: any) => {
   return !header ? (
     first ? (
@@ -499,12 +503,14 @@ const SingleBox = ({
         sx={{
           width: "140%",
           height: "40px",
-          flexDirection: "column",
+          // flexDirection: "column",
           background: "#F8C851",
           display: { xs: "initial", lg: "flex" },
           justifyContent: { lg: "center", xs: "initial" },
+          alignItems: "center",
         }}
       >
+         {isCommissionActive && <CommissionDot />}
         <Typography
           sx={{
             fontWeight: "700",
