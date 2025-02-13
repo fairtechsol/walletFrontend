@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { formatToINR } from "../../helper";
 import { MatchComponentInterface } from "../../interface/inplay";
-import { socket, socketService } from "../../socketManager";
+import { socket, socketService, matchService } from "../../socketManager";
 import { updateMatchListRates } from "../../store/actions/match/matchAction";
 import { AppDispatch } from "../../store/store";
 import Divider from "./Divider";
@@ -63,6 +63,13 @@ const MatchComponent = (props: MatchComponentInterface) => {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    matchService.connect();
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {

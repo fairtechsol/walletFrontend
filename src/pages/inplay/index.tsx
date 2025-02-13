@@ -15,7 +15,7 @@ import { getMatchListInplay } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Constants } from "../../utils/Constants";
-import { socket, socketService } from "../../socketManager";
+import { socket, socketService, matchService } from "../../socketManager";
 import { makeStyles } from "@material-ui/core/styles";
 const Inplay = () => {
   const navigate = useNavigate();
@@ -34,6 +34,13 @@ const Inplay = () => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
+
+  useEffect(() => {
+    matchService.connect();
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, []);
 
   const getMatchListService = () => {
     dispatch(getMatchListInplay({ currentPage: currentPage }));
