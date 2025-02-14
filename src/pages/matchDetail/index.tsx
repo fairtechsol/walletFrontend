@@ -25,7 +25,7 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { socket, socketService, thirdParty, matchService } from "../../socketManager";
+import { socket, socketService, matchService } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
