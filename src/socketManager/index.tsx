@@ -34,7 +34,7 @@ export const initialiseSocket = () => {
 //   },
 // });
 
-export const initialiseMatchSocket = () => {
+export const initialiseMatchSocket = (matchId: string[], roleName: string) => {
   thirdParty = io(baseUrls.thirdParty, {
     transports: [
       // process.env.NODE_ENV === "production"
@@ -45,6 +45,10 @@ export const initialiseMatchSocket = () => {
     ],
     auth: {
       token: `${sessionStorage.getItem("jwtWallet")}`,
+    },
+    query: {
+      matchIdArray: matchId,
+      roleName: roleName
     },
   });
 };
@@ -71,8 +75,8 @@ export const socketService = {
 };
 
 export const matchService = {
-  connect: () => {
-    initialiseMatchSocket();
+  connect: (matchId: string[], roleName: string) => {
+    initialiseMatchSocket(matchId, roleName);
     thirdParty?.connect();
   },
   disconnect: () => {

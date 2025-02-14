@@ -36,11 +36,15 @@ const Inplay = () => {
   );
 
   useEffect(() => {
-    matchService.connect();
+    const matchIds = matchListInplay?.matches?.map((item: any) => item?.id) || [];
+
+    if (matchIds.length > 0) {
+      matchService.connect(matchIds, profileDetail?.roleName);
+    }
     return () => {
       matchService.disconnect(); 
     };
-  }, []);
+  }, [matchListInplay]);
 
   const getMatchListService = () => {
     dispatch(getMatchListInplay({ currentPage: currentPage }));
@@ -63,7 +67,7 @@ const Inplay = () => {
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
         matchListInplay?.matches?.map((item: any) => {
-          socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+          socketService.match.joinMatchRoom(item?.id);
         });
         socketService.match.matchResultDeclared(getMatchListService);
         socketService.match.matchResultUnDeclared(getMatchListService);

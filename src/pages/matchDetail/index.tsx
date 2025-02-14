@@ -108,11 +108,13 @@ const MatchDetail = () => {
   );
 
   useEffect(() => {
-    matchService.connect();
+    if(state){
+      matchService.connect([state?.matchId], profileDetail?.roleName);
+    }
     return () => {
       matchService.disconnect(); 
     };
-  }, []);
+  }, [state]);
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -450,8 +452,7 @@ const MatchDetail = () => {
         socketService.match.matchResultUnDeclaredOff();
         socketService.match.updateDeleteReasonOff();
         socketService.match.joinMatchRoom(
-          state?.matchId,
-          profileDetail?.roleName
+          state?.matchId
         );
         socketService.match.getMatchRates(
           state?.matchId,
@@ -601,23 +602,23 @@ const MatchDetail = () => {
     };
   }, []);
 
-  useEffect(() => {
-    try {
-      if (state?.matchId && thirdParty) {
-        let currInitRateInt = setInterval(() => {
-          socketService.match.joinMatchRoom(state?.matchId, "user");
-        }, 60000);
+  // useEffect(() => {
+  //   try {
+  //     if (state?.matchId && thirdParty) {
+  //       let currInitRateInt = setInterval(() => {
+  //         socketService.match.joinMatchRoom(state?.matchId);
+  //       }, 60000);
 
-        return () => {
-          if (currInitRateInt) {
-            clearInterval(currInitRateInt);
-          }
-        };
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [state?.matchId]);
+  //       return () => {
+  //         if (currInitRateInt) {
+  //           clearInterval(currInitRateInt);
+  //         }
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [state?.matchId]);
 
   // useEffect(() => {
   //   try {

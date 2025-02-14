@@ -56,11 +56,13 @@ const MultipleMatchHorseRacing = () => {
   };
 
   useEffect(() => {
-    matchService.connect();
+    if(state){
+      matchService.connect(state?.matchIds, profileDetail?.roleName);
+    }
     return () => {
       matchService.disconnect(); 
     };
-  }, []);
+  }, [state]);
 
   const setMultiMatchBetsPlaced = (event: any) => {
     try {
@@ -161,7 +163,7 @@ const MultipleMatchHorseRacing = () => {
         socketService.match.matchDeleteBetOff();
         socketService.match.updateDeleteReasonOff();
         state?.matchIds?.map((item: any) => {
-          socketService.match.joinMatchRoom(item, profileDetail?.roleName);
+          socketService.match.joinMatchRoom(item);
         });
         state?.matchIds?.map((item: any) => {
           socketService.match.getMatchRates(item, updateMatchDetailToRedux);

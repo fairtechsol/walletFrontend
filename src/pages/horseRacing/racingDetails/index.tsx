@@ -72,11 +72,13 @@ const RacingDetails = () => {
   });
 
   useEffect(() => {
-    matchService.connect();
+    if(id){
+      matchService.connect([id], profileDetail?.roleName);
+    }
     return () => {
       matchService.disconnect(); 
     };
-  }, []);
+  }, [id]);
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -255,7 +257,7 @@ const RacingDetails = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
         socketService.match.updateDeleteReasonOff();
-        socketService.match.joinMatchRoom(id, profileDetail?.roleName);
+        socketService.match.joinMatchRoom(id);
         socketService.match.getMatchRates(id, updateMatchDetailToRedux);
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);

@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment-timezone";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatToINR } from "../../helper";
 import { MatchComponentInterface } from "../../interface/inplay";
 import { socket, socketService, matchService } from "../../socketManager";
 import { updateMatchListRates } from "../../store/actions/match/matchAction";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import Divider from "./Divider";
 import HeaderRow from "./HeaderRow";
 import TeamDetailRow from "./TeamDetailRow";
@@ -15,6 +15,9 @@ const MatchComponent = (props: MatchComponentInterface) => {
   const { onClick, top, blur, match } = props;
   const dispatch: AppDispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
 
   function calculateTimeLeft() {
     try {
@@ -65,7 +68,9 @@ const MatchComponent = (props: MatchComponentInterface) => {
   };
 
   useEffect(() => {
-    matchService.connect();
+    if(match?.id){
+      matchService.connect([match?.id], profileDetail?.roleName);
+    }
     return () => {
       matchService.disconnect(); 
     };
