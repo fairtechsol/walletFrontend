@@ -1489,6 +1489,7 @@ const MatchDetail = () => {
               flexDirection: "column",
               display: "flex",
               minHeight: "100px",
+              maxWidth: "40%"
             }}
           >
             <Box
