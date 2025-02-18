@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
 import LiveBookmaker from "../../components/matchDetail/LiveBookmaker";
 import MatchOdds from "../../components/matchDetail/MatchOdds";
-import { socket, socketService } from "../../socketManager";
+import { socket, socketService, matchService } from "../../socketManager";
 import {
   getUserOfLock,
   updateUserMatchLock,
@@ -52,6 +52,15 @@ const LockMatchScreen = () => {
   const [_, setIsManualLock] = useState<any>(false);
   const [isQuickSessionLock, setIsQuickSessionLock] = useState<any>(false);
   const [isSessionLock, setIsSessionLock] = useState<any>(false);
+
+  useEffect(() => {
+    if(state){
+      matchService.connect([state?.matchId], profileDetail?.roleName);
+    }
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, [state]);
 
   const handleBlock = async (value: any, status: any, typeOfBet: any) => {
     try {
@@ -233,8 +242,7 @@ const LockMatchScreen = () => {
         socketService.match.sessionResultOff();
         socketService.match.sessionResultUnDeclareOff();
         socketService.match.joinMatchRoom(
-          state?.matchId,
-          profileDetail?.roleName
+          state?.matchId
         );
         socketService.match.getMatchRates(
           state?.matchId,

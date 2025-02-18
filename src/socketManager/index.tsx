@@ -13,16 +13,18 @@ export const initialiseSocket = () => {
       token: `${sessionStorage.getItem("jwtWallet")}`,
     },
   });
-  thirdParty = io(baseUrls.thirdParty, {
-    transports: [
-      process.env.NODE_ENV === "production"
-        ? `${Constants.POLLING}`
-        : `${Constants.WEBSOCKET}`,
-    ],
-    auth: {
-      token: `${sessionStorage.getItem("jwtWallet")}`,
-    },
-  });
+  // thirdParty = io(baseUrls.thirdParty, {
+  //   transports: [
+  //     // process.env.NODE_ENV === "production"
+  //     //   ? `${Constants.POLLING}`
+  //     //   :
+  //     `${Constants.WEBSOCKET}`,
+  //     `${Constants.POLLING}`,
+  //   ],
+  //   auth: {
+  //     token: `${sessionStorage.getItem("jwtWallet")}`,
+  //   },
+  // });
 };
 
 // export const socket = io(baseUrls.socket, {
@@ -32,23 +34,50 @@ export const initialiseSocket = () => {
 //   },
 // });
 
+export const initialiseMatchSocket = (matchId: string[], roleName: string) => {
+  thirdParty = io(baseUrls.thirdParty, {
+    transports: [
+      process.env.NODE_ENV === "production"
+        ? `${Constants.POLLING}`
+        : `${Constants.WEBSOCKET}`,
+    ],
+    auth: {
+      token: `${sessionStorage.getItem("jwtWallet")}`,
+    },
+    query: {
+      matchIdArray: matchId,
+      roleName: roleName
+    },
+  });
+};
+
 export const socketService = {
   connect: () => {
     initialiseSocket();
     // Connect to the socket server
     socket?.connect();
-    thirdParty?.connect();
+    // thirdParty?.connect();
     // expertSocket.connect();
   },
 
   disconnect: () => {
     // Disconnect from the socket server
     socket?.disconnect();
-    thirdParty?.disconnect();
+    // thirdParty?.disconnect();
     // expertSocket.disconnect();
   },
   auth: { ...authSocketService },
   match: { ...matchSocketService },
 
   // Add other socket-related methods as needed
+};
+
+export const matchService = {
+  connect: (matchId: string[], roleName: string) => {
+    initialiseMatchSocket(matchId, roleName);
+    thirdParty?.connect();
+  },
+  disconnect: () => {
+    thirdParty?.disconnect();
+  },
 };

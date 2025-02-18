@@ -18,7 +18,7 @@ import SessionMarket from "../../../components/matchDetail/SessionMarket";
 import RunsBox from "../../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../../components/matchDetail/TournamentOdds";
 import { formatToINR } from "../../../helper";
-import { socket, socketService } from "../../../socketManager";
+import { socket, socketService, matchService } from "../../../socketManager";
 import {
   getPlacedBets,
   removeRunAmount,
@@ -70,6 +70,15 @@ const MultipleMatch = () => {
   const { placedBets, sessionProLoss } = useSelector(
     (state: RootState) => state.match.bets
   );
+
+  useEffect(() => {
+    if(state){
+      matchService.connect(state?.matchIds, profileDetail?.roleName);
+    }
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, [state]);
 
   const updateMatchDetailToRedux = (event: any) => {
     dispatch(updateMultipleMatchDetail(event));
@@ -279,7 +288,7 @@ const MultipleMatch = () => {
         socketService.match.sessionResultUnDeclareOff();
         socketService.match.updateDeleteReasonOff();
         state?.matchIds?.map((item: any) => {
-          socketService.match.joinMatchRoom(item, profileDetail?.roleName);
+          socketService.match.joinMatchRoom(item);
         });
         state?.matchIds?.map((item: any) => {
           socketService.match.getMatchRates(item, updateMatchDetailToRedux);

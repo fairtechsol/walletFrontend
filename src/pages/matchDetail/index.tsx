@@ -25,7 +25,7 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { socket, socketService, thirdParty } from "../../socketManager";
+import { socket, socketService, matchService } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
@@ -106,6 +106,16 @@ const MatchDetail = () => {
   const { permanentDeleteSuccess } = useSelector(
     (state: RootState) => state.match.sideBarList
   );
+
+  useEffect(() => {
+    if(state){
+      matchService.connect([state?.matchId], profileDetail?.roleName);
+    }
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, [state]);
+
   const handleDeleteBet = (value: any) => {
     try {
       let payload: any = {
@@ -442,8 +452,7 @@ const MatchDetail = () => {
         socketService.match.matchResultUnDeclaredOff();
         socketService.match.updateDeleteReasonOff();
         socketService.match.joinMatchRoom(
-          state?.matchId,
-          profileDetail?.roleName
+          state?.matchId
         );
         socketService.match.getMatchRates(
           state?.matchId,
@@ -593,23 +602,23 @@ const MatchDetail = () => {
     };
   }, []);
 
-  useEffect(() => {
-    try {
-      if (state?.matchId && thirdParty) {
-        let currInitRateInt = setInterval(() => {
-          socketService.match.joinMatchRoom(state?.matchId, "user");
-        }, 60000);
+  // useEffect(() => {
+  //   try {
+  //     if (state?.matchId && thirdParty) {
+  //       let currInitRateInt = setInterval(() => {
+  //         socketService.match.joinMatchRoom(state?.matchId);
+  //       }, 60000);
 
-        return () => {
-          if (currInitRateInt) {
-            clearInterval(currInitRateInt);
-          }
-        };
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [state?.matchId]);
+  //       return () => {
+  //         if (currInitRateInt) {
+  //           clearInterval(currInitRateInt);
+  //         }
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [state?.matchId]);
 
   // useEffect(() => {
   //   try {
@@ -1489,6 +1498,7 @@ const MatchDetail = () => {
               flexDirection: "column",
               display: "flex",
               minHeight: "100px",
+              maxWidth: "50%"
             }}
           >
             <Box

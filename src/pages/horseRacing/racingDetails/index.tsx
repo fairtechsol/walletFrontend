@@ -19,7 +19,7 @@ import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLo
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { getTimeLeft } from "../../../helper";
-import { socket, socketService } from "../../../socketManager";
+import { socket, socketService, matchService } from "../../../socketManager";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -70,6 +70,15 @@ const RacingDetails = () => {
     hours: 0,
     minutes: 0,
   });
+
+  useEffect(() => {
+    if(id){
+      matchService.connect([id], profileDetail?.roleName);
+    }
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, [id]);
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -248,7 +257,7 @@ const RacingDetails = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.matchDeleteBetOff();
         socketService.match.updateDeleteReasonOff();
-        socketService.match.joinMatchRoom(id, profileDetail?.roleName);
+        socketService.match.joinMatchRoom(id);
         socketService.match.getMatchRates(id, updateMatchDetailToRedux);
         socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchResultDeclared);

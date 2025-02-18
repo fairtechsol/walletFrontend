@@ -6,15 +6,16 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
+import axios from "axios";
 import Loader from "../../components/Loader";
 import MatchComponent from "../../components/Inplay/MatchComponent";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getMatchListInplay } from "../../store/actions/match/matchAction";
+import { getMatchListInplay, updateMatchRatesFromApiOnList } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
-import { Constants } from "../../utils/Constants";
+import { Constants, marketApiConst } from "../../utils/Constants";
 import { socket, socketService } from "../../socketManager";
 import { makeStyles } from "@material-ui/core/styles";
 const Inplay = () => {
@@ -35,6 +36,17 @@ const Inplay = () => {
     (state: RootState) => state.user.profile
   );
 
+  // useEffect(() => {
+  //   const matchIds = matchListInplay?.matches?.map((item: any) => item?.id) || [];
+
+  //   if (matchIds.length > 0) {
+  //     matchService.connect(matchIds, profileDetail?.roleName);
+  //   }
+  //   return () => {
+  //     matchService.disconnect(); 
+  //   };
+  // }, [matchListInplay]);
+
   const getMatchListService = () => {
     dispatch(getMatchListInplay({ currentPage: currentPage }));
   };
@@ -47,6 +59,19 @@ const Inplay = () => {
     }
   }, [currentPage]);
 
+  const getMatchListMarket = async (matchType: string) => {
+    try {
+      const resp: any = await axios.get(marketApiConst[matchType], {
+        timeout: 2000,
+      });
+      if (resp?.status) {
+        dispatch(updateMatchRatesFromApiOnList(resp?.data));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName && socket) {
@@ -56,7 +81,7 @@ const Inplay = () => {
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
         matchListInplay?.matches?.map((item: any) => {
-          socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
+          socketService.match.joinMatchRoom(item?.id);
         });
         socketService.match.matchResultDeclared(getMatchListService);
         socketService.match.matchResultUnDeclared(getMatchListService);
@@ -71,9 +96,9 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      matchListInplay?.matches?.map((item: any) => {
-        socketService.match.leaveMatchRoom(item?.id);
-      });
+      // matchListInplay?.matches?.map((item: any) => {
+      //   socketService.match.leaveMatchRoom(item?.id);
+      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
@@ -94,6 +119,17 @@ const Inplay = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getMatchListMarket("cricket");
+      getMatchListMarket("tennis");
+      getMatchListMarket("football");
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const classes = useStyles();
   return (
     <>

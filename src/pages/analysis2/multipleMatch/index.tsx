@@ -18,7 +18,7 @@ import {
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
-import { socket, socketService } from "../../../socketManager";
+import { socket, socketService, matchService } from "../../../socketManager";
 import {
   getMultipleMatchDetailHorseRacing,
   updateMultiMatchRatesForHorseRacing,
@@ -54,6 +54,15 @@ const MultipleMatchHorseRacing = () => {
   const updateMatchDetailToRedux = (event: any) => {
     dispatch(updateMultiMatchRatesForHorseRacing(event));
   };
+
+  useEffect(() => {
+    if(state){
+      matchService.connect(state?.matchIds, profileDetail?.roleName);
+    }
+    return () => {
+      matchService.disconnect(); 
+    };
+  }, [state]);
 
   const setMultiMatchBetsPlaced = (event: any) => {
     try {
@@ -154,7 +163,7 @@ const MultipleMatchHorseRacing = () => {
         socketService.match.matchDeleteBetOff();
         socketService.match.updateDeleteReasonOff();
         state?.matchIds?.map((item: any) => {
-          socketService.match.joinMatchRoom(item, profileDetail?.roleName);
+          socketService.match.joinMatchRoom(item);
         });
         state?.matchIds?.map((item: any) => {
           socketService.match.getMatchRates(item, updateMatchDetailToRedux);
