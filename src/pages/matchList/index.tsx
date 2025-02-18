@@ -40,7 +40,7 @@ const Inplay = () => {
     (state: RootState) => state.user.profile
   );
 
-  const getMatchListMarket = async (matchType: string) => {
+  const getMatchListMarket = async (matchType: any) => {
     try {
       const resp: any = await axios.get(marketApiConst[matchType], {
         timeout: 2000,
@@ -126,7 +126,7 @@ const Inplay = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      getMatchListMarket("cricket");
+      getMatchListMarket(type);
     }, 500);
 
     return () => clearInterval(intervalId);
