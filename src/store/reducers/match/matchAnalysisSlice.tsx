@@ -141,8 +141,8 @@ const analysisListSlice = createSlice({
                     return a.sNo - b.sNo;
                   }
                   // If sNo values are equal, sort so that null parentId comes first
-                  if (a.parentId === null && b.parentId !== null) return -1;
-                  if (a.parentId !== null && b.parentId === null) return 1;
+                  if (a.parentBetId === null && b.parentBetId !== null) return -1;
+                  if (a.parentBetId !== null && b.parentBetId === null) return 1;
                   return 0;
                 }),
               };
@@ -226,8 +226,8 @@ const analysisListSlice = createSlice({
                     return a.sNo - b.sNo;
                   }
                   // If sNo values are equal, sort so that null parentId comes first
-                  if (a.parentId === null && b.parentId !== null) return -1;
-                  if (a.parentId !== null && b.parentId === null) return 1;
+                  if (a.parentBetId === null && b.parentBetId !== null) return -1;
+                  if (a.parentBetId !== null && b.parentBetId === null) return 1;
                   return 0;
                 }),
               };
