@@ -135,7 +135,16 @@ const analysisListSlice = createSlice({
                   apiSession
                 ),
                 other,
-                tournament,
+                tournament: tournament?.sort((a: any, b: any) => {
+                  // Primary sort by sNo (ascending)
+                  if (a.sNo !== b.sNo) {
+                    return a.sNo - b.sNo;
+                  }
+                  // If sNo values are equal, sort so that null parentId comes first
+                  if (a.parentId === null && b.parentId !== null) return -1;
+                  if (a.parentId !== null && b.parentId === null) return 1;
+                  return 0;
+                }),
               };
             } else {
               return match;
@@ -211,7 +220,16 @@ const analysisListSlice = createSlice({
                   apiSession
                 ),
                 other,
-                tournament,
+                tournament: tournament?.sort((a: any, b: any) => {
+                  // Primary sort by sNo (ascending)
+                  if (a.sNo !== b.sNo) {
+                    return a.sNo - b.sNo;
+                  }
+                  // If sNo values are equal, sort so that null parentId comes first
+                  if (a.parentId === null && b.parentId !== null) return -1;
+                  if (a.parentId !== null && b.parentId === null) return 1;
+                  return 0;
+                }),
               };
             } else {
               return match;
