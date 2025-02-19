@@ -206,7 +206,16 @@ const matchListSlice = createSlice({
             apiSession
           ),
           other,
-          tournament,
+          tournament: tournament?.sort((a: any, b: any) => {
+            // Primary sort by sNo (ascending)
+            if (a.sNo !== b.sNo) {
+              return a.sNo - b.sNo;
+            }
+            // If sNo values are equal, sort so that null parentId comes first
+            if (a.parentId === null && b.parentId !== null) return -1;
+            if (a.parentId !== null && b.parentId === null) return 1;
+            return 0;
+          }),
         };
       })
       .addCase(getMatchRates.fulfilled, (state, action) => {
@@ -277,7 +286,16 @@ const matchListSlice = createSlice({
             apiSession
           ),
           other,
-          tournament,
+          tournament: tournament?.sort((a: any, b: any) => {
+            // Primary sort by sNo (ascending)
+            if (a.sNo !== b.sNo) {
+              return a.sNo - b.sNo;
+            }
+            // If sNo values are equal, sort so that null parentId comes first
+            if (a.parentId === null && b.parentId !== null) return -1;
+            if (a.parentId !== null && b.parentId === null) return 1;
+            return 0;
+          }),
         };
       })
       .addCase(matchListReset, (state) => {
@@ -296,17 +314,19 @@ const matchListSlice = createSlice({
       .addCase(updateMatchRatesFromApiOnList.fulfilled, (state, action) => {
         let matchListFromApi = action.payload;
         if (state.matchListInplay?.matches?.length > 0) {
-          state.matchListInplay.matches = state.matchListInplay?.matches?.map((items: any) => {
-            const itemToUpdate = matchListFromApi?.find(
-              (item: any) =>
-                +item?.gameId === +items?.eventId ||
-                +item?.gmid === +items?.eventId
-            );
-            return {
-              ...items,
-              ...itemToUpdate,
-            };
-          });
+          state.matchListInplay.matches = state.matchListInplay?.matches?.map(
+            (items: any) => {
+              const itemToUpdate = matchListFromApi?.find(
+                (item: any) =>
+                  +item?.gameId === +items?.eventId ||
+                  +item?.gmid === +items?.eventId
+              );
+              return {
+                ...items,
+                ...itemToUpdate,
+              };
+            }
+          );
         }
       })
       .addCase(updateMaxLossForBetOnUndeclare.fulfilled, (state, action) => {
