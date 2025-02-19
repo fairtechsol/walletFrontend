@@ -136,13 +136,13 @@ const analysisListSlice = createSlice({
                 ),
                 other,
                 tournament: tournament?.sort((a: any, b: any) => {
-                  // Primary sort by sNo (ascending)
-                  if (a.sNo !== b.sNo) {
-                    return a.sNo - b.sNo;
+                  // Primary sort by sno (ascending)
+                  if (a.sno !== b.sno) {
+                    return a.sno - b.sno;
                   }
-                  // If sNo values are equal, sort so that null parentId comes first
-                  if (a.parentId === null && b.parentId !== null) return -1;
-                  if (a.parentId !== null && b.parentId === null) return 1;
+                  // If sno values are equal, sort so that null parentId comes first
+                  if (a.parentBetId === null && b.parentBetId !== null) return -1;
+                  if (a.parentBetId !== null && b.parentBetId === null) return 1;
                   return 0;
                 }),
               };
@@ -221,13 +221,13 @@ const analysisListSlice = createSlice({
                 ),
                 other,
                 tournament: tournament?.sort((a: any, b: any) => {
-                  // Primary sort by sNo (ascending)
-                  if (a.sNo !== b.sNo) {
-                    return a.sNo - b.sNo;
+                  // Primary sort by sno (ascending)
+                  if (a.sno !== b.sno) {
+                    return a.sno - b.sno;
                   }
-                  // If sNo values are equal, sort so that null parentId comes first
-                  if (a.parentId === null && b.parentId !== null) return -1;
-                  if (a.parentId !== null && b.parentId === null) return 1;
+                  // If sno values are equal, sort so that null parentId comes first
+                  if (a.parentBetId === null && b.parentBetId !== null) return -1;
+                  if (a.parentBetId !== null && b.parentBetId === null) return 1;
                   return 0;
                 }),
               };
