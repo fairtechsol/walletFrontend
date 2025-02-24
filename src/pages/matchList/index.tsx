@@ -130,7 +130,7 @@ const Inplay = () => {
     }, 500);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [type]);
   return (
     <>
       {matchListInplay && matchListInplay?.matches?.length > 0
