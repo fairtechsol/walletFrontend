@@ -183,7 +183,7 @@ const matchListSlice = createSlice({
 
         state.matchDetail = {
           ...state.matchDetail,
-          // manualSessionActive: sessionBettings?.length >= 0 ? true : false,
+          manualSessionActive: sessionBettings?.length >= 0 ? true : false,
           // apiSessionActive: apiSession?.length >= 0 ? true : false,
           apiSession,
           apiTideMatch: apiTiedMatch,
@@ -263,7 +263,7 @@ const matchListSlice = createSlice({
 
         state.matchDetail = {
           ...state.matchDetail,
-          // manualSessionActive: sessionBettings?.length >= 0 ? true : false,
+          manualSessionActive: sessionBettings?.length >= 0 ? true : false,
           // apiSessionActive: apiSession?.length >= 0 ? true : false,
           apiSession,
           apiTideMatch: apiTiedMatch,
