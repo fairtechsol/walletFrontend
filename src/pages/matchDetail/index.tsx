@@ -25,7 +25,7 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { socket, socketService, matchService } from "../../socketManager";
+import { matchService, socket, socketService } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
@@ -108,11 +108,11 @@ const MatchDetail = () => {
   );
 
   useEffect(() => {
-    if(state){
+    if (state) {
       matchService.connect([state?.matchId], profileDetail?.roleName);
     }
     return () => {
-      matchService.disconnect(); 
+      matchService.disconnect();
     };
   }, [state]);
 
@@ -451,9 +451,7 @@ const MatchDetail = () => {
         socketService.match.sessionResultUnDeclareOff();
         socketService.match.matchResultUnDeclaredOff();
         socketService.match.updateDeleteReasonOff();
-        socketService.match.joinMatchRoom(
-          state?.matchId
-        );
+        socketService.match.joinMatchRoom(state?.matchId);
         socketService.match.getMatchRates(
           state?.matchId,
           updateMatchDetailToRedux
@@ -1031,7 +1029,9 @@ const MatchDetail = () => {
           {matchDetail?.manualSessionActive &&
             matchesMobile &&
             matchDetail?.sessionBettings?.filter(
-              (item: any) => !JSON.parse(item).selectionId
+              (item: any) =>
+                !JSON.parse(item).selectionId &&
+                JSON.parse(item)?.activeStatus === "live"
             )?.length > 0 && (
               <SessionMarket
                 title={"Quick Session Market"}
@@ -1448,7 +1448,6 @@ const MatchDetail = () => {
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
                 role={state.roleName}
-
                 // onClick={() => {
                 //   if (mode.value && mode?.type === "delete") {
                 //     alert(1)
@@ -1475,7 +1474,7 @@ const MatchDetail = () => {
                           value: mode.value,
                         };
                       });
-                    }else {
+                    } else {
                       setMode((prev: any) => {
                         return {
                           ...prev,
@@ -1498,7 +1497,7 @@ const MatchDetail = () => {
               flexDirection: "column",
               display: "flex",
               minHeight: "100px",
-              maxWidth: "50%"
+              maxWidth: "50%",
             }}
           >
             <Box
@@ -1539,7 +1538,9 @@ const MatchDetail = () => {
             <Box sx={{ width: "150px", height: "3px" }}></Box>
             {matchDetail?.manualSessionActive &&
               matchDetail?.sessionBettings?.filter(
-                (item: any) => !JSON.parse(item).selectionId
+                (item: any) =>
+                  !JSON.parse(item).selectionId &&
+                  JSON.parse(item)?.activeStatus === "live"
               )?.length > 0 && (
                 <SessionMarket
                   title={"Quick Session Market"}
