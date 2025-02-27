@@ -496,47 +496,47 @@ const MatchDetail = () => {
     };
   }, [state?.matchId]);
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        if (state?.matchId) {
-          dispatch(
-            getMatchDetail({
-              matchId: state?.matchId,
-              matchType: state?.matchType,
-            })
-          );
-          if (state?.userId) {
-            dispatch(
-              getMatchDetailMarketAnalysis({
-                matchId: state?.matchId,
-                userId: state?.userId,
-                domain: state?.domain,
-              })
-            );
-          }
-          dispatch(getUserProfitLoss(state?.matchId));
-          dispatch(
-            getPlacedBets(
-              `eq${state?.matchId}${
-                state.userId
-                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                  : ""
-              }${state.domain ? `&domain=${state.domain}` : ""}`
-            )
-          );
-        }
-      } else if (document.visibilityState === "hidden") {
-        socketService.match.leaveMatchRoom(state?.matchId);
-        socketService.match.getMatchRatesOff(state?.matchId);
-      }
-    };
+  // useEffect(() => {
+  //   const handleVisibilityChange = () => {
+  //     if (document.visibilityState === "visible") {
+  //       if (state?.matchId) {
+  //         dispatch(
+  //           getMatchDetail({
+  //             matchId: state?.matchId,
+  //             matchType: state?.matchType,
+  //           })
+  //         );
+  //         if (state?.userId) {
+  //           dispatch(
+  //             getMatchDetailMarketAnalysis({
+  //               matchId: state?.matchId,
+  //               userId: state?.userId,
+  //               domain: state?.domain,
+  //             })
+  //           );
+  //         }
+  //         dispatch(getUserProfitLoss(state?.matchId));
+  //         dispatch(
+  //           getPlacedBets(
+  //             `eq${state?.matchId}${
+  //               state.userId
+  //                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
+  //                 : ""
+  //             }${state.domain ? `&domain=${state.domain}` : ""}`
+  //           )
+  //         );
+  //       }
+  //     } else if (document.visibilityState === "hidden") {
+  //       socketService.match.leaveMatchRoom(state?.matchId);
+  //       socketService.match.getMatchRatesOff(state?.matchId);
+  //     }
+  //   };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [state]);
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+  //   return () => {
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  //   };
+  // }, [state]);
 
   useEffect(() => {
     if (state?.matchId) {
