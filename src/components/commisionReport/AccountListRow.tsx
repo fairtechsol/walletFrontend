@@ -174,11 +174,14 @@ const AccountListRow = ({
             ]}
           >
             {/* {elementToUDM.teamBet} */}
-            {elementToUDM?.createAt
-              ? `${moment(elementToUDM?.createAt).format("L")}  ${moment(
-                  elementToUDM?.createAt
-                ).format("LTS")}`
-              : ""}
+            {elementToUDM?.createAt ? (
+              <>
+                {moment(elementToUDM?.createAt).format("L")} <br />
+                {moment(elementToUDM?.createAt).format("LTS")}
+              </>
+            ) : (
+              ""
+            )}
           </Typography>
         </Box>
         <Box
