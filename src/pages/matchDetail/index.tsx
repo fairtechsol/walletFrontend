@@ -136,9 +136,7 @@ const MatchDetail = () => {
       });
       dispatch(
         AllBetDelete({
-          url: ["cricket", "politics"].includes(matchDetail?.matchType)
-            ? ApiConstants.MATCH.BETDELETE
-            : ApiConstants.MATCH.BETDELETEOTHER,
+          url: ApiConstants.MATCH.BETDELETE,
           data: payload,
         })
       );
@@ -175,9 +173,7 @@ const MatchDetail = () => {
       });
       dispatch(
         AllBetDeletePermanent({
-          url: ["cricket", "politics"].includes(matchDetail?.matchType)
-            ? ApiConstants.MATCH.BET_DELETE_PERMANENT
-            : ApiConstants.MATCH.BET_DELETE_OTHER_PERMANENT,
+          url: ApiConstants.MATCH.BET_DELETE_PERMANENT,
           data: payload,
         })
       );
@@ -221,10 +217,7 @@ const MatchDetail = () => {
   const matchResultDeclared = (event: any) => {
     try {
       if (event?.matchId === state?.matchId && event.isMatchDeclare) {
-        if (
-          event?.gameType === "cricket" ||
-          event?.betType === "quickbookmaker1"
-        ) {
+        if (event?.gameType === "cricket") {
           navigate(
             `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
           );
@@ -342,11 +335,6 @@ const MatchDetail = () => {
           })
         );
         dispatch(removeRunAmount(event));
-        // dispatch(getPlacedBets(`eq${state?.matchId}${
-        //   state.userId
-        //     ? `&userId=${state.userId}&roleName=${state?.roleName}`
-        //     : ""
-        // }${state.domain ? `&domain=${state.domain}` : ""}`));
       }
     } catch (error) {
       console.log(error);
