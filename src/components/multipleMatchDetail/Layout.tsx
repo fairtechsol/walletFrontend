@@ -18,6 +18,7 @@ const Layout = ({
   selectedBetData,
   showBets,
 }: any) => {
+  console.log(sessionProLoss);
   return (
     <>
       <Typography

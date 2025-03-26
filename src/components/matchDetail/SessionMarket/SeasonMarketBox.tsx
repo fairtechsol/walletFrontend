@@ -11,7 +11,6 @@ const SeasonMarketBox = (props: any) => {
   const { newData, setData, profitLossData, index, type } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  // console.log('first',type)
   return (
     <>
       <Box
