@@ -82,8 +82,6 @@ const ListOfClients = () => {
         ) : (
           <AccountList endpoint={ApiConstants.USER.LIST} />
         )}
-
-        {/* <AccountList /> */}
       </Box>
     </>
   );
