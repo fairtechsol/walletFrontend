@@ -50,35 +50,39 @@ const Analysis = () => {
   };
 
   const changeSelected = (match: any) => {
-    if (mode === "0") {
+    if (mode === "0") return false;
+
+    const matchId = match?.id;
+    if (!matchId) return false;
+
+    const isSameMatchType =
+      !selectedMatchType || selectedMatchType === match?.matchType;
+    const isAlreadySelected = selected.includes(matchId);
+
+    if (!isSameMatchType) {
+      toast.error("Please Select Match Of Same Category");
       return false;
     }
 
-    const updatedSelected = [...selected];
-    const matchId = match?.id;
-
-    if (selected?.length === 0 || selectedMatchType === match?.matchType) {
-      const isSelected = updatedSelected.includes(matchId);
-
-      if (isSelected) {
-        setMatchIds((prevIds: any) =>
-          prevIds.filter((matchId: any) => matchId !== matchId)
-        );
-        setSelected(updatedSelected.filter((id: any) => id !== matchId));
-      } else {
-        if (+max === selected?.length) {
-          toast.warn(`Only ${max} allowed`);
-          return;
-        }
-        setMatchIds((prevIds: any) => [...prevIds, matchId]);
-        setSelected([...updatedSelected, matchId]);
-        if (!isSelected) {
-          setSelectedMatchType(match?.matchType);
-        }
-      }
+    if (isAlreadySelected) {
+      setMatchIds((prevIds: any) =>
+        prevIds.filter((id: any) => id !== matchId)
+      );
+      setSelected((prevSelected: any) =>
+        prevSelected.filter((id: any) => id !== matchId)
+      );
     } else {
-      toast.error("Please Select Match Of Same Category");
-      return;
+      if (selected.length >= +max) {
+        toast.warn(`Only ${max} allowed`);
+        return false;
+      }
+
+      setMatchIds((prevIds: any) => [...prevIds, matchId]);
+      setSelected((prevSelected: any) => [...prevSelected, matchId]);
+
+      if (!selectedMatchType) {
+        setSelectedMatchType(match?.matchType);
+      }
     }
   };
 
