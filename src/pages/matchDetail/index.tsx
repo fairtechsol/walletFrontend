@@ -316,7 +316,6 @@ const MatchDetail = () => {
             myStake: event?.jobData?.myStake,
           })
         );
-        // dispatch(updateBalance(event?.jobData));
         dispatch(updateTeamRates(event));
       }
     } catch (e) {
