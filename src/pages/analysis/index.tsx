@@ -270,18 +270,16 @@ const Analysis = () => {
           <>
             {analysisList?.matches?.map((match: any) => {
               return (
-                <div style={{ marginTop: "15px" }}>
-                  <MatchListComponent
-                    key={match?.id}
-                    data={match}
-                    setSelected={() => changeSelected(match)}
-                    mode={mode}
-                    selected={!selected.includes(match.id as never)}
-                    title={match?.title}
-                    team={match?.teamA}
-                    team2={match?.teamB}
-                  />
-                </div>
+                <MatchListComponent
+                  key={match?.id}
+                  data={match}
+                  setSelected={() => changeSelected(match)}
+                  mode={mode}
+                  selected={!selected.includes(match.id as never)}
+                  title={match?.title}
+                  team={match?.teamA}
+                  team2={match?.teamB}
+                />
               );
             })}
             <div style={{ marginTop: "15px" }}>

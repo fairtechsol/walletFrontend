@@ -1,4 +1,4 @@
-import { Cricket, Football,Politics,Tennis } from "../assets";
+import { Cricket, Football, Politics, Tennis } from "../assets";
 
 export const IconConstants: any = {
   cricket: Cricket,

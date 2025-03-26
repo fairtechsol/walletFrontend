@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
-import StockBox from "./StockBox";
-import { CHECK } from "../../assets";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import moment from "moment-timezone";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CHECK } from "../../assets";
 import { IconConstants } from "../../helper/gameConstants";
+import StockBox from "./StockBox";
 
 const MatchListComponent = (props: any) => {
   const { team, team2, selected, mode, data, setSelected, title } = props;
