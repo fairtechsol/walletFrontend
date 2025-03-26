@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { memo, useEffect, useState } from "react";
-import SessionMarket from "../../components/matchDetail/SessionMarket";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import FullAllBets from "../../components/matchDetail/Common/FullAllBets";
+import SessionMarket from "../../components/matchDetail/SessionMarket";
 import { matchService, socket, socketService } from "../../socketManager";
 import {
   getUserOfLock,
@@ -209,7 +209,6 @@ const LockMatchScreen = () => {
         dispatch(
           getMatchDetail({
             matchId: state?.matchId,
-            matchType: state?.matchType,
           })
         );
         dispatch(getUserProfitLoss(state?.matchId));
@@ -276,7 +275,6 @@ const LockMatchScreen = () => {
           dispatch(
             getMatchDetail({
               matchId: state?.matchId,
-              matchType: state?.matchType,
             })
           );
           dispatch(getUserProfitLoss(state?.matchId));

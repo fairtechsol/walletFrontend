@@ -242,10 +242,7 @@ const MultipleMatch = () => {
       if (state?.matchIds) {
         dispatch(
           getMultipleMatchDetail({
-            url:
-              state.matchType === "cricket"
-                ? ApiConstants.MATCH.GET
-                : ApiConstants.MATCH.GET_OTHER,
+            url: ApiConstants.MATCH.GET,
             ids: state?.matchIds,
             matchType: state.matchType,
           })
@@ -323,10 +320,7 @@ const MultipleMatch = () => {
         if (state?.matchIds) {
           dispatch(
             getMultipleMatchDetail({
-              url:
-                state.matchType === "cricket"
-                  ? ApiConstants.MATCH.GET
-                  : ApiConstants.MATCH.GET_OTHER,
+              url: ApiConstants.MATCH.GET,
               ids: state?.matchIds,
               matchType: state.matchType,
             })

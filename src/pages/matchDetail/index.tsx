@@ -87,7 +87,6 @@ const MatchDetail = () => {
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
   const [deleteCode, setDeleteCode] = useState("");
-  // const [rateInterval, setRateInterval] = useState<any>({ intervalData: [] });
   const [submitting, setSubmitting] = useState(false);
 
   const { state } = useLocation();
@@ -394,7 +393,6 @@ const MatchDetail = () => {
         dispatch(
           getMatchDetail({
             matchId: state?.matchId,
-            matchType: state?.matchType,
           })
         );
         if (state?.userId) {
@@ -488,7 +486,6 @@ const MatchDetail = () => {
         dispatch(
           getMatchDetail({
             matchId: state?.matchId,
-            matchType: state?.matchType,
           })
         );
         dispatch(getUserProfitLoss(state?.matchId));

@@ -31,15 +31,7 @@ export const getMatchDetail = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET}${
-          !["cricket", "politics"].includes(requestData?.matchType)
-            ? `/other`
-            : ""
-        }/${requestData?.matchId}${
-          !["cricket", "politics"].includes(requestData?.matchType)
-            ? `?matchType=${requestData?.matchType}`
-            : ""
-        }`
+        `${ApiConstants.MATCH.GET}/${requestData?.matchId}`
       );
       if (resp) {
         return resp?.data;
@@ -251,7 +243,7 @@ export const updateMatchRates = createAsyncThunk<any, any>(
 
 export const getMatchRates = createAsyncThunk<any, any>(
   "/third/match/rates",
-  async (matchId,thunkApi) => {
+  async (matchId, thunkApi) => {
     try {
       const resp = await axios.get(
         `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`
