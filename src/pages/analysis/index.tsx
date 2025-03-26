@@ -236,7 +236,6 @@ const Analysis = () => {
                           match: Number(max),
                           matchIds: matchIds,
                           matchType: selectedMatchType,
-                          // marketIds: marketIds,
                         },
                       });
                     } else {
@@ -245,7 +244,6 @@ const Analysis = () => {
                           match: Number(max),
                           matchIds: matchIds,
                           matchType: selectedMatchType,
-                          // marketIds: marketIds,
                         },
                       });
                     }
@@ -272,33 +270,33 @@ const Analysis = () => {
           <>
             {analysisList?.matches?.map((match: any) => {
               return (
-                <div style={{marginTop:"15px"}}>
-                <MatchListComponent
-                  key={match?.id}
-                  data={match}
-                  setSelected={() => changeSelected(match)}
-                  mode={mode}
-                  selected={!selected.includes(match.id as never)}
-                  title={match?.title}
-                  team={match?.teamA}
-                  team2={match?.teamB}
-                />
+                <div style={{ marginTop: "15px" }}>
+                  <MatchListComponent
+                    key={match?.id}
+                    data={match}
+                    setSelected={() => changeSelected(match)}
+                    mode={mode}
+                    selected={!selected.includes(match.id as never)}
+                    title={match?.title}
+                    team={match?.teamA}
+                    team2={match?.teamB}
+                  />
                 </div>
               );
             })}
-            <div style={{marginTop:"15px"}}>
-            <Pagination
-              page={currentPage}
-              className={`${classes.whiteTextPagination} d-flex justify-content-center`}
-              count={Math.ceil(
-                parseInt(analysisList?.count ? analysisList?.count : 1) /
-                  Constants.pageLimit
-              )}
-              color="primary"
-              onChange={(_: any, value: number) => {
-                setCurrentPage(value);
-              }}
-            />
+            <div style={{ marginTop: "15px" }}>
+              <Pagination
+                page={currentPage}
+                className={`${classes.whiteTextPagination} d-flex justify-content-center`}
+                count={Math.ceil(
+                  parseInt(analysisList?.count ? analysisList?.count : 1) /
+                    Constants.pageLimit
+                )}
+                color="primary"
+                onChange={(_: any, value: number) => {
+                  setCurrentPage(value);
+                }}
+              />
             </div>
           </>
         ) : (
