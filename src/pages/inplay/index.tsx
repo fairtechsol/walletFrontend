@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Pagination,
@@ -7,17 +8,18 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import Loader from "../../components/Loader";
-import MatchComponent from "../../components/Inplay/MatchComponent";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getMatchListInplay, updateMatchRatesFromApiOnList } from "../../store/actions/match/matchAction";
-import { AppDispatch, RootState } from "../../store/store";
-import { useSelector } from "react-redux";
-import { Constants, marketApiConst } from "../../utils/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import MatchComponent from "../../components/Inplay/MatchComponent";
+import Loader from "../../components/Loader";
 import { socket, socketService } from "../../socketManager";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  getMatchListInplay,
+  updateMatchRatesFromApiOnList,
+} from "../../store/actions/match/matchAction";
+import { AppDispatch, RootState } from "../../store/store";
+import { Constants, marketApiConst } from "../../utils/Constants";
 const Inplay = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -28,24 +30,13 @@ const Inplay = () => {
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
-
-  // useEffect(() => {
-  //   const matchIds = matchListInplay?.matches?.map((item: any) => item?.id) || [];
-
-  //   if (matchIds.length > 0) {
-  //     matchService.connect(matchIds, profileDetail?.roleName);
-  //   }
-  //   return () => {
-  //     matchService.disconnect(); 
-  //   };
-  // }, [matchListInplay]);
 
   const getMatchListService = () => {
     dispatch(getMatchListInplay({ currentPage: currentPage }));
@@ -150,7 +141,6 @@ const Inplay = () => {
                 top={true}
                 blur={false}
                 match={match}
-                // handleUpdateMatch={handleUpdateMatch}
               />
             );
           })

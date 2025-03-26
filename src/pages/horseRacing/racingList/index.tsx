@@ -1,16 +1,15 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import CountryWiseListComponent from "../../../components/horseRacingComp/CountryWiseListComponent";
+import RacingListComponent from "../../../components/horseRacingComp/RacingListComponent";
+import { socketService } from "../../../socketManager";
 import {
   getHorseRacingCountryWiseList,
   getHorseRacingMatchList,
 } from "../../../store/actions/horseRacing/horseMatchListAction";
-import { useSelector } from "react-redux";
-import CountryWiseListComponent from "../../../components/horseRacingComp/CountryWiseListComponent";
-import RacingListComponent from "../../../components/horseRacingComp/RacingListComponent";
-import { Box } from "@mui/material";
-import { socketService } from "../../../socketManager";
-import { useParams } from "react-router-dom";
+import { AppDispatch, RootState } from "../../../store/store";
 
 const RacingList = () => {
   const dispatch: AppDispatch = useDispatch();
