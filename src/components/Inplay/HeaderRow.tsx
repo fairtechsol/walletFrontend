@@ -41,14 +41,13 @@ const HeaderRow = (props: any) => {
       </Box>
       <div
         style={{
-          background: "#f1c40f",
+          background: "#f1c550",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
         <img
-          className="inplayicon"
           src={IconConstants[match?.matchType]}
           alt="Inplay Icon"
           width={25}
