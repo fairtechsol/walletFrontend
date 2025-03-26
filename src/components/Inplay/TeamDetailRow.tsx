@@ -3,8 +3,6 @@ import SeparateBox from "./SeparateBox";
 
 const TeamDetailRow = (props: any) => {
   const { teamName, runnerNumber, match } = props;
-  // console.log("runnerNumber :", runnerNumber)
-  // console.log("match :", match?.section)
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (
@@ -27,13 +25,6 @@ const TeamDetailRow = (props: any) => {
             alignItems: "center",
           }}
         >
-          {/* {image !== null && (
-            <img
-              src={`${apiBasePath}/${image}`}
-              style={{ width: "25px", height: "25px", marginLeft: "10px" }}
-              alt={image}
-            />
-          )} */}
           <Typography
             sx={{
               color: "black",
@@ -55,67 +46,23 @@ const TeamDetailRow = (props: any) => {
             alignItems: "center",
           }}
         >
-          {/* {!matchesMobile && (
-            <SeparateBox
-              value={
-                matchOddsLive?.runners?.length &&
-                matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack
-                  ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack[2]
-                      ?.price
-                  : 0
-              }
-              value2={formatNumber(
-                matchOddsLive?.runners?.length &&
-                  matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack
-                    ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack[2]
-                      ?.size
-                  : 0
-              )}
-              color={matchesMobile ? "white" : "#CEEBFF"}
-            />
-          )} */}
           <Box
             sx={{ width: ".25%", display: "flex", background: "pink" }}
           ></Box>
-          {/* {!matchesMobile && (
-            <SeparateBox
-              value={
-                matchOddsLive?.runners?.length &&
-                matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack
-                  ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack[1]
-                      ?.price
-                  : 0
-              }
-              value2={formatNumber(
-                matchOddsLive?.runners?.length &&
-                  matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack
-                    ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToBack[1]
-                      ?.size
-                  : 0
-              )}
-              color={matchesMobile ? "white" : "#C2E6FF"}
-            />
-          )} */}
           <Box
             sx={{ width: ".25%", display: "flex", background: "pink" }}
           ></Box>
-          {/* backRate={item?.back1 || match?.section?.[0]?.odds?.[0]?.odds || 0}
-          layRate={item?.lay1 || match?.section?.[0]?.odds?.[1]?.odds || 0} */}
           <SeparateBox
-           value={
-            (runnerNumber == 0
-              ? match?.back1 || match?.section?.[0]?.odds?.[0]?.odds
-              : runnerNumber == 1
-              ? match?.back11 ||  match?.section?.[0]?.odds?.[0]?.odds || 0
-              : runnerNumber == 2
-              ? match?.back12 ||  match?.section?.[0]?.odds?.[0]?.odds || 0
-              : 0) ?? 0
-          }
-          value2={""}
+            value={
+              (runnerNumber == 0
+                ? match?.back1 || match?.section?.[0]?.odds?.[0]?.odds
+                : runnerNumber == 1
+                ? match?.back11 || match?.section?.[0]?.odds?.[0]?.odds || 0
+                : runnerNumber == 2
+                ? match?.back12 || match?.section?.[0]?.odds?.[0]?.odds || 0
+                : 0) ?? 0
+            }
+            value2={""}
             color={matchesMobile ? "#A7DCFF" : "#A7DCFF"}
           />
           <Box
@@ -134,54 +81,6 @@ const TeamDetailRow = (props: any) => {
             value2={""}
             color={matchesMobile ? "#FFB5B5" : "#FFB5B5"}
           />
-          <Box
-            sx={{ width: ".25%", display: "flex", background: "pink" }}
-          ></Box>
-          {/* {!matchesMobile && (
-            <SeparateBox
-              value={
-                matchOddsLive?.runners?.length &&
-                matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay
-                  ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay[1]
-                      ?.price
-                  : 0
-              }
-              value2={formatNumber(
-                matchOddsLive?.runners?.length &&
-                  matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay
-                    ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay[1]
-                      ?.size
-                  : 0
-              )}
-              color={matchesMobile ? "white" : "#F2CBCB"}
-            />
-          )} */}
-          <Box
-            sx={{ width: ".25%", display: "flex", background: "pink" }}
-          ></Box>
-          {/* {!matchesMobile && (
-            <SeparateBox
-              value={
-                matchOddsLive?.runners?.length &&
-                matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay
-                  ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay[2]
-                      ?.price
-                  : 0
-              }
-              value2={formatNumber(
-                matchOddsLive?.runners?.length &&
-                  matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay
-                    ?.length > 0
-                  ? matchOddsLive?.runners[runnerNumber]?.ex?.availableToLay[2]
-                      ?.size
-                  : 0
-              )}
-              color={matchesMobile ? "white" : "#ECD6D6"}
-            />
-          )} */}
           <Box
             sx={{ width: ".25%", display: "flex", background: "pink" }}
           ></Box>
