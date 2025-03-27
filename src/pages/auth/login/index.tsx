@@ -9,12 +9,18 @@ import { authReset, login } from "../../../store/actions/auth/authAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { loginValidationSchema } from "../../../utils/Validations";
 
+interface InitialValues {
+  userName: string;
+  password: string;
+  loginType: string;
+}
+
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
-  const initialValues: any = {
+  const initialValues: InitialValues = {
     userName: "",
     password: "",
     loginType: "wallet",
@@ -32,7 +38,7 @@ const Login = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: loginValidationSchema,
-    onSubmit: (values: any) => {
+    onSubmit: (values: InitialValues) => {
       if (loading) {
         return;
       }

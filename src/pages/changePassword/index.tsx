@@ -18,8 +18,7 @@ const initialValues: any = {
   confirmPassword: "",
 };
 
-const ChangePassword = (props: any) => {
-  const { passLoader, width } = props;
+const ChangePassword = () => {
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -72,8 +71,8 @@ const ChangePassword = (props: any) => {
           sx={{
             width: { xs: "96vw", lg: "19vw", md: "19vw" },
             minWidth: {
-              lg: width ? width : "350px",
-              md: width ? width : "350px",
+              lg: "350px",
+              md: "350px",
               xs: "0px",
             },
             marginTop: "10px",
@@ -198,7 +197,7 @@ const ChangePassword = (props: any) => {
                 sx={{ fontSize: { lg: "18px", xs: "20px" } }}
                 color={"white"}
               >
-                {passLoader ? (
+                {loading ? (
                   <CircularProgress
                     sx={{
                       color: "#FFF",
