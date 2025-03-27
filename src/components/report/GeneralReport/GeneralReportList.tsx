@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import ListHeaderRow from "./ListHeaderRow";
-import TableHeaderList from "./TableHeaderList";
 import Pagination from "../../Common/Pagination";
+import ListHeaderRow from "./ListHeaderRow";
 import TableDataRow from "./TableDataRow";
+import TableHeaderList from "./TableHeaderList";
 
 const GeneralReportList = () => {
   return (

@@ -67,7 +67,6 @@ const TableHeaderList = () => {
           width: "10%",
           minWidth: "100px",
           display: "flex",
-          // paddingLeft: "10px",
           justifyContent: "center",
           alignItems: "center",
           height: "35px",
@@ -99,7 +98,6 @@ const TableHeaderList = () => {
           width: "10%",
           minWidth: "100px",
           display: "flex",
-          // paddingLeft: "10px",
           justifyContent: "center",
           alignItems: "center",
           height: "35px",
@@ -139,7 +137,6 @@ const TableHeaderList = () => {
           alignItems: "center",
           height: "35px",
           borderRight: "2px solid white",
-          // overflow: "hidden"
         }}
       >
         <Typography

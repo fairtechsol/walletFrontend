@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import Divider from "../../Inplay/Divider";
 import { handleNumber } from "../../../helper";
+import Divider from "../../Inplay/Divider";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
 const UserProfitLossListCompRace = (props: any) => {
@@ -11,9 +11,7 @@ const UserProfitLossListCompRace = (props: any) => {
         <Box
           sx={{
             display: "flex",
-            // height: "38px",
             alignItems: "center",
-            // width:"100%"
           }}
         >
           <Typography
@@ -25,13 +23,13 @@ const UserProfitLossListCompRace = (props: any) => {
               fontWeight: "600",
               textOverflow: "ellipsis",
               lineHeight: "0.9",
-              width: "4rem"
+              width: "4rem",
             }}
           >
             {element?.userName}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", width: "100%"}}>
+        <Box sx={{ display: "flex", width: "100%" }}>
           {matchDetail?.matchOdd?.runners?.map((runner: any) => (
             <>
               <SeperateBox

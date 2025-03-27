@@ -1,8 +1,7 @@
-import { memo } from "react";
-import { useState } from "react";
 import { Box, Modal, TextField, Typography } from "@mui/material";
-import DeleteBetButton from "../../Common/DeleteBetButton";
+import { memo, useState } from "react";
 import { CancelDark } from "../../../assets";
+import DeleteBetButton from "../../Common/DeleteBetButton";
 
 const AddNotificationModal = ({
   visible,
@@ -120,7 +119,6 @@ const AddNotificationModal = ({
                 }}
                 style={{
                   width: "96%",
-                  // marginX: "2%",
                   height: "100px",
                   marginTop: "10px",
                 }}

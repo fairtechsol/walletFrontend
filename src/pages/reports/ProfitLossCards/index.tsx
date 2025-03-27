@@ -1,18 +1,17 @@
+import { Box, Typography } from "@mui/material";
+import { debounce } from "lodash";
+import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ProfitLossHeader from "../../../components/report/ProfitLossReportCard/ProfitLossHeader";
+import ProfitLossTableComponent from "../../../components/report/ProfitLossReportCard/ProfitLossTableComponent";
+import service from "../../../service";
 import {
   getTotalProfitLossCard,
   updateUserSearchId,
 } from "../../../store/actions/reports";
-import moment from "moment";
-import { debounce } from "lodash";
 import { getSearchClientList } from "../../../store/actions/user/userAction";
-import service from "../../../service";
-import ProfitLossHeader from "../../../components/report/ProfitLossReportCard/ProfitLossHeader";
-import { Box, Typography } from "@mui/material";
-import ProfitLossTableComponent from "../../../components/report/ProfitLossReportCard/ProfitLossTableComponent";
+import { AppDispatch, RootState } from "../../../store/store";
 
 const ProfitLossReportCards = () => {
   const defaultDate = new Date();

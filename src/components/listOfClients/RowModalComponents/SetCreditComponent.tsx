@@ -1,10 +1,10 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { EyeIcon, EyeSlash } from "../../../assets";
+import { formatToINR } from "../../../helper";
 import {
   getTotalBalance,
   getUserList,
@@ -13,10 +13,10 @@ import {
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
-import { formatToINR } from "../../../helper";
-import { toast } from "react-toastify";
+import { depositAmountValidations } from "../../../utils/Validations";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
 const initialValues: any = {
   userId: "",
@@ -49,8 +49,6 @@ const SetCreditComponent = (props: any) => {
 
     formik.setFieldValue("amount", value);
     onChangeAmount(value, element?.id, "credit");
-    // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
-    // setChexckValue(event.target.value);
   };
 
   const formik = useFormik({
@@ -172,8 +170,6 @@ const SetCreditComponent = (props: any) => {
                 required={true}
                 name={"amount"}
                 id={"amount"}
-                // value={formik.values.amount}
-                // onChange={formik.handleChange}
                 value={formatToINR(
                   parseFloat(formik.values.amount?.toString())
                 )}

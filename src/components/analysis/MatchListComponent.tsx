@@ -6,8 +6,15 @@ import { CHECK } from "../../assets";
 import { IconConstants } from "../../helper/gameConstants";
 import StockBox from "./StockBox";
 
-const MatchListComponent = (props: any) => {
-  const { team, team2, selected, mode, data, setSelected, title } = props;
+const MatchListComponent = ({
+  team,
+  team2,
+  selected,
+  mode,
+  data,
+  setSelected,
+  title,
+}: any) => {
   const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());

@@ -41,7 +41,7 @@ export const logout = createAsyncThunk<any>(
     }
   }
 );
-export const checkOldPass = createAsyncThunk<any,any>(
+export const checkOldPass = createAsyncThunk<any, any>(
   "auth/checkOldPass",
   async (requestData, thunkApi) => {
     try {

@@ -1,9 +1,10 @@
-import { Box, Typography,useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import moment from "moment";
 import { useState } from "react";
+import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
-import moment from "moment";
+
 const SessionBetSeperate = ({
   profit,
   mark,
@@ -72,7 +73,6 @@ const SessionBetSeperate = ({
             sx={{
               flex: 0.1,
               background: "#262626",
-              // '#262626'
             }}
           >
             <div className="slanted"></div>
@@ -82,7 +82,6 @@ const SessionBetSeperate = ({
             sx={{
               flex: 1,
               background: "#262626",
-              // '#262626' ,
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-end",
@@ -108,7 +107,6 @@ const SessionBetSeperate = ({
             <Box sx={{ display: "flex", flexDirection: "row", gap: "1px" }}>
               <Box
                 sx={{
-                  // margin: { xs: "1px", lg: "0.5px" },
                   height: "25px",
                   width: "30px",
                   display: "flex",
@@ -136,7 +134,6 @@ const SessionBetSeperate = ({
                     background: "#319E5B",
                     justifyContent: "center",
                     alignItems: "center",
-                    // margin: { xs: "1px", lg: "1px" },
                   }}
                 >
                   <Typography
@@ -146,7 +143,7 @@ const SessionBetSeperate = ({
                       color: "white",
                     }}
                   >
-                {matchesMobile ? "P/L" : "Profit Loss"}
+                    {matchesMobile ? "P/L" : "Profit Loss"}
                   </Typography>
                 </Box>
               )}
@@ -177,7 +174,6 @@ const SessionBetSeperate = ({
                     <Box
                       sx={{
                         height: "40px",
-                        // margin: { xs: "1px", lg: "1px" },
                         marginBottom: { xs: "1px", lg: "1px" },
                         width: "30px",
                         display: "flex",
@@ -263,7 +259,6 @@ const SessionBetSeperate = ({
                         sx={{
                           height: "40px",
                           width: "30%",
-                          // margin: { xs: "1px", lg: "1px", my: 0 },
                           background: i.totalLoss > 0 ? "#10DC61" : "#E32A2A",
                         }}
                       >
@@ -348,7 +343,6 @@ const SessionBetSeperate = ({
                           width: "30%",
                           margin: { xs: "1px", lg: "1px" },
                           display: "flex",
-                          // background: "black",
                           justifyContent: "center",
                           alignItems: "center",
                           paddingX: "2px",
@@ -390,17 +384,7 @@ const SessionBetSeperate = ({
     </>
   );
 };
-// value2 = { formatNumber(newData?.rate_percent?.split("-")[0])}
 const RowComponent = ({ header, data }: any) => {
-  // const getTime = (date: any) => {
-  //   const now = new Date(date);
-  //   const timeString = now.toLocaleTimeString("en-US", {
-  //     hour: "numeric",
-  //     minute: "numeric",
-  //     hour12: true,
-  //   });
-  //   return timeString;
-  // };
   const getTime = (date: any) => {
     const timeString = moment
       .utc(date)
@@ -412,10 +396,8 @@ const RowComponent = ({ header, data }: any) => {
     if (header) {
       return "black";
     } else if (data?.betType === "BACK" || data?.betType == "YES") {
-      // return "#00C0F9";
       return "#CEEBFF";
     } else if (data?.betType === "LAY" || data?.betType == "NO") {
-      // return "#FF9292";
       return "#F2CBCB";
     }
   };
@@ -429,7 +411,6 @@ const RowComponent = ({ header, data }: any) => {
         alignItems: "center",
         display: "flex",
         gap: "1px",
-        // marginTop: "1px"
         marginBottom: { xs: "1px", lg: "1px" },
       }}
     >
@@ -497,8 +478,8 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: "#F8C851",
-          display: {xs: "initial",lg:"flex"},
-          justifyContent:{ lg:"center", xs: "initial"},
+          display: { xs: "initial", lg: "flex" },
+          justifyContent: { lg: "center", xs: "initial" },
         }}
       >
         <Typography
@@ -567,7 +548,6 @@ const SingleBox = ({
           width: "100%",
           height: "40px",
           background: color,
-          // marginX: { xs: "1px", lg: "1px" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -608,7 +588,6 @@ const SingleBox = ({
         width: "140%",
         height: "25px",
         background: "#319E5B",
-        // marginX: { xs: "1px", lg: "1px" },
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -620,7 +599,7 @@ const SingleBox = ({
           fontSize: "11px",
           color: "white",
           wordWrap: "break-word",
-          lineHeight: "0.9"
+          lineHeight: "0.9",
         }}
       >
         {data}

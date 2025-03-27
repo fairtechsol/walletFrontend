@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
-import Layout from "../../../components/multipleMatchDetail/layout";
+import Layout from "../../../components/multipleMatchDetail/Layout";
 import { matchService, socket, socketService } from "../../../socketManager";
 import {
   getPlacedBets,

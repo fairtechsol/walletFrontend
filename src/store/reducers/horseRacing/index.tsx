@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { matchListReducer } from "./matchListSlice";
-import { matchDetailReducer } from "./matchDetailReducer";
-import { betPlacedReducer } from "./betPlacedHorseRacing";
-import { userProfitLossRaceReducer } from "./userProfitLossRace";
 import { analysisRaceReducers } from "./analysisReducer";
+import { betPlacedReducer } from "./betPlacedHorseRacing";
+import { matchDetailReducer } from "./matchDetailReducer";
+import { matchListReducer } from "./matchListSlice";
 import { multipleMatchDetailReducer } from "./multipleMatchDetailReducer";
+import { userProfitLossRaceReducer } from "./userProfitLossRace";
 
 export const horseRacingReducer = combineReducers({
   matchList: matchListReducer,

@@ -14,18 +14,17 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import ListHeaderModal from "./ListHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { stripUrl } from "../../../helper";
+import service from "../../../service";
 import {
   getSearchClientList,
   resetSearchUserList,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { ApiConstants } from "../../../utils/Constants";
-import { toast } from "react-toastify";
-import service from "../../../service";
-import { stripUrl } from "../../../helper";
+import ListHeaderModal from "./ListHeader";
 
 const DirectUserBlock = ({ setShow }: any) => {
   const theme = useTheme();
@@ -61,7 +60,7 @@ const DirectUserBlock = ({ setShow }: any) => {
               ? !userDetail?.userBlock
               : userDetail?.userBlock,
           transactionPassword: transactionPassword,
-          userDomain: userDetail?.domain
+          userDomain: userDetail?.domain,
         };
 
         const resp: any = await service.post(

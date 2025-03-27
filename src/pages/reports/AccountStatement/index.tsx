@@ -1,16 +1,15 @@
 import { Box, Typography } from "@mui/material";
-import Loader from "../../../components/Loader";
-import Pagination from "../../../components/Common/Pagination";
-import YellowHeader from "../../../components/report/AccountStatement/YellowHeader";
-import ListHeaderRow from "../../../components/report/AccountStatement/ListHeaderRow";
-import TableHeaderList from "../../../components/report/AccountStatement/TableHeaderList";
-import TableDataRow from "../../../components/report/AccountStatement/TableDataRow";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { getAccountStatement } from "../../../store/actions/reports";
-import { useSelector } from "react-redux";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Pagination from "../../../components/Common/Pagination";
+import Loader from "../../../components/Loader";
+import ListHeaderRow from "../../../components/report/AccountStatement/ListHeaderRow";
+import TableDataRow from "../../../components/report/AccountStatement/TableDataRow";
+import TableHeaderList from "../../../components/report/AccountStatement/TableHeaderList";
+import YellowHeader from "../../../components/report/AccountStatement/YellowHeader";
+import { getAccountStatement } from "../../../store/actions/reports";
+import { AppDispatch, RootState } from "../../../store/store";
 
 const AccountStatement = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -139,35 +138,39 @@ const AccountStatement = () => {
               <Box sx={{ overflowX: "scroll", width: "100%" }}>
                 <TableHeaderList />
 
-                {accountStatement?.transactions?.length > 0 ? accountStatement?.transactions?.map((item: any) => (
-                  <TableDataRow
-                    key={item?.id}
-                    index={item?.id}
-                    containerStyle={{ background: "#FFE094" }}
-                    profit={true}
-                    fContainerStyle={{ background: "#0B4F26" }}
-                    fTextStyle={{ color: "white" }}
-                    date={item?.createdAt}
-                    description={item?.description}
-                    closing={item?.closingBalance}
-                    transType={item?.transType}
-                    amount={item?.amount}
-                    fromuserName={item?.actionByUser?.userName}
-                    touserName={item?.user?.userName}
-                  />
-                )) : <Box>
-                  <Typography
-                    sx={{
-                      color: "#000",
-                      textAlign: "center",
-                      fontSize: { lg: "16px", xs: "10px" },
-                      fontWeight: "600",
-                      margin: "1rem",
-                    }}
-                  >
-                    No Matching Records Found
-                  </Typography>
-                </Box>}
+                {accountStatement?.transactions?.length > 0 ? (
+                  accountStatement?.transactions?.map((item: any) => (
+                    <TableDataRow
+                      key={item?.id}
+                      index={item?.id}
+                      containerStyle={{ background: "#FFE094" }}
+                      profit={true}
+                      fContainerStyle={{ background: "#0B4F26" }}
+                      fTextStyle={{ color: "white" }}
+                      date={item?.createdAt}
+                      description={item?.description}
+                      closing={item?.closingBalance}
+                      transType={item?.transType}
+                      amount={item?.amount}
+                      fromuserName={item?.actionByUser?.userName}
+                      touserName={item?.user?.userName}
+                    />
+                  ))
+                ) : (
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: "#000",
+                        textAlign: "center",
+                        fontSize: { lg: "16px", xs: "10px" },
+                        fontWeight: "600",
+                        margin: "1rem",
+                      }}
+                    >
+                      No Matching Records Found
+                    </Typography>
+                  </Box>
+                )}
               </Box>
               <Pagination
                 currentPage={currentPage}

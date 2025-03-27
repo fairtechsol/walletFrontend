@@ -20,7 +20,6 @@ const TableDataRow = (props: any) => {
       sx={[
         {
           display: "flex",
-          // height: "45px",
           background: "#0B4F26",
           alignItems: "center",
           borderBottom: "1px solid white",
@@ -112,7 +111,6 @@ const TableDataRow = (props: any) => {
           width: "10%",
           minWidth: "100px",
           display: "flex",
-          // paddingLeft: "10px",
           background: flag ? "#ECECEC" : "#FFE094",
           alignItems: "center",
           justifyContent: "center",

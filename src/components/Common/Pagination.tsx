@@ -78,11 +78,10 @@ const Pagination = (props: PaginationInterface) => {
             justifyContent: "center",
             alignItems: "center",
             opacity: currentPage === pages ? 0.5 : 1,
-
           }}
           onClick={() => {
-            if (+currentPage !== pages) { 
-              setCurrentPage(+currentPage + 1); 
+            if (+currentPage !== pages) {
+              setCurrentPage(+currentPage + 1);
             }
           }}
         >

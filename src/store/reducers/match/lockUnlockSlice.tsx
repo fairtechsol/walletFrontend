@@ -60,24 +60,24 @@ const lockUnlockSlice = createSlice({
       .addCase(updateUserMatchLock.fulfilled, (state, action) => {
         state.loading = false;
         state.statusSuccess = true;
-        if(action.payload?.role === "fairGameWallet"){
+        if (action.payload?.role === "fairGameWallet") {
           state.userMatchLock = {
-            parentBlock:false,
-            selfBlock:action.payload?.data?.matchLock
-          }
+            parentBlock: false,
+            selfBlock: action.payload?.data?.matchLock,
+          };
           state.userSessionLock = {
-            parentBlock:false,
-            selfBlock:action.payload?.data?.sessionLock
-          }
-        }else{
+            parentBlock: false,
+            selfBlock: action.payload?.data?.sessionLock,
+          };
+        } else {
           state.userMatchLock = {
-            parentBlock:state.userMatchLock?.parentBlock,
-            selfBlock:action.payload?.data?.matchLock
-          }
+            parentBlock: state.userMatchLock?.parentBlock,
+            selfBlock: action.payload?.data?.matchLock,
+          };
           state.userSessionLock = {
-            parentBlock:state.userSessionLock?.parentBlock,
-            selfBlock:action.payload?.data?.sessionLock
-          }
+            parentBlock: state.userSessionLock?.parentBlock,
+            selfBlock: action.payload?.data?.sessionLock,
+          };
         }
       })
       .addCase(updateUserMatchLock.rejected, (state, action) => {

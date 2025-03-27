@@ -17,7 +17,7 @@ const FullAllBets = (props: any) => {
     selectedBetData,
     setSelectedBetData,
     role,
-    deletePermanent
+    deletePermanent,
   } = props;
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
@@ -315,8 +315,8 @@ const FullAllBets = (props: any) => {
               flexDirection: "column",
               marginRight: "2px",
             }}
-            onDoubleClick={()=>{
-              deletePermanent()
+            onDoubleClick={() => {
+              deletePermanent();
             }}
           >
             <Typography
@@ -868,46 +868,6 @@ const LargeBox = ({ item, k }: any) => {
           {stripUrl(item?.domain)}
         </Typography>
       </Box>
-      {/* <Typography
-        sx={{
-          fontSize: matchesMobile ? "8px" : "8px",
-          fontWeight: "600",
-          color: item?.color,
-          textTransform: "capitalize",
-          wordWrap: "break-word",
-          textAlign: "center",
-          lineHeight: 1,
-          overflowWrap: "anywhere",
-          whiteSpace: "inherit",
-          textOverflow: "ellipsis",
-          maxWidth: { xs: "auto", lg: "initial" },
-          display: "flex",
-          // padding: "5px",
-        }}
-      >
-        {item?.isCommissionActive && (
-          <Box
-            sx={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              backgroundColor: "#74ee15",
-              marginRight: "5px",
-            }}
-          />
-        )}
-        {item?.name}
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : "8px",
-            textTransform: "none",
-            overflow: "wrap",
-            lineHeight: 1,
-          }}
-        >
-          {stripUrl(item?.domain)}
-        </Typography>
-      </Typography> */}
       {item?.time && (
         <Typography
           sx={{
@@ -926,7 +886,6 @@ const LargeBox = ({ item, k }: any) => {
 const SmallBox = ({ item, k }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  // alert(JSON.stringify(item))
   return (
     <Box
       key={k}

@@ -9,20 +9,19 @@ import Divider from "../../Inplay/Divider";
 import SmallBox from "../MatchOdds/SmallBox";
 import BoxComponent from "./BoxComponent";
 
-const TournamentOdds = (props: any) => {
-  const {
-    currentMatch,
-    minBet,
-    maxBet,
-    locked,
-    blockMatch,
-    selft,
-    showBox,
-    upcoming,
-    liveData,
-    title,
-    profitLossFromAnalysis,
-  } = props;
+const TournamentOdds = ({
+  currentMatch,
+  minBet,
+  maxBet,
+  locked,
+  blockMatch,
+  selft,
+  showBox,
+  upcoming,
+  liveData,
+  title,
+  profitLossFromAnalysis,
+}: any) => {
   const { marketAnalysis } = useSelector(
     (state: RootState) => state.match.matchList
   );

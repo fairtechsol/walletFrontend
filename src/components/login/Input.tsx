@@ -9,32 +9,31 @@ import React, { useState } from "react";
 import { numberInputOnWheelPreventChange } from "../../helper";
 import { InputInterface } from "../../interface/common";
 
-const Input: React.FC<InputInterface> = (props: any) => {
-  const {
-    id,
-    title,
-    value,
-    containerStyle,
-    required,
-    placeholder,
-    titleStyle,
-    inputStyle,
-    inputContainerStyle,
-    inputProps,
-    type,
-    disabled,
-    autoFocus,
-    img,
-    img1,
-    imgstyle,
-    onBlur,
-    error,
-    onChange,
-    name,
-    max,
-    min,
-    fullWidth,
-  } = props;
+const Input: React.FC<InputInterface> = ({
+  id,
+  title,
+  value,
+  containerStyle,
+  required,
+  placeholder,
+  titleStyle,
+  inputStyle,
+  inputContainerStyle,
+  inputProps,
+  type,
+  disabled,
+  autoFocus,
+  img,
+  img1,
+  imgstyle,
+  onBlur,
+  error,
+  onChange,
+  name,
+  max,
+  min,
+  fullWidth,
+}: any) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [showPass, setShowPass] = useState(false);

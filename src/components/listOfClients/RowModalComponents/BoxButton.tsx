@@ -1,19 +1,18 @@
 import { Button, CircularProgress, Typography } from "@mui/material";
 
-const BoxButton = (props: any) => {
-  const {
-    title,
-    containerStyle,
-    icon,
-    onClick,
-    isSelected,
-    deleteBtn,
-    titleStyle,
-    loading,
-    type,
-    color,
-    disabled,
-  } = props;
+const BoxButton = ({
+  title,
+  containerStyle,
+  icon,
+  onClick,
+  isSelected,
+  deleteBtn,
+  titleStyle,
+  loading,
+  type,
+  color,
+  disabled,
+}: any) => {
   const classes = {
     mainBox: [
       {
@@ -39,7 +38,6 @@ const BoxButton = (props: any) => {
     mainBoxTypography: [
       {
         fontSize: {
-          // xs: "3.5vw",
           lg: "11px",
           md: "0.9vw",
           desktop2XL: "12px",

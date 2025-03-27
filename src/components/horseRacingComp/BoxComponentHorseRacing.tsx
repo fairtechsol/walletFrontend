@@ -25,11 +25,9 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
         sx={{
           display: "flex",
           background: "white",
-          // position: "relative",
           height: "40px",
           width: "100%",
           alignItems: "center",
-          // flexDirection: "column",
           justifyContent: "space-between",
         }}
       >
@@ -47,7 +45,6 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
               fontSize: { lg: "14px", xs: "13px" },
               fontWeight: "600",
               marginLeft: "10px",
-              // overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
               maxWidth: "88px",
@@ -61,11 +58,9 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
       {!["ACTIVE", undefined, null].includes(status) ? (
         <Box
           sx={{
-            // background: "rgba(0,0,0,1)",
             height: "40px",
             display: "flex",
             width: { lg: "60%", xs: "80%" },
-            // // width: { xs: "60%", lg: "10.2vw" },
             justifyContent: { xs: "flex-end", lg: "flex-end" },
             alignItems: "center",
           }}
@@ -73,7 +68,6 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
           <MoneyBox color={color} rates={rates} />
           <Box
             sx={{
-              // background: "rgba(0,0,0,1)",
               height: "40px",
               display: "flex",
               width: {
@@ -91,7 +85,6 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
                 background: "rgba(0,0,0,1)",
                 height: "40px",
                 display: "flex",
-                // width: { xs: "100%", lg: "10.2vw" },
                 width: {
                   xs: "39vw",
                   lg: "10.17vw",
@@ -178,7 +171,6 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
           )}
 
           <Box sx={{ width: "3px", display: "flex", background: "pink" }}></Box>
-          {/* {!lock ? */}
           {ex?.availableToLay?.length > 0 &&
           ![0, "0"].includes(ex?.availableToLay[0]?.price) ? (
             <SeperateBox

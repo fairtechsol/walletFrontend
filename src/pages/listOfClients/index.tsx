@@ -6,9 +6,7 @@ import AccountListExpert from "../../components/listOfClients/ExpertList/Account
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 
-function TabPanel(props: any) {
-  const { children, value, index, ...other } = props;
-
+function TabPanel({ children, value, index, ...other }: any) {
   return (
     <div
       className="p-0"

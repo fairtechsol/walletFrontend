@@ -9,34 +9,29 @@ import {
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useFormik } from "formik";
+import _, { debounce } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import { EyeIcon, EyeSlash } from "../../assets";
+import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
+import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
+import CustomModal from "../../components/Common/CustomModal";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
 import Input from "../../components/login/Input";
+import { formatToINR } from "../../helper";
 import {
   addExpert,
   addReset,
   addUrlAdmin,
   addUser,
   getAlreadyUserExist,
-  // profileReset,
   updateReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
-import CustomModal from "../../components/Common/CustomModal";
-import {
-  // FgAdminValidation,
-  // SuperURLValidation,
-  addUserValidation,
-} from "../../utils/Validations";
-import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
-import _, { debounce } from "lodash";
-import { formatToINR } from "../../helper";
-import { toast } from "react-toastify";
+import { addUserValidation } from "../../utils/Validations";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -563,11 +558,6 @@ const AddAccount = () => {
                     errors={errors.userName}
                   />
                 </Box>
-                {/* {touched.userName && errors.userName && (
-                  <p style={{ color: "#fa1e1e" }}>
-                    {errors.userName as string}
-                  </p>
-                )} */}
                 <Box
                   sx={{
                     pb: errors.password && touched.password ? 2 : 0,
@@ -1082,7 +1072,6 @@ const AddAccount = () => {
                       type={"number"}
                       max={100}
                       value={formik.values.myPartnership}
-                      // error={touched.myPartnership && Boolean(errors.myPartnership)}
                       error={
                         touched.myPartnership && Boolean(errors.myPartnership)
                       }
@@ -1176,12 +1165,10 @@ const AddAccount = () => {
                               );
                             }}
                             onBlur={formik.handleBlur}
-                            // touched={touched.matchCommission}
-                            // error={errors.matchCommission}
                           />
                         </>
                       )}
-                      
+
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
@@ -1197,8 +1184,6 @@ const AddAccount = () => {
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        // touched={touched.sessionCommission}
-                        // error={errors.sessionCommission}
                       />
                     </Box>
                   </>

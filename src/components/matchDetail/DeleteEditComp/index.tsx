@@ -1,6 +1,6 @@
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
 import { DeleteIcon } from "../../../assets";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 const DeleteEditComp = ({
   mode,

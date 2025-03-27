@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants } from "../../../utils/Constants";
-import { AxiosError } from "axios";
 
 export const updateUserMatchLock = createAsyncThunk<any, any>(
   "/userMatchLock",
@@ -13,10 +13,10 @@ export const updateUserMatchLock = createAsyncThunk<any, any>(
       );
       if (resp) {
         const response = {
-          data : resp?.data?.returnData,
-          role : requestData?.role
-        }
-        return response;  
+          data: resp?.data?.returnData,
+          role: requestData?.role,
+        };
+        return response;
       }
     } catch (error: any) {
       const err = error as AxiosError;

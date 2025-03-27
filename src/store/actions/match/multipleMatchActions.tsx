@@ -73,7 +73,7 @@ export const updateMultipleMatchDetail = createAsyncThunk<any, any>(
 
 export const getMultipleMatchRates = createAsyncThunk<any, any>(
   "third/multipleMatch/update",
-  async (matchId,thunkApi) => {
+  async (matchId, thunkApi) => {
     try {
       const resp = await axios.get(
         `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`

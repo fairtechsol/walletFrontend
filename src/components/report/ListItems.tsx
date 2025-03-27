@@ -1,13 +1,12 @@
 import { Box, MenuItem, Modal, Typography } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import DirectUserBlock from "./DirectUserBlock";
-import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { resetSearchUserList } from "../../store/actions/user/userAction";
+import { AppDispatch } from "../../store/store";
+import DirectUserBlock from "./DirectUserBlock";
 
-const ListItems = (props: any) => {
-  const { menutItems1, title } = props;
+const ListItems = ({ menutItems1, title }: any) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [userBlockModal, setUserBlockModal] = useState(false);

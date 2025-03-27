@@ -7,7 +7,6 @@ const Reports = () => {
     { title: "Account Statement", link: `/wallet/reports/account_statement` },
     { title: "Current Bet", link: `/wallet/reports/current_bet` },
     { title: "Direct User Block", link: "" },
-    //{ title: "General Report", link: `/wallet/reports/general_report` },
   ];
 
   return <ListItems title={"Report"} menutItems1={menutItems1} />;

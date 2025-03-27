@@ -1,41 +1,38 @@
 import { TextField, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import StyledImage from "./StyledImages";
-import { SEARCH, Search } from "../../assets";
 import { debounce } from "lodash";
-import { getUserList } from "../../store/actions/user/userAction";
-import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { SEARCH, Search } from "../../assets";
 import {
   getAccountStatement,
   getCurrentBets,
 } from "../../store/actions/reports";
-import { useSelector } from "react-redux";
-import moment from "moment";
+import { getUserList } from "../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../store/store";
+import StyledImage from "./StyledImages";
 
-const SearchInput = (props: any) => {
-  const {
-    placeholder,
-    inputContainerStyle,
-    showTextInput,
-    header,
-    setShowSearch,
-    show,
-    width,
-    searchContainerStyle,
-    onChange,
-    endpoint,
-    searchFor,
-    pageLimit,
-    fromDate,
-    toDate,
-    userId,
-    roleName,
-    domain,
-    setCurrentPage,
-    getUserListModal,
-  } = props;
-
+const SearchInput = ({
+  placeholder,
+  inputContainerStyle,
+  showTextInput,
+  header,
+  setShowSearch,
+  show,
+  width,
+  searchContainerStyle,
+  onChange,
+  endpoint,
+  searchFor,
+  pageLimit,
+  fromDate,
+  toDate,
+  userId,
+  roleName,
+  domain,
+  setCurrentPage,
+  getUserListModal,
+}: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { profileDetail } = useSelector(

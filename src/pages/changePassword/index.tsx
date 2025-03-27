@@ -1,16 +1,16 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useState,useMemo } from "react";
+import { debounce } from "lodash";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { eye, eyeLock } from "../../assets";
 import CustomModal from "../../components/Common/CustomModal";
 import Input from "../../components/login/Input";
+import { checkOldPass, logout } from "../../store/actions/auth/authAction";
 import { changePassword } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { changePasswordValidation } from "../../utils/Validations";
 import { ApiConstants } from "../../utils/Constants";
-import { checkOldPass, logout } from "../../store/actions/auth/authAction";
-import _, { debounce } from "lodash";
+import { changePasswordValidation } from "../../utils/Validations";
 
 const initialValues: any = {
   oldPassword: "",
@@ -27,7 +27,7 @@ const ChangePassword = (props: any) => {
     (state: RootState) => state.user.profile
   );
   const { oldPasswordMatched } = useSelector((state: RootState) => state.auth);
-  
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: changePasswordValidation(oldPasswordMatched),
@@ -55,7 +55,7 @@ const ChangePassword = (props: any) => {
 
   const debouncedInputValue = useMemo(() => {
     return debounce((value) => {
-      dispatch(checkOldPass({'oldPassword':value}));
+      dispatch(checkOldPass({ oldPassword: value }));
     }, 500);
   }, []);
 

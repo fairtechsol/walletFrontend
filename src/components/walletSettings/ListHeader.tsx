@@ -4,7 +4,7 @@ const ListHeader = ({ userName }: any) => {
   return (
     <Box
       sx={{
-        width: {xs: "150%", lg: "100%", md: "100%"},
+        width: { xs: "150%", lg: "100%", md: "100%" },
         display: "flex",
         height: "45px",
         background: "#262626",
@@ -48,7 +48,7 @@ const ListHeader = ({ userName }: any) => {
             lineHeight: "1.1",
           }}
         >
-          Credit Reference 
+          Credit Reference
         </Typography>
       </Box>
       <Box

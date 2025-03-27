@@ -1,14 +1,12 @@
 import { Box } from "@mui/material";
+import { useState } from "react";
 import Pagination from "../../Common/Pagination";
 import EmptyRow from "./EmptyRow";
-import TableHeaderList from "./TableHeaderList";
-import TableDataRow from "./TableDataRow";
 import ListHeaderRow from "./ListHeaderRow";
-import { useState } from "react";
+import TableDataRow from "./TableDataRow";
+import TableHeaderList from "./TableHeaderList";
 
-const BetsList = (props: any) => {
-  const { getLimitEntries, betHistory } = props;
-
+const BetsList = ({ getLimitEntries, betHistory }: any) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageLimit, setPageLimit] = useState<number>(15);
 
@@ -89,7 +87,6 @@ const BetsList = (props: any) => {
       >
         <Pagination
           currentPage={currentPage}
-          // pages={+(betHistory.length / pageLimit).toFixed()}
           setCurrentPage={setCurrentPage}
           pages={Math.ceil(
             parseInt(

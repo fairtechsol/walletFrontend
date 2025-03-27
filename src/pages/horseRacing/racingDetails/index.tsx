@@ -19,7 +19,7 @@ import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLo
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { getTimeLeft } from "../../../helper";
-import { socket, socketService, matchService } from "../../../socketManager";
+import { matchService, socket, socketService } from "../../../socketManager";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -54,7 +54,6 @@ const RacingDetails = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
-  // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.horseRacing.matchDetail
@@ -72,11 +71,11 @@ const RacingDetails = () => {
   });
 
   useEffect(() => {
-    if(id){
+    if (id) {
       matchService.connect([id], profileDetail?.roleName);
     }
     return () => {
-      matchService.disconnect(); 
+      matchService.disconnect();
     };
   }, [id]);
 
@@ -458,7 +457,6 @@ const RacingDetails = () => {
             <UserProfitLossRace
               single={"single"}
               title={"User Profit Loss"}
-              // matchId={matchId}
               matchDetail={matchDetail}
             />
           )}
@@ -507,7 +505,7 @@ const RacingDetails = () => {
                 </Typography>
               </Box>
             )}
-           {!["edit", "delete"].includes(mode?.type) && mode.value && (
+            {!["edit", "delete"].includes(mode?.type) && mode.value && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box

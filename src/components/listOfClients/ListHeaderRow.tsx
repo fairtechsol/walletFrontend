@@ -49,7 +49,7 @@ const ListHeaderRow = (props: any) => {
             lineHeight: "1.1",
           }}
         >
-          Credit Reference 
+          Credit Reference
         </Typography>
       </Box>
       <Box
@@ -221,7 +221,7 @@ const ListHeaderRow = (props: any) => {
           Bet Lock
         </Typography>
       </Box>
-      
+
       <Box
         sx={{
           width: { lg: "8vw", md: "8vw", xs: "26.5vw" },

@@ -1,20 +1,19 @@
 import { Box } from "@mui/material";
-import SearchInput from "../../Common/SearchInput";
-import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 import { ApiConstants } from "../../../utils/Constants";
+import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
+import SearchInput from "../../Common/SearchInput";
 
-const ListHeaderRow = (props: any) => {
-  const {
-    getLimitEntries,
-    getAccountStatement,
-    searchFor,
-    pageLimit,
-    setPageLimit,
-    setCurrentPage,
-    fromDate,
-    toDate,
-    setSearchValue
-  } = props;
+const ListHeaderRow = ({
+  getLimitEntries,
+  getAccountStatement,
+  searchFor,
+  pageLimit,
+  setPageLimit,
+  setCurrentPage,
+  fromDate,
+  toDate,
+  setSearchValue,
+}: any) => {
   return (
     <Box
       sx={{

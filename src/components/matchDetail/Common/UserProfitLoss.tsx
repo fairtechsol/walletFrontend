@@ -16,14 +16,13 @@ import { AppDispatch, RootState } from "../../../store/store";
 import Divider from "../../Inplay/Divider";
 import UserProfitLossListComp from "./UserProfitLossListComp";
 
-const UserProfitLoss = (props: any) => {
-  const {
-    title,
-    matchData,
-    setShowUserProfitLoss,
-    single,
-    matchDetail,
-  } = props;
+const UserProfitLoss = ({
+  title,
+  matchData,
+  setShowUserProfitLoss,
+  single,
+  matchDetail,
+}: any) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -180,9 +179,9 @@ const UserProfitLoss = (props: any) => {
                 width: "10%",
                 alignItems: "center",
                 minWidth: "100px",
-                position:"sticky",
-                left:0,
-                zIndex:2
+                position: "sticky",
+                left: 0,
+                zIndex: 2,
               }}
             >
               <Typography
@@ -202,8 +201,6 @@ const UserProfitLoss = (props: any) => {
                 background: "#319E5B",
                 height: "25px",
                 width: { lg: "90%", xs: "90%" },
-                // justifyContent: { lg: "flex-end", xs: "flex-end" },
-                // overflow: "auto",
               }}
             >
               {userProfitLossData?.markets?.map((item: any) => {
@@ -238,13 +235,6 @@ const UserProfitLoss = (props: any) => {
                         {item?.name}
                       </Typography>
                     </Box>
-                    {/* <Box
-                      sx={{
-                        width: "3px",
-                        display: "flex",
-                        background: "white",
-                      }}
-                    ></Box> */}
                   </>
                 );
               })}

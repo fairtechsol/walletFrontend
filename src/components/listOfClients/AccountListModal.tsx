@@ -1,13 +1,13 @@
-import { Box, useMediaQuery, Button } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
+import service from "../../service";
+import { ApiConstants, Constants } from "../../utils/Constants";
+import Pagination from "../Common/Pagination";
+import SearchInput from "../Common/SearchInput";
 import AccountListRow from "./AccountListRow";
 import ListHeader from "./ListHeader";
-import Pagination from "../Common/Pagination";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
-import SearchInput from "../Common/SearchInput";
-import { ApiConstants, Constants } from "../../utils/Constants";
-import service from "../../service";
 
 const AccountListTable = ({
   endpoint,
@@ -112,7 +112,6 @@ const AccountListTable = ({
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              // height: "50px",
             }}
           >
             <SearchInput

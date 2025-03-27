@@ -1,16 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import BoxButton from "./BoxButton";
-import ChangePasswordComponent from "./ChangePasswordComponent";
-import DepositComponent from "./DepositComponent";
-import LockUnlockComponent from "./LockUnlockComponent";
-import SetCreditComponent from "./SetCreditComponent";
-import SetExposureLimit from "./SetExposureLimit";
-import WithdrawComponent from "./WithdrawComponent";
-import { ApiConstants } from "../../../utils/Constants";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { DeleteIcon } from "../../../assets";
 import {
   getTotalBalance,
   getUserList,
@@ -19,20 +10,26 @@ import {
   handleSettleCommission,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { ApiConstants } from "../../../utils/Constants";
 import StyledImage from "../../Common/StyledImages";
-import { DeleteIcon } from "../../../assets";
+import BoxButton from "./BoxButton";
+import ChangePasswordComponent from "./ChangePasswordComponent";
+import DepositComponent from "./DepositComponent";
+import LockUnlockComponent from "./LockUnlockComponent";
+import SetCreditComponent from "./SetCreditComponent";
+import SetExposureLimit from "./SetExposureLimit";
+import WithdrawComponent from "./WithdrawComponent";
 
-const RowModalComponents = (props: any) => {
-  const {
-    element,
-    selected,
-    setSelected,
-    backgroundColor,
-    onValueChange,
-    currentPage,
-    setShowUserModal,
-  } = props;
-
+const RowModalComponents = ({
+  element,
+  selected,
+  setSelected,
+  backgroundColor,
+  onValueChange,
+  currentPage,
+  setShowUserModal,
+}: any) => {
   const dispatch: AppDispatch = useDispatch();
 
   const [settlementModal, setSettlementModal] = useState(false);
@@ -373,7 +370,6 @@ const RowModalComponents = (props: any) => {
             icon={
               <StyledImage src={DeleteIcon} sx={classes.BoxButtonStyledImage} />
             }
-            // containerStyle={classes.BoxButtonContStyle}
           />
           <Dialog
             open={settlementModal}
@@ -428,24 +424,6 @@ const RowModalComponents = (props: any) => {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* <Dialog
-            open={false}
-            onClose={() => {}}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {
-                "Your available balance is not zero. Are you sure want to delete this user?"
-              }
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={() => {}}>Cancel</Button>
-              <Button sx={{ color: "#E32A2A" }} onClick={() => {}}>
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog> */}
         </Box>
       )}
     </Box>

@@ -161,27 +161,26 @@ const CricketCasinoMarket = (props: any) => {
                     lineHeight: 1,
                   }}
                 >
-                  {/* {allBetsData?.reduce((acc: number, bet: any) => {
-                    let total = Number(acc) + Number(bet?.maxLoss);
-                    return Number(total)?.toFixed(2);
-                  }, 0)} */}
                   {new Intl.NumberFormat("en-IN").format(
                     parseFloat(
                       marketAnalysis?.betType
-                      ? marketAnalysis?.betType?.session
-                          ?.filter((item: any) => sessionData?.id == item?.betId)
-                          ?.reduce((prev: number, session: any) => {
-                            prev += Number(session?.profitLoss?.maxLoss || 0);
-                            return prev;
-                          }, 0)
-                          .toFixed(2)
-                      : 
-                      allBetsData
-                        ?.filter((item: any) => sessionData?.id == item?.betId)
-                        ?.reduce((acc: number, bet: any) => {
-                          return acc + (Number(bet?.maxLoss) || 0);
-                        }, 0)
-                        .toFixed(2)
+                        ? marketAnalysis?.betType?.session
+                            ?.filter(
+                              (item: any) => sessionData?.id == item?.betId
+                            )
+                            ?.reduce((prev: number, session: any) => {
+                              prev += Number(session?.profitLoss?.maxLoss || 0);
+                              return prev;
+                            }, 0)
+                            .toFixed(2)
+                        : allBetsData
+                            ?.filter(
+                              (item: any) => sessionData?.id == item?.betId
+                            )
+                            ?.reduce((acc: number, bet: any) => {
+                              return acc + (Number(bet?.maxLoss) || 0);
+                            }, 0)
+                            .toFixed(2)
                     )
                   )}
                 </Typography>
@@ -348,14 +347,15 @@ const CricketCasinoMarket = (props: any) => {
                         newData={currSessionItem}
                         profitLossData={
                           marketAnalysis?.betType
-                          ? [marketAnalysis?.betType?.session?.find(
-                              (item: any) => item.betId == sessionData?.id
-                            )?.profitLoss]
-                          :
-                          currentMatch?.profitLossDataSession &&
-                          currentMatch?.profitLossDataSession?.filter(
-                            (item: any) => item?.betId === sessionData?.id
-                          )
+                            ? [
+                                marketAnalysis?.betType?.session?.find(
+                                  (item: any) => item.betId == sessionData?.id
+                                )?.profitLoss,
+                              ]
+                            : currentMatch?.profitLossDataSession &&
+                              currentMatch?.profitLossDataSession?.filter(
+                                (item: any) => item?.betId === sessionData?.id
+                              )
                         }
                         index={index}
                         sessionData={sessionData}
@@ -365,40 +365,6 @@ const CricketCasinoMarket = (props: any) => {
                   );
                 }
               )}
-              {/* {sessionData?.length > 0 &&
-                sessionData
-                  ?.slice()
-                  .sort(customSort)
-                  ?.map((element: any, index: any) => {
-                    return (
-                      <Box
-                        key={
-                          title === "Session Market" ? element?.id : element?.id
-                        }
-                        sx={{
-                          width: "100%",
-                          display: element?.betStatus === 2 ? "none" : "block",
-                        }}
-                      >
-                        <CricketCasinoMarketBox
-                          newData={
-                            title === "Quick Session Market"
-                              ? JSON.parse(element)
-                              : element
-                          }
-                          profitLossData={allBetsData?.filter(
-                            (item: any) =>
-                              item?.betId ===
-                              (title === "Quick Session Market"
-                                ? JSON.parse(element)?.id
-                                : element?.id)
-                          )}
-                          index={index}
-                        />
-                        <Divider />
-                      </Box>
-                    );
-                  })} */}
             </Box>
             {showUnlock && (
               <Box

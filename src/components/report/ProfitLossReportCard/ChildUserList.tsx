@@ -1,7 +1,5 @@
-import { memo } from "react";
 import { Box } from "@mui/material";
-import { useState } from "react";
-import { useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import service from "../../../service";
 import AllUserListSeparate from "./AllUserListSeparate";
 

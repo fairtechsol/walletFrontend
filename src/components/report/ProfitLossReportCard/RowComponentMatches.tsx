@@ -1,14 +1,12 @@
-import { memo } from "react";
-import { useState } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
+import { memo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import AllRateSeperate from "./AllRateSeperate";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { getBetProfitLossCard } from "../../../store/actions/reports";
-import { useSelector } from "react-redux";
 import { formatToINR, handleNumber } from "../../../helper";
+import { getBetProfitLossCard } from "../../../store/actions/reports";
+import { AppDispatch, RootState } from "../../../store/store";
+import StyledImage from "../../Common/StyledImages";
+import AllRateSeperate from "./AllRateSeperate";
 import AllUserListSeparate from "./AllUserListSeparate";
 
 const RowComponentMatches = ({
@@ -111,21 +109,6 @@ const RowComponentMatches = ({
             justifyContent: "space-between",
           }}
         >
-          {/* <Typography
-            sx={{
-              fontSize: { lg: "0px", xs: "10px" },
-              color: "white",
-              marginLeft: "5px",
-              fontWeight: "500",
-              position: "absolute",
-              top: 0,
-              right: 5,
-            }}
-          > */}
-          {/* ({moment(item?.startAt || new Date()).format("DD-MM-YYYY")}) */}
-          {/* {moment(item?.startAt).format("DD-MM-YYYY HH:mm:ss")} */}
-          {/* </Typography> */}
-
           <Box
             sx={{
               flexDirection: "row",
@@ -148,16 +131,6 @@ const RowComponentMatches = ({
             >
               {item?.runnerId}
             </Typography>
-            {/* <Typography
-              sx={{
-                fontSize: { lg: "10px", xs: "0" },
-                color: "white",
-                marginLeft: "5px",
-                fontWeight: "500",
-              }}
-            >
-              ({moment(item?.startAt).format("DD-MM-YYYY")})
-            </Typography> */}
           </Box>
           {true && (
             <StyledImage
@@ -172,18 +145,6 @@ const RowComponentMatches = ({
               }}
             />
           )}
-          {/* <StyledImage
-              src={ArrowDown}
-              sx={{
-                marginTop: { xs: "5px", lg: "0" },
-                width: { lg: "20px", xs: "10px" },
-                height: { lg: "10px", xs: "6px" },
-                transform:
-                  selectedId === item?.matchId
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
-              }}
-            /> */}
         </Box>
         <Box
           onClick={(e) => {
@@ -301,9 +262,7 @@ const RowComponentMatches = ({
                   <Box
                     sx={{
                       width: { xs: "100%", lg: "100%", md: "100%" },
-                      // maxHeight: "51vh",
                       overflow: "hidden",
-                      // overflowY: "auto",
                       marginY: { xs: ".2vh", lg: "1vh" },
                       padding: 0.2,
                     }}
@@ -318,8 +277,6 @@ const RowComponentMatches = ({
                           userId={item?.userId}
                           showListOfUsers={showListOfUsers}
                           getBetReport={getBetReport}
-                          // sessionBetData={sessionBetData}
-                          // bet1Data={betData}
                         />
                       );
                     })}

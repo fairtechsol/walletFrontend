@@ -5,15 +5,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import CustomBox from "../../components/analysis/CustomBox";
-import { socket, socketService } from "../../socketManager";
-import { AppDispatch, RootState } from "../../store/store";
-import "./index.css";
+import RacingListComponentAnalysis from "../../components/analysis2/raceListAnalysisComp";
 import CountryWiseListComponent from "../../components/horseRacingComp/CountryWiseListComponent";
+import { socket, socketService } from "../../socketManager";
 import {
   getHorseRacingCountryWiseList,
   getHorseRacingMatchList,
 } from "../../store/actions/horseRacing/horseMatchListAction";
-import RacingListComponentAnalysis from "../../components/analysis2/raceListAnalysisComp";
+import { AppDispatch, RootState } from "../../store/store";
+import "./index.css";
 
 const Analysis2 = () => {
   const navigate = useNavigate();
@@ -42,17 +42,6 @@ const Analysis2 = () => {
     setMax(value);
     setMode("1");
   };
-
-  // const handleRadioButtonSelect = (event: any) => {
-  //   const value = event.target.value;
-  //   setSelected((prevValues: any) => {
-  //     if (prevValues.includes(value)) {
-  //       return prevValues.filter((val: any) => val !== value);
-  //     } else {
-  //       return [...prevValues, value];
-  //     }
-  //   });
-  // };
 
   const handleRadioButtonSelect = (match: any) => {
     if (mode === "0") {

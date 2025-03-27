@@ -17,23 +17,21 @@ import RowModalComponents from "./RowModalComponents";
 import EventWiseExposureModal from "./eventWiseExposureModal";
 import EventWiseMatchListModal from "./eventWiseMatchListModal";
 
-const AccountListRow = (props: AccountListRowInterface) => {
-  const {
-    containerStyle,
-    fContainerStyle,
-    fTextStyle,
-    profit,
-    element,
-    getListOfUser,
-    showOptions,
-    showCReport,
-    showUserDetails,
-    show,
-    domain,
-    currentPage,
-    showDownIcon,
-  } = props;
-
+const AccountListRow = ({
+  containerStyle,
+  fContainerStyle,
+  fTextStyle,
+  profit,
+  element,
+  getListOfUser,
+  showOptions,
+  showCReport,
+  showUserDetails,
+  show,
+  domain,
+  currentPage,
+  showDownIcon,
+}: AccountListRowInterface) => {
   const navigate = useNavigate();
 
   const [userModal] = useState({});
@@ -49,9 +47,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
     id: "",
     title: "",
   });
-  const [showUserWiseExposureModal, setShowUserWiseExposureModal] = useState(
-    false
-  );
+  const [showUserWiseExposureModal, setShowUserWiseExposureModal] =
+    useState(false);
   const [showUserWiseMatchListModal, setShowUserWiseMatchListModal] = useState({
     status: false,
     value: {},
@@ -171,35 +168,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
     currency: "INR",
   }).format(calculateProfitLoss());
 
-  // const handleModal = () => {
-  // dispatch(
-  //   handleModelActions({
-  //     url: ApiConstants.USER.LIST,
-  //     userId: element?.id,
-  //     roleName: element?.roleName,
-  //     domain: element?.domain ? element?.domain : "",
-  //     openModal: true,
-  //     isUrl: element?.isUrl,
-  //     title: element?.userName,
-  //   })
-  // );
-  // dispatch(
-  //   getTotalBalance({
-  //     userId: element?.id,
-  //     roleName: element?.roleName,
-  //     domain: domain ? domain : element?.domain ? element?.domain : "",
-  //   })
-  // );
-  // dispatch(
-  //   getModalUserList({
-  //     currentPage: currentPage,
-  //     url: ApiConstants.USER.LIST,
-  //     userId: element?.id,
-  //     roleName: element?.roleName,
-  //     domain: domain ? domain : element?.domain ? element?.domain : "",
-  //   })
-  // );
-  // };
   const handleClearValue = () => {
     setDepositeValue(0);
     setWithdrawValue(0);
@@ -207,6 +175,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
     setExposureValue(0);
     setLockValue(null);
   };
+
   return (
     <>
       <Box
@@ -648,19 +617,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
                             ? element?.matchCommission
                             : 0}
                         </Typography>
-                        {/* <Typography
-                          
-                          sx={[
-                            {
-                              color: "white",
-                              textAlign: "center",
-                              marginRight: "1px",
-                            },
-                            fTextStyle,
-                          ]}
-                        >
-                         
-                        </Typography> */}
                       </>
                     ) : (
                       <>
@@ -677,69 +633,26 @@ const AccountListRow = (props: AccountListRowInterface) => {
                         >
                           Match Com : 0
                         </Typography>
-                        {/* <Typography
-                          
-                          sx={[
-                            {
-                              color: "white",
-                              textAlign: "left",
-                            },
-                            fTextStyle,
-                          ]}
-                        >
-                        
-                        </Typography> */}
                       </>
                     )}
                   </Box>
-
-                  {/* <Box sx={{ display: "flex" }}> */}
                   <Box sx={{ display: "flex" }}>
-                      <Typography
-                        variant="h5"
-                        sx={[
-                          {
-                            color: "white",
-                            textAlign: { lg: "left", xs: "left" },
-                            width: { lg: "150px", xs: "100px" },
-                          },
-                          fTextStyle,
-                        ]}
-                      >
-                        Session Com {": "}
-                        {element?.sessionCommission
-                          ? element?.sessionCommission
-                          : 0}
-                      </Typography>
-                  {/* <Typography
-                        
-                        sx={[
-                          {
-                            color: "white",
-                            textAlign: "center",
-                            marginRight: "1px",
-                          },
-                          fTextStyle,
-                        ]}
-                      >
-                    
-                      </Typography> */}
-                  {/* </Box> */}
-                  {/* <Typography
-                      
+                    <Typography
+                      variant="h5"
                       sx={[
                         {
                           color: "white",
-                          textAlign: "left",
-                          marginLeft: "3px",
+                          textAlign: { lg: "left", xs: "left" },
+                          width: { lg: "150px", xs: "100px" },
                         },
                         fTextStyle,
                       ]}
                     >
+                      Session Com {": "}
                       {element?.sessionCommission
                         ? element?.sessionCommission
                         : 0}
-                    </Typography> */}
+                    </Typography>
                   </Box>
                 </Box>
                 {showCReport && (
@@ -892,8 +805,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
         open={showSubUsers?.value}
         onClose={() => {
           setSubSusers({ value: false, id: "", title: "" });
-          // dispatch(setSubUserData([]));
-          // dispatch(setSubPage(1));
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -904,7 +815,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
             height: "100%",
             display: "flex",
             justifyContent: "center",
-            // flexDirection: "column",
             alignItems: "center",
           }}
         >
@@ -916,7 +826,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
             title={showSubUsers?.title}
             element={element}
             domain={domain ? domain : element?.domain ? element?.domain : ""}
-            // handleExport={handleExport}
             currentPage={currentPage}
           />
         </Box>
@@ -929,7 +838,6 @@ const AccountListRow = (props: AccountListRowInterface) => {
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
           navigateTo={"list_of_clients"}
-          // title={`${element?.userName} - (Commission Report)`}
         ></Modal>
       )}
     </>

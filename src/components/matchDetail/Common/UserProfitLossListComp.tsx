@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-const UserProfitLossListComp = (props: any) => {
-  const { element, markets, color } = props;
+const UserProfitLossListComp = ({ element, markets, color }: any) => {
   return (
     <>
       <Box
@@ -11,7 +10,7 @@ const UserProfitLossListComp = (props: any) => {
           height: "auto",
           width: "99.7%",
           position: "relative",
-          borderBottom:"1px solid rgba(211,211,211)"
+          borderBottom: "1px solid rgba(211,211,211)",
         }}
       >
         <Box
@@ -22,11 +21,11 @@ const UserProfitLossListComp = (props: any) => {
             width: "10%",
             alignItems: "center",
             minWidth: "100px",
-            position:"sticky",
-            left:0,
+            position: "sticky",
+            left: 0,
             border: "1px solid #2626264D",
 
-            zIndex:2
+            zIndex: 2,
           }}
         >
           <Typography
@@ -35,7 +34,7 @@ const UserProfitLossListComp = (props: any) => {
               fontSize: { lg: "11px", md: "10px", xs: "8px" },
               marginLeft: "7px",
               fontWeight: "600",
-              minWidth: "100px"
+              minWidth: "100px",
             }}
           >
             {element?.userName}
@@ -47,7 +46,6 @@ const UserProfitLossListComp = (props: any) => {
             position: "relative",
             background: "white",
             width: { lg: "90%", xs: "90%" },
-            // justifyContent: { lg: "flex-end", xs: "flex-end" },
             alignItems: "center",
             height: "100%",
           }}
@@ -66,7 +64,7 @@ const UserProfitLossListComp = (props: any) => {
                 {element?.profitLoss?.[item?.betId]?.teams ? (
                   Object.values(
                     element?.profitLoss?.[item?.betId]?.teams || {}
-                  )?.map((itemVal: any,index:number) => {
+                  )?.map((itemVal: any, index: number) => {
                     return (
                       <Box
                         sx={{
@@ -157,39 +155,6 @@ const UserProfitLossListComp = (props: any) => {
             );
           })}
         </Box>
-        {/* <Box
-          sx={{
-            display: "flex",
-            position: "relative",
-            background: "white",
-            height: "38px",
-            width: { lg: "60%", xs: "80%" },
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
-          <>
-            <SeperateBox
-              value2={handleNumber(parseFloat(element?.teamRateA || 0), color) ?? "N/A"}
-              value={handleNumber(parseFloat(element?.percentTeamRateA || 0), color) ?? "N/A"}
-              color={"#ffffff"}
-              width={10}
-            />
-            <Box
-              sx={{ width: "3px", display: "flex", background: "#ffffff" }}
-            ></Box>
-            <SeperateBox
-               value2={handleNumber(parseFloat(element?.teamRateB || 0),color) ?? "N/A"}
-               value={handleNumber(parseFloat(element?.percentTeamRateB || 0),color) ?? "N/A"}
-              color={"#ffffff"}
-              width={10}
-            />
-            
-          </>
-          <Box
-            sx={{ width: ".45%", display: "flex", background: "pink" }}
-          ></Box>
-        </Box> */}
       </Box>
     </>
   );

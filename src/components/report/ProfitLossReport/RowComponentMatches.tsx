@@ -1,21 +1,19 @@
-import { memo } from "react";
-import { useState } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import StyledImage from "../../Common/StyledImages";
+import { memo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import AllRateSeperate from "./AllRateSeperate";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
+import { formatToINR, handleNumber } from "../../../helper";
 import {
   getBetProfitLoss,
   getSessionProfitLoss,
 } from "../../../store/actions/reports";
-import SessionComponentMatches from "./SessionComponentMatches";
-import SessionBetSeperate from "./SessionBetSeperate";
-import { useSelector } from "react-redux";
-import { formatToINR, handleNumber } from "../../../helper";
+import { AppDispatch, RootState } from "../../../store/store";
+import StyledImage from "../../Common/StyledImages";
+import AllRateSeperate from "./AllRateSeperate";
 import AllUserListSeparate from "./AllUserListSeparate";
+import SessionBetSeperate from "./SessionBetSeperate";
+import SessionComponentMatches from "./SessionComponentMatches";
 
 const RowComponentMatches = ({
   index,
@@ -187,18 +185,6 @@ const RowComponentMatches = ({
               }}
             />
           )}
-          {/* <StyledImage
-              src={ArrowDown}
-              sx={{
-                marginTop: { xs: "5px", lg: "0" },
-                width: { lg: "20px", xs: "10px" },
-                height: { lg: "10px", xs: "6px" },
-                transform:
-                  selectedId === item?.matchId
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
-              }}
-            /> */}
         </Box>
         <Box
           onClick={(e) => {
@@ -442,8 +428,6 @@ const RowComponentMatches = ({
                           userId={item?.userId}
                           showListOfUsers={showListOfUsers}
                           getBetReport={getBetReport}
-                          // sessionBetData={sessionBetData}
-                          // bet1Data={betData}
                         />
                       );
                     })}
@@ -509,8 +493,6 @@ const RowComponentMatches = ({
                           setShowSessionBets={setShowSessionBets}
                           getBetReport={getBetReport}
                           selectedId={selectedId}
-                          // domainUrl={domainUrl}
-                          // setSelectedId={getBetReport}
                         />
                       );
                     })}

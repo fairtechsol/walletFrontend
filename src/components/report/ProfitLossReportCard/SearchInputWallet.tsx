@@ -1,17 +1,15 @@
+import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
 import { ARROWDROPDOWN } from "../../../assets";
 
-const SearchInputWallet = (props: any) => {
-  const {
-    title,
-    data,
-    containerStyle,
-    inputContainerStyle,
-    setSearch,
-    search,
-  } = props;
-
+const SearchInputWallet = ({
+  title,
+  data,
+  containerStyle,
+  inputContainerStyle,
+  setSearch,
+  search,
+}: any) => {
   const [open, setOpen] = useState(false);
 
   const Block = ({ i }: any) => {

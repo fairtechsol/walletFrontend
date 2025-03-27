@@ -1,13 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { serviceUrl } from "./utils/Constants";
-// import {
-//   decryptAESKeyWithRSA,
-//   decryptWithAES,
-//   encryptAESKeyWithRSA,
-//   encryptWithAES,
-//   generateRandomBytes,
-// } from "./utils/encryptDecrypt";
 
 const toastOptions = {
   autoClose: 2000,
@@ -16,7 +9,6 @@ const toastOptions = {
   pauseOnHover: true,
 };
 console.log(import.meta.env.VITE_API_URL);
-// const aesKey = generateRandomBytes(32);
 
 const service = axios.create({
   baseURL: serviceUrl,
@@ -43,29 +35,6 @@ service.interceptors.request.use(
     config.cancelToken = source.token;
     cancelTokenSources[requestUrl!] = source;
 
-    // if (config.data) {
-    //   const encryptedData = encryptWithAES(config.data, aesKey);
-    //   const encryptedKey = encryptAESKeyWithRSA(aesKey);
-    //   config.data = { encryptedData, encryptedKey };
-    // }
-
-    // let [url, query]: any = config?.url?.split("?");
-    // // Encrypt query parameters if exists
-    // if (query) {
-    //   const params = query.split("&")?.reduce((prev: any, curr: any) => {
-    //     const [key, val] = curr.split("=");
-    //     prev[key] = val;
-    //     return prev;
-    //   }, {});
-    //   const encryptedData = encryptWithAES(params, aesKey);
-    //   const encryptedKey = encryptAESKeyWithRSA(aesKey);
-    //   config.params = {
-    //     encryptedData: encryptedData,
-    //     encryptedKey: encryptedKey,
-    //   };
-    //   config.url = url;
-    // }
-
     config.headers["Content-Type"] = "application/json";
 
     const authToken = sessionStorage.getItem("jwtWallet");
@@ -81,11 +50,6 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    // if (response.data?.encryptedData && response.data?.encryptedKey) {
-    //   const aesKey = decryptAESKeyWithRSA(response.data.encryptedKey);
-    //   response.data = decryptWithAES(response.data.encryptedData, aesKey);
-    // }
-
     const isGetRequest = response.config.method === "get";
 
     const requestUrl = response.config.url;
@@ -107,8 +71,6 @@ service.interceptors.response.use(
     }
 
     let { status, data } = error.response || {};
-    // const aesKey = decryptAESKeyWithRSA(data.encryptedKey);
-    // data = decryptWithAES(data.encryptedData, aesKey);
 
     if (status === 500) {
       toast.error(data?.message || "Internal Server Error", toastOptions);

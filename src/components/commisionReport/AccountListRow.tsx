@@ -40,7 +40,6 @@ const AccountListRow = ({
         <Box
           sx={{
             background: "rgba(0,0,0,0.5)",
-            //   width: { xs: "218%", lg: "100%", md: "100%" },
             height: "45px",
             position: "absolute",
             display: "flex",
@@ -126,37 +125,6 @@ const AccountListRow = ({
             {elementToUDM.commissionType}
           </Typography>
         </Box>
-        {/* <Box
-          sx={[
-            {
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingX: "10px",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            },
-            fContainerStyle,
-          ]}
-        >
-          <Typography
-            sx={[
-              {
-                fontSize: { xs: "10px", lg: "12px", md: "10px" },
-                fontWeight: "600",
-                cursor: "pointer",
-                display: " -webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              },
-              fTextStyle,
-            ]}
-          >
-            {elementToUDM?.name}
-          </Typography>
-        </Box> */}
         <Box
           sx={{
             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
@@ -173,7 +141,6 @@ const AccountListRow = ({
               fTextStyle,
             ]}
           >
-            {/* {elementToUDM.teamBet} */}
             {elementToUDM?.createAt ? (
               <>
                 {moment(elementToUDM?.createAt).format("L")} <br />

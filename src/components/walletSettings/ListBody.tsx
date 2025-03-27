@@ -3,8 +3,11 @@ import StyledImage from "../Common/StyledImages";
 import { LockIcon, UnLockIcon } from "../../assets";
 import { formatToINR } from "../../helper";
 
-const ListBody = (props: any) => {
-  const { walletAccountDetail, fContainerStyle, fTextStyle } = props;
+const ListBody = ({
+  walletAccountDetail,
+  fContainerStyle,
+  fTextStyle,
+}: any) => {
   return (
     <Box
       sx={[
@@ -14,7 +17,6 @@ const ListBody = (props: any) => {
           height: "45px",
           background: "#0B4F26",
           alignItems: "center",
-          // overflow: "hidden",
           borderBottom: "2px solid white",
         },
       ]}

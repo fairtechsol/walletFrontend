@@ -567,7 +567,9 @@ export const handleModelActions = createAsyncThunk<any, any>(
     return data;
   }
 );
-export const resetDeleteChangePassword = createAction("delete/changePassword/reset");
+export const resetDeleteChangePassword = createAction(
+  "delete/changePassword/reset"
+);
 export const changePasswordReset = createAction("changePassword/reset");
 export const profileReset = createAction("profile/reset");
 export const updateReset = createAction("update/reset");

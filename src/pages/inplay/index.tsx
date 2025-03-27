@@ -27,7 +27,7 @@ const Inplay = () => {
   const { loading, matchListInplay, success } = useSelector(
     (state: RootState) => state.match.matchList
   );
-  
+
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {

@@ -220,23 +220,24 @@ const MyAccount = () => {
             />
           </Box>
         </Box>
-       {profileDetail?.roleName == "fairGameWallet" &&  <BoxButton
-          color={"#0B4F26"}
-          onClick={() => {
-            setOpenChangePassword(!openChangePassword);
-          }}
-          title={"Change permanent delete password"}
-          isSelected={openChangePassword}
-          containerStyle={{
-            // marginLeft: { lg: "8px", xs: "0" },
-            flex: 1,
-            borderColor: "white",
-          }}
-          titleStyle={{
-            fontSize: { xs: "12px" },
-          }}
-          labelStyle={{}}
-        />}
+        {profileDetail?.roleName == "fairGameWallet" && (
+          <BoxButton
+            color={"#0B4F26"}
+            onClick={() => {
+              setOpenChangePassword(!openChangePassword);
+            }}
+            title={"Change permanent delete password"}
+            isSelected={openChangePassword}
+            containerStyle={{
+              flex: 1,
+              borderColor: "white",
+            }}
+            titleStyle={{
+              fontSize: { xs: "12px" },
+            }}
+            labelStyle={{}}
+          />
+        )}
         {openChangePassword && (
           <ChangeDeleteCode
             open={openChangePassword}

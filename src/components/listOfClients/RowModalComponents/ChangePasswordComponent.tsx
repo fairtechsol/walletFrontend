@@ -13,12 +13,7 @@ import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
 
-import {
-  // EyeIcon,
-  EyeIconWhite,
-  // EyeSlash,
-  EyeSlashWhite,
-} from "../../../assets";
+import { EyeIconWhite, EyeSlashWhite } from "../../../assets";
 import CustomErrorMessage from "../../Common/CustomErrorMessage";
 
 const initialValues: any = {
@@ -28,7 +23,13 @@ const initialValues: any = {
 };
 
 const ChangePasswordComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, setShowUserModal } = props;
+  const {
+    setSelected,
+    element,
+    walletAccountDetail,
+    endpoint,
+    setShowUserModal,
+  } = props;
   const [showPass, setShowPass] = useState(false);
   const [showPassTransaction, setShowPassTransaction] = useState(false);
 
@@ -43,33 +44,18 @@ const ChangePasswordComponent = (props: any) => {
         payload = {
           newPassword: values.newPassword,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
-      }
-      // else if (
-      //   element.roleName === "superAdmin" ||
-      //   element.roleName === "fairGameAdmin"
-      // ) {
-      //   payload = {
-      //     userId: element?.id,
-      //     newPassword: values.newPassword,
-      //     transactionPassword: values.transactionPassword,
-      //     // remark: values.remark,
-      //   };
-      // }
-      else if (element.roleName === "expert") {
+      } else if (element.roleName === "expert") {
         payload = {
           id: element?.id,
           password: values.newPassword,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
       } else {
         payload = {
           userId: element?.id,
           newPassword: values.newPassword,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
       }
       dispatch(
@@ -166,7 +152,6 @@ const ChangePasswordComponent = (props: any) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={touched.newPassword && Boolean(errors.newPassword)}
-                    // helperText={touched.newPassword && errors.newPassword}
                     sx={{ width: "100%", height: "45px", color: "white" }}
                     variant="standard"
                     InputProps={{
