@@ -40,10 +40,6 @@ const TournamentOdds = (props: any) => {
     return teamBRates < 0 ? `-${formattedRatio}` : formattedRatio;
   };
 
-  const handleLock = (data: any) => {
-    return data?.ex?.availableToBack?.length > 0 ? false : true;
-  };
-
   return (
     <Box
       sx={{
@@ -403,7 +399,6 @@ const TournamentOdds = (props: any) => {
                       : "#319E5B"
                   }
                   data={runner}
-                  lock={handleLock(runner)}
                   marketDetails={liveData}
                 />
                 <Divider />

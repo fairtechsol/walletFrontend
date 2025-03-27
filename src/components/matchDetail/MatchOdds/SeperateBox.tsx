@@ -1,8 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { Lock } from "../../../assets";
 
-const SeperateBox = (props: any) => {
-  const { color, empty, value, value2, lock, width } = props;
+const SeperateBox = ({ color, empty, value, value2, lock, width }: any) => {
   return (
     <>
       <Box
@@ -10,7 +9,6 @@ const SeperateBox = (props: any) => {
           if (lock || color == "white") {
             return null;
           }
-          //   dispatch(setColorValue(color));
         }}
         sx={{
           background: lock ? "#FDF21A" : color,

@@ -1,13 +1,12 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import MoneyBox from "../matchDetail/MatchOdds/MoneyBox";
-import SeperateBox from "../matchDetail/MatchOdds/SeperateBox";
+import moment from "moment";
+import { LockSolid } from "../../assets";
 import { formatNumber } from "../../helper";
 import StyledImage from "../Common/StyledImages";
-import { LockSolid } from "../../assets";
-import moment from "moment";
+import MoneyBox from "../matchDetail/MatchOdds/MoneyBox";
+import SeperateBox from "../matchDetail/MatchOdds/SeperateBox";
 
-const BoxComponentHorseRacing = (props: any) => {
-  const { name, color, align, rates, data } = props;
+const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status, adjustmentFactor, removalDate } = data ?? {};
@@ -146,7 +145,6 @@ const BoxComponentHorseRacing = (props: any) => {
           {ex?.availableToBack?.length > 0 &&
           ![0, "0"].includes(ex?.availableToBack[0]?.price) ? (
             <SeperateBox
-              align={align}
               value={
                 ex?.availableToBack?.length > 0
                   ? ex?.availableToBack[0]?.price
@@ -184,7 +182,6 @@ const BoxComponentHorseRacing = (props: any) => {
           {ex?.availableToLay?.length > 0 &&
           ![0, "0"].includes(ex?.availableToLay[0]?.price) ? (
             <SeperateBox
-              align={align}
               value={
                 ex?.availableToLay?.length > 0
                   ? ex?.availableToLay[0]?.price

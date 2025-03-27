@@ -1,14 +1,19 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import SeperateBox from "../MatchOdds/SeperateBox";
 import { BallStart } from "../../../assets";
 import { formatNumber, formatToINR } from "../../../helper";
-import PlaceBetComponent from "./PlaceBetComponent";
-import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 import { sessionBettingType } from "../../../utils/Constants";
 import CommissionDot from "../../Common/CommissionDot";
+import SeperateBox from "../MatchOdds/SeperateBox";
+import PlaceBetComponent from "./PlaceBetComponent";
+import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
-const SeasonMarketBox = (props: any) => {
-  const { newData, setData, profitLossData, index, type } = props;
+const SeasonMarketBox = ({
+  newData,
+  setData,
+  profitLossData,
+  index,
+  type,
+}: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (
@@ -38,12 +43,10 @@ const SeasonMarketBox = (props: any) => {
         <Box
           sx={{
             display: "flex",
-            // background: "white",
             height: "38px",
             width: "45%",
             alignItems: "center",
             background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
-            // backgroundColor:"red"
           }}
         >
           <Box>
@@ -170,8 +173,6 @@ const SeasonMarketBox = (props: any) => {
               {newData?.isManual ? (
                 <>
                   <SeperateBox
-                    session={true}
-                    back={true}
                     value={Math.floor(newData?.noRate)}
                     value2={Math.floor(newData?.noPercent)}
                     lock={
@@ -182,9 +183,8 @@ const SeasonMarketBox = (props: any) => {
                   />
                   <Box
                     sx={{ width: "3px", display: "flex", background: "pink" }}
-                  ></Box>
+                  />
                   <SeperateBox
-                    session={true}
                     value={Math.floor(newData?.yesRate)}
                     value2={formatNumber(Math.floor(newData?.yesPercent))}
                     lock={
@@ -198,8 +198,6 @@ const SeasonMarketBox = (props: any) => {
                 <>
                   <SeperateBox
                     key={index}
-                    session={true}
-                    back={true}
                     value={newData.ex?.availableToLay[0]?.price ?? 0}
                     value2={newData.ex?.availableToLay[0]?.size ?? 0}
                     lock={
@@ -215,10 +213,9 @@ const SeasonMarketBox = (props: any) => {
                   />
                   <Box
                     sx={{ width: "3px", display: "flex", background: "pink" }}
-                  ></Box>
+                  />
                   <SeperateBox
                     key={index}
-                    session={true}
                     value={newData.ex?.availableToBack[0]?.price ?? 0}
                     value2={newData.ex?.availableToBack[0]?.size ?? 0}
                     lock={
@@ -234,9 +231,7 @@ const SeasonMarketBox = (props: any) => {
               )}
             </>
           )}
-          <Box
-            sx={{ width: ".45%", display: "flex", background: "pink" }}
-          ></Box>
+          <Box sx={{ width: ".45%", display: "flex", background: "pink" }} />
         </Box>
       </Box>
       {Array.from(
@@ -301,11 +296,8 @@ const SeasonMarketBox = (props: any) => {
                 <Box
                   sx={{
                     background: "rgba(0,0,0,1)",
-                    // marginLeft: "-2px",
                     height: "38px",
-                    // position: "absolute",
                     marginLeft: { lg: "20%", md: "0%", xs: "0%" },
-                    // right: 0,
                     width: { lg: "36%", md: "60.2%", xs: "60.9%" },
                     justifyContent: { xs: "center", lg: "center" },
                     alignItems: "center",
@@ -345,8 +337,6 @@ const SeasonMarketBox = (props: any) => {
                 <>
                   <SeperateBox
                     key={index}
-                    session={true}
-                    back={true}
                     value={
                       sessionBettingType.oddEven === type
                         ? newData.ex?.availableToBack[item]?.price ?? 0
@@ -381,7 +371,6 @@ const SeasonMarketBox = (props: any) => {
                   ></Box>
                   <SeperateBox
                     key={index}
-                    session={true}
                     value={
                       sessionBettingType.oddEven === type
                         ? newData.ex?.availableToLay[item]?.price ?? 0
@@ -410,7 +399,7 @@ const SeasonMarketBox = (props: any) => {
 
               <Box
                 sx={{ width: ".45%", display: "flex", background: "pink" }}
-              ></Box>
+              />
             </Box>
           </Box>
         </>

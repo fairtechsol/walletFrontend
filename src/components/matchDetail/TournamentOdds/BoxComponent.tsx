@@ -1,12 +1,11 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { LockSolid } from "../../../assets";
+import { formatNumber } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
 import MoneyBox from "../MatchOdds/MoneyBox";
 import SeperateBox from "../MatchOdds/SeperateBox";
-import { formatNumber } from "../../../helper";
-import { LockSolid } from "../../../assets";
 
-const BoxComponent = (props: any) => {
-  const { name, color, align, rates, data, marketDetails } = props;
+const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status } = data ?? {};
@@ -46,7 +45,6 @@ const BoxComponent = (props: any) => {
               fontSize: { lg: "14px", xs: "13px" },
               fontWeight: "600",
               marginLeft: "10px",
-              // overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
               maxWidth: "88px",
@@ -64,11 +62,9 @@ const BoxComponent = (props: any) => {
       ) ? (
         <Box
           sx={{
-            // background: "rgba(0,0,0,1)",
             height: "40px",
             display: "flex",
             width: { lg: "60%", xs: "80%" },
-            // // width: { xs: "60%", lg: "10.2vw" },
             justifyContent: { xs: "flex-end", lg: "flex-end" },
             alignItems: "center",
           }}
@@ -76,7 +72,6 @@ const BoxComponent = (props: any) => {
           <MoneyBox color={color} rates={rates} />
           <Box
             sx={{
-              // background: "rgba(0,0,0,1)",
               height: "40px",
               display: "flex",
               width: {
@@ -94,7 +89,6 @@ const BoxComponent = (props: any) => {
                 background: "rgba(0,0,0,1)",
                 height: "40px",
                 display: "flex",
-                // width: { xs: "100%", lg: "10.2vw" },
                 width: {
                   xs: "39vw",
                   lg: "10.17vw",
@@ -132,13 +126,11 @@ const BoxComponent = (props: any) => {
           }}
         >
           <MoneyBox color={color} rates={rates} />
-
           {ex?.availableToBack?.length > 0 &&
           ![0, "0"].includes(
             ex?.availableToBack[ex?.availableToBack?.length > 1 ? 2 : 0]?.price
           ) ? (
             <SeperateBox
-              align={align}
               value={
                 ex?.availableToBack?.length > 0
                   ? ex?.availableToBack[ex?.availableToBack?.length > 1 ? 2 : 0]
@@ -174,11 +166,9 @@ const BoxComponent = (props: any) => {
           )}
 
           <Box sx={{ width: "3px", display: "flex", background: "pink" }}></Box>
-          {/* {!lock ? */}
           {ex?.availableToLay?.length > 0 &&
           ![0, "0"].includes(ex?.availableToLay[0]?.price) ? (
             <SeperateBox
-              align={align}
               value={
                 ex?.availableToLay?.length > 0
                   ? ex?.availableToLay[0]?.price
