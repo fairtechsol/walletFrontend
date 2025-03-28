@@ -203,39 +203,37 @@ const UserProfitLoss = ({
                 width: { lg: "90%", xs: "90%" },
               }}
             >
-              {userProfitLossData?.markets?.map((item: any) => {
+              {userProfitLossData?.markets?.map((item: any, index: number) => {
                 return (
-                  <>
-                    <Box
+                  <Box
+                    sx={{
+                      background: "#f1c550",
+                      border: "1px solid #2626264D",
+                      width: { lg: "30%", xs: "30.06%" },
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      minWidth: "100px",
+                    }}
+                    className="wrapContent"
+                    key={index}
+                  >
+                    <Typography
                       sx={{
-                        background: "#f1c550",
-                        border: "1px solid #2626264D",
-                        width: { lg: "30%", xs: "30.06%" },
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        minWidth: "100px",
+                        fontSize: {
+                          lg: "13px",
+                          md: "12px",
+                          xs: matchesMobile ? "8px" : "8px",
+                        },
+                        color: "black",
+                        fontWeight: "600",
+                        lineHeight: "0.9",
                       }}
-                      className="wrapContent"
-                      key={item?.betId}
                     >
-                      <Typography
-                        sx={{
-                          fontSize: {
-                            lg: "13px",
-                            md: "12px",
-                            xs: matchesMobile ? "8px" : "8px",
-                          },
-                          color: "black",
-                          fontWeight: "600",
-                          lineHeight: "0.9",
-                        }}
-                      >
-                        {item?.name}
-                      </Typography>
-                    </Box>
-                  </>
+                      {item?.name}
+                    </Typography>
+                  </Box>
                 );
               })}
             </Box>
