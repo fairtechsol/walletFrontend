@@ -10,7 +10,7 @@ import FullAllBetsRow from "./FullAllBetsRow";
 
 const ITEMS_PER_PAGE = 100;
 const BUFFER_SIZE = 30;
-const ROW_HEIGHT = 30;
+const ROW_HEIGHT = 35;
 const FullAllBets = ({
   tag,
   mode,
@@ -34,7 +34,7 @@ const FullAllBets = ({
 
   const renderCheckBox = (isSelected: any) =>
     isSelected ? (
-      <Box sx={{}}>
+      <Box>
         <img src={CHECK} style={{ width: "20px", height: "20px" }} />
       </Box>
     ) : (
