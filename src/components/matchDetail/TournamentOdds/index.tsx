@@ -230,7 +230,7 @@ const TournamentOdds = ({
               background: "#319E5B",
               height: "25px",
               borderTop: "2px solid white",
-              width: "99.7%",
+              width: "100%",
               alignSelf: "center",
             }}
           >
