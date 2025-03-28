@@ -182,34 +182,34 @@ const Analysis = () => {
                   onClick={() => {
                     handleClick("2");
                   }}
-                  title={"2 Match Screen"}
+                  title="2 Match Screen"
                 />
-                <Box sx={{ width: "10px" }}></Box>
+                <Box sx={{ width: "10px" }} />
                 <CustomBox
                   onClick={() => {
                     handleClick("3");
                   }}
-                  title={"3 Match Screen"}
+                  title="3 Match Screen"
                 />
-                <Box sx={{ width: "10px" }}></Box>
+                <Box sx={{ width: "10px" }} />
                 <CustomBox
                   onClick={() => {
                     handleClick("4");
                   }}
-                  title={"4 Match Screen"}
+                  title="4 Match Screen"
                 />
               </Box>
             )}
             {mode == "1" && (
               <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
                 <CustomBox
-                  bg={"#E32A2A"}
+                  bg="#E32A2A"
                   onClick={() => {
                     setMode("0");
                     setSelected([]);
                     setMatchIds([]);
                   }}
-                  title={"Cancel"}
+                  title="Cancel"
                 />
                 <CustomBox
                   onClick={() => {
@@ -252,9 +252,9 @@ const Analysis = () => {
                       });
                     }
                   }}
-                  title={"Submit"}
+                  title="Submit"
                 />
-                <Box sx={{ width: "10px" }}></Box>
+                <Box sx={{ width: "10px" }} />
               </Box>
             )}
           </Box>

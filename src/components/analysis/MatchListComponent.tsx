@@ -251,7 +251,7 @@ const MatchListComponent = ({
                   borderRadius: "3px",
                 }}
               >
-                <Box className="wave"> </Box>
+                <Box className="wave" />
                 <Typography
                   sx={{
                     fontSize: "10px",
@@ -272,7 +272,6 @@ const MatchListComponent = ({
                   width: "70px",
                   height: "15px",
                   top: "-10px",
-
                   left: "-1px",
                   background: "#129FFE",
                   display: "flex",
@@ -378,7 +377,7 @@ const MatchListComponent = ({
                 position: "absolute",
                 right: 0,
               }}
-            ></Box>
+            />
           )}
         </Box>
       </Box>

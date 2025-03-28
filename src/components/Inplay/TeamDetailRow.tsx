@@ -49,9 +49,7 @@ const TeamDetailRow = (props: any) => {
           <Box
             sx={{ width: ".25%", display: "flex", background: "pink" }}
           ></Box>
-          <Box
-            sx={{ width: ".25%", display: "flex", background: "pink" }}
-          ></Box>
+          <Box sx={{ width: ".25%", display: "flex", background: "pink" }} />
           <SeparateBox
             value={
               (runnerNumber == 0
@@ -65,9 +63,7 @@ const TeamDetailRow = (props: any) => {
             value2={""}
             color={matchesMobile ? "#A7DCFF" : "#A7DCFF"}
           />
-          <Box
-            sx={{ width: ".25%", display: "flex", background: "pink" }}
-          ></Box>
+          <Box sx={{ width: ".25%", display: "flex", background: "pink" }} />
           <SeparateBox
             value={
               (runnerNumber == 0
@@ -81,9 +77,7 @@ const TeamDetailRow = (props: any) => {
             value2={""}
             color={matchesMobile ? "#FFB5B5" : "#FFB5B5"}
           />
-          <Box
-            sx={{ width: ".25%", display: "flex", background: "pink" }}
-          ></Box>
+          <Box sx={{ width: ".25%", display: "flex", background: "pink" }} />
         </Box>
       </Box>
     </>

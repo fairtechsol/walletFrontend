@@ -55,10 +55,12 @@ const AccountListRow = ({
     matchType: "",
   });
   const [selected, setSelected] = useState(null);
-  const [depositeValue, setDepositeValue] = useState(0);
-  const [withdrawValue, setWithdrawValue] = useState(0);
-  const [creditValue, setCreditValue] = useState(0);
-  const [exposureValue, setExposureValue] = useState(0);
+  const [values, setValues] = useState({
+    depositValue: 0,
+    withdrawValue: 0,
+    creditValue: 0,
+    exposureValue: 0,
+  });
   const [lockValue, setLockValue] = useState<any>(null);
   const [typeOfAmount, setTypeOfAmount] = useState<string>("");
   const { isUrl } = useSelector((state: RootState) => state.user.userList);
@@ -66,13 +68,33 @@ const AccountListRow = ({
     if (id === element?.id) {
       setTypeOfAmount(type);
       if (type === "deposite") {
-        setDepositeValue(Number(amount));
+        setValues((prev: any) => {
+          return {
+            ...prev,
+            depositValue: Number(amount),
+          };
+        });
       } else if (type === "withdraw") {
-        setWithdrawValue(Number(amount));
+        setValues((prev: any) => {
+          return {
+            ...prev,
+            withdrawValue: Number(amount),
+          };
+        });
       } else if (type === "credit") {
-        setCreditValue(Number(amount));
+        setValues((prev: any) => {
+          return {
+            ...prev,
+            creditValue: Number(amount),
+          };
+        });
       } else if (type === "exposure") {
-        setExposureValue(Number(amount));
+        setValues((prev: any) => {
+          return {
+            ...prev,
+            exposureValue: Number(amount),
+          };
+        });
       } else if (type === "lock") {
         setLockValue(amount);
       }
@@ -84,21 +106,21 @@ const AccountListRow = ({
     if (Number(baseValue) >= 0) {
       return Number(
         typeOfAmount === "deposite"
-          ? baseValue + depositeValue
+          ? baseValue + values.depositValue
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue
-          : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue
+          ? baseValue - values.withdrawValue
+          : typeOfAmount === "credit" && values.creditValue
+          ? baseValue + element?.creditRefrence - values.creditValue
           : baseValue
       );
     } else {
       return Number(
         typeOfAmount === "deposite"
-          ? baseValue + depositeValue
+          ? baseValue + values.depositValue
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue
-          : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue
+          ? baseValue - values.withdrawValue
+          : typeOfAmount === "credit" && values.creditValue
+          ? baseValue + element?.creditRefrence - values.creditValue
           : baseValue
       );
     }
@@ -113,19 +135,19 @@ const AccountListRow = ({
     if (typeof baseProfitLoss === "number" && baseProfitLoss >= 0) {
       return Number(
         typeOfAmount === "deposite"
-          ? (Number(+element?.userBal?.profitLoss + depositeValue) *
+          ? (Number(+element?.userBal?.profitLoss + values.depositValue) *
               element?.upLinePartnership) /
               100
-          : typeOfAmount === "credit" && creditValue
+          : typeOfAmount === "credit" && values.creditValue
           ? (Number(
               +element?.userBal?.profitLoss +
                 element?.creditRefrence -
-                creditValue
+                values.creditValue
             ) *
               element?.upLinePartnership) /
             100
           : typeOfAmount === "withdraw"
-          ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
+          ? (Number(+element?.userBal?.profitLoss - values.withdrawValue) *
               element?.upLinePartnership) /
             100
           : +element?.percentProfitLoss || 0
@@ -133,19 +155,19 @@ const AccountListRow = ({
     } else {
       return Number(
         typeOfAmount === "deposite"
-          ? (Number(+element?.userBal?.profitLoss + depositeValue) *
+          ? (Number(+element?.userBal?.profitLoss + values.depositValue) *
               element?.upLinePartnership) /
               100
-          : typeOfAmount === "credit" && creditValue
+          : typeOfAmount === "credit" && values.creditValue
           ? (Number(
               +element?.userBal?.profitLoss +
                 element?.creditRefrence -
-                creditValue
+                values.creditValue
             ) *
               element?.upLinePartnership) /
             100
           : typeOfAmount === "withdraw"
-          ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
+          ? (Number(+element?.userBal?.profitLoss - values.withdrawValue) *
               element?.upLinePartnership) /
             100
           : +element?.percentProfitLoss || 0
@@ -154,13 +176,8 @@ const AccountListRow = ({
   };
 
   function formatAmount(amount: string) {
-    // Splitting the string into numeric part and percentage part
     const [numericPart, percentagePart] = amount?.split("(");
-
-    // Formatting the numeric part to INR format
     const formattedNumericPart = formatToINR(Number(numericPart));
-
-    // Combining the formatted numeric part with the percentage part
     return `${formattedNumericPart}(${percentagePart}`;
   }
 
@@ -169,10 +186,12 @@ const AccountListRow = ({
   }).format(calculateProfitLoss());
 
   const handleClearValue = () => {
-    setDepositeValue(0);
-    setWithdrawValue(0);
-    setCreditValue(0);
-    setExposureValue(0);
+    setValues({
+      depositValue: 0,
+      withdrawValue: 0,
+      creditValue: 0,
+      exposureValue: 0,
+    });
     setLockValue(null);
   };
 
@@ -275,10 +294,10 @@ const AccountListRow = ({
           }}
         >
           <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-            {typeOfAmount === "credit" && creditValue > 0 ? (
+            {typeOfAmount === "credit" && values.creditValue > 0 ? (
               <>
                 {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                  Number(+creditValue)
+                  Number(+values.creditValue)
                 )}
               </>
             ) : (
@@ -306,14 +325,14 @@ const AccountListRow = ({
                 <span style={{ visibility: "hidden" }}>-</span>
                 {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                   typeOfAmount === "withdraw"
-                    ? Number(+element?.balance - withdrawValue)
+                    ? Number(+element?.balance - values.withdrawValue)
                     : Number(+element?.balance || 0)
                 )}
               </>
             ) : (
               new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                 typeOfAmount === "withdraw"
-                  ? Number(+element?.balance - withdrawValue)
+                  ? Number(+element?.balance - values.withdrawValue)
                   : Number(+element?.balance || 0)
               )
             )}
@@ -433,18 +452,18 @@ const AccountListRow = ({
                 <span style={{ visibility: "hidden" }}>-</span>
                 {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                   typeOfAmount === "deposite"
-                    ? +element?.availableBalance + depositeValue
+                    ? +element?.availableBalance + values.depositValue
                     : typeOfAmount === "withdraw"
-                    ? +element?.availableBalance - withdrawValue
+                    ? +element?.availableBalance - values.withdrawValue
                     : +element?.availableBalance || 0
                 )}
               </>
             ) : (
               new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                 typeOfAmount === "deposite"
-                  ? +element?.availableBalance + depositeValue
+                  ? +element?.availableBalance + values.depositValue
                   : typeOfAmount === "withdraw"
-                  ? +element?.availableBalance - withdrawValue
+                  ? +element?.availableBalance - values.withdrawValue
                   : +element?.availableBalance || 0
               )
             )}
@@ -511,9 +530,9 @@ const AccountListRow = ({
           }}
         >
           <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
-            {typeOfAmount === "exposure" && exposureValue > 0
+            {typeOfAmount === "exposure" && values.exposureValue > 0
               ? new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                  Number(exposureValue)
+                  Number(values.exposureValue)
                 )
               : new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
                   +element?.exposureLimit ? element?.exposureLimit : 0

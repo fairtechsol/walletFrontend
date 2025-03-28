@@ -2,8 +2,7 @@ import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import { IconConstants } from "../../helper/gameConstants";
 
-const HeaderRow = (props: any) => {
-  const { match, timeLeft } = props;
+const HeaderRow = ({ match, timeLeft }: any) => {
   return (
     <Box
       sx={{
@@ -60,7 +59,7 @@ const HeaderRow = (props: any) => {
           background: "#262626",
         }}
       >
-        <div className="slanted"></div>
+        <div className="slanted" />
       </Box>
       <Box
         sx={{
