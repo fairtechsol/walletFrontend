@@ -347,7 +347,7 @@ const MatchListComponent = ({
                     ? "0" + data?.totalBet
                     : data?.totalBet
                 }
-                team={"Total Bet"}
+                team="Total Bet"
                 mode={mode}
                 showFixed
               />

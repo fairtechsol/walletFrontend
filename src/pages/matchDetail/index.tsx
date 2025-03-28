@@ -784,8 +784,8 @@ const MatchDetail = () => {
           )}
           {matchesMobile && (
             <UserProfitLoss
-              single={"single"}
-              title={"User Profit Loss"}
+              single="single"
+              title="User Profit Loss"
               matchDetail={matchDetail}
             />
           )}
@@ -860,13 +860,10 @@ const MatchDetail = () => {
                 width: "100%",
               }}
             >
-              {/* {mode && <CancelButton />} */}
-              <Box sx={{ width: "2%" }}></Box>
-              <Box
-                sx={{ width: "150px", marginY: ".75%", height: "15px" }}
-              ></Box>
+              <Box sx={{ width: "2%" }} />
+              <Box sx={{ width: "150px", marginY: ".75%", height: "15px" }} />
             </Box>
-            <Box sx={{ width: "150px", height: "3px" }}></Box>
+            <Box sx={{ width: "150px", height: "3px" }} />
             {matchDetail?.manualSessionActive &&
               matchDetail?.sessionBettings?.filter(
                 (item: any) =>
@@ -928,8 +925,8 @@ const MatchDetail = () => {
               </Box>
             )}
             <UserProfitLoss
-              single={"single"}
-              title={"User Profit Loss"}
+              single="single"
+              title="User Profit Loss"
               matchDetail={matchDetail}
             />
           </Box>

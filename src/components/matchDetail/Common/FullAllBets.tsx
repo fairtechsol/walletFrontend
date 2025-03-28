@@ -1,24 +1,25 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, CHECK } from "../../../assets";
-import { formatToINR, stripUrl } from "../../../helper";
+import { formatToINR } from "../../../helper";
 import { RootState } from "../../../store/store";
+import AllBetsHeaderRow from "./AllBetsHeaderRow";
+import FullAllBetsRow from "./FullAllBetsRow";
 
 const ITEMS_PER_PAGE = 100;
 const BUFFER_SIZE = 30;
 const ROW_HEIGHT = 30;
-const FullAllBets = (props: any) => {
-  const {
-    tag,
-    mode,
-    IObets,
-    selectedBetData,
-    setSelectedBetData,
-    role,
-    deletePermanent,
-  } = props;
+const FullAllBets = ({
+  tag,
+  mode,
+  IObets,
+  selectedBetData,
+  setSelectedBetData,
+  role,
+  deletePermanent,
+}: any) => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -54,7 +55,6 @@ const FullAllBets = (props: any) => {
     if (scrollRef.current) {
       const { scrollTop, clientHeight } = scrollRef.current;
 
-      // Calculate visible range based on scroll position
       const start = Math.floor(scrollTop / ROW_HEIGHT);
       const visibleCount = Math.ceil(clientHeight / ROW_HEIGHT);
 
@@ -62,17 +62,11 @@ const FullAllBets = (props: any) => {
         start: Math.max(0, start - BUFFER_SIZE),
         end: Math.min(newData.length, start + visibleCount + BUFFER_SIZE),
       });
-      // console.log(visibleRange);
-      // // Load more data when reaching bottom
-      // if (scrollHeight - scrollTop - clientHeight < ROW_HEIGHT * BUFFER_SIZE) {
-      //   processNextChunk();
-      // }
     }
   }, [newData.length]);
 
   const processNextChunk = useCallback(() => {
     if (IObets) {
-      // console.log("IObets", IObets);
       const uniqueData: any = {};
       IObets?.forEach((item: any) => {
         uniqueData[item.id] = item;
@@ -214,7 +208,73 @@ const FullAllBets = (props: any) => {
     }
   }, [IObets]);
 
-  // console.log(newData, "abc");
+  const handleBetSelect = (e: any, i: any) => {
+    e.stopPropagation();
+    try {
+      let x: any = [...selectedData];
+      if (
+        x.length > 0 &&
+        x.some((item: any) => item?.id === i?.values[0]?.id)
+      ) {
+        const updatedSelectedBetData = selectedBetData.filter(
+          (item: any) => item?.id !== i?.values[0].id
+        );
+        setSelectedBetData(updatedSelectedBetData);
+        const updatedX = x.filter((v: any) => v?.id !== i?.values[0]?.id);
+        x = updatedX;
+        setSelectedData(updatedX);
+      } else {
+        if (mode?.type == "edit") {
+          if (i?.values[0].deleteReason) {
+            setSelectedBetData([
+              ...selectedBetData,
+              {
+                id: i?.values[0].id,
+                betId: i?.values[0].betId,
+                matchId: i?.values[0].matchId,
+                userId: i?.values[0].userId,
+                domain: i?.values[0].domain,
+              },
+            ]);
+            x.push({
+              id: i?.values[0].id,
+              betId: i?.values[0].betId,
+              matchId: i?.values[0].matchId,
+              userId: i?.values[0].userId,
+              domain: i?.values[0].domain,
+            });
+            setSelectedData([...x]);
+          }
+        } else if (
+          mode?.type === "delete" ||
+          mode?.type === "deletePermanent"
+        ) {
+          if (!i?.values[0].deleteReason) {
+            setSelectedBetData([
+              ...selectedBetData,
+              {
+                id: i?.values[0].id,
+                betId: i?.values[0].betId,
+                matchId: i?.values[0].matchId,
+                userId: i?.values[0].userId,
+                domain: i?.values[0].domain,
+              },
+            ]);
+            x.push({
+              id: i?.values[0].id,
+              betId: i?.values[0].betId,
+              matchId: i?.values[0].matchId,
+              userId: i?.values[0].userId,
+              domain: i?.values[0].domain,
+            });
+            setSelectedData([...x]);
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     setSelectedData([]);
@@ -239,7 +299,6 @@ const FullAllBets = (props: any) => {
       };
     }
   }, [handleScroll]);
-  // Calculate visible items
   const visibleItems = useMemo(() => {
     return newData.slice(visibleRange.start, visibleRange.end);
   }, [newData, visibleRange]);
@@ -291,7 +350,7 @@ const FullAllBets = (props: any) => {
             background: "#262626",
           }}
         >
-          <div className="slanted"></div>
+          <div className="slanted" />
         </Box>
         <Box
           sx={{
@@ -328,7 +387,6 @@ const FullAllBets = (props: any) => {
             >
               Total Bet
             </Typography>
-
             <Typography
               sx={{
                 fontSize: "14px",
@@ -358,7 +416,7 @@ const FullAllBets = (props: any) => {
       </Box>
       {visible && (
         <>
-          <HeaderRow mode={mode?.value} tag={tag} />
+          <AllBetsHeaderRow mode={mode?.value} tag={tag} />
           <div
             ref={scrollRef}
             className="myScroll"
@@ -377,71 +435,7 @@ const FullAllBets = (props: any) => {
                     position: "relative",
                     height: ROW_HEIGHT,
                   }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    let x: any = [...selectedData];
-                    if (
-                      x.length > 0 &&
-                      x.some((item: any) => item?.id === i?.values[0]?.id)
-                    ) {
-                      const updatedSelectedBetData = selectedBetData.filter(
-                        (item: any) => item?.id !== i?.values[0].id
-                      );
-                      setSelectedBetData(updatedSelectedBetData);
-                      const updatedX = x.filter(
-                        (v: any) => v?.id !== i?.values[0]?.id
-                      );
-                      x = updatedX;
-                      setSelectedData(updatedX);
-                    } else {
-                      if (mode?.type == "edit") {
-                        if (i?.values[0].deleteReason) {
-                          setSelectedBetData([
-                            ...selectedBetData,
-                            {
-                              id: i?.values[0].id,
-                              betId: i?.values[0].betId,
-                              matchId: i?.values[0].matchId,
-                              userId: i?.values[0].userId,
-                              domain: i?.values[0].domain,
-                            },
-                          ]);
-                          x.push({
-                            id: i?.values[0].id,
-                            betId: i?.values[0].betId,
-                            matchId: i?.values[0].matchId,
-                            userId: i?.values[0].userId,
-                            domain: i?.values[0].domain,
-                          });
-                          setSelectedData([...x]);
-                        }
-                      } else if (
-                        mode?.type === "delete" ||
-                        mode?.type === "deletePermanent"
-                      ) {
-                        if (!i?.values[0].deleteReason) {
-                          setSelectedBetData([
-                            ...selectedBetData,
-                            {
-                              id: i?.values[0].id,
-                              betId: i?.values[0].betId,
-                              matchId: i?.values[0].matchId,
-                              userId: i?.values[0].userId,
-                              domain: i?.values[0].domain,
-                            },
-                          ]);
-                          x.push({
-                            id: i?.values[0].id,
-                            betId: i?.values[0].betId,
-                            matchId: i?.values[0].matchId,
-                            userId: i?.values[0].userId,
-                            domain: i?.values[0].domain,
-                          });
-                          setSelectedData([...x]);
-                        }
-                      }
-                    }
-                  }}
+                  onClick={(e) => handleBetSelect(e, i)}
                 >
                   <Box
                     sx={{
@@ -465,62 +459,7 @@ const FullAllBets = (props: any) => {
                         {formattedNum}
                       </Typography>
                     )}
-                    {/* {mode?.type === "delete" && !i?.values[0]?.deleteReason && (
-                      <>
-                        {mode?.value &&
-                          !selectedData.some(
-                            (item: any) => item?.id === i?.values[0].id
-                          ) && (
-                            <Box
-                              sx={{
-                                width: "15px",
-                                height: "15px",
-                                border: "1px solid white",
-                                borderRadius: "10px",
-                              }}
-                            ></Box>
-                          )}
-                        {mode?.value &&
-                          selectedData.some(
-                            (item: any) => item?.id === i?.values[0].id
-                          ) && (
-                            <Box sx={{}}>
-                              <img
-                                src={CHECK}
-                                style={{ width: "20px", height: "20px" }}
-                              />
-                            </Box>
-                          )}
-                      </>
-                    )}
-                    {mode?.type === "edit" && i?.values[0]?.deleteReason && (
-                      <>
-                        {mode?.value &&
-                          !selectedData.some(
-                            (item: any) => item?.id === i?.values[0].id
-                          ) && (
-                            <Box
-                              sx={{
-                                width: "15px",
-                                height: "15px",
-                                border: "1px solid white",
-                                borderRadius: "10px",
-                              }}
-                            ></Box>
-                          )}
-                        {mode?.value &&
-                          selectedData.some(
-                            (item: any) => item?.id === i?.values[0].id
-                          ) && (
-                            <Box sx={{}}>
-                              <img
-                                src={CHECK}
-                                style={{ width: "20px", height: "20px" }}
-                              />
-                            </Box>
-                          )}
-                      </>
-                    )} */}
+
                     {(((mode?.type === "delete" ||
                       mode?.type === "deletePermanent") &&
                       !i?.values[0]?.deleteReason) ||
@@ -529,20 +468,21 @@ const FullAllBets = (props: any) => {
                         shouldRenderCheckBox(mode, i?.values, selectedData)
                       )}
                   </Box>
-                  <Row index={k + visibleRange.start} values={i.values} />
-                  {/* {i?.values[0].id  */}
+                  <FullAllBetsRow
+                    index={k + visibleRange.start}
+                    values={i.values}
+                  />
                   {i?.values[0]?.deleteReason && (
                     <Box
                       sx={{
                         background: "rgba(0,0,0,0.5)",
                         width: "100%",
-                        // height: "350px",
                         position: "absolute",
                         display: "flex",
                       }}
                     >
                       <Box sx={{ flex: 1, display: "flex" }}>
-                        <Box sx={{ width: "34%", height: "35px" }}></Box>
+                        <Box sx={{ width: "34%", height: "35px" }} />
                         <Box
                           sx={{
                             width: "66%",
@@ -579,343 +519,6 @@ const FullAllBets = (props: any) => {
           </div>
         </>
       )}
-    </Box>
-  );
-};
-const HeaderRow = ({ tag, mode }: any) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  return (
-    <Box sx={{ width: "100%", display: "flex" }}>
-      <Box
-        sx={{
-          width: mode ? "8%" : "6%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          No
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "15%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: tag ? "flex-start" : "center",
-          paddingLeft: tag ? "5px" : 0,
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          User
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "20%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: tag ? "flex-start" : "center",
-          paddingLeft: tag ? "5px" : 0,
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          Market
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "15%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          Favourite
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "10%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          Odds
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "10%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          Type
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "15%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          Stake
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "15%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-            lineHeight: 1,
-            textAlign: "center",
-          }}
-        >
-          My Stake
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: "15%",
-          border: "1px solid white",
-          background: "rgba(0,0,0)",
-          height: "30px",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : ".7vw",
-            fontWeight: "500",
-            color: "white",
-          }}
-        >
-          Time
-        </Typography>
-      </Box>
-    </Box>
-  );
-};
-
-const Row = ({ values, index }: any) => {
-  return (
-    <Box key={index} sx={{ width: "100%", display: "flex" }}>
-      {values.map((item: any, k: any) => {
-        if (!item?.small) {
-          return <LargeBox k={k} key={k} item={item} />;
-        } else {
-          return <SmallBox k={k} key={k} item={item} />;
-        }
-      })}
-    </Box>
-  );
-};
-
-const LargeBox = ({ item, k }: any) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  return (
-    <Box
-      key={k}
-      sx={{
-        width: k == 1 ? "20%" : "15%",
-        border: "1px solid white",
-        background: item?.background,
-        height: "35px",
-        justifyContent: "center",
-        alignItems: k == 1 || k == 0 ? "center" : "center",
-        paddingLeft: k == 1 || k == 0 ? { xs: "0", md: "5px", lg: "5px" } : 0,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          textAlign: "left",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: matchesMobile ? "8px" : "8px",
-              fontWeight: "600",
-              color: item?.color,
-              textTransform: "capitalize",
-              wordWrap: "break-word",
-              lineHeight: 1,
-              overflowWrap: "anywhere",
-              whiteSpace: "inherit",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {item?.name}
-          </Typography>
-          {item?.isCommissionActive && (
-            <Box
-              sx={{
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-                backgroundColor: "#74ee15",
-              }}
-            />
-          )}
-        </Box>
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : "8px",
-            textTransform: "none",
-            overflow: "wrap",
-            lineHeight: 1,
-          }}
-        >
-          {stripUrl(item?.domain)}
-        </Typography>
-      </Box>
-      {item?.time && (
-        <Typography
-          sx={{
-            fontSize: matchesMobile ? "8px" : "10px",
-            fontWeight: "600",
-            color: item?.color,
-          }}
-        >
-          {item?.date}
-        </Typography>
-      )}
-    </Box>
-  );
-};
-
-const SmallBox = ({ item, k }: any) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  return (
-    <Box
-      key={k}
-      sx={{
-        width: "10%",
-        border: "1px solid white",
-        background: item?.background,
-        height: "35px",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-        textTransform: "capitalize",
-      }}
-    >
-      <Typography
-        sx={{
-          fontSize: matchesMobile ? "10px" : ".7vw",
-          fontWeight: "600",
-          lineHeight: 1,
-          color: item?.color,
-        }}
-      >
-        {item?.name}
-      </Typography>
-      <Typography
-        sx={{ fontSize: "9px", fontWeight: "600", color: item?.color }}
-      >
-        {item?.rate && item?.rate}
-      </Typography>
     </Box>
   );
 };
