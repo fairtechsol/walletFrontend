@@ -45,7 +45,7 @@ const FullAllBets = ({
           border: "1px solid white",
           borderRadius: "10px",
         }}
-      ></Box>
+      />
     );
 
   const shouldRenderCheckBox = (mode: any, values: any, selectedData: any) =>
