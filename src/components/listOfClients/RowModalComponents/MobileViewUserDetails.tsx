@@ -29,9 +29,7 @@ const MobileViewUserDetails = (props: any) => {
   };
 
   const numberWithCommas = (numString: any) => {
-    // console.log('numString',numString)
     let stringWithoutCommas = numString?.replace(/,/g, "");
-    // console.log('stringWithoutCommas', stringWithoutCommas)
     if (!stringWithoutCommas?.includes(".")) {
       if (stringWithoutCommas?.length > 3) {
         let mainArray = stringWithoutCommas.slice(0, -3);
@@ -44,7 +42,6 @@ const MobileViewUserDetails = (props: any) => {
         }
         result = result.slice(0, -1); // Remove the last comma
         let reversedStr1 = result.split("").reverse().join("");
-        // console.log(reversedStr1,' jnknk ',reversedStr);
         return reversedStr1 + "," + lastThreeDigitsArray;
       } else {
         let data = stringWithoutCommas?.replace(/,/g, "");
@@ -62,7 +59,6 @@ const MobileViewUserDetails = (props: any) => {
         }
         result = result.slice(0, -1); // Remove the last comma
         let reversedStr1 = result.split("").reverse().join("");
-        // console.log(reversedStr1,' jnknk ',reversedStr);
         return reversedStr1 + "," + lastThreeDigitsArray + "." + parts[1];
       } else {
         let data = stringWithoutCommas?.replace(/,/g, "");

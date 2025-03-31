@@ -15,7 +15,6 @@ const toastOptions = {
   closeOnClick: true,
   pauseOnHover: true,
 };
-console.log(import.meta.env.VITE_API_URL);
 // const aesKey = generateRandomBytes(32);
 
 const service = axios.create({
