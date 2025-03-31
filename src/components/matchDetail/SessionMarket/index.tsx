@@ -307,7 +307,7 @@ const SessionMarket = ({
                   <Box
                     sx={{
                       background: "#FF9292",
-                      width: { lg: "5.02vw", xs: "30.06%" },
+                      width: { lg: "5.02vw", xs: "30%" },
                       height: "100%",
                       display: "flex",
                       justifyContent: "center",

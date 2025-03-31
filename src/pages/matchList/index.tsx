@@ -125,12 +125,14 @@ const Inplay = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    getMatchListMarket(type);
     const intervalId = setInterval(() => {
       getMatchListMarket(type);
-    }, 500);
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, [type]);
+  
   return (
     <>
       {matchListInplay && matchListInplay?.matches?.length > 0
