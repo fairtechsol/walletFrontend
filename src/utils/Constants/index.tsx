@@ -100,7 +100,7 @@ export const ApiConstants = {
     MATCHLIST: "match/list",
   },
   MATCH: {
-    RATES:"/getUserRateDetails/",
+    RATES: "/getUserRateDetails/",
     GET: "match",
     GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",
@@ -119,11 +119,11 @@ export const ApiConstants = {
     SESSION_PROFIT_LOSS: "/user/total/session/profitLoss",
     GET_MATCH_MARKET_ANALYSIS: "/match/marketAnalysis",
     MARKET_MATCH_LIST_CRICKET:
-    "https://marketsarket.qnsports.live/getcricketmatches",
-  MARKET_MATCH_LIST_FOOTBALL:
-    "https://marketsarket.qnsports.live/getsoccerallmatches2",
-  MARKET_MATCH_LIST_TENNIS:
-    "https://marketsarket.qnsports.live/gettennisallmatches2",
+      import.meta.env.VITE_THIRD_PARTY_BASE_URL + `/sportsList?type=cricket`,
+    MARKET_MATCH_LIST_FOOTBALL:
+      import.meta.env.VITE_THIRD_PARTY_BASE_URL + `/sportsList?type=football`,
+    MARKET_MATCH_LIST_TENNIS:
+      import.meta.env.VITE_THIRD_PARTY_BASE_URL + `/sportsList?type=tennis`,
   },
   HORSERACING: {
     MATCH: {
@@ -447,7 +447,7 @@ export const baseUrls = {
   expertSocket: import.meta.env.VITE_EXPERT_BASE_URL,
 };
 
-export const marketApiConst: { [key: string]: string }  = {
+export const marketApiConst: { [key: string]: string } = {
   cricket: ApiConstants.MATCH.MARKET_MATCH_LIST_CRICKET,
   football: ApiConstants.MATCH.MARKET_MATCH_LIST_FOOTBALL,
   tennis: ApiConstants.MATCH.MARKET_MATCH_LIST_TENNIS,
