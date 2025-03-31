@@ -12,7 +12,10 @@ import MatchComponent from "../../components/Inplay/MatchComponent";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getMatchListInplay, updateMatchRatesFromApiOnList } from "../../store/actions/match/matchAction";
+import {
+  getMatchListInplay,
+  updateMatchRatesFromApiOnList,
+} from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Constants, marketApiConst } from "../../utils/Constants";
@@ -43,7 +46,7 @@ const Inplay = () => {
   //     matchService.connect(matchIds, profileDetail?.roleName);
   //   }
   //   return () => {
-  //     matchService.disconnect(); 
+  //     matchService.disconnect();
   //   };
   // }, [matchListInplay]);
 
@@ -121,9 +124,11 @@ const Inplay = () => {
   }, []);
 
   useEffect(() => {
-    getMatchListMarket("cricket");
-    getMatchListMarket("tennis");
-    getMatchListMarket("football");
+    setTimeout(() => {
+      getMatchListMarket("cricket");
+      getMatchListMarket("tennis");
+      getMatchListMarket("football");
+    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket("cricket");
       getMatchListMarket("tennis");
