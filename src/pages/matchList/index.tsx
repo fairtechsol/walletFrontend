@@ -122,13 +122,16 @@ const Inplay = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    getMatchListMarket(type);
+    setTimeout(() => {
+      getMatchListMarket(type);
+    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket(type);
-    }, 60000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [type]);
+
   return (
     <>
       {matchListInplay && matchListInplay?.matches?.length > 0

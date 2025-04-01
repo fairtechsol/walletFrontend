@@ -8,7 +8,6 @@ const toastOptions = {
   closeOnClick: true,
   pauseOnHover: true,
 };
-console.log(import.meta.env.VITE_API_URL);
 
 const service = axios.create({
   baseURL: serviceUrl,

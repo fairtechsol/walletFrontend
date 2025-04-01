@@ -110,14 +110,16 @@ const Inplay = () => {
   }, []);
 
   useEffect(() => {
-    getMatchListMarket("cricket");
-    getMatchListMarket("tennis");
-    getMatchListMarket("football");
+    setTimeout(() => {
+      getMatchListMarket("cricket");
+      getMatchListMarket("tennis");
+      getMatchListMarket("football");
+    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket("cricket");
       getMatchListMarket("tennis");
       getMatchListMarket("football");
-    }, 60000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, []);
