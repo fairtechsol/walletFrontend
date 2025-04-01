@@ -27,7 +27,7 @@ const Analysis = () => {
   const [mode, setMode] = useState("0");
   const [max, setMax] = useState("2");
   const [selected, setSelected] = useState<any>([]);
-  const [selectedMatchType, setSelectedMatchType] = useState<any>("");
+  const [selectedMatchType, setSelectedMatchType] = useState<string>("");
   const [matchIds, setMatchIds] = useState<any>([]);
   // const [marketIds, setMarketIds] = useState([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -50,14 +50,12 @@ const Analysis = () => {
   };
 
   const changeSelected = (match: any) => {
-    if (mode === "0") return false;
+    if (mode === "0" || !match?.id) return false;
 
-    const matchId = match?.id;
-    if (!matchId) return false;
-
-    const isSameMatchType =
-      !selectedMatchType || selectedMatchType === match?.matchType;
+    const matchId = match.id;
     const isAlreadySelected = selected.includes(matchId);
+    const isSameMatchType =
+      !selectedMatchType || selectedMatchType === match.matchType;
 
     if (!isSameMatchType) {
       toast.error("Please Select Match Of Same Category");
@@ -65,24 +63,18 @@ const Analysis = () => {
     }
 
     if (isAlreadySelected) {
-      setMatchIds((prevIds: any) =>
-        prevIds.filter((id: any) => id !== matchId)
-      );
-      setSelected((prevSelected: any) =>
-        prevSelected.filter((id: any) => id !== matchId)
-      );
+      const updatedSelected = selected.filter((id: any) => id !== matchId);
+      setSelected(updatedSelected);
+      setMatchIds(updatedSelected);
+      if (!updatedSelected.length) setSelectedMatchType("");
     } else {
       if (selected.length >= +max) {
         toast.warn(`Only ${max} allowed`);
         return false;
       }
-
-      setMatchIds((prevIds: any) => [...prevIds, matchId]);
-      setSelected((prevSelected: any) => [...prevSelected, matchId]);
-
-      if (!selectedMatchType) {
-        setSelectedMatchType(match?.matchType);
-      }
+      setSelected([...selected, matchId]);
+      setMatchIds([...selected, matchId]);
+      if (!selectedMatchType) setSelectedMatchType(match.matchType);
     }
   };
 
