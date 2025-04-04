@@ -71,6 +71,12 @@ const ChangePassword = () => {
     }
   }, [oldPasswordMatched]);
 
+  useEffect(() => {
+    return () => {
+      debouncedInputValue.cancel();
+    };
+  }, []);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
