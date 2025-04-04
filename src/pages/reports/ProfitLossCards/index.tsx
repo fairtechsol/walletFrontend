@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { debounce } from "lodash";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
@@ -109,7 +109,7 @@ const ProfitLossReportCards = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <ProfitLossHeader
         title="Profit/Loss Cards"
         onClick={handleClick}
@@ -133,22 +133,19 @@ const ProfitLossReportCards = () => {
       >
         Profit/Loss for Event Type
       </Typography>
-
-      <Box>
-        <ProfitLossTableComponent
-          show={show}
-          setShow={setShow}
-          startDate={startDate}
-          endDate={endDate}
-          eventData={totalProfitLossListCard && totalProfitLossListCard}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          setCurrentPage={setCurrentPage}
-          userProfitLoss={userProfitLoss}
-          getUserProfitLoss={getUserProfitLoss}
-        />
-      </Box>
-    </div>
+      <ProfitLossTableComponent
+        show={show}
+        setShow={setShow}
+        startDate={startDate}
+        endDate={endDate}
+        eventData={totalProfitLossListCard && totalProfitLossListCard}
+        currentPage={currentPage}
+        pageCount={pageCount}
+        setCurrentPage={setCurrentPage}
+        userProfitLoss={userProfitLoss}
+        getUserProfitLoss={getUserProfitLoss}
+      />
+    </>
   );
 };
 

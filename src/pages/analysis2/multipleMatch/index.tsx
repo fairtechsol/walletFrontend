@@ -318,7 +318,7 @@ const MultipleMatchHorseRacing = () => {
                               </Typography>
                               <MatchOddsHorseRacing
                                 currentMatch={item}
-                                typeOfBet={"Match Odds"}
+                                typeOfBet="Match Odds"
                                 showBox={
                                   item?.matchOdd?.activeStatus === "save"
                                 }
@@ -514,7 +514,6 @@ const MultipleMatchHorseRacing = () => {
               flexDirection: { matchesMobile: "column", lg: "row" },
               flex: 1,
               height: "100%",
-              // marginX: "0.5%",
               marginLeft: "0.5%",
             }}
           >
@@ -589,7 +588,7 @@ const MultipleMatchHorseRacing = () => {
                         </Typography>
                         <MatchOddsHorseRacing
                           currentMatch={item}
-                          typeOfBet={"Match Odds"}
+                          typeOfBet="Match Odds"
                           showBox={item?.matchOdd?.activeStatus === "save"}
                           minBet={Math.floor(item?.matchOdd?.minBet)}
                           maxBet={Math.floor(item?.matchOdd?.maxBet)}
@@ -641,10 +640,10 @@ const MultipleMatchHorseRacing = () => {
                 }}
               >
                 <UserProfitLossRace
-                  title={"User Profit Loss"}
+                  title="User Profit Loss"
                   matchData={storedMatchData}
                   setShowUserProfitLoss={setShowUserProfitLoss}
-                  single={"multiple"}
+                  single="multiple"
                   matchDetail={storedMatchData?.match}
                 />
               </Box>

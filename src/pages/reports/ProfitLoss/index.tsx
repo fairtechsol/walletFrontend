@@ -108,7 +108,7 @@ const ProfitLossReport = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <ProfitLossHeader
         title="Profit/Loss"
         onClick={handleClick}
@@ -132,22 +132,19 @@ const ProfitLossReport = () => {
       >
         Profit/Loss for Event Type
       </Typography>
-
-      <Box>
-        <ProfitLossTableComponent
-          show={show}
-          setShow={setShow}
-          startDate={startDate}
-          endDate={endDate}
-          eventData={totalProfitLossList && totalProfitLossList}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          setCurrentPage={setCurrentPage}
-          userProfitLoss={userProfitLoss}
-          getUserProfitLoss={getUserProfitLoss}
-        />
-      </Box>
-    </div>
+      <ProfitLossTableComponent
+        show={show}
+        setShow={setShow}
+        startDate={startDate}
+        endDate={endDate}
+        eventData={totalProfitLossList && totalProfitLossList}
+        currentPage={currentPage}
+        pageCount={pageCount}
+        setCurrentPage={setCurrentPage}
+        userProfitLoss={userProfitLoss}
+        getUserProfitLoss={getUserProfitLoss}
+      />
+    </>
   );
 };
 

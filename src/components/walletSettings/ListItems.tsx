@@ -6,27 +6,25 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import ListHeader from "./ListHeader";
-import ListBody from "./ListBody";
-import DepositComponent from "../listOfClients/RowModalComponents/DepositComponent";
-import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawComponent";
-import SetCreditComponent from "../listOfClients/RowModalComponents/SetCreditComponent";
-import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockComponent";
-import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
-import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
 import {
   getUsersProfile,
   handleSettleCommission,
   userListSuccessReset,
 } from "../../store/actions/user/userAction";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
+import DepositComponent from "../listOfClients/RowModalComponents/DepositComponent";
+import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockComponent";
+import SetCreditComponent from "../listOfClients/RowModalComponents/SetCreditComponent";
+import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
+import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawComponent";
+import ListBody from "./ListBody";
+import ListHeader from "./ListHeader";
 
-const ListItems = (props: any) => {
-  const { title, currentPage } = props;
+const ListItems = () => {
   const navigate = useNavigate();
   const [isSliderVisible, setIsSliderVisible] = useState(false);
   const [selected, setSelected] = useState<any>(null);
@@ -121,7 +119,7 @@ const ListItems = (props: any) => {
               },
             ]}
           >
-            {title}
+            Wallet
           </Typography>
         </Box>
         <Box
@@ -177,7 +175,6 @@ const ListItems = (props: any) => {
                   navigate={navigate}
                   titleBackgroundColor="#27AC1E"
                   onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
                 />
               )}
               {selected == 1 && (
@@ -190,7 +187,6 @@ const ListItems = (props: any) => {
                   }}
                   titleBackgroundColor="#ff0000"
                   onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
                 />
               )}
               {selected == 2 && (
@@ -202,7 +198,6 @@ const ListItems = (props: any) => {
                     setSelected(null);
                   }}
                   onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
                 />
               )}
               {selected == 4 && (
@@ -214,7 +209,6 @@ const ListItems = (props: any) => {
                   }}
                   walletAccountDetail={profileDetail}
                   onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
                 />
               )}
               {selected == 5 && (
@@ -226,7 +220,6 @@ const ListItems = (props: any) => {
                     setSelected(null);
                   }}
                   onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
                 />
               )}
             </Box>
@@ -234,7 +227,6 @@ const ListItems = (props: any) => {
           {selected === null && (
             <Box
               sx={{
-                // flex: 1,
                 display: "flex",
                 flexDirection: {
                   xs: "row",
@@ -250,14 +242,13 @@ const ListItems = (props: any) => {
               }}
             >
               <BoxButton
-                color={"#0B4F26"}
+                color="#0B4F26"
                 onClick={() => {
                   setSelected(0);
                 }}
-                title={"Deposit"}
+                title="Deposit"
                 isSelected={selected == 0}
                 containerStyle={{
-                  // marginLeft: { lg: "8px", xs: "0" },
                   flex: 1,
                   borderColor: "white",
                 }}
@@ -267,31 +258,28 @@ const ListItems = (props: any) => {
                 labelStyle={{}}
               />
               <BoxButton
-                color={"#0B4F26"}
+                color="#0B4F26"
                 onClick={() => {
                   setSelected(1);
                 }}
                 containerStyle={{
-                  // marginLeft: { lg: "10px", xs: "0" },
                   flex: 1,
                   borderColor: "white",
                 }}
                 titleStyle={{
                   fontSize: { xs: "12px" },
                 }}
-                // isSelected={selected == 1}
-                title={"Withdraw"}
+                title="Withdraw"
                 labelStyle={{}}
               />
               <BoxButton
-                color={"#0B4F26"}
+                color="#0B4F26"
                 onClick={(e: any) => {
                   e?.preventDefault();
                   setSettlementUserModal(true);
                 }}
-                title={"C_Settlement"}
+                title="C_Settlement"
                 containerStyle={{
-                  // marginLeft: { lg: "10px", xs: "0" },
                   flex: 1,
                   borderColor: "white",
                 }}
@@ -300,30 +288,13 @@ const ListItems = (props: any) => {
                 }}
                 labelStyle={{}}
               />
-              {/* <BoxButton
-                  color={"#0B4F26"}
-                  onClick={() => {
-                    setSelected(3);
-                  }}
-                  title={"Change Password"}
-                  isSelected={selected == 3}
-                  containerStyle={{
-                    marginLeft: { lg: "10px", xs: "0" },
-                    flex: 1,
-                    borderColor: "white",
-                  }}
-                  titleStyle={{
-                    fontSize: { xs: "12px" },
-                  }}
-                /> */}
               <BoxButton
-                color={"#0B4F26"}
+                color="#0B4F26"
                 onClick={() => {
                   setSelected(4);
                 }}
-                title={"Lock/Unlock"}
+                title="Lock/Unlock"
                 containerStyle={{
-                  // marginLeft: { lg: "10px", xs: "0" },
                   flex: 1,
                   borderColor: "white",
                 }}
@@ -333,11 +304,11 @@ const ListItems = (props: any) => {
                 isSelected={selected == 4}
               />
               <BoxButton
-                color={"#0B4F26"}
+                color="#0B4F26"
                 onClick={() => {
                   setSelected(2);
                 }}
-                title={"set Credit Reference"}
+                title="set Credit Reference"
                 isSelected={selected == 2}
                 labelStyle={{}}
                 containerStyle={{
@@ -349,7 +320,7 @@ const ListItems = (props: any) => {
                 }}
               />
               <BoxButton
-                color={"#0B4F26"}
+                color="#0B4F26"
                 onClick={() => {
                   setSelected(5);
                 }}
@@ -372,7 +343,7 @@ const ListItems = (props: any) => {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  {"Are you sure want to settle this commission ?"}
+                  Are you sure want to settle this commission ?
                 </DialogTitle>
                 <DialogActions>
                   <Button
@@ -386,7 +357,6 @@ const ListItems = (props: any) => {
                       dispatch(
                         handleSettleCommission({
                           userId: profileDetail?.id,
-                          // domain: profileDetail?.domain,
                         })
                       );
                     }}

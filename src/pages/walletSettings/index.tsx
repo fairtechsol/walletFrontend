@@ -11,7 +11,7 @@ const WalletSettings = () => {
     dispatch(getUsersProfile());
   }, []);
 
-  return <ListItems title={"Wallet"} />;
+  return <ListItems />;
 };
 
 export default WalletSettings;

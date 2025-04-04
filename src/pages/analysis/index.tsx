@@ -115,197 +115,195 @@ const Analysis = () => {
   }, []);
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        flexDirection: "column",
+        margin: "0.5%",
+      }}
+    >
       <Box
         sx={{
-          display: "flex",
           width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexDirection: "column",
-          margin: "0.5%",
         }}
       >
         <Box
           sx={{
-            width: "100%",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
+            justifyContent: "space-between",
+            marginX: ".5%",
+            padding: { xs: "5px", lg: "0px 8px" },
+            flexDirection: { xs: "column", md: "row", lg: "row" },
+            width: "100%",
+            marginY: { xs: "1%", md: "1%", lg: "0" },
           }}
         >
-          <Box
+          <Typography
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginX: ".5%",
-              padding: { xs: "5px", lg: "0px 8px" },
-              flexDirection: { xs: "column", md: "row", lg: "row" },
+              fontSize: "16px",
+              color: "white",
               width: "100%",
-              marginY: { xs: "1%", md: "1%", lg: "0" },
+              fontWeight: "700",
+              marginY: "0.5%",
+              marginLeft: "5px",
+              alignSelf: "start",
             }}
           >
-            <Typography
+            MARKET ANALYSIS
+          </Typography>
+          {mode == "0" && (
+            <Box
               sx={{
-                fontSize: "16px",
-                color: "white",
+                display: "flex",
                 width: "100%",
-                fontWeight: "700",
-                marginY: "0.5%",
-                marginLeft: "5px",
-                alignSelf: "start",
+                justifyContent: {
+                  xs: "center",
+                  md: "flex-end",
+                  lg: "flex-end",
+                  marginRight: "0.5%",
+                },
               }}
             >
-              MARKET ANALYSIS
-            </Typography>
-            {mode == "0" && (
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  justifyContent: {
-                    xs: "center",
-                    md: "flex-end",
-                    lg: "flex-end",
-                    marginRight: "0.5%",
-                  },
+              <CustomBox
+                onClick={() => {
+                  handleClick("2");
                 }}
-              >
-                <CustomBox
-                  onClick={() => {
-                    handleClick("2");
-                  }}
-                  title="2 Match Screen"
-                />
-                <Box sx={{ width: "10px" }} />
-                <CustomBox
-                  onClick={() => {
-                    handleClick("3");
-                  }}
-                  title="3 Match Screen"
-                />
-                <Box sx={{ width: "10px" }} />
-                <CustomBox
-                  onClick={() => {
-                    handleClick("4");
-                  }}
-                  title="4 Match Screen"
-                />
-              </Box>
-            )}
-            {mode == "1" && (
-              <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
-                <CustomBox
-                  bg="#E32A2A"
-                  onClick={() => {
+                title="2 Match Screen"
+              />
+              <Box sx={{ width: "10px" }} />
+              <CustomBox
+                onClick={() => {
+                  handleClick("3");
+                }}
+                title="3 Match Screen"
+              />
+              <Box sx={{ width: "10px" }} />
+              <CustomBox
+                onClick={() => {
+                  handleClick("4");
+                }}
+                title="4 Match Screen"
+              />
+            </Box>
+          )}
+          {mode == "1" && (
+            <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
+              <CustomBox
+                bg="#E32A2A"
+                onClick={() => {
+                  setMode("0");
+                  setSelected([]);
+                  setMatchIds([]);
+                }}
+                title="Cancel"
+              />
+              <CustomBox
+                onClick={() => {
+                  if (max == "2") {
+                    if (selected.length != 2) {
+                      toast.error("Select 2 matches");
+                      return;
+                    }
+                  } else if (max == "3") {
+                    if (selected.length != 3) {
+                      toast.error("Select 3 matches");
+                      return;
+                    }
+                  } else if (max == "4") {
+                    if (selected.length != 4) {
+                      toast.error("Select 4 matches");
+                      return;
+                    }
+                  }
+                  if (selected) {
                     setMode("0");
                     setSelected([]);
                     setMatchIds([]);
-                  }}
-                  title="Cancel"
-                />
-                <CustomBox
-                  onClick={() => {
-                    if (max == "2") {
-                      if (selected.length != 2) {
-                        toast.error("Select 2 matches");
-                        return;
-                      }
-                    } else if (max == "3") {
-                      if (selected.length != 3) {
-                        toast.error("Select 3 matches");
-                        return;
-                      }
-                    } else if (max == "4") {
-                      if (selected.length != 4) {
-                        toast.error("Select 4 matches");
-                        return;
-                      }
-                    }
-                    if (selected) {
-                      setMode("0");
-                      setSelected([]);
-                      setMatchIds([]);
-                    }
-                    if (max == "3") {
-                      navigate(`/wallet/market_analysis/multiple_Match`, {
-                        state: {
-                          match: Number(max),
-                          matchIds: matchIds,
-                          matchType: selectedMatchType,
-                        },
-                      });
-                    } else {
-                      navigate(`/wallet/market_analysis/multiple_Match`, {
-                        state: {
-                          match: Number(max),
-                          matchIds: matchIds,
-                          matchType: selectedMatchType,
-                        },
-                      });
-                    }
-                  }}
-                  title="Submit"
-                />
-                <Box sx={{ width: "10px" }} />
-              </Box>
-            )}
-          </Box>
-        </Box>
-        {loading ? (
-          <Box
-            sx={{
-              height: "60vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Loader />
-          </Box>
-        ) : analysisList?.matches?.length > 0 ? (
-          <>
-            {analysisList?.matches?.map((match: any) => {
-              return (
-                <MatchListComponent
-                  key={match?.id}
-                  data={match}
-                  setSelected={() => changeSelected(match)}
-                  mode={mode}
-                  selected={!selected.includes(match.id as never)}
-                  title={match?.title}
-                  team={match?.teamA}
-                  team2={match?.teamB}
-                />
-              );
-            })}
-            <div style={{ marginTop: "15px" }}>
-              <Pagination
-                page={currentPage}
-                className={`${classes.whiteTextPagination} d-flex justify-content-center`}
-                count={Math.ceil(
-                  parseInt(analysisList?.count ? analysisList?.count : 1) /
-                    Constants.pageLimit
-                )}
-                color="primary"
-                onChange={(_: any, value: number) => {
-                  setCurrentPage(value);
+                  }
+                  if (max == "3") {
+                    navigate(`/wallet/market_analysis/multiple_Match`, {
+                      state: {
+                        match: Number(max),
+                        matchIds: matchIds,
+                        matchType: selectedMatchType,
+                      },
+                    });
+                  } else {
+                    navigate(`/wallet/market_analysis/multiple_Match`, {
+                      state: {
+                        match: Number(max),
+                        matchIds: matchIds,
+                        matchType: selectedMatchType,
+                      },
+                    });
+                  }
                 }}
+                title="Submit"
               />
-            </div>
-          </>
-        ) : (
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell style={{ color: "white", textAlign: "center" }}>
-                  No Record Found...
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        )}
+              <Box sx={{ width: "10px" }} />
+            </Box>
+          )}
+        </Box>
       </Box>
-    </>
+      {loading ? (
+        <Box
+          sx={{
+            height: "60vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Loader />
+        </Box>
+      ) : analysisList?.matches?.length > 0 ? (
+        <>
+          {analysisList?.matches?.map((match: any) => {
+            return (
+              <MatchListComponent
+                key={match?.id}
+                data={match}
+                setSelected={() => changeSelected(match)}
+                mode={mode}
+                selected={!selected.includes(match.id as never)}
+                title={match?.title}
+                team={match?.teamA}
+                team2={match?.teamB}
+              />
+            );
+          })}
+          <div style={{ marginTop: "15px" }}>
+            <Pagination
+              page={currentPage}
+              className={`${classes.whiteTextPagination} d-flex justify-content-center`}
+              count={Math.ceil(
+                parseInt(analysisList?.count ? analysisList?.count : 1) /
+                  Constants.pageLimit
+              )}
+              color="primary"
+              onChange={(_: any, value: number) => {
+                setCurrentPage(value);
+              }}
+            />
+          </div>
+        </>
+      ) : (
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell style={{ color: "white", textAlign: "center" }}>
+                No Record Found...
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
+    </Box>
   );
 };
 

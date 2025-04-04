@@ -116,7 +116,6 @@ const EditAccount = () => {
 
   const formik = useFormik({
     initialValues: formDataSchema,
-    //   validationSchema: addUserValidation,
     onSubmit: (values: any) => {
       const commonPayload = {
         id: state?.id,
@@ -273,7 +272,6 @@ const EditAccount = () => {
         console.warn(file.size);
         formik.setFieldValue("logo", file);
 
-        // Convert the image to base64
         const reader = new FileReader();
         reader.onloadend = () => {
           formik.setFieldValue("base64Image", reader.result);

@@ -96,9 +96,6 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      // matchListInplay?.matches?.map((item: any) => {
-      //   socketService.match.leaveMatchRoom(item?.id);
-      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
