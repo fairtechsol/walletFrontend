@@ -94,29 +94,6 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   }
 );
 
-export const getModalUserList = createAsyncThunk<any, RequestData | undefined>(
-  "user/modalList",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.get(
-        `${requestData?.url}?searchBy=${
-          requestData?.searchBy ? requestData?.searchBy : ""
-        }&userId=${requestData?.userId}&domain=${
-          requestData?.domain
-        }&roleName=${requestData?.roleName}&keyword=${
-          requestData?.userName ? requestData?.userName : ""
-        }&page=${requestData?.currentPage}&limit=${Constants.pageLimit}`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
-
 export const getTotalBalance = createAsyncThunk<any, RequestData | undefined>(
   "user/balance",
   async (requestData, thunkApi) => {
@@ -452,23 +429,6 @@ export const getSearchClientList = createAsyncThunk<
   }
 });
 
-export const getChildUserProfitLoss = createAsyncThunk<any, string>(
-  "user/childProfitLoss",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.get(
-        `${ApiConstants.USER.CHILD_PROFIT_LOSS}/${requestData}`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      throw thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
-
 export const handleExport = createAsyncThunk<any, any>(
   "user/export",
   async (requestData, thunkApi) => {
@@ -485,7 +445,6 @@ export const handleExport = createAsyncThunk<any, any>(
 
       let blob = new Blob();
       if (requestData.type == "pdf") {
-        // window.open(`data:application/pdf;base64,${fileData}`, '_blank');
         const binaryData = new Uint8Array(
           atob(fileData)
             .split("")
@@ -498,21 +457,17 @@ export const handleExport = createAsyncThunk<any, any>(
             .split("")
             .map((char) => char.charCodeAt(0))
         );
-        // Create a Blob from the Uint8Array
         blob = new Blob([binaryData], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
       }
-      // Create a temporary URL for the Blob
       const url = window.URL.createObjectURL(blob);
-      // Create an <a> element and trigger the download
       const link = document.createElement("a");
       link.href = url;
       link.download = requestData?.name
         ? `${requestData?.name}`.replace(/[^\w\s]/g, "_")
         : "client_list";
       link.click();
-      // Clean up by revoking the URL
       window.URL.revokeObjectURL(url);
     } catch (error: any) {
       const err = error as AxiosError;
@@ -557,12 +512,6 @@ export const changeDeletePassword = createAsyncThunk<any, any>(
 
 export const updateBalanceOfLoggedUser = createAsyncThunk<any, any>(
   "/loggedUserBalance/update",
-  async (data) => {
-    return data;
-  }
-);
-export const handleModelActions = createAsyncThunk<any, any>(
-  "/user/handleModelActions",
   async (data) => {
     return data;
   }

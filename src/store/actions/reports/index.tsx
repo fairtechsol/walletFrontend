@@ -251,14 +251,10 @@ export const resetAccountStatement = createAction("statement/reset");
 export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");
 export const resetBetProfitLoss = createAction("betProfitLoss/reset");
 export const resetDomainProfitLoss = createAction("domainProfitLoss/reset");
-export const resetUpdateUserSearchId = createAction("updateUserSearchId/reset");
 export const resetSessionProfitLossCard = createAction(
   "sessionProfitLoss/resetCard"
 );
 export const resetBetProfitLossCard = createAction("betProfitLoss/resetCard");
 export const resetDomainProfitLossCard = createAction(
   "domainProfitLoss/resetCard"
-);
-export const resetUpdateUserSearchIdCard = createAction(
-  "updateUserSearchId/resetCard"
 );

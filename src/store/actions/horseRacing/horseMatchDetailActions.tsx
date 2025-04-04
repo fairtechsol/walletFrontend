@@ -25,23 +25,6 @@ export const getMatchDetailHorseRacing = createAsyncThunk<any, string>(
     }
   }
 );
-export const deleteHorseRacingBets = createAsyncThunk<any, any>(
-  "horseRacing/deleteBet",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.post(
-        `${ApiConstants.HORSERACING.MATCH.DELETE_BET}`,
-        { requestData }
-      );
-      if (resp?.data) {
-        return resp?.data;
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
 
 export const getUserProfitLossForRace = createAsyncThunk<any, any>(
   "userProfitLossData/forRace",
