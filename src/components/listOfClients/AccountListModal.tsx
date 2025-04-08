@@ -30,11 +30,27 @@ const AccountListTable = ({
     roleName,
     domain,
     searchBy,
-  }: any) => {
+  }: {
+    userName: string | null;
+    currentPage: number;
+    userId: string;
+    roleName: string;
+    domain: string;
+    searchBy: string | null;
+  }) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.USER.LIST}?userId=${userId}&searchBy=${searchBy}&keyword=${userName}&domain=${domain}&roleName=${roleName}&page=${currentPage}&limit=${Constants.pageLimit}&sort=user.betBlock:ASC,user.userBlock:ASC,user.userName:ASC`
-      );
+      const resp = await service.get(ApiConstants.USER.LIST, {
+        params: {
+          userId: userId || null,
+          searchBy,
+          keyword: userName,
+          domain: domain || null,
+          roleName: roleName || null,
+          page: currentPage || null,
+          limit: Constants.pageLimit || null,
+          sort: "user.betBlock:ASC,user.userBlock:ASC,user.userName:ASC",
+        },
+      });
       if (resp) {
         setNewData(resp?.data?.list);
         setDataCount(resp?.data?.count);
@@ -44,11 +60,23 @@ const AccountListTable = ({
     }
   };
 
-  const getTotalBalance = async ({ userId, roleName, domain }: any) => {
+  const getTotalBalance = async ({
+    userId,
+    roleName,
+    domain,
+  }: {
+    userId: string;
+    roleName: string;
+    domain: string;
+  }) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.USER.TOTAL_BALANCE}?userId=${userId}&roleName=${roleName}&domain=${domain}`
-      );
+      const resp = await service.get(ApiConstants.USER.TOTAL_BALANCE, {
+        params: {
+          userId,
+          roleName,
+          domain,
+        },
+      });
       if (resp) {
         setNewTotalBalance(resp?.data);
       }
@@ -65,10 +93,10 @@ const AccountListTable = ({
     });
     getUserList({
       userId: element?.id,
-      searchBy: "",
-      domain: domain ? domain : element?.domain ? element?.domain : "",
+      searchBy: null,
+      domain: domain ? domain : element?.domain ? element?.domain : null,
       roleName: element?.roleName,
-      userName: "",
+      userName: null,
       currentPage: currentPage,
     });
   }, [id, currentPage]);
@@ -115,9 +143,9 @@ const AccountListTable = ({
             }}
           >
             <SearchInput
-              placeholder={"Search User..."}
+              placeholder="Search User..."
               show={true}
-              searchFor={"userModalList"}
+              searchFor="userModalList"
               endpoint={endpoint}
               userId={id}
               roleName={element?.roleName}
@@ -140,69 +168,34 @@ const AccountListTable = ({
           <Box sx={{ display: matchesBreakPoint ? "inline-block" : "block" }}>
             <ListHeaderRow />
             <SubHeaderListRow data={newTotalBalance} />
-            {newData?.map((newElement: any, i: any) => {
-              if (i % 2 === 0) {
-                return (
-                  <AccountListRow
-                    key={i}
-                    callProfile={false}
-                    showCReport={true}
-                    showUserDetails={false}
-                    showOptions={true}
-                    show={true}
-                    containerStyle={{ background: "#FFE094" }}
-                    profit={(+newElement?.userBal?.profitLoss || 0) >= 0}
-                    fContainerStyle={{ background: "#0B4F26" }}
-                    fTextStyle={{ color: "white" }}
-                    element={
-                      element?.isUrl
-                        ? { ...newElement, isUrl: element?.isUrl }
-                        : newElement
-                    }
-                    domain={
-                      domain
-                        ? domain
-                        : newElement?.domain
-                        ? newElement?.domain
-                        : ""
-                    }
-                    currentPage={currentPage}
-                    showDownIcon={element?.isUrl || newElement?.isUrl}
-                  />
-                );
-              } else {
-                return (
-                  <AccountListRow
-                    key={i}
-                    callProfile={false}
-                    showUserDetails={false}
-                    showOptions={true}
-                    showCReport={true}
-                    show={true}
-                    // showChildModal={true}
-                    containerStyle={{ background: "#ECECEC" }}
-                    profit={(+newElement?.userBal?.profitLoss || 0) >= 0}
-                    fContainerStyle={{ background: "#F8C851" }}
-                    fTextStyle={{ color: "#0B4F26" }}
-                    element={
-                      element?.isUrl
-                        ? { ...newElement, isUrl: element?.isUrl }
-                        : newElement
-                    }
-                    domain={
-                      domain
-                        ? domain
-                        : newElement?.domain
-                        ? newElement?.domain
-                        : ""
-                    }
-                    // getListOfUser={getListOfUser}
-                    currentPage={currentPage}
-                    showDownIcon={element?.isUrl || newElement?.isUrl}
-                  />
-                );
-              }
-            })}
+            {newData?.map((newElement: any, i: any) => (
+              <AccountListRow
+                key={i}
+                callProfile={false}
+                showCReport={true}
+                showUserDetails={false}
+                showOptions={true}
+                show={true}
+                containerStyle={{
+                  background: i % 2 === 0 ? "#FFE094" : "#ECECEC",
+                }}
+                profit={(+newElement?.userBal?.profitLoss || 0) >= 0}
+                fContainerStyle={{
+                  background: i % 2 === 0 ? "#0B4F26" : "#F8C851",
+                }}
+                fTextStyle={{ color: i % 2 === 0 ? "white" : "#0B4F26" }}
+                element={
+                  element?.isUrl
+                    ? { ...newElement, isUrl: element?.isUrl }
+                    : newElement
+                }
+                domain={
+                  domain ? domain : newElement?.domain ? newElement?.domain : ""
+                }
+                currentPage={currentPage}
+                showDownIcon={element?.isUrl || newElement?.isUrl}
+              />
+            ))}
           </Box>
         </Box>
         <Pagination

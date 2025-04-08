@@ -57,7 +57,7 @@ export const getMyAccountDetails = createAsyncThunk<any>(
   "user/getMyAccountDetails",
   async (_, thunkApi) => {
     try {
-      const resp = await service.get(`${ApiConstants.USER.BALANCE}`);
+      const resp = await service.get(ApiConstants.USER.BALANCE);
       if (resp) {
         const data = resp?.data?.response;
         return data;
@@ -73,17 +73,17 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
   "user/list",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${requestData?.url?.endpoint}?searchBy=${
-          requestData?.searchBy ? requestData?.searchBy : ""
-        }&keyword=${requestData?.userName ? requestData?.userName : ""}&${
-          requestData?.url?.endpoint === ApiConstants.USER.EXPERTLIST
+      const resp = await service.get(requestData?.url?.endpoint, {
+        params: {
+          sort: "user.betBlock:ASC,user.userBlock:ASC,user.userName:ASC",
+          limit: Constants.pageLimit,
+          searchBy: requestData?.searchBy,
+          keyword: requestData?.userName,
+          [requestData?.url?.endpoint === ApiConstants.USER.EXPERTLIST
             ? "offset"
-            : "page"
-        }=${requestData?.currentPage}&limit=${
-          Constants.pageLimit
-        }&sort=user.betBlock:ASC,user.userBlock:ASC,user.userName:ASC`
-      );
+            : "page"]: requestData?.currentPage,
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -96,15 +96,9 @@ export const getUserList = createAsyncThunk<any, RequestData | undefined>(
 
 export const getTotalBalance = createAsyncThunk<any, RequestData | undefined>(
   "user/balance",
-  async (requestData, thunkApi) => {
+  async (_, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.USER.TOTAL_BALANCE}?userId=${
-          requestData?.userId ? requestData?.userId : ""
-        }&roleName=${
-          requestData?.roleName ? requestData?.roleName : ""
-        }&domain=${requestData?.domain ? requestData?.domain : ""}`
-      );
+      const resp = await service.get(ApiConstants.USER.TOTAL_BALANCE);
       if (resp) {
         return resp?.data;
       }
@@ -120,7 +114,7 @@ export const addUser = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.ADDFGADMIN}`,
+        ApiConstants.USER.ADDFGADMIN,
         requestData
       );
       if (resp) {
@@ -137,10 +131,7 @@ export const addExpert = createAsyncThunk<any, any>(
   "user/addExpert",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${ApiConstants.USER.ADDEXPERT}`,
-        requestData
-      );
+      const resp = await service.post(ApiConstants.USER.ADDEXPERT, requestData);
       if (resp) {
         return resp?.data;
       }
@@ -156,7 +147,7 @@ export const addUrlAdmin = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.ADDURLADMIN}`,
+        ApiConstants.USER.ADDURLADMIN,
         requestData
       );
       if (resp) {
@@ -174,7 +165,7 @@ export const updateUrlAdmin = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.UPDATEURLADMIN}`,
+        ApiConstants.USER.UPDATEURLADMIN,
         requestData
       );
       if (resp) {
@@ -191,10 +182,7 @@ export const updateUser = createAsyncThunk<any, any>(
   "user/updateUser",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${ApiConstants.USER.UPDATE}`,
-        requestData
-      );
+      const resp = await service.post(ApiConstants.USER.UPDATE, requestData);
       if (resp) {
         return resp?.data;
       }
@@ -209,7 +197,7 @@ export const updateExpert = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.UPDATEEXPERT}`,
+        ApiConstants.USER.UPDATEEXPERT,
         requestData
       );
       if (resp) {
@@ -226,7 +214,7 @@ export const getUsersProfile = createAsyncThunk(
   "user/profile",
   async (_, thunkApi) => {
     try {
-      const resp = await service.get(`${ApiConstants.USER.PROFILE}`);
+      const resp = await service.get(ApiConstants.USER.PROFILE);
       if (resp) {
         if (resp?.data[0][0].loginAt === null) {
           window.location.replace("/wallet/login");
@@ -245,9 +233,11 @@ export const getUsersDetail = createAsyncThunk<any, string>(
   "user/detail",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.USER.PROFILE}?userId=${requestData}`
-      );
+      const resp = await service.get(ApiConstants.USER.PROFILE, {
+        params: {
+          userId: requestData,
+        },
+      });
       if (resp) {
         return resp?.data[0][0];
       }
@@ -262,10 +252,7 @@ export const changeAmmountUser = createAsyncThunk<any, any>(
   "balance/update",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return resp?.data;
       }
@@ -280,7 +267,7 @@ export const handleSettleCommission = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.COMMISSION_SETTLEMENT}`,
+        ApiConstants.USER.COMMISSION_SETTLEMENT,
         requestData
       );
       if (resp) {
@@ -311,7 +298,7 @@ export const marqueeNotification = createAsyncThunk<any>(
   "expert/notification",
   async (_, thunkApi) => {
     try {
-      const resp = await service.get(`${ApiConstants.USER.MARQUEE}`);
+      const resp = await service.get(ApiConstants.USER.MARQUEE);
       if (resp) {
         return resp?.data;
       }
@@ -326,10 +313,7 @@ export const setCreditRefference = createAsyncThunk<any, any>(
   "user/update/creditreferrence",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return resp?.data;
       }
@@ -344,10 +328,7 @@ export const setExposureLimit = createAsyncThunk<any, any>(
   "user/update/exposurelimit",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return resp?.data;
       }
@@ -362,10 +343,7 @@ export const setLockUnlockUser = createAsyncThunk<any, any>(
   "/user/lockUnlockUser",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return { ...resp?.data, requestData };
       }
@@ -379,10 +357,7 @@ export const setLockUnlockUserExpert = createAsyncThunk<any, any>(
   "/user/lockUnlockUserExpert",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return { ...resp?.data, requestData };
       }
@@ -398,9 +373,11 @@ export const getAlreadyUserExist = createAsyncThunk<
   SearchUsers | undefined
 >("user/clientName", async (requestData, thunkApi) => {
   try {
-    const resp = await service.get(
-      `${ApiConstants.USER.ALREADY_EXIST}?userName=${requestData}`
-    );
+    const resp = await service.get(ApiConstants.USER.ALREADY_EXIST, {
+      params: {
+        userName: requestData,
+      },
+    });
     if (resp) {
       return resp?.data?.isUserExist;
     }
@@ -415,11 +392,12 @@ export const getSearchClientList = createAsyncThunk<
   SearchUsers | undefined
 >("user/clientList", async (requestData, thunkApi) => {
   try {
-    const resp = await service.get(
-      `${ApiConstants.USER.ALREADY_SEARCHLIST}?userName=${
-        requestData?.userName
-      }${requestData?.isUser ? "&isUser=true" : ""}`
-    );
+    const resp = await service.get(ApiConstants.USER.ALREADY_SEARCHLIST, {
+      params: {
+        userName: requestData?.userName,
+        isUser: requestData?.isUser ? true : null,
+      },
+    });
     if (resp) {
       return resp?.data;
     }
@@ -433,13 +411,14 @@ export const handleExport = createAsyncThunk<any, any>(
   "user/export",
   async (requestData, thunkApi) => {
     try {
-      const response = await service.get(
-        `${requestData.endPoint}?type=${requestData.type}&userId=${
-          requestData.userId ? requestData.userId : ""
-        }&domain=${requestData.domain ? requestData.domain : ""}&roleName=${
-          requestData.roleName ? requestData.roleName : ""
-        }`
-      );
+      const response = await service.get(requestData.endPoint, {
+        params: {
+          type: requestData.type,
+          userId: requestData.userId,
+          domain: requestData.domain,
+          roleName: requestData.roleName,
+        },
+      });
 
       const fileData = response?.data?.file;
 

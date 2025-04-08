@@ -25,7 +25,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
           paddingX: "10px",
         }}
       >
-        <Typography sx={{ color: "white", fontSize: "10px" }}></Typography>
+        <Typography sx={{ color: "white", fontSize: "10px" }} />
       </Box>
       <Box
         sx={{

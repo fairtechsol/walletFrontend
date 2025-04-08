@@ -8,13 +8,10 @@ import SearchInput from "../Common/SearchInput";
 import StyledImage from "../Common/StyledImages";
 
 const HeaderRow = ({
-  getListOfUser,
   endpoint,
   searchFor,
   downloadPdfExcel,
-  pageLimit,
   setCurrentPage,
-  setSearchValue,
 }: any) => {
   const dispatch: AppDispatch = useDispatch();
   const { profileDetail } = useSelector(
@@ -22,7 +19,7 @@ const HeaderRow = ({
   );
   return (
     <Box
-      display={"flex"}
+      display="flex"
       sx={{
         justifyContent: "space-between",
         px: "10px",
@@ -89,13 +86,10 @@ const HeaderRow = ({
         )}
       </Box>
       <SearchInput
-        placeholder={"Search User..."}
+        placeholder="Search User..."
         show={true}
         searchFor={searchFor}
         endpoint={ApiConstants.USER.LIST}
-        getListOfUser={getListOfUser}
-        pageLimit={pageLimit}
-        onChange={setSearchValue}
         setCurrentPage={setCurrentPage}
       />
     </Box>
