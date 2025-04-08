@@ -1,23 +1,22 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
+  Box,
+  Button,
+  Paper,
+  Radio,
+  styled,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
-  Paper,
-  styled,
-  Box,
-  Button,
-  Radio,
 } from "@mui/material";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getRateMarketAnalysis } from "../../store/actions/horseRacing/analysisActions";
+import { AppDispatch, RootState } from "../../store/store";
 
 const YellowButton = styled("button")(() => ({
   backgroundColor: "#F8C851",
@@ -89,7 +88,7 @@ const RacingListComponentAnalysis = ({
                           zIndex: 1,
                           pointerEvents: "none",
                         }}
-                      ></div>
+                      />
                     )}
                     <TableCell
                       sx={{

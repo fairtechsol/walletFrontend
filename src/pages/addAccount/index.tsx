@@ -595,7 +595,6 @@ const AddAccount = () => {
                     }}
                   />
                 </Box>
-
                 <Box
                   sx={{
                     pb:

@@ -11,6 +11,7 @@ import FullAllBetsRow from "./FullAllBetsRow";
 const ITEMS_PER_PAGE = 100;
 const BUFFER_SIZE = 30;
 const ROW_HEIGHT = 35;
+
 const FullAllBets = ({
   tag,
   mode,

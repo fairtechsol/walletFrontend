@@ -246,13 +246,13 @@ const Analysis2 = () => {
           {mode == "1" && (
             <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
               <CustomBox
-                bg={"#E32A2A"}
+                bg="#E32A2A"
                 onClick={() => {
                   setMode("0");
                   setSelected([]);
                   setMatchIds([]);
                 }}
-                title={"Cancel"}
+                title="Cancel"
               />
               <CustomBox onClick={handleSubmit} title="Submit" />
               <Box sx={{ width: "10px" }}></Box>
@@ -293,7 +293,6 @@ const Analysis2 = () => {
               countryWiseList={countryWiseList}
               setSelectedCountryCode={setSelectedCountryCode}
               matchType={value}
-              mode={mode}
             />
           </Box>
           <Box>
