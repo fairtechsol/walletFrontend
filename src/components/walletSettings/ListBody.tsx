@@ -1,13 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import StyledImage from "../Common/StyledImages";
 import { LockIcon, UnLockIcon } from "../../assets";
 import { formatToINR } from "../../helper";
+import StyledImage from "../Common/StyledImages";
 
-const ListBody = ({
-  walletAccountDetail,
-  fContainerStyle,
-  fTextStyle,
-}: any) => {
+const ListBody = ({ walletAccountDetail }: any) => {
   return (
     <Box
       sx={[
@@ -22,35 +18,29 @@ const ListBody = ({
       ]}
     >
       <Box
-        sx={[
-          {
-            width: {
-              lg: "11.5vw",
-              md: "20.5vw",
-              xs: "18.5vw",
-            },
-            display: "flex",
-            paddingX: "10px",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "45px",
-            borderRight: "2px solid white",
+        sx={{
+          width: {
+            lg: "11.5vw",
+            md: "20.5vw",
+            xs: "18.5vw",
           },
-          fContainerStyle,
-        ]}
+          display: "flex",
+          paddingX: "10px",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "45px",
+          borderRight: "2px solid white",
+        }}
       >
         <Typography
-          sx={[
-            {
-              fontSize: "10px",
-              fontWeight: "600",
-              cursor: "pointer",
-              textTransform: "capitalize",
-              wordBreak: "break-all",
-              color: "white",
-            },
-            fTextStyle,
-          ]}
+          sx={{
+            fontSize: "10px",
+            fontWeight: "600",
+            cursor: "pointer",
+            textTransform: "capitalize",
+            wordBreak: "break-all",
+            color: "white",
+          }}
         >
           {walletAccountDetail?.userName}
         </Typography>

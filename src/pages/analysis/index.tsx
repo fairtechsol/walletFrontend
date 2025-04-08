@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -75,6 +75,47 @@ const Analysis = () => {
       setSelected([...selected, matchId]);
       setMatchIds([...selected, matchId]);
       if (!selectedMatchType) setSelectedMatchType(match.matchType);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (max == "2") {
+      if (selected.length != 2) {
+        toast.error("Select 2 matches");
+        return;
+      }
+    } else if (max == "3") {
+      if (selected.length != 3) {
+        toast.error("Select 3 matches");
+        return;
+      }
+    } else if (max == "4") {
+      if (selected.length != 4) {
+        toast.error("Select 4 matches");
+        return;
+      }
+    }
+    if (selected) {
+      setMode("0");
+      setSelected([]);
+      setMatchIds([]);
+    }
+    if (max == "3") {
+      navigate(`/wallet/market_analysis/multiple_Match`, {
+        state: {
+          match: Number(max),
+          matchIds: matchIds,
+          matchType: selectedMatchType,
+        },
+      });
+    } else {
+      navigate(`/wallet/market_analysis/multiple_Match`, {
+        state: {
+          match: Number(max),
+          matchIds: matchIds,
+          matchType: selectedMatchType,
+        },
+      });
     }
   };
 
@@ -169,26 +210,15 @@ const Analysis = () => {
                 },
               }}
             >
-              <CustomBox
-                onClick={() => {
-                  handleClick("2");
-                }}
-                title="2 Match Screen"
-              />
-              <Box sx={{ width: "10px" }} />
-              <CustomBox
-                onClick={() => {
-                  handleClick("3");
-                }}
-                title="3 Match Screen"
-              />
-              <Box sx={{ width: "10px" }} />
-              <CustomBox
-                onClick={() => {
-                  handleClick("4");
-                }}
-                title="4 Match Screen"
-              />
+              {["2", "3", "4"].map((value: string, index: number) => (
+                <Fragment key={value}>
+                  <CustomBox
+                    onClick={() => handleClick(value)}
+                    title={`${value} Match Screen`}
+                  />
+                  {index !== 2 && <Box sx={{ width: "10px" }} />}
+                </Fragment>
+              ))}
             </Box>
           )}
           {mode == "1" && (
@@ -202,49 +232,7 @@ const Analysis = () => {
                 }}
                 title="Cancel"
               />
-              <CustomBox
-                onClick={() => {
-                  if (max == "2") {
-                    if (selected.length != 2) {
-                      toast.error("Select 2 matches");
-                      return;
-                    }
-                  } else if (max == "3") {
-                    if (selected.length != 3) {
-                      toast.error("Select 3 matches");
-                      return;
-                    }
-                  } else if (max == "4") {
-                    if (selected.length != 4) {
-                      toast.error("Select 4 matches");
-                      return;
-                    }
-                  }
-                  if (selected) {
-                    setMode("0");
-                    setSelected([]);
-                    setMatchIds([]);
-                  }
-                  if (max == "3") {
-                    navigate(`/wallet/market_analysis/multiple_Match`, {
-                      state: {
-                        match: Number(max),
-                        matchIds: matchIds,
-                        matchType: selectedMatchType,
-                      },
-                    });
-                  } else {
-                    navigate(`/wallet/market_analysis/multiple_Match`, {
-                      state: {
-                        match: Number(max),
-                        matchIds: matchIds,
-                        matchType: selectedMatchType,
-                      },
-                    });
-                  }
-                }}
-                title="Submit"
-              />
+              <CustomBox onClick={handleSubmit} title="Submit" />
               <Box sx={{ width: "10px" }} />
             </Box>
           )}
@@ -263,20 +251,18 @@ const Analysis = () => {
         </Box>
       ) : analysisList?.matches?.length > 0 ? (
         <>
-          {analysisList?.matches?.map((match: any) => {
-            return (
-              <MatchListComponent
-                key={match?.id}
-                data={match}
-                setSelected={() => changeSelected(match)}
-                mode={mode}
-                selected={!selected.includes(match.id as never)}
-                title={match?.title}
-                team={match?.teamA}
-                team2={match?.teamB}
-              />
-            );
-          })}
+          {analysisList?.matches?.map((match: any) => (
+            <MatchListComponent
+              key={match?.id}
+              data={match}
+              setSelected={() => changeSelected(match)}
+              mode={mode}
+              selected={!selected.includes(match.id as never)}
+              title={match?.title}
+              team={match?.teamA}
+              team2={match?.teamB}
+            />
+          ))}
           <div style={{ marginTop: "15px" }}>
             <Pagination
               page={currentPage}

@@ -2,15 +2,17 @@ import { Box } from "@mui/material";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 import SearchInput from "../../Common/SearchInput";
 
+interface ListHeaderRowProps {
+  setPageLimit: (value: number) => void;
+  pageLimit: number;
+  setCurrentPage: (value: number) => void;
+}
+
 const ListHeaderRow = ({
-  getLimitEntries,
   setPageLimit,
   pageLimit,
   setCurrentPage,
-  fromDate,
-  toDate,
-  setSearchValue,
-}: any) => {
+}: ListHeaderRowProps) => {
   return (
     <Box
       sx={{
@@ -29,21 +31,17 @@ const ListHeaderRow = ({
       }}
     >
       <NumberDropDown
-        getLimitEntries={getLimitEntries}
-        textColor={"000"}
+        textColor="#000"
         setPageLimit={setPageLimit}
         pageLimit={pageLimit}
         setCurrentPage={setCurrentPage}
       />
       <SearchInput
         show={true}
-        width={"100%"}
-        searchFor={"currentBets"}
-        placeholder={"Search..."}
-        fromDate={fromDate}
-        toDate={toDate}
+        width="100%"
+        searchFor="currentBets"
+        placeholder="Search..."
         pageLimit={pageLimit}
-        onChange={setSearchValue}
         setCurrentPage={setCurrentPage}
       />
     </Box>

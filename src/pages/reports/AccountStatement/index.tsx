@@ -110,7 +110,7 @@ const AccountStatement = () => {
         ]}
       >
         <ListHeaderRow
-          searchFor={"accountStatement"}
+          searchFor="accountStatement"
           pageLimit={pageLimit}
           setPageLimit={setPageLimit}
           setCurrentPage={setCurrentPage}
@@ -118,7 +118,6 @@ const AccountStatement = () => {
           toDate={toDate}
           setSearchValue={setSearchValue}
         />
-
         {loading ? (
           <Box
             sx={{
@@ -134,7 +133,6 @@ const AccountStatement = () => {
           <>
             <Box sx={{ overflowX: "scroll", width: "100%" }}>
               <TableHeaderList />
-
               {accountStatement?.transactions?.length > 0 ? (
                 accountStatement?.transactions?.map((item: any) => (
                   <TableDataRow

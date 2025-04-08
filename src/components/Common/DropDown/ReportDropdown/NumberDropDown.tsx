@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import SmallDropDown from "../../../report/AccountStatement/SmallDropDown";
 
 const NumberDropDown = ({
-  getLimitEntries,
   textColor,
   setPageLimit,
   pageLimit,
@@ -16,7 +15,6 @@ const NumberDropDown = ({
         Show
       </Typography>
       <SmallDropDown
-        getLimitEntries={getLimitEntries}
         pageLimit={pageLimit}
         setPageLimit={setPageLimit}
         setCurrentPage={setCurrentPage}

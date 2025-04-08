@@ -22,12 +22,12 @@ const ListHeaderRow = ({ getLimitEntries }: any) => {
       <NumberDropDown
         getLimitEntries={getLimitEntries}
         pageLimit={15}
-        textColor={"white"}
+        textColor="white"
       />
       <SearchInput
         show={true}
-        width={"100%"}
-        placeholder={"Search..."}
+        width="100%"
+        placeholder="Search..."
         endpoint={ApiConstants.USER.LIST}
         setCurrentPage={() => {}}
       />

@@ -243,7 +243,6 @@ const MatchComponent = ({
           <TeamDetailRow
             teamName={match.teamA}
             runnerNumber={0}
-            apiBasePath={"abc"}
             match={match}
           />
           {match.teamB && (
@@ -252,7 +251,6 @@ const MatchComponent = ({
               <TeamDetailRow
                 teamName={match.teamB}
                 runnerNumber={1}
-                apiBasePath={"abc"}
                 match={match}
               />
             </>
@@ -263,7 +261,6 @@ const MatchComponent = ({
               <TeamDetailRow
                 teamName={match.teamC}
                 runnerNumber={2}
-                apiBasePath={"abc"}
                 match={match}
               />
             </>

@@ -113,8 +113,8 @@ const ChangePassword = () => {
           >
             <Input
               required={true}
-              placeholder={"Enter Old Password"}
-              title={"Old Password"}
+              placeholder="Enter Old Password"
+              title="Old Password"
               titleStyle={{
                 color: "#222222",
                 marginLeft: "0px",
@@ -125,7 +125,7 @@ const ChangePassword = () => {
               img={eye}
               img1={eyeLock}
               id="oldPassword"
-              name={"oldPassword"}
+              name="oldPassword"
               onBlur={formik.handleBlur}
               type="password"
               value={formik.values.oldPassword}
@@ -138,9 +138,9 @@ const ChangePassword = () => {
             )}
             <Input
               required={true}
-              placeholder={"Enter New Password"}
-              title={"New Password"}
-              name={"newPassword"}
+              placeholder="Enter New Password"
+              title="New Password"
+              name="newPassword"
               id="newPassword"
               titleStyle={{
                 color: "#222222",
@@ -163,9 +163,9 @@ const ChangePassword = () => {
             )}
             <Input
               required={true}
-              placeholder={"Enter Confirm Password"}
-              title={"Confirm New Password"}
-              name={"confirmPassword"}
+              placeholder="Enter Confirm Password"
+              title="Confirm New Password"
+              name="confirmPassword"
               onBlur={formik.handleBlur}
               id="confirmPassword"
               titleStyle={{
@@ -208,7 +208,7 @@ const ChangePassword = () => {
             >
               <Typography
                 sx={{ fontSize: { lg: "18px", xs: "20px" } }}
-                color={"white"}
+                color="white"
               >
                 {loading ? (
                   <CircularProgress
@@ -240,8 +240,8 @@ const ChangePassword = () => {
               dispatch(logout());
             }
           }}
-          buttonMessage={"Navigate To Login"}
-          navigateTo={`/wallet/login`}
+          buttonMessage="Navigate To Login"
+          navigateTo="/wallet/login"
         />
       )}
     </>

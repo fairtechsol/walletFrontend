@@ -5,8 +5,8 @@ import { DataShowInterface } from "../../interface/myAccount";
 const DataShow = ({
   title,
   value,
-  value2,
-  value3,
+  valueProfitLoss,
+  valuePercentage,
   containerStyle,
   valueContainerStyle,
 }: DataShowInterface) => {
@@ -58,10 +58,10 @@ const DataShow = ({
             }}
           >
             {handleNumber(parseFloat(value), "white")}{" "}
-            {value3 ? `(${value3}%)` : value3 === 0 ? "(0%)" : null}
+            {valuePercentage ? `(${valuePercentage}%)` : valuePercentage === 0 ? "(0%)" : null}
           </Typography>
 
-          {value2 ? (
+          {valueProfitLoss ? (
             <Typography
               sx={{
                 fontSize: { lg: "11px", xs: "10px" },
@@ -71,7 +71,7 @@ const DataShow = ({
                 fontWeight: "600",
               }}
             >
-              {handleNumber(parseFloat(value2), "white")}
+              {handleNumber(parseFloat(valueProfitLoss), "white")}
             </Typography>
           ) : null}
         </Box>

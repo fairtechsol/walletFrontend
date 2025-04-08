@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-const ListHeader = ({ userName }: any) => {
+const ListHeader = ({ userName }: { userName: string }) => {
   return (
     <Box
       sx={{

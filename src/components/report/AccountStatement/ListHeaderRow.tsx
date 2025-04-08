@@ -4,7 +4,6 @@ import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown"
 import SearchInput from "../../Common/SearchInput";
 
 const ListHeaderRow = ({
-  getLimitEntries,
   getAccountStatement,
   searchFor,
   pageLimit,
@@ -30,10 +29,9 @@ const ListHeaderRow = ({
       }}
     >
       <NumberDropDown
-        getLimitEntries={getLimitEntries}
         setPageLimit={setPageLimit}
         pageLimit={pageLimit}
-        textColor={"000"}
+        textColor="#000"
         setCurrentPage={setCurrentPage}
       />
       <SearchInput
@@ -46,8 +44,8 @@ const ListHeaderRow = ({
         pageLimit={pageLimit}
         onChange={setSearchValue}
         setCurrentPage={setCurrentPage}
-        width={"100%"}
-        placeholder={"Search..."}
+        width="100%"
+        placeholder="Search..."
         inputContainerStyle={{
           width: { xs: "50vw", lg: "17vw" },
           marginLeft: "auto",

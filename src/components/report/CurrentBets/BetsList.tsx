@@ -6,7 +6,7 @@ import ListHeaderRow from "./ListHeaderRow";
 import TableDataRow from "./TableDataRow";
 import TableHeaderList from "./TableHeaderList";
 
-const BetsList = ({ getLimitEntries, betHistory }: any) => {
+const BetsList = ({ betHistory }: any) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageLimit, setPageLimit] = useState<number>(15);
 
@@ -49,7 +49,6 @@ const BetsList = ({ getLimitEntries, betHistory }: any) => {
       ]}
     >
       <ListHeaderRow
-        getLimitEntries={getLimitEntries}
         setPageLimit={setPageLimit}
         pageLimit={pageLimit}
         setCurrentPage={setCurrentPage}
@@ -78,23 +77,14 @@ const BetsList = ({ getLimitEntries, betHistory }: any) => {
           <EmptyRow containerStyle={{ background: "#FFE094" }} />
         )}
       </Box>
-
-      <Box
-        sx={{
-          width: "100%",
-          position: "absolute",
-        }}
-      >
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pages={Math.ceil(
-            parseInt(
-              betHistory && betHistory?.length ? betHistory?.length : 1
-            ) / pageLimit
-          )}
-        />
-      </Box>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        pages={Math.ceil(
+          parseInt(betHistory && betHistory?.length ? betHistory?.length : 1) /
+            pageLimit
+        )}
+      />
     </Box>
   );
 };

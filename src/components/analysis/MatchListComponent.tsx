@@ -6,6 +6,16 @@ import { CHECK } from "../../assets";
 import { IconConstants } from "../../helper/gameConstants";
 import StockBox from "./StockBox";
 
+interface MatchListComponentProps {
+  team: string;
+  team2: string;
+  selected: boolean;
+  mode: string;
+  data: any;
+  setSelected: () => void;
+  title: string;
+}
+
 const MatchListComponent = ({
   team,
   team2,
@@ -14,7 +24,7 @@ const MatchListComponent = ({
   data,
   setSelected,
   title,
-}: any) => {
+}: MatchListComponentProps) => {
   const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
@@ -362,7 +372,7 @@ const MatchListComponent = ({
                 position: "absolute",
                 right: 0,
               }}
-            ></Box>
+            />
           )}
           {selected && mode == "1" && (
             <Box
