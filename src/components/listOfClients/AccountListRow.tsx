@@ -1,7 +1,7 @@
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
@@ -89,20 +89,20 @@ const AccountListRow = (props: AccountListRowInterface) => {
         typeOfAmount === "deposite"
           ? baseValue + depositeValue
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue
-          : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue
-          : baseValue
+            ? baseValue - withdrawValue
+            : typeOfAmount === "credit" && creditValue
+              ? baseValue + element?.creditRefrence - creditValue
+              : baseValue
       );
     } else {
       return Number(
         typeOfAmount === "deposite"
           ? baseValue + depositeValue
           : typeOfAmount === "withdraw"
-          ? baseValue - withdrawValue
-          : typeOfAmount === "credit" && creditValue
-          ? baseValue + element?.creditRefrence - creditValue
-          : baseValue
+            ? baseValue - withdrawValue
+            : typeOfAmount === "credit" && creditValue
+              ? baseValue + element?.creditRefrence - creditValue
+              : baseValue
       );
     }
   };
@@ -117,41 +117,41 @@ const AccountListRow = (props: AccountListRowInterface) => {
       return Number(
         typeOfAmount === "deposite"
           ? (Number(+element?.userBal?.profitLoss + depositeValue) *
-              element?.upLinePartnership) /
-              100
+            element?.upLinePartnership) /
+          100
           : typeOfAmount === "credit" && creditValue
-          ? (Number(
+            ? (Number(
               +element?.userBal?.profitLoss +
-                element?.creditRefrence -
-                creditValue
+              element?.creditRefrence -
+              creditValue
             ) *
               element?.upLinePartnership) /
             100
-          : typeOfAmount === "withdraw"
-          ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
-              element?.upLinePartnership) /
-            100
-          : +element?.percentProfitLoss || 0
+            : typeOfAmount === "withdraw"
+              ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
+                element?.upLinePartnership) /
+              100
+              : +element?.percentProfitLoss || 0
       );
     } else {
       return Number(
         typeOfAmount === "deposite"
           ? (Number(+element?.userBal?.profitLoss + depositeValue) *
-              element?.upLinePartnership) /
-              100
+            element?.upLinePartnership) /
+          100
           : typeOfAmount === "credit" && creditValue
-          ? (Number(
+            ? (Number(
               +element?.userBal?.profitLoss +
-                element?.creditRefrence -
-                creditValue
+              element?.creditRefrence -
+              creditValue
             ) *
               element?.upLinePartnership) /
             100
-          : typeOfAmount === "withdraw"
-          ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
-              element?.upLinePartnership) /
-            100
-          : +element?.percentProfitLoss || 0
+            : typeOfAmount === "withdraw"
+              ? (Number(+element?.userBal?.profitLoss - withdrawValue) *
+                element?.upLinePartnership) /
+              100
+              : +element?.percentProfitLoss || 0
       );
     }
   };
@@ -207,6 +207,12 @@ const AccountListRow = (props: AccountListRowInterface) => {
     setExposureValue(0);
     setLockValue(null);
   };
+
+  useEffect(() => {
+    if (currentPage) {
+      setShowUserModal(false);
+    }
+  }, [currentPage]);
   return (
     <>
       <Box
@@ -466,8 +472,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   typeOfAmount === "deposite"
                     ? +element?.availableBalance + depositeValue
                     : typeOfAmount === "withdraw"
-                    ? +element?.availableBalance - withdrawValue
-                    : +element?.availableBalance || 0
+                      ? +element?.availableBalance - withdrawValue
+                      : +element?.availableBalance || 0
                 )}
               </>
             ) : (
@@ -475,8 +481,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                 typeOfAmount === "deposite"
                   ? +element?.availableBalance + depositeValue
                   : typeOfAmount === "withdraw"
-                  ? +element?.availableBalance - withdrawValue
-                  : +element?.availableBalance || 0
+                    ? +element?.availableBalance - withdrawValue
+                    : +element?.availableBalance || 0
               )
             )}
           </Typography>
@@ -499,8 +505,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   ? UnLockIcon
                   : LockIcon
                 : !element?.userBlock
-                ? UnLockIcon
-                : LockIcon
+                  ? UnLockIcon
+                  : LockIcon
             }
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
@@ -523,8 +529,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                   ? UnLockIcon
                   : LockIcon
                 : !element?.betBlock
-                ? UnLockIcon
-                : LockIcon
+                  ? UnLockIcon
+                  : LockIcon
             }
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
@@ -544,11 +550,11 @@ const AccountListRow = (props: AccountListRowInterface) => {
           <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
             {typeOfAmount === "exposure" && exposureValue > 0
               ? new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                  Number(exposureValue)
-                )
+                Number(exposureValue)
+              )
               : new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                  +element?.exposureLimit ? element?.exposureLimit : 0
-                )}
+                +element?.exposureLimit ? element?.exposureLimit : 0
+              )}
           </Typography>
         </Box>
         <Box
@@ -561,15 +567,13 @@ const AccountListRow = (props: AccountListRowInterface) => {
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>{`${
-            element.roleName ?? ""
-          } ${
-            element.roleName === "superAdmin"
+          <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>{`${element.roleName ?? ""
+            } ${element.roleName === "superAdmin"
               ? element?.isUrl
                 ? "(url)"
                 : ""
               : ""
-          }`}</Typography>{" "}
+            }`}</Typography>{" "}
         </Box>
       </Box>
 
@@ -695,23 +699,23 @@ const AccountListRow = (props: AccountListRowInterface) => {
 
                   {/* <Box sx={{ display: "flex" }}> */}
                   <Box sx={{ display: "flex" }}>
-                      <Typography
-                        variant="h5"
-                        sx={[
-                          {
-                            color: "white",
-                            textAlign: { lg: "left", xs: "left" },
-                            width: { lg: "150px", xs: "100px" },
-                          },
-                          fTextStyle,
-                        ]}
-                      >
-                        Session Com {": "}
-                        {element?.sessionCommission
-                          ? element?.sessionCommission
-                          : 0}
-                      </Typography>
-                  {/* <Typography
+                    <Typography
+                      variant="h5"
+                      sx={[
+                        {
+                          color: "white",
+                          textAlign: { lg: "left", xs: "left" },
+                          width: { lg: "150px", xs: "100px" },
+                        },
+                        fTextStyle,
+                      ]}
+                    >
+                      Session Com {": "}
+                      {element?.sessionCommission
+                        ? element?.sessionCommission
+                        : 0}
+                    </Typography>
+                    {/* <Typography
                         
                         sx={[
                           {
@@ -724,8 +728,8 @@ const AccountListRow = (props: AccountListRowInterface) => {
                       >
                     
                       </Typography> */}
-                  {/* </Box> */}
-                  {/* <Typography
+                    {/* </Box> */}
+                    {/* <Typography
                       
                       sx={[
                         {
@@ -929,7 +933,7 @@ const AccountListRow = (props: AccountListRowInterface) => {
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
           navigateTo={"list_of_clients"}
-          // title={`${element?.userName} - (Commission Report)`}
+        // title={`${element?.userName} - (Commission Report)`}
         ></Modal>
       )}
     </>
