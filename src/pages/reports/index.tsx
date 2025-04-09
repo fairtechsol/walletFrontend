@@ -9,7 +9,7 @@ const Reports = () => {
     { title: "Direct User Block", link: "" },
   ];
 
-  return <ListItems title={"Report"} menutItems1={menutItems1} />;
+  return <ListItems title="Report" menutItems1={menutItems1} />;
 };
 
 export default Reports;

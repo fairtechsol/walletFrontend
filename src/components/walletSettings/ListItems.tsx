@@ -53,10 +53,8 @@ const ListItems = () => {
 
   const classes = {
     Menusx: {
-      marginTop: { xs: "15px", lg: "30px", md: "18px" },
-      marginLeft: { xs: "5px", lg: "0", md: "0" },
-      paddingY: "0px",
-      padding: "0px",
+      margin: "1%",
+      fontFamily: "Poppins, sans-serif",
       width: { xs: "105%", lg: "100%", md: "100%" },
     },
     MenuListProps: { "aria-labelledby": "basic-button" },
@@ -107,16 +105,13 @@ const ListItems = () => {
     <Box sx={{ width: "100%" }}>
       <Box sx={classes.Menusx}>
         <Typography
-          sx={[
-            {
-              fontSize: { lg: "18px", xs: "16px" },
-              fontWeight: "600",
-              padding: { lg: "10px 37px", xs: "10px 20px" },
-              paddingBottom: "15px",
-              color: "#fff",
-              textTransform: "uppercase",
-            },
-          ]}
+          sx={{
+            fontSize: { lg: "18px", xs: "16px" },
+            fontWeight: "600",
+            color: "#fff",
+            marginLeft: "0.5%",
+            textTransform: "uppercase",
+          }}
         >
           Wallet
         </Typography>
@@ -124,9 +119,8 @@ const ListItems = () => {
       <Box
         sx={{
           background: "#F8C851",
-          marginLeft: { xs: "20px", lg: "37px" },
-          marginRight: "20px",
           padding: "10px",
+          margin: "1%",
           borderRadius: "5px",
         }}
       >
@@ -134,9 +128,9 @@ const ListItems = () => {
           style={{
             overflowX: "auto",
             maxWidth: "100%",
-            boxShadow: "inset 0 -3px 10px 0px #000000",
+            boxShadow: "inset 0 0 5px 0px #000000",
             position: "relative",
-            borderRadius: "10px",
+            borderRadius: "5px",
           }}
         >
           <Box

@@ -12,17 +12,13 @@ const ListItems = ({ menutItems1, title }: any) => {
   const [userBlockModal, setUserBlockModal] = useState(false);
   const classes = {
     Menusx: {
-      marginTop: { xs: "15px", lg: "30px", md: "18px" },
-      marginLeft: { xs: "5px", lg: "0", md: "0" },
-      paddingY: "0px",
-      padding: "0px",
+      margin: "1%",
       fontFamily: "Poppins, sans-serif",
       width: { xs: "105%", lg: "100%", md: "100%" },
     },
     MenuListProps: { "aria-labelledby": "basic-button" },
     MenuPaperProps: {
       sx: {
-        paddingY: "0px",
         padding: "0px",
         width: "100%",
         left: "1px !important",
@@ -42,7 +38,6 @@ const ListItems = ({ menutItems1, title }: any) => {
       marginTop: "0px",
       borderStyle: "solid",
       minHeight: { xs: "30px", lg: "40px" },
-      lineHeight: "18px",
       color: "black",
       "&:hover": {
         backgroundColor: "#e5b744",
@@ -66,10 +61,9 @@ const ListItems = ({ menutItems1, title }: any) => {
                 fontSize: { lg: "18px", xs: "16px" },
                 fontWeight: "600",
                 fontFamily: "Poppins, sans-serif",
-                padding: { lg: "10px 37px", xs: "10px 20px" },
-                paddingBottom: "15px",
                 color: "#fff",
                 textTransform: "uppercase",
+                marginLeft: "0.5%",
               },
             ]}
           >
@@ -79,9 +73,8 @@ const ListItems = ({ menutItems1, title }: any) => {
         <Box
           sx={{
             background: "#F8C851",
-            marginLeft: { xs: "20px", lg: "37px" },
-            marginRight: "20px",
             padding: "10px",
+            margin: "1%",
             borderRadius: "5px",
           }}
         >

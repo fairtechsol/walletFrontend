@@ -19,11 +19,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
     >
       <Box
         sx={{
-          width: {
-            lg: "11.5vw",
-            md: "20.5vw",
-            xs: "18.5vw",
-          },
+          width: { lg: "12.1vw", md: "20.5vw", xs: "18.5vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "space-between",
@@ -47,11 +43,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "10.5vw",
-            md: "10.5vw",
-            xs: "26.5vw",
-          },
+          width: { lg: "11.1vw", md: "10.5vw", xs: "24.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -66,11 +58,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "10.5vw",
-            md: "9.5vw",
-            xs: "30.5vw",
-          },
+          width: { lg: "11vw", md: "9.5vw", xs: "30vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -85,11 +73,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "11.8vw",
-            md: "11.5vw",
-            xs: "35.5vw",
-          },
+          width: { lg: "12.8vw", md: "11.5vw", xs: "35.5vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "space-between",
@@ -123,11 +107,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "10.9vw",
-            md: "11.5vw",
-            xs: "27vw",
-          },
+          width: { lg: "11.5vw", md: "11.5vw", xs: "25vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "space-between",
@@ -161,11 +141,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "8.5vw",
-            md: "9.5vw",
-            xs: "18.5vw",
-          },
+          width: { lg: "9vw", md: "9.5vw", xs: "18vw" },
           display: "flex",
           justifyContent: "space-between",
           paddingX: "10px",
@@ -181,11 +157,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "9.3vw",
-            md: "9.5vw",
-            xs: "18.5vw",
-          },
+          width: { lg: "9.5vw", md: "9.5vw", xs: "18vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -200,11 +172,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "8.9vw",
-            md: "9.5vw",
-            xs: "30.5vw",
-          },
+          width: { lg: "9.6vw", md: "9.5vw", xs: "30.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -219,7 +187,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "4.8vw", md: "5vw", xs: "14vw" },
+          width: { lg: "5vw", md: "5vw", xs: "13vw" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -236,7 +204,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "4.8vw", md: "5vw", xs: "14vw" },
+          width: { lg: "5vw", md: "5vw", xs: "14vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "center",
@@ -252,7 +220,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "7.3vw", md: "8vw", xs: "26.5vw" },
+          width: { lg: "7.5vw", md: "8vw", xs: "24.5vw" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -268,7 +236,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "8vw", md: "10vw", xs: "24.5vw" },
+          width: { lg: "8.5vw", md: "10vw", xs: "23.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
