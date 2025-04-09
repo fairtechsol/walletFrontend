@@ -3,6 +3,15 @@ import { memo, useState } from "react";
 import { CancelDark } from "../../../assets";
 import DeleteBetButton from "../../Common/DeleteBetButton";
 
+interface AddNotificationModalProps {
+  visible: boolean;
+  setVisible: (value: boolean) => void;
+  title: string;
+  onDone: (value: any) => void;
+  loadingDeleteBet: boolean;
+  buttonText: string;
+}
+
 const AddNotificationModal = ({
   visible,
   setVisible,
@@ -10,7 +19,7 @@ const AddNotificationModal = ({
   onDone,
   loadingDeleteBet,
   buttonText,
-}: any) => {
+}: AddNotificationModalProps) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
@@ -131,7 +140,7 @@ const AddNotificationModal = ({
             >
               {error && (
                 <Typography sx={{ fontSize: "12px", color: "#ff0000" }}>
-                  Field Required !
+                  Field Required!
                 </Typography>
               )}
             </Box>

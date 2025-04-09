@@ -523,17 +523,11 @@ const MatchDetail = () => {
       {visible && selectedBetData.length > 0 && (
         <>
           <AddNotificationModal
-            value={""}
-            title={"Add Remark"}
+            title="Add Remark"
             visible={visible}
             loadingDeleteBet={loading}
             setVisible={setVisible}
             onDone={handleDeleteBet}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              setVisible(false);
-              setMode({ type: "", value: false });
-            }}
             buttonText="Delete"
           />
         </>
@@ -541,17 +535,11 @@ const MatchDetail = () => {
       {visibleEdit && selectedBetData.length > 0 && (
         <>
           <AddNotificationModal
-            value={""}
-            title={"Edit Remark"}
+            title="Edit Remark"
             visible={visibleEdit}
             loadingDeleteBet={loading}
             setVisible={setVisibleEdit}
             onDone={handleEditDeleteBetReason}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              setVisibleEdit(false);
-              setMode({ type: "", value: false });
-            }}
             buttonText="Edit"
           />
         </>
