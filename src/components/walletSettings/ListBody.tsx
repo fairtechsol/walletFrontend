@@ -6,16 +6,14 @@ import StyledImage from "../Common/StyledImages";
 const ListBody = ({ walletAccountDetail }: any) => {
   return (
     <Box
-      sx={[
-        {
-          width: { xs: "150%", lg: "100%", md: "100%" },
-          display: "flex",
-          height: "45px",
-          background: "#0B4F26",
-          alignItems: "center",
-          borderBottom: "2px solid white",
-        },
-      ]}
+      sx={{
+        width: { xs: "150%", lg: "100%", md: "100%" },
+        display: "flex",
+        height: "45px",
+        background: "#0B4F26",
+        alignItems: "center",
+        borderBottom: "2px solid white",
+      }}
     >
       <Box
         sx={{
