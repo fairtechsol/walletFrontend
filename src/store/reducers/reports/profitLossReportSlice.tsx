@@ -33,7 +33,7 @@ const initialState: InitialState = {
   betProfitLossList: [],
   sessionProfitLossList: [],
   totalBetProfitLossModal: [],
-  commissionMatchList: [],
+  commissionMatchList: null,
   commissionBetPlacedList: [],
   loading: false,
   success: false,
