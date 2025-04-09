@@ -10,9 +10,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  getUsersProfile,
   handleSettleCommission,
-  userListSuccessReset,
+  userListSuccessReset
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
@@ -96,9 +95,9 @@ const ListItems = () => {
     if (success) {
       setSettlementUserModal(false);
       dispatch(userListSuccessReset());
-      setTimeout(() => {
-        dispatch(getUsersProfile());
-      }, 300);
+      // setTimeout(() => {
+      //   dispatch(getUsersProfile());
+      // }, 300);
     }
   }, [success]);
   return (

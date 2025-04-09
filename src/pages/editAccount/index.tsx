@@ -47,20 +47,20 @@ const formDataSchema = {
     label: "",
     value: "",
   },
-  creditRefrence: "",
+  creditRefrence: 0,
   uplinePartnership: 0,
   myPartnership: 0,
   downlinePartnership: 0,
   matchCommissionType: {
-    label: "",
+    label: "0.00",
     value: "",
   },
   matchCommission: {
-    label: "",
+    label: "0.00",
     value: "",
   },
   sessionCommission: {
-    label: "",
+    label: "0.00",
     value: "",
   },
   remarks: "",
@@ -151,18 +151,42 @@ const EditAccount = () => {
       } else if (values.roleName.value === "fairGameAdmin") {
         payload = {
           ...commonPayload,
-          sessionCommission: values.sessionCommission.value,
-          matchComissionType: values.matchCommissionType.value,
-          matchCommission: values.matchCommission.value,
+          sessionCommission:
+            values.sessionCommission.value === "" ||
+            values.sessionCommission.value === "0.00"
+              ? 0
+              : values.sessionCommission.value,
+          matchComissionType:
+            values.matchCommissionType.value === "" ||
+            values.matchCommissionType.value === "0.00"
+              ? null
+              : values.matchCommissionType.value,
+          matchCommission:
+            values.matchCommission.value === "" ||
+            values.matchCommission.value === "0.00"
+              ? 0
+              : values.matchCommission.value,
         };
         dispatch(updateUser(payload));
       } else {
         payload = {
           ...commonPayload,
           isOldFairGame: true,
-          sessionCommission: values.sessionCommission.value,
-          matchComissionType: values.matchCommissionType.value,
-          matchCommission: values.matchCommission.value,
+          sessionCommission:
+            values.sessionCommission.value === "" ||
+            values.sessionCommission.value === "0.00"
+              ? 0
+              : values.sessionCommission.value,
+          matchComissionType:
+            values.matchCommissionType.value === "" ||
+            values.matchCommissionType.value === "0.00"
+              ? null
+              : values.matchCommissionType.value,
+          matchCommission:
+            values.matchCommission.value === "" ||
+            values.matchCommission.value === "0.00"
+              ? 0
+              : values.matchCommission.value,
         };
         dispatch(updateUrlAdmin(payload));
       }
@@ -424,16 +448,34 @@ const EditAccount = () => {
           base64Image: userDetail?.domainData?.logo,
           downlinePartnership: 100 - res - my,
           matchCommissionType: {
-            label: userDetail?.matchComissionType,
-            value: userDetail?.matchComissionType,
+            label:
+              userDetail?.matchComissionType === null
+                ? "0.00"
+                : userDetail?.matchComissionType,
+            value:
+              userDetail?.matchComissionType === null
+                ? "0.00"
+                : userDetail?.matchComissionType,
           },
           matchCommission: {
-            label: userDetail?.matchCommission,
-            value: userDetail?.matchCommission,
+            label:
+              userDetail?.matchCommission === null
+                ? "0.00"
+                : userDetail?.matchCommission,
+            value:
+              userDetail?.matchCommission === null
+                ? "0.00"
+                : userDetail?.matchCommission,
           },
           sessionCommission: {
-            label: userDetail?.sessionCommission,
-            value: userDetail?.sessionCommission,
+            label:
+              userDetail?.sessionCommission === null
+                ? "0.00"
+                : userDetail?.sessionCommission,
+            value:
+              userDetail?.sessionCommission === null
+                ? "0.00"
+                : userDetail?.sessionCommission,
           },
           remarks: "",
           adminTransPassword: "",

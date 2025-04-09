@@ -113,8 +113,9 @@ const SetCreditComponent = (props: any) => {
             url: { endpoint: ApiConstants.USER.LIST },
           })
         );
+        dispatch(getTotalBalance());
+        dispatch(getUsersProfile());
       }
-      dispatch(getTotalBalance());
       setSubmitting(false);
       dispatch(userListSuccessReset());
     }
