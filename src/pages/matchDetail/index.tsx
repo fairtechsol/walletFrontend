@@ -439,7 +439,7 @@ const MatchDetail = () => {
           state?.matchId,
           updateMatchDetailToRedux
         );
-        if (!state.userId) {
+        if (!state?.userId) {
           socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
           socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
           socketService.match.matchResultDeclared(matchResultDeclared);
@@ -810,7 +810,7 @@ const MatchDetail = () => {
             />
           )}
 
-          {!state.userId && (
+          {!state?.userId && (
             <DeleteEditComp
               mode={mode}
               setMode={setMode}
