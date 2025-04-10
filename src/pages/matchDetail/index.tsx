@@ -616,7 +616,13 @@ const MatchDetail = () => {
           </Typography>
           {matchDetail?.tournament &&
             matchDetail?.tournament
-              ?.filter((items: any) => items.activeStatus === "live")
+              ?.filter(
+                (items: any) =>
+                  items.activeStatus === "live" &&
+                  !["completed_match", "tied_match"].includes(
+                    items?.name?.toLowerCase()
+                  )
+              )
               ?.sort((a: any, b: any) => a.sNo - b.sNo)
               ?.map((market: any, index: any) => {
                 return (
@@ -743,6 +749,32 @@ const MatchDetail = () => {
                     min={formatToINR(matchDetail?.betFairSessionMinBet) || 0}
                     max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
                     type={sessionBettingType.cricketCasino}
+                  />
+                );
+              })}
+               {matchDetail?.tournament &&
+            matchDetail?.tournament
+              ?.filter(
+                (items: any) =>
+                  items.activeStatus === "live" &&
+                  ["completed_match", "tied_match"].includes(
+                    items?.name?.toLowerCase()
+                  )
+              )
+              ?.sort((a: any, b: any) => a.sNo - b.sNo)
+              ?.map((market: any, index: any) => {
+                return (
+                  <TournamentOdds
+                    key={index}
+                    currentMatch={matchDetail}
+                    minBet={Math.floor(market?.minBet) || 0}
+                    maxBet={Math.floor(market?.maxBet) || 0}
+                    title={market?.name}
+                    liveData={market}
+                    profitLossFromAnalysis={marketAnalysis?.betType?.match?.find(
+                      (item: any) =>
+                        item?.betId === (market?.parentBetId || market?.id)
+                    )}
                   />
                 );
               })}
