@@ -50,13 +50,13 @@ const DeleteEditComp = ({
               marginRight: "10px",
             }}
           >
-            {"Cancel"}
+            Cancel
           </Typography>
         </Box>
       )}
       {!["edit", "delete"].includes(mode?.type) && mode.value && (
         <>
-          <Box sx={{ width: "2%" }}></Box>
+          <Box sx={{ width: "2%" }} />
           <Box
             onClick={() => {
               setPermanentDeletePopShow(true);
@@ -83,7 +83,7 @@ const DeleteEditComp = ({
                 marginRight: "10px",
               }}
             >
-              {"Delete"}
+              Delete
             </Typography>
             <img src={DeleteIcon} style={{ width: "17px", height: "20px" }} />
           </Box>
@@ -91,7 +91,7 @@ const DeleteEditComp = ({
       )}
       {!["edit", "deletePermanent"].includes(mode?.type) && (
         <>
-          <Box sx={{ width: "2%" }}></Box>
+          <Box sx={{ width: "2%" }} />
           <Box
             onClick={() => {
               if (mode.value && mode?.type === "delete") {
@@ -136,7 +136,7 @@ const DeleteEditComp = ({
       )}
       {!["delete", "deletePermanent"].includes(mode?.type) && (
         <>
-          <Box sx={{ width: "2%" }}></Box>
+          <Box sx={{ width: "2%" }} />
           <Box
             onClick={() => {
               if (mode.value && mode?.type === "edit") {

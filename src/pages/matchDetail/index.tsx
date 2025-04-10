@@ -778,13 +778,15 @@ const MatchDetail = () => {
             />
           )}
 
-          <DeleteEditComp
-            mode={mode}
-            setMode={setMode}
-            setPermanentDeletePopShow={setPermanentDeletePopShow}
-            setVisible={setVisible}
-            setVisibleEdit={setVisibleEdit}
-          />
+          {!state.userId && (
+            <DeleteEditComp
+              mode={mode}
+              setMode={setMode}
+              setPermanentDeletePopShow={setPermanentDeletePopShow}
+              setVisible={setVisible}
+              setVisibleEdit={setVisibleEdit}
+            />
+          )}
           {placedBets?.length > 0 && (
             <Box sx={{ mt: 0 }}>
               <FullAllBets
