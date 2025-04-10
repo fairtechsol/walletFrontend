@@ -38,7 +38,7 @@ const SeasonMarketBox = ({
               background: "rgba(0,0,0,0.5)",
               zIndex: 2,
             }}
-          ></Box>
+          />
         )}
         <Box
           sx={{
@@ -127,7 +127,7 @@ const SeasonMarketBox = ({
                 // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 // right: 0,
-                width: { lg: "38%", md: "62.8%", xs: "63.5%" },
+                width: { lg: "38%", md: "60.5%", xs: "61%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
                 display: "flex",

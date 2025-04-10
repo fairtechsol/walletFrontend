@@ -642,7 +642,7 @@ const MatchDetail = () => {
                 JSON.parse(item)?.activeStatus === "live"
             )?.length > 0 && (
               <SessionMarket
-                title={"Quick Session Market"}
+                title="Quick Session Market"
                 allBetsData={
                   matchDetail?.profitLossDataSession
                     ? Array.from(
