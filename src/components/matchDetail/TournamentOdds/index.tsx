@@ -48,8 +48,8 @@ const TournamentOdds = ({
         padding: 0.2,
         flexDirection: "column",
         width: "100%",
-        marginTop: "3px",
-        marginBottom: "0",
+        // marginTop: "3px",
+        marginBottom: "3px",
         alignSelf: {
           xs: "center",
           md: "center",
