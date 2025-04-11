@@ -113,10 +113,10 @@ const SeasonMarketBox = ({
           {(
             !newData?.isManual
               ? !["ACTIVE", "active", "", undefined, null, ""].includes(
-                  newData?.GameStatus
-                ) ||
-                (!newData.ex?.availableToBack?.length &&
-                  !newData.ex?.availableToLay?.length)
+                newData?.GameStatus
+              ) ||
+              (!newData.ex?.availableToBack?.length &&
+                !newData.ex?.availableToLay?.length)
               : newData?.status !== "active"
           ) ? (
             <Box
@@ -127,7 +127,7 @@ const SeasonMarketBox = ({
                 // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 // right: 0,
-                width: { lg: "38%", md: "60.5%", xs: "61%" },
+                width: { lg: "38%", md: "60.2%", xs: "60.9%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
                 display: "flex",
@@ -135,7 +135,7 @@ const SeasonMarketBox = ({
               }}
             >
               {newData?.status == "Ball Running" ||
-              newData?.status === "ball start" ? (
+                newData?.status === "ball start" ? (
                 Math.max(
                   newData?.ex?.availableToLay?.length ?? 0,
                   newData?.ex?.availableToBack?.length ?? 0
@@ -163,8 +163,8 @@ const SeasonMarketBox = ({
                     (newData?.isManual
                       ? newData?.status
                       : !newData?.GameStatus
-                      ? "SUSPENDED"
-                      : newData?.GameStatus)}
+                        ? "SUSPENDED"
+                        : newData?.GameStatus)}
                 </Typography>
               )}
             </Box>
@@ -291,8 +291,8 @@ const SeasonMarketBox = ({
               {!["ACTIVE", "active", "", undefined, null, ""].includes(
                 newData?.GameStatus
               ) ||
-              (!newData.ex?.availableToBack?.length &&
-                !newData.ex?.availableToLay?.length) ? (
+                (!newData.ex?.availableToBack?.length &&
+                  !newData.ex?.availableToLay?.length) ? (
                 <Box
                   sx={{
                     background: "rgba(0,0,0,1)",
@@ -306,7 +306,7 @@ const SeasonMarketBox = ({
                   }}
                 >
                   {newData?.status == "Ball Running" ||
-                  newData?.status === "ball start" ? (
+                    newData?.status === "ball start" ? (
                     item === 1 && (
                       <img
                         src={BallStart}
@@ -328,8 +328,8 @@ const SeasonMarketBox = ({
                         (newData?.isManual
                           ? newData?.status
                           : !newData?.GameStatus
-                          ? "SUSPENDED"
-                          : newData?.GameStatus)}
+                            ? "SUSPENDED"
+                            : newData?.GameStatus)}
                     </Typography>
                   )}
                 </Box>

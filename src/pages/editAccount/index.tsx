@@ -30,7 +30,7 @@ import {
 import { AppDispatch, RootState } from "../../store/store";
 
 const MatchCommissionTypes = [
-  { value: "0.00", label: "0.00" },
+  { value: null, label: "0.00" },
   { value: "totalLoss", label: "Total Loss" },
   { value: "entryWise", label: "Entry Wise" },
 ];
@@ -151,42 +151,18 @@ const EditAccount = () => {
       } else if (values.roleName.value === "fairGameAdmin") {
         payload = {
           ...commonPayload,
-          sessionCommission:
-            values.sessionCommission.value === "" ||
-            values.sessionCommission.value === "0.00"
-              ? 0
-              : values.sessionCommission.value,
-          matchComissionType:
-            values.matchCommissionType.value === "" ||
-            values.matchCommissionType.value === "0.00"
-              ? null
-              : values.matchCommissionType.value,
-          matchCommission:
-            values.matchCommission.value === "" ||
-            values.matchCommission.value === "0.00"
-              ? 0
-              : values.matchCommission.value,
+          sessionCommission: values.sessionCommission.value == '0.00' ? 0 : values.sessionCommission.value,
+          matchComissionType: values.matchCommissionType.value,
+          matchCommission: values.matchCommission.value == '0.00' ? 0 : values.matchCommission.value,
         };
         dispatch(updateUser(payload));
       } else {
         payload = {
           ...commonPayload,
           isOldFairGame: true,
-          sessionCommission:
-            values.sessionCommission.value === "" ||
-            values.sessionCommission.value === "0.00"
-              ? 0
-              : values.sessionCommission.value,
-          matchComissionType:
-            values.matchCommissionType.value === "" ||
-            values.matchCommissionType.value === "0.00"
-              ? null
-              : values.matchCommissionType.value,
-          matchCommission:
-            values.matchCommission.value === "" ||
-            values.matchCommission.value === "0.00"
-              ? 0
-              : values.matchCommission.value,
+          sessionCommission: values.sessionCommission.value == '0.00' ? 0 : values.sessionCommission.value,
+          matchComissionType: values.matchCommissionType.value,
+          matchCommission: values.matchCommission.value == '0.00' ? 0 : values.matchCommission.value,
         };
         dispatch(updateUrlAdmin(payload));
       }
@@ -1011,7 +987,7 @@ const EditAccount = () => {
                     id="downlinePartnership"
                     type="Number"
                     value={formik.values.downlinePartnership}
-                    // onChange={formik.handleChange}
+                  // onChange={formik.handleChange}
                   />
                 </>
               )}

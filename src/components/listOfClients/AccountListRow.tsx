@@ -487,8 +487,8 @@ const AccountListRow = ({
                   ? UnLockIcon
                   : LockIcon
                 : !element?.userBlock
-                ? UnLockIcon
-                : LockIcon
+                  ? UnLockIcon
+                  : LockIcon
             }
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
@@ -511,8 +511,8 @@ const AccountListRow = ({
                   ? UnLockIcon
                   : LockIcon
                 : !element?.betBlock
-                ? UnLockIcon
-                : LockIcon
+                  ? UnLockIcon
+                  : LockIcon
             }
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
@@ -535,8 +535,8 @@ const AccountListRow = ({
                   Number(values.exposureValue)
                 )
               : new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                  +element?.exposureLimit ? element?.exposureLimit : 0
-                )}
+                +element?.exposureLimit ? element?.exposureLimit : 0
+              )}
           </Typography>
         </Box>
         <Box
@@ -549,15 +549,13 @@ const AccountListRow = ({
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>{`${
-            element.roleName ?? ""
-          } ${
-            element.roleName === "superAdmin"
+          <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>{`${element.roleName ?? ""
+            } ${element.roleName === "superAdmin"
               ? element?.isUrl
                 ? "(url)"
                 : ""
               : ""
-          }`}</Typography>{" "}
+            }`}</Typography>{" "}
         </Box>
       </Box>
 
