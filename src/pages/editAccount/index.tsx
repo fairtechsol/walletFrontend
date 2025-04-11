@@ -12,9 +12,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
+import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
+import CustomModal from "../../components/Common/CustomModal";
 import SelectField from "../../components/Common/DropDown/SelectField";
 import Loader from "../../components/Loader";
+import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
 import Input from "../../components/login/Input";
+import { formatToINR } from "../../helper";
 import {
   getUsersDetail,
   updateExpert,
@@ -24,10 +28,6 @@ import {
   updateUserReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
-import CustomModal from "../../components/Common/CustomModal";
-import ButtonWithSwitch from "../../components/addMatchComp/ButtonWithSwitch";
-import { formatToINR } from "../../helper";
 
 // const AccountTypes = [
 //   { value: "fairGameAdmin", label: "Fairgame Admin", level: 1 },
@@ -40,7 +40,7 @@ import { formatToINR } from "../../helper";
 // ];
 
 const MatchCommissionTypes = [
-  { value: "0.00", label: "0.00" },
+  { value: null, label: "0.00" },
   { value: "totalLoss", label: "Total Loss" },
   { value: "entryWise", label: "Entry Wise" },
 ];
@@ -162,18 +162,18 @@ const EditAccount = () => {
       } else if (values.roleName.value === "fairGameAdmin") {
         payload = {
           ...commonPayload,
-          sessionCommission: values.sessionCommission.value,
+          sessionCommission: values.sessionCommission.value == '0.00' ? 0 : values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
-          matchCommission: values.matchCommission.value,
+          matchCommission: values.matchCommission.value == '0.00' ? 0 : values.matchCommission.value,
         };
         dispatch(updateUser(payload));
       } else {
         payload = {
           ...commonPayload,
           isOldFairGame: true,
-          sessionCommission: values.sessionCommission.value,
+          sessionCommission: values.sessionCommission.value == '0.00' ? 0 : values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
-          matchCommission: values.matchCommission.value,
+          matchCommission: values.matchCommission.value == '0.00' ? 0 : values.matchCommission.value,
         };
         dispatch(updateUrlAdmin(payload));
       }
@@ -844,10 +844,10 @@ const EditAccount = () => {
                       (option: any) =>
                         option.value === formik.values.roleName.value
                     )}
-                    // touched={touched.roleName}
-                    // error={errors.roleName}
-                    // error={touched.roleName && Boolean(errors.roleName)}
-                    // onBlur={formik.handleBlur}
+                  // touched={touched.roleName}
+                  // error={errors.roleName}
+                  // error={touched.roleName && Boolean(errors.roleName)}
+                  // onBlur={formik.handleBlur}
                   />
                   {/* <CustomErrorMessage touched={touched.roleName} errors={errors.roleName} /> */}
                 </Box>
@@ -1031,7 +1031,7 @@ const EditAccount = () => {
                     id={"downlinePartnership"}
                     type={"Number"}
                     value={formik.values.downlinePartnership}
-                    // onChange={formik.handleChange}
+                  // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -1068,33 +1068,33 @@ const EditAccount = () => {
                           option.value ===
                           formik.values.matchCommissionType.value
                       )}
-                      // touched={touched.matchCommissionType}
-                      // error={errors.matchCommissionType}
+                    // touched={touched.matchCommissionType}
+                    // error={errors.matchCommissionType}
                     />
                     {!["", null, "0.00"].includes(
                       formik.values.matchCommissionType.value
                     ) && (
-                      <>
-                        <SelectField
-                          containerStyle={containerStyles}
-                          titleStyle={titleStyles}
-                          id={"matchCommission"}
-                          name={"matchCommission"}
-                          label={"Match Commission (%)*"}
-                          options={matchComissionArray}
-                          value={formik.values.matchCommission}
-                          onChange={(matchComissionArray: any) => {
-                            formik.setFieldValue(
-                              "matchCommission",
-                              matchComissionArray
-                            );
-                          }}
-                          onBlur={formik.handleBlur}
+                        <>
+                          <SelectField
+                            containerStyle={containerStyles}
+                            titleStyle={titleStyles}
+                            id={"matchCommission"}
+                            name={"matchCommission"}
+                            label={"Match Commission (%)*"}
+                            options={matchComissionArray}
+                            value={formik.values.matchCommission}
+                            onChange={(matchComissionArray: any) => {
+                              formik.setFieldValue(
+                                "matchCommission",
+                                matchComissionArray
+                              );
+                            }}
+                            onBlur={formik.handleBlur}
                           // touched={touched.matchCommission}
                           // error={errors.matchCommission}
-                        />
-                      </>
-                    )}
+                          />
+                        </>
+                      )}
 
                     <SelectField
                       containerStyle={containerStyles}
@@ -1111,8 +1111,8 @@ const EditAccount = () => {
                         );
                       }}
                       onBlur={formik.handleBlur}
-                      // touched={touched.sessionCommission}
-                      // error={errors.sessionCommission}
+                    // touched={touched.sessionCommission}
+                    // error={errors.sessionCommission}
                     />
                   </Box>
                 </>
@@ -1207,7 +1207,7 @@ const EditAccount = () => {
           setShowModal={setShowModal}
           showModal={showModal}
           buttonMessage={"Ok"}
-          functionDispatch={() => {}}
+          functionDispatch={() => { }}
           navigateTo={`/wallet/list_of_clients`}
         />
       )}
