@@ -15,7 +15,7 @@ import HeaderRow from "./HeaderRow";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 
-const AccountList = (endpoint: any) => {
+const AccountList = (endpoint: { endpoint: string }) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const dispatch: AppDispatch = useDispatch();
   const loading = false;
@@ -62,7 +62,7 @@ const AccountList = (endpoint: any) => {
           >
             <HeaderRow
               endpoint={ApiConstants.USER.LIST}
-              searchFor={"userList"}
+              searchFor="userList"
               downloadPdfExcel={true}
               setCurrentPage={setCurrentPage}
             />
@@ -73,67 +73,49 @@ const AccountList = (endpoint: any) => {
                   position: { xs: "relative", lg: "static" },
                 }}
               >
-                <Box>
-                  <ListHeaderRow />
-                  <SubHeaderListRow data={totalBalance} />
-                  {userList?.list?.length === 0 && (
-                    <Box>
-                      <Typography
-                        sx={{
-                          color: "#000",
-                          textAlign: "center",
-                          fontSize: { lg: "16px", xs: "10px" },
-                          fontWeight: "600",
-                          margin: "1rem",
+                <ListHeaderRow />
+                <SubHeaderListRow data={totalBalance} />
+                {userList?.list?.length === 0 && (
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: "#000",
+                        textAlign: "center",
+                        fontSize: { lg: "16px", xs: "10px" },
+                        fontWeight: "600",
+                        margin: "1rem",
+                      }}
+                    >
+                      No Matching Records Found
+                    </Typography>
+                  </Box>
+                )}
+                {userList?.list?.length > 0 &&
+                  userList?.list?.map(
+                    (element: AccountListDataInterface, i: any) => (
+                      <AccountListRow
+                        key={element?.id}
+                        callProfile={true}
+                        showOptions={true}
+                        showUserDetails={true}
+                        showCReport={true}
+                        containerStyle={{
+                          background: i % 2 === 0 ? "#FFE094" : "#ECECEC",
                         }}
-                      >
-                        No Matching Records Found
-                      </Typography>
-                    </Box>
+                        profit={(+element?.userBal?.profitLoss || 0) >= 0}
+                        fContainerStyle={{
+                          background: i % 2 === 0 ? "#0B4F26" : "#F8C851",
+                        }}
+                        fTextStyle={{
+                          color: i % 2 === 0 ? "white" : "#0B4F26",
+                        }}
+                        element={element}
+                        show={false}
+                        domain={domain}
+                        currentPage={currentPage}
+                      />
+                    )
                   )}
-                  {userList?.list?.length > 0 &&
-                    userList?.list?.map(
-                      (element: AccountListDataInterface, i: any) => {
-                        if (i % 2 === 0) {
-                          return (
-                            <AccountListRow
-                              key={element?.id}
-                              callProfile={true}
-                              showOptions={true}
-                              showUserDetails={true}
-                              showCReport={true}
-                              containerStyle={{ background: "#FFE094" }}
-                              profit={(+element?.userBal?.profitLoss || 0) >= 0}
-                              fContainerStyle={{ background: "#0B4F26" }}
-                              fTextStyle={{ color: "white" }}
-                              element={element}
-                              show={false}
-                              domain={domain}
-                              currentPage={currentPage}
-                            />
-                          );
-                        } else {
-                          return (
-                            <AccountListRow
-                              key={element?.id}
-                              showCReport={true}
-                              callProfile={true}
-                              showUserDetails={true}
-                              showOptions={true}
-                              containerStyle={{ background: "#ECECEC" }}
-                              profit={(+element?.userBal?.profitLoss || 0) >= 0}
-                              fContainerStyle={{ background: "#F8C851" }}
-                              fTextStyle={{ color: "#0B4F26" }}
-                              element={element}
-                              show={false}
-                              domain={domain}
-                              currentPage={currentPage}
-                            />
-                          );
-                        }
-                      }
-                    )}
-                </Box>
               </Box>
             </Box>
           </Box>

@@ -34,11 +34,6 @@ const AllRateSeperate = ({
             borderRadius: "2px",
             background: "white",
             padding: "1px",
-            // alignSelf: {
-            //   xs: "center",
-            //   md: "center",
-            //   lg: "flex-start",
-            // },
           },
         ]}
       >
@@ -75,22 +70,10 @@ const AllRateSeperate = ({
             sx={{
               flex: 0.1,
               background: "#262626",
-              // '#262626'
             }}
           >
-            <div className="slanted"></div>
+            <div className="slanted" />
           </Box>
-          {/* <Box
-            sx={{
-              flex: 1,
-              background: "#262626",
-              // '#262626' ,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          ></Box> */}
-
           <Box
             sx={{
               flex: 1,
@@ -114,16 +97,6 @@ const AllRateSeperate = ({
                 marginLeft: "5px",
               }}
             />
-            {/* <Typography
-              sx={{ fontSize: "12px", fontWeight: "700", color: "#FF1111" }}
-            >
-              All Bet
-            </Typography>
-            <Typography
-              sx={{ fontSize: "12px", fontWeight: "700", color: "#0B4F26" }}
-            >
-              {count || 0}
-            </Typography> */}
           </Box>
         </Box>
         {visible && (
@@ -132,7 +105,6 @@ const AllRateSeperate = ({
               <Box
                 sx={{
                   height: "25px",
-                  // margin: { xs: "1px", lg: "0.5px" },
                   width: "30px",
                   display: "flex",
                   background: "black",
@@ -167,7 +139,6 @@ const AllRateSeperate = ({
                     background: "#319E5B",
                     justifyContent: "center",
                     alignItems: "center",
-                    // margin: { xs: "1px", lg: "0" },
                     overflow: "hidden",
                   }}
                 >
@@ -185,7 +156,6 @@ const AllRateSeperate = ({
             </Box>
 
             <Box
-              // className="myScroll"
               sx={{
                 maxHeight: { xs: "200px", lg: "420px" },
                 overflowY: "auto",
@@ -194,7 +164,6 @@ const AllRateSeperate = ({
                 },
               }}
             >
-              {/* {console.warn("allBetsData :", allBetsData)} */}
               {[
                 ...new Set(
                   allBetsData?.filter(
@@ -216,7 +185,6 @@ const AllRateSeperate = ({
                       flexDirection: "row",
                       position: "relative",
                       gap: "1px",
-                      // marginBottom: { xs: "1px", lg: "1px" },
                     }}
                   >
                     <Box
@@ -225,7 +193,6 @@ const AllRateSeperate = ({
                         width: "30px",
                         display: "flex",
                         background: "black",
-                        // marginBottom: { xs: "1px", lg: "1px" },
                         justifyContent: "center",
                         alignItems: "center",
                       }}
@@ -325,11 +292,7 @@ const AllRateSeperate = ({
                         sx={{
                           height: "40px",
                           width: "12%",
-                          // margin: { xs: "1px", lg: "1px" },
-                          // display: "flex",
                           background: i?.totalLoss > 0 ? "#10DC61" : "#E32A2A",
-                          // justifyContent: "center",
-                          // alignItems: "center",
                         }}
                       >
                         <Box
@@ -356,7 +319,6 @@ const AllRateSeperate = ({
                             ) : (
                               formatToINR(Number(i.totalLoss).toFixed(2))
                             )}
-                            {/* {Number(i?.totalLoss).toFixed(2) || ""} */}
                           </Typography>
 
                           {!matchesMobile && !isArrow && (
@@ -376,7 +338,6 @@ const AllRateSeperate = ({
                         sx={{
                           height: "40px",
                           width: "12%",
-                          // margin: { xs: "1px", lg: "1px" },
                           display: "flex",
                           background: "black",
                           justifyContent: "center",
@@ -411,9 +372,7 @@ const AllRateSeperate = ({
                         sx={{
                           height: "40px",
                           width: "30%",
-                          // margin: { xs: "1px", lg: "1px" },
                           display: "flex",
-                          // background: "black",
                           justifyContent: "center",
                           alignItems: "center",
                           zIndex: 999,
@@ -446,12 +405,6 @@ const AllRateSeperate = ({
                   </Box>
                 );
               })}
-              {/* <Footer
-                currentPage={currentPage}
-                pages={pageCount}
-                callPage={callPage}
-                currentPageNo={allbetsPage}
-              /> */}
             </Box>
           </>
         )}
@@ -486,16 +439,6 @@ const AllRateSeperate = ({
 };
 
 const RowComponent = ({ header, data }: any) => {
-  // const getTime = (date: any) => {
-  //   const now = new Date(date);
-  //   const timeString = now.toLocaleTimeString("en-US", {
-  //     hour: "numeric",
-  //     minute: "numeric",
-  //     second: "numeric",
-  //     hour12: true,
-  //   });
-  //   return timeString;
-  // };
   const getTime = (date: any) => {
     const timeString = moment
       .utc(date)
@@ -533,11 +476,6 @@ const RowComponent = ({ header, data }: any) => {
         <>
           <SingleBox
             color={getColor}
-            // data={
-            //   data?.marketType == "MANUAL BOOKMAKER"
-            //     ? "Quick Bookmaker"
-            //     : data?.marketType
-            // }// was showing markettype
             data={data?.bettingName ?? data?.marketType}
             first={true}
             header={header}
@@ -623,103 +561,6 @@ const RowComponent = ({ header, data }: any) => {
   );
 };
 
-// const Footer = ({ currentPage, pages, callPage, currentPageNo }: any) => {
-//   return (
-//     <Box
-//       sx={{
-//         height: "35px",
-//         display: "flex",
-//         alignItems: "center",
-//         px: { xs: "5px", lg: "10px" },
-//         justifyContent: "space-between",
-//         background: "#FAFAFA",
-//         // marginX: "0%",
-//         // marginBottom: "10px",
-//       }}
-//     >
-//       <Typography
-//         sx={{ fontSize: { xs: "10px", lg: "12px" }, fontWeight: "600" }}
-//       >
-//         Showing 1 to {pages}
-//       </Typography>
-//       <Box sx={{ display: "flex", alignItems: "center" }}>
-//         <Box
-//           sx={{
-//             height: "25px",
-//             width: { xs: "60px", lg: "80px" },
-//             background: "#0B4F26",
-//             display: "flex",
-//             justifyContent: "center",
-//             alignItems: "center",
-//             borderRadius: "5px",
-//           }}
-//           onClick={() => {
-//             callPage(
-//               parseInt(currentPage) - 1 === -1 ? 0 : parseInt(currentPage) - 1
-//             );
-//           }}
-//         >
-//           <Typography
-//             sx={{
-//               color: "white",
-//               fontSize: { lg: "12px", xs: "10px" },
-//             }}
-//           >
-//             Previous
-//           </Typography>
-//         </Box>
-//         <Box
-//           sx={{
-//             height: "25px",
-//             marginX: { lg: "8px", xs: "3.5px" },
-//             width: "40px",
-//             background: "#262626",
-//             display: "flex",
-//             borderRadius: "5px",
-//             justifyContent: "center",
-//             alignItems: "center",
-//           }}
-//         >
-//           <Typography
-//             sx={{
-//               color: "white",
-//               fontSize: { lg: "12px", xs: "12px" },
-//             }}
-//           >
-//             {currentPageNo + 1}
-//           </Typography>
-//         </Box>
-//         <Box
-//           sx={{
-//             height: "25px",
-//             width: { xs: "60px", lg: "80px" },
-//             background: "#0B4F26",
-//             display: "flex",
-//             borderRadius: "5px",
-//             justifyContent: "center",
-//             alignItems: "center",
-//           }}
-//           onClick={() => {
-//             callPage(
-//               parseInt(currentPage) === pages - 1
-//                 ? pages - 1
-//                 : parseInt(currentPage) + 1
-//             );
-//           }}
-//         >
-//           <Typography
-//             sx={{
-//               color: "white",
-//               fontSize: { lg: "14px", xs: "12px" },
-//             }}
-//           >
-//             Next
-//           </Typography>
-//         </Box>
-//       </Box>
-//     </Box>
-//   );
-// };
 const SingleBox = ({
   data,
   header,
@@ -740,9 +581,7 @@ const SingleBox = ({
           width: width ? width : "100%",
           height: "40px",
           background: "#F1C550",
-          // marginX: { xs: "0.5px", lg: "0.5px" },
           display: "flex",
-          // gap: '0.5px',
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -820,7 +659,6 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: color,
-          // marginX: { xs: "1px", lg: "1px" },
           display: "flex",
           justifyContent: "center",
         }}
@@ -854,11 +692,9 @@ const SingleBox = ({
     ) : (
       <Box
         sx={{
-          // width: "100%",
           width: boxWidth,
           height: "40px",
           background: color,
-          // marginX: { xs: "1px", lg: "1px" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -885,12 +721,9 @@ const SingleBox = ({
     header && (
       <Box
         sx={{
-          // width: "100%",
           width: boxWidth,
           height: "25px",
           background: "#319E5B",
-          // gap: '0.5px',
-          // marginX: { xs: "1px", lg: "1px" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

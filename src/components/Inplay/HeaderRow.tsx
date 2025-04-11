@@ -2,8 +2,12 @@ import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import { IconConstants } from "../../helper/gameConstants";
 
-const HeaderRow = (props: any) => {
-  const { match, timeLeft } = props;
+interface HeaderRowProps {
+  match: any;
+  timeLeft: any;
+}
+
+const HeaderRow = ({ match, timeLeft }: HeaderRowProps) => {
   return (
     <Box
       sx={{
@@ -33,28 +37,35 @@ const HeaderRow = (props: any) => {
             marginLeft: "7px",
           }}
         >
-          {match.teamA} vs {match.teamB}{" "}
+          {match.title}
           <span style={{ fontWeight: "500" }}>
             ({moment(match.startAt).format("LL")})
           </span>
-        </Typography>{" "}
-        {/* Today at 9:30 PM */}
+        </Typography>
       </Box>
-      <div style={{background: "#f1c40f",display:'flex',justifyContent:'center',alignItems:'center'}}>
-      {/* {location.pathname === '/inplay' && ( */}
-        <img className="inplayicon" src={IconConstants[match?.matchType]} alt="Inplay Icon"  width={25} height={25}  />
-      {/* )} */}
-    </div>
+      <div
+        style={{
+          background: "#f1c550",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src={IconConstants[match?.matchType]}
+          alt="Inplay Icon"
+          width={25}
+          height={25}
+        />
+      </div>
       <Box
         sx={{
           flex: 0.1,
           background: "#262626",
-          // '#262626'
         }}
       >
-        <div className="slanted"></div>
+        <div className="slanted" />
       </Box>
-
       <Box
         sx={{
           flex: 1,

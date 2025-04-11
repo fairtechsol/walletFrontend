@@ -1,19 +1,18 @@
 import { Box, Typography } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { handleNumber } from "../../../helper";
 import moment from "moment";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { gameIconConstants } from "../../../utils/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { handleNumber } from "../../../helper";
 import {
   getDomainProfitLossCard,
   resetBetProfitLossCard,
   resetDomainProfitLossCard,
   resetSessionProfitLossCard,
 } from "../../../store/actions/reports";
+import { AppDispatch, RootState } from "../../../store/store";
+import { gameIconConstants } from "../../../utils/Constants";
+import StyledImage from "../../Common/StyledImages";
 import RowComponentMatches from "./RowComponentMatches";
 
 const RowHeaderMatches = ({
@@ -21,7 +20,6 @@ const RowHeaderMatches = ({
   startDate,
   endDate,
   getHandleReport,
-  // show,
   color,
   selectedId,
   getBetReport,

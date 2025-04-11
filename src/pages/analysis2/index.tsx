@@ -1,19 +1,19 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import CustomBox from "../../components/analysis/CustomBox";
-import { socket, socketService } from "../../socketManager";
-import { AppDispatch, RootState } from "../../store/store";
-import "./index.css";
+import RacingListComponentAnalysis from "../../components/analysis2/raceListAnalysisComp";
 import CountryWiseListComponent from "../../components/horseRacingComp/CountryWiseListComponent";
+import { socket, socketService } from "../../socketManager";
 import {
   getHorseRacingCountryWiseList,
   getHorseRacingMatchList,
 } from "../../store/actions/horseRacing/horseMatchListAction";
-import RacingListComponentAnalysis from "../../components/analysis2/raceListAnalysisComp";
+import { AppDispatch, RootState } from "../../store/store";
+import "./index.css";
 
 const Analysis2 = () => {
   const navigate = useNavigate();
@@ -42,17 +42,6 @@ const Analysis2 = () => {
     setMax(value);
     setMode("1");
   };
-
-  // const handleRadioButtonSelect = (event: any) => {
-  //   const value = event.target.value;
-  //   setSelected((prevValues: any) => {
-  //     if (prevValues.includes(value)) {
-  //       return prevValues.filter((val: any) => val !== value);
-  //     } else {
-  //       return [...prevValues, value];
-  //     }
-  //   });
-  // };
 
   const handleRadioButtonSelect = (match: any) => {
     if (mode === "0") {
@@ -87,6 +76,46 @@ const Analysis2 = () => {
     }
   };
 
+  const handleSubmit = () => {
+    if (max == "2") {
+      if (selected.length != 2) {
+        toast.error("Select 2 matches");
+        return;
+      }
+    } else if (max == "3") {
+      if (selected.length != 3) {
+        toast.error("Select 3 matches");
+        return;
+      }
+    } else if (max == "4") {
+      if (selected.length != 4) {
+        toast.error("Select 4 matches");
+        return;
+      }
+    }
+    if (selected) {
+      setMode("0");
+      setSelected([]);
+      setMatchIds([]);
+    }
+    if (max == "3") {
+      navigate(`/wallet/market_analysis2/multiple_Match`, {
+        state: {
+          match: Number(max),
+          matchIds: matchIds,
+          matchType: selectedMatchType,
+        },
+      });
+    } else {
+      navigate(`/wallet/market_analysis2/multiple_Match`, {
+        state: {
+          match: Number(max),
+          matchIds: matchIds,
+          matchType: selectedMatchType,
+        },
+      });
+    }
+  };
   const getMatchist = (event: any) => {
     if (event?.gameType === value) {
       dispatch(getHorseRacingCountryWiseList({ matchType: value }));
@@ -149,197 +178,135 @@ const Analysis2 = () => {
   }, [raceType]);
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        flexDirection: "column",
+        margin: "0.5%",
+      }}
+    >
       <Box
         sx={{
-          display: "flex",
           width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexDirection: "column",
-          margin: "0.5%",
         }}
       >
         <Box
           sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginX: ".5%",
+            padding: { xs: "5px", lg: "0px 8px" },
+            flexDirection: { xs: "column", md: "row", lg: "row" },
             width: "100%",
+            marginY: { xs: "1%", md: "1%", lg: "0" },
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "16px",
+              color: "white",
+              width: "100%",
+              fontWeight: "700",
+              marginY: "0.5%",
+              marginLeft: "5px",
+              alignSelf: "start",
+            }}
+          >
+            MARKET ANALYSIS 2
+          </Typography>
+          {mode == "0" && (
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: {
+                  xs: "center",
+                  md: "flex-end",
+                  lg: "flex-end",
+                  marginRight: "0.5%",
+                },
+              }}
+            >
+              {["2", "3", "4"].map((value: string, index: number) => (
+                <Fragment key={value}>
+                  <CustomBox
+                    onClick={() => handleClick(value)}
+                    title={`${value} Match Screen`}
+                  />
+                  {index !== 2 && <Box sx={{ width: "10px" }} />}
+                </Fragment>
+              ))}
+            </Box>
+          )}
+          {mode == "1" && (
+            <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
+              <CustomBox
+                bg="#E32A2A"
+                onClick={() => {
+                  setMode("0");
+                  setSelected([]);
+                  setMatchIds([]);
+                }}
+                title="Cancel"
+              />
+              <CustomBox onClick={handleSubmit} title="Submit" />
+              <Box sx={{ width: "10px" }}></Box>
+            </Box>
+          )}
+        </Box>
+      </Box>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        textColor="secondary"
+        indicatorColor="secondary"
+        aria-label="secondary tabs example"
+        variant="scrollable"
+      >
+        <Tab sx={{ color: "white" }} value="horseRacing" label="Horse Racing" />
+        <Tab
+          sx={{ color: "white" }}
+          value="greyHound"
+          label="Greyhound Racing"
+        />
+      </Tabs>
+      {loading ? (
+        <Box
+          sx={{
+            height: "60vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "column",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginX: ".5%",
-              padding: { xs: "5px", lg: "0px 8px" },
-              flexDirection: { xs: "column", md: "row", lg: "row" },
-              width: "100%",
-              marginY: { xs: "1%", md: "1%", lg: "0" },
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "16px",
-                color: "white",
-                width: "100%",
-                fontWeight: "700",
-                marginY: "0.5%",
-                marginLeft: "5px",
-                alignSelf: "start",
-              }}
-            >
-              MARKET ANALYSIS 2
-            </Typography>
-            {mode == "0" && (
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  justifyContent: {
-                    xs: "center",
-                    md: "flex-end",
-                    lg: "flex-end",
-                    marginRight: "0.5%",
-                  },
-                }}
-              >
-                <CustomBox
-                  onClick={() => {
-                    handleClick("2");
-                  }}
-                  title={"2 Match Screen"}
-                />
-                <Box sx={{ width: "10px" }}></Box>
-                <CustomBox
-                  onClick={() => {
-                    handleClick("3");
-                  }}
-                  title={"3 Match Screen"}
-                />
-                <Box sx={{ width: "10px" }}></Box>
-                <CustomBox
-                  onClick={() => {
-                    handleClick("4");
-                  }}
-                  title={"4 Match Screen"}
-                />
-              </Box>
-            )}
-            {mode == "1" && (
-              <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
-                <CustomBox
-                  bg={"#E32A2A"}
-                  onClick={() => {
-                    setMode("0");
-                    setSelected([]);
-                    setMatchIds([]);
-                  }}
-                  title={"Cancel"}
-                />
-                <CustomBox
-                  onClick={() => {
-                    if (max == "2") {
-                      if (selected.length != 2) {
-                        toast.error("Select 2 matches");
-                        return;
-                      }
-                    } else if (max == "3") {
-                      if (selected.length != 3) {
-                        toast.error("Select 3 matches");
-                        return;
-                      }
-                    } else if (max == "4") {
-                      if (selected.length != 4) {
-                        toast.error("Select 4 matches");
-                        return;
-                      }
-                    }
-                    if (selected) {
-                      setMode("0");
-                      setSelected([]);
-                      setMatchIds([]);
-                    }
-                    if (max == "3") {
-                      navigate(`/wallet/market_analysis2/multiple_Match`, {
-                        state: {
-                          match: Number(max),
-                          matchIds: matchIds,
-                          matchType: selectedMatchType,
-                          // marketIds: marketIds,
-                        },
-                      });
-                    } else {
-                      navigate(`/wallet/market_analysis2/multiple_Match`, {
-                        state: {
-                          match: Number(max),
-                          matchIds: matchIds,
-                          matchType: selectedMatchType,
-                          // marketIds: marketIds,
-                        },
-                      });
-                    }
-                  }}
-                  title={"Submit"}
-                />
-                <Box sx={{ width: "10px" }}></Box>
-              </Box>
-            )}
-          </Box>
+          <Loader />
         </Box>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="secondary"
-          indicatorColor="secondary"
-          aria-label="secondary tabs example"
-          variant="scrollable"
-        >
-          <Tab
-            sx={{ color: "white" }}
-            value="horseRacing"
-            label="Horse Racing"
-          />
-          <Tab
-            sx={{ color: "white" }}
-            value="greyHound"
-            label="Greyhound Racing"
-          />
-        </Tabs>
-        {loading ? (
-          <Box
-            sx={{
-              height: "60vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Loader />
+      ) : (
+        <>
+          <Box sx={{ margin: "1rem" }}>
+            <CountryWiseListComponent
+              countryWiseList={countryWiseList}
+              setSelectedCountryCode={setSelectedCountryCode}
+              matchType={value}
+            />
           </Box>
-        ) : (
-          <>
-            <Box sx={{ margin: "1rem" }}>
-              <CountryWiseListComponent
-                countryWiseList={countryWiseList}
-                setSelectedCountryCode={setSelectedCountryCode}
-                matchType={value}
-                mode={mode}
-              />
-            </Box>
-            <Box>
-              <RacingListComponentAnalysis
-                racingList={racingList}
-                matchType={value}
-                mode={mode}
-                handleRadioButtonSelect={handleRadioButtonSelect}
-                selected={selected}
-              />
-            </Box>
-          </>
-        )}
-      </Box>
-    </>
+          <Box>
+            <RacingListComponentAnalysis
+              racingList={racingList}
+              matchType={value}
+              mode={mode}
+              handleRadioButtonSelect={handleRadioButtonSelect}
+              selected={selected}
+            />
+          </Box>
+        </>
+      )}
+    </Box>
   );
 };
 

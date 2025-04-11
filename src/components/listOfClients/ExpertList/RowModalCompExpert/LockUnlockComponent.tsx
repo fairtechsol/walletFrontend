@@ -1,18 +1,18 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect, memo } from "react";
 import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../store/store";
+import { EyeIcon, EyeSlash } from "../../../../assets";
 import {
   getUserList,
   setLockUnlockUserExpert,
   userListSuccessReset,
 } from "../../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../../store/store";
+import { ApiConstants } from "../../../../utils/Constants";
 import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../../Common/StyledImages";
-import { EyeIcon, EyeSlash } from "../../../../assets";
 import BoxButton from "../../RowModalComponents/BoxButton";
-import { ApiConstants } from "../../../../utils/Constants";
 
 const initialValues: any = {
   userBlock: false,
@@ -127,12 +127,9 @@ const LockUnlockComponent = (props: any) => {
               sx={{
                 width: { xs: "100%", lg: "65%", md: "65%" },
                 height: "45px",
-                // background: "white",
                 display: "flex",
                 alignItems: "center",
                 borderRadius: "5px",
-                // border: "2px solid #26262633",
-                // paddingX: "20px",
               }}
             >
               <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>

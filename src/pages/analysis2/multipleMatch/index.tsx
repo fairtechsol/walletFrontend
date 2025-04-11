@@ -1,15 +1,26 @@
 import {
-  Typography,
   Box,
+  Button,
+  Typography,
   useMediaQuery,
   useTheme,
-  Button,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
-import { useLocation, useNavigate } from "react-router-dom";
+import moment from "moment";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
+import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLoss/userProfitLossRace";
+import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
+import { getTimeLeft } from "../../../helper";
+import { matchService, socket, socketService } from "../../../socketManager";
+import {
+  getMultipleMatchDetailHorseRacing,
+  updateMultiMatchRatesForHorseRacing,
+  updateTeamRatesOfMultipleMatchForHorseRacing,
+  updateTeamRatesOnDeleteForMultiMatchRace,
+} from "../../../store/actions/horseRacing/multiplematchDetailAction";
 import {
   getPlacedBets,
   updateBetsPlaced,
@@ -17,18 +28,6 @@ import {
   updatePlacedbetsDeleteReason,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import { socket, socketService, matchService } from "../../../socketManager";
-import {
-  getMultipleMatchDetailHorseRacing,
-  updateMultiMatchRatesForHorseRacing,
-  updateTeamRatesOfMultipleMatchForHorseRacing,
-  updateTeamRatesOnDeleteForMultiMatchRace,
-} from "../../../store/actions/horseRacing/multiplematchDetailAction";
-import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
-import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLoss/userProfitLossRace";
-import moment from "moment";
-import { getTimeLeft } from "../../../helper";
 
 const MultipleMatchHorseRacing = () => {
   const theme = useTheme();
@@ -56,11 +55,11 @@ const MultipleMatchHorseRacing = () => {
   };
 
   useEffect(() => {
-    if(state){
+    if (state) {
       matchService.connect(state?.matchIds, profileDetail?.roleName);
     }
     return () => {
-      matchService.disconnect(); 
+      matchService.disconnect();
     };
   }, [state]);
 
@@ -319,7 +318,7 @@ const MultipleMatchHorseRacing = () => {
                               </Typography>
                               <MatchOddsHorseRacing
                                 currentMatch={item}
-                                typeOfBet={"Match Odds"}
+                                typeOfBet="Match Odds"
                                 showBox={
                                   item?.matchOdd?.activeStatus === "save"
                                 }
@@ -515,7 +514,6 @@ const MultipleMatchHorseRacing = () => {
               flexDirection: { matchesMobile: "column", lg: "row" },
               flex: 1,
               height: "100%",
-              // marginX: "0.5%",
               marginLeft: "0.5%",
             }}
           >
@@ -590,7 +588,7 @@ const MultipleMatchHorseRacing = () => {
                         </Typography>
                         <MatchOddsHorseRacing
                           currentMatch={item}
-                          typeOfBet={"Match Odds"}
+                          typeOfBet="Match Odds"
                           showBox={item?.matchOdd?.activeStatus === "save"}
                           minBet={Math.floor(item?.matchOdd?.minBet)}
                           maxBet={Math.floor(item?.matchOdd?.maxBet)}
@@ -642,10 +640,10 @@ const MultipleMatchHorseRacing = () => {
                 }}
               >
                 <UserProfitLossRace
-                  title={"User Profit Loss"}
+                  title="User Profit Loss"
                   matchData={storedMatchData}
                   setShowUserProfitLoss={setShowUserProfitLoss}
-                  single={"multiple"}
+                  single="multiple"
                   matchDetail={storedMatchData?.match}
                 />
               </Box>

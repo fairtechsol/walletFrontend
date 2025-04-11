@@ -16,6 +16,7 @@ import {
   HorseRacing,
   InstantWorli,
   Lucky7A,
+  MAC88,
   Poker,
   Politics,
   Race2020,
@@ -102,12 +103,9 @@ export const ApiConstants = {
   MATCH: {
     RATES: "/getUserRateDetails/",
     GET: "match",
-    GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",
-    BETDELETEOTHER: "/bet/deleteMultipleBetForOther",
     BETDELETERACE: "/bet/deleteMultipleBetForRace",
     BET_DELETE_PERMANENT: "/bet/deleteMultipleBet/permanent",
-    BET_DELETE_OTHER_PERMANENT: "/bet/deleteMultipleBetForOther/permanent",
     BET_DELETE_RACE_PERMANENT: "/bet/deleteMultipleBetForRace/permanent",
     GET_BETS: "/superadmin/bets",
     TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
@@ -185,15 +183,10 @@ export const Constants = {
   pageCount: 10,
   listOfClientCountLimit: 15,
 
-  // customPageLimit: 10,
-  // customTimeOut: 300000,// 5 mint in mili seconds user ideal 5 mint after that logout
-  // customTimer: 30000,// 30 sec in mili seconds remainint timer start and show message  Your session will expire in 30 second
-  // sessionExpireTime: 30 // 30 sec,
-
   customPageLimit: 15,
-  customTimeOut: 1000 * 60 * 60, // 5 mint in mili seconds user ideal 5 mint after that logout
-  customTimer: 1000 * 60 * 5, // 30 sec in mili seconds remainint timer start and show message  Your session will expire in 30 second
-  sessionExpireTime: 60 * 5, // 30 sec
+  customTimeOut: 1000 * 60 * 60,
+  customTimer: 1000 * 60 * 5,
+  sessionExpireTime: 60 * 5,
   apiBasePath: "https://devwalletapi.fairgame.club",
   thirdParty: "https://devserviceapi.fairgame.club",
   expertPath: "https://devexpertapi.fairgame.club",
@@ -286,6 +279,7 @@ export const cardGamesTypeConstants: any = {
   cmeter: "cmeter",
   queen: "queen",
   worli: "worli",
+  mac88: "MAC88",
 };
 
 export const gameIconConstants = {
@@ -327,6 +321,7 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.cmeter]: CasinoMeter,
   [cardGamesTypeConstants.queen]: CasinoQueen,
   [cardGamesTypeConstants.worli]: WorliMatka,
+  [cardGamesTypeConstants.mac88]: MAC88,
 };
 
 export const sessionBettingType = {

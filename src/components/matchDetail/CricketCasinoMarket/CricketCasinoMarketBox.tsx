@@ -5,6 +5,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { Fragment } from "react";
 import { BallStart } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import SeperateBox from "../MatchOdds/SeperateBox";
@@ -108,11 +109,8 @@ const CricketCasinoMarketBox = (props: any) => {
             <Box
               sx={{
                 background: "rgba(0,0,0,1)",
-                // marginLeft: "-2px",
                 height: "38px",
-                // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
-                // right: 0,
                 width: { lg: "36.5%", md: "60%", xs: "60.5%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
@@ -144,11 +142,8 @@ const CricketCasinoMarketBox = (props: any) => {
           ) : (
             <>
               {newData?.odds?.map((item: any, index: number) => (
-                <>
+                <Fragment key={index}>
                   <SeperateBox
-                    key={index}
-                    session={true}
-                    back={true}
                     value={item?.odds ?? 0}
                     value2={item?.size ?? 0}
                     lock={
@@ -160,15 +155,13 @@ const CricketCasinoMarketBox = (props: any) => {
                   />
                   <Box
                     sx={{ width: "3px", display: "flex", background: "pink" }}
-                  ></Box>
-                </>
+                  />
+                </Fragment>
               ))}
             </>
           )}
 
-          <Box
-            sx={{ width: ".45%", display: "flex", background: "pink" }}
-          ></Box>
+          <Box sx={{ width: ".45%", display: "flex", background: "pink" }} />
         </Box>
       </Box>
       <Divider />

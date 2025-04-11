@@ -18,13 +18,10 @@ export function Modal({
     <Box
       sx={[
         {
-          // width: "100%",
           width: { xs: "96%", lg: "100%", md: "96%" },
-          // marginX: "0.5%",
           minHeight: "140px",
           display: "flex",
           flexDirection: "column",
-          // justifyContent: "space-between",
           borderRadius: "10px",
           borderBottomRightRadius: "0px",
           borderBottomLeftRadius: "0px",
@@ -44,7 +41,6 @@ export function Modal({
           top: 0,
           left: 0,
           backgroundColor: "#00000069",
-          //   borderRadius: "15px",
           height: "100vh",
           width: "100vw",
         }}
@@ -69,20 +65,14 @@ export function Modal({
           <Box
             sx={{
               maxHeight: "300px",
-
-              // width: "250px",
-              // height: "100px",
               minHeight: "100px",
               minwidth: "150px",
               width: "100%",
-              // background: "#F8C851",
               borderRadius: "15px",
-              // padding: "20px",
               display: "flex",
               flexDirection: "column",
             }}
           >
-            {/* header */}
             <Box
               sx={{
                 marginX: "0",
@@ -96,7 +86,6 @@ export function Modal({
                 sx={{
                   justifyContent: "space-between",
                   alignItems: "center",
-                  // width: "100%",
                   px: "10px",
                   height: "100%",
                 }}
@@ -114,7 +103,6 @@ export function Modal({
                     {title}
                   </Typography>
                 </Box>
-
                 <Button
                   sx={{ color: "", fontSize: "30px" }}
                   onClick={() => {
@@ -126,7 +114,6 @@ export function Modal({
               </Box>
             </Box>
             {children}
-
             <Button
               sx={{
                 backgroundColor: "#fff",
@@ -143,9 +130,7 @@ export function Modal({
                   );
                 userPG && navigate(`/${navigateTo}`);
               }}
-            >
-              {/* {buttonMessage} */}
-            </Button>
+            ></Button>
           </Box>
         </Box>
       </Box>

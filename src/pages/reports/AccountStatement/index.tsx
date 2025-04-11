@@ -1,16 +1,15 @@
 import { Box, Typography } from "@mui/material";
-import Loader from "../../../components/Loader";
-import Pagination from "../../../components/Common/Pagination";
-import YellowHeader from "../../../components/report/AccountStatement/YellowHeader";
-import ListHeaderRow from "../../../components/report/AccountStatement/ListHeaderRow";
-import TableHeaderList from "../../../components/report/AccountStatement/TableHeaderList";
-import TableDataRow from "../../../components/report/AccountStatement/TableDataRow";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { getAccountStatement } from "../../../store/actions/reports";
-import { useSelector } from "react-redux";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Pagination from "../../../components/Common/Pagination";
+import Loader from "../../../components/Loader";
+import ListHeaderRow from "../../../components/report/AccountStatement/ListHeaderRow";
+import TableDataRow from "../../../components/report/AccountStatement/TableDataRow";
+import TableHeaderList from "../../../components/report/AccountStatement/TableHeaderList";
+import YellowHeader from "../../../components/report/AccountStatement/YellowHeader";
+import { getAccountStatement } from "../../../store/actions/reports";
+import { AppDispatch, RootState } from "../../../store/store";
 
 const AccountStatement = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -53,93 +52,89 @@ const AccountStatement = () => {
   }, [profileDetail, currentPage, pageLimit]);
 
   return (
-    <>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ marginX: { xs: "2vw", lg: "1vw" } }}>
-          <YellowHeader
-            fromDate={fromDate}
-            toDate={toDate}
-            getAccountStatement={() => {
-              let filter = "";
-              if (fromDate && toDate) {
-                filter += `&createdAt=between${moment(fromDate)?.format(
-                  "YYYY-MM-DD"
-                )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
-              } else if (fromDate) {
-                filter += `&createdAt=gte${moment(fromDate)?.format(
-                  "YYYY-MM-DD"
-                )}`;
-              } else if (toDate) {
-                filter += `&createdAt=lte${moment(toDate)?.format(
-                  "YYYY-MM-DD"
-                )}`;
-              }
-              setCurrentPage(1);
-              dispatch(
-                getAccountStatement({
-                  id: profileDetail?.id,
-                  page: 1,
-                  pageLimit: pageLimit,
-                  filter: filter,
-                  keyword: searchValue,
-                  searchBy: "description,user.userName,actionByUser.userName",
-                })
-              );
-            }}
-            setToDate={setToDate}
-            setFromDate={setFromDate}
-          />
-        </Box>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ marginX: { xs: "2vw", lg: "1vw" } }}>
+        <YellowHeader
+          fromDate={fromDate}
+          toDate={toDate}
+          getAccountStatement={() => {
+            let filter = "";
+            if (fromDate && toDate) {
+              filter += `&createdAt=between${moment(fromDate)?.format(
+                "YYYY-MM-DD"
+              )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
+            } else if (fromDate) {
+              filter += `&createdAt=gte${moment(fromDate)?.format(
+                "YYYY-MM-DD"
+              )}`;
+            } else if (toDate) {
+              filter += `&createdAt=lte${moment(toDate)?.format("YYYY-MM-DD")}`;
+            }
+            setCurrentPage(1);
+            dispatch(
+              getAccountStatement({
+                id: profileDetail?.id,
+                page: 1,
+                pageLimit: pageLimit,
+                filter: filter,
+                keyword: searchValue,
+                searchBy: "description,user.userName,actionByUser.userName",
+              })
+            );
+          }}
+          setToDate={setToDate}
+          setFromDate={setFromDate}
+        />
+      </Box>
 
-        <Box
-          sx={[
-            {
-              marginX: { xs: "2vw", lg: "1vw" },
-              minHeight: "100px",
-              borderRadius: "2px",
-              border: "2px solid white",
-              width: "97.5%",
-              borderTopRightRadius: {
-                xs: "10px",
-                lg: "0px",
-                md: "10px",
-              },
-              borderTopLeftRadius: {
-                xs: "10px",
-                lg: "0px",
-                md: "10px",
-              },
-              background: "#F8C851",
+      <Box
+        sx={[
+          {
+            marginX: { xs: "2vw", lg: "1vw" },
+            minHeight: "100px",
+            borderRadius: "2px",
+            border: "2px solid white",
+            width: "97.5%",
+            borderTopRightRadius: {
+              xs: "10px",
+              lg: "0px",
+              md: "10px",
             },
-          ]}
-        >
-          <ListHeaderRow
-            searchFor={"accountStatement"}
-            pageLimit={pageLimit}
-            setPageLimit={setPageLimit}
-            setCurrentPage={setCurrentPage}
-            fromDate={fromDate}
-            toDate={toDate}
-            setSearchValue={setSearchValue}
-          />
-
-          {loading ? (
-            <Box
-              sx={{
-                minHeight: "60vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Loader text="" />
-            </Box>
-          ) : (
-            <>
-              <Box sx={{ overflowX: "scroll", width: "100%" }}>
-                <TableHeaderList />
-
-                {accountStatement?.transactions?.length > 0 ? accountStatement?.transactions?.map((item: any) => (
+            borderTopLeftRadius: {
+              xs: "10px",
+              lg: "0px",
+              md: "10px",
+            },
+            background: "#F8C851",
+          },
+        ]}
+      >
+        <ListHeaderRow
+          searchFor="accountStatement"
+          pageLimit={pageLimit}
+          setPageLimit={setPageLimit}
+          setCurrentPage={setCurrentPage}
+          fromDate={fromDate}
+          toDate={toDate}
+          setSearchValue={setSearchValue}
+        />
+        {loading ? (
+          <Box
+            sx={{
+              minHeight: "60vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Loader text="" />
+          </Box>
+        ) : (
+          <>
+            <Box sx={{ overflowX: "scroll", width: "100%" }}>
+              <TableHeaderList />
+              {accountStatement?.transactions?.length > 0 ? (
+                accountStatement?.transactions?.map((item: any) => (
                   <TableDataRow
                     key={item?.id}
                     index={item?.id}
@@ -155,7 +150,9 @@ const AccountStatement = () => {
                     fromuserName={item?.actionByUser?.userName}
                     touserName={item?.user?.userName}
                   />
-                )) : <Box>
+                ))
+              ) : (
+                <Box>
                   <Typography
                     sx={{
                       color: "#000",
@@ -167,22 +164,22 @@ const AccountStatement = () => {
                   >
                     No Matching Records Found
                   </Typography>
-                </Box>}
-              </Box>
-              <Pagination
-                currentPage={currentPage}
-                pages={Math.ceil(
-                  parseInt(
-                    accountStatement?.count ? accountStatement?.count : 1
-                  ) / pageLimit
-                )}
-                setCurrentPage={setCurrentPage}
-              />
-            </>
-          )}
-        </Box>
+                </Box>
+              )}
+            </Box>
+            <Pagination
+              currentPage={currentPage}
+              pages={Math.ceil(
+                parseInt(
+                  accountStatement?.count ? accountStatement?.count : 1
+                ) / pageLimit
+              )}
+              setCurrentPage={setCurrentPage}
+            />
+          </>
+        )}
       </Box>
-    </>
+    </Box>
   );
 };
 

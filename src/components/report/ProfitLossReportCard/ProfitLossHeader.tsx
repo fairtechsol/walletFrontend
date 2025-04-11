@@ -1,23 +1,22 @@
 import { Box, Typography } from "@mui/material";
-import SearchInputWallet from "./SearchInputWallet";
+import { memo } from "react";
 import Calendar from "../../Common/Calendar";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
-import { memo } from "react";
+import SearchInputWallet from "./SearchInputWallet";
 
-const ProfitLossHeader = (props: any) => {
-  const {
-    type,
-    clientData,
-    setSearch,
-    search,
-    startDate,
-    setEndDate,
-    setStartDate,
-    setSelectedUser,
-    endDate,
-    onClick,
-    title,
-  } = props;
+const ProfitLossHeader = ({
+  type,
+  clientData,
+  setSearch,
+  search,
+  startDate,
+  setEndDate,
+  setStartDate,
+  setSelectedUser,
+  endDate,
+  onClick,
+  title,
+}: any) => {
   return (
     <Box
       sx={{

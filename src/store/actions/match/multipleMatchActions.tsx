@@ -1,7 +1,7 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 import service from "../../../service";
-import { ApiConstants, baseUrls, Constants } from "../../../utils/Constants";
+import { ApiConstants, Constants } from "../../../utils/Constants";
 
 export const getAnalysisList = createAsyncThunk<any, any>(
   "analysis/list",
@@ -37,62 +37,9 @@ export const getMultipleMatchDetail = createAsyncThunk<any, any>(
   }
 );
 
-export const getSessionProLossForMultipleMatch = createAsyncThunk<any, any>(
-  "/getSessionProLossForMultipleMatch",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.get(
-        `${ApiConstants.USER.RUN_AMOUNT}/${requestData?.id}`
-      );
-      if (resp?.data && resp?.data?.profitLoss[0]) {
-        return {
-          id: requestData?.id,
-          name: requestData?.name,
-          type: requestData?.type,
-          proLoss: resp?.data?.profitLoss,
-        };
-      } else {
-        return {
-          id: requestData?.id,
-          name: requestData?.name,
-          type: requestData?.type,
-          proLoss: [JSON.stringify({ betPlaced: [] })],
-        };
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
-
 export const updateMultipleMatchDetail = createAsyncThunk<any, any>(
   "multipleMatch/update",
   async (data) => data
-);
-
-export const getMultipleMatchRates = createAsyncThunk<any, any>(
-  "third/multipleMatch/update",
-  async (matchId,thunkApi) => {
-    try {
-      const resp = await axios.get(
-        `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
-
-export const updateProfitLossForMultipleMatch = createAsyncThunk<any, any>(
-  "/placed/profitLossMultiMatch",
-  async (profitLoss) => {
-    return profitLoss;
-  }
 );
 export const updateMaxLossForBetForMultipleMatch = createAsyncThunk<any, any>(
   "/maxLoss/updateMultiMatch",
@@ -136,5 +83,3 @@ export const updateMatchRatesOnMarketUndeclareForMulti = createAsyncThunk<
 >("/maxLoss/updateMatchRatesOnMarketUndeclareForMulti", async (data) => {
   return data;
 });
-
-export const analysisListReset = createAction("analysisList/reset");

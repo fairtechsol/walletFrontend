@@ -11,7 +11,7 @@ const TableDataRow = (props: any) => {
           alignItems: "center",
           overflow: "hidden",
           borderBottom: "2px solid white",
-          background: "#FFE094"
+          background: "#FFE094",
         },
       ]}
     >

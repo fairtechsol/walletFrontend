@@ -1,18 +1,17 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-// import moment from "moment";
 import { memo, useState } from "react";
+import { useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { formatToINR, stripUrl } from "../../../helper";
 import service from "../../../service";
+import { RootState } from "../../../store/store";
+import { ApiConstants } from "../../../utils/Constants";
 import StyledImage from "../../Common/StyledImages";
 import AllRateSeperate from "./AllRateSeperate";
 import ChildUserList from "./ChildUserList";
 import SessionBetSeperate from "./SessionBetSeperate";
 import SessionComponentMatches from "./SessionComponentMatches";
-import { ApiConstants } from "../../../utils/Constants";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import { formatToINR, stripUrl } from "../../../helper";
 
 const AllUserListSeparate = ({
   item,
@@ -127,20 +126,6 @@ const AllUserListSeparate = ({
             justifyContent: "space-between",
           }}
         >
-          {/* <Typography
-            sx={{
-              fontSize: { lg: "0px", xs: "10px" },
-              color: "white",
-              marginLeft: "5px",
-              fontWeight: "500",
-              position: "absolute",
-              top: 0,
-              right: 5,
-            }}
-          > */}
-          {/* ({moment(item?.betDate).format("DD-MM-YYYY")}) */}
-          {/* </Typography> */}
-
           <Box
             onClick={(e) => {
               e.stopPropagation();
@@ -469,14 +454,6 @@ const AllUserListSeparate = ({
                             setShowSessions(false);
                           }
                           setShowBets((prev) => !prev);
-                          // getBetReport({
-                          //   eventType: item?.eventType,
-                          //   matchId: matchId,
-                          //   userId: item?.userId,
-                          //   type: "all_bet",
-                          //   betId: "",
-                          //   sessionBet: false,
-                          // });
                           getBetDataForChildUser({
                             matchId,
                             userId: item?.userId,
@@ -672,7 +649,6 @@ const AllUserListSeparate = ({
                       </Box>
                     )}
                   </Box>
-                  {/* {selectedId?.id === item?.matchId && ( */}
                   <>
                     {showBets && (
                       <>
@@ -680,7 +656,6 @@ const AllUserListSeparate = ({
                           sx={{
                             width: { xs: "100%", lg: "100%" },
                             marginTop: { xs: ".25vh" },
-                            // marginLeft: { lg: "4%" },
                             display: "flex",
                             flexDirection: { lg: "row", xs: "column" },
                           }}
@@ -784,7 +759,6 @@ const AllUserListSeparate = ({
                       </Box>
                     )}
                   </>
-                  {/* )} */}
                 </Box>
               </Box>
             </>
@@ -806,9 +780,7 @@ const AllUserListSeparate = ({
               <Box
                 sx={{
                   width: { xs: "100%", lg: "100%", md: "100%" },
-                  // maxHeight: "51vh",
                   overflow: "hidden",
-                  // overflowY: "auto",
                   marginY: { xs: ".2vh", lg: "1vh" },
                   padding: 0.2,
                 }}

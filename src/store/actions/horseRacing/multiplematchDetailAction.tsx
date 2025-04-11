@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants } from "../../../utils/Constants";
-import { AxiosError } from "axios";
 
 export const getMultipleMatchDetailHorseRacing = createAsyncThunk<any, any>(
   "horseRacing/multipleMatchDetail",
@@ -42,9 +42,9 @@ export const updateTeamRatesOfMultipleMatchForHorseRacing = createAsyncThunk<
   return data;
 });
 
-export const updateTeamRatesOnDeleteForMultiMatchRace = createAsyncThunk<any, any>(
-  "/maxLoss/updateTeamRatesOnDeleteForMultiMatchRace",
-  async (data) => {
-    return data;
-  }
-);
+export const updateTeamRatesOnDeleteForMultiMatchRace = createAsyncThunk<
+  any,
+  any
+>("/maxLoss/updateTeamRatesOnDeleteForMultiMatchRace", async (data) => {
+  return data;
+});

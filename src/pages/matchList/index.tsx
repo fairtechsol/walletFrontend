@@ -31,7 +31,7 @@ const Inplay = () => {
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });
@@ -83,9 +83,6 @@ const Inplay = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
-        // matchListInplay?.matches?.map((item: any) => {
-        //   socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
-        // });
         socketService.match.matchResultDeclared(getMatchListService);
         socketService.match.matchResultUnDeclared(getMatchListService);
         socketService.match.declaredMatchResultAllUser(getMatchListService);
@@ -99,9 +96,6 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      // matchListInplay?.matches?.map((item: any) => {
-      //   socketService.match.leaveMatchRoom(item?.id);
-      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
@@ -125,14 +119,16 @@ const Inplay = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    getMatchListMarket(type);
+    setTimeout(() => {
+      getMatchListMarket(type);
+    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket(type);
-    }, 60000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [type]);
-  
+
   return (
     <>
       {matchListInplay && matchListInplay?.matches?.length > 0
@@ -155,7 +151,6 @@ const Inplay = () => {
                 top={true}
                 blur={false}
                 match={match}
-                // handleUpdateMatch={handleUpdateMatch}
               />
             );
           })

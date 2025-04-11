@@ -1,4 +1,13 @@
-import { Box, Tab, Tabs, styled } from "@mui/material";
+import {
+  Box,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Tabs,
+  styled,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 const CustomTabs = styled(Tabs)({
@@ -37,7 +46,15 @@ const CountryWiseListComponent = ({
   return (
     <>
       {countryWiseList && countryWiseList?.length === 0 && (
-        <span style={{ color: "#fff" }}>No Record Found</span>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell style={{ color: "white", textAlign: "center" }}>
+                No Record Found...
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       )}
       {countryWiseList && countryWiseList?.length > 0 && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>

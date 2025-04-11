@@ -66,7 +66,7 @@ const MyAccount = () => {
             }}
           >
             <DataShow
-              title={"Upper Level Credit Reference"}
+              title="Upper Level Credit Reference"
               value={myAccountDetails?.userCreditReference ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
@@ -78,7 +78,7 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"Down level Occupy Balance"}
+              title="Down level Occupy Balance"
               value={myAccountDetails?.downLevelOccupyBalance ?? 0}
               containerStyle={{
                 flex: 1,
@@ -94,7 +94,7 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"Down Level Credit Reference"}
+              title="Down Level Credit Reference"
               value={myAccountDetails?.downLevelCreditReference ?? 0}
               containerStyle={{
                 flex: 1,
@@ -118,7 +118,7 @@ const MyAccount = () => {
             }}
           >
             <DataShow
-              title={"Total Master Balance"}
+              title="Total Master Balance"
               value={myAccountDetails?.totalMasterBalance ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
@@ -130,10 +130,12 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"Upper Level"}
+              title="Upper Level"
               value={myAccountDetails?.upperLevelBalance ?? 0}
-              value2={myAccountDetails?.totalProfitLossUpperlevel ?? 0}
-              value3={myAccountDetails?.upperLevelProfitLossPercent ?? 0}
+              valueProfitLoss={myAccountDetails?.totalProfitLossUpperlevel ?? 0}
+              valuePercentage={
+                myAccountDetails?.upperLevelProfitLossPercent ?? 0
+              }
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -148,9 +150,9 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"Down Level Profit/Loss"}
+              title="Down Level Profit/Loss"
               value={myAccountDetails?.downLevelProfitLoss ?? 0}
-              value2={myAccountDetails?.totalProfitLossDownlevel ?? 0}
+              valueProfitLoss={myAccountDetails?.totalProfitLossDownlevel ?? 0}
               containerStyle={{
                 flex: 1,
                 marginTop: matchesMobile ? "10px" : "0px",
@@ -174,7 +176,7 @@ const MyAccount = () => {
             }}
           >
             <DataShow
-              title={"Available Balance"}
+              title="Available Balance"
               value={myAccountDetails?.availableBalance ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
@@ -186,7 +188,7 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"Available Balance With Profit/Loss"}
+              title="Available Balance With Profit/Loss"
               value={myAccountDetails?.availableBalanceWithProfitLoss ?? 0}
               containerStyle={{
                 flex: 1,
@@ -204,7 +206,7 @@ const MyAccount = () => {
               }}
             />
             <DataShow
-              title={"My Profit/Loss"}
+              title="My Profit/Loss"
               value={myAccountDetails?.profitLoss ?? 0}
               containerStyle={{
                 flex: 1,
@@ -220,23 +222,23 @@ const MyAccount = () => {
             />
           </Box>
         </Box>
-       {profileDetail?.roleName == "fairGameWallet" &&  <BoxButton
-          color={"#0B4F26"}
-          onClick={() => {
-            setOpenChangePassword(!openChangePassword);
-          }}
-          title={"Change permanent delete password"}
-          isSelected={openChangePassword}
-          containerStyle={{
-            // marginLeft: { lg: "8px", xs: "0" },
-            flex: 1,
-            borderColor: "white",
-          }}
-          titleStyle={{
-            fontSize: { xs: "12px" },
-          }}
-          labelStyle={{}}
-        />}
+        {profileDetail?.roleName == "fairGameWallet" && (
+          <BoxButton
+            color="#0B4F26"
+            onClick={() => {
+              setOpenChangePassword(!openChangePassword);
+            }}
+            title="Change permanent delete password"
+            isSelected={openChangePassword}
+            containerStyle={{
+              flex: 1,
+              borderColor: "white",
+            }}
+            titleStyle={{
+              fontSize: { xs: "12px" },
+            }}
+          />
+        )}
         {openChangePassword && (
           <ChangeDeleteCode
             open={openChangePassword}

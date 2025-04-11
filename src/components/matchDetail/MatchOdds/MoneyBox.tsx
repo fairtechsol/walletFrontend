@@ -5,7 +5,7 @@ const MoneyBox = (props: any) => {
   const { color, rates } = props;
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  let val: any = parseFloat(rates || 0)
+  let val: any = parseFloat(rates || 0);
 
   return (
     <Box
@@ -19,7 +19,6 @@ const MoneyBox = (props: any) => {
         display: "flex",
         height: "25px",
         background: "#F6F6F6",
-        // zIndex: 99,
       }}
     >
       <Typography
@@ -29,8 +28,7 @@ const MoneyBox = (props: any) => {
           color: color,
         }}
       >
-     {handleNumber(parseFloat(val), color)}
-        {/* {new Intl.NumberFormat("en-IN").format(val)} */}
+        {handleNumber(parseFloat(val), color)}
       </Typography>
     </Box>
   );

@@ -2,17 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { convertData, updateSessionBettingsItem } from "../../../helper";
 import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import {
-  analysisListReset,
   getAnalysisList,
   getMultipleMatchDetail,
-  getMultipleMatchRates,
   updateBetDataOnDeclareOfMultipleMatch,
   updateMatchRatesOnMarketUndeclareForMulti,
   updateMaxLossForBetForMultipleMatch,
   updateMaxLossForBetOnUndeclareForMultipleMatch,
   updateMaxLossForDeleteBetForMultiMatch,
   updateMultipleMatchDetail,
-  updateProfitLossForMultipleMatch,
   updateTeamRatesOfMultipleMatch,
   updateTeamRatesOnDeleteForMultiMatch,
 } from "../../actions/match/multipleMatchActions";
@@ -141,8 +138,10 @@ const analysisListSlice = createSlice({
                     return a.sno - b.sno;
                   }
                   // If sno values are equal, sort so that null parentId comes first
-                  if (a.parentBetId === null && b.parentBetId !== null) return -1;
-                  if (a.parentBetId !== null && b.parentBetId === null) return 1;
+                  if (a.parentBetId === null && b.parentBetId !== null)
+                    return -1;
+                  if (a.parentBetId !== null && b.parentBetId === null)
+                    return 1;
                   return 0;
                 }),
               };
@@ -151,108 +150,6 @@ const analysisListSlice = createSlice({
             }
           }
         );
-      })
-      .addCase(getMultipleMatchRates.fulfilled, (state, action) => {
-        state.multipleMatchDetail = state?.multipleMatchDetail?.map(
-          (match: any) => {
-            if (match?.id === action?.payload?.id) {
-              const {
-                apiSession,
-                apiTiedMatch,
-                apiTiedMatch2,
-                bookmaker,
-                bookmaker2,
-                manualTideMatch,
-                marketCompleteMatch,
-                marketCompleteMatch1,
-                matchOdd,
-                quickbookmaker,
-                sessionBettings,
-                setWinner,
-                firstHalfGoal,
-                halfTime,
-                overUnder,
-                completeManual,
-                other,
-                tournament,
-              } = action?.payload;
-              const parsedSessionBettings =
-                match?.sessionBettings?.map(JSON.parse) || [];
-              const apiParsedSessionBettings =
-                sessionBettings?.map(JSON.parse) || [];
-
-              apiParsedSessionBettings.forEach((apiItem: any) => {
-                const index = parsedSessionBettings.findIndex(
-                  (parsedItem: any) => parsedItem.id === apiItem.id
-                );
-                if (index !== -1) {
-                  parsedSessionBettings[index] = {
-                    ...parsedSessionBettings[index],
-                    ...apiItem,
-                  };
-                } else {
-                  parsedSessionBettings.push(apiItem);
-                }
-              });
-              const stringifiedSessionBetting = parsedSessionBettings.map(
-                JSON.stringify
-              );
-              return {
-                ...match,
-                apiSession,
-                apiTideMatch: apiTiedMatch,
-                apiTideMatch2: apiTiedMatch2,
-                bookmaker,
-                marketBookmaker2: bookmaker2,
-                manualTiedMatch: manualTideMatch,
-                marketCompleteMatch,
-                marketCompleteMatch1,
-                matchOdd,
-                quickBookmaker: quickbookmaker,
-                sessionBettings: stringifiedSessionBetting,
-                setWinner,
-                firstHalfGoal,
-                halfTime,
-                overUnder,
-                manualCompleteMatch: completeManual,
-                updatedSessionBettings: updateSessionBettingsItem(
-                  convertData(parsedSessionBettings),
-                  apiSession
-                ),
-                other,
-                tournament: tournament?.sort((a: any, b: any) => {
-                  // Primary sort by sno (ascending)
-                  if (a.sno !== b.sno) {
-                    return a.sno - b.sno;
-                  }
-                  // If sno values are equal, sort so that null parentId comes first
-                  if (a.parentBetId === null && b.parentBetId !== null) return -1;
-                  if (a.parentBetId !== null && b.parentBetId === null) return 1;
-                  return 0;
-                }),
-              };
-            } else {
-              return match;
-            }
-          }
-        );
-      })
-      .addCase(updateProfitLossForMultipleMatch.fulfilled, () => {
-        // const { jobData, profitLoss } = action.payload;
-        // if (jobData?.betPlaceObject?.betPlacedData?.betId) {
-        //   const updatedSessionProLoss = state.sessionProLoss.map((item: any) =>
-        //     item?.id === jobData.betPlaceObject.betPlacedData.betId
-        //       ? {
-        //           ...item,
-        //           proLoss: [
-        //             JSON.stringify(profitLoss),
-        //             ...item.proLoss.slice(1),
-        //           ],
-        //         }
-        //       : item
-        //   );
-        //   state.sessionProLoss = updatedSessionProLoss;
-        // }
       })
       .addCase(
         updateMaxLossForBetForMultipleMatch.fulfilled,
@@ -609,10 +506,7 @@ const analysisListSlice = createSlice({
             }
           );
         }
-      )
-      .addCase(analysisListReset, (state) => {
-        return { ...state, success: false };
-      });
+      );
   },
 });
 

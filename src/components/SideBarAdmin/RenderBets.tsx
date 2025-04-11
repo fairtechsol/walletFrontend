@@ -1,10 +1,9 @@
-import MainBox from "./MainBox";
 import { Box } from "@mui/material";
 import { useState } from "react";
+import MainBox from "./MainBox";
 import RenderOdds from "./RenderOdds";
 
-const RenderBets = (props: any) => {
-  const { i, handleDrawerToggle, colors,matchType } = props;
+const RenderBets = ({ i, handleDrawerToggle, colors, matchType }: any) => {
   const [selected, setSelected] = useState(false);
 
   return (

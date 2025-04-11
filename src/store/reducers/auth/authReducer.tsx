@@ -8,7 +8,7 @@ interface InitialState {
   isTransPasswordCreated: boolean;
   userRole: string;
   error: any;
-  oldPasswordMatched:boolean;
+  oldPasswordMatched: boolean;
 }
 
 const initialState: InitialState = {
@@ -47,7 +47,7 @@ export const authReducer = createReducer(initialState, (builder) => {
     })
     .addCase(checkOldPass.fulfilled, (state, action) => {
       state.loading = false;
-      state.oldPasswordMatched = action?.payload
+      state.oldPasswordMatched = action?.payload;
     })
     .addCase(checkOldPass.rejected, (state, action) => {
       state.loading = false;

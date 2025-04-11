@@ -1,19 +1,19 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
+import moment from "moment";
 import { useState } from "react";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { formatToINR } from "../../../helper";
 import {
   getDomainProfitLoss,
   resetBetProfitLoss,
   resetDomainProfitLoss,
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
-import moment from "moment";
-import { formatToINR } from "../../../helper";
+import { AppDispatch, RootState } from "../../../store/store";
 import theme from "../../../theme";
 import { gameConstants } from "../../../utils/Constants";
+import StyledImage from "../../Common/StyledImages";
 
 const RowHeaderDomain = ({
   item,

@@ -2,9 +2,23 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import MaterialUISwitch from "../Common/MaterialUISwitch";
 
-const ButtonWithSwitch = (props: any) => {
-  const { title, val, name, setLockUnlockObj, lockUnlockObj, showLockUnlock } =
-    props;
+interface ButtonWithSwitchProps {
+  title: string;
+  val: boolean;
+  name: string;
+  setLockUnlockObj: (val: any) => void;
+  lockUnlockObj: any;
+  showLockUnlock?: boolean;
+}
+
+const ButtonWithSwitch = ({
+  title,
+  val,
+  name,
+  setLockUnlockObj,
+  lockUnlockObj,
+  showLockUnlock,
+}: ButtonWithSwitchProps) => {
   const [checked, setChecked] = useState(val);
   const classes = {
     mainBox: [
@@ -26,7 +40,7 @@ const ButtonWithSwitch = (props: any) => {
         color: "white",
         marginRight: "10px",
         minWidth: { lg: "80px", xs: "0px", md: "0px" },
-        lineHeight: "1"
+        lineHeight: "1",
       },
     ],
   };

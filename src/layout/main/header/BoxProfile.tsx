@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import StyledImage from "../../../components/Common/StyledImages";
 import { useEffect, useState } from "react";
 import { ArrowDown } from "../../../assets";
-import BoxDropDownMenu from "./BoxDropDownMenu";
+import StyledImage from "../../../components/Common/StyledImages";
 import { handleNumber } from "../../../helper";
+import BoxDropDownMenu from "./BoxDropDownMenu";
 
 const BoxProfile = (props: any) => {
   const { value, containerStyle, balance, color } = props;
@@ -63,7 +63,7 @@ const BoxProfile = (props: any) => {
               fontWeight: "700",
             }}
           >
-            {handleNumber(parseFloat(balance || 0.00), color)}
+            {handleNumber(parseFloat(balance || 0.0), color)}
           </Typography>
         </Box>
         <StyledImage

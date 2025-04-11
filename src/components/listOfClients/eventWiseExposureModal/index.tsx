@@ -8,14 +8,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getUserWiseExposure,
   resetUserWiseExposureList,
 } from "../../../store/actions/user/userAction";
-import { useEffect } from "react";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 
 const EventWiseExposureModal = ({
   setShowUserWiseExposureModal,

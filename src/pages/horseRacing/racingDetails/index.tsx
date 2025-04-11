@@ -19,7 +19,7 @@ import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLo
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { getTimeLeft } from "../../../helper";
-import { socket, socketService, matchService } from "../../../socketManager";
+import { matchService, socket, socketService } from "../../../socketManager";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -54,7 +54,6 @@ const RacingDetails = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
-  // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.horseRacing.matchDetail
@@ -72,11 +71,11 @@ const RacingDetails = () => {
   });
 
   useEffect(() => {
-    if(id){
+    if (id) {
       matchService.connect([id], profileDetail?.roleName);
     }
     return () => {
-      matchService.disconnect(); 
+      matchService.disconnect();
     };
   }, [id]);
 
@@ -335,40 +334,24 @@ const RacingDetails = () => {
   return (
     <>
       {visible && selectedBetData.length > 0 && (
-        <>
-          <AddNotificationModal
-            value={""}
-            title={"Add Remark"}
-            visible={visible}
-            loadingDeleteBet={loading}
-            setVisible={setVisible}
-            onDone={handleDeleteBet}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              setVisible(false);
-              setMode({ type: "", value: false });
-            }}
-            buttonText="Delete"
-          />
-        </>
+        <AddNotificationModal
+          title="Add Remark"
+          visible={visible}
+          loadingDeleteBet={loading}
+          setVisible={setVisible}
+          onDone={handleDeleteBet}
+          buttonText="Delete"
+        />
       )}
       {visibleEdit && selectedBetData.length > 0 && (
-        <>
-          <AddNotificationModal
-            value={""}
-            title={"Edit Remark"}
-            visible={visibleEdit}
-            loadingDeleteBet={loading}
-            setVisible={setVisibleEdit}
-            onDone={handleEditDeleteBetReason}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              setVisibleEdit(false);
-              setMode({ type: "", value: false });
-            }}
-            buttonText="Edit"
-          />
-        </>
+        <AddNotificationModal
+          title="Edit Remark"
+          visible={visibleEdit}
+          loadingDeleteBet={loading}
+          setVisible={setVisibleEdit}
+          onDone={handleEditDeleteBetReason}
+          buttonText="Edit"
+        />
       )}
       <Dialog
         open={selectedBetData.length > 0 && permanentDeletePopShow}
@@ -458,7 +441,6 @@ const RacingDetails = () => {
             <UserProfitLossRace
               single={"single"}
               title={"User Profit Loss"}
-              // matchId={matchId}
               matchDetail={matchDetail}
             />
           )}
@@ -507,7 +489,7 @@ const RacingDetails = () => {
                 </Typography>
               </Box>
             )}
-           {!["edit", "delete"].includes(mode?.type) && mode.value && (
+            {!["edit", "delete"].includes(mode?.type) && mode.value && (
               <>
                 <Box sx={{ width: "2%" }}></Box>
                 <Box
@@ -547,7 +529,7 @@ const RacingDetails = () => {
             )}
             {!["edit", "deletePermanent"].includes(mode?.type) && (
               <>
-                <Box sx={{ width: "2%" }}></Box>
+                <Box sx={{ width: "2%" }} />
                 <Box
                   onClick={() => {
                     if (mode.value && mode?.type === "delete") {
@@ -595,7 +577,7 @@ const RacingDetails = () => {
             )}
             {!["delete", "deletePermanent"].includes(mode?.type) && (
               <>
-                <Box sx={{ width: "2%" }}></Box>
+                <Box sx={{ width: "2%" }} />
                 <Box
                   onClick={() => {
                     if (mode.value && mode?.type === "edit") {
@@ -695,15 +677,13 @@ const RacingDetails = () => {
                 width: "100%",
               }}
             >
-              <Box sx={{ width: "2%" }}></Box>
-              <Box
-                sx={{ width: "150px", marginY: ".75%", height: "15px" }}
-              ></Box>
+              <Box sx={{ width: "2%" }} />
+              <Box sx={{ width: "150px", marginY: ".75%", height: "15px" }} />
             </Box>
 
             <UserProfitLossRace
-              single={"single"}
-              title={"User Profit Loss"}
+              single="single"
+              title="User Profit Loss"
               matchDetail={matchDetail}
             />
           </Box>

@@ -1,20 +1,19 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { handleNumber } from "../../../helper";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { handleNumber } from "../../../helper";
 import {
   getDomainProfitLoss,
   resetBetProfitLoss,
   resetDomainProfitLoss,
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
-import { useDispatch } from "react-redux";
-import RowComponentMatches from "./RowComponentMatches";
-import { useEffect, useState } from "react";
+import { AppDispatch, RootState } from "../../../store/store";
 import { gameConstants, gameIconConstants } from "../../../utils/Constants";
+import StyledImage from "../../Common/StyledImages";
+import RowComponentMatches from "./RowComponentMatches";
 
 const RowHeaderMatches = ({
   item,
@@ -183,9 +182,7 @@ const RowHeaderMatches = ({
             >
               {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}
               {`${matchesMobile ? "TD(1%)" : "Total Deduction"} : `}
-              {handleNumber(parseFloat(item?.totalDeduction || 0), color)}{" "}
-              {/* {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                ${handleNumber(parseFloat(item?.totalDeduction || 0),color)})`} */}
+              {handleNumber(parseFloat(item?.totalDeduction || 0), color)}
             </Typography>
           </Box>
         </Box>

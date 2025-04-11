@@ -1,10 +1,10 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
-import { formatNumber, formatToINR, stripUrl } from "../../../helper";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
-import CommissionDot from "../../Common/CommissionDot";
 import moment from "moment";
+import { useState } from "react";
+import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
+import { formatNumber, formatToINR, stripUrl } from "../../../helper";
+import CommissionDot from "../../Common/CommissionDot";
+import StyledImage from "../../Common/StyledImages";
 const SessionBetSeperate = ({
   profit,
   mark,
@@ -391,17 +391,7 @@ const SessionBetSeperate = ({
     </>
   );
 };
-// value2 = { formatNumber(newData?.rate_percent?.split("-")[0])}
 const RowComponent = ({ header, data }: any) => {
-  // const getTime = (date: any) => {
-  //   const now = new Date(date);
-  //   const timeString = now.toLocaleTimeString("en-US", {
-  //     hour: "numeric",
-  //     minute: "numeric",
-  //     hour12: true,
-  //   });
-  //   return timeString;
-  // };
   const getTime = (date: any) => {
     const timeString = moment
       .utc(date)
@@ -444,8 +434,7 @@ const RowComponent = ({ header, data }: any) => {
             header={header}
             time={getTime(data.createdAt)}
             isCommissionActive={data?.isCommissionActive}
-          /> 
-          {/* // iscomision */}
+          />
           <SingleBox
             color={getColor()}
             data={data?.username || data?.userName || data?.user?.userName}
@@ -495,7 +484,7 @@ const SingleBox = ({
   isPercent,
   rate,
   domain,
-  isCommissionActive
+  isCommissionActive,
 }: any) => {
   return !header ? (
     first ? (
@@ -510,7 +499,7 @@ const SingleBox = ({
           alignItems: "center",
         }}
       >
-         {isCommissionActive && <CommissionDot />}
+        {isCommissionActive && <CommissionDot />}
         <Typography
           sx={{
             fontWeight: "700",
@@ -521,19 +510,6 @@ const SingleBox = ({
         >
           {time}
         </Typography>
-        {/* <Typography
-          sx={{
-            maxHeight: "2em",
-            // overflowY: "scroll",
-            lineHeight: 1,
-            fontWeight: "600",
-            fontSize: { lg: "0.6vw", xs: "10px" },
-            color: "black",
-            textAlign: "center",
-          }}
-        >
-          {data}
-        </Typography> */}
       </Box>
     ) : up ? (
       <Box
@@ -577,7 +553,6 @@ const SingleBox = ({
           width: "100%",
           height: "40px",
           background: color,
-          // marginX: { xs: "1px", lg: "1px" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
