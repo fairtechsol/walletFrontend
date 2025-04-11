@@ -4,14 +4,12 @@ import {
   changeDeletePassword,
   changePasswordRow,
   getAlreadyUserExist,
-  getModalUserList,
   getSearchClientList,
   getTotalBalance,
   getUserList,
   getUserWiseExposure,
   handleDeleteUser,
   handleExport,
-  handleModelActions,
   handleSettleCommission,
   resetDeleteChangePassword,
   resetSearchUserList,
@@ -20,14 +18,13 @@ import {
   setExposureLimit,
   setLockUnlockUser,
   setLockUnlockUserExpert,
-  userListSuccessReset
+  userListSuccessReset,
 } from "../../actions/user/userAction";
 
 interface InitialState {
   userDetail: any;
   userAlreadyExist: boolean;
   userList: any;
-  userModalList: any;
   searchUserList: any;
   success: boolean;
   loading: boolean;
@@ -44,7 +41,6 @@ const initialState: InitialState = {
   userDetail: null,
   userAlreadyExist: false,
   userList: null,
-  userModalList: null,
   searchUserList: [],
   success: false,
   loading: false,
@@ -85,41 +81,6 @@ export const userList = createSlice({
       .addCase(getUserList.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message;
-      })
-      .addCase(getModalUserList.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getModalUserList.fulfilled, (state, action) => {
-        state.userModalList = action?.payload;
-        state.loading = false;
-      })
-      .addCase(getModalUserList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action?.error?.message;
-      })
-      .addCase(handleModelActions.fulfilled, (state, action) => {
-        const { openModal, domain } = action?.payload;
-        state.openModal = openModal;
-        let obj = {
-          roleName: action?.payload?.roleName,
-          id: action?.payload?.userId,
-          domain: domain,
-          title: action?.payload?.title,
-        };
-        state.userElement = obj;
-        state.isUrl = action?.payload?.isUrl;
-        if (
-          domain !== undefined &&
-          domain !== null &&
-          domain !== "" &&
-          openModal
-        ) {
-          state.domain = domain;
-        } else if (!openModal) {
-          state.domain = "";
-        }
-        state.loading = false;
       })
       .addCase(changeAmmountUser.pending, (state) => {
         state.loading = true;

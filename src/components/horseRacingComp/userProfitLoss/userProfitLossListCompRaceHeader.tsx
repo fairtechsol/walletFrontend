@@ -10,36 +10,30 @@ const UserProfitLossListCompRaceHeader = (props: any) => {
         <Box
           sx={{
             display: "flex",
-            // height: "38px",
             alignItems: "center",
             backgroundColor: "#319E5B",
-            overflow: "hidden"
-            // width:"100%"
+            overflow: "hidden",
           }}
         >
           <Typography
             sx={{
               color: "black",
               fontSize: { lg: "12px", md: "10px", xs: "8px" },
-            //   padding: "2px",
               margin: "8px",
               fontWeight: "600",
               textOverflow: "ellipsis",
               lineHeight: "1",
               width: "4rem",
-              
             }}
           >
             Username
           </Typography>
         </Box>
-        <Box sx={{ display: "flex"}}>
+        <Box sx={{ display: "flex" }}>
           {matchDetail?.matchOdd?.runners?.map((runner: any) => (
             <>
               <SeperateBox
-                value={
-                  runner.runnerName
-                }
+                value={runner.runnerName}
                 color={"#f1c550"}
                 width={10}
               />
@@ -49,7 +43,7 @@ const UserProfitLossListCompRaceHeader = (props: any) => {
                   display: "flex",
                   background: "#ffffff",
                 }}
-              ></Box>
+              />
             </>
           ))}
         </Box>

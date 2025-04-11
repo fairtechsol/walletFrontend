@@ -1,6 +1,5 @@
 import moment from "moment-timezone";
 
-
 const order: any = {
   session: 1,
   overByover: 2,
@@ -12,13 +11,11 @@ const order: any = {
 };
 export const formatNumber = (value?: any, isRound?: any) => {
   if (value >= 1000) {
-    // return (value / 1000).toFixed(1) + "k";
     return isRound
       ? Math.round(value / 1000) + "k"
       : (value / 1000).toFixed(1) + "k";
   } else {
     return isRound ? Math.round(value) : value;
-    // return value
   }
 };
 
@@ -180,13 +177,7 @@ export const stripUrl = (url: any) => {
 
   const parts = url?.split(".");
 
-  url = parts?.[parts.length-2]
-  // if (parts?.length > 2) {
-  //   parts?.pop();
-  //   url = parts?.join(".");
-  // } else if (parts?.length === 2) {
-  //   url = parts?.[0];
-  // }
+  url = parts?.[parts.length - 2];
 
   return url || "";
 };

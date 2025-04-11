@@ -1,24 +1,24 @@
 import { Box } from "@mui/system";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {
   ADDACCOUNT,
   CHECKLIST,
   Cricket,
   Football,
+  GreyHound,
+  HorseRacing,
   MYACCOUNT,
   Play,
+  Politics,
   TEAM,
   TREND,
   Tennis,
   WALLET,
-  HorseRacing,
-  GreyHound,
-  Politics,
 } from "../../../assets";
-import AdminEventComponent from "./AdminEventComponent";
-import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import AdminEventComponent from "./AdminEventComponent";
 
 const data = [
   { id: 1, title: "INPLAY", image: Play, url: "live_market", alt: "Inplay" },

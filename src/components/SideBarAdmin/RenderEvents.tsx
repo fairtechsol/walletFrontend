@@ -10,15 +10,14 @@ import { AppDispatch, RootState } from "../../store/store";
 import MainBox from "./MainBox";
 import RenderDates from "./RenderDates";
 
-const RenderEvents = (props: any) => {
-  const {
-    i,
-    handleDrawerToggle,
-    colors,
-    selectedCompetitionId,
-    setSelectedCompetitionId,
-    matchType
-  } = props;
+const RenderEvents = ({
+  i,
+  handleDrawerToggle,
+  colors,
+  selectedCompetitionId,
+  setSelectedCompetitionId,
+  matchType,
+}: any) => {
   const dispatch: AppDispatch = useDispatch();
   const [selectedCompetitionDate, setSelectedCompertitionDate] = useState({
     value: false,

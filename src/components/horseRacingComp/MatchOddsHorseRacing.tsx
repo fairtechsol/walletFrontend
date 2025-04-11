@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../assets";
 import { formatToINR } from "../../helper";
-import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import Divider from "../Inplay/Divider";
+import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import BoxComponentHorseRacing from "./BoxComponentHorseRacing";
 
 const MatchOddsHorseRacing = (props: any) => {
@@ -249,7 +249,6 @@ const MatchOddsHorseRacing = (props: any) => {
                   }
                   data={runner}
                   lock={handleLock(runner)}
-                  // align="end"
                 />
                 <Divider />
               </>

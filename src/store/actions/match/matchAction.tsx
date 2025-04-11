@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import service from "../../../service";
-import { ApiConstants, baseUrls, Constants } from "../../../utils/Constants";
+import { ApiConstants, Constants } from "../../../utils/Constants";
 
 export const getMatchListInplay = createAsyncThunk<any, any>(
   "matchList/inplay",
@@ -31,15 +31,7 @@ export const getMatchDetail = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET}${
-          !["cricket", "politics"].includes(requestData?.matchType)
-            ? `/other`
-            : ""
-        }/${requestData?.matchId}${
-          !["cricket", "politics"].includes(requestData?.matchType)
-            ? `?matchType=${requestData?.matchType}`
-            : ""
-        }`
+        `${ApiConstants.MATCH.GET}/${requestData?.matchId}`
       );
       if (resp) {
         return resp?.data;
@@ -235,34 +227,10 @@ export const editBetDeleteReason = createAsyncThunk<any, any>(
     }
   }
 );
-
-export const updateMatchListRates = createAsyncThunk<any, any>(
-  "/matchList/rates",
-  async (matchList) => {
-    return matchList;
-  }
-);
 export const updateMatchRates = createAsyncThunk<any, any>(
   "/match/rates",
   async (matchDetails) => {
     return matchDetails;
-  }
-);
-
-export const getMatchRates = createAsyncThunk<any, any>(
-  "/third/match/rates",
-  async (matchId,thunkApi) => {
-    try {
-      const resp = await axios.get(
-        `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
   }
 );
 export const updateBetsPlaced = createAsyncThunk<any, any>(
@@ -288,19 +256,6 @@ export const removeRunAmount = createAsyncThunk<any, any>(
   "/remove/runAmount",
   async (profitLoss) => {
     return profitLoss;
-  }
-);
-export const updateBalance = createAsyncThunk<any, any>(
-  "/user/balance",
-  async (balance) => {
-    return balance;
-  }
-);
-
-export const betDataFromSocket = createAsyncThunk<any, any>(
-  "/betData/update",
-  async (data) => {
-    return data;
   }
 );
 export const updateMaxLossForBet = createAsyncThunk<any, any>(
@@ -385,7 +340,6 @@ export const updateMatchRatesFromApiOnList = createAsyncThunk<any, any>(
   }
 );
 
-export const matchListReset = createAction("matchList/reset");
 export const resetSessionProLoss = createAction("sessionProloss/reset");
 export const resetcompetitionList = createAction("competitionList/reset");
 export const resetCompetitionDates = createAction("competitionDates/reset");

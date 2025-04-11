@@ -10,7 +10,6 @@ import {
   resetBetProfitLoss,
   resetDomainProfitLoss,
   resetSessionProfitLoss,
-  resetUpdateUserSearchId,
   updateUserSearchId,
 } from "../../actions/reports";
 
@@ -34,7 +33,7 @@ const initialState: InitialState = {
   betProfitLossList: [],
   sessionProfitLossList: [],
   totalBetProfitLossModal: [],
-  commissionMatchList: [],
+  commissionMatchList: null,
   commissionBetPlacedList: [],
   loading: false,
   success: false,
@@ -161,9 +160,6 @@ const profitLossReportSlice = createSlice({
         state.success = true;
         state.loading = false;
         state.user = action?.payload?.search;
-      })
-      .addCase(resetUpdateUserSearchId, (state) => {
-        return { ...state, user: {} };
       });
   },
 });

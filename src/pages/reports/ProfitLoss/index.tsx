@@ -1,17 +1,17 @@
-import { Box, Typography } from "@mui/material";
-import ProfitLossHeader from "../../../components/report/ProfitLossReport/ProfitLossHeader";
-import ProfitLossTableComponent from "../../../components/report/ProfitLossReport/ProfitLossTableComponent";
+import { Typography } from "@mui/material";
+import { debounce } from "lodash";
+import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
+import ProfitLossHeader from "../../../components/report/ProfitLossReport/ProfitLossHeader";
+import ProfitLossTableComponent from "../../../components/report/ProfitLossReport/ProfitLossTableComponent";
+import service from "../../../service";
 import {
   getTotalProfitLoss,
   updateUserSearchId,
 } from "../../../store/actions/reports";
-import moment from "moment";
 import { getSearchClientList } from "../../../store/actions/user/userAction";
-import { debounce } from "lodash";
-import service from "../../../service";
+import { AppDispatch, RootState } from "../../../store/store";
 
 const ProfitLossReport = () => {
   const defaultDate = new Date();
@@ -108,7 +108,7 @@ const ProfitLossReport = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <ProfitLossHeader
         title="Profit/Loss"
         onClick={handleClick}
@@ -132,22 +132,19 @@ const ProfitLossReport = () => {
       >
         Profit/Loss for Event Type
       </Typography>
-
-      <Box>
-        <ProfitLossTableComponent
-          show={show}
-          setShow={setShow}
-          startDate={startDate}
-          endDate={endDate}
-          eventData={totalProfitLossList && totalProfitLossList}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          setCurrentPage={setCurrentPage}
-          userProfitLoss={userProfitLoss}
-          getUserProfitLoss={getUserProfitLoss}
-        />
-      </Box>
-    </div>
+      <ProfitLossTableComponent
+        show={show}
+        setShow={setShow}
+        startDate={startDate}
+        endDate={endDate}
+        eventData={totalProfitLossList && totalProfitLossList}
+        currentPage={currentPage}
+        pageCount={pageCount}
+        setCurrentPage={setCurrentPage}
+        userProfitLoss={userProfitLoss}
+        getUserProfitLoss={getUserProfitLoss}
+      />
+    </>
   );
 };
 

@@ -6,27 +6,24 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import ListHeader from "./ListHeader";
-import ListBody from "./ListBody";
-import DepositComponent from "../listOfClients/RowModalComponents/DepositComponent";
-import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawComponent";
-import SetCreditComponent from "../listOfClients/RowModalComponents/SetCreditComponent";
-import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockComponent";
-import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
-import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
 import {
-  getUsersProfile,
   handleSettleCommission,
-  userListSuccessReset,
+  userListSuccessReset
 } from "../../store/actions/user/userAction";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
+import DepositComponent from "../listOfClients/RowModalComponents/DepositComponent";
+import LockUnlockComponent from "../listOfClients/RowModalComponents/LockUnlockComponent";
+import SetCreditComponent from "../listOfClients/RowModalComponents/SetCreditComponent";
+import SetExposureLimit from "../listOfClients/RowModalComponents/SetExposureLimit";
+import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawComponent";
+import ListBody from "./ListBody";
+import ListHeader from "./ListHeader";
 
-const ListItems = (props: any) => {
-  const { title, currentPage } = props;
+const ListItems = () => {
   const navigate = useNavigate();
   const [isSliderVisible, setIsSliderVisible] = useState(false);
   const [selected, setSelected] = useState<any>(null);
@@ -55,10 +52,8 @@ const ListItems = (props: any) => {
 
   const classes = {
     Menusx: {
-      marginTop: { xs: "15px", lg: "30px", md: "18px" },
-      marginLeft: { xs: "5px", lg: "0", md: "0" },
-      paddingY: "0px",
-      padding: "0px",
+      margin: "1%",
+      fontFamily: "Poppins, sans-serif",
       width: { xs: "105%", lg: "100%", md: "100%" },
     },
     MenuListProps: { "aria-labelledby": "basic-button" },
@@ -100,306 +95,265 @@ const ListItems = (props: any) => {
     if (success) {
       setSettlementUserModal(false);
       dispatch(userListSuccessReset());
-      setTimeout(() => {
-        dispatch(getUsersProfile());
-      }, 300);
+      // setTimeout(() => {
+      //   dispatch(getUsersProfile());
+      // }, 300);
     }
   }, [success]);
   return (
-    <>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={classes.Menusx}>
-          <Typography
-            sx={[
-              {
-                fontSize: { lg: "18px", xs: "16px" },
-                fontWeight: "600",
-                padding: { lg: "10px 37px", xs: "10px 20px" },
-                paddingBottom: "15px",
-                color: "#fff",
-                textTransform: "uppercase",
-              },
-            ]}
-          >
-            {title}
-          </Typography>
-        </Box>
-        <Box
+    <Box sx={{ width: "100%" }}>
+      <Box sx={classes.Menusx}>
+        <Typography
           sx={{
-            background: "#F8C851",
-            marginLeft: { xs: "20px", lg: "37px" },
-            marginRight: "20px",
-            padding: "10px",
+            fontSize: { lg: "18px", xs: "16px" },
+            fontWeight: "600",
+            color: "#fff",
+            marginLeft: "0.5%",
+            textTransform: "uppercase",
+          }}
+        >
+          Wallet
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          background: "#F8C851",
+          padding: "10px",
+          margin: "1%",
+          borderRadius: "5px",
+        }}
+      >
+        <div
+          style={{
+            overflowX: "auto",
+            maxWidth: "100%",
+            boxShadow: "inset 0 0 5px 0px #000000",
+            position: "relative",
             borderRadius: "5px",
           }}
         >
-          <div
-            style={{
-              overflowX: "auto",
-              maxWidth: "100%",
-              boxShadow: "inset 0 -3px 10px 0px #000000",
-              position: "relative",
-              borderRadius: "10px",
+          <Box
+            sx={{
+              background: isSliderVisible ? "#F8C851" : "transparent",
+              padding: "10px",
+              width: isSliderVisible ? "calc(100% + 400px)" : "100%",
             }}
           >
-            <Box
-              sx={{
-                background: isSliderVisible ? "#F8C851" : "transparent",
-                padding: "10px",
-                width: isSliderVisible ? "calc(100% + 400px)" : "100%",
-              }}
-            >
-              <ListHeader userName={"User Name"} />
-              <ListBody walletAccountDetail={profileDetail} />
-            </Box>
-          </div>
-          {selected != null && (
-            <Box
-              sx={{
-                width: {
-                  xs: "auto",
-                  md: "90%",
-                  lg: "100%",
-                  marginLeft: "12px",
-                },
-                padding: "5px",
-                paddingTop: "1rem",
-              }}
-            >
-              {selected == 0 && (
-                <DepositComponent
-                  isWallet={true}
-                  walletAccountDetail={profileDetail}
-                  selected={selected == 0}
-                  setSelected={() => {
-                    setSelected(null);
-                  }}
-                  navigate={navigate}
-                  titleBackgroundColor="#27AC1E"
-                  onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
-                />
-              )}
-              {selected == 1 && (
-                <WithdrawComponent
-                  isWallet={true}
-                  walletAccountDetail={profileDetail}
-                  selected={selected == 1}
-                  setSelected={() => {
-                    setSelected(null);
-                  }}
-                  titleBackgroundColor="#ff0000"
-                  onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
-                />
-              )}
-              {selected == 2 && (
-                <SetCreditComponent
-                  isWallet={true}
-                  walletAccountDetail={profileDetail}
-                  selected={selected == 2}
-                  setSelected={() => {
-                    setSelected(null);
-                  }}
-                  onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
-                />
-              )}
-              {selected == 4 && (
-                <LockUnlockComponent
-                  isWallet={true}
-                  selected={selected == 4}
-                  setSelected={() => {
-                    setSelected(null);
-                  }}
-                  walletAccountDetail={profileDetail}
-                  onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
-                />
-              )}
-              {selected == 5 && (
-                <SetExposureLimit
-                  isWallet={true}
-                  walletAccountDetail={profileDetail}
-                  selected={selected == 5}
-                  setSelected={() => {
-                    setSelected(null);
-                  }}
-                  onChangeAmount={handleAmountChange}
-                  currentPage={currentPage}
-                />
-              )}
-            </Box>
-          )}
-          {selected === null && (
-            <Box
-              sx={{
-                // flex: 1,
-                display: "flex",
-                flexDirection: {
-                  xs: "row",
-                  lg: "row",
-                  md: "row",
-                },
-                gap: { xs: 0.5 },
-                flexWrap: "wrap",
-                justifyContent: "center",
-                width: { xs: "78vw", lg: "100%", md: "100%" },
-                padding: "0 15px 0 9px",
-                margin: "15px 0px 0px 5px",
-              }}
-            >
-              <BoxButton
-                color={"#0B4F26"}
-                onClick={() => {
-                  setSelected(0);
+            <ListHeader userName="User Name" />
+            <ListBody walletAccountDetail={profileDetail} />
+          </Box>
+        </div>
+        {selected != null && (
+          <Box
+            sx={{
+              width: {
+                xs: "auto",
+                md: "90%",
+                lg: "100%",
+                marginLeft: "12px",
+              },
+              padding: "5px",
+              paddingTop: "1rem",
+            }}
+          >
+            {selected == 0 && (
+              <DepositComponent
+                isWallet={true}
+                walletAccountDetail={profileDetail}
+                selected={selected == 0}
+                setSelected={() => {
+                  setSelected(null);
                 }}
-                title={"Deposit"}
-                isSelected={selected == 0}
-                containerStyle={{
-                  // marginLeft: { lg: "8px", xs: "0" },
-                  flex: 1,
-                  borderColor: "white",
-                }}
-                titleStyle={{
-                  fontSize: { xs: "12px" },
-                }}
-                labelStyle={{}}
+                navigate={navigate}
+                titleBackgroundColor="#27AC1E"
+                onChangeAmount={handleAmountChange}
               />
-              <BoxButton
-                color={"#0B4F26"}
-                onClick={() => {
-                  setSelected(1);
+            )}
+            {selected == 1 && (
+              <WithdrawComponent
+                isWallet={true}
+                walletAccountDetail={profileDetail}
+                selected={selected == 1}
+                setSelected={() => {
+                  setSelected(null);
                 }}
-                containerStyle={{
-                  // marginLeft: { lg: "10px", xs: "0" },
-                  flex: 1,
-                  borderColor: "white",
-                }}
-                titleStyle={{
-                  fontSize: { xs: "12px" },
-                }}
-                // isSelected={selected == 1}
-                title={"Withdraw"}
-                labelStyle={{}}
+                titleBackgroundColor="#ff0000"
+                onChangeAmount={handleAmountChange}
               />
-              <BoxButton
-                color={"#0B4F26"}
-                onClick={(e: any) => {
-                  e?.preventDefault();
-                  setSettlementUserModal(true);
+            )}
+            {selected == 2 && (
+              <SetCreditComponent
+                isWallet={true}
+                walletAccountDetail={profileDetail}
+                selected={selected == 2}
+                setSelected={() => {
+                  setSelected(null);
                 }}
-                title={"C_Settlement"}
-                containerStyle={{
-                  // marginLeft: { lg: "10px", xs: "0" },
-                  flex: 1,
-                  borderColor: "white",
-                }}
-                titleStyle={{
-                  fontSize: { xs: "12px" },
-                }}
-                labelStyle={{}}
+                onChangeAmount={handleAmountChange}
               />
-              {/* <BoxButton
-                  color={"#0B4F26"}
+            )}
+            {selected == 4 && (
+              <LockUnlockComponent
+                isWallet={true}
+                selected={selected == 4}
+                setSelected={() => {
+                  setSelected(null);
+                }}
+                walletAccountDetail={profileDetail}
+                onChangeAmount={handleAmountChange}
+              />
+            )}
+            {selected == 5 && (
+              <SetExposureLimit
+                isWallet={true}
+                walletAccountDetail={profileDetail}
+                selected={selected == 5}
+                setSelected={() => {
+                  setSelected(null);
+                }}
+                onChangeAmount={handleAmountChange}
+              />
+            )}
+          </Box>
+        )}
+        {selected === null && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: {
+                xs: "row",
+                lg: "row",
+                md: "row",
+              },
+              gap: { xs: 0.5 },
+              flexWrap: "wrap",
+              justifyContent: "center",
+              width: { xs: "78vw", lg: "100%", md: "100%" },
+              padding: "0 15px 0 9px",
+              margin: "15px 0px 0px 5px",
+            }}
+          >
+            <BoxButton
+              color="#0B4F26"
+              onClick={() => {
+                setSelected(0);
+              }}
+              title="Deposit"
+              isSelected={selected == 0}
+              containerStyle={{
+                flex: 1,
+                borderColor: "white",
+              }}
+              titleStyle={{
+                fontSize: { xs: "12px" },
+              }}
+            />
+            <BoxButton
+              color="#0B4F26"
+              onClick={() => {
+                setSelected(1);
+              }}
+              containerStyle={{
+                flex: 1,
+                borderColor: "white",
+              }}
+              titleStyle={{
+                fontSize: { xs: "12px" },
+              }}
+              title="Withdraw"
+            />
+            <BoxButton
+              color="#0B4F26"
+              onClick={(e: any) => {
+                e?.preventDefault();
+                setSettlementUserModal(true);
+              }}
+              title="C_Settlement"
+              containerStyle={{
+                flex: 1,
+                borderColor: "white",
+              }}
+              titleStyle={{
+                fontSize: { xs: "12px" },
+              }}
+            />
+            <BoxButton
+              color="#0B4F26"
+              onClick={() => {
+                setSelected(4);
+              }}
+              title="Lock/Unlock"
+              containerStyle={{
+                flex: 1,
+                borderColor: "white",
+              }}
+              titleStyle={{
+                fontSize: { xs: "12px" },
+              }}
+              isSelected={selected == 4}
+            />
+            <BoxButton
+              color="#0B4F26"
+              onClick={() => {
+                setSelected(2);
+              }}
+              title="set Credit Reference"
+              isSelected={selected == 2}
+              containerStyle={{
+                flex: 1,
+                borderColor: "white",
+              }}
+              titleStyle={{
+                fontSize: { xs: "12px" },
+              }}
+            />
+            <BoxButton
+              color="#0B4F26"
+              onClick={() => {
+                setSelected(5);
+              }}
+              containerStyle={{
+                marginLeft: { lg: "10px", xs: "0" },
+                flex: 1,
+                borderColor: "white",
+              }}
+              titleStyle={{
+                fontSize: { xs: "12px" },
+              }}
+              title={"Set Exposure Limit"}
+              isSelected={selected == 5}
+            />
+            <Dialog
+              open={settlementUserModal}
+              onClose={() => setSettlementUserModal((prev) => !prev)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                Are you sure want to settle this commission ?
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => setSettlementUserModal((prev) => !prev)}>
+                  No
+                </Button>
+                <Button
+                  sx={{ color: "#E32A2A" }}
                   onClick={() => {
-                    setSelected(3);
+                    dispatch(
+                      handleSettleCommission({
+                        userId: profileDetail?.id,
+                      })
+                    );
                   }}
-                  title={"Change Password"}
-                  isSelected={selected == 3}
-                  containerStyle={{
-                    marginLeft: { lg: "10px", xs: "0" },
-                    flex: 1,
-                    borderColor: "white",
-                  }}
-                  titleStyle={{
-                    fontSize: { xs: "12px" },
-                  }}
-                /> */}
-              <BoxButton
-                color={"#0B4F26"}
-                onClick={() => {
-                  setSelected(4);
-                }}
-                title={"Lock/Unlock"}
-                containerStyle={{
-                  // marginLeft: { lg: "10px", xs: "0" },
-                  flex: 1,
-                  borderColor: "white",
-                }}
-                titleStyle={{
-                  fontSize: { xs: "12px" },
-                }}
-                isSelected={selected == 4}
-              />
-              <BoxButton
-                color={"#0B4F26"}
-                onClick={() => {
-                  setSelected(2);
-                }}
-                title={"set Credit Reference"}
-                isSelected={selected == 2}
-                labelStyle={{}}
-                containerStyle={{
-                  flex: 1,
-                  borderColor: "white",
-                }}
-                titleStyle={{
-                  fontSize: { xs: "12px" },
-                }}
-              />
-              <BoxButton
-                color={"#0B4F26"}
-                onClick={() => {
-                  setSelected(5);
-                }}
-                containerStyle={{
-                  marginLeft: { lg: "10px", xs: "0" },
-                  flex: 1,
-                  borderColor: "white",
-                }}
-                titleStyle={{
-                  fontSize: { xs: "12px" },
-                }}
-                title={"Set Exposure Limit"}
-                labelStyle={{}}
-                isSelected={selected == 5}
-              />
-              <Dialog
-                open={settlementUserModal}
-                onClose={() => setSettlementUserModal((prev) => !prev)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {"Are you sure want to settle this commission ?"}
-                </DialogTitle>
-                <DialogActions>
-                  <Button
-                    onClick={() => setSettlementUserModal((prev) => !prev)}
-                  >
-                    No
-                  </Button>
-                  <Button
-                    sx={{ color: "#E32A2A" }}
-                    onClick={() => {
-                      dispatch(
-                        handleSettleCommission({
-                          userId: profileDetail?.id,
-                          // domain: profileDetail?.domain,
-                        })
-                      );
-                    }}
-                  >
-                    Yes
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </Box>
-          )}
-        </Box>
+                >
+                  Yes
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
+        )}
       </Box>
-    </>
+    </Box>
   );
 };
 

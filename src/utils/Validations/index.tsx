@@ -140,22 +140,6 @@ export const addUserValidation = (item: any) => {
       value: Yup.string().required("Please select an option"),
       label: Yup.string().required("Please select an option"),
     }),
-    //   creditRefrence: Yup.string()
-    // .test({
-    //   name: 'creditRefrence',
-    //   message: 'Credit reference is required',
-    //   test: (value) => value != "0",
-    // })
-    // .required("Credit reference is required"),
-    // domain: Yup.string().matches(
-    //   /^http:\/\/localhost:5000$/,
-    //   "Your URL should be http://107.23.165.155:5000 format for dev"
-    // ),
-    // matchCommissionType: Yup.string().required(
-    //   "Match Commission Type is required"
-    // ),
-    // matchCommission: Yup.number().required("Match Commission is required"),
-    // sessionCommission: Yup.number().required("Session Commission is required"),
     adminTransPassword: Yup.string().required(
       "Admin Transaction Password is required"
     ),
@@ -210,25 +194,13 @@ export const FgAdminValidation = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), ""], "Passwords must match")
     .required("Confirm Password is required"),
-  // fullName: Yup.string().required("Full Name is required"),
-  // city: Yup.string()
-  //   .max(15, "City must be at most 15 characters")
-  //   .matches(/^[a-zA-Z\s]*$/, "City must only contain letters and spaces")
-  //   .required("City is required"),
-  // phoneNumber: Yup.string()
-  //   .matches(/^[6-9]\d{9}$/, "Invalid phone number")
-  //   .required("Number is required"),
 
   creditRefrence: Yup.string().required("Credit Reference is required"),
 
   matchCommission: Yup.number().required("Match Commission is required"),
-  // sessionCommission: Yup.number().required("Session Commission is required"),
-  // remarks: Yup.string(),
   adminTransPassword: Yup.string().required(
     "Admin Transaction Password is required"
   ),
-  // session: Yup.boolean(),
-  // bookmaker: Yup.boolean(),
 });
 
 export const changeDeleteCodeValidation = () => {

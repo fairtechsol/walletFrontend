@@ -15,7 +15,6 @@ const SmallBox = (props: any) => {
       <Box
         sx={{
           width: { lg: "3.68vw", xs: "12.7vw", md: "70px" },
-          // position: "absolute",
           flexDirection: "column",
           paddingX: "5px",
           display: "flex",
@@ -41,13 +40,11 @@ const SmallBox = (props: any) => {
           }}
         >
           {handleNumber(parseFloat(valueA || 0.0), color)}
-          {/* {valueA < 0 ? ` ${valueA}` : `${valueA}`}{" "} */}
         </Typography>
       </Box>
       <Box
         sx={{
           width: { lg: "3.7vw", xs: "12.7vw", md: "70px" },
-          // position: "absolute",
           paddingX: "5px",
           display: "flex",
           flexDirection: "column",
@@ -75,7 +72,6 @@ const SmallBox = (props: any) => {
           }}
         >
           {handleNumber(parseFloat(valueB || 0.0), color)}
-          {/* {valueB < 0 ? ` ${valueB}` : `${valueB}`}{" "} */}
         </Typography>
       </Box>
     </Box>

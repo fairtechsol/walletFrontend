@@ -1,10 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import StyledImage from "../Common/StyledImages";
 import { handleNumber } from "../../helper";
+import StyledImage from "../Common/StyledImages";
 
-const SubHeaderListRow = (props: any) => {
-  const { data, color } = props;
-
+const SubHeaderListRow = ({ data, color }: any) => {
   return (
     <Box
       sx={{
@@ -27,7 +25,7 @@ const SubHeaderListRow = (props: any) => {
           paddingX: "10px",
         }}
       >
-        <Typography sx={{ color: "white", fontSize: "10px" }}></Typography>
+        <Typography sx={{ color: "white", fontSize: "10px" }} />
       </Box>
       <Box
         sx={{
@@ -42,9 +40,6 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {/* {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-            +data?.totalCreditReference || 0
-          )} */}
           {handleNumber(
             parseFloat(data?.totalCreditReference || "0.00"),
             color
@@ -81,12 +76,9 @@ const SubHeaderListRow = (props: any) => {
           justifyContent: "space-between",
         }}
       >
-        {" "}
-        {/* element.profit_loss >= 0 ? '#27AC1E' : '#E32A2A'*/}
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {/* {data?userBal?.profitLoss} */}
           {handleNumber(parseFloat(data?.profitsum || 0), color)}
         </Typography>
         <StyledImage
@@ -117,12 +109,9 @@ const SubHeaderListRow = (props: any) => {
           justifyContent: "space-between",
         }}
       >
-        {" "}
-        {/* element.profit_loss >= 0 ? '#27AC1E' : '#E32A2A'*/}
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {/* {data?.percent_profit_loss} */}
           {handleNumber(parseFloat(data?.percentprofitloss || 0), color)}
         </Typography>
         <StyledImage
@@ -152,7 +141,6 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {/* {formatToINR(data?.totalcommission || 0)} */}
           {handleNumber(parseFloat(data?.totalcommission || 0), color)}
         </Typography>
       </Box>
@@ -169,9 +157,6 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {/* {new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-            +data?.totalExposure || 0
-          )} */}
           {handleNumber(parseFloat(data?.totalExposure || 0), color)}
         </Typography>
       </Box>
@@ -188,7 +173,6 @@ const SubHeaderListRow = (props: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {/* {data?.availablebalancesum} */}
           {handleNumber(parseFloat(data?.availableBalance || 0), color)}
         </Typography>
       </Box>
@@ -202,7 +186,7 @@ const SubHeaderListRow = (props: any) => {
           height: "45px",
           borderRight: "2px solid white",
         }}
-      ></Box>
+      />
       <Box
         sx={{
           width: { lg: "5vw", md: "5vw", xs: "14vw" },
@@ -213,7 +197,7 @@ const SubHeaderListRow = (props: any) => {
           height: "45px",
           borderRight: "2px solid white",
         }}
-      ></Box>
+      />
       <Box
         sx={{
           width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
@@ -224,13 +208,7 @@ const SubHeaderListRow = (props: any) => {
           height: "45px",
           borderRight: "2px solid white",
         }}
-      >
-        <Typography
-          sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
-        >
-          {/* {+data?.totalExposure || 0} */}
-        </Typography>
-      </Box>
+      />
       <Box
         sx={{
           width: { lg: "10vw", md: "10vw", xs: "26.5vw" },
@@ -241,7 +219,7 @@ const SubHeaderListRow = (props: any) => {
           height: "45px",
           borderRight: "2px solid white",
         }}
-      ></Box>
+      />
     </Box>
   );
 };

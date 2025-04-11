@@ -1,19 +1,19 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../../assets";
-import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
 import {
   getUserList,
   getUsersProfile,
+  setLockUnlockUser,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
-import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
-import { setLockUnlockUser } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
+import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
 const initialValues: any = {
   betBlock: false,
@@ -115,20 +115,15 @@ const LockUnlockComponent = (props: any) => {
   useEffect(() => {
     onChangeAmount(lockUnlockObj, element?.id, "lock");
   }, [lockUnlockObj, onChangeAmount]);
-
-  // const handleLockSubmit = (e: any) => {
-  //   e.preventDefault();
-  // };
+  
   return (
     <form onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
           borderRadius: "5px",
-          // paddingRight: { xs: "0", lg: "10px" },
           flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 2,
-          // width: { xs: "92vw", md: "80%", lg: "80%" },
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -158,19 +153,6 @@ const LockUnlockComponent = (props: any) => {
             >
               Dummy
             </Typography>
-
-            {/* <Box
-              sx={{
-                width: { xs: "100%", lg: "63%", md: "65%" },
-                height: "45px",
-                // background: "white",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: "5px",
-                // border: "2px solid #26262633",
-                // paddingX: "20px",
-              }}
-            > */}
             <Box sx={{ width: "50%", display: "flex", alignItems: "center" }}>
               <BoxButtonWithSwitch
                 title={"User"}

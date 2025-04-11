@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, Drawer } from "@mui/material";
 import { memo } from "react";
-import { Drawer } from "@mui/material";
 import SideBarAdmin from "../../../components/SideBarAdmin";
 
 const MobileSideBar = (props: any) => {

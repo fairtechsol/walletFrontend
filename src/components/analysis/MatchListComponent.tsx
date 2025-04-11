@@ -1,13 +1,30 @@
 import { Box, Typography } from "@mui/material";
-import StockBox from "./StockBox";
-import { CHECK } from "../../assets";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import moment from "moment-timezone";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CHECK } from "../../assets";
 import { IconConstants } from "../../helper/gameConstants";
+import StockBox from "./StockBox";
 
-const MatchListComponent = (props: any) => {
-  const { team, team2, selected, mode, data, setSelected, title } = props;
+interface MatchListComponentProps {
+  team: string;
+  team2: string;
+  selected: boolean;
+  mode: string;
+  data: any;
+  setSelected: () => void;
+  title: string;
+}
+
+const MatchListComponent = ({
+  team,
+  team2,
+  selected,
+  mode,
+  data,
+  setSelected,
+  title,
+}: MatchListComponentProps) => {
   const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft());
@@ -192,8 +209,8 @@ const MatchListComponent = (props: any) => {
               minHeight: "30px",
             }}
           >
-            <div
-              style={{
+            <Box
+              sx={{
                 background: "#f1c40f",
                 display: "flex",
                 justifyContent: "center",
@@ -208,14 +225,12 @@ const MatchListComponent = (props: any) => {
                 width={25}
                 height={25}
               />
-            </div>
-
+            </Box>
             <Typography
               sx={{
                 fontSize: { lg: "16px", xs: "10px" },
                 fontWeight: "bold",
                 marginLeft: "5px",
-
                 overflow: "hidden",
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
@@ -244,7 +259,7 @@ const MatchListComponent = (props: any) => {
                   borderRadius: "3px",
                 }}
               >
-                <Box className="wave"> </Box>
+                <Box className="wave" />
                 <Typography
                   sx={{
                     fontSize: "10px",
@@ -265,7 +280,6 @@ const MatchListComponent = (props: any) => {
                   width: "70px",
                   height: "15px",
                   top: "-10px",
-
                   left: "-1px",
                   background: "#129FFE",
                   display: "flex",
@@ -341,7 +355,7 @@ const MatchListComponent = (props: any) => {
                     ? "0" + data?.totalBet
                     : data?.totalBet
                 }
-                team={"Total Bet"}
+                team="Total Bet"
                 mode={mode}
                 showFixed
               />
@@ -358,7 +372,7 @@ const MatchListComponent = (props: any) => {
                 position: "absolute",
                 right: 0,
               }}
-            ></Box>
+            />
           )}
           {selected && mode == "1" && (
             <Box
@@ -371,7 +385,7 @@ const MatchListComponent = (props: any) => {
                 position: "absolute",
                 right: 0,
               }}
-            ></Box>
+            />
           )}
         </Box>
       </Box>

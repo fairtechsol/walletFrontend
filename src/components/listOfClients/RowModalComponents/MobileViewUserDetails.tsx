@@ -1,26 +1,25 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import BoxButton from "./BoxButton";
 import { useSelector } from "react-redux";
+import { EyeIcon, EyeSlash } from "../../../assets";
 import { RootState } from "../../../store/store";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
-const MobileViewUserDetails = (props: any) => {
-  const {
-    value,
-    onChange,
-    setShowPass,
-    showPass,
-    onCancel,
-    initialBalance,
-    backgroundColor,
-    loading,
-    title,
-    userName,
-    elementToUDM,
-    titleBackgroundColor,
-    type,
-  } = props;
+const MobileViewUserDetails = ({
+  value,
+  onChange,
+  setShowPass,
+  showPass,
+  onCancel,
+  initialBalance,
+  backgroundColor,
+  loading,
+  title,
+  userName,
+  elementToUDM,
+  titleBackgroundColor,
+  type,
+}: any) => {
   const formatIndianCurrency = (amount: number) => {
     const formatter = new Intl.NumberFormat("en-IN", {
       currency: "INR",
@@ -29,9 +28,7 @@ const MobileViewUserDetails = (props: any) => {
   };
 
   const numberWithCommas = (numString: any) => {
-    // console.log('numString',numString)
     let stringWithoutCommas = numString?.replace(/,/g, "");
-    // console.log('stringWithoutCommas', stringWithoutCommas)
     if (!stringWithoutCommas?.includes(".")) {
       if (stringWithoutCommas?.length > 3) {
         let mainArray = stringWithoutCommas.slice(0, -3);
@@ -44,7 +41,6 @@ const MobileViewUserDetails = (props: any) => {
         }
         result = result.slice(0, -1); // Remove the last comma
         let reversedStr1 = result.split("").reverse().join("");
-        // console.log(reversedStr1,' jnknk ',reversedStr);
         return reversedStr1 + "," + lastThreeDigitsArray;
       } else {
         let data = stringWithoutCommas?.replace(/,/g, "");
@@ -62,7 +58,6 @@ const MobileViewUserDetails = (props: any) => {
         }
         result = result.slice(0, -1); // Remove the last comma
         let reversedStr1 = result.split("").reverse().join("");
-        // console.log(reversedStr1,' jnknk ',reversedStr);
         return reversedStr1 + "," + lastThreeDigitsArray + "." + parts[1];
       } else {
         let data = stringWithoutCommas?.replace(/,/g, "");

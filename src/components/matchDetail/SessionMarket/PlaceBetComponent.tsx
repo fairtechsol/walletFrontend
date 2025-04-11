@@ -16,7 +16,6 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   );
   return (
     <Box
-      //   onClick={handleClick}
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -25,7 +24,6 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
       }}
     >
       <Box
-        // ref={innerRef}
         onClick={() => {
           if (marketAnalysis?.betType) {
             const currBetPL = [

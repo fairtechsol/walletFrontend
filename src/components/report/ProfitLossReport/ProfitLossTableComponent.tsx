@@ -1,10 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import RowHeaderMatches from "./RowHeaderMatches";
-import Pagination from "../../Common/Pagination";
 import { useState } from "react";
-// import RowComponentMatches from "./RowComponentMatches";
-// import { RootState } from "../../../store/store";
-// import { useSelector } from "react-redux";
+import Pagination from "../../Common/Pagination";
+import RowHeaderMatches from "./RowHeaderMatches";
 
 const ProfitLossTableComponent = (props: any) => {
   const {

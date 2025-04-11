@@ -1,17 +1,16 @@
-import { memo } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import StyledImage from "../../Common/StyledImages";
+import { memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import SessionBetSeperate from "./SessionBetSeperate";
+import { handleNumber } from "../../../helper";
 import {
   getBetProfitLoss,
   getTotalBetProfitLossForModal,
 } from "../../../store/actions/reports";
-import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import {  handleNumber } from "../../../helper";
+import StyledImage from "../../Common/StyledImages";
+import SessionBetSeperate from "./SessionBetSeperate";
 
 const SessionComponentMatches = ({
   item,
@@ -24,7 +23,7 @@ const SessionComponentMatches = ({
   userDetail,
   selectedChildBetId,
   setSelectedChildBetId,
-  color
+  color,
 }: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -215,7 +214,7 @@ const SessionComponentMatches = ({
                 color: "white",
               }}
             >
-               {matchesMobile ? "P/L" : "Profit Loss"}
+              {matchesMobile ? "P/L" : "Profit Loss"}
             </Typography>
             <StyledImage
               src={item?.totalLoss > 0 ? ARROW_UP : ARROWDOWN}

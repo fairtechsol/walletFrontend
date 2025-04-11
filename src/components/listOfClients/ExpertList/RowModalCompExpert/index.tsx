@@ -1,13 +1,19 @@
 import { Box } from "@mui/material";
-import ChangePasswordComponent from "../../RowModalComponents/ChangePasswordComponent";
-import BoxButton from "../../RowModalComponents/BoxButton";
-import { ApiConstants } from "../../../../utils/Constants";
-import LockUnlockComponent from "./LockUnlockComponent";
 import { memo } from "react";
+import { ApiConstants } from "../../../../utils/Constants";
+import BoxButton from "../../RowModalComponents/BoxButton";
+import ChangePasswordComponent from "../../RowModalComponents/ChangePasswordComponent";
+import LockUnlockComponent from "./LockUnlockComponent";
 
-const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor, onValueChange, currentPage, setShowUserModal } =
-    props;
+const RowModalComponents = ({
+  element,
+  selected,
+  setSelected,
+  backgroundColor,
+  onValueChange,
+  currentPage,
+  setShowUserModal,
+}: any) => {
   const classes = {
     mainBox: {
       background: "#F8C851",
@@ -96,7 +102,6 @@ const RowModalComponents = (props: any) => {
       {selected === null && (
         <Box
           sx={{
-            // flex: 1,
             display: "flex",
             flexDirection: { xs: "row", lg: "row", md: "row" },
             gap: { xs: 0.5 },

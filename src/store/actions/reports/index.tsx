@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import service from "../../../service";
-import { ApiConstants } from "../../../utils/Constants";
 import { AxiosError } from "axios";
+import service from "../../../service";
+import { ApiConstants, Constants } from "../../../utils/Constants";
 
 interface AccountStatement {
   id: string;
@@ -157,10 +157,16 @@ export const getTotalBetProfitLossForModal = createAsyncThunk<any, any>(
 );
 export const getCommissionMatch = createAsyncThunk<any, any>(
   "commissionMatch/list",
-  async (userId, thunkApi) => {
+  async ({ userId, currentPage }, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.COMMISSION_MATCH}/${userId}`
+        `${ApiConstants.USER.COMMISSION_MATCH}/${userId}`,
+        {
+          params: {
+            page: currentPage || 1,
+            limit: Constants.pageLimit,
+          },
+        }
       );
       if (resp) {
         return resp?.data;
@@ -251,14 +257,10 @@ export const resetAccountStatement = createAction("statement/reset");
 export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");
 export const resetBetProfitLoss = createAction("betProfitLoss/reset");
 export const resetDomainProfitLoss = createAction("domainProfitLoss/reset");
-export const resetUpdateUserSearchId = createAction("updateUserSearchId/reset");
 export const resetSessionProfitLossCard = createAction(
   "sessionProfitLoss/resetCard"
 );
 export const resetBetProfitLossCard = createAction("betProfitLoss/resetCard");
 export const resetDomainProfitLossCard = createAction(
   "domainProfitLoss/resetCard"
-);
-export const resetUpdateUserSearchIdCard = createAction(
-  "updateUserSearchId/resetCard"
 );
