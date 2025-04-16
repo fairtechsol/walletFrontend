@@ -1,5 +1,5 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommissionMatch } from "../../store/actions/reports";
 import { AppDispatch, RootState } from "../../store/store";
@@ -98,4 +98,4 @@ const CommissionReportTable = ({ id, setShow, title }: any) => {
   );
 };
 
-export default CommissionReportTable;
+export default memo(CommissionReportTable);

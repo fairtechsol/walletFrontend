@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import Divider from "../../Inplay/Divider";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
@@ -53,4 +54,4 @@ const UserProfitLossListCompRaceHeader = (props: any) => {
   );
 };
 
-export default UserProfitLossListCompRaceHeader;
+export default memo(UserProfitLossListCompRaceHeader);

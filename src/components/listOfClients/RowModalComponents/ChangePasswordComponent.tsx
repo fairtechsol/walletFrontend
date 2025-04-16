@@ -1,5 +1,5 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
@@ -364,4 +364,4 @@ const ChangePasswordComponent = (props: any) => {
   );
 };
 
-export default ChangePasswordComponent;
+export default memo(ChangePasswordComponent);

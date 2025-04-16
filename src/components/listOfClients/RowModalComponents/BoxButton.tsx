@@ -1,4 +1,5 @@
 import { Button, CircularProgress, Typography } from "@mui/material";
+import { memo } from "react";
 
 const BoxButton = ({
   title,
@@ -75,4 +76,4 @@ const BoxButton = ({
   );
 };
 
-export default BoxButton;
+export default memo(BoxButton);

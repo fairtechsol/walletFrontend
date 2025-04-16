@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import MaterialUISwitch from "../Common/MaterialUISwitch";
 
 interface ButtonWithSwitchProps {
@@ -67,4 +67,4 @@ const ButtonWithSwitch = ({
   );
 };
 
-export default ButtonWithSwitch;
+export default memo(ButtonWithSwitch);

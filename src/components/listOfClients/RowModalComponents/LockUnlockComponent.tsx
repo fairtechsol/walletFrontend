@@ -1,6 +1,6 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import {
@@ -115,7 +115,7 @@ const LockUnlockComponent = (props: any) => {
   useEffect(() => {
     onChangeAmount(lockUnlockObj, element?.id, "lock");
   }, [lockUnlockObj, onChangeAmount]);
-  
+
   return (
     <form onSubmit={handleSubmit}>
       <Box
@@ -323,4 +323,4 @@ const LockUnlockComponent = (props: any) => {
   );
 };
 
-export default LockUnlockComponent;
+export default memo(LockUnlockComponent);

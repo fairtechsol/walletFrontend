@@ -2,6 +2,7 @@ import { TextField, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { debounce } from "lodash";
 import moment from "moment";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SEARCH, Search } from "../../assets";
 import {
@@ -218,4 +219,4 @@ const SearchInput = ({
   );
 };
 
-export default SearchInput;
+export default memo(SearchInput);

@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import moment from "moment";
+import { memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const YellowButton = styled("button")(() => ({
@@ -66,4 +67,4 @@ const RacingListComponent = ({ racingList }: any) => {
   );
 };
 
-export default RacingListComponent;
+export default memo(RacingListComponent);

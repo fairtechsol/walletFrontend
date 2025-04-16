@@ -1,29 +1,27 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../assets";
 import { formatToINR } from "../../helper";
 import Divider from "../Inplay/Divider";
 import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import BoxComponentHorseRacing from "./BoxComponentHorseRacing";
 
-const MatchOddsHorseRacing = (props: any) => {
-  const {
-    currentMatch,
-    data,
-    minBet,
-    maxBet,
-    typeOfBet,
-    locked,
-    blockMatch,
-    handleShowLock,
-    selft,
-    showBox,
-    upcoming,
-    showUnlock,
-    handleBlock,
-    handleHide,
-  } = props;
-
+const MatchOddsHorseRacing = ({
+  currentMatch,
+  data,
+  minBet,
+  maxBet,
+  typeOfBet,
+  locked,
+  blockMatch,
+  handleShowLock,
+  selft,
+  showBox,
+  upcoming,
+  showUnlock,
+  handleBlock,
+  handleHide,
+}: any) => {
   const [visible, setVisible] = useState(true);
 
   const handleLock = (data: any) => {
@@ -301,4 +299,4 @@ const MatchOddsHorseRacing = (props: any) => {
   );
 };
 
-export default MatchOddsHorseRacing;
+export default memo(MatchOddsHorseRacing);

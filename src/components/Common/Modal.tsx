@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Typography } from "@mui/material";
 
-export function Modal({
+const Modal = ({
   children,
   navigateTo,
   setShowSuccessModal,
@@ -11,7 +11,7 @@ export function Modal({
   userPG,
   activeTab,
   title,
-}: any) {
+}: any) => {
   const navigate = useNavigate();
 
   return (
@@ -136,4 +136,6 @@ export function Modal({
       </Box>
     </Box>
   );
-}
+};
+
+export default Modal;

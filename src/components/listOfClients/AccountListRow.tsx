@@ -1,7 +1,7 @@
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../assets";
@@ -9,7 +9,7 @@ import { formatToINR } from "../../helper";
 import { AccountListRowInterface } from "../../interface/listOfClients";
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
-import { Modal } from "../Common/Modal";
+import Modal from "../Common/Modal";
 import StyledImage from "../Common/StyledImages";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
 import AccountListModal from "./AccountListModal";
@@ -487,8 +487,8 @@ const AccountListRow = ({
                   ? UnLockIcon
                   : LockIcon
                 : !element?.userBlock
-                  ? UnLockIcon
-                  : LockIcon
+                ? UnLockIcon
+                : LockIcon
             }
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
@@ -511,8 +511,8 @@ const AccountListRow = ({
                   ? UnLockIcon
                   : LockIcon
                 : !element?.betBlock
-                  ? UnLockIcon
-                  : LockIcon
+                ? UnLockIcon
+                : LockIcon
             }
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
@@ -535,8 +535,8 @@ const AccountListRow = ({
                   Number(values.exposureValue)
                 )
               : new Intl.NumberFormat("en-IN", { currency: "INR" }).format(
-                +element?.exposureLimit ? element?.exposureLimit : 0
-              )}
+                  +element?.exposureLimit ? element?.exposureLimit : 0
+                )}
           </Typography>
         </Box>
         <Box
@@ -549,13 +549,15 @@ const AccountListRow = ({
             borderRight: "2px solid white",
           }}
         >
-          <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>{`${element.roleName ?? ""
-            } ${element.roleName === "superAdmin"
+          <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>{`${
+            element.roleName ?? ""
+          } ${
+            element.roleName === "superAdmin"
               ? element?.isUrl
                 ? "(url)"
                 : ""
               : ""
-            }`}</Typography>{" "}
+          }`}</Typography>{" "}
         </Box>
       </Box>
 
@@ -861,4 +863,4 @@ const AccountListRow = ({
   );
 };
 
-export default AccountListRow;
+export default memo(AccountListRow);

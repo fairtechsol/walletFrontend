@@ -1,5 +1,5 @@
 import { Box, Button, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import service from "../../service";
 import { ApiConstants, Constants } from "../../utils/Constants";
 import Pagination from "../Common/Pagination";
@@ -208,4 +208,4 @@ const AccountListTable = ({
   );
 };
 
-export default AccountListTable;
+export default memo(AccountListTable);

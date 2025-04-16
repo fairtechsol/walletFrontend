@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import {
@@ -645,4 +645,4 @@ const DepositComponent = ({
   );
 };
 
-export default DepositComponent;
+export default memo(DepositComponent);

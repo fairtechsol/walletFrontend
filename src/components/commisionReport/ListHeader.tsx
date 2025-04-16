@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import { memo } from "react";
 
 const ListHeader = ({ title, setShow, userName }: any) => {
   return (
@@ -38,4 +39,4 @@ const ListHeader = ({ title, setShow, userName }: any) => {
   );
 };
 
-export default ListHeader;
+export default memo(ListHeader);

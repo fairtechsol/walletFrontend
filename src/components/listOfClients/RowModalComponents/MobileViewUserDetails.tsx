@@ -1,4 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
+import { memo } from "react";
 import { useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import { RootState } from "../../../store/store";
@@ -724,4 +725,4 @@ const MobileViewUserDetails = ({
   );
 };
 
-export default MobileViewUserDetails;
+export default memo(MobileViewUserDetails);

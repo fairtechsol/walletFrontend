@@ -1,5 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
+import { memo } from "react";
 import { LockSolid } from "../../assets";
 import { formatNumber } from "../../helper";
 import StyledImage from "../Common/StyledImages";
@@ -211,4 +212,4 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
   );
 };
 
-export default BoxComponentHorseRacing;
+export default memo(BoxComponentHorseRacing);

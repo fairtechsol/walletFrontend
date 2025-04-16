@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const ListHeaderExpertRow = () => {
   return (
@@ -203,4 +204,4 @@ const ListHeaderExpertRow = () => {
   );
 };
 
-export default ListHeaderExpertRow;
+export default memo(ListHeaderExpertRow);

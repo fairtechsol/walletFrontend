@@ -6,7 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
@@ -657,4 +657,4 @@ const WithdrawComponent = ({
   );
 };
 
-export default WithdrawComponent;
+export default memo(WithdrawComponent);

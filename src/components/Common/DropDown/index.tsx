@@ -1,29 +1,27 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { ARROWDROPDOWN } from "../../../assets";
 import { DropdownInterface } from "../../../interface/addAccount";
 import StyledImage from "../StyledImages";
 import DropDownItem from "./DropDownItem";
 
-const DropDown = (props: DropdownInterface) => {
-  const {
-    title,
-    data,
-    containerStyle,
-    titleStyle,
-    valueContainerStyle,
-    dropStyle,
-    dropDownStyle,
-    dropDownTextStyle,
-    Detail,
-    place,
-    type,
-    matchesSelect,
-    disable,
-    setSelected,
-    name,
-  } = props;
-
+const DropDown = ({
+  title,
+  data,
+  containerStyle,
+  titleStyle,
+  valueContainerStyle,
+  dropStyle,
+  dropDownStyle,
+  dropDownTextStyle,
+  Detail,
+  place,
+  type,
+  matchesSelect,
+  disable,
+  setSelected,
+  name,
+}: DropdownInterface) => {
   const [value, setValue] = useState(data[0]);
   const [open, setOpen] = useState(false);
 
@@ -161,4 +159,4 @@ const DropDown = (props: DropdownInterface) => {
   );
 };
 
-export default DropDown;
+export default memo(DropDown);

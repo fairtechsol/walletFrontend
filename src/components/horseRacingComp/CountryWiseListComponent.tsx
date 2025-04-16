@@ -8,7 +8,7 @@ import {
   Tabs,
   styled,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 const CustomTabs = styled(Tabs)({
   "& .MuiTab-root": {
@@ -90,4 +90,4 @@ const CountryWiseListComponent = ({
   );
 };
 
-export default CountryWiseListComponent;
+export default memo(CountryWiseListComponent);

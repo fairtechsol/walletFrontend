@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getRateMarketAnalysis } from "../../store/actions/horseRacing/analysisActions";
@@ -231,4 +231,4 @@ const RacingListComponentAnalysis = ({
   );
 };
 
-export default RacingListComponentAnalysis;
+export default memo(RacingListComponentAnalysis);

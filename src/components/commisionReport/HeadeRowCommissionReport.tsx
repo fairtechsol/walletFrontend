@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const HeaderRowCommissionReport = () => {
   return (
@@ -209,4 +210,4 @@ const HeaderRowCommissionReport = () => {
   );
 };
 
-export default HeaderRowCommissionReport;
+export default memo(HeaderRowCommissionReport);

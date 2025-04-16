@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const BackLayRow = () => {
   return (
@@ -67,4 +68,4 @@ const BackLayRow = () => {
   );
 };
 
-export default BackLayRow;
+export default memo(BackLayRow);
