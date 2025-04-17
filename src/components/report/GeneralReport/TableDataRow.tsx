@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const TableDataRow = (props: any) => {
   const { style } = props;
@@ -155,4 +156,4 @@ const TableDataRow = (props: any) => {
   );
 };
 
-export default TableDataRow;
+export default memo(TableDataRow);

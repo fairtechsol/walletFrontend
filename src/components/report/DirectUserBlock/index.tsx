@@ -13,7 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { stripUrl } from "../../../helper";
@@ -199,4 +199,4 @@ const DirectUserBlock = ({ setShow }: any) => {
   );
 };
 
-export default DirectUserBlock;
+export default memo(DirectUserBlock);

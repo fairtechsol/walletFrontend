@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import moment from "moment";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import { formatToINR } from "../../../helper";
@@ -243,4 +243,4 @@ const RowHeaderDomain = ({
   );
 };
 
-export default RowHeaderDomain;
+export default memo(RowHeaderDomain);

@@ -6,6 +6,7 @@ import {
   getSessionProLoss,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
+import { memo } from "react";
 
 const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   const dispatch: AppDispatch = useDispatch();
@@ -131,4 +132,4 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   );
 };
 
-export default PlaceBetComponent;
+export default memo(PlaceBetComponent);

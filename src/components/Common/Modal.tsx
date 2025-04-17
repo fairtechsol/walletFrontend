@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Typography } from "@mui/material";
+import { memo } from "react";
 
 const Modal = ({
   children,
@@ -138,4 +139,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default memo(Modal);

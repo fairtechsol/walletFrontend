@@ -667,7 +667,7 @@ const AllUserListSeparate = ({
                             profit
                           />
                         </Box>
-                        <Box sx={{ width: { lg: "1vw", xs: 0 } }}></Box>
+                        <Box sx={{ width: { lg: "1vw", xs: 0 } }} />
                       </>
                     )}
                     {showSessions && (

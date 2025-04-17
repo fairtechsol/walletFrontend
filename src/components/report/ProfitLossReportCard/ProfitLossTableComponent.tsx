@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import Pagination from "../../Common/Pagination";
 import RowHeaderMatches from "./RowHeaderMatches";
 
@@ -103,4 +103,4 @@ const ProfitLossTableComponent = ({
   );
 };
 
-export default ProfitLossTableComponent;
+export default memo(ProfitLossTableComponent);

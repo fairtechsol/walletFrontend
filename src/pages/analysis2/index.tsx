@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -255,7 +255,7 @@ const Analysis2 = () => {
                 title="Cancel"
               />
               <CustomBox onClick={handleSubmit} title="Submit" />
-              <Box sx={{ width: "10px" }}></Box>
+              <Box sx={{ width: "10px" }} />
             </Box>
           )}
         </Box>
@@ -310,4 +310,4 @@ const Analysis2 = () => {
   );
 };
 
-export default Analysis2;
+export default memo(Analysis2);

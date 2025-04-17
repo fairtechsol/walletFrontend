@@ -6,12 +6,12 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   handleSettleCommission,
-  userListSuccessReset
+  userListSuccessReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import BoxButton from "../listOfClients/RowModalComponents/BoxButton";
@@ -357,4 +357,4 @@ const ListItems = () => {
   );
 };
 
-export default ListItems;
+export default memo(ListItems);

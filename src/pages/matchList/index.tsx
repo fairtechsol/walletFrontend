@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import MatchComponent from "../../components/Inplay/MatchComponent";
@@ -195,4 +195,4 @@ const Inplay = () => {
   );
 };
 
-export default Inplay;
+export default memo(Inplay);

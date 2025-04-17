@@ -184,7 +184,7 @@ const MatchOddsHorseRacing = ({
               </Box>
               <Box
                 sx={{ width: "3px", display: "flex", background: "white" }}
-              ></Box>
+               />
               <Box
                 sx={{
                   background: "#FF9292",
@@ -204,7 +204,7 @@ const MatchOddsHorseRacing = ({
               </Box>
               <Box
                 sx={{ width: ".7px", display: "flex", background: "white" }}
-              ></Box>
+               />
             </Box>
           </Box>
 
@@ -222,7 +222,7 @@ const MatchOddsHorseRacing = ({
                   alignItems: "center",
                   background: "rgba(0, 0, 0, .5)",
                 }}
-              ></Box>
+               />
             )}
 
             {data?.map((runner: any) => (

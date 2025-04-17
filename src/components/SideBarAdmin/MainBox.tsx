@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { ARROWDROPDOWN } from "../../assets";
 
 const MainBox = ({ title, width, color, under, selected, sub }: any) => {
@@ -33,7 +34,7 @@ const MainBox = ({ title, width, color, under, selected, sub }: any) => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ display: "flex", flex: 0.1 }}></Box>
+        <Box sx={{ display: "flex", flex: 0.1 }} />
         <Typography
           sx={{
             fontSize: "12px",
@@ -79,4 +80,4 @@ const MainBox = ({ title, width, color, under, selected, sub }: any) => {
   );
 };
 
-export default MainBox;
+export default memo(MainBox);

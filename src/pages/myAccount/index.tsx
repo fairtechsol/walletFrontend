@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BoxButton from "../../components/listOfClients/RowModalComponents/BoxButton";
 import ChangeDeleteCode from "../../components/myAccount/ChangeDeleteCode";
@@ -250,4 +250,4 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default memo(MyAccount);

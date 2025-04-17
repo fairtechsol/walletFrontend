@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import Pagination from "../../Common/Pagination";
 import ListHeaderRow from "./ListHeaderRow";
 import TableDataRow from "./TableDataRow";
@@ -158,4 +159,4 @@ const RowLast = (props: any) => {
     </Box>
   );
 };
-export default GeneralReportList;
+export default memo(GeneralReportList);

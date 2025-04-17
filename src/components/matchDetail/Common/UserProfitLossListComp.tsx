@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const UserProfitLossListComp = ({ element, markets, color }: any) => {
   return (
@@ -149,7 +150,7 @@ const UserProfitLossListComp = ({ element, markets, color }: any) => {
                       height: "100%",
                       minWidth: "100px",
                     }}
-                  ></Box>
+                   />
                 )}
               </Box>
             );
@@ -160,4 +161,4 @@ const UserProfitLossListComp = ({ element, markets, color }: any) => {
   );
 };
 
-export default UserProfitLossListComp;
+export default memo(UserProfitLossListComp);

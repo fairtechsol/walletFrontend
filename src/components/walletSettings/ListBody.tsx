@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { LockIcon, UnLockIcon } from "../../assets";
 import { formatToINR } from "../../helper";
 import StyledImage from "../Common/StyledImages";
@@ -251,4 +252,4 @@ const ListBody = ({ walletAccountDetail }: any) => {
   );
 };
 
-export default ListBody;
+export default memo(ListBody);

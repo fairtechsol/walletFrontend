@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ArrowDown } from "../../../assets";
 import StyledImage from "../../../components/Common/StyledImages";
 import { handleNumber } from "../../../helper";
@@ -86,4 +86,4 @@ const BoxProfile = (props: any) => {
   );
 };
 
-export default BoxProfile;
+export default memo(BoxProfile);

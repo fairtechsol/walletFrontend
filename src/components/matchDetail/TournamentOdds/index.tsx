@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment, memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import { formatToINR } from "../../../helper";
@@ -281,7 +281,7 @@ const TournamentOdds = ({
               </Box>
               <Box
                 sx={{ width: "3px", display: "flex", background: "white" }}
-              ></Box>
+               />
               <Box
                 sx={{
                   background: "#FF9292",
@@ -301,7 +301,7 @@ const TournamentOdds = ({
               </Box>
               <Box
                 sx={{ width: ".7px", display: "flex", background: "white" }}
-              ></Box>
+               />
             </Box>
           </Box>
 
@@ -451,4 +451,4 @@ const TournamentOdds = ({
   );
 };
 
-export default TournamentOdds;
+export default memo(TournamentOdds);

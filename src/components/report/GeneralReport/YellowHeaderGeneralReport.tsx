@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
 import DropDown from "../../Common/DropDown";
 
@@ -41,13 +42,13 @@ const YellowHeaderGeneralReport = () => {
         }}
       >
         <Box sx={{ display: "flex", width: "100%" }}>
-          <Box sx={{ width: "10px" }}></Box>
+          <Box sx={{ width: "10px" }} />
           <DropDown
             titleStyle={{ marginLeft: "0px" }}
             title={"Select Type"}
             data={["General Report", "Credit Reference Report"]}
           />
-          <Box sx={{ width: "30px" }}></Box>
+          <Box sx={{ width: "30px" }} />
           <CustomButtonAdmin />
         </Box>
       </Box>
@@ -55,4 +56,4 @@ const YellowHeaderGeneralReport = () => {
   );
 };
 
-export default YellowHeaderGeneralReport;
+export default memo(YellowHeaderGeneralReport);

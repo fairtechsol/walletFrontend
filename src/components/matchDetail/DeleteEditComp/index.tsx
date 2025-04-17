@@ -1,5 +1,6 @@
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { DeleteIcon } from "../../../assets";
 
 const DeleteEditComp = ({
@@ -189,4 +190,4 @@ const DeleteEditComp = ({
   );
 };
 
-export default DeleteEditComp;
+export default memo(DeleteEditComp);

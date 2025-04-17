@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import moment from "moment";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCompetitionMatches,
@@ -18,7 +19,6 @@ const RenderDates = ({
   setSelectedCompertitionDate,
   matchType,
 }: any) => {
-  
   const dispatch: AppDispatch = useDispatch();
 
   const { competitionMatches } = useSelector(
@@ -75,4 +75,4 @@ const RenderDates = ({
   );
 };
 
-export default RenderDates;
+export default memo(RenderDates);

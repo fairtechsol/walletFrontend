@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
 import { handleNumber } from "../../../helper";
@@ -243,4 +243,4 @@ const RowHeaderMatches = ({
   );
 };
 
-export default RowHeaderMatches;
+export default memo(RowHeaderMatches);

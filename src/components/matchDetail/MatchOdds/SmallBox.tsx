@@ -1,9 +1,8 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { handleNumber } from "../../../helper";
 
-const SmallBox = (props: any) => {
-  const { valueA, valueB, color } = props;
-
+const SmallBox = ({ valueA, valueB, color }: any) => {
   return (
     <Box
       sx={{
@@ -78,4 +77,4 @@ const SmallBox = (props: any) => {
   );
 };
 
-export default SmallBox;
+export default memo(SmallBox);

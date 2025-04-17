@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { memo } from "react";
 import { ApiConstants } from "../../../utils/Constants";
 import NumberDropDown from "../../Common/DropDown/ReportDropdown/NumberDropDown";
 import SearchInput from "../../Common/SearchInput";
@@ -55,4 +56,4 @@ const ListHeaderRow = ({
   );
 };
 
-export default ListHeaderRow;
+export default memo(ListHeaderRow);

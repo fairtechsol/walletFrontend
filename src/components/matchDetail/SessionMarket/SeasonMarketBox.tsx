@@ -1,4 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { memo } from "react";
 import { BallStart } from "../../../assets";
 import { formatNumber, formatToINR } from "../../../helper";
 import { sessionBettingType } from "../../../utils/Constants";
@@ -113,10 +114,10 @@ const SeasonMarketBox = ({
           {(
             !newData?.isManual
               ? !["ACTIVE", "active", "", undefined, null, ""].includes(
-                newData?.GameStatus
-              ) ||
-              (!newData.ex?.availableToBack?.length &&
-                !newData.ex?.availableToLay?.length)
+                  newData?.GameStatus
+                ) ||
+                (!newData.ex?.availableToBack?.length &&
+                  !newData.ex?.availableToLay?.length)
               : newData?.status !== "active"
           ) ? (
             <Box
@@ -135,7 +136,7 @@ const SeasonMarketBox = ({
               }}
             >
               {newData?.status == "Ball Running" ||
-                newData?.status === "ball start" ? (
+              newData?.status === "ball start" ? (
                 Math.max(
                   newData?.ex?.availableToLay?.length ?? 0,
                   newData?.ex?.availableToBack?.length ?? 0
@@ -163,8 +164,8 @@ const SeasonMarketBox = ({
                     (newData?.isManual
                       ? newData?.status
                       : !newData?.GameStatus
-                        ? "SUSPENDED"
-                        : newData?.GameStatus)}
+                      ? "SUSPENDED"
+                      : newData?.GameStatus)}
                 </Typography>
               )}
             </Box>
@@ -266,7 +267,7 @@ const SeasonMarketBox = ({
                   background: "rgba(0,0,0,0.5)",
                   zIndex: 2,
                 }}
-              ></Box>
+               />
             )}
             <Box
               sx={{
@@ -276,7 +277,7 @@ const SeasonMarketBox = ({
                 alignItems: "center",
                 background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
               }}
-            ></Box>
+             />
             <Box
               sx={{
                 display: "flex",
@@ -291,8 +292,8 @@ const SeasonMarketBox = ({
               {!["ACTIVE", "active", "", undefined, null, ""].includes(
                 newData?.GameStatus
               ) ||
-                (!newData.ex?.availableToBack?.length &&
-                  !newData.ex?.availableToLay?.length) ? (
+              (!newData.ex?.availableToBack?.length &&
+                !newData.ex?.availableToLay?.length) ? (
                 <Box
                   sx={{
                     background: "rgba(0,0,0,1)",
@@ -306,7 +307,7 @@ const SeasonMarketBox = ({
                   }}
                 >
                   {newData?.status == "Ball Running" ||
-                    newData?.status === "ball start" ? (
+                  newData?.status === "ball start" ? (
                     item === 1 && (
                       <img
                         src={BallStart}
@@ -328,8 +329,8 @@ const SeasonMarketBox = ({
                         (newData?.isManual
                           ? newData?.status
                           : !newData?.GameStatus
-                            ? "SUSPENDED"
-                            : newData?.GameStatus)}
+                          ? "SUSPENDED"
+                          : newData?.GameStatus)}
                     </Typography>
                   )}
                 </Box>
@@ -368,7 +369,7 @@ const SeasonMarketBox = ({
                       display: "flex",
                       background: "pink",
                     }}
-                  ></Box>
+                   />
                   <SeperateBox
                     key={index}
                     value={
@@ -408,4 +409,4 @@ const SeasonMarketBox = ({
   );
 };
 
-export default SeasonMarketBox;
+export default memo(SeasonMarketBox);

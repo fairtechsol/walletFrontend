@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeleteIcon } from "../../../assets";
@@ -491,7 +491,7 @@ const RacingDetails = () => {
             )}
             {!["edit", "delete"].includes(mode?.type) && mode.value && (
               <>
-                <Box sx={{ width: "2%" }}></Box>
+                <Box sx={{ width: "2%" }} />
                 <Box
                   onClick={() => {
                     setPermanentDeletePopShow(true);
@@ -693,4 +693,4 @@ const RacingDetails = () => {
   );
 };
 
-export default RacingDetails;
+export default memo(RacingDetails);

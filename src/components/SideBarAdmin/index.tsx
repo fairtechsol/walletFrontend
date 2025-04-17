@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { ARROWDROPDOWN } from "../../assets";
 import RenderGames from "./RenderGames";
 
@@ -56,7 +56,7 @@ const SideBarAdmin = (props: any) => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", flex: 0.1 }}></Box>
+          <Box sx={{ display: "flex", flex: 0.1 }} />
           <Box
             sx={{
               display: "flex",
@@ -110,4 +110,4 @@ const SideBarAdmin = (props: any) => {
     </Box>
   );
 };
-export default SideBarAdmin;
+export default memo(SideBarAdmin);

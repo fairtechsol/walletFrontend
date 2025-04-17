@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -752,7 +752,7 @@ const MatchDetail = () => {
                   />
                 );
               })}
-               {matchDetail?.tournament &&
+          {matchDetail?.tournament &&
             matchDetail?.tournament
               ?.filter(
                 (items: any) =>
@@ -958,4 +958,4 @@ const MatchDetail = () => {
   );
 };
 
-export default MatchDetail;
+export default memo(MatchDetail);

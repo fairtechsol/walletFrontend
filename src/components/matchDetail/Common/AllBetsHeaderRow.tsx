@@ -1,4 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { memo } from "react";
 
 const AllBetsHeaderRow = ({ tag, mode }: any) => {
   const theme = useTheme();
@@ -201,4 +202,4 @@ const AllBetsHeaderRow = ({ tag, mode }: any) => {
     </Box>
   );
 };
-export default AllBetsHeaderRow;
+export default memo(AllBetsHeaderRow);

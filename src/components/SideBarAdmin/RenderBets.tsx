@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import MainBox from "./MainBox";
 import RenderOdds from "./RenderOdds";
 
@@ -38,4 +38,4 @@ const RenderBets = ({ i, handleDrawerToggle, colors, matchType }: any) => {
     </Box>
   );
 };
-export default RenderBets;
+export default memo(RenderBets);

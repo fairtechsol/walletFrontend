@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const EmptyRow = ({ containerStyle }: any) => {
   return (
@@ -21,4 +22,4 @@ const EmptyRow = ({ containerStyle }: any) => {
   );
 };
 
-export default EmptyRow;
+export default memo(EmptyRow);

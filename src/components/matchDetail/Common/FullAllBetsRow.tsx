@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { memo } from "react";
 import LargeBox from "./LargeBox";
 import SmallBox from "./SmallBox";
 
@@ -16,4 +17,4 @@ const FullAllBetsRow = ({ values, index }: any) => {
   );
 };
 
-export default FullAllBetsRow;
+export default memo(FullAllBetsRow);

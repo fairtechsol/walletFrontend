@@ -1,4 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { memo } from "react";
 import { LockSolid } from "../../../assets";
 import { formatNumber } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
@@ -165,7 +166,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
             </Box>
           )}
 
-          <Box sx={{ width: "3px", display: "flex", background: "pink" }}></Box>
+          <Box sx={{ width: "3px", display: "flex", background: "pink" }} />
           {ex?.availableToLay?.length > 0 &&
           ![0, "0"].includes(ex?.availableToLay[0]?.price) ? (
             <SeperateBox
@@ -206,4 +207,4 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
   );
 };
 
-export default BoxComponent;
+export default memo(BoxComponent);

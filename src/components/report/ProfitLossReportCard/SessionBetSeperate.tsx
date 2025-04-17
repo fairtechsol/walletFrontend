@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import { formatNumber, formatToINR } from "../../../helper";
 import StyledImage from "../../Common/StyledImages";
@@ -208,7 +208,7 @@ const SessionBetSeperate = ({
                           position: "absolute",
                         }}
                       >
-                        <Box sx={{ width: mark2 ? "35%" : "35%" }}></Box>
+                        <Box sx={{ width: mark2 ? "35%" : "35%" }} />
                       </Box>
                     )}
                     {i?.deleteReason && betHistory === undefined && (
@@ -226,7 +226,7 @@ const SessionBetSeperate = ({
                           position: "absolute",
                         }}
                       >
-                        <Box sx={{ width: mark2 ? "35%" : "35%" }}></Box>
+                        <Box sx={{ width: mark2 ? "35%" : "35%" }} />
                         <Box
                           sx={{
                             width: mark2 ? "65%" : "65%",
@@ -529,7 +529,7 @@ const SingleBox = ({
         >
           {data.time}
         </Typography>
-        <Box sx={{ height: ".4vh" }}></Box>
+        <Box sx={{ height: ".4vh" }} />
         <Typography
           sx={{
             fontWeight: "600",
@@ -630,4 +630,4 @@ const SingleBox = ({
     </Box>
   );
 };
-export default SessionBetSeperate;
+export default memo(SessionBetSeperate);

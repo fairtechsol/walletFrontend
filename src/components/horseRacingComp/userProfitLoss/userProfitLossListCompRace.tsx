@@ -53,7 +53,7 @@ const UserProfitLossListCompRace = (props: any) => {
                   display: "flex",
                   background: "#ffffff",
                 }}
-              ></Box>
+               />
             </>
           ))}
         </Box>

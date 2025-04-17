@@ -1,3 +1,4 @@
+import { memo } from "react";
 import ListItems from "../../components/report/ListItems";
 
 const Reports = () => {
@@ -12,4 +13,4 @@ const Reports = () => {
   return <ListItems title="Report" menutItems1={menutItems1} />;
 };
 
-export default Reports;
+export default memo(Reports);

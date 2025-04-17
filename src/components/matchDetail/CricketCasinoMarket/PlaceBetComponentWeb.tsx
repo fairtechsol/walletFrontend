@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { UD } from "../../../assets";
 import { handleNumber } from "../../../helper";
@@ -70,4 +71,4 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, index }: any) => {
   );
 };
 
-export default PlaceBetComponentWeb;
+export default memo(PlaceBetComponentWeb);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import GeneralReportList from "../../../components/report/GeneralReport/GeneralReportList";
 import YellowHeaderGeneralReport from "../../../components/report/GeneralReport/YellowHeaderGeneralReport";
 
@@ -10,4 +11,4 @@ const GeneralReport = () => {
   );
 };
 
-export default GeneralReport;
+export default memo(GeneralReport);

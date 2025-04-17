@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import ListItems from "../../components/walletSettings/ListItems";
 import { getUsersProfile } from "../../store/actions/user/userAction";
@@ -14,4 +14,4 @@ const WalletSettings = () => {
   return <ListItems />;
 };
 
-export default WalletSettings;
+export default memo(WalletSettings);

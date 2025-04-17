@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 const columns = [
   { label: "No", width: "5%", minWidth: "70px" },
@@ -77,4 +78,4 @@ const TableHeaderList = () => {
   );
 };
 
-export default TableHeaderList;
+export default memo(TableHeaderList);

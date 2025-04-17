@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
@@ -151,18 +151,30 @@ const EditAccount = () => {
       } else if (values.roleName.value === "fairGameAdmin") {
         payload = {
           ...commonPayload,
-          sessionCommission: values.sessionCommission.value == '0.00' ? 0 : values.sessionCommission.value,
+          sessionCommission:
+            values.sessionCommission.value == "0.00"
+              ? 0
+              : values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
-          matchCommission: values.matchCommission.value == '0.00' ? 0 : values.matchCommission.value,
+          matchCommission:
+            values.matchCommission.value == "0.00"
+              ? 0
+              : values.matchCommission.value,
         };
         dispatch(updateUser(payload));
       } else {
         payload = {
           ...commonPayload,
           isOldFairGame: true,
-          sessionCommission: values.sessionCommission.value == '0.00' ? 0 : values.sessionCommission.value,
+          sessionCommission:
+            values.sessionCommission.value == "0.00"
+              ? 0
+              : values.sessionCommission.value,
           matchComissionType: values.matchCommissionType.value,
-          matchCommission: values.matchCommission.value == '0.00' ? 0 : values.matchCommission.value,
+          matchCommission:
+            values.matchCommission.value == "0.00"
+              ? 0
+              : values.matchCommission.value,
         };
         dispatch(updateUrlAdmin(payload));
       }
@@ -496,7 +508,10 @@ const EditAccount = () => {
   }, [lockUnlockObj]);
 
   useEffect(() => {
-    if (formik.values.matchCommissionType.value || formik.values.matchCommissionType.value == null) {
+    if (
+      formik.values.matchCommissionType.value ||
+      formik.values.matchCommissionType.value == null
+    ) {
       formik.setValues({
         ...formik.values,
         // matchCommission: {
@@ -508,12 +523,28 @@ const EditAccount = () => {
         //   value: "0.00",
         // },
         matchCommission: {
-          label: userDetail?.matchComissionType == formik.values.matchCommissionType.value ? userDetail?.matchCommission : "0.00",
-          value: userDetail?.matchComissionType == formik.values.matchCommissionType.value ? userDetail?.matchCommission : "0.00",
+          label:
+            userDetail?.matchComissionType ==
+            formik.values.matchCommissionType.value
+              ? userDetail?.matchCommission
+              : "0.00",
+          value:
+            userDetail?.matchComissionType ==
+            formik.values.matchCommissionType.value
+              ? userDetail?.matchCommission
+              : "0.00",
         },
         sessionCommission: {
-          label: userDetail?.matchComissionType == formik.values.matchCommissionType.value ? userDetail?.sessionCommission : "0.00",
-          value: userDetail?.matchComissionType == formik.values.matchCommissionType.value ? userDetail?.sessionCommission : "0.00",
+          label:
+            userDetail?.matchComissionType ==
+            formik.values.matchCommissionType.value
+              ? userDetail?.sessionCommission
+              : "0.00",
+          value:
+            userDetail?.matchComissionType ==
+            formik.values.matchCommissionType.value
+              ? userDetail?.sessionCommission
+              : "0.00",
         },
       });
     }
@@ -1011,7 +1042,7 @@ const EditAccount = () => {
                     id="downlinePartnership"
                     type="Number"
                     value={formik.values.downlinePartnership}
-                  // onChange={formik.handleChange}
+                    // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -1189,4 +1220,4 @@ const EditAccount = () => {
   );
 };
 
-export default EditAccount;
+export default memo(EditAccount);

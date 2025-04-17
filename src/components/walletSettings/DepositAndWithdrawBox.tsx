@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
 import Input from "../login/Input";
@@ -435,4 +435,4 @@ const DepositAndWithdrawBox = () => {
   );
 };
 
-export default DepositAndWithdrawBox;
+export default memo(DepositAndWithdrawBox);

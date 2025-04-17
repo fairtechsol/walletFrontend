@@ -1,4 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { memo } from "react";
 import Calendar from "../../Common/Calendar";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
 
@@ -75,7 +76,7 @@ const YellowHeader = ({
               startDate={fromDate}
               setStartDate={setFromDate}
             />
-            <Box sx={{ width: "10px" }}></Box>
+            <Box sx={{ width: "10px" }} />
 
             <Calendar
               sx={{ width: "50%" }}
@@ -86,7 +87,7 @@ const YellowHeader = ({
             />
           </Box>
 
-          <Box sx={{ width: "10px" }}></Box>
+          <Box sx={{ width: "10px" }} />
           {!matchesMobile && (
             <CustomButtonAdmin
               btnStyle={{
@@ -130,4 +131,4 @@ const YellowHeader = ({
   );
 };
 
-export default YellowHeader;
+export default memo(YellowHeader);

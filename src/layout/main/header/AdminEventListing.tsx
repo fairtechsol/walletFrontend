@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
@@ -167,4 +167,4 @@ const AdminEventListing = () => {
   );
 };
 
-export default AdminEventListing;
+export default memo(AdminEventListing);

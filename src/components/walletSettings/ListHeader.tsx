@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 
 interface HeaderItem {
   id: string;
@@ -127,4 +128,4 @@ const ListHeader = ({ userName }: { userName: string }) => {
   );
 };
 
-export default ListHeader;
+export default memo(ListHeader);

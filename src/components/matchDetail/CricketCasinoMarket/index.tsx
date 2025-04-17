@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import { RootState } from "../../../store/store";
@@ -293,7 +293,7 @@ const CricketCasinoMarket = (props: any) => {
                   sx={{
                     width: { xs: "60%", lg: "20%", md: "60%" },
                   }}
-                ></Box>
+                 />
                 <Box
                   sx={{
                     width: { xs: "40%", lg: "60%", md: "40%" },
@@ -413,4 +413,4 @@ const CricketCasinoMarket = (props: any) => {
   );
 };
 
-export default CricketCasinoMarket;
+export default memo(CricketCasinoMarket);

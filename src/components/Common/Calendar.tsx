@@ -45,7 +45,7 @@ const Calendar = (props: any) => {
             setStartDate(date);
           }}
           {...DatePickerProps}
-          customInput={<Box sx={[{ width: "10vw" }]}></Box>}
+          customInput={<Box sx={[{ width: "10vw" }]} />}
           minDate={limit ?? limit}
         />
       </Box>

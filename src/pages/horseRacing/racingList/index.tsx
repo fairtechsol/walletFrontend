@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CountryWiseListComponent from "../../../components/horseRacingComp/CountryWiseListComponent";
@@ -92,4 +92,4 @@ const RacingList = () => {
   );
 };
 
-export default RacingList;
+export default memo(RacingList);

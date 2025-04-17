@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import MatchOddsHorseRacing from "../../../components/horseRacingComp/MatchOddsHorseRacing";
@@ -354,7 +354,7 @@ const MultipleMatchHorseRacing = () => {
                                     marginY: ".75%",
                                     height: "35px",
                                   }}
-                                ></Box>
+                                />
                               </Box>
                               <FullAllBets
                                 tag={false}
@@ -655,4 +655,4 @@ const MultipleMatchHorseRacing = () => {
   );
 };
 
-export default MultipleMatchHorseRacing;
+export default memo(MultipleMatchHorseRacing);

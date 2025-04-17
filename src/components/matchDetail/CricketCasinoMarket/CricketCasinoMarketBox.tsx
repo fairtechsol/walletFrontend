@@ -5,7 +5,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Fragment } from "react";
+import { Fragment, memo } from "react";
 import { BallStart } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import SeperateBox from "../MatchOdds/SeperateBox";
@@ -39,7 +39,7 @@ const CricketCasinoMarketBox = (props: any) => {
               background: "rgba(0,0,0,0.5)",
               zIndex: 2,
             }}
-          ></Box>
+           />
         )}
         <Box
           sx={{
@@ -169,4 +169,4 @@ const CricketCasinoMarketBox = (props: any) => {
   );
 };
 
-export default CricketCasinoMarketBox;
+export default memo(CricketCasinoMarketBox);

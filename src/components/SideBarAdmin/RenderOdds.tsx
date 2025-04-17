@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import MainBox from "./MainBox";
 
@@ -42,4 +43,4 @@ const RenderOdds = ({ i, handleDrawerToggle, colors, matchType }: any) => {
     </Box>
   );
 };
-export default RenderOdds;
+export default memo(RenderOdds);

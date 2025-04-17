@@ -10,7 +10,7 @@ const Divider = () => {
     },
   };
 
-  return <Box sx={classes.root}></Box>;
+  return <Box sx={classes.root} />;
 };
 
 export default memo(Divider);

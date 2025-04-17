@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import Pagination from "../../Common/Pagination";
 import EmptyRow from "./EmptyRow";
 import ListHeaderRow from "./ListHeaderRow";
@@ -86,4 +86,4 @@ const BetsList = ({ betHistory }: { betHistory: any }) => {
   );
 };
 
-export default BetsList;
+export default memo(BetsList);

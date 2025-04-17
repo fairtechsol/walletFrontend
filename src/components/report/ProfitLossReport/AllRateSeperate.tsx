@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import { formatToINR, stripUrl } from "../../../helper";
 import CommissionDot from "../../Common/CommissionDot";
@@ -223,7 +223,7 @@ const AllRateSeperate = ({
                           position: "absolute",
                         }}
                       >
-                        <Box sx={{ width: mark2 ? "20%" : "35%" }}></Box>
+                        <Box sx={{ width: mark2 ? "20%" : "35%" }} />
                       </Box>
                     )}
                     {i?.deleteReason && betHistory === undefined && (
@@ -241,7 +241,7 @@ const AllRateSeperate = ({
                           position: "absolute",
                         }}
                       >
-                        <Box sx={{ width: mark2 ? "20%" : "35%" }}></Box>
+                        <Box sx={{ width: mark2 ? "20%" : "35%" }} />
                         <Box
                           sx={{
                             width: mark2 ? "80%" : "65%",
@@ -284,7 +284,7 @@ const AllRateSeperate = ({
                           position: "absolute",
                         }}
                       >
-                        <Box sx={{ width: mark2 ? "20%" : "35%" }}></Box>
+                        <Box sx={{ width: mark2 ? "20%" : "35%" }} />
                       </Box>
                     )}
                     {profit && !i?.deleteReason && (
@@ -636,7 +636,7 @@ const SingleBox = ({
         >
           {time}
         </Typography>
-        {/* <Box sx={{ height: ".4vh" }}></Box> */}
+        {/* <Box sx={{ height: ".4vh" }} /> */}
         <Typography
           sx={{
             fontWeight: "600",
@@ -744,4 +744,4 @@ const SingleBox = ({
     )
   );
 };
-export default AllRateSeperate;
+export default memo(AllRateSeperate);

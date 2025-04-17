@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BetsList from "../../../components/report/CurrentBets/BetsList";
 import HeaderCurrentBets from "../../../components/report/CurrentBets/HeaderCurrentBets";
@@ -24,4 +24,4 @@ const CurrentBets = () => {
   );
 };
 
-export default CurrentBets;
+export default memo(CurrentBets);

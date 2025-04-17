@@ -1,4 +1,5 @@
 import { Box, Modal, Typography } from "@mui/material";
+import { memo } from "react";
 import { BETPLACED, NOT } from "../../assets";
 
 const DailogModal = ({}) => {
@@ -58,4 +59,4 @@ const DailogModal = ({}) => {
     </Modal>
   );
 };
-export default DailogModal;
+export default memo(DailogModal);

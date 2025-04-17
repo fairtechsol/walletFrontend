@@ -1,10 +1,8 @@
 import { Navigate } from "react-router-dom";
-import MultipleMatch from "../pages/analysis/multipleMatch";
-import { Constants } from "../utils/Constants";
-
 import MainLayout from "../layout/main";
 import AddAccount from "../pages/addAccount";
 import Analysis from "../pages/analysis";
+import MultipleMatch from "../pages/analysis/multipleMatch";
 import Analysis2 from "../pages/analysis2";
 import MultipleMatchHorseRacing from "../pages/analysis2/multipleMatch";
 import ChangePassword from "../pages/changePassword";
@@ -24,6 +22,7 @@ import GeneralReport from "../pages/reports/GeneralReport";
 import ProfitLossReport from "../pages/reports/ProfitLoss";
 import ProfitLossReportCards from "../pages/reports/ProfitLossCards";
 import WalletSettings from "../pages/walletSettings";
+import { Constants } from "../utils/Constants";
 
 const MainRoutes = {
   path: Constants.MainPaths.root,

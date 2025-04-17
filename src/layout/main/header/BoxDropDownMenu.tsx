@@ -1,4 +1,5 @@
 import { Box, MenuItem } from "@mui/material";
+import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Logout } from "../../../assets";
@@ -81,4 +82,4 @@ const BoxDropDownMenu = (props: any) => {
   );
 };
 
-export default BoxDropDownMenu;
+export default memo(BoxDropDownMenu);

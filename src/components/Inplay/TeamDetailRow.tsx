@@ -48,7 +48,7 @@ const TeamDetailRow = ({
           alignItems: "center",
         }}
       >
-        <Box sx={{ width: ".25%", display: "flex", background: "pink" }}></Box>
+        <Box sx={{ width: ".25%", display: "flex", background: "pink" }} />
         <Box sx={{ width: ".25%", display: "flex", background: "pink" }} />
         <SeparateBox
           value={

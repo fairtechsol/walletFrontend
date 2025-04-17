@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import { memo } from "react";
 import { formatToINR } from "../../helper";
 import { sessionBettingType } from "../../utils/Constants";
 import FullAllBets from "../matchDetail/Common/FullAllBets";
@@ -217,4 +218,4 @@ const Layout = ({
   );
 };
 
-export default Layout;
+export default memo(Layout);

@@ -1,4 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { memo } from "react";
 
 const SmallBox = ({ item, k }: any) => {
   const theme = useTheme();
@@ -37,4 +38,4 @@ const SmallBox = ({ item, k }: any) => {
   );
 };
 
-export default SmallBox;
+export default memo(SmallBox);
