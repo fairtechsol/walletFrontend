@@ -87,9 +87,7 @@ const ListItems = () => {
       },
     },
   };
-  const handleAmountChange = () => {
-    console.log("");
-  };
+  const handleAmountChange = () => {};
 
   useEffect(() => {
     if (success) {

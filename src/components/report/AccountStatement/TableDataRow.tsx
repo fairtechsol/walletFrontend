@@ -3,6 +3,20 @@ import moment from "moment";
 import { memo } from "react";
 import { handleNumber } from "../../../helper";
 
+interface TableDataRowProps {
+  containerStyle: any;
+  fContainerStyle: any;
+  fTextStyle: any;
+  index: number;
+  date: any;
+  closing: string;
+  description: string;
+  touserName: string;
+  fromuserName: string;
+  transType: string;
+  amount: number;
+}
+
 const TableDataRow = ({
   containerStyle,
   fContainerStyle,
@@ -15,8 +29,7 @@ const TableDataRow = ({
   fromuserName,
   transType,
   amount,
-  color,
-}: any) => {
+}: TableDataRowProps) => {
   return (
     <Box
       sx={[
@@ -114,7 +127,7 @@ const TableDataRow = ({
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {closing !== null ? handleNumber(parseFloat(closing), color) : ""}
+          {closing !== null ? handleNumber(parseFloat(closing), "") : ""}
         </Typography>
       </Box>
       <Box

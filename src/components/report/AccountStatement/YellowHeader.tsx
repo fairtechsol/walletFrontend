@@ -3,13 +3,21 @@ import { memo } from "react";
 import Calendar from "../../Common/Calendar";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
 
+interface YellowHeaderProps {
+  getAccountStatement: (val?: any, val2?: any) => void;
+  fromDate: any;
+  toDate: any;
+  setFromDate: (val: any) => void;
+  setToDate: (val: any) => void;
+}
+
 const YellowHeader = ({
   getAccountStatement,
   fromDate,
   toDate,
   setFromDate,
   setToDate,
-}: any) => {
+}: YellowHeaderProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const tab = useMediaQuery(theme.breakpoints.between("xs", "lg"));
@@ -33,7 +41,6 @@ const YellowHeader = ({
           marginLeft: "10px",
           fontWeight: "600",
           marginY: "2vh",
-
           alignSelf: "start",
         }}
       >
@@ -44,7 +51,6 @@ const YellowHeader = ({
           borderRadius: "5px",
           width: "100%",
           p: "10px",
-
           minHeight: { xs: "0", lg: "80px" },
           background: "#F8C851",
           display: "flex",
@@ -71,16 +77,13 @@ const YellowHeader = ({
             }}
           >
             <Calendar
-              sx={{ width: "50%" }}
-              title={"From"}
+              title="From"
               startDate={fromDate}
               setStartDate={setFromDate}
             />
             <Box sx={{ width: "10px" }} />
-
             <Calendar
-              sx={{ width: "50%" }}
-              title={"To"}
+              title="To"
               startDate={toDate}
               setStartDate={setToDate}
               limit={fromDate}

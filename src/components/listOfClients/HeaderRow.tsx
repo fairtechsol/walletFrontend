@@ -8,12 +8,19 @@ import { ApiConstants } from "../../utils/Constants";
 import SearchInput from "../Common/SearchInput";
 import StyledImage from "../Common/StyledImages";
 
+interface HeaderRowProps {
+  endpoint: string;
+  searchFor: string;
+  downloadPdfExcel: boolean;
+  setCurrentPage: (val: number) => void;
+}
+
 const HeaderRow = ({
   endpoint,
   searchFor,
   downloadPdfExcel,
   setCurrentPage,
-}: any) => {
+}: HeaderRowProps) => {
   const dispatch: AppDispatch = useDispatch();
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile

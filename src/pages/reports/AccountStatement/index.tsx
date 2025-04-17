@@ -26,6 +26,34 @@ const AccountStatement = () => {
     (state: RootState) => state.user.reportList
   );
 
+  const headerClick = () => {
+    try {
+      let filter = "";
+      if (fromDate && toDate) {
+        filter += `&createdAt=between${moment(fromDate)?.format(
+          "YYYY-MM-DD"
+        )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
+      } else if (fromDate) {
+        filter += `&createdAt=gte${moment(fromDate)?.format("YYYY-MM-DD")}`;
+      } else if (toDate) {
+        filter += `&createdAt=lte${moment(toDate)?.format("YYYY-MM-DD")}`;
+      }
+      setCurrentPage(1);
+      dispatch(
+        getAccountStatement({
+          id: profileDetail?.id,
+          page: 1,
+          pageLimit: pageLimit,
+          filter: filter,
+          keyword: searchValue,
+          searchBy: "description,user.userName,actionByUser.userName",
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (profileDetail) {
       let filter = "";
@@ -57,57 +85,30 @@ const AccountStatement = () => {
         <YellowHeader
           fromDate={fromDate}
           toDate={toDate}
-          getAccountStatement={() => {
-            let filter = "";
-            if (fromDate && toDate) {
-              filter += `&createdAt=between${moment(fromDate)?.format(
-                "YYYY-MM-DD"
-              )}|${moment(toDate).add(1, "days")?.format("YYYY-MM-DD")}`;
-            } else if (fromDate) {
-              filter += `&createdAt=gte${moment(fromDate)?.format(
-                "YYYY-MM-DD"
-              )}`;
-            } else if (toDate) {
-              filter += `&createdAt=lte${moment(toDate)?.format("YYYY-MM-DD")}`;
-            }
-            setCurrentPage(1);
-            dispatch(
-              getAccountStatement({
-                id: profileDetail?.id,
-                page: 1,
-                pageLimit: pageLimit,
-                filter: filter,
-                keyword: searchValue,
-                searchBy: "description,user.userName,actionByUser.userName",
-              })
-            );
-          }}
+          getAccountStatement={headerClick}
           setToDate={setToDate}
           setFromDate={setFromDate}
         />
       </Box>
-
       <Box
-        sx={[
-          {
-            marginX: { xs: "2vw", lg: "1vw" },
-            minHeight: "100px",
-            borderRadius: "2px",
-            border: "2px solid white",
-            width: "97.5%",
-            borderTopRightRadius: {
-              xs: "10px",
-              lg: "0px",
-              md: "10px",
-            },
-            borderTopLeftRadius: {
-              xs: "10px",
-              lg: "0px",
-              md: "10px",
-            },
-            background: "#F8C851",
+        sx={{
+          marginX: { xs: "2vw", lg: "1vw" },
+          minHeight: "100px",
+          borderRadius: "2px",
+          border: "2px solid white",
+          width: "97.5%",
+          borderTopRightRadius: {
+            xs: "10px",
+            lg: "0px",
+            md: "10px",
           },
-        ]}
+          borderTopLeftRadius: {
+            xs: "10px",
+            lg: "0px",
+            md: "10px",
+          },
+          background: "#F8C851",
+        }}
       >
         <ListHeaderRow
           searchFor="accountStatement"
@@ -139,7 +140,6 @@ const AccountStatement = () => {
                     key={item?.id}
                     index={item?.id}
                     containerStyle={{ background: "#FFE094" }}
-                    profit={true}
                     fContainerStyle={{ background: "#0B4F26" }}
                     fTextStyle={{ color: "white" }}
                     date={item?.createdAt}

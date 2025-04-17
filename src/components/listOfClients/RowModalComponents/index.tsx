@@ -41,7 +41,6 @@ const RowModalComponents = ({
 
   const { success } = useSelector((state: RootState) => state.user.userList);
   const handleAmountChange = (amount: string, id: string, type: string) => {
-    // alert(amount)
     onValueChange(amount, id, type);
   };
   const classes = {

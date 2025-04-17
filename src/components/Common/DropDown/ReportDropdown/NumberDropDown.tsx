@@ -3,9 +3,9 @@ import SmallDropDown from "../../../report/AccountStatement/SmallDropDown";
 
 interface NumberDropDownProps {
   textColor: string;
-  setPageLimit?: (value: number) => void;
+  setPageLimit: (value: number) => void;
   pageLimit: number;
-  setCurrentPage?: (value: number) => void;
+  setCurrentPage: (value: number) => void;
 }
 
 const NumberDropDown = ({
@@ -17,7 +17,7 @@ const NumberDropDown = ({
   return (
     <Box display={"flex"} alignItems="center" sx={{ width: "100%" }}>
       <Typography
-        sx={{ fontSize: "10px", color: `${textColor}`, fontWeight: "500" }}
+        sx={{ fontSize: "10px", color: textColor, fontWeight: "500" }}
       >
         Show
       </Typography>
@@ -27,7 +27,7 @@ const NumberDropDown = ({
         setCurrentPage={setCurrentPage}
       />
       <Typography
-        sx={{ fontSize: "10px", color: `${textColor}`, fontWeight: "500" }}
+        sx={{ fontSize: "10px", color: textColor, fontWeight: "500" }}
       >
         Entries
       </Typography>
