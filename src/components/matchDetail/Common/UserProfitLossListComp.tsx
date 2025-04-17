@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 
-const UserProfitLossListComp = ({ element, markets, color }: any) => {
+const UserProfitLossListComp = ({ element, markets }: any) => {
   return (
     <>
       <Box
@@ -94,11 +94,7 @@ const UserProfitLossListComp = ({ element, markets, color }: any) => {
                         </Box>
                         <Box
                           sx={{
-                            background: color,
-                            border:
-                              color != "white"
-                                ? "1px solid #2626264D"
-                                : "0px solid white",
+                            border: "1px solid #2626264D",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -116,7 +112,7 @@ const UserProfitLossListComp = ({ element, markets, color }: any) => {
                             <Typography
                               sx={{
                                 fontSize: "13px",
-                                color: color == "white" ? "white" : "black",
+                                color: "black",
                                 fontWeight: "700",
                                 textAlign: "center",
                                 lineHeight: "13px",
@@ -128,7 +124,7 @@ const UserProfitLossListComp = ({ element, markets, color }: any) => {
                               sx={{
                                 fontSize: { lg: "10px", xs: "9px" },
                                 marginTop: -0.4,
-                                color: color == "white" ? "white" : "black",
+                                color: "black",
                                 textAlign: "center",
                                 fontWeight: "600",
                                 lineHeight: "13px",
@@ -150,7 +146,7 @@ const UserProfitLossListComp = ({ element, markets, color }: any) => {
                       height: "100%",
                       minWidth: "100px",
                     }}
-                   />
+                  />
                 )}
               </Box>
             );

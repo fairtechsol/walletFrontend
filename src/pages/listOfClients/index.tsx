@@ -83,4 +83,4 @@ const ListOfClients = () => {
   );
 };
 
-export default React.memo(ListOfClients);
+export default ListOfClients;

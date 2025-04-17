@@ -373,7 +373,6 @@ const SessionMarket = ({
                 ?.slice()
                 .sort(customSort)
                 ?.map((element: any, index: any) => {
-                  console.log(element, "abc");
                   return (
                     <Box
                       key={
