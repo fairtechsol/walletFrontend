@@ -49,19 +49,21 @@ const StockBox = ({ team, value, up, mode, showFixed }: StockBoxProps) => {
         >
           {team}
         </Typography>
-        <StyledImage
-          src={
-            up
-              ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
-              : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
-          }
-          sx={{
-            height: { xs: "17px", lg: "25px" },
-            marginLeft: "5px",
-            filter: "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
-            width: { xs: "17px", lg: "25px" },
-          }}
-        />
+        {(up == true || up == false) && (
+          <StyledImage
+            src={
+              up
+                ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
+                : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
+            }
+            sx={{
+              height: { xs: "17px", lg: "25px" },
+              marginLeft: "5px",
+              filter: "invert(.9) sepia(1) saturate(5) hue-rotate(175deg);",
+              width: { xs: "17px", lg: "25px" },
+            }}
+          />
+        )}
       </Box>
       <Typography
         sx={{
