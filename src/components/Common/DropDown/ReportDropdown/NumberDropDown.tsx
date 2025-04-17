@@ -1,13 +1,19 @@
 import { Box, Typography } from "@mui/material";
-import { memo } from "react";
 import SmallDropDown from "../../../report/AccountStatement/SmallDropDown";
+
+interface NumberDropDownProps {
+  textColor: string;
+  setPageLimit?: (value: number) => void;
+  pageLimit: number;
+  setCurrentPage?: (value: number) => void;
+}
 
 const NumberDropDown = ({
   textColor,
   setPageLimit,
   pageLimit,
   setCurrentPage,
-}: any) => {
+}: NumberDropDownProps) => {
   return (
     <Box display={"flex"} alignItems="center" sx={{ width: "100%" }}>
       <Typography
@@ -29,4 +35,4 @@ const NumberDropDown = ({
   );
 };
 
-export default memo(NumberDropDown);
+export default NumberDropDown;

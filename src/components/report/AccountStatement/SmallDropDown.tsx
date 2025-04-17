@@ -3,9 +3,9 @@ import { Fragment, memo, useState } from "react";
 import { ARROWDROPDOWN } from "../../../assets";
 
 interface SmallDropDownProps {
-  setPageLimit: (value: number) => void;
+  setPageLimit?: (value: number) => void;
   pageLimit: number;
-  setCurrentPage: (value: number) => void;
+  setCurrentPage?: (value: number) => void;
 }
 
 const SmallDropDown = ({
@@ -63,8 +63,8 @@ const SmallDropDown = ({
               <Fragment key={idx}>
                 <Typography
                   onClick={() => {
-                    setPageLimit(+item);
-                    setCurrentPage(1);
+                    setPageLimit?.(+item);
+                    setCurrentPage?.(1);
                     setOpen(false);
                   }}
                   sx={{ textAlign: "center", paddingY: "1px" }}

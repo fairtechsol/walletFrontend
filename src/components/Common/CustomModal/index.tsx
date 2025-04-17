@@ -5,6 +5,16 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changePasswordReset } from "../../../store/actions/user/userAction";
 
+interface CustomModalProps {
+  transactionMessage?: string;
+  modalTitle: string;
+  buttonMessage: string;
+  setShowModal: (val: boolean) => void;
+  closeBtn?: boolean;
+  functionDispatch: () => void;
+  navigateTo: string;
+}
+
 const CustomModal = ({
   transactionMessage,
   modalTitle,
@@ -13,7 +23,7 @@ const CustomModal = ({
   closeBtn,
   functionDispatch,
   navigateTo,
-}: any) => {
+}: CustomModalProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

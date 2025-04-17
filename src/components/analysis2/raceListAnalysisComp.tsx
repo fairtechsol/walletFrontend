@@ -136,7 +136,7 @@ const RacingListComponentAnalysis = ({
                                 zIndex: 1,
                                 pointerEvents: "none",
                               }}
-                            ></div>
+                             />
                           )}
                           {moment(time.startAt).format("hh:mm")}
                           <ExpandMoreIcon

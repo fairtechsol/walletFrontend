@@ -775,9 +775,7 @@ const AccountListRow = ({
           <CommissionReportTable
             title={element?.userName}
             id={showCommissionReport?.id}
-            show={showCommissionReport?.value}
             setShow={setShowCommissionReport}
-            currentPage={currentPage}
           />
         </Box>
       </ModalMUI>

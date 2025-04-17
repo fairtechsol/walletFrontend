@@ -1208,7 +1208,6 @@ const EditAccount = () => {
         <CustomModal
           modalTitle="User edited successfully"
           setShowModal={setShowModal}
-          showModal={showModal}
           buttonMessage="Ok"
           functionDispatch={() => {}}
           navigateTo="/wallet/list_of_clients"
