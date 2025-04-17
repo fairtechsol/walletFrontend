@@ -178,7 +178,6 @@ export const Constants = {
     profitLossCards: "/wallet/reports/profit_loss_cards",
     accountStatement: "/wallet/reports/account_statement",
     currentBet: "/wallet/reports/current_bet",
-    generalReport: "/wallet/reports/general_report",
   },
   pageCount: 10,
   listOfClientCountLimit: 15,

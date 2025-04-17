@@ -18,7 +18,6 @@ import MyAccount from "../pages/myAccount";
 import Reports from "../pages/reports";
 import AccountStatement from "../pages/reports/AccountStatement";
 import CurrentBets from "../pages/reports/CurrentBets";
-import GeneralReport from "../pages/reports/GeneralReport";
 import ProfitLossReport from "../pages/reports/ProfitLoss";
 import ProfitLossReportCards from "../pages/reports/ProfitLossCards";
 import WalletSettings from "../pages/walletSettings";
@@ -115,10 +114,6 @@ const MainRoutes = {
     {
       path: Constants.ReportsPaths.currentBet,
       element: <CurrentBets />,
-    },
-    {
-      path: Constants.ReportsPaths.generalReport,
-      element: <GeneralReport />,
     },
     {
       path: Constants.MainPaths.horseRacing,
