@@ -15,7 +15,7 @@ const SmallDropDown = ({
 }: SmallDropDownProps) => {
   const [open, setOpen] = useState(false);
   return (
-    <Box>
+    <>
       <Box
         onClick={() => {
           setOpen(!open);
@@ -79,7 +79,7 @@ const SmallDropDown = ({
           })}
         </Box>
       )}
-    </Box>
+    </>
   );
 };
 

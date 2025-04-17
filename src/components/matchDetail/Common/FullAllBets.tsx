@@ -35,9 +35,7 @@ const FullAllBets = ({
 
   const renderCheckBox = (isSelected: any) =>
     isSelected ? (
-      <Box>
-        <img src={CHECK} style={{ width: "20px", height: "20px" }} />
-      </Box>
+      <img src={CHECK} style={{ width: "20px", height: "20px" }} />
     ) : (
       <Box
         sx={{

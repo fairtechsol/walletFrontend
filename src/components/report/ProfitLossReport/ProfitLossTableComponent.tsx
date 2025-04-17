@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { memo, useState } from "react";
 import Pagination from "../../Common/Pagination";
 import RowHeaderMatches from "./RowHeaderMatches";
@@ -58,24 +58,22 @@ const ProfitLossTableComponent = (props: any) => {
   };
 
   return eventData?.length > 0 ? (
-    <Box>
+    <>
       {eventData?.map((item: any, index: any) => {
         return (
-          <>
-            <RowHeaderMatches
-              key={index}
-              item={item}
-              show={show}
-              startDate={startDate}
-              endDate={endDate}
-              getHandleReport={getHandleReport}
-              selectedId={selectedId}
-              getBetReport={getBetReport}
-              userProfitLoss={userProfitLoss}
-              getUserProfitLoss={getUserProfitLoss}
-              eventType={eventType}
-            />
-          </>
+          <RowHeaderMatches
+            key={index}
+            item={item}
+            show={show}
+            startDate={startDate}
+            endDate={endDate}
+            getHandleReport={getHandleReport}
+            selectedId={selectedId}
+            getBetReport={getBetReport}
+            userProfitLoss={userProfitLoss}
+            getUserProfitLoss={getUserProfitLoss}
+            eventType={eventType}
+          />
         );
       })}
 
@@ -87,21 +85,19 @@ const ProfitLossTableComponent = (props: any) => {
           setCurrentPage={setCurrentPage}
         />
       )}
-    </Box>
+    </>
   ) : (
-    <Box>
-      <Typography
-        sx={{
-          color: "#fff",
-          textAlign: "center",
-          fontSize: { lg: "16px", xs: "10px" },
-          fontWeight: "600",
-          margin: "1rem",
-        }}
-      >
-        No Matching Records Found
-      </Typography>
-    </Box>
+    <Typography
+      sx={{
+        color: "#fff",
+        textAlign: "center",
+        fontSize: { lg: "16px", xs: "10px" },
+        fontWeight: "600",
+        margin: "1rem",
+      }}
+    >
+      No Matching Records Found
+    </Typography>
   );
 };
 

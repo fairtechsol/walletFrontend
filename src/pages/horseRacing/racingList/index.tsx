@@ -85,9 +85,7 @@ const RacingList = () => {
           matchType={matchType}
         />
       </Box>
-      <Box>
-        <RacingListComponent racingList={racingList} />
-      </Box>
+      <RacingListComponent racingList={racingList} />
     </>
   );
 };

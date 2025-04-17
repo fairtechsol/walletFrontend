@@ -152,19 +152,17 @@ const AccountStatement = () => {
                   />
                 ))
               ) : (
-                <Box>
-                  <Typography
-                    sx={{
-                      color: "#000",
-                      textAlign: "center",
-                      fontSize: { lg: "16px", xs: "10px" },
-                      fontWeight: "600",
-                      margin: "1rem",
-                    }}
-                  >
-                    No Matching Records Found
-                  </Typography>
-                </Box>
+                <Typography
+                  sx={{
+                    color: "#000",
+                    textAlign: "center",
+                    fontSize: { lg: "16px", xs: "10px" },
+                    fontWeight: "600",
+                    margin: "1rem",
+                  }}
+                >
+                  No Matching Records Found
+                </Typography>
               )}
             </Box>
             <Pagination

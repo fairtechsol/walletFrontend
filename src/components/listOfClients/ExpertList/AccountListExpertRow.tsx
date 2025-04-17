@@ -138,11 +138,9 @@ const AccountListExpertRow = ({
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
-        <Box>
-          <Typography variant="h5" sx={{ color: "white" }}>
-            {element?.betFairMatchPrivilege}
-          </Typography>
-        </Box>
+        <Typography variant="h5" sx={{ color: "white" }}>
+          {element?.betFairMatchPrivilege}
+        </Typography>
         <Box
           sx={{
             width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },

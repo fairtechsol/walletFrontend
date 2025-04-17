@@ -295,15 +295,13 @@ const Analysis2 = () => {
               matchType={value}
             />
           </Box>
-          <Box>
-            <RacingListComponentAnalysis
-              racingList={racingList}
-              matchType={value}
-              mode={mode}
-              handleRadioButtonSelect={handleRadioButtonSelect}
-              selected={selected}
-            />
-          </Box>
+          <RacingListComponentAnalysis
+            racingList={racingList}
+            matchType={value}
+            mode={mode}
+            handleRadioButtonSelect={handleRadioButtonSelect}
+            selected={selected}
+          />
         </>
       )}
     </Box>

@@ -27,7 +27,7 @@ const SideBarAdmin = (props: any) => {
   });
 
   return (
-    <Box>
+    <>
       <Box
         sx={[
           {
@@ -107,7 +107,7 @@ const SideBarAdmin = (props: any) => {
           />
         );
       })}
-    </Box>
+    </>
   );
 };
 export default memo(SideBarAdmin);

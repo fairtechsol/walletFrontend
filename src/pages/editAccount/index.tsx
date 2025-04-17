@@ -943,26 +943,24 @@ const EditAccount = () => {
                   </>
                 )}
                 {formik?.values?.roleName?.value !== "expert" && (
-                  <Box>
-                    <Input
-                      containerStyle={containerStyles}
-                      titleStyle={titleStyles}
-                      inputStyle={inputStyle}
-                      inputContainerStyle={{
-                        ...inputContainerStyle,
-                        height: { lg: "45px", xs: "36px" },
-                        backgroundColor: "#DEDEDE",
-                      }}
-                      disabled={state?.id ? true : false}
-                      title="Credit Reference*"
-                      name="creditRefrence"
-                      id="creditRefrence"
-                      value={formatToINR(
-                        parseFloat(formik.values.creditRefrence?.toString())
-                      )}
-                      onChange={formik.handleChange}
-                    />
-                  </Box>
+                  <Input
+                    containerStyle={containerStyles}
+                    titleStyle={titleStyles}
+                    inputStyle={inputStyle}
+                    inputContainerStyle={{
+                      ...inputContainerStyle,
+                      height: { lg: "45px", xs: "36px" },
+                      backgroundColor: "#DEDEDE",
+                    }}
+                    disabled={state?.id ? true : false}
+                    title="Credit Reference*"
+                    name="creditRefrence"
+                    id="creditRefrence"
+                    value={formatToINR(
+                      parseFloat(formik.values.creditRefrence?.toString())
+                    )}
+                    onChange={formik.handleChange}
+                  />
                 )}
               </Box>
               {formik.values.roleName.value !== "expert" && (

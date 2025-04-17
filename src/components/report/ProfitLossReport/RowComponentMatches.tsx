@@ -411,9 +411,7 @@ const RowComponentMatches = ({
                   <Box
                     sx={{
                       width: { xs: "100%", lg: "100%", md: "100%" },
-                      // maxHeight: "51vh",
                       overflow: "hidden",
-                      // overflowY: "auto",
                       marginY: { xs: ".2vh", lg: "1vh" },
                       padding: 0.2,
                     }}

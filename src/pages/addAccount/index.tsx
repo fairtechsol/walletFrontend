@@ -708,7 +708,7 @@ const AddAccount = () => {
                   />
                 </Box>
                 {formik?.values?.roleName?.value === "superAdmin" && (
-                  <Box>
+                  <>
                     <Box sx={{ pb: touched.domain && errors.domain ? 2 : 0 }}>
                       <Input
                         containerStyle={containerStyles}
@@ -869,7 +869,7 @@ const AddAccount = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                  </Box>
+                  </>
                 )}
               </Box>
             </Box>

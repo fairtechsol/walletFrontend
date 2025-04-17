@@ -210,23 +210,21 @@ const RowHeaderMatches = ({
           </Box>
         </Box>
       </Box>
-      <Box>
-        {show &&
-          type === item?.type &&
-          domainProfitLossListCard?.map((item: any, index: number) => {
-            return (
-              <RowComponentMatches
-                key={index}
-                item={item}
-                index={index + 1}
-                selectedId={selectedId}
-                getBetReport={getBetReport}
-                userProfitLoss={userProfitLoss}
-                getUserProfitLoss={getUserProfitLoss}
-              />
-            );
-          })}
-      </Box>
+      {show &&
+        type === item?.type &&
+        domainProfitLossListCard?.map((item: any, index: number) => {
+          return (
+            <RowComponentMatches
+              key={index}
+              item={item}
+              index={index + 1}
+              selectedId={selectedId}
+              getBetReport={getBetReport}
+              userProfitLoss={userProfitLoss}
+              getUserProfitLoss={getUserProfitLoss}
+            />
+          );
+        })}
     </>
   );
 };

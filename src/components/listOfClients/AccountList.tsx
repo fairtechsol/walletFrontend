@@ -76,19 +76,17 @@ const AccountList = (endpoint: { endpoint: string }) => {
                 <ListHeaderRow />
                 <SubHeaderListRow data={totalBalance} />
                 {userList?.list?.length === 0 && (
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#000",
-                        textAlign: "center",
-                        fontSize: { lg: "16px", xs: "10px" },
-                        fontWeight: "600",
-                        margin: "1rem",
-                      }}
-                    >
-                      No Matching Records Found
-                    </Typography>
-                  </Box>
+                  <Typography
+                    sx={{
+                      color: "#000",
+                      textAlign: "center",
+                      fontSize: { lg: "16px", xs: "10px" },
+                      fontWeight: "600",
+                      margin: "1rem",
+                    }}
+                  >
+                    No Matching Records Found
+                  </Typography>
                 )}
                 {userList?.list?.length > 0 &&
                   userList?.list?.map(
