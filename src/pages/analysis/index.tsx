@@ -29,13 +29,12 @@ const Analysis = () => {
   const [selected, setSelected] = useState<any>([]);
   const [selectedMatchType, setSelectedMatchType] = useState<string>("");
   const [matchIds, setMatchIds] = useState<any>([]);
-  // const [marketIds, setMarketIds] = useState([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });

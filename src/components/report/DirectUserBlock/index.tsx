@@ -26,7 +26,11 @@ import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import ListHeaderModal from "./ListHeader";
 
-const DirectUserBlock = ({ setShow }: any) => {
+interface DirectUserBlockProps {
+  setShow: () => void;
+}
+
+const DirectUserBlock = ({ setShow }: DirectUserBlockProps) => {
   const theme = useTheme();
   const matchesxs = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
@@ -93,109 +97,106 @@ const DirectUserBlock = ({ setShow }: any) => {
   }, []);
 
   return (
-    <>
+    <Box
+      sx={{
+        width: { xs: "70%", lg: "70%", md: "70%" },
+        minHeight: "200px",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "10px",
+        borderBottomRightRadius: "0px",
+        borderBottomLeftRadius: "0px",
+        overflow: "hidden",
+        border: "2px solid white",
+        background: "#fff",
+      }}
+    >
+      <Box sx={{ marginX: "0", background: "#F8C851", height: "50px" }}>
+        <ListHeaderModal
+          title="Direct User Block"
+          setShow={setShow}
+          matchesxs={matchesxs}
+        />
+      </Box>
       <Box
         sx={{
-          width: { xs: "70%", lg: "70%", md: "70%" },
-          minHeight: "200px",
-          display: "flex",
-          flexDirection: "column",
-          borderRadius: "10px",
-          borderBottomRightRadius: "0px",
-          borderBottomLeftRadius: "0px",
-          overflow: "hidden",
-          border: "2px solid white",
-          background: "#fff",
+          overflowX: "auto",
+          width: { xs: "100%", lg: "100%", md: "100%" },
         }}
       >
-        <Box sx={{ marginX: "0", background: "#F8C851", height: "50px" }}>
-          <ListHeaderModal
-            title="Direct User Block"
-            setShow={setShow}
-            matchesxs={matchesxs}
+        <Box display="flex" alignItems="center" gap={2} m={2}>
+          <TextField
+            label="Search Users"
+            variant="outlined"
+            required
+            size="small"
+            fullWidth
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Button variant="contained" onClick={handleSearch}>
+            Load
+          </Button>
+        </Box>
+        <Box display="flex" alignItems="center" m={2} width={"50%"}>
+          <TextField
+            label="Transaction Code"
+            required
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={transactionPassword}
+            onChange={(e) => setTransactionPassword(e.target.value)}
           />
         </Box>
-        <Box
-          sx={{
-            overflowX: "auto",
-            width: { xs: "100%", lg: "100%", md: "100%" },
-          }}
+        <TableContainer
+          component={Paper}
+          sx={{ maxHeight: 400, overflowY: "auto" }}
         >
-          <Box display="flex" alignItems="center" gap={2} m={2}>
-            <TextField
-              label="Search Users"
-              variant="outlined"
-              required
-              size="small"
-              fullWidth
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button variant="contained" onClick={handleSearch}>
-              Load
-            </Button>
-          </Box>
-          <Box display="flex" alignItems="center" m={2} width={"50%"}>
-            <TextField
-              label="Transaction Code"
-              required
-              variant="outlined"
-              size="small"
-              fullWidth
-              value={transactionPassword}
-              onChange={(e) => setTransactionPassword(e.target.value)}
-            />
-          </Box>
-          {/* Table */}
-          <TableContainer
-            component={Paper}
-            sx={{ maxHeight: 400, overflowY: "auto" }}
-          >
-            <Table stickyHeader size="small">
-              <TableHead>
+          <Table stickyHeader size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontWeight: "600" }}>User Name</TableCell>
+                <TableCell sx={{ fontWeight: "600" }}>Domain</TableCell>
+                <TableCell align="center" sx={{ fontWeight: "600" }}>
+                  User Block
+                </TableCell>
+                <TableCell align="center" sx={{ fontWeight: "600" }}>
+                  Bet Block
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users?.length === 0 && (
                 <TableRow>
-                  <TableCell sx={{ fontWeight: "600" }}>User Name</TableCell>
-                  <TableCell sx={{ fontWeight: "600" }}>Domain</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: "600" }}>
-                    User Block
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: "600" }}>
-                    Bet Block
+                  <TableCell colSpan={4} align="center">
+                    No Record Found!
                   </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {users?.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No Record Found!
-                    </TableCell>
-                  </TableRow>
-                )}
-                {users?.map((user: any) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{user.userName}</TableCell>
-                    <TableCell>{stripUrl(user.domain)}</TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        checked={user?.userBlock}
-                        onChange={() => handleToggle(user, "userBlock")}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Checkbox
-                        checked={user?.betBlock}
-                        onChange={() => handleToggle(user, "betBlock")}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+              )}
+              {users?.map((user: any) => (
+                <TableRow key={user.id}>
+                  <TableCell>{user.userName}</TableCell>
+                  <TableCell>{stripUrl(user.domain)}</TableCell>
+                  <TableCell align="center">
+                    <Checkbox
+                      checked={user?.userBlock}
+                      onChange={() => handleToggle(user, "userBlock")}
+                    />
+                  </TableCell>
+                  <TableCell align="center">
+                    <Checkbox
+                      checked={user?.betBlock}
+                      onChange={() => handleToggle(user, "betBlock")}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
-    </>
+    </Box>
   );
 };
 

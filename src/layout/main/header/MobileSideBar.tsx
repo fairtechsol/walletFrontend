@@ -2,8 +2,12 @@ import { Box, Drawer } from "@mui/material";
 import { memo } from "react";
 import SideBarAdmin from "../../../components/SideBarAdmin";
 
-const MobileSideBar = (props: any) => {
-  const { mobileOpen, setMobileOpen } = props;
+interface MobileSideBarProps {
+  mobileOpen: boolean;
+  setMobileOpen: (val: boolean) => void;
+}
+
+const MobileSideBar = ({ mobileOpen, setMobileOpen }: MobileSideBarProps) => {
   const handleDrawerToggle = () => {
     setMobileOpen(false);
   };
@@ -40,11 +44,7 @@ const MobileSideBar = (props: any) => {
           }))
         }
       >
-        <SideBarAdmin
-          key={2}
-          handleDrawerToggle={handleDrawerToggle}
-          mobileShow={true}
-        />
+        <SideBarAdmin handleDrawerToggle={handleDrawerToggle} />
       </Box>
     </Drawer>
   );

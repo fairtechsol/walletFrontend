@@ -10,7 +10,7 @@ import {
 import ModalMUI from "@mui/material/Modal";
 import { useFormik } from "formik";
 import _, { debounce } from "lodash";
-import { memo, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -1286,4 +1286,4 @@ const AddAccount = () => {
   );
 };
 
-export default memo(AddAccount);
+export default AddAccount;

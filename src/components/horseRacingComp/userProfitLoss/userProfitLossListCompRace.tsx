@@ -4,8 +4,15 @@ import { handleNumber } from "../../../helper";
 import Divider from "../../Inplay/Divider";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
-const UserProfitLossListCompRace = (props: any) => {
-  const { element, color, matchDetail } = props;
+interface UserProfitLossListCompRaceProps {
+  element: any;
+  matchDetail: any;
+}
+
+const UserProfitLossListCompRace = ({
+  element,
+  matchDetail,
+}: UserProfitLossListCompRaceProps) => {
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -35,13 +42,13 @@ const UserProfitLossListCompRace = (props: any) => {
             <>
               <SeperateBox
                 value2={
-                  handleNumber(parseFloat(element[runner?.id] || 0), color) ??
+                  handleNumber(parseFloat(element[runner?.id] || 0), "") ??
                   "N/A"
                 }
                 value={
                   handleNumber(
                     parseFloat(element[runner?.id + "_percent"] || 0),
-                    color
+                    ""
                   ) ?? "N/A"
                 }
                 color={"#ffffff"}
@@ -53,7 +60,7 @@ const UserProfitLossListCompRace = (props: any) => {
                   display: "flex",
                   background: "#ffffff",
                 }}
-               />
+              />
             </>
           ))}
         </Box>

@@ -3,8 +3,11 @@ import { memo } from "react";
 import Divider from "../../Inplay/Divider";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
-const UserProfitLossListCompRaceHeader = (props: any) => {
-  const { matchDetail } = props;
+interface Props {
+  matchDetail: any;
+}
+
+const UserProfitLossListCompRaceHeader = ({ matchDetail }: Props) => {
   return (
     <>
       <Box sx={{ display: "flex" }}>

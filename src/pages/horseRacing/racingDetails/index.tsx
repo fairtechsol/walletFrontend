@@ -426,7 +426,7 @@ const RacingDetails = () => {
           </Typography>
           <MatchOddsHorseRacing
             currentMatch={matchDetail}
-            typeOfBet={"Match Odds"}
+            typeOfBet="Match Odds"
             showBox={matchDetail?.matchOdd?.activeStatus === "save"}
             minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
             maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
@@ -439,8 +439,8 @@ const RacingDetails = () => {
           />
           {matchesMobile && (
             <UserProfitLossRace
-              single={"single"}
-              title={"User Profit Loss"}
+              single="single"
+              title="User Profit Loss"
               matchDetail={matchDetail}
             />
           )}
@@ -680,7 +680,6 @@ const RacingDetails = () => {
               <Box sx={{ width: "2%" }} />
               <Box sx={{ width: "150px", marginY: ".75%", height: "15px" }} />
             </Box>
-
             <UserProfitLossRace
               single="single"
               title="User Profit Loss"

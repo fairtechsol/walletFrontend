@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { memo, useState } from "react";
+import { Fragment, memo, useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../assets";
 import { formatToINR } from "../../helper";
 import Divider from "../Inplay/Divider";
@@ -23,10 +23,6 @@ const MatchOddsHorseRacing = ({
   handleHide,
 }: any) => {
   const [visible, setVisible] = useState(true);
-
-  const handleLock = (data: any) => {
-    return data?.ex?.availableToBack?.length > 0 ? false : true;
-  };
 
   const onSubmit = (value: any) => {
     handleBlock(value, !locked, typeOfBet);
@@ -184,7 +180,7 @@ const MatchOddsHorseRacing = ({
               </Box>
               <Box
                 sx={{ width: "3px", display: "flex", background: "white" }}
-               />
+              />
               <Box
                 sx={{
                   background: "#FF9292",
@@ -204,7 +200,7 @@ const MatchOddsHorseRacing = ({
               </Box>
               <Box
                 sx={{ width: ".7px", display: "flex", background: "white" }}
-               />
+              />
             </Box>
           </Box>
 
@@ -222,11 +218,11 @@ const MatchOddsHorseRacing = ({
                   alignItems: "center",
                   background: "rgba(0, 0, 0, .5)",
                 }}
-               />
+              />
             )}
 
-            {data?.map((runner: any) => (
-              <>
+            {data?.map((runner: any, index: number) => (
+              <Fragment key={index}>
                 <BoxComponentHorseRacing
                   color={
                     currentMatch?.profitLossDataMatch
@@ -246,10 +242,9 @@ const MatchOddsHorseRacing = ({
                       : 0
                   }
                   data={runner}
-                  lock={handleLock(runner)}
                 />
                 <Divider />
-              </>
+              </Fragment>
             ))}
           </Box>
         </>

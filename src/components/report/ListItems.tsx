@@ -1,5 +1,5 @@
 import { Box, MenuItem, Modal, Typography } from "@mui/material";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetSearchUserList } from "../../store/actions/user/userAction";
@@ -119,4 +119,4 @@ const ListItems = ({ menutItems1, title }: any) => {
   );
 };
 
-export default memo(ListItems);
+export default ListItems;

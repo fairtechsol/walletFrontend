@@ -495,10 +495,11 @@ const MultipleMatchHorseRacing = () => {
                 }}
               >
                 <UserProfitLossRace
-                  title={"User Profit Loss"}
+                  title="User Profit Loss"
                   matchData={storedMatchData}
                   setShowUserProfitLoss={setShowUserProfitLoss}
-                  single={"multiple"}
+                  single="multiple"
+                  matchDetail={storedMatchData?.match}
                 />
               </Box>
             </Box>
