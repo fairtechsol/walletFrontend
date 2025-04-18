@@ -3,7 +3,6 @@ import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
 import Input from "../login/Input";
-import DailogModal from "./DailogModal";
 import WalletModal from "./WalletModal";
 
 const DepositAndWithdrawBox = () => {
@@ -420,8 +419,6 @@ const DepositAndWithdrawBox = () => {
           </>
         </form>
       </Box>
-
-      <DailogModal />
       {showSuccessModal && (
         <WalletModal
           message={showModalMessage}
