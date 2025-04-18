@@ -125,8 +125,8 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
                 cursor: "pointer",
                 textTransform: "capitalize",
                 color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") &&
-                  "white",
+                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") ?
+                    "white" : "white",
               },
               fTextStyle,
             ]}
@@ -156,8 +156,8 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
                 cursor: "pointer",
                 textTransform: "capitalize",
                 color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") &&
-                  "white",
+                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") ?
+                    "white" : "white",
               },
               fTextStyle,
             ]}
