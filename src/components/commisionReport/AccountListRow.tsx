@@ -3,36 +3,76 @@ import moment from "moment";
 import { memo, useEffect, useState } from "react";
 import { formatToINR } from "../../helper";
 
-const AccountListRow = ({
-  containerStyle,
-  fContainerStyle,
-  fTextStyle,
-  element,
-}: any) => {
-  const prevElement = {
+interface AccountListRowProps {
+  containerStyle?: React.CSSProperties;
+  fContainerStyle?: React.CSSProperties & { background?: string };
+  fTextStyle?: React.CSSProperties;
+  element?: {
+    matchName?: string;
+    commissionAmount?: number | string;
+    matchType?: "SESSION" | string;
+    betType?: string;
+    stake?: number | string;
+    odds?: number | string;
+    isActive?: boolean;
+    teamName?: string;
+    date?: string;
+    partnerShip?: number;
+    userName?: string;
+  };
+}
+
+interface FormattedElement {
+  name?: string;
+  commissionAmount?: string;
+  commissionType?: string;
+  betType?: string;
+  stack?: string;
+  odds?: string | number;
+  isActive?: boolean;
+  teamBet?: string;
+  createAt?: string;
+  myCommission?: string;
+  userName?: string;
+}
+
+// const AccountListRow = ({
+//   containerStyle,
+//   fContainerStyle,
+//   fTextStyle,
+//   element,
+// }: any) => {
+const AccountListRow: React.FC<AccountListRowProps> = ({
+  containerStyle = {},
+  fContainerStyle = {},
+  fTextStyle = {},
+  element = {},
+}) => {
+  const formatElement = (): FormattedElement => ({
     name: element?.matchName,
-    commissionAmount: formatToINR(element?.commissionAmount),
+    commissionAmount: formatToINR(Number(element?.commissionAmount) || 0),
     commissionType: element?.matchType === "SESSION" ? "Session" : "Match",
     betType: element?.betType,
-    stack: element?.stake && formatToINR(element?.stake),
+    stack: element?.stake ? formatToINR(Number(element.stake)) : undefined,
     odds: element?.odds,
     isActive: element?.isActive,
     teamBet: element?.teamName,
     createAt: element?.date,
-    myCommission:
-      formatToINR(
-        ((+element?.commissionAmount || 0) * element?.partnerShip) / 100
-      ) + `(${element?.partnerShip}%)`,
+    myCommission: element?.partnerShip
+      ? `${formatToINR(
+        ((Number(element.commissionAmount) || 0) * element.partnerShip) / 100
+      )}(${element.partnerShip}%)`
+      : undefined,
     userName: element?.userName,
-  };
-  const [elementToUDM, setElementToUDM] = useState(prevElement);
+  });
+  const [elementToUDM, setElementToUDM] = useState<FormattedElement>(
+    formatElement()
+  );
 
-  function checkIfElementUpdated(val: any) {
-    setElementToUDM(val);
-  }
+
   useEffect(() => {
-    checkIfElementUpdated(prevElement);
-  }, [element?.commissionType]);
+    setElementToUDM(formatElement());
+  }, [element?.matchType]);
 
   return (
     <>
@@ -85,7 +125,7 @@ const AccountListRow = ({
                 cursor: "pointer",
                 textTransform: "capitalize",
                 color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background) &&
+                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") &&
                   "white",
               },
               fTextStyle,
@@ -116,7 +156,7 @@ const AccountListRow = ({
                 cursor: "pointer",
                 textTransform: "capitalize",
                 color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background) &&
+                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") &&
                   "white",
               },
               fTextStyle,
