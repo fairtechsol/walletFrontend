@@ -59,21 +59,19 @@ const ProfitLossTableComponent = ({
     <>
       {eventData?.map((item: any, index: any) => {
         return (
-          <>
-            <RowHeaderMatches
-              key={index}
-              item={item}
-              show={show}
-              startDate={startDate}
-              endDate={endDate}
-              getHandleReport={getHandleReport}
-              selectedId={selectedId}
-              getBetReport={getBetReport}
-              userProfitLoss={userProfitLoss}
-              getUserProfitLoss={getUserProfitLoss}
-              type={eventType}
-            />
-          </>
+          <RowHeaderMatches
+            key={index}
+            item={item}
+            show={show}
+            startDate={startDate}
+            endDate={endDate}
+            getHandleReport={getHandleReport}
+            selectedId={selectedId}
+            getBetReport={getBetReport}
+            userProfitLoss={userProfitLoss}
+            getUserProfitLoss={getUserProfitLoss}
+            type={eventType}
+          />
         );
       })}
 
