@@ -77,7 +77,7 @@ const CommissionReportTable = ({
             >
               {commissionMatchList?.rows?.map((element: any, index: number) => (
                 <MatchList
-                  key={element?.id}
+                  key={index}
                   element={element}
                   index={index}
                   selectedId={selectedId}
