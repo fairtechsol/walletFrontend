@@ -18,6 +18,26 @@ import { useNavigate } from "react-router-dom";
 import { getRateMarketAnalysis } from "../../store/actions/horseRacing/analysisActions";
 import { AppDispatch, RootState } from "../../store/store";
 
+interface RaceTime {
+  id: string;
+  startAt: string;
+  matchType?: string;
+}
+
+interface ProfitLossItem {
+  id: string;
+  name: string;
+  profitLoss?: number;
+}
+
+interface RacingListComponentAnalysisProps {
+  racingList: Record<string, RaceTime[]> | null;
+  matchType: string;
+  mode: string;
+  handleRadioButtonSelect: (item: { id: string; matchType?: string }) => void;
+  selected: string[];
+}
+
 const YellowButton = styled("button")(() => ({
   backgroundColor: "#F8C851",
   color: "black",
@@ -35,17 +55,20 @@ const YellowButton = styled("button")(() => ({
   },
 }));
 
-const RacingListComponentAnalysis = ({
+const RacingListComponentAnalysis: React.FC<RacingListComponentAnalysisProps> = ({
   racingList,
   matchType,
   mode,
   handleRadioButtonSelect,
   selected,
-}: any) => {
+}) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
-  const [selectedRace, setSelectedRace] = useState<any>(null);
+  const [selectedRace, setSelectedRace] = useState<{
+    id: string;
+    matchName: string;
+  } | null>(null);
 
   const { raceMatchChilds } = useSelector(
     (state: RootState) => state.horseRacing.analysisRace
@@ -136,7 +159,7 @@ const RacingListComponentAnalysis = ({
                                 zIndex: 1,
                                 pointerEvents: "none",
                               }}
-                             />
+                            />
                           )}
                           {moment(time.startAt).format("hh:mm")}
                           <ExpandMoreIcon
@@ -171,12 +194,12 @@ const RacingListComponentAnalysis = ({
                               alignItems: "center",
                             }}
                           >
-                            {raceMatchChilds?.profitLoss?.map((item: any) => (
+                            {raceMatchChilds?.profitLoss?.map((item: ProfitLossItem) => (
                               <Button
                                 key={item?.id}
                                 sx={{
                                   backgroundColor:
-                                    item?.profitLoss >= 0 || !item?.profitLoss
+                                    item.profitLoss === undefined || item?.profitLoss >= 0 || !item?.profitLoss
                                       ? "#27AC1E"
                                       : "#E32A2A",
                                   borderRadius: 0,
@@ -186,7 +209,7 @@ const RacingListComponentAnalysis = ({
                                   fontWeight: "700",
                                   "&:hover": {
                                     backgroundColor:
-                                      item?.profitLoss >= 0 || !item?.profitLoss
+                                      item.profitLoss === undefined || item?.profitLoss >= 0 || !item?.profitLoss
                                         ? "#27AC1E"
                                         : "#E32A2A",
                                   },
