@@ -70,11 +70,10 @@ const MyAccount = () => {
               value={myAccountDetails?.userCreditReference ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.userCreditReference ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
             <DataShow
@@ -86,11 +85,10 @@ const MyAccount = () => {
                 marginX: matchesMobile ? "0px" : "20px",
               }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.downLevelOccupyBalance ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
             <DataShow
@@ -101,11 +99,10 @@ const MyAccount = () => {
                 marginTop: matchesMobile ? "10px" : "0px",
               }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.downLevelCreditReference ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
           </Box>
@@ -122,11 +119,10 @@ const MyAccount = () => {
               value={myAccountDetails?.totalMasterBalance ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.totalMasterBalance ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
             <DataShow
@@ -142,11 +138,10 @@ const MyAccount = () => {
                 marginX: matchesMobile ? "0px" : "20px",
               }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.upperLevelBalance ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
             <DataShow
@@ -158,11 +153,10 @@ const MyAccount = () => {
                 marginTop: matchesMobile ? "10px" : "0px",
               }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.downLevelProfitLoss ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
           </Box>
@@ -180,11 +174,10 @@ const MyAccount = () => {
               value={myAccountDetails?.availableBalance ?? 0}
               containerStyle={{ flex: 1 }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.availableBalance ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
             <DataShow
@@ -196,13 +189,12 @@ const MyAccount = () => {
                 marginX: matchesMobile ? "0px" : "20px",
               }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(
                     myAccountDetails?.availableBalanceWithProfitLoss ?? 0
                   ) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
             <DataShow
@@ -213,11 +205,10 @@ const MyAccount = () => {
                 marginTop: matchesMobile ? "10px" : "0px",
               }}
               valueContainerStyle={{
-                background: `${
+                background:
                   parseInt(myAccountDetails?.profitLoss ?? 0) >= 0
                     ? "#0B4F26"
-                    : "#FF4848"
-                }`,
+                    : "#FF4848",
               }}
             />
           </Box>
