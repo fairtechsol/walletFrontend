@@ -20,6 +20,9 @@ interface AccountListRowProps {
     partnerShip?: number;
     userName?: string;
   };
+  showOptions?: boolean;
+  showChildModal?: boolean;
+  profit?: any;
 }
 
 interface FormattedElement {
