@@ -13,7 +13,22 @@ import { useNavigate } from "react-router-dom";
 import { formatToINR } from "../../../helper";
 import { Constants } from "../../../utils/Constants";
 
-const EventWiseMatchListModal = ({
+
+interface EventWiseMatchListModalProps {
+  setShowUserWiseMatchListModal: (value: {
+    status: boolean;
+    value: any;
+    matchType: string;
+  }) => void;
+  userName: string;
+  data: any;
+  userId: string;
+  matchType: string;
+  domain: string;
+  roleName: string;
+}
+
+const EventWiseMatchListModal: React.FC<EventWiseMatchListModalProps> = ({
   setShowUserWiseMatchListModal,
   userName,
   data,
@@ -21,7 +36,7 @@ const EventWiseMatchListModal = ({
   matchType,
   domain,
   roleName,
-}: any) => {
+}) => {
   const navigate = useNavigate();
   return (
     <>
