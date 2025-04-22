@@ -8,7 +8,12 @@ export const getRateMarketAnalysis = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.HORSERACING.MATCH.GET_RATE_MARKETANALYSIS}?matchId=${requestData}`
+        ApiConstants.HORSERACING.MATCH.GET_RATE_MARKETANALYSIS,
+        {
+          params: {
+            matchId: requestData,
+          },
+        }
       );
       if (resp?.data) {
         return resp?.data;

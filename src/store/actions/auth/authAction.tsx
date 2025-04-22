@@ -13,10 +13,7 @@ export const login = createAsyncThunk<any, LoginData>(
   "auth/login",
   async (requestData, thunkApi) => {
     try {
-      const { data } = await service.post(
-        `${ApiConstants.AUTH.LOGIN}`,
-        requestData
-      );
+      const { data } = await service.post(ApiConstants.AUTH.LOGIN, requestData);
       const { token } = data;
       sessionStorage.setItem("jwtWallet", token);
       return data;
@@ -31,7 +28,7 @@ export const logout = createAsyncThunk<any>(
   "auth/logout",
   async (_, thunkApi) => {
     try {
-      const response = await service.post(`${ApiConstants.AUTH.LOGOUT}`);
+      const response = await service.post(ApiConstants.AUTH.LOGOUT);
       sessionStorage.clear();
       window.location.replace(`/wallet/login`);
       return response;
@@ -46,7 +43,7 @@ export const checkOldPass = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.AUTH.OLD_PASSWORD}`,
+        ApiConstants.AUTH.OLD_PASSWORD,
         requestData
       );
       if (resp) {

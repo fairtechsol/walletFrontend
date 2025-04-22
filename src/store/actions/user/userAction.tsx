@@ -22,10 +22,7 @@ export const changePassword = createAsyncThunk<any, any>(
   "user/changePassword",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return resp?.data;
       }
@@ -39,10 +36,7 @@ export const changePasswordRow = createAsyncThunk<any, any>(
   "user/changePasswordRow",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.post(
-        `${requestData.url}`,
-        requestData.payload
-      );
+      const resp = await service.post(requestData.url, requestData.payload);
       if (resp) {
         return resp?.data;
       }
@@ -476,7 +470,7 @@ export const changeDeletePassword = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.post(
-        `${ApiConstants.USER.CHANGE_DELETE_PASSWORD}`,
+        ApiConstants.USER.CHANGE_DELETE_PASSWORD,
         requestData
       );
       if (resp) {

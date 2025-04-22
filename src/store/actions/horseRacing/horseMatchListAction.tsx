@@ -8,7 +8,13 @@ export const getHorseRacingCountryWiseList = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.HORSERACING.MATCH.GET_COUNTRY_WISE_LIST}?racingMatch.stopAt=isNull&matchType=${requestData.matchType}`
+        ApiConstants.HORSERACING.MATCH.GET_COUNTRY_WISE_LIST,
+        {
+          params: {
+            "racingMatch.stopAt": "isNull",
+            matchType: requestData.matchType,
+          },
+        }
       );
       if (resp?.data) {
         return resp?.data;
@@ -24,7 +30,14 @@ export const getHorseRacingMatchList = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.HORSERACING.MATCH.GET_RACING_LIST}?racingMatch.countryCode=${requestData.countryCode}&stopAt=isNull&matchType=eq${requestData.matchType}`
+        ApiConstants.HORSERACING.MATCH.GET_RACING_LIST,
+        {
+          params: {
+            "racingMatch.countryCode": requestData.countryCode,
+            stopAt: "isNull",
+            matchType: `eq${requestData.matchType}`,
+          },
+        }
       );
       if (resp?.data) {
         return resp?.data;

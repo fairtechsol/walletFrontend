@@ -8,7 +8,12 @@ export const getMultipleMatchDetailHorseRacing = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.HORSERACING.MATCH.GET_MATCH_DETAIL}/${requestData.ids}?matchType=${requestData.matchType}`
+        `${ApiConstants.HORSERACING.MATCH.GET_MATCH_DETAIL}/${requestData.ids}`,
+        {
+          params: {
+            matchType: requestData.matchType,
+          },
+        }
       );
       if (resp?.data) {
         return resp?.data?.map((match: any) => {
