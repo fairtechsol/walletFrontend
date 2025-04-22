@@ -175,7 +175,6 @@ export const updateSessionBettingsItem = (
                     : true
                   : true,
               };
-            } else {
             }
           }
         }
