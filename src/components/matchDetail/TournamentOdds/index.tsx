@@ -48,7 +48,6 @@ const TournamentOdds = ({
         padding: 0.2,
         flexDirection: "column",
         width: "100%",
-        // marginTop: "3px",
         marginBottom: "3px",
         alignSelf: {
           xs: "center",
@@ -281,7 +280,7 @@ const TournamentOdds = ({
               </Box>
               <Box
                 sx={{ width: "3px", display: "flex", background: "white" }}
-               />
+              />
               <Box
                 sx={{
                   background: "#FF9292",
@@ -301,7 +300,7 @@ const TournamentOdds = ({
               </Box>
               <Box
                 sx={{ width: ".7px", display: "flex", background: "white" }}
-               />
+              />
             </Box>
           </Box>
 

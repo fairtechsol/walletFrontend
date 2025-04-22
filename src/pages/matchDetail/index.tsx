@@ -521,28 +521,24 @@ const MatchDetail = () => {
   return (
     <>
       {visible && selectedBetData.length > 0 && (
-        <>
-          <AddNotificationModal
-            title="Add Remark"
-            visible={visible}
-            loadingDeleteBet={loading}
-            setVisible={setVisible}
-            onDone={handleDeleteBet}
-            buttonText="Delete"
-          />
-        </>
+        <AddNotificationModal
+          title="Add Remark"
+          visible={visible}
+          loadingDeleteBet={loading}
+          setVisible={setVisible}
+          onDone={handleDeleteBet}
+          buttonText="Delete"
+        />
       )}
       {visibleEdit && selectedBetData.length > 0 && (
-        <>
-          <AddNotificationModal
-            title="Edit Remark"
-            visible={visibleEdit}
-            loadingDeleteBet={loading}
-            setVisible={setVisibleEdit}
-            onDone={handleEditDeleteBetReason}
-            buttonText="Edit"
-          />
-        </>
+        <AddNotificationModal
+          title="Edit Remark"
+          visible={visibleEdit}
+          loadingDeleteBet={loading}
+          setVisible={setVisibleEdit}
+          onDone={handleEditDeleteBetReason}
+          buttonText="Edit"
+        />
       )}
       <Dialog
         open={selectedBetData.length > 0 && permanentDeletePopShow}
@@ -641,12 +637,12 @@ const MatchDetail = () => {
                 );
               })}
           {matchDetail?.manualSessionActive &&
-            matchesMobile &&
             matchDetail?.sessionBettings?.filter(
               (item: any) =>
                 !JSON.parse(item).selectionId &&
                 JSON.parse(item)?.activeStatus === "live"
-            )?.length > 0 && (
+            )?.length > 0 &&
+            matchesMobile && (
               <SessionMarket
                 title="Quick Session Market"
                 allBetsData={
