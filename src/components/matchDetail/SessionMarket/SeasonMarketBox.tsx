@@ -204,7 +204,7 @@ const SeasonMarketBox = ({
                     lock={
                       [null, 0, "0"].includes(
                         Math.floor(newData.ex?.availableToLay[0]?.price ?? 0)
-                      ) || type === "khado"
+                      )
                         ? true
                         : false
                     }
@@ -267,7 +267,7 @@ const SeasonMarketBox = ({
                   background: "rgba(0,0,0,0.5)",
                   zIndex: 2,
                 }}
-               />
+              />
             )}
             <Box
               sx={{
@@ -277,7 +277,7 @@ const SeasonMarketBox = ({
                 alignItems: "center",
                 background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
               }}
-             />
+            />
             <Box
               sx={{
                 display: "flex",
@@ -369,7 +369,7 @@ const SeasonMarketBox = ({
                       display: "flex",
                       background: "pink",
                     }}
-                   />
+                  />
                   <SeperateBox
                     key={index}
                     value={
