@@ -7,15 +7,14 @@ export const getMatchListInplay = createAsyncThunk<any, any>(
   "matchList/inplay",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.INPLAY.MATCHLIST}?${
-          requestData?.matchType
-            ? `match.matchType=${requestData?.matchType}&`
-            : ""
-        }page=${requestData?.currentPage}&limit=${
-          Constants.pageLimit
-        }&sort=match.startAt:ASC`
-      );
+      const resp = await service.get(ApiConstants.INPLAY.MATCHLIST, {
+        params: {
+          "match.matchType": requestData?.matchType,
+          page: requestData?.currentPage,
+          limit: Constants.pageLimit,
+          sort: "match.startAt:ASC",
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -47,11 +46,14 @@ export const getMatchDetailMarketAnalysis = createAsyncThunk<any, any>(
   async ({ matchId, userId, domain }, thunkApi) => {
     try {
       const resp = await service.get(
-        `${
-          ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS
-        }?matchId=${matchId}&userId=${userId}${
-          domain ? `&domain=${domain}` : ""
-        }`
+        ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS,
+        {
+          params: {
+            matchId,
+            userId,
+            domain,
+          },
+        }
       );
       if (resp) {
         return resp?.data?.[0];
@@ -67,14 +69,13 @@ export const getPlacedBets = createAsyncThunk<any, any>(
   "get/placedBets",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${
-          ApiConstants.MATCH.GET_BETS
-        }?matchId=${requestData}&result=inArr${JSON.stringify([
-          "PENDING",
-          "UNDECLARE",
-        ])}&sort=betPlaced.createdAt:DESC`
-      );
+      const resp = await service.get(ApiConstants.MATCH.GET_BETS, {
+        params: {
+          matchId: requestData,
+          result: `inArr${JSON.stringify(["PENDING", "UNDECLARE"])}`,
+          sort: "betPlaced.createdAt:DESC",
+        },
+      });
       if (resp?.data) {
         return resp?.data;
       }
