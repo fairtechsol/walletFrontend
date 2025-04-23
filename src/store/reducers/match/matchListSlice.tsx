@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { convertData, updateSessionBettingsItem } from "../../../helper";
-import { profitLossDataForMatchConstants } from "../../../utils/Constants";
 import {
   getMatchDetail,
   getMatchDetailMarketAnalysis,
@@ -285,33 +284,13 @@ const matchListSlice = createSlice({
         };
       })
       .addCase(updateMatchRatesOnMarketUndeclare.fulfilled, (state, action) => {
-        const {
-          profitLossData,
-          betType,
-          teamArateRedisKey,
-          teamBrateRedisKey,
-          teamCrateRedisKey,
-        } = action?.payload;
+        const { betId, profitLossData } = action?.payload;
 
-        if (profitLossData[teamCrateRedisKey]) {
-          state.matchDetail.profitLossDataMatch = {
-            ...state.matchDetail.profitLossDataMatch,
-            [profitLossDataForMatchConstants[betType].A]:
-              profitLossData[teamArateRedisKey],
-            [profitLossDataForMatchConstants[betType].B]:
-              profitLossData[teamBrateRedisKey],
-            [profitLossDataForMatchConstants[betType].C]:
-              profitLossData[teamCrateRedisKey],
-          };
-        } else {
-          state.matchDetail.profitLossDataMatch = {
-            ...state.matchDetail.profitLossDataMatch,
-            [profitLossDataForMatchConstants[betType].A]:
-              profitLossData[teamArateRedisKey],
-            [profitLossDataForMatchConstants[betType].B]:
-              profitLossData[teamBrateRedisKey],
-          };
-        }
+        state.matchDetail.profitLossDataMatch = {
+          ...state.matchDetail.profitLossDataMatch,
+          [betId + "_" + "profitLoss" + "_" + state.matchDetail?.id]:
+            JSON.stringify(profitLossData),
+        };
       })
       .addCase(setCurrentOdd.fulfilled, (state, action) => {
         state.currentOdd = action?.payload;

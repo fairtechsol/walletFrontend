@@ -215,22 +215,23 @@ const MatchDetail = () => {
 
   const matchResultDeclared = (event: any) => {
     try {
-      if (event?.matchId === state?.matchId && event.isMatchDeclare) {
-        if (event?.gameType === "cricket") {
-          navigate(
-            `/wallet/${location.pathname.split("/")[2]}/${state.matchType}`
-          );
-        } else {
-          dispatch(
-            getPlacedBets(
-              `eq${state?.matchId}${
-                state.userId
-                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                  : ""
-              }${state.domain ? `&domain=${state.domain}` : ""}`
-            )
-          );
-        }
+      if (event?.matchId !== state?.matchId) return;
+      if (event?.isMatchDeclare) {
+        navigate(
+          `/wallet/${location.pathname.split("/")[2]}/${
+            state.matchType || event?.gameType
+          }`
+        );
+      } else {
+        dispatch(
+          getPlacedBets(
+            `eq${state?.matchId}${
+              state.userId
+                ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                : ""
+            }${state.domain ? `&domain=${state.domain}` : ""}`
+          )
+        );
       }
     } catch (e) {
       console.log(e);
@@ -361,18 +362,21 @@ const MatchDetail = () => {
   const handleMatchResultUndeclared = (event: any) => {
     try {
       if (event?.matchId === state?.matchId) {
-        if (event?.betType !== "quickbookmaker1") {
-          dispatch(
-            getPlacedBets(
-              `eq${state?.matchId}${
-                state.userId
-                  ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                  : ""
-              }${state.domain ? `&domain=${state.domain}` : ""}`
-            )
-          );
+        if (event?.betType) {
           dispatch(updateMatchRatesOnMarketUndeclare(event));
+        } else {
+          dispatch(getMatchDetail(state?.matchId));
+          dispatch(getUserProfitLoss(state?.matchId));
         }
+        dispatch(
+          getPlacedBets(
+            `eq${state?.matchId}${
+              state.userId
+                ? `&userId=${state.userId}&roleName=${state?.roleName}`
+                : ""
+            }${state.domain ? `&domain=${state.domain}` : ""}`
+          )
+        );
       }
     } catch (error) {
       console.log(error);
