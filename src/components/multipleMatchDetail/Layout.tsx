@@ -57,18 +57,26 @@ const Layout = ({
         </Button>
       </Typography>
       {item?.tournament &&
-        item?.tournament?.map((market: any, index: any) => {
-          return (
-            <TournamentOdds
-              key={index}
-              currentMatch={item}
-              minBet={Math.floor(market?.minBet) || 0}
-              maxBet={Math.floor(market?.maxBet) || 0}
-              title={market?.name}
-              liveData={market}
-            />
-          );
-        })}
+        item?.tournament
+          ?.filter(
+            (items: any) =>
+              items.activeStatus === "live" &&
+              !["completed_match", "tied_match"].includes(
+                items?.name?.toLowerCase()
+              )
+          )
+          ?.map((market: any, index: any) => {
+            return (
+              <TournamentOdds
+                key={index}
+                currentMatch={item}
+                minBet={Math.floor(market?.minBet) || 0}
+                maxBet={Math.floor(market?.maxBet) || 0}
+                title={market?.name}
+                liveData={market}
+              />
+            );
+          })}
       {item?.manualSessionActive && (
         <SessionMarket
           title={"Quick Session Market"}
@@ -101,10 +109,10 @@ const Layout = ({
               value?.section?.length > 0 &&
               key != sessionBettingType.cricketCasino
           )
-          ?.map(([key, value]: any) => {
+          ?.map(([key, value]: any, index: number) => {
             return (
               <SessionMarket
-                key={key}
+                key={index}
                 title={value?.mname || key}
                 allBetsData={
                   item?.profitLossDataSession
@@ -140,10 +148,10 @@ const Layout = ({
                 item?.activeStatus === "result"
               )
           )
-          ?.map((item: any) => {
+          ?.map((item: any, index: number) => {
             return (
               <CricketCasinoMarket
-                key={item?.selectionId}
+                key={index}
                 title={item?.RunnerName}
                 allBetsData={
                   item?.profitLossDataSession
@@ -170,6 +178,27 @@ const Layout = ({
               />
             );
           })}
+      {item?.tournament &&
+        item?.tournament
+          ?.filter(
+            (items: any) =>
+              items.activeStatus === "live" &&
+              ["completed_match", "tied_match"].includes(
+                items?.name?.toLowerCase()
+              )
+          )
+          ?.map((market: any, index: any) => {
+            return (
+              <TournamentOdds
+                key={index}
+                currentMatch={item}
+                minBet={Math.floor(market?.minBet) || 0}
+                maxBet={Math.floor(market?.maxBet) || 0}
+                title={market?.name}
+                liveData={market}
+              />
+            );
+          })}
       {sessionProLoss?.length > 0 &&
         sessionProLoss.filter(
           (runAmount: any) => runAmount?.matchId === item?.id
@@ -188,10 +217,10 @@ const Layout = ({
           >
             {sessionProLoss
               .filter((run: any) => run?.matchId === item?.id)
-              .map((v: any) => {
+              .map((v: any, index: number) => {
                 return (
                   <RunsBox
-                    key={v?.id}
+                    key={index}
                     item={v}
                     currentOdd={currentOdd?.betId === v?.id ? currentOdd : null}
                   />

@@ -1,6 +1,6 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { memo, useEffect, useState } from "react";
+import { Fragment, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
@@ -124,10 +124,7 @@ const MultipleMatch = () => {
   const matchMultiResultDeclared = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
-        if (
-          event?.gameType === "cricket" ||
-          event?.betType === "quickbookmaker1"
-        ) {
+        if (event?.isMatchDeclare) {
           navigate(`/wallet/market_analysis`);
         } else {
           dispatch(getPlacedBets(`eq${state?.matchId}`));
@@ -181,11 +178,9 @@ const MultipleMatch = () => {
 
   const handleMatchResultUndeclared = (event: any) => {
     try {
-      if (event?.matchId === state?.matchId) {
-        if (event?.betType !== "quickbookmaker1") {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
-          dispatch(updateMatchRatesOnMarketUndeclareForMulti(event));
-        }
+      if (state?.matchIds.includes(event?.matchId)) {
+        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(updateMatchRatesOnMarketUndeclareForMulti(event));
       }
     } catch (error) {
       console.log(error);
@@ -357,7 +352,7 @@ const MultipleMatch = () => {
                     (item: any) => !JSON.parse(item).selectionId
                   );
                   return (
-                    <>
+                    <Fragment key={index}>
                       {index === 0 ? (
                         <Box
                           key={index}
@@ -431,7 +426,6 @@ const MultipleMatch = () => {
                         </Box>
                       ) : (
                         <Box
-                          key={index}
                           sx={{
                             maxWidth: matchesMobile ? "99%" : "49.5%",
                             flex: matchesMobile ? "0 0 99%" : "0 0 49.5%",
@@ -451,7 +445,7 @@ const MultipleMatch = () => {
                           />
                         </Box>
                       )}
-                    </>
+                    </Fragment>
                   );
                 })}
             </Box>
