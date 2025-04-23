@@ -78,7 +78,6 @@ const SeasonMarketBox = ({
           sx={{
             display: "flex",
             position: "relative",
-            // background: "white",
             height: "38px",
             width: { lg: "60%", xs: "89%" },
             justifyContent: "flex-end",
@@ -123,11 +122,8 @@ const SeasonMarketBox = ({
             <Box
               sx={{
                 background: "rgba(0,0,0,1)",
-                // marginLeft: "-2px",
                 height: "38px",
-                // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
-                // right: 0,
                 width: { lg: "38%", md: "60.2%", xs: "60.9%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
@@ -198,7 +194,6 @@ const SeasonMarketBox = ({
               ) : (
                 <>
                   <SeperateBox
-                    key={index}
                     value={newData.ex?.availableToLay[0]?.price ?? 0}
                     value2={newData.ex?.availableToLay[0]?.size ?? 0}
                     lock={
@@ -216,7 +211,6 @@ const SeasonMarketBox = ({
                     sx={{ width: "3px", display: "flex", background: "pink" }}
                   />
                   <SeperateBox
-                    key={index}
                     value={newData.ex?.availableToBack[0]?.price ?? 0}
                     value2={newData.ex?.availableToBack[0]?.size ?? 0}
                     lock={
@@ -245,165 +239,159 @@ const SeasonMarketBox = ({
         },
         (_, i) => i + 1
       )?.map((item: number) => (
-        <>
-          <Box
-            key={item}
-            sx={{
-              display: "flex",
-              background: "white",
-              height: "38px",
-              width: "100%",
-              position: "relative",
-            }}
-          >
-            {newData?.activeStatus === "save" && (
-              <Box
-                sx={{
-                  margin: "1px",
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                  right: 0,
-                  background: "rgba(0,0,0,0.5)",
-                  zIndex: 2,
-                }}
-              />
-            )}
+        <Box
+          key={item}
+          sx={{
+            display: "flex",
+            background: "white",
+            height: "38px",
+            width: "100%",
+            position: "relative",
+          }}
+        >
+          {newData?.activeStatus === "save" && (
             <Box
               sx={{
-                display: "flex",
-                height: "38px",
-                width: "40%",
-                alignItems: "center",
-                background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
+                margin: "1px",
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                right: 0,
+                background: "rgba(0,0,0,0.5)",
+                zIndex: 2,
               }}
             />
-            <Box
-              sx={{
-                display: "flex",
-                position: "relative",
-                background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
-                height: "38px",
-                width: { lg: "60%", xs: "79%" },
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
-              {!["ACTIVE", "active", "", undefined, null, ""].includes(
-                newData?.GameStatus
-              ) ||
-              (!newData.ex?.availableToBack?.length &&
-                !newData.ex?.availableToLay?.length) ? (
+          )}
+          <Box
+            sx={{
+              display: "flex",
+              height: "38px",
+              width: "40%",
+              alignItems: "center",
+              background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
+            }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              position: "relative",
+              background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
+              height: "38px",
+              width: { lg: "60%", xs: "79%" },
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            {!["ACTIVE", "active", "", undefined, null, ""].includes(
+              newData?.GameStatus
+            ) ||
+            (!newData.ex?.availableToBack?.length &&
+              !newData.ex?.availableToLay?.length) ? (
+              <Box
+                sx={{
+                  background: "rgba(0,0,0,1)",
+                  height: "38px",
+                  marginLeft: { lg: "20%", md: "0%", xs: "0%" },
+                  width: { lg: "36%", md: "60.2%", xs: "60.9%" },
+                  justifyContent: { xs: "center", lg: "center" },
+                  alignItems: "center",
+                  display: "flex",
+                  zIndex: 1,
+                }}
+              >
+                {newData?.status == "Ball Running" ||
+                newData?.status === "ball start" ? (
+                  item === 1 && (
+                    <img
+                      src={BallStart}
+                      style={{ width: "113px", height: "32px" }}
+                    />
+                  )
+                ) : (
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "12px", lg: "16px" },
+                      textTransform: "uppercase",
+                      textAlign: "center",
+                      width: "100%",
+                      color: "white",
+                      fontWeight: "400",
+                    }}
+                  >
+                    {item === 1 &&
+                      (newData?.isManual
+                        ? newData?.status
+                        : !newData?.GameStatus
+                        ? "SUSPENDED"
+                        : newData?.GameStatus)}
+                  </Typography>
+                )}
+              </Box>
+            ) : (
+              <>
+                <SeperateBox
+                  value={
+                    sessionBettingType.oddEven === type
+                      ? newData.ex?.availableToBack[item]?.price ?? 0
+                      : newData.ex?.availableToLay[item]?.price ?? 0
+                  }
+                  value2={
+                    sessionBettingType.oddEven === type
+                      ? newData.ex?.availableToBack[item]?.size ?? 0
+                      : newData.ex?.availableToLay[item]?.size ?? 0
+                  }
+                  lock={
+                    [null, 0, "0"].includes(
+                      Math.floor(
+                        sessionBettingType.oddEven === type
+                          ? newData.ex?.availableToBack[item]?.price ?? 0
+                          : newData.ex?.availableToLay[item]?.price ?? 0
+                      )
+                    ) || type === "khado"
+                      ? true
+                      : false
+                  }
+                  color={
+                    sessionBettingType.oddEven == type ? "#B3E0FF" : "#F6D0CB"
+                  }
+                />
                 <Box
                   sx={{
-                    background: "rgba(0,0,0,1)",
-                    height: "38px",
-                    marginLeft: { lg: "20%", md: "0%", xs: "0%" },
-                    width: { lg: "36%", md: "60.2%", xs: "60.9%" },
-                    justifyContent: { xs: "center", lg: "center" },
-                    alignItems: "center",
+                    width: "3px",
                     display: "flex",
-                    zIndex: 1,
+                    background: "pink",
                   }}
-                >
-                  {newData?.status == "Ball Running" ||
-                  newData?.status === "ball start" ? (
-                    item === 1 && (
-                      <img
-                        src={BallStart}
-                        style={{ width: "113px", height: "32px" }}
-                      />
-                    )
-                  ) : (
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "12px", lg: "16px" },
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        width: "100%",
-                        color: "white",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {item === 1 &&
-                        (newData?.isManual
-                          ? newData?.status
-                          : !newData?.GameStatus
-                          ? "SUSPENDED"
-                          : newData?.GameStatus)}
-                    </Typography>
-                  )}
-                </Box>
-              ) : (
-                <>
-                  <SeperateBox
-                    key={index}
-                    value={
-                      sessionBettingType.oddEven === type
-                        ? newData.ex?.availableToBack[item]?.price ?? 0
-                        : newData.ex?.availableToLay[item]?.price ?? 0
-                    }
-                    value2={
-                      sessionBettingType.oddEven === type
-                        ? newData.ex?.availableToBack[item]?.size ?? 0
-                        : newData.ex?.availableToLay[item]?.size ?? 0
-                    }
-                    lock={
-                      [null, 0, "0"].includes(
-                        Math.floor(
-                          sessionBettingType.oddEven === type
-                            ? newData.ex?.availableToBack[item]?.price ?? 0
-                            : newData.ex?.availableToLay[item]?.price ?? 0
-                        )
-                      ) || type === "khado"
-                        ? true
-                        : false
-                    }
-                    color={
-                      sessionBettingType.oddEven == type ? "#B3E0FF" : "#F6D0CB"
-                    }
-                  />
-                  <Box
-                    sx={{
-                      width: "3px",
-                      display: "flex",
-                      background: "pink",
-                    }}
-                  />
-                  <SeperateBox
-                    key={index}
-                    value={
-                      sessionBettingType.oddEven === type
-                        ? newData.ex?.availableToLay[item]?.price ?? 0
-                        : newData.ex?.availableToBack[item]?.price ?? 0
-                    }
-                    value2={
-                      sessionBettingType.oddEven === type
-                        ? newData.ex?.availableToLay[item]?.size ?? 0
-                        : newData.ex?.availableToBack[item]?.size ?? 0
-                    }
-                    lock={
-                      [null, 0, "0"].includes(
-                        Math.floor(
-                          sessionBettingType.oddEven === type
-                            ? newData.ex?.availableToLay[item]?.price ?? 0
-                            : newData.ex?.availableToBack[item]?.price ?? 0
-                        )
+                />
+                <SeperateBox
+                  value={
+                    sessionBettingType.oddEven === type
+                      ? newData.ex?.availableToLay[item]?.price ?? 0
+                      : newData.ex?.availableToBack[item]?.price ?? 0
+                  }
+                  value2={
+                    sessionBettingType.oddEven === type
+                      ? newData.ex?.availableToLay[item]?.size ?? 0
+                      : newData.ex?.availableToBack[item]?.size ?? 0
+                  }
+                  lock={
+                    [null, 0, "0"].includes(
+                      Math.floor(
+                        sessionBettingType.oddEven === type
+                          ? newData.ex?.availableToLay[item]?.price ?? 0
+                          : newData.ex?.availableToBack[item]?.price ?? 0
                       )
-                        ? true
-                        : false
-                    }
-                    color="#B3E0FF"
-                  />
-                </>
-              )}
+                    )
+                      ? true
+                      : false
+                  }
+                  color="#B3E0FF"
+                />
+              </>
+            )}
 
-              <Box
-                sx={{ width: ".45%", display: "flex", background: "pink" }}
-              />
-            </Box>
+            <Box sx={{ width: ".45%", display: "flex", background: "pink" }} />
           </Box>
-        </>
+        </Box>
       ))}
     </>
   );
