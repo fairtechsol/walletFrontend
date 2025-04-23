@@ -77,7 +77,7 @@ const Layout = ({
               />
             );
           })}
-      {item?.manualSessionActive && (
+      {item?.manualSessionActive && QuicksessionData?.length > 0 && (
         <SessionMarket
           title={"Quick Session Market"}
           allBetsData={
