@@ -236,8 +236,8 @@ const matchListSlice = createSlice({
       })
       .addCase(updateTeamRates.fulfilled, (state, action) => {
         const { userRedisObj, jobData } = action.payload;
-        state.matchDetail.teamRates = {
-          ...state.matchDetail.teamRates,
+        state.matchDetail.profitLossDataMatch = {
+          ...state.matchDetail.profitLossDataMatch,
           [jobData?.betId + "_" + "profitLoss" + "_" + state.matchDetail?.id]:
             JSON.stringify(userRedisObj),
         };

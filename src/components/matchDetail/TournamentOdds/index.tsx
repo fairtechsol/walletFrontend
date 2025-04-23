@@ -117,14 +117,14 @@ const TournamentOdds = ({
                 ? profitLossFromAnalysis
                   ? profitLossFromAnalysis?.profitLoss?.a
                   : 0
-                : currentMatch?.teamRates
-                ? currentMatch?.teamRates[
+                : currentMatch?.profitLossDataMatch
+                ? currentMatch?.profitLossDataMatch[
                     (liveData?.parentBetId || liveData?.id) +
                       "_profitLoss_" +
                       currentMatch?.id
                   ]
                   ? JSON.parse(
-                      currentMatch?.teamRates[
+                      currentMatch?.profitLossDataMatch[
                         (liveData?.parentBetId || liveData?.id) +
                           "_profitLoss_" +
                           currentMatch?.id
@@ -139,14 +139,14 @@ const TournamentOdds = ({
                 ? profitLossFromAnalysis
                   ? profitLossFromAnalysis?.profitLoss?.b
                   : 0
-                : currentMatch?.teamRates
-                ? currentMatch?.teamRates[
+                : currentMatch?.profitLossDataMatch
+                ? currentMatch?.profitLossDataMatch[
                     (liveData?.parentBetId || liveData?.id) +
                       "_profitLoss_" +
                       currentMatch?.id
                   ]
                   ? JSON.parse(
-                      currentMatch?.teamRates[
+                      currentMatch?.profitLossDataMatch[
                         (liveData?.parentBetId || liveData?.id) +
                           "_profitLoss_" +
                           currentMatch?.id
@@ -163,14 +163,14 @@ const TournamentOdds = ({
                 ? profitLossFromAnalysis
                   ? profitLossFromAnalysis?.profitLoss?.a
                   : 0
-                : currentMatch?.teamRates
-                ? currentMatch?.teamRates[
+                : currentMatch?.profitLossDataMatch
+                ? currentMatch?.profitLossDataMatch[
                     (liveData?.parentBetId || liveData?.id) +
                       "_profitLoss_" +
                       currentMatch?.id
                   ]
                   ? JSON.parse(
-                      currentMatch?.teamRates[
+                      currentMatch?.profitLossDataMatch[
                         (liveData?.parentBetId || liveData?.id) +
                           "_profitLoss_" +
                           currentMatch?.id
@@ -185,14 +185,14 @@ const TournamentOdds = ({
                 ? profitLossFromAnalysis
                   ? profitLossFromAnalysis?.profitLoss?.b
                   : 0
-                : currentMatch?.teamRates
-                ? currentMatch?.teamRates[
+                : currentMatch?.profitLossDataMatch
+                ? currentMatch?.profitLossDataMatch[
                     (liveData?.parentBetId || liveData?.id) +
                       "_profitLoss_" +
                       currentMatch?.id
                   ]
                   ? JSON.parse(
-                      currentMatch?.teamRates[
+                      currentMatch?.profitLossDataMatch[
                         (liveData?.parentBetId || liveData?.id) +
                           "_profitLoss_" +
                           currentMatch?.id
@@ -351,7 +351,7 @@ const TournamentOdds = ({
                             String.fromCharCode(97 + index)
                           ]
                         : 0
-                      : currentMatch?.teamRates?.[
+                      : currentMatch?.profitLossDataMatch?.[
                           (liveData?.parentBetId || liveData?.id) +
                             "_" +
                             "profitLoss" +
@@ -359,7 +359,7 @@ const TournamentOdds = ({
                             currentMatch?.id
                         ]
                       ? JSON.parse(
-                          currentMatch?.teamRates?.[
+                          currentMatch?.profitLossDataMatch?.[
                             (liveData?.parentBetId || liveData?.id) +
                               "_" +
                               "profitLoss" +
@@ -376,7 +376,7 @@ const TournamentOdds = ({
                         ] < 0
                         ? "#FF4D4D"
                         : "#319E5B"
-                      : currentMatch?.teamRates?.[
+                      : currentMatch?.profitLossDataMatch?.[
                           (liveData?.parentBetId || liveData?.id) +
                             "_" +
                             "profitLoss" +
@@ -384,7 +384,7 @@ const TournamentOdds = ({
                             currentMatch?.id
                         ]
                       ? JSON.parse(
-                          currentMatch?.teamRates?.[
+                          currentMatch?.profitLossDataMatch?.[
                             (liveData?.parentBetId || liveData?.id) +
                               "_" +
                               "profitLoss" +
