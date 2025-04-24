@@ -3,20 +3,18 @@ import { memo, useState } from "react";
 import Pagination from "../../Common/Pagination";
 import RowHeaderMatches from "./RowHeaderMatches";
 
-const ProfitLossTableComponent = (props: any) => {
-  const {
-    eventData,
-    currentPage,
-    pageCount,
-    setCurrentPage,
-    startDate,
-    endDate,
-    setShow,
-    show,
-    userProfitLoss,
-    getUserProfitLoss,
-  } = props;
-
+const ProfitLossTableComponent = ({
+  eventData,
+  currentPage,
+  pageCount,
+  setCurrentPage,
+  startDate,
+  endDate,
+  setShow,
+  show,
+  userProfitLoss,
+  getUserProfitLoss,
+}: any) => {
   const [eventType, setEvent] = useState("");
   const [selectedId, setSelectedId] = useState({
     type: "",

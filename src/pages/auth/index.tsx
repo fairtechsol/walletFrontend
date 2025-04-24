@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
+import { memo } from "react";
 import { Outlet } from "react-router-dom";
 import { FgLogo } from "../../assets";
 import StyledImage from "../../components/Common/StyledImages";
 import AuthBackground from "./AuthBackground";
-import { memo } from "react";
 
 const Auth = () => {
   return (
@@ -20,17 +20,15 @@ const Auth = () => {
         }}
       >
         <Box
-          sx={[
-            {
-              display: "flex",
-              flexDirection: "column",
-              py: "20px",
-              width: "18%",
-              minWidth: "250px",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-          ]}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            py: "20px",
+            width: "18%",
+            minWidth: "250px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <StyledImage
             src={FgLogo}

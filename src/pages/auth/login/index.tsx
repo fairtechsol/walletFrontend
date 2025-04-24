@@ -78,9 +78,9 @@ const Login = () => {
     >
       <Box sx={{ width: "100%", opacity: 1 }}>
         <Input
-          id={"userName"}
-          placeholder={"Enter Username"}
-          title={"Username"}
+          id="userName"
+          placeholder="Enter Username"
+          title="Username"
           type="text"
           name="userName"
           img={mail}
@@ -94,8 +94,8 @@ const Login = () => {
           </p>
         )}
         <Input
-          id={"password"}
-          title={"Password"}
+          id="password"
+          title="Password"
           type="password"
           placeholder={"Enter Password"}
           containerStyle={{ marginTop: "10px" }}

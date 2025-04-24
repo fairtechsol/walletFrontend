@@ -485,7 +485,7 @@ const RacingDetails = () => {
                     marginRight: "10px",
                   }}
                 >
-                  {"Cancel"}
+                  Cancel
                 </Typography>
               </Box>
             )}
@@ -518,7 +518,7 @@ const RacingDetails = () => {
                       marginRight: "10px",
                     }}
                   >
-                    {"Delete"}
+                    Delete
                   </Typography>
                   <img
                     src={DeleteIcon}

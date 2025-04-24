@@ -28,18 +28,16 @@ const TableDataRow = ({
       ]}
     >
       <Box
-        sx={[
-          {
-            width: "5%",
-            minWidth: "70px",
-            justifyContent: "center",
-            display: "flex",
-            alignItems: "center",
-            height: "45px",
-            background: "black",
-            borderRight: "2px solid white",
-          },
-        ]}
+        sx={{
+          width: "5%",
+          minWidth: "70px",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          height: "45px",
+          background: "black",
+          borderRight: "2px solid white",
+        }}
       >
         <Typography
           sx={[

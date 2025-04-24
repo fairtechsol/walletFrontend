@@ -564,12 +564,12 @@ const MatchDetail = () => {
               ...inputContainerStyle,
               height: { lg: "45px", xs: "36px" },
             }}
-            title={"Password*"}
+            title="Password*"
             fullWidth={true}
-            name={"password"}
-            id={"password"}
-            type={"password"}
-            placeholder={"Ex : Abc@12"}
+            name="password"
+            id="password"
+            type="password"
+            placeholder="Ex : Abc@12"
             required={true}
             value={deleteCode}
             onChange={(e: any) => setDeleteCode(e.target.value)}

@@ -100,7 +100,6 @@ const RowHeaderDomain = ({
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
-          // marginLeft: 0.1,
           justifyContent: "space-between",
           borderRight: "1px solid white",
         }}
@@ -123,7 +122,6 @@ const RowHeaderDomain = ({
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
-          // marginLeft: 0.1,
           justifyContent: "space-between",
         }}
       >
@@ -208,7 +206,7 @@ const RowHeaderDomain = ({
                     Number(item?.totalDeduction).toFixed(2) || 0
                   )})`}
               </>
-            )}{" "}
+            )}
           </Typography>
         </Box>
       </Box>

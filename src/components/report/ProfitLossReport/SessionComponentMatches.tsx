@@ -32,74 +32,76 @@ const SessionComponentMatches = ({
     (state: RootState) => state.report.reportList
   );
 
+  const handleSessionBetClick = () => {
+    if (
+      selectedId?.betId === item?.betId ||
+      selectedChildBetId === item?.betId
+    ) {
+      setShowSessionBets((prev: any) => !prev);
+      if (!showSessionBets) {
+        if (userDetail) {
+          dispatch(
+            getTotalBetProfitLossForModal({
+              matchId: matchId,
+              betId: item?.betId,
+              isSession: true,
+              url: item?.url || "",
+              id: user?.id,
+            })
+          );
+          setSelectedChildBetId(item?.betId);
+        } else {
+          dispatch(
+            getBetProfitLoss({
+              matchId: matchId,
+              betId: item?.betId,
+              isSession: true,
+              url: item?.url || "",
+              id: user?.id,
+            })
+          );
+        }
+      }
+    } else {
+      setShowSessionBets(true);
+      if (userDetail) {
+        dispatch(
+          getTotalBetProfitLossForModal({
+            matchId: matchId,
+            betId: item?.betId,
+            isSession: true,
+            url: item?.url || "",
+            id: user?.id,
+            userId: item?.userId,
+            roleName: item?.roleName,
+          })
+        );
+        setSelectedChildBetId(item?.betId);
+      } else {
+        dispatch(
+          getBetProfitLoss({
+            matchId: matchId,
+            betId: item?.betId,
+            isSession: true,
+            url: item?.url || "",
+            id: user?.id,
+          })
+        );
+        getBetReport({
+          eventType: item?.eventType,
+          matchId: matchId,
+          type: "session_bet",
+          betId: item?.betId,
+          sessionBet: true,
+        });
+      }
+    }
+  };
+
   return (
     <Box key={index} sx={{ width: "100%" }}>
       <Box
-        onClick={() => {
-          if (
-            selectedId?.betId === item?.betId ||
-            selectedChildBetId === item?.betId
-          ) {
-            setShowSessionBets((prev: any) => !prev);
-            if (!showSessionBets) {
-              if (userDetail) {
-                dispatch(
-                  getTotalBetProfitLossForModal({
-                    matchId: matchId,
-                    betId: item?.betId,
-                    isSession: true,
-                    url: item?.url || "",
-                    id: user?.id,
-                  })
-                );
-                setSelectedChildBetId(item?.betId);
-              } else {
-                dispatch(
-                  getBetProfitLoss({
-                    matchId: matchId,
-                    betId: item?.betId,
-                    isSession: true,
-                    url: item?.url || "",
-                    id: user?.id,
-                  })
-                );
-              }
-            }
-          } else {
-            setShowSessionBets(true);
-            if (userDetail) {
-              dispatch(
-                getTotalBetProfitLossForModal({
-                  matchId: matchId,
-                  betId: item?.betId,
-                  isSession: true,
-                  url: item?.url || "",
-                  id: user?.id,
-                  userId: item?.userId,
-                  roleName: item?.roleName,
-                })
-              );
-              setSelectedChildBetId(item?.betId);
-            } else {
-              dispatch(
-                getBetProfitLoss({
-                  matchId: matchId,
-                  betId: item?.betId,
-                  isSession: true,
-                  url: item?.url || "",
-                  id: user?.id,
-                })
-              );
-              getBetReport({
-                eventType: item?.eventType,
-                matchId: matchId,
-                type: "session_bet",
-                betId: item?.betId,
-                sessionBet: true,
-              });
-            }
-          }
-        }}
+        onClick={handleSessionBetClick}
         sx={{
           width: "100%",
           height: "45px",

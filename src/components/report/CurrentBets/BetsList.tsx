@@ -28,25 +28,23 @@ const BetsList = ({ betHistory }: { betHistory: any }) => {
 
   return (
     <Box
-      sx={[
-        {
-          marginX: "0.5%",
-          minHeight: "200px",
-          borderTopRightRadius: {
-            xs: "10px",
-            lg: "0px",
-            md: "10px",
-          },
-          position: "relative",
-          borderRadius: {
-            xs: "10px 10px 0 0",
-            lg: "10px 10px 0 0",
-            md: "10px 10px 0 0",
-          },
-          backgroundColor: "white",
-          border: "2px solid white",
+      sx={{
+        marginX: "0.5%",
+        minHeight: "200px",
+        borderTopRightRadius: {
+          xs: "10px",
+          lg: "0px",
+          md: "10px",
         },
-      ]}
+        position: "relative",
+        borderRadius: {
+          xs: "10px 10px 0 0",
+          lg: "10px 10px 0 0",
+          md: "10px 10px 0 0",
+        },
+        backgroundColor: "white",
+        border: "2px solid white",
+      }}
     >
       <ListHeaderRow
         setPageLimit={setPageLimit}

@@ -2,10 +2,15 @@ import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { memo } from "react";
 import { handleNumber } from "../../../helper";
 
-const MoneyBox = ({ color, rates }: any) => {
+interface MoneyBoxProps {
+  color: string;
+  rates: string;
+}
+
+const MoneyBox = ({ color, rates }: MoneyBoxProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  let val: any = parseFloat(rates || 0);
+  let val: any = parseFloat(rates || "0");
 
   return (
     <Box

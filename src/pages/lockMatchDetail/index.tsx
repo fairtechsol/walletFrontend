@@ -346,7 +346,7 @@ const LockMatchScreen = () => {
                     )
                   : []
               }
-              title={"Quick Session Market"}
+              title="Quick Session Market"
               currentMatch={matchDetail}
               sessionData={matchDetail?.sessionBettings?.filter(
                 (item: any) => !JSON.parse(item).selectionId
@@ -385,7 +385,7 @@ const LockMatchScreen = () => {
                     )
                   : []
               }
-              title={"Session Market"}
+              title="Session Market"
               currentMatch={matchDetail}
               sessionData={matchDetail?.apiSession}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}

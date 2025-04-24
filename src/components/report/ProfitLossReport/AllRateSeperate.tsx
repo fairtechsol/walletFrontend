@@ -21,21 +21,19 @@ const AllRateSeperate = ({
   return (
     <>
       <Box
-        sx={[
-          {
-            width: { md: "100%", xs: "100%", lg: "100%" },
-            display: "flex",
-            flexDirection: "column",
-            alignSelf: "center",
-            marginX: { lg: "0vw", xs: "0px", md: "0px" },
-            marginY: { lg: ".5vh", xs: "2px" },
-            marginTop: { xs: "0" },
-            marginBottom: { lg: ".5vh", xs: "2px" },
-            borderRadius: "2px",
-            background: "white",
-            padding: "1px",
-          },
-        ]}
+        sx={{
+          width: { md: "100%", xs: "100%", lg: "100%" },
+          display: "flex",
+          flexDirection: "column",
+          alignSelf: "center",
+          marginX: { lg: "0vw", xs: "0px", md: "0px" },
+          marginY: { lg: ".5vh", xs: "2px" },
+          marginTop: { xs: "0" },
+          marginBottom: { lg: ".5vh", xs: "2px" },
+          borderRadius: "2px",
+          background: "white",
+          padding: "1px",
+        }}
       >
         <Box
           sx={{
@@ -78,7 +76,6 @@ const AllRateSeperate = ({
             sx={{
               flex: 1,
               background: "#262626",
-              // '#262626' ,
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-end",
@@ -115,7 +112,7 @@ const AllRateSeperate = ({
                 <Typography
                   sx={{ fontWeight: "400", fontSize: "10px", color: "white" }}
                 >
-                  {"No"}
+                  No
                 </Typography>
               </Box>
               <RowComponent
@@ -450,13 +447,9 @@ const RowComponent = ({ header, data }: any) => {
     if (header) {
       return "black";
     } else if (data?.betType === "BACK" || data?.betType === "YES") {
-      // return "#FF9292";
-      // return "#00C0F9";
       return "#CEEBFF";
     } else if (data?.betType === "LAY" || data?.betType === "NO") {
       return "#F2CBCB";
-      // return "#FF9292";
-      // return "#B3E0FF";
     }
   };
   return (

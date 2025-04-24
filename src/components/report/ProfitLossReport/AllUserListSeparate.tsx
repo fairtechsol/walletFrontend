@@ -138,7 +138,6 @@ const AllUserListSeparate = ({
             />
           )}
         </Box>
-
         <Box
           sx={{
             background: "#27AC1E",
@@ -265,42 +264,40 @@ const AllUserListSeparate = ({
         />
       </ModalMUI>
       {showSubUsers?.value && (
-        <>
-          <Box
-            sx={{
-              width: { xs: "100%", lg: "99%" },
-              marginTop: { xs: ".25vh" },
-              marginLeft: { lg: "1%" },
-              display: "flex",
-              flexDirection: { lg: "row", xs: "column" },
-            }}
-          >
-            <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
-              <Box
-                sx={{
-                  width: { xs: "100%", lg: "100%", md: "100%" },
-                  overflow: "hidden",
-                  marginY: { xs: ".2vh", lg: "1vh" },
-                  padding: 0.2,
-                }}
-              >
-                <ChildUserList
-                  id={showSubUsers?.id}
-                  url={showSubUsers?.url}
-                  show={showSubUsers?.value}
-                  eventType={showSubUsers?.eventType}
-                  setShow={showSubUsers}
-                  matchId={matchId}
-                  bet1Data={bet1Data}
-                  roleName={showSubUsers?.roleName}
-                  getBetReport={getBetReport}
-                  sessionBetData={sessionBetData}
-                  sessionBets={sessionBets}
-                />
-              </Box>
+        <Box
+          sx={{
+            width: { xs: "100%", lg: "99%" },
+            marginTop: { xs: ".25vh" },
+            marginLeft: { lg: "1%" },
+            display: "flex",
+            flexDirection: { lg: "row", xs: "column" },
+          }}
+        >
+          <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
+            <Box
+              sx={{
+                width: { xs: "100%", lg: "100%", md: "100%" },
+                overflow: "hidden",
+                marginY: { xs: ".2vh", lg: "1vh" },
+                padding: 0.2,
+              }}
+            >
+              <ChildUserList
+                id={showSubUsers?.id}
+                url={showSubUsers?.url}
+                show={showSubUsers?.value}
+                eventType={showSubUsers?.eventType}
+                setShow={showSubUsers}
+                matchId={matchId}
+                bet1Data={bet1Data}
+                roleName={showSubUsers?.roleName}
+                getBetReport={getBetReport}
+                sessionBetData={sessionBetData}
+                sessionBets={sessionBets}
+              />
             </Box>
           </Box>
-        </>
+        </Box>
       )}
     </Box>
   );

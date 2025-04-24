@@ -20,7 +20,6 @@ const RowHeaderMatches = ({
   startDate,
   endDate,
   getHandleReport,
-  // show,
   color,
   selectedId,
   getBetReport,
@@ -37,6 +36,41 @@ const RowHeaderMatches = ({
     (state: RootState) => state.report.reportList
   );
 
+  const handleEventClick = () => {
+    if (!show) {
+      let filter = "";
+      if (user?.id) {
+        filter += `&id=${user?.id}`;
+      }
+      if (startDate && endDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      } else if (startDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+      } else if (endDate) {
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      }
+      if (
+        item?.eventType === gameConstants.horseRacing ||
+        item?.eventType === gameConstants.greyHound
+      ) {
+        filter += `&isRacing=true`;
+      }
+      dispatch(
+        getDomainProfitLoss({
+          url: item?.domainUrl,
+          type: item?.eventType,
+          filter: filter,
+        })
+      );
+    }
+    dispatch(resetDomainProfitLoss());
+    dispatch(resetBetProfitLoss());
+    dispatch(resetSessionProfitLoss());
+    getHandleReport(item?.eventType);
+    setShow((prev: boolean) => !prev);
+  };
+
   useEffect(() => {
     if (item?.eventType !== eventType) {
       setShow(false);
@@ -46,40 +80,7 @@ const RowHeaderMatches = ({
   return (
     <>
       <Box
-        onClick={() => {
-          if (!show) {
-            let filter = "";
-            if (user?.id) {
-              filter += `&id=${user?.id}`;
-            }
-            if (startDate && endDate) {
-              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-            } else if (startDate) {
-              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-            } else if (endDate) {
-              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-            }
-            if (
-              item?.eventType === gameConstants.horseRacing ||
-              item?.eventType === gameConstants.greyHound
-            ) {
-              filter += `&isRacing=true`;
-            }
-            dispatch(
-              getDomainProfitLoss({
-                url: item?.domainUrl,
-                type: item?.eventType,
-                filter: filter,
-              })
-            );
-          }
-          dispatch(resetDomainProfitLoss());
-          dispatch(resetBetProfitLoss());
-          dispatch(resetSessionProfitLoss());
-          getHandleReport(item?.eventType);
-          setShow((prev: boolean) => !prev);
-        }}
+        onClick={handleEventClick}
         sx={{
           width: "100%",
           height: { lg: "60px", xs: "50px" },
