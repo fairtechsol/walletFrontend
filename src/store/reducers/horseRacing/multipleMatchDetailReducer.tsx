@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    getMultipleMatchDetailHorseRacing,
-    updateMultiMatchRatesForHorseRacing,
-    updateTeamRatesOfMultipleMatchForHorseRacing,
-    updateTeamRatesOnDeleteForMultiMatchRace,
+  getMultipleMatchDetailHorseRacing,
+  updateMultiMatchRatesForHorseRacing,
+  updateTeamRatesOfMultipleMatchForHorseRacing,
+  updateTeamRatesOnDeleteForMultiMatchRace,
 } from "../../actions/horseRacing/multiplematchDetailAction";
 
 interface InitialState {
@@ -47,25 +47,23 @@ const multipleMatchDetailSlice = createSlice({
 
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === id) {
-                return {
-                  ...match,
-                  matchOdd: {
-                    ...match.matchOdd,
-                    ...matchOdd,
-                    runners: match?.matchOdd?.runners?.map((item: any) => {
-                      const runnersData = matchOdd?.runners?.find(
-                        (items: any) => items?.selectionId == item?.selectionId
-                      );
-                      return {
-                        ...item,
-                        ...runnersData,
-                      };
-                    }),
-                  },
-                };
-              }
-              return match;
+              if (match?.id !== id) return match;
+              return {
+                ...match,
+                matchOdd: {
+                  ...match.matchOdd,
+                  ...matchOdd,
+                  runners: match?.matchOdd?.runners?.map((item: any) => {
+                    const runnersData = matchOdd?.runners?.find(
+                      (items: any) => items?.selectionId == item?.selectionId
+                    );
+                    return {
+                      ...item,
+                      ...runnersData,
+                    };
+                  }),
+                },
+              };
             }
           );
         }
@@ -76,13 +74,11 @@ const multipleMatchDetailSlice = createSlice({
           const { userRedisObj, jobData } = action.payload;
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === jobData?.newBet?.matchId) {
-                return {
-                  ...match,
-                  profitLossDataMatch: userRedisObj,
-                };
-              }
-              return match;
+              if (match?.id !== jobData?.newBet?.matchId) return match;
+              return {
+                ...match,
+                profitLossDataMatch: userRedisObj,
+              };
             }
           );
         }
@@ -93,13 +89,11 @@ const multipleMatchDetailSlice = createSlice({
           const { teamRate, matchId } = action.payload;
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === matchId) {
-                return {
-                  ...match,
-                  profitLossDataMatch: teamRate,
-                };
-              }
-              return match;
+              if (match?.id !== matchId) return match;
+              return {
+                ...match,
+                profitLossDataMatch: teamRate,
+              };
             }
           );
         }

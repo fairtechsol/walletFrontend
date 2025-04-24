@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    changePassword,
-    changePasswordReset,
-    getMyAccountDetails,
-    getUsersProfile,
-    marqueeNotification,
-    profileReset,
-    updateBalanceOfLoggedUser,
+  changePassword,
+  changePasswordReset,
+  getMyAccountDetails,
+  getUsersProfile,
+  marqueeNotification,
+  profileReset,
+  updateBalanceOfLoggedUser,
 } from "../../actions/user/userAction";
 
 interface InitialState {
@@ -101,10 +101,11 @@ const profileSlice = createSlice({
         };
       })
       .addCase(profileReset, (state) => {
-        return { ...state, success: false };
+        state.success = false;
       })
       .addCase(changePasswordReset, (state) => {
-        return { ...state, success: false, transactionPassword: "" };
+        state.success = false;
+        state.transactionPassword = "";
       });
   },
 });

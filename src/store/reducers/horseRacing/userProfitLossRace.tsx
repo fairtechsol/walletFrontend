@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    getUserProfitLossForRace,
-    resetUserProfitLossForRace,
+  getUserProfitLossForRace,
+  resetUserProfitLossForRace,
 } from "../../actions/horseRacing/horseMatchDetailActions";
 
 interface InitialState {
@@ -39,7 +39,7 @@ const userProfitLossRace = createSlice({
         state.error = action.error?.message;
       })
       .addCase(resetUserProfitLossForRace, (state) => {
-        return { ...state, userProfitLossData: [] };
+        state.userProfitLossData = [];
       });
   },
 });

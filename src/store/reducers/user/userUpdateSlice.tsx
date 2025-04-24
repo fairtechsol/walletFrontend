@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    addExpert,
-    addReset,
-    addUrlAdmin,
-    addUser,
-    getUsersDetail,
-    updateExpert,
-    updateReset,
-    updateUrlAdmin,
-    updateUser,
-    updateUserReset,
+  addExpert,
+  addReset,
+  addUrlAdmin,
+  addUser,
+  getUsersDetail,
+  updateExpert,
+  updateReset,
+  updateUrlAdmin,
+  updateUser,
+  updateUserReset,
 } from "../../actions/user/userAction";
 
 interface InitialState {
@@ -123,19 +123,16 @@ const userUpdateSlice = createSlice({
         state.error = action.error?.message;
       })
       .addCase(updateReset, (state) => {
-        return {
-          ...state,
-          userDetail: null,
-          loading: false,
-          success: false,
-          error: null,
-        };
+        state.userDetail = null;
+        state.loading = false;
+        state.success = false;
+        state.error = null;
       })
       .addCase(addReset, (state) => {
-        return { ...state, addSuccess: false };
+        state.addSuccess = false;
       })
       .addCase(updateUserReset, (state) => {
-        return { ...state, editSuccess: false };
+        state.editSuccess = false;
       });
   },
 });

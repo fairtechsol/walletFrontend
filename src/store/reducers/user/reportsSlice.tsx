@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    getAccountStatement,
-    getCurrentBets,
-    resetAccountStatement,
+  getAccountStatement,
+  getCurrentBets,
+  resetAccountStatement,
 } from "../../actions/reports";
 
 interface InitialState {
@@ -54,7 +54,7 @@ export const reportSlice = createSlice({
         state.error = action.error?.message;
       })
       .addCase(resetAccountStatement, (state) => {
-        return { ...state, success: false };
+        state.success = false;
       });
   },
 });

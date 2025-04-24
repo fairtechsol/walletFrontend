@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { convertData, updateSessionBettingsItem } from "../../../helper";
 import {
-    getMatchDetail,
-    getMatchDetailMarketAnalysis,
-    getMatchListInplay,
-    resetMarketAnalysys,
-    setCurrentOdd,
-    updateBetDataOnDeclare,
-    updateMatchRates,
-    updateMatchRatesFromApiOnList,
-    updateMatchRatesOnMarketUndeclare,
-    updateMaxLossForBet,
-    updateMaxLossForBetOnUndeclare,
-    updateMaxLossForDeleteBet,
-    updateTeamRates,
-    updateTeamRatesOnDelete,
+  getMatchDetail,
+  getMatchDetailMarketAnalysis,
+  getMatchListInplay,
+  resetMarketAnalysys,
+  setCurrentOdd,
+  updateBetDataOnDeclare,
+  updateMatchRates,
+  updateMatchRatesFromApiOnList,
+  updateMatchRatesOnMarketUndeclare,
+  updateMaxLossForBet,
+  updateMaxLossForBetOnUndeclare,
+  updateMaxLossForDeleteBet,
+  updateTeamRates,
+  updateTeamRatesOnDelete,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -204,15 +204,13 @@ const matchListSlice = createSlice({
         if (state?.matchDetail?.id === jobData?.placedBet?.matchId) {
           const updatedProfitLossDataSession =
             state?.matchDetail?.profitLossDataSession?.map((item: any) => {
-              if (item?.betId === jobData?.placedBet?.betId) {
-                return {
-                  ...item,
-                  maxLoss: profitLoss?.maxLoss,
-                  totalBet: profitLoss?.totalBet,
-                  profitLoss: profitLoss?.betPlaced,
-                };
-              }
-              return item;
+              if (item?.betId !== jobData?.placedBet?.betId) return item;
+              return {
+                ...item,
+                maxLoss: profitLoss?.maxLoss,
+                totalBet: profitLoss?.totalBet,
+                profitLoss: profitLoss?.betPlaced,
+              };
             });
 
           const betIndex = updatedProfitLossDataSession?.findIndex(
@@ -246,15 +244,13 @@ const matchListSlice = createSlice({
         if (state?.matchDetail?.id === matchId) {
           const updatedProfitLossDataSession =
             state?.matchDetail?.profitLossDataSession?.map((item: any) => {
-              if (betId === item?.betId) {
-                return {
-                  ...item,
-                  maxLoss: profitLoss?.maxLoss,
-                  totalBet: profitLoss?.totalBet,
-                  profitLoss: profitLoss?.betPlaced,
-                };
-              }
-              return item;
+              if (betId !== item?.betId) return item;
+              return {
+                ...item,
+                maxLoss: profitLoss?.maxLoss,
+                totalBet: profitLoss?.totalBet,
+                profitLoss: profitLoss?.betPlaced,
+              };
             });
 
           const betIndex = updatedProfitLossDataSession.findIndex(
