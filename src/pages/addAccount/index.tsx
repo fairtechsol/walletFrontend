@@ -32,6 +32,7 @@ import {
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
 import { addUserValidation } from "../../utils/Validations";
+import { accountTypeMap } from "../../utils/Constants";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -317,42 +318,6 @@ const AddAccount = () => {
     try {
       const roleName = profileDetail?.roleName;
 
-      const accountTypeMap: any = {
-        fairGameWallet: [
-          { value: "fairGameAdmin", label: "Fairgame Admin" },
-          { value: "oldSuperAdmin", label: "Super Admin" },
-          { value: "admin", label: "Admin" },
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        fairGameAdmin: [
-          { value: "superAdmin", label: "URL Super Admin" },
-          { value: "oldSuperAdmin", label: "Super Admin" },
-          { value: "admin", label: "Admin" },
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "expert", label: "Expert" },
-          { value: "user", label: "User" },
-        ],
-        superAdmin: [
-          { value: "admin", label: "Admin" },
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        admin: [
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        superMaster: [
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        master: [{ value: "user", label: "User" }],
-      };
-
       setAccountTypes(accountTypeMap[roleName] || []);
     } catch (e) {
       console.error(e);
@@ -376,7 +341,6 @@ const AddAccount = () => {
         console.warn(file.size);
         formik.setFieldValue("logo", file);
 
-        // Convert the image to base64
         const reader = new FileReader();
         reader.onloadend = () => {
           formik.setFieldValue("base64Image", reader.result);

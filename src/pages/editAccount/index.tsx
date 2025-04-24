@@ -28,6 +28,7 @@ import {
   updateUserReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
+import { accountTypeMap } from "../../utils/Constants";
 
 const MatchCommissionTypes = [
   { value: null, label: "0.00" },
@@ -224,42 +225,6 @@ const EditAccount = () => {
   const setTypeForAccountType = () => {
     try {
       const roleName = profileDetail?.roleName;
-
-      const accountTypeMap: any = {
-        fairGameWallet: [
-          { value: "fairGameAdmin", label: "Fairgame Admin" },
-          { value: "oldSuperAdmin", label: "Super Admin" },
-          { value: "admin", label: "Admin" },
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        fairGameAdmin: [
-          { value: "superAdmin", label: "URL Super Admin" },
-          { value: "oldSuperAdmin", label: "Super Admin" },
-          { value: "admin", label: "Admin" },
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "expert", label: "Expert" },
-          { value: "user", label: "User" },
-        ],
-        superAdmin: [
-          { value: "admin", label: "Admin" },
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        admin: [
-          { value: "superMaster", label: "Super Master" },
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        superMaster: [
-          { value: "master", label: "Master" },
-          { value: "user", label: "User" },
-        ],
-        master: [{ value: "user", label: "User" }],
-      };
 
       setAccountTypes(accountTypeMap[roleName] || []);
     } catch (e) {
