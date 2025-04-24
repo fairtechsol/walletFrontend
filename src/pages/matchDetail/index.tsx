@@ -218,9 +218,12 @@ const MatchDetail = () => {
       if (event?.matchId !== state?.matchId) return;
       if (event?.isMatchDeclare) {
         navigate(
-          `/wallet/${location.pathname.split("/")[2]}/${
-            state.matchType || event?.gameType
-          }`
+          location.pathname.split("/")[2] === "live_market" ||
+            location.pathname.split("/")[2] === "market_analysis"
+            ? `/wallet/${location.pathname.split("/")[2]}`
+            : `/wallet/${location.pathname.split("/")[2]}/${
+                state.matchType || event?.gameType
+              }`
         );
       } else {
         dispatch(
