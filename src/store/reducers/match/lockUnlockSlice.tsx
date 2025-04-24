@@ -37,29 +37,30 @@ const lockUnlockSlice = createSlice({
       .addCase(updateUserMatchLock.fulfilled, (state, action) => {
         state.loading = false;
         state.statusSuccess = true;
-        if (action.payload?.role === "fairGameWallet") {
+        const { role, data } = action.payload;
+        if (role === "fairGameWallet") {
           state.userMatchLock = {
             parentBlock: false,
-            selfBlock: action.payload?.data?.matchLock,
+            selfBlock: data?.matchLock,
           };
           state.userSessionLock = {
             parentBlock: false,
-            selfBlock: action.payload?.data?.sessionLock,
+            selfBlock: data?.sessionLock,
           };
         } else {
           state.userMatchLock = {
             parentBlock: state.userMatchLock?.parentBlock,
-            selfBlock: action.payload?.data?.matchLock,
+            selfBlock: data?.matchLock,
           };
           state.userSessionLock = {
             parentBlock: state.userSessionLock?.parentBlock,
-            selfBlock: action.payload?.data?.sessionLock,
+            selfBlock: data?.sessionLock,
           };
         }
       })
       .addCase(updateUserMatchLock.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
 
       .addCase(getUserOfLock.pending, (state) => {
@@ -70,12 +71,13 @@ const lockUnlockSlice = createSlice({
       .addCase(getUserOfLock.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.userMatchLock = action.payload?.match;
-        state.userSessionLock = action.payload?.session;
+        const { match, session } = action.payload;
+        state.userMatchLock = match;
+        state.userSessionLock = session;
       })
       .addCase(getUserOfLock.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       });
   },
 });

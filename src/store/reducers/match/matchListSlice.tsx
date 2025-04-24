@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { convertData, updateSessionBettingsItem } from "../../../helper";
 import {
-  getMatchDetail,
-  getMatchDetailMarketAnalysis,
-  getMatchListInplay,
-  resetMarketAnalysys,
-  setCurrentOdd,
-  updateBetDataOnDeclare,
-  updateMatchRates,
-  updateMatchRatesFromApiOnList,
-  updateMatchRatesOnMarketUndeclare,
-  updateMaxLossForBet,
-  updateMaxLossForBetOnUndeclare,
-  updateMaxLossForDeleteBet,
-  updateTeamRates,
-  updateTeamRatesOnDelete,
+    getMatchDetail,
+    getMatchDetailMarketAnalysis,
+    getMatchListInplay,
+    resetMarketAnalysys,
+    setCurrentOdd,
+    updateBetDataOnDeclare,
+    updateMatchRates,
+    updateMatchRatesFromApiOnList,
+    updateMatchRatesOnMarketUndeclare,
+    updateMaxLossForBet,
+    updateMaxLossForBetOnUndeclare,
+    updateMaxLossForDeleteBet,
+    updateTeamRates,
+    updateTeamRatesOnDelete,
 } from "../../actions/match/matchAction";
 
 interface InitialState {
@@ -56,13 +56,13 @@ const matchListSlice = createSlice({
         state.matchListInplay = null;
       })
       .addCase(getMatchListInplay.fulfilled, (state, action) => {
-        state.matchListInplay = action?.payload;
+        state.matchListInplay = action.payload;
         state.loading = false;
         state.success = true;
       })
       .addCase(getMatchListInplay.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(getMatchDetail.pending, (state) => {
         state.loading = true;
@@ -71,13 +71,13 @@ const matchListSlice = createSlice({
         state.matchDetail = null;
       })
       .addCase(getMatchDetail.fulfilled, (state, action) => {
-        state.matchDetail = action?.payload;
+        state.matchDetail = action.payload;
         state.loading = false;
         state.success = true;
       })
       .addCase(getMatchDetail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(getMatchDetailMarketAnalysis.pending, (state) => {
         state.loading = true;
@@ -86,17 +86,17 @@ const matchListSlice = createSlice({
       })
       .addCase(getMatchDetailMarketAnalysis.fulfilled, (state, action) => {
         state.loading = false;
-        state.marketAnalysis = action?.payload;
+        state.marketAnalysis = action.payload;
       })
       .addCase(getMatchDetailMarketAnalysis.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(resetMarketAnalysys, (state) => {
         state.marketAnalysis = null;
       })
       .addCase(updateMatchRates.fulfilled, (state, action) => {
-        const { apiSession, sessionBettings, tournament } = action?.payload;
+        const { apiSession, sessionBettings, tournament } = action.payload;
 
         const parsedSessionBettings =
           state.matchDetail?.sessionBettings?.map(JSON.parse) || [];
@@ -161,7 +161,7 @@ const matchListSlice = createSlice({
         }
       })
       .addCase(updateMaxLossForBetOnUndeclare.fulfilled, (state, action) => {
-        const { betId, matchId, parentRedisUpdateObj } = action?.payload;
+        const { betId, matchId, parentRedisUpdateObj } = action.payload;
         if (state?.matchDetail?.id === matchId) {
           state.matchDetail = {
             ...state.matchDetail,
@@ -186,7 +186,7 @@ const matchListSlice = createSlice({
         }
       })
       .addCase(updateBetDataOnDeclare.fulfilled, (state, action) => {
-        const { betId, matchId } = action?.payload;
+        const { betId, matchId } = action.payload;
         if (state?.matchDetail?.id === matchId) {
           const updatedProfitLossDataSession =
             state.matchDetail?.profitLossDataSession?.filter(
@@ -200,7 +200,7 @@ const matchListSlice = createSlice({
         }
       })
       .addCase(updateMaxLossForBet.fulfilled, (state, action) => {
-        const { jobData, profitLoss } = action?.payload;
+        const { jobData, profitLoss } = action.payload;
         if (state?.matchDetail?.id === jobData?.placedBet?.matchId) {
           const updatedProfitLossDataSession =
             state?.matchDetail?.profitLossDataSession?.map((item: any) => {
@@ -242,7 +242,7 @@ const matchListSlice = createSlice({
         };
       })
       .addCase(updateMaxLossForDeleteBet.fulfilled, (state, action) => {
-        const { matchId, betId, profitLoss } = action?.payload;
+        const { matchId, betId, profitLoss } = action.payload;
         if (state?.matchDetail?.id === matchId) {
           const updatedProfitLossDataSession =
             state?.matchDetail?.profitLossDataSession?.map((item: any) => {
@@ -275,7 +275,7 @@ const matchListSlice = createSlice({
         }
       })
       .addCase(updateTeamRatesOnDelete.fulfilled, (state, action) => {
-        const { betId, teamRate } = action?.payload;
+        const { betId, teamRate } = action.payload;
 
         state.matchDetail.profitLossDataMatch = {
           ...state.matchDetail.profitLossDataMatch,
@@ -284,7 +284,7 @@ const matchListSlice = createSlice({
         };
       })
       .addCase(updateMatchRatesOnMarketUndeclare.fulfilled, (state, action) => {
-        const { betId, profitLossData } = action?.payload;
+        const { betId, profitLossData } = action.payload;
 
         state.matchDetail.profitLossDataMatch = {
           ...state.matchDetail.profitLossDataMatch,
@@ -293,7 +293,7 @@ const matchListSlice = createSlice({
         };
       })
       .addCase(setCurrentOdd.fulfilled, (state, action) => {
-        state.currentOdd = action?.payload;
+        state.currentOdd = action.payload;
       });
   },
 });

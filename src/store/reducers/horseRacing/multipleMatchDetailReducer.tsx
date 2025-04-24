@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getMultipleMatchDetailHorseRacing,
-  updateMultiMatchRatesForHorseRacing,
-  updateTeamRatesOfMultipleMatchForHorseRacing,
-  updateTeamRatesOnDeleteForMultiMatchRace,
+    getMultipleMatchDetailHorseRacing,
+    updateMultiMatchRatesForHorseRacing,
+    updateTeamRatesOfMultipleMatchForHorseRacing,
+    updateTeamRatesOnDeleteForMultiMatchRace,
 } from "../../actions/horseRacing/multiplematchDetailAction";
 
 interface InitialState {
@@ -38,16 +38,16 @@ const multipleMatchDetailSlice = createSlice({
       })
       .addCase(getMultipleMatchDetailHorseRacing.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(
         updateMultiMatchRatesForHorseRacing.fulfilled,
         (state, action) => {
-          const { matchOdd } = action.payload;
+          const { matchOdd, id } = action.payload;
 
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === action?.payload?.id) {
+              if (match?.id === id) {
                 return {
                   ...match,
                   matchOdd: {
@@ -90,10 +90,10 @@ const multipleMatchDetailSlice = createSlice({
       .addCase(
         updateTeamRatesOnDeleteForMultiMatchRace.fulfilled,
         (state, action) => {
-          const { teamRate } = action.payload;
+          const { teamRate, matchId } = action.payload;
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === action.payload?.matchId) {
+              if (match?.id === matchId) {
                 return {
                   ...match,
                   profitLossDataMatch: teamRate,
