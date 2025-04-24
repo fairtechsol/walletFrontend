@@ -60,7 +60,7 @@ const Inplay = () => {
         dispatch(updateMatchRatesFromApiOnList(resp?.data));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
