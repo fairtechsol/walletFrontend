@@ -19,16 +19,14 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
-const LockUnlockComponent = (props: any) => {
-  const {
-    setSelected,
-    element,
-    endpoint,
-    onChangeAmount,
-    currentPage,
-    setShowUserModal,
-  } = props;
-
+const LockUnlockComponent = ({
+  setSelected,
+  element,
+  endpoint,
+  onChangeAmount,
+  currentPage,
+  setShowUserModal,
+}: any) => {
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,
@@ -90,10 +88,8 @@ const LockUnlockComponent = (props: any) => {
         sx={{
           display: "flex",
           borderRadius: "5px",
-          // paddingRight: { xs: "0", lg: "10px" },
           flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 2,
-          // width: { xs: "92vw", md: "80%", lg: "80%" },
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -116,7 +112,6 @@ const LockUnlockComponent = (props: any) => {
                 width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
-
                 visibility: "hidden",
                 display: { xs: "none", lg: "block" },
               }}
@@ -134,8 +129,8 @@ const LockUnlockComponent = (props: any) => {
             >
               <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>
                 <BoxButtonWithSwitch
-                  title={"User"}
-                  name={"all_blocked"}
+                  title="User"
+                  name="all_blocked"
                   val={lockUnlockObj?.all_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
@@ -234,7 +229,7 @@ const LockUnlockComponent = (props: any) => {
             }}
           >
             <BoxButton
-              color={"#0B4F26"}
+              color="#0B4F26"
               loading={loading}
               disabled={isSubmitting}
               containerStyle={{
@@ -248,7 +243,7 @@ const LockUnlockComponent = (props: any) => {
               }}
               isSelected={true}
               type="submit"
-              title={"Submit"}
+              title="Submit"
             />
           </Box>
           <Box
@@ -259,7 +254,7 @@ const LockUnlockComponent = (props: any) => {
             }}
           >
             <BoxButton
-              color={"#E32A2A"}
+              color="#E32A2A"
               containerStyle={{
                 maxWidth: "100%!important",
                 height: "44px",
@@ -276,7 +271,7 @@ const LockUnlockComponent = (props: any) => {
                 setSelected();
                 onChangeAmount(elementLockUnlockObj1, element?.id, "lock");
               }}
-              title={"Cancel"}
+              title="Cancel"
             />
           </Box>
         </Box>

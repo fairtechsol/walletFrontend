@@ -39,7 +39,7 @@ const AccountListExpert = (endpoint: any) => {
       >
         <HeaderRow
           endpoint={ApiConstants.USER.EXPERTLIST}
-          searchFor={"userList"}
+          searchFor="userList"
           downloadPdfExcel={false}
           setCurrentPage={setCurrentPage}
         />

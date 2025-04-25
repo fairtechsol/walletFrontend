@@ -28,7 +28,7 @@ const ListHeaderExpertRow = () => {
         <Typography
           sx={{ color: "white", fontSize: { lg: "12px", xs: "9px" } }}
         >
-          {"User Details"}
+          User Details
         </Typography>
       </Box>
       <Box

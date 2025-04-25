@@ -53,7 +53,6 @@ const RowModalComponents = ({
     },
   };
   const handleAmountChange = (amount: string, id: string, type: string) => {
-    // alert(amount)
     onValueChange(amount, id, type);
   };
 
@@ -112,7 +111,7 @@ const RowModalComponents = ({
           }}
         >
           <BoxButton
-            color={"#0B4F26"}
+            color="#0B4F26"
             onClick={() => {
               setSelected(3);
             }}
@@ -128,11 +127,11 @@ const RowModalComponents = ({
             }}
           />
           <BoxButton
-            color={"#0B4F26"}
+            color="#0B4F26"
             onClick={() => {
               setSelected(4);
             }}
-            title={"Lock/Unlock"}
+            title="Lock/Unlock"
             containerStyle={{
               marginLeft: { lg: "10px", xs: "0" },
               flex: 1,
