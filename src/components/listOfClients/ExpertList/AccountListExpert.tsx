@@ -67,7 +67,7 @@ const AccountListExpert = (endpoint: any) => {
               )}
               {userList?.list?.length > 0 &&
                 userList?.list?.map(
-                  (element: AccountListDataInterface, i: any) => {
+                  (element: AccountListDataInterface, i: number) => {
                     if (i % 2 === 0) {
                       return (
                         <AccountListExpertRow
