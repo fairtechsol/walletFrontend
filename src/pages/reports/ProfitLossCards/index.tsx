@@ -93,10 +93,6 @@ const ProfitLossReportCards = () => {
 
   useEffect(() => {
     let filter = "";
-    dispatch(updateUserSearchId({ search }));
-    if (search?.id) {
-      filter += `&id=${search?.id}`;
-    }
     if (startDate && endDate) {
       filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
       filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
