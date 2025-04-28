@@ -171,7 +171,6 @@ const AccountListTable = ({
             {newData?.map((newElement: any, i: any) => (
               <AccountListRow
                 key={i}
-                callProfile={false}
                 showCReport={true}
                 showUserDetails={false}
                 showOptions={true}

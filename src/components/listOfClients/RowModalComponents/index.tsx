@@ -21,6 +21,16 @@ import SetCreditComponent from "./SetCreditComponent";
 import SetExposureLimit from "./SetExposureLimit";
 import WithdrawComponent from "./WithdrawComponent";
 
+interface RowModalComponentsProps {
+  element: any;
+  selected: number | null;
+  setSelected: any;
+  backgroundColor: string;
+  onValueChange: (amount: string, id: string, type: string) => void;
+  currentPage: number | any;
+  setShowUserModal: (value: boolean) => void;
+}
+
 const RowModalComponents = ({
   element,
   selected,
@@ -29,7 +39,7 @@ const RowModalComponents = ({
   onValueChange,
   currentPage,
   setShowUserModal,
-}: any) => {
+}: RowModalComponentsProps) => {
   const dispatch: AppDispatch = useDispatch();
 
   const [settlementModal, setSettlementModal] = useState(false);

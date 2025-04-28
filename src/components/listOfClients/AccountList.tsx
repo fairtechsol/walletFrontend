@@ -78,7 +78,6 @@ const AccountList = (endpoint: { endpoint: string }) => {
                 (element: AccountListDataInterface, i: any) => (
                   <AccountListRow
                     key={element?.id}
-                    callProfile={true}
                     showOptions={true}
                     showUserDetails={true}
                     showCReport={true}

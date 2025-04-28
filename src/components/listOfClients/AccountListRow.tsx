@@ -23,7 +23,6 @@ const AccountListRow = ({
   fTextStyle,
   profit,
   element,
-  getListOfUser,
   showOptions,
   showCReport,
   showUserDetails,
@@ -34,9 +33,8 @@ const AccountListRow = ({
 }: AccountListRowInterface) => {
   const navigate = useNavigate();
 
-  const [userModal] = useState({});
   const [showUserModal, setShowUserModal] = useState(false);
-  const [showModalMessage, setShowModalMessage] = useState("No data found");
+  const [showModalMessage] = useState("No data found");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showCommissionReport, setShowCommissionReport] = useState({
     value: false,
@@ -522,7 +520,6 @@ const AccountListRow = ({
           sx={{
             width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
             display: "flex",
-            // justifyContent: "center",
             alignItems: "center",
             height: "45px",
             borderRight: "2px solid white",
@@ -617,42 +614,37 @@ const AccountListRow = ({
                     }}
                   >
                     {element?.matchComissionType ? (
-                      <>
-                        <Typography
-                          variant="h5"
-                          sx={[
-                            {
-                              color: "white",
-                              textAlign: { lg: "left", xs: "left" },
-                              width: { lg: "150px", xs: "100px" },
-                              // fontSize: "10px"
-                            },
-                            fTextStyle,
-                          ]}
-                        >
-                          {element?.matchComissionType} Com
-                          {":"}{" "}
-                          {element?.matchCommission
-                            ? element?.matchCommission
-                            : 0}
-                        </Typography>
-                      </>
+                      <Typography
+                        variant="h5"
+                        sx={[
+                          {
+                            color: "white",
+                            textAlign: { lg: "left", xs: "left" },
+                            width: { lg: "150px", xs: "100px" },
+                          },
+                          fTextStyle,
+                        ]}
+                      >
+                        {element?.matchComissionType} Com
+                        {":"}{" "}
+                        {element?.matchCommission
+                          ? element?.matchCommission
+                          : 0}
+                      </Typography>
                     ) : (
-                      <>
-                        <Typography
-                          variant="h5"
-                          sx={[
-                            {
-                              color: "white",
-                              textAlign: { lg: "left", xs: "left" },
-                              width: { lg: "100px", xs: "100px" },
-                            },
-                            fTextStyle,
-                          ]}
-                        >
-                          Match Com : 0
-                        </Typography>
-                      </>
+                      <Typography
+                        variant="h5"
+                        sx={[
+                          {
+                            color: "white",
+                            textAlign: { lg: "left", xs: "left" },
+                            width: { lg: "100px", xs: "100px" },
+                          },
+                          fTextStyle,
+                        ]}
+                      >
+                        Match Com : 0
+                      </Typography>
                     )}
                   </Box>
                   <Box sx={{ display: "flex" }}>
@@ -741,12 +733,8 @@ const AccountListRow = ({
               selected={selected}
               element={element}
               setSelected={setSelected}
-              getListOfUser={getListOfUser}
               setShowUserModal={setShowUserModal}
               backgroundColor={containerStyle?.background}
-              userModal={userModal}
-              setShowSuccessModal={setShowSuccessModal}
-              setShowModalMessage={setShowModalMessage}
               onValueChange={handleAmountChange}
               currentPage={currentPage}
             />
@@ -853,9 +841,9 @@ const AccountListRow = ({
           message={showModalMessage}
           setShowSuccessModal={setShowSuccessModal}
           showSuccessModal={showSuccessModal}
-          buttonMessage={"OK"}
-          navigateTo={"list_of_clients"}
-        ></Modal>
+          buttonMessage="OK"
+          navigateTo="list_of_clients"
+        />
       )}
     </>
   );
