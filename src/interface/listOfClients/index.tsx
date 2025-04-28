@@ -33,14 +33,14 @@ export interface AccountListDataInterface {
 export interface AccountListRowInterface {
   showOptions: boolean;
   showUserDetails: boolean;
-  showCReport: boolean;
+  showCReport?: boolean;
   containerStyle: any;
   profit?: boolean;
   fContainerStyle: any;
   fTextStyle: any;
   element: any;
-  show: boolean;
-  domain: any;
+  show?: boolean;
+  domain?: any;
   currentPage: number;
   showDownIcon?: boolean;
 }

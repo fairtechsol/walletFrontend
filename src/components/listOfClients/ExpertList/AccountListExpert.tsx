@@ -72,7 +72,6 @@ const AccountListExpert = (endpoint: any) => {
                       return (
                         <AccountListExpertRow
                           key={element?.id}
-                          callProfile={true}
                           showOptions={true}
                           showUserDetails={true}
                           showCReport={true}
@@ -89,7 +88,6 @@ const AccountListExpert = (endpoint: any) => {
                         <AccountListExpertRow
                           key={element?.id}
                           showCReport={true}
-                          callProfile={true}
                           showUserDetails={true}
                           showOptions={true}
                           containerStyle={{ background: "#ECECEC" }}
