@@ -12,8 +12,13 @@ import SeperateBox from "../MatchOdds/SeperateBox";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
-const CricketCasinoMarketBox = (props: any) => {
-  const { newData, setData, profitLossData, index, sessionData } = props;
+const CricketCasinoMarketBox = ({
+  newData,
+  setData,
+  profitLossData,
+  index,
+  sessionData,
+}: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
@@ -39,7 +44,7 @@ const CricketCasinoMarketBox = (props: any) => {
               background: "rgba(0,0,0,0.5)",
               zIndex: 2,
             }}
-           />
+          />
         )}
         <Box
           sx={{
@@ -50,7 +55,7 @@ const CricketCasinoMarketBox = (props: any) => {
             background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
           }}
         >
-          <Typography>
+          <Box>
             <Typography
               sx={{
                 color: "black",
@@ -72,7 +77,7 @@ const CricketCasinoMarketBox = (props: any) => {
             >
               max: {formatToINR(newData?.maxBet || newData?.max)}
             </Typography>
-          </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -151,10 +156,7 @@ const CricketCasinoMarketBox = (props: any) => {
                         ? true
                         : false
                     }
-                    color={"#B3E0FF"}
-                  />
-                  <Box
-                    sx={{ width: "3px", display: "flex", background: "pink" }}
+                    color="#B3E0FF"
                   />
                 </Fragment>
               ))}

@@ -293,7 +293,7 @@ const CricketCasinoMarket = (props: any) => {
                   sx={{
                     width: { xs: "60%", lg: "20%", md: "60%" },
                   }}
-                 />
+                />
                 <Box
                   sx={{
                     width: { xs: "40%", lg: "60%", md: "40%" },
@@ -335,9 +335,7 @@ const CricketCasinoMarket = (props: any) => {
                     ) || {};
                   return (
                     <Box
-                      key={
-                        title === "Session Market" ? element?.id : element?.id
-                      }
+                      key={index}
                       sx={{
                         width: "100%",
                         display: element?.betStatus === 2 ? "none" : "block",
