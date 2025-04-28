@@ -121,8 +121,8 @@ const ListItems = () => {
           borderRadius: "5px",
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             overflowX: "auto",
             maxWidth: "100%",
             boxShadow: "inset 0 0 5px 0px #000000",
@@ -140,7 +140,7 @@ const ListItems = () => {
             <ListHeader userName="User Name" />
             <ListBody walletAccountDetail={profileDetail} />
           </Box>
-        </div>
+        </Box>
         {selected != null && (
           <Box
             sx={{

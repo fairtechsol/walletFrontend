@@ -262,7 +262,7 @@ const Analysis = () => {
               team2={match?.teamB}
             />
           ))}
-          <div style={{ marginTop: "15px" }}>
+          <Box sx={{ marginTop: "15px" }}>
             <Pagination
               page={currentPage}
               className={`${classes.whiteTextPagination} d-flex justify-content-center`}
@@ -275,7 +275,7 @@ const Analysis = () => {
                 setCurrentPage(value);
               }}
             />
-          </div>
+          </Box>
         </>
       ) : (
         <Table>

@@ -55,13 +55,9 @@ const YellowButton = styled("button")(() => ({
   },
 }));
 
-const RacingListComponentAnalysis: React.FC<RacingListComponentAnalysisProps> = ({
-  racingList,
-  matchType,
-  mode,
-  handleRadioButtonSelect,
-  selected,
-}) => {
+const RacingListComponentAnalysis: React.FC<
+  RacingListComponentAnalysisProps
+> = ({ racingList, matchType, mode, handleRadioButtonSelect, selected }) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
@@ -96,8 +92,8 @@ const RacingListComponentAnalysis: React.FC<RacingListComponentAnalysisProps> = 
                 <React.Fragment key={index}>
                   <TableRow sx={{ position: "relative" }}>
                     {mode === "1" && (
-                      <div
-                        style={{
+                      <Box
+                        sx={{
                           position: "absolute",
                           top: 0,
                           left: 0,
@@ -146,8 +142,8 @@ const RacingListComponentAnalysis: React.FC<RacingListComponentAnalysisProps> = 
                           }}
                         >
                           {mode === "1" && (
-                            <div
-                              style={{
+                            <Box
+                              sx={{
                                 position: "absolute",
                                 top: 0,
                                 left: 0,
@@ -194,37 +190,45 @@ const RacingListComponentAnalysis: React.FC<RacingListComponentAnalysisProps> = 
                               alignItems: "center",
                             }}
                           >
-                            {raceMatchChilds?.profitLoss?.map((item: ProfitLossItem) => (
-                              <Button
-                                key={item?.id}
-                                sx={{
-                                  backgroundColor:
-                                    item.profitLoss === undefined || item?.profitLoss >= 0 || !item?.profitLoss
-                                      ? "#27AC1E"
-                                      : "#E32A2A",
-                                  borderRadius: 0,
-                                  padding: "0.5rem",
-                                  border: "1px solid #000",
-                                  color: "#fff",
-                                  fontWeight: "700",
-                                  "&:hover": {
+                            {raceMatchChilds?.profitLoss?.map(
+                              (item: ProfitLossItem) => (
+                                <Button
+                                  key={item?.id}
+                                  sx={{
                                     backgroundColor:
-                                      item.profitLoss === undefined || item?.profitLoss >= 0 || !item?.profitLoss
+                                      item.profitLoss === undefined ||
+                                      item?.profitLoss >= 0 ||
+                                      !item?.profitLoss
                                         ? "#27AC1E"
                                         : "#E32A2A",
-                                  },
-                                }}
-                              >
-                                {item?.name} :{" "}
-                                <span
-                                  style={{
-                                    marginLeft: "5px",
+                                    borderRadius: 0,
+                                    padding: "0.5rem",
+                                    border: "1px solid #000",
+                                    color: "#fff",
+                                    fontWeight: "700",
+                                    "&:hover": {
+                                      backgroundColor:
+                                        item.profitLoss === undefined ||
+                                        item?.profitLoss >= 0 ||
+                                        !item?.profitLoss
+                                          ? "#27AC1E"
+                                          : "#E32A2A",
+                                    },
                                   }}
                                 >
-                                  {item?.profitLoss ? item?.profitLoss : "0.00"}
-                                </span>
-                              </Button>
-                            ))}
+                                  {item?.name} :{" "}
+                                  <span
+                                    style={{
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    {item?.profitLoss
+                                      ? item?.profitLoss
+                                      : "0.00"}
+                                  </span>
+                                </Button>
+                              )
+                            )}
                             <Button
                               sx={{
                                 backgroundColor: "#0B4F26",

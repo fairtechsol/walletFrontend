@@ -73,17 +73,15 @@ const SessionBetSeperate = ({
             sx={{
               flex: 0.1,
               background: "#262626",
-              // '#262626'
             }}
           >
-            <div className="slanted" />
+            <Box className="slanted" />
           </Box>
 
           <Box
             sx={{
               flex: 1,
               background: "#262626",
-              // '#262626' ,
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-end",

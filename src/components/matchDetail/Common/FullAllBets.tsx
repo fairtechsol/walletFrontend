@@ -349,7 +349,7 @@ const FullAllBets = ({
             background: "#262626",
           }}
         >
-          <div className="slanted" />
+          <Box className="slanted" />
         </Box>
         <Box
           sx={{
@@ -416,18 +416,18 @@ const FullAllBets = ({
       {visible && (
         <>
           <AllBetsHeaderRow mode={mode?.value} tag={tag} />
-          <div
+          <Box
             ref={scrollRef}
             className="myScroll"
             style={{ maxHeight: "80vh", overflowY: "auto" }}
           >
-            <div style={{ height: visibleRange.start * ROW_HEIGHT }} />
+            <Box style={{ height: visibleRange.start * ROW_HEIGHT }} />
 
             {visibleItems?.map((i: any, k: number) => {
               const num = IObets.length - (k + visibleRange.start);
               const formattedNum = num < 10 ? "0" + num : num.toString();
               return (
-                <div
+                <Box
                   key={k + visibleRange.start}
                   style={{
                     display: "flex",
@@ -507,15 +507,15 @@ const FullAllBets = ({
                       </Box>
                     </Box>
                   )}
-                </div>
+                </Box>
               );
             })}
-            <div
+            <Box
               style={{
                 height: (IObets.length - visibleRange.end) * ROW_HEIGHT,
               }}
             />
-          </div>
+          </Box>
         </>
       )}
     </Box>

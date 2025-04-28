@@ -63,7 +63,7 @@ const SelectField = ({
         styles={customStyles}
         menuPlacement={getMenuPlacement(id)}
       />
-      {touched && error ? <div style={{ color: "red" }}>{error}</div> : null}
+      {touched && error ? <Box sx={{ color: "red" }}>{error}</Box> : null}
     </Box>
   );
 };

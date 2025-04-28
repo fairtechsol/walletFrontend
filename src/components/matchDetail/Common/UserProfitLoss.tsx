@@ -109,7 +109,7 @@ const UserProfitLoss = ({
             background: "#262626",
           }}
         >
-          <div className="slanted" />
+          <Box className="slanted" />
         </Box>
         <Box
           sx={{
