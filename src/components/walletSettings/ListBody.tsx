@@ -246,7 +246,7 @@ const ListBody = ({ walletAccountDetail }: any) => {
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
           {walletAccountDetail?.fullName}
-        </Typography>{" "}
+        </Typography>
       </Box>
     </Box>
   );

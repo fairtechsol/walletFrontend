@@ -9,9 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  useMediaQuery,
-  useTheme,
+  TextField
 } from "@mui/material";
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,8 +29,6 @@ interface DirectUserBlockProps {
 }
 
 const DirectUserBlock = ({ setShow }: DirectUserBlockProps) => {
-  const theme = useTheme();
-  const matchesxs = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
 
   const { searchUserList } = useSelector(
@@ -112,11 +108,7 @@ const DirectUserBlock = ({ setShow }: DirectUserBlockProps) => {
       }}
     >
       <Box sx={{ marginX: "0", background: "#F8C851", height: "50px" }}>
-        <ListHeaderModal
-          title="Direct User Block"
-          setShow={setShow}
-          matchesxs={matchesxs}
-        />
+        <ListHeaderModal title="Direct User Block" setShow={setShow} />
       </Box>
       <Box
         sx={{

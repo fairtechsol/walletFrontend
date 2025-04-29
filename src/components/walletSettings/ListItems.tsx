@@ -93,9 +93,6 @@ const ListItems = () => {
     if (success) {
       setSettlementUserModal(false);
       dispatch(userListSuccessReset());
-      // setTimeout(() => {
-      //   dispatch(getUsersProfile());
-      // }, 300);
     }
   }, [success]);
   return (
@@ -137,7 +134,7 @@ const ListItems = () => {
               width: isSliderVisible ? "calc(100% + 400px)" : "100%",
             }}
           >
-            <ListHeader userName="User Name" />
+            <ListHeader />
             <ListBody walletAccountDetail={profileDetail} />
           </Box>
         </Box>

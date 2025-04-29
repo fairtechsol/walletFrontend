@@ -1,7 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 import { memo } from "react";
 
-const ListHeaderModal = ({ title, setShow }: any) => {
+interface ListHeaderModalProps {
+  title: string;
+  setShow: () => void;
+}
+
+const ListHeaderModal = ({ title, setShow }: ListHeaderModalProps) => {
   return (
     <Box
       display={"flex"}
