@@ -124,18 +124,27 @@ const AllUserListSeparate = ({
             </Typography>
           </Box>
           {item?.roleName !== "user" && (
-            <StyledImage
-              onClick={handleSubUserClick}
-              src={ArrowDown}
+            <Box
               sx={{
-                width: { lg: "20px", xs: "10px" },
-                height: { lg: "10px", xs: "6px" },
-                transform:
-                  showSubUsers?.id === item?.userId && showChildUserList
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
               }}
-            />
+              onClick={handleSubUserClick}
+            >
+              <StyledImage
+                src={ArrowDown}
+                sx={{
+                  width: { lg: "20px", xs: "10px" },
+                  height: { lg: "10px", xs: "6px" },
+                  transform:
+                    showSubUsers?.id === item?.userId && showChildUserList
+                      ? "rotate(180deg)"
+                      : "rotate(0deg)",
+                }}
+              />
+            </Box>
           )}
         </Box>
         <Box
