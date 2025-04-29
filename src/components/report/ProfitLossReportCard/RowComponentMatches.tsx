@@ -28,45 +28,47 @@ const RowComponentMatches = ({
   const [showBets, setShowBets] = useState(false);
   const [showListOfUsers, setShowListOfUsers] = useState(false);
 
+  const handleGameNameClick = (e: any) => {
+    e.stopPropagation();
+    if (selectedId?.id === item?.runnerId) {
+      if (showListOfUsers) {
+        setShowListOfUsers((prev) => !prev);
+        getBetReport({
+          eventType: "",
+          matchId: "",
+          type: "users_list",
+          betId: "",
+          sessionBet: false,
+        });
+      } else {
+        getUserProfitLoss(item?.runnerId);
+        getBetReport({
+          eventType: item?.eventType,
+          matchId: item?.runnerId,
+          type: "users_list",
+          betId: "",
+          sessionBet: false,
+        });
+        setShowListOfUsers((prev) => !prev);
+      }
+    } else {
+      setShowListOfUsers(true);
+      setShowBets(false);
+      getUserProfitLoss(item?.runnerId);
+      getBetReport({
+        eventType: item?.eventType,
+        matchId: item?.runnerId,
+        type: "users_list",
+        betId: "",
+        sessionBet: false,
+      });
+    }
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box
-        onClick={(e) => {
-          e.stopPropagation();
-          if (selectedId?.id === item?.runnerId) {
-            if (showListOfUsers) {
-              setShowListOfUsers((prev) => !prev);
-              getBetReport({
-                eventType: "",
-                matchId: "",
-                type: "users_list",
-                betId: "",
-                sessionBet: false,
-              });
-            } else {
-              getUserProfitLoss(item?.runnerId);
-              getBetReport({
-                eventType: item?.eventType,
-                matchId: item?.runnerId,
-                type: "users_list",
-                betId: "",
-                sessionBet: false,
-              });
-              setShowListOfUsers((prev) => !prev);
-            }
-          } else {
-            setShowListOfUsers(true);
-            setShowBets(false);
-            getUserProfitLoss(item?.runnerId);
-            getBetReport({
-              eventType: item?.eventType,
-              matchId: item?.runnerId,
-              type: "users_list",
-              betId: "",
-              sessionBet: false,
-            });
-          }
-        }}
+        onClick={handleGameNameClick}
         sx={{
           width: "100%",
           height: "50px",

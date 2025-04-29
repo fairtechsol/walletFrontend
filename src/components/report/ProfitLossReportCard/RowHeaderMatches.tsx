@@ -34,6 +34,34 @@ const RowHeaderMatches = ({
     (state: RootState) => state.report.cardReport
   );
 
+  const handleGameClick = () => {
+    if (!show) {
+      let filter = "";
+      if (user?.id) {
+        filter += `&id=${user?.id}`;
+      }
+      if (startDate && endDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      } else if (startDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+      } else if (endDate) {
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      }
+      dispatch(
+        getDomainProfitLossCard({
+          matchId: item?.matchId,
+          filter: filter,
+        })
+      );
+    }
+    dispatch(resetDomainProfitLossCard());
+    dispatch(resetBetProfitLossCard());
+    dispatch(resetSessionProfitLossCard());
+    getHandleReport(item?.type);
+    setShow((prev: boolean) => !prev);
+  };
+
   useEffect(() => {
     if (item?.type !== type) {
       setShow(false);
@@ -43,39 +71,14 @@ const RowHeaderMatches = ({
   return (
     <>
       <Box
-        onClick={() => {
-          if (!show) {
-            let filter = "";
-            if (user?.id) {
-              filter += `&id=${user?.id}`;
-            }
-            if (startDate && endDate) {
-              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-            } else if (startDate) {
-              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-            } else if (endDate) {
-              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-            }
-            dispatch(
-              getDomainProfitLossCard({
-                matchId: item?.matchId,
-                filter: filter,
-              })
-            );
-          }
-          dispatch(resetDomainProfitLossCard());
-          dispatch(resetBetProfitLossCard());
-          dispatch(resetSessionProfitLossCard());
-          getHandleReport(item?.type);
-          setShow((prev: boolean) => !prev);
-        }}
+        onClick={handleGameClick}
         sx={{
           width: "100%",
           height: { lg: "60px", xs: "50px" },
           background: "white",
           display: "flex",
           padding: 0.1,
+          cursor: "pointer",
         }}
       >
         <Box

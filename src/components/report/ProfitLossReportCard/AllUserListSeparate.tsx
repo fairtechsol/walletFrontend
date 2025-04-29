@@ -85,6 +85,30 @@ const AllUserListSeparate = ({
     }
   };
 
+  const handleShowSubUsers = () => {
+    if (!["user"].includes(item?.roleName)) {
+      if (showSubUsers?.value && showSubUsers?.id === item?.userId) {
+        setSubSusers({
+          value: false,
+          id: "",
+          url: null,
+          roleName: "",
+          eventType: "",
+        });
+        setShowChildUserList(false);
+      } else {
+        setSubSusers({
+          value: true,
+          id: item?.userId,
+          url: item?.url,
+          roleName: item?.roleName,
+          eventType: item?.eventType,
+        });
+        setShowChildUserList(true);
+      }
+    }
+  };
+
   return (
     <Box key={index} sx={{ width: "100%" }}>
       <Box
@@ -155,43 +179,27 @@ const AllUserListSeparate = ({
             </Typography>
           </Box>
           {item?.roleName !== "user" && (
-            <StyledImage
-              onClick={() => {
-                if (!["user"].includes(item?.roleName)) {
-                  if (
-                    showSubUsers?.value &&
-                    showSubUsers?.id === item?.userId
-                  ) {
-                    setSubSusers({
-                      value: false,
-                      id: "",
-                      url: null,
-                      roleName: "",
-                      eventType: "",
-                    });
-                    setShowChildUserList(false);
-                  } else {
-                    setSubSusers({
-                      value: true,
-                      id: item?.userId,
-                      url: item?.url,
-                      roleName: item?.roleName,
-                      eventType: item?.eventType,
-                    });
-                    setShowChildUserList(true);
-                  }
-                }
-              }}
-              src={ArrowDown}
+            <Box
               sx={{
-                width: { lg: "20px", xs: "10px" },
-                height: { lg: "10px", xs: "6px" },
-                transform:
-                  showSubUsers?.id === item?.userId && showChildUserList
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
               }}
-            />
+              onClick={handleShowSubUsers}
+            >
+              <StyledImage
+                src={ArrowDown}
+                sx={{
+                  width: { lg: "20px", xs: "10px" },
+                  height: { lg: "10px", xs: "6px" },
+                  transform:
+                    showSubUsers?.id === item?.userId && showChildUserList
+                      ? "rotate(180deg)"
+                      : "rotate(0deg)",
+                }}
+              />
+            </Box>
           )}
         </Box>
 
@@ -326,11 +334,9 @@ const AllUserListSeparate = ({
                 sx={[
                   {
                     width: { xs: "96%", lg: "100%", md: "100%" },
-                    // marginX: "0.5%",
                     minHeight: "200px",
                     display: "flex",
                     flexDirection: "column",
-                    // justifyContent: "space-between",
                     borderRadius: "10px",
                     borderBottomRightRadius: "0px",
                     borderBottomLeftRadius: "0px",
