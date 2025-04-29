@@ -65,6 +65,30 @@ const RowComponentMatches = ({
     }
   };
 
+  const handleBetClick = (e: any) => {
+    e.stopPropagation();
+    if (selectedId?.id === item?.runnerId && selectedId?.type === "all_bet") {
+      setShowBets((prev) => !prev);
+    } else {
+      setShowListOfUsers(false);
+      setShowBets(true);
+      getBetReport({
+        eventType: item?.eventType,
+        matchId: item?.runnerId,
+        type: "all_bet",
+        betId: "",
+        sessionBet: false,
+      });
+      dispatch(
+        getBetProfitLossCard({
+          runnerId: item?.runnerId,
+          isSession: false,
+          id: user?.id,
+        })
+      );
+    }
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box
@@ -149,32 +173,7 @@ const RowComponentMatches = ({
           )}
         </Box>
         <Box
-          onClick={(e) => {
-            e.stopPropagation();
-            if (
-              selectedId?.id === item?.runnerId &&
-              selectedId?.type === "all_bet"
-            ) {
-              setShowBets((prev) => !prev);
-            } else {
-              setShowListOfUsers(false);
-              setShowBets(true);
-              getBetReport({
-                eventType: item?.eventType,
-                matchId: item?.runnerId,
-                type: "all_bet",
-                betId: "",
-                sessionBet: false,
-              });
-              dispatch(
-                getBetProfitLossCard({
-                  runnerId: item?.runnerId,
-                  isSession: false,
-                  id: user?.id,
-                })
-              );
-            }
-          }}
+          onClick={handleBetClick}
           sx={{
             background: item?.rateProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
             paddingX: "2px",
