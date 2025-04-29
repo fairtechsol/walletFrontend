@@ -18,6 +18,7 @@ const ChildUserList = ({
 
   const getChildUserList = async () => {
     try {
+      setData([]);
       const { data } = await service.get(
         `/user/userwise/profitLoss?runnerId=${matchId}${
           id ? "&userId=" + id + "&roleName=" + roleName : ""
