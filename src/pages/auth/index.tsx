@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { memo } from "react";
 import { Outlet } from "react-router-dom";
 import { FgLogo } from "../../assets";
 import StyledImage from "../../components/Common/StyledImages";
@@ -42,4 +41,4 @@ const Auth = () => {
   );
 };
 
-export default memo(Auth);
+export default Auth;

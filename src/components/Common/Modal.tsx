@@ -17,19 +17,17 @@ const Modal = ({
 
   return (
     <Box
-      sx={[
-        {
-          width: { xs: "96%", lg: "100%", md: "96%" },
-          minHeight: "140px",
-          display: "flex",
-          flexDirection: "column",
-          borderRadius: "10px",
-          borderBottomRightRadius: "0px",
-          borderBottomLeftRadius: "0px",
-          overflow: "hidden",
-          border: "2px solid white",
-        },
-      ]}
+      sx={{
+        width: { xs: "96%", lg: "100%", md: "96%" },
+        minHeight: "140px",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "10px",
+        borderBottomRightRadius: "0px",
+        borderBottomLeftRadius: "0px",
+        overflow: "hidden",
+        border: "2px solid white",
+      }}
     >
       <Box
         p={2}
@@ -131,7 +129,7 @@ const Modal = ({
                   );
                 userPG && navigate(`/${navigateTo}`);
               }}
-            ></Button>
+            />
           </Box>
         </Box>
       </Box>

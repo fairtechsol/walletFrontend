@@ -133,7 +133,7 @@ const Inplay = () => {
               <MatchComponent
                 key={match.id}
                 onClick={() => {
-                  navigate(`/wallet/live_market/matches`, {
+                  navigate("/wallet/live_market/matches", {
                     state: {
                       submit: true,
                       matchId: match?.id,

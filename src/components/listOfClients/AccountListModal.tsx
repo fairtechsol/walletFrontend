@@ -104,20 +104,18 @@ const AccountListTable = ({
   return (
     <>
       <Box
-        sx={[
-          {
-            marginX: "0.5%",
-            width: { xs: "96%", lg: "90%", md: "96%" },
-            minHeight: "200px",
-            borderRadius: "10px",
-            borderBottomRightRadius: "0px",
-            borderBottomLeftRadius: "0px",
-            overflow: "hidden",
-            overflowY: "auto",
-            border: "2px solid white",
-            background: "#F8C851",
-          },
-        ]}
+        sx={{
+          marginX: "0.5%",
+          width: { xs: "96%", lg: "90%", md: "96%" },
+          minHeight: "200px",
+          borderRadius: "10px",
+          borderBottomRightRadius: "0px",
+          borderBottomLeftRadius: "0px",
+          overflow: "hidden",
+          overflowY: "auto",
+          border: "2px solid white",
+          background: "#F8C851",
+        }}
       >
         <Box
           sx={{
