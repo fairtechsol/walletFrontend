@@ -7,6 +7,7 @@ import { RootState } from "../../../store/store";
 import CommissionDot from "../../Common/CommissionDot";
 import Divider from "../../Inplay/Divider";
 import SmallBox from "../MatchOdds/SmallBox";
+import BackLayBox from "./BackLayBox";
 import BoxComponent from "./BoxComponent";
 
 const TournamentOdds = ({
@@ -107,8 +108,8 @@ const TournamentOdds = ({
             background: "#262626",
             display: "flex",
             alignItems: "center",
-            justifyContent: { lg: "flex-end", xs: "flex-end" },
-            paddingRight: { lg: "0", xs: "0" },
+            justifyContent: "flex-end",
+            paddingRight: "0",
           }}
         >
           <SmallBox
@@ -252,56 +253,7 @@ const TournamentOdds = ({
                 MIN:{formatToINR(minBet)} MAX: {formatToINR(maxBet)}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                background: "#319E5B",
-                height: "25px",
-                width: { lg: "60%", xs: "80%" },
-                justifyContent: { lg: "flex-end", xs: "flex-end" },
-              }}
-            >
-              <Box
-                sx={{
-                  background: "#00C0F9",
-                  border: "1px solid #2626264D",
-                  width: { lg: "5vw", xs: "30%" },
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "12px", color: "black", fontWeight: "600" }}
-                >
-                  Back
-                </Typography>
-              </Box>
-              <Box
-                sx={{ width: "3px", display: "flex", background: "white" }}
-              />
-              <Box
-                sx={{
-                  background: "#FF9292",
-                  border: "1px solid #2626264D",
-                  width: { lg: "5vw", xs: "30%" },
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "12px", color: "black", fontWeight: "600" }}
-                >
-                  Lay
-                </Typography>
-              </Box>
-              <Box
-                sx={{ width: ".7px", display: "flex", background: "white" }}
-              />
-            </Box>
+            <BackLayBox />
           </Box>
 
           <Box sx={{ position: "relative", width: "99.8%", background: "red" }}>
@@ -314,7 +266,6 @@ const TournamentOdds = ({
                 sx={{
                   position: "absolute",
                   height: "100%",
-                  // top: "18%",
                   width: "100%",
                   display: "flex",
                   zIndex: "999",
@@ -428,7 +379,6 @@ const TournamentOdds = ({
                   }}
                 >
                   <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
-
                   <Typography
                     sx={{
                       color: "white",

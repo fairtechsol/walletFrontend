@@ -62,7 +62,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
             height: "40px",
             display: "flex",
             width: { lg: "60%", xs: "80%" },
-            justifyContent: { xs: "flex-end", lg: "flex-end" },
+            justifyContent: "flex-end",
             alignItems: "center",
           }}
         >
@@ -77,7 +77,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
                 desktop: "10.17vw",
                 desktop2XL: "10.12vw",
               },
-              justifyContent: { xs: "flex-end", lg: "flex-end" },
+              justifyContent: "flex-end",
               alignItems: "center",
             }}
           >
@@ -92,7 +92,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
                   desktop: "10.17vw",
                   desktop2XL: "10.12vw",
                 },
-                justifyContent: { xs: "flex-end", lg: "flex-end" },
+                justifyContent: "flex-end",
                 alignItems: "center",
               }}
             >
@@ -130,7 +130,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
             background: "white",
             height: "40px",
             width: { lg: "60%", xs: "80%" },
-            justifyContent: { xs: "flex-end", lg: "flex-end" },
+            justifyContent: "flex-end",
             alignItems: "center",
           }}
         >
@@ -150,7 +150,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
                   : 0,
                 false
               )}
-              color={matchesMobile ? "#A7DCFF" : "#A7DCFF"}
+              color="#A7DCFF"
             />
           ) : (
             <Box
@@ -186,7 +186,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
                   : 0,
                 false
               )}
-              color={matchesMobile ? "#FFB5B5" : "#FFB5B5"}
+              color="#FFB5B5"
             />
           ) : (
             <Box

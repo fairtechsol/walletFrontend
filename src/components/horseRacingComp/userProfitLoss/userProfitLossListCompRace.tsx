@@ -51,7 +51,7 @@ const UserProfitLossListCompRace = ({
                     ""
                   ) ?? "N/A"
                 }
-                color={"#ffffff"}
+                color="#ffffff"
                 width={10}
               />
               <Box

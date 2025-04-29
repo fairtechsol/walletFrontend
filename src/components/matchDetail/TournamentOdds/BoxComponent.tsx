@@ -6,7 +6,21 @@ import StyledImage from "../../Common/StyledImages";
 import MoneyBox from "../MatchOdds/MoneyBox";
 import SeperateBox from "../MatchOdds/SeperateBox";
 
-const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
+interface BoxComponentProps {
+  name: string;
+  color: string;
+  rates: any;
+  data: any;
+  marketDetails: any;
+}
+
+const BoxComponent = ({
+  name,
+  color,
+  rates,
+  data,
+  marketDetails,
+}: BoxComponentProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status } = data ?? {};
@@ -66,7 +80,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
             height: "40px",
             display: "flex",
             width: { lg: "60%", xs: "80%" },
-            justifyContent: { xs: "flex-end", lg: "flex-end" },
+            justifyContent: "flex-end",
             alignItems: "center",
           }}
         >
@@ -81,7 +95,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
                 desktop: "10.17vw",
                 desktop2XL: "10.12vw",
               },
-              justifyContent: { xs: "flex-end", lg: "flex-end" },
+              justifyContent: "flex-end",
               alignItems: "center",
             }}
           >
@@ -96,7 +110,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
                   desktop: "10.17vw",
                   desktop2XL: "10.12vw",
                 },
-                justifyContent: { xs: "flex-end", lg: "flex-end" },
+                justifyContent: "flex-end",
                 alignItems: "center",
               }}
             >
@@ -122,7 +136,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
             background: "white",
             height: "40px",
             width: { lg: "60%", xs: "80%" },
-            justifyContent: { xs: "flex-end", lg: "flex-end" },
+            justifyContent: "flex-end",
             alignItems: "center",
           }}
         >
@@ -145,7 +159,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
                   : 0,
                 false
               )}
-              color={matchesMobile ? "#A7DCFF" : "#A7DCFF"}
+              color="#A7DCFF"
             />
           ) : (
             <Box
@@ -181,7 +195,7 @@ const BoxComponent = ({ name, color, rates, data, marketDetails }: any) => {
                   : 0,
                 false
               )}
-              color={matchesMobile ? "#FFB5B5" : "#FFB5B5"}
+              color="#FFB5B5"
             />
           ) : (
             <Box
