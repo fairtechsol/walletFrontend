@@ -386,6 +386,28 @@ const MatchDetail = () => {
     }
   };
 
+  const handleDeletePermanent = () => {
+    if (profileDetail?.roleName == "fairGameWallet") {
+      if (mode.value) {
+        setMode((prev: any) => {
+          return {
+            ...prev,
+            type: "deletePermanent",
+            value: mode.value,
+          };
+        });
+      } else {
+        setMode((prev: any) => {
+          return {
+            ...prev,
+            type: "deletePermanent",
+            value: !mode.value,
+          };
+        });
+      }
+    }
+  }
+
   useEffect(() => {
     if (matchDetail && matchDetail?.stopAt) {
       navigate(`/wallet/${location.pathname.split("/")[2]}/${state.matchType}`);
@@ -842,27 +864,7 @@ const MatchDetail = () => {
                 setSelectedBetData={setSelectedBetData}
                 selectedBetData={selectedBetData}
                 role={state.roleName}
-                deletePermanent={() => {
-                  if (profileDetail?.roleName == "fairGameWallet") {
-                    if (mode.value) {
-                      setMode((prev: any) => {
-                        return {
-                          ...prev,
-                          type: "deletePermanent",
-                          value: mode.value,
-                        };
-                      });
-                    } else {
-                      setMode((prev: any) => {
-                        return {
-                          ...prev,
-                          type: "deletePermanent",
-                          value: !mode.value,
-                        };
-                      });
-                    }
-                  }
-                }}
+                deletePermanent={handleDeletePermanent}
               />
             </Box>
           )}
