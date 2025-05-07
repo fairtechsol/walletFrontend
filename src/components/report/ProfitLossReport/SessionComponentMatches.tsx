@@ -12,6 +12,19 @@ import { AppDispatch, RootState } from "../../../store/store";
 import StyledImage from "../../Common/StyledImages";
 import SessionBetSeperate from "./SessionBetSeperate";
 
+interface SessionComponentMatchesProps {
+  item: any;
+  index: number;
+  showSessionBets: boolean;
+  setShowSessionBets: (val: any) => void;
+  matchId: string;
+  selectedId?: any;
+  getBetReport: (val: any) => void;
+  userDetail?: any;
+  selectedChildBetId?: string;
+  setSelectedChildBetId?: (val: string) => void;
+}
+
 const SessionComponentMatches = ({
   item,
   index,
@@ -23,8 +36,7 @@ const SessionComponentMatches = ({
   userDetail,
   selectedChildBetId,
   setSelectedChildBetId,
-  color,
-}: any) => {
+}: SessionComponentMatchesProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
@@ -49,7 +61,7 @@ const SessionComponentMatches = ({
               id: user?.id,
             })
           );
-          setSelectedChildBetId(item?.betId);
+          setSelectedChildBetId?.(item?.betId);
         } else {
           dispatch(
             getBetProfitLoss({
@@ -76,7 +88,7 @@ const SessionComponentMatches = ({
             roleName: item?.roleName,
           })
         );
-        setSelectedChildBetId(item?.betId);
+        setSelectedChildBetId?.(item?.betId);
       } else {
         dispatch(
           getBetProfitLoss({
@@ -237,7 +249,7 @@ const SessionComponentMatches = ({
             <Typography
               sx={{ fontSize: "15px", fontWeight: "700", color: "white" }}
             >
-              {handleNumber(parseFloat(item?.totalLoss), color)}
+              {handleNumber(parseFloat(item?.totalLoss), "")}
             </Typography>
             <StyledImage
               src={ArrowDown}
@@ -261,7 +273,6 @@ const SessionComponentMatches = ({
         showSessionBets && (
           <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
             <SessionBetSeperate
-              betHistory={false}
               allBetsData={
                 userDetail
                   ? totalBetProfitLossModal
@@ -271,8 +282,6 @@ const SessionComponentMatches = ({
                   ? betProfitLossList
                   : []
               }
-              profit
-              isArrow={true}
             />
           </Box>
         )}

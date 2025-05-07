@@ -7,16 +7,25 @@ import StyledImage from "../../Common/StyledImages";
 import ChildUserList from "./ChildUserList";
 import UserListModalComponent from "./UserListModalComponent";
 
+interface AllUserListSeparateProps {
+  item: any;
+  index: number;
+  getBetReport: (val: any) => void;
+  sessionBetData?: any;
+  matchId: string;
+  bet1Data?: any;
+  sessionBets?: any;
+}
+
 const AllUserListSeparate = ({
   item,
   index,
   getBetReport,
   sessionBetData,
-  selectedId,
   matchId,
   bet1Data,
   sessionBets,
-}: any) => {
+}: AllUserListSeparateProps) => {
   const [showChildUserList, setShowChildUserList] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showBets, setShowBets] = useState(false);
@@ -266,9 +275,7 @@ const AllUserListSeparate = ({
           showBets={showBets}
           showSessions={showSessions}
           showSessionBets={showSessionBets}
-          selectedId={selectedId}
           getBetReport={getBetReport}
-          sessionBetData={sessionBetData}
           matchId={matchId}
         />
       </ModalMUI>
@@ -294,9 +301,7 @@ const AllUserListSeparate = ({
               <ChildUserList
                 id={showSubUsers?.id}
                 url={showSubUsers?.url}
-                show={showSubUsers?.value}
                 eventType={showSubUsers?.eventType}
-                setShow={showSubUsers}
                 matchId={matchId}
                 bet1Data={bet1Data}
                 roleName={showSubUsers?.roleName}

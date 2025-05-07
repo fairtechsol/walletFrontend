@@ -5,15 +5,13 @@ import { ARROWDOWN, ARROWUP, ARROW_UP, DeleteIcon } from "../../../assets";
 import { formatToINR, stripUrl } from "../../../helper";
 import CommissionDot from "../../Common/CommissionDot";
 import StyledImage from "../../Common/StyledImages";
-const AllRateSeperate = ({
-  profit,
-  mark,
-  mark2,
-  allBetsData,
-  count,
-  betHistory,
-  isArrow,
-}: any) => {
+
+interface AllRateSeperateProps {
+  allBetsData: any;
+  count: any;
+}
+
+const AllRateSeperate = ({ allBetsData, count }: AllRateSeperateProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [visible, setVisible] = useState(true);
@@ -126,30 +124,27 @@ const AllRateSeperate = ({
                   "Stake",
                 ]}
               />
-
-              {profit && (
-                <Box
+              <Box
+                sx={{
+                  height: "25px",
+                  width: "12%",
+                  display: "flex",
+                  background: "#319E5B",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  overflow: "hidden",
+                }}
+              >
+                <Typography
                   sx={{
-                    height: "25px",
-                    width: "12%",
-                    display: "flex",
-                    background: "#319E5B",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    overflow: "hidden",
+                    fontWeight: "400",
+                    fontSize: { xs: "10px", lg: ".7vw" },
+                    color: "white",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "400",
-                      fontSize: { xs: "10px", lg: ".7vw" },
-                      color: "white",
-                    }}
-                  >
-                    {matchesMobile ? "P/L" : "Profit Loss"}
-                  </Typography>
-                </Box>
-              )}
+                  {matchesMobile ? "P/L" : "Profit Loss"}
+                </Typography>
+              </Box>
             </Box>
 
             <Box
@@ -205,86 +200,26 @@ const AllRateSeperate = ({
                       </Typography>
                     </Box>
                     <RowComponent header={false} data={i} />
-                    {i?.deleteReason && betHistory && (
+
+                    {i?.deleteReason && (
                       <Box
                         sx={{
                           width: {
-                            xs: profit ? "100%" : "100%",
+                            xs: "100%",
                             alignItems: "flex-end",
                             justifyContent: "center",
                             display: "flex",
-                            lg: profit ? "100 % " : "100% ",
+                            lg: "100% ",
                           },
                           background: "rgba(0, 0, 0, 0.6)",
                           height: "100%",
                           position: "absolute",
                         }}
                       >
-                        <Box sx={{ width: mark2 ? "20%" : "35%" }} />
+                        <Box sx={{ width: "35%" }} />
                       </Box>
                     )}
-                    {i?.deleteReason && betHistory === undefined && (
-                      <Box
-                        sx={{
-                          width: {
-                            xs: profit ? "100%" : "100%",
-                            alignItems: "flex-end",
-                            justifyContent: "center",
-                            display: "flex",
-                            lg: profit ? "100 % " : "100% ",
-                          },
-                          background: "rgba(0, 0, 0, 0.5)",
-                          height: "42px",
-                          position: "absolute",
-                        }}
-                      >
-                        <Box sx={{ width: mark2 ? "20%" : "35%" }} />
-                        <Box
-                          sx={{
-                            width: mark2 ? "80%" : "65%",
-                            height: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            alignSelf: "flex-end",
-                          }}
-                        >
-                          {mark && (
-                            <Typography
-                              sx={{
-                                fontSize: "10px",
-                                fontWeight: "700",
-                                color: "white",
-                                textTransform: "uppercase",
-                              }}
-                            >
-                              Bet{" "}
-                              <span style={{ color: "#e41b23" }}>deleted</span>{" "}
-                              due to ${i?.deleteReason}
-                            </Typography>
-                          )}
-                        </Box>
-                      </Box>
-                    )}
-                    {i?.deleteReason && profit && (
-                      <Box
-                        sx={{
-                          width: {
-                            xs: profit ? "100%" : "100%",
-                            alignItems: "flex-end",
-                            justifyContent: "center",
-                            display: "flex",
-                            lg: profit ? "100 % " : "100% ",
-                          },
-                          background: "rgba(0, 0, 0, 0.6)",
-                          height: "100%",
-                          position: "absolute",
-                        }}
-                      >
-                        <Box sx={{ width: mark2 ? "20%" : "35%" }} />
-                      </Box>
-                    )}
-                    {profit && !i?.deleteReason && (
+                    {!i?.deleteReason && (
                       <Box
                         sx={{
                           height: "40px",
@@ -318,7 +253,7 @@ const AllRateSeperate = ({
                             )}
                           </Typography>
 
-                          {!matchesMobile && !isArrow && (
+                          {!matchesMobile && (
                             <StyledImage
                               sx={{
                                 width: { xs: "12px", lg: "15px" },
@@ -330,7 +265,7 @@ const AllRateSeperate = ({
                         </Box>
                       </Box>
                     )}
-                    {profit && i?.deleteReason && (
+                    {i?.deleteReason && (
                       <Box
                         sx={{
                           height: "40px",
@@ -340,41 +275,6 @@ const AllRateSeperate = ({
                           justifyContent: "center",
                           alignItems: "center",
                           zIndex: 999,
-                        }}
-                      >
-                        <StyledImage
-                          sx={{
-                            width: { xs: "15px", lg: "20px" },
-                            height: { lg: "20px", xs: "14px" },
-                            marginRight: "5px",
-                          }}
-                          src={DeleteIcon}
-                        />
-                        <Typography
-                          sx={{
-                            fontSize: { xs: "7px", lg: ".5vw" },
-                            color: "white",
-                            fontWeight: "700",
-                            width: { lg: "65%", xs: "55%" },
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          Bet <span style={{ color: "#e41b23" }}>Deleted</span>{" "}
-                          Due {"\n"} {i?.deleteReason}
-                        </Typography>
-                      </Box>
-                    )}
-                    {i?.deleteReason && betHistory && (
-                      <Box
-                        sx={{
-                          height: "40px",
-                          width: "30%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          zIndex: 999,
-                          position: "absolute",
-                          right: 0,
                         }}
                       >
                         <StyledImage

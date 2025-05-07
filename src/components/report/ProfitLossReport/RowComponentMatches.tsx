@@ -15,6 +15,15 @@ import AllUserListSeparate from "./AllUserListSeparate";
 import SessionBetSeperate from "./SessionBetSeperate";
 import SessionComponentMatches from "./SessionComponentMatches";
 
+interface RowComponentMatchesProps {
+  index: number;
+  item: any;
+  selectedId: any;
+  getBetReport: (val: any) => void;
+  userProfitLoss: any;
+  getUserProfitLoss: (val: string) => void;
+}
+
 const RowComponentMatches = ({
   index,
   item,
@@ -22,8 +31,7 @@ const RowComponentMatches = ({
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
-  color,
-}: any) => {
+}: RowComponentMatchesProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
@@ -34,6 +42,8 @@ const RowComponentMatches = ({
   const [showSessions, setShowSessions] = useState(false);
   const [showSessionBets, setShowSessionBets] = useState(false);
   const [showListOfUsers, setShowListOfUsers] = useState(false);
+
+  const isCricketOrPolitics = ["cricket", "politics"].includes(item?.eventType);
 
   const handleMatchClick = (e: any) => {
     e.stopPropagation();
@@ -157,15 +167,9 @@ const RowComponentMatches = ({
         <Box
           sx={{
             width: {
-              xs: ["cricket", "politics"].includes(item?.eventType)
-                ? "40%"
-                : "65%",
-              sm: ["cricket", "politics"].includes(item?.eventType)
-                ? "55%"
-                : "80%",
-              lg: ["cricket", "politics"].includes(item?.eventType)
-                ? "56%"
-                : "80%",
+              xs: isCricketOrPolitics ? "40%" : "65%",
+              sm: isCricketOrPolitics ? "55%" : "80%",
+              lg: isCricketOrPolitics ? "56%" : "80%",
             },
             position: "relative",
             height: "100%",
@@ -291,7 +295,7 @@ const RowComponentMatches = ({
                 lineHeight: "0.9",
               }}
             >
-              {handleNumber(parseFloat(item?.rateProfitLoss || 0), color)}{" "}
+              {handleNumber(parseFloat(item?.rateProfitLoss || 0), "")}
               {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
                   ${formatToINR(Number(item?.totalDeduction || 0))})`}
             </Typography>
@@ -310,7 +314,7 @@ const RowComponentMatches = ({
             />
           </Box>
         </Box>
-        {["cricket", "politics"].includes(item?.eventType) && (
+        {isCricketOrPolitics && (
           <Box
             onClick={handleSessionClick}
             sx={{
@@ -368,13 +372,10 @@ const RowComponentMatches = ({
                 {Number(item?.sessionProfitLoss) >= 0 ? (
                   <>
                     <span style={{ visibility: "hidden" }}>-</span>
-                    {handleNumber(
-                      parseFloat(item?.sessionProfitLoss || 0),
-                      color
-                    )}
+                    {handleNumber(parseFloat(item?.sessionProfitLoss || 0), "")}
                   </>
                 ) : (
-                  handleNumber(parseFloat(item?.sessionProfitLoss || 0), color)
+                  handleNumber(parseFloat(item?.sessionProfitLoss || 0), "")
                 )}
               </Typography>
               <StyledImage
@@ -423,8 +424,6 @@ const RowComponentMatches = ({
                         item={{ ...profitLoss, eventType: item?.eventType }}
                         index={index + 1}
                         matchId={item?.matchId}
-                        userId={item?.userId}
-                        showListOfUsers={showListOfUsers}
                         getBetReport={getBetReport}
                       />
                     );
@@ -445,10 +444,8 @@ const RowComponentMatches = ({
                 }}
               >
                 <AllRateSeperate
-                  betHistory={false}
                   count={betProfitLossList?.length}
                   allBetsData={betProfitLossList ? betProfitLossList : []}
-                  profit
                 />
               </Box>
               <Box sx={{ width: { lg: "1vw", xs: 0 } }} />
@@ -506,12 +503,7 @@ const RowComponentMatches = ({
                         },
                       }}
                     >
-                      <SessionBetSeperate
-                        betHistory={false}
-                        allBetsData={betProfitLossList}
-                        profit
-                        isArrow={true}
-                      />
+                      <SessionBetSeperate allBetsData={betProfitLossList} />
                     </Box>
                   )}
               </Box>

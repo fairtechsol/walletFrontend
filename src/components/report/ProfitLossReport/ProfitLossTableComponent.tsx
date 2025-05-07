@@ -3,6 +3,19 @@ import { memo, useState } from "react";
 import Pagination from "../../Common/Pagination";
 import RowHeaderMatches from "./RowHeaderMatches";
 
+interface ProfitLossTableComponentProps {
+  eventData: any;
+  currentPage: number;
+  pageCount: number;
+  setCurrentPage: any;
+  startDate: any;
+  endDate: any;
+  setShow: (val: boolean) => void;
+  show: boolean;
+  userProfitLoss: any;
+  getUserProfitLoss: (val: string) => void;
+}
+
 const ProfitLossTableComponent = ({
   eventData,
   currentPage,
@@ -14,7 +27,7 @@ const ProfitLossTableComponent = ({
   show,
   userProfitLoss,
   getUserProfitLoss,
-}: any) => {
+}: ProfitLossTableComponentProps) => {
   const [eventType, setEvent] = useState("");
   const [selectedId, setSelectedId] = useState({
     type: "",
@@ -62,7 +75,6 @@ const ProfitLossTableComponent = ({
           <RowHeaderMatches
             key={index}
             item={item}
-            show={show}
             startDate={startDate}
             endDate={endDate}
             getHandleReport={getHandleReport}

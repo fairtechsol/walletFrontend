@@ -11,6 +11,19 @@ import AllRateSeperate from "./AllRateSeperate";
 import SessionBetSeperate from "./SessionBetSeperate";
 import SessionComponentMatches from "./SessionComponentMatches";
 
+interface UserListModalComponentProps {
+  setShowModal: (val: any) => void;
+  setShowBets: (val: any) => void;
+  setShowSessionBets: (val: any) => void;
+  setShowSessions: (val: any) => void;
+  item: any;
+  showBets: boolean;
+  showSessions: boolean;
+  showSessionBets: boolean;
+  getBetReport: (val: any) => void;
+  matchId: string; 
+}
+
 const UserListModalComponent = ({
   setShowModal,
   setShowBets,
@@ -20,11 +33,9 @@ const UserListModalComponent = ({
   showBets,
   showSessions,
   showSessionBets,
-  selectedId,
   getBetReport,
-  sessionBetData,
   matchId,
-}: any) => {
+}: UserListModalComponentProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [betData, setBetData] = useState([]);
@@ -424,10 +435,8 @@ const UserListModalComponent = ({
                     }}
                   >
                     <AllRateSeperate
-                      betHistory={false}
                       count={betData?.length}
                       allBetsData={betData}
-                      profit
                     />
                   </Box>
                   <Box sx={{ width: { lg: "1vw", xs: 0 } }} />
@@ -473,13 +482,10 @@ const UserListModalComponent = ({
                                 roleName: item?.roleName,
                               }}
                               index={index + 1}
-                              userId={item?.userId}
                               matchId={item?.matchId}
                               showSessionBets={showSessionBets}
                               setShowSessionBets={setShowSessionBets}
                               getBetReport={getBetReport}
-                              selectedId={selectedId}
-                              sessionBetData={sessionBetData}
                               userDetail={{
                                 id: item?.userId,
                                 roleName: item?.roleName,
@@ -490,7 +496,7 @@ const UserListModalComponent = ({
                           );
                         })}
                     </Box>
-                    {(selectedId?.betId !== "" || selectedChildBetId !== "") &&
+                    {(selectedChildBetId !== "") &&
                       !matchesMobile &&
                       showSessionBets && (
                         <Box
@@ -503,14 +509,11 @@ const UserListModalComponent = ({
                           }}
                         >
                           <SessionBetSeperate
-                            betHistory={false}
                             allBetsData={
                               totalBetProfitLossModal
                                 ? totalBetProfitLossModal
                                 : []
                             }
-                            profit
-                            isArrow={true}
                           />
                         </Box>
                       )}

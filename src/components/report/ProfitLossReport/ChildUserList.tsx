@@ -3,6 +3,18 @@ import { memo, useEffect, useState } from "react";
 import service from "../../../service";
 import AllUserListSeparate from "./AllUserListSeparate";
 
+interface ChildUserListProps {
+  id: string;
+  url: string | null;
+  matchId: string;
+  roleName: string;
+  eventType: string;
+  getBetReport: any;
+  sessionBetData: any;
+  sessionBets: any;
+  bet1Data: any;
+}
+
 const ChildUserList = ({
   id,
   url,
@@ -13,7 +25,7 @@ const ChildUserList = ({
   sessionBetData,
   sessionBets,
   bet1Data,
-}: any) => {
+}: ChildUserListProps) => {
   const [data1, setData] = useState([]);
 
   const getChildUserList = async () => {
@@ -40,7 +52,6 @@ const ChildUserList = ({
     <Box sx={{ width: "100%" }}>
       {data1?.map((profitLoss: any, index: number) => (
         <AllUserListSeparate
-          id={profitLoss?.userId}
           key={index}
           item={{ ...profitLoss, eventType }}
           index={index + 1}
