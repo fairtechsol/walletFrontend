@@ -13,16 +13,25 @@ import ChildUserList from "./ChildUserList";
 import SessionBetSeperate from "./SessionBetSeperate";
 import SessionComponentMatches from "./SessionComponentMatches";
 
+interface AllUserListSeparateProps {
+  item: any;
+  index: number;
+  getBetReport: (val: any) => void;
+  sessionBetData?: any;
+  matchId: string;
+  bet1Data?: any;
+  sessionBets?: any;
+}
+
 const AllUserListSeparate = ({
   item,
   index,
   getBetReport,
   sessionBetData,
-  selectedId,
   matchId,
   bet1Data,
   sessionBets,
-}: any) => {
+}: AllUserListSeparateProps) => {
   const theme = useTheme();
 
   const { totalBetProfitLossModal, user } = useSelector(
@@ -124,6 +133,46 @@ const AllUserListSeparate = ({
       }
     }
   };
+
+  const handleRateClick = (e: any) => {
+    e.stopPropagation();
+    if (showBets) {
+      setShowBets((prev) => !prev);
+    } else {
+      if (showSessions) {
+        setShowSessions(false);
+      }
+      setShowBets((prev) => !prev);
+      getBetDataForChildUser({
+        matchId,
+        userId: item?.userId,
+        url: item?.url,
+        roleName: item?.roleName,
+      });
+    }
+  }
+
+  const handleSessionClick = (e: any) => {
+    e.stopPropagation();
+    if (showSessions) {
+      setShowSessions((prev) => !prev);
+    } else {
+      if (showBets) {
+        setShowBets(false);
+      }
+      if (showSessionBets) {
+        setShowSessionBets(false);
+      }
+      setShowSessions((prev) => !prev);
+      getSessionDataForChildUser({
+        matchId,
+        userId: item?.userId,
+        roleName: item?.roleName,
+        searchId: "",
+        url: item?.url,
+      });
+    }
+  }
 
   return (
     <Box key={index} sx={{ width: "100%" }}>
@@ -466,23 +515,7 @@ const AllUserListSeparate = ({
                       </Box>
                     </Box>
                     <Box
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (showBets) {
-                          setShowBets((prev) => !prev);
-                        } else {
-                          if (showSessions) {
-                            setShowSessions(false);
-                          }
-                          setShowBets((prev) => !prev);
-                          getBetDataForChildUser({
-                            matchId,
-                            userId: item?.userId,
-                            url: item?.url,
-                            roleName: item?.roleName,
-                          });
-                        }
-                      }}
+                      onClick={handleRateClick}
                       sx={{
                         background:
                           item?.rateProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
@@ -564,27 +597,7 @@ const AllUserListSeparate = ({
                     </Box>
                     {item?.eventType === "cricket" && (
                       <Box
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (showSessions) {
-                            setShowSessions((prev) => !prev);
-                          } else {
-                            if (showBets) {
-                              setShowBets(false);
-                            }
-                            if (showSessionBets) {
-                              setShowSessionBets(false);
-                            }
-                            setShowSessions((prev) => !prev);
-                            getSessionDataForChildUser({
-                              matchId,
-                              userId: item?.userId,
-                              roleName: item?.roleName,
-                              searchId: "",
-                              url: item?.url,
-                            });
-                          }
-                        }}
+                        onClick={handleSessionClick}
                         sx={{
                           background:
                             item?.sessionProfitLoss > 0 ? "#27AC1E" : "#E32A2A",
@@ -729,13 +742,10 @@ const AllUserListSeparate = ({
                                       roleName: item?.roleName,
                                     }}
                                     index={index + 1}
-                                    userId={item?.userId}
                                     matchId={item?.matchId}
                                     showSessionBets={showSessionBets}
                                     setShowSessionBets={setShowSessionBets}
                                     getBetReport={getBetReport}
-                                    selectedId={selectedId}
-                                    sessionBetData={sessionBetData}
                                     userDetail={{
                                       id: item?.userId,
                                       roleName: item?.roleName,
@@ -748,8 +758,7 @@ const AllUserListSeparate = ({
                                 );
                               })}
                           </Box>
-                          {(selectedId?.betId !== "" ||
-                            selectedChildBetId !== "") &&
+                          {selectedChildBetId !== "" &&
                             !matchesMobile &&
                             showSessionBets && (
                               <Box
@@ -803,9 +812,7 @@ const AllUserListSeparate = ({
                 <ChildUserList
                   id={showSubUsers?.id}
                   url={showSubUsers?.url}
-                  show={showSubUsers?.value}
                   eventType={showSubUsers?.eventType}
-                  setShow={showSubUsers}
                   matchId={matchId}
                   bet1Data={bet1Data}
                   roleName={showSubUsers?.roleName}

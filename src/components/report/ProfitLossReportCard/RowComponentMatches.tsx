@@ -283,8 +283,6 @@ const RowComponentMatches = ({
                           item={{ ...profitLoss, eventType: item?.eventType }}
                           index={index + 1}
                           matchId={item?.runnerId}
-                          userId={item?.userId}
-                          showListOfUsers={showListOfUsers}
                           getBetReport={getBetReport}
                         />
                       );
