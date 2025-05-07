@@ -2,6 +2,19 @@ import { Box, Typography } from "@mui/material";
 import { stripUrl } from "../../../helper";
 import CommissionDot from "../../Common/CommissionDot";
 
+interface SingleBoxProps {
+  data: any;
+  header: boolean;
+  color: any;
+  up?: boolean;
+  first?: boolean;
+  time?: string;
+  isPercent?: boolean;
+  rate?: string;
+  domain?: string;
+  isCommissionActive?: boolean;
+}
+
 const SingleBox = ({
   data,
   header,
@@ -13,7 +26,7 @@ const SingleBox = ({
   rate,
   domain,
   isCommissionActive,
-}: any) => {
+}: SingleBoxProps) => {
   return !header ? (
     first ? (
       <Box
