@@ -9,6 +9,15 @@ import StyledImage from "../../Common/StyledImages";
 import AllRateSeperate from "./AllRateSeperate";
 import AllUserListSeparate from "./AllUserListSeparate";
 
+interface RowComponentMatchesProps {
+  index: number;
+  item: any;
+  selectedId: any;
+  getBetReport: (val: any) => void;
+  userProfitLoss: any;
+  getUserProfitLoss: (val: string) => void;
+}
+
 const RowComponentMatches = ({
   index,
   item,
@@ -16,8 +25,7 @@ const RowComponentMatches = ({
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
-  color,
-}: any) => {
+}: RowComponentMatchesProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
@@ -226,7 +234,7 @@ const RowComponentMatches = ({
                 lineHeight: "0.9",
               }}
             >
-              {handleNumber(parseFloat(item?.rateProfitLoss || 0), color)}{" "}
+              {handleNumber(parseFloat(item?.rateProfitLoss || 0), "")}
               {`(${matchesMobile ? "TB" : "Total Bet"}: 
                   ${formatToINR(Number(item?.totalBet || 0))})`}
             </Typography>
@@ -298,12 +306,10 @@ const RowComponentMatches = ({
                 }}
               >
                 <AllRateSeperate
-                  betHistory={false}
                   count={betProfitLossListCard?.length}
                   allBetsData={
                     betProfitLossListCard ? betProfitLossListCard : []
                   }
-                  profit
                 />
               </Box>
               <Box sx={{ width: { lg: "1vw", xs: 0 } }} />

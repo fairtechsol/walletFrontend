@@ -667,10 +667,8 @@ const AllUserListSeparate = ({
                           }}
                         >
                           <AllRateSeperate
-                            betHistory={false}
                             count={betData?.length}
                             allBetsData={betData}
-                            profit
                           />
                         </Box>
                         <Box sx={{ width: { lg: "1vw", xs: 0 } }} />

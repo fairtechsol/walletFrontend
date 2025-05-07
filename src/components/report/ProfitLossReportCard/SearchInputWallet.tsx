@@ -2,39 +2,44 @@ import { Box, TextField, Typography } from "@mui/material";
 import { memo, useState } from "react";
 import { ARROWDROPDOWN } from "../../../assets";
 
+interface SearchInputWalletProps {
+  title: string;
+  data: any;
+  containerStyle: any;
+  setSearch: (val: string) => void;
+  search: any;
+}
+
 const SearchInputWallet = ({
   title,
   data,
   containerStyle,
-  inputContainerStyle,
   setSearch,
   search,
-}: any) => {
+}: SearchInputWalletProps) => {
   const [open, setOpen] = useState(false);
 
   const Block = ({ i }: any) => {
     return (
-      <>
-        <Typography
-          onClick={() => {
-            setSearch(i);
-            setOpen(false);
-          }}
-          sx={{
-            paddingY: "5px",
-            paddingLeft: "10px",
-            fontSize: "10px",
-            fontWeight: "500",
-            color: "black",
-            "&:hover": {
-              cursor: "pointer",
-              background: "#3498ff33",
-            },
-          }}
-        >
-          {i?.userName}
-        </Typography>
-      </>
+      <Typography
+        onClick={() => {
+          setSearch(i);
+          setOpen(false);
+        }}
+        sx={{
+          paddingY: "5px",
+          paddingLeft: "10px",
+          fontSize: "10px",
+          fontWeight: "500",
+          color: "black",
+          "&:hover": {
+            cursor: "pointer",
+            background: "#3498ff33",
+          },
+        }}
+      >
+        {i?.userName}
+      </Typography>
     );
   };
 
@@ -54,20 +59,17 @@ const SearchInputWallet = ({
         onClick={() => {
           setOpen(!open);
         }}
-        sx={[
-          {
-            width: "100%",
-            height: "37px",
-            justifyContent: "space-between",
-            alignItems: "center",
-            display: "flex",
-            background: "white",
-            borderRadius: "3px",
-            border: "2px solid #DEDEDE",
-            paddingX: "7px",
-          },
-          inputContainerStyle,
-        ]}
+        sx={{
+          width: "100%",
+          height: "37px",
+          justifyContent: "space-between",
+          alignItems: "center",
+          display: "flex",
+          background: "white",
+          borderRadius: "3px",
+          border: "2px solid #DEDEDE",
+          paddingX: "7px",
+        }}
       >
         <TextField
           variant="standard"

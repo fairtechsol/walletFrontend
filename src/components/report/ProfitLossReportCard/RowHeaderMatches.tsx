@@ -15,18 +15,29 @@ import { gameIconConstants } from "../../../utils/Constants";
 import StyledImage from "../../Common/StyledImages";
 import RowComponentMatches from "./RowComponentMatches";
 
+interface RowHeaderMatchesProps {
+  item: any;
+  startDate: any;
+  endDate: any;
+  getHandleReport: (val: string) => void;
+  selectedId: any;
+  getBetReport: (val: any) => void;
+  userProfitLoss: any;
+  getUserProfitLoss: (val: string) => void;
+  type: string;
+}
+
 const RowHeaderMatches = ({
   item,
   startDate,
   endDate,
   getHandleReport,
-  color,
   selectedId,
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
   type,
-}: any) => {
+}: RowHeaderMatchesProps) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const [show, setShow] = useState(false);
   const dispatch: AppDispatch = useDispatch();
@@ -173,7 +184,7 @@ const RowHeaderMatches = ({
                 lineHeight: "0.9",
               }}
             >
-              {handleNumber(parseFloat(item?.totalLoss || 0), color)}
+              {handleNumber(parseFloat(item?.totalLoss || 0), "")}
             </Typography>
           </Box>
         </Box>
