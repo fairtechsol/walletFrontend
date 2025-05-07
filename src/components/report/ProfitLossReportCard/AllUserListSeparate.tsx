@@ -750,14 +750,11 @@ const AllUserListSeparate = ({
                                 }}
                               >
                                 <SessionBetSeperate
-                                  betHistory={false}
                                   allBetsData={
                                     totalBetProfitLossModal
                                       ? totalBetProfitLossModal
                                       : []
                                   }
-                                  profit
-                                  isArrow={true}
                                 />
                               </Box>
                             )}

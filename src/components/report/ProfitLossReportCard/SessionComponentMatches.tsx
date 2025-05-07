@@ -258,7 +258,6 @@ const SessionComponentMatches = ({
         showSessionBets && (
           <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
             <SessionBetSeperate
-              betHistory={false}
               allBetsData={
                 userDetail
                   ? totalBetProfitLossModal
@@ -268,8 +267,6 @@ const SessionComponentMatches = ({
                   ? betProfitLossList
                   : []
               }
-              profit
-              isArrow={true}
             />
           </Box>
         )}
