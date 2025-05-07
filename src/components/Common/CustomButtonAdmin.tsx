@@ -1,12 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 
-const CustomButtonAdmin = (props: any) => {
-  const { btnStyle, onClick } = props;
+interface CustomButtonAdminProps {
+  btnStyle: any;
+  onClick: () => void;
+}
 
+const CustomButtonAdmin = ({ btnStyle, onClick }: CustomButtonAdminProps) => {
   return (
     <Box
-      onClick={() => onClick()}
+      onClick={onClick}
       sx={[
         {
           width: "200px",

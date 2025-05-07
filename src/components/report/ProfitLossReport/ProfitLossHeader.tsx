@@ -4,19 +4,29 @@ import Calendar from "../../Common/Calendar";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
 import SearchInputWallet from "./SearchInputWallet";
 
+interface ProfitLossHeaderProps {
+  clientData: any;
+  setSearch: any;
+  search: any;
+  startDate: any;
+  setEndDate: any;
+  setStartDate: any;
+  endDate: any;
+  onClick: any;
+  title: string;
+}
+
 const ProfitLossHeader = ({
-  type,
   clientData,
   setSearch,
   search,
   startDate,
   setEndDate,
   setStartDate,
-  setSelectedUser,
   endDate,
   onClick,
   title,
-}: any) => {
+}: ProfitLossHeaderProps) => {
   return (
     <Box
       sx={{
@@ -61,24 +71,21 @@ const ProfitLossHeader = ({
             padding: "10px 20px",
           }}
         >
-          {type !== "user" && (
-            <Box
-              sx={{
-                display: "block",
-                width: { xs: "100%", lg: "40%" },
-              }}
-            >
-              <Box sx={{ width: "10px" }} />
-              <SearchInputWallet
-                containerStyle={{ width: "100% !important " }}
-                data={clientData}
-                title={"Search By Client Name"}
-                setSearch={setSearch}
-                search={search}
-                setSelectedUser={setSelectedUser}
-              />
-            </Box>
-          )}
+          <Box
+            sx={{
+              display: "block",
+              width: { xs: "100%", lg: "40%" },
+            }}
+          >
+            <Box sx={{ width: "10px" }} />
+            <SearchInputWallet
+              containerStyle={{ width: "100% !important " }}
+              data={clientData}
+              title={"Search By Client Name"}
+              setSearch={setSearch}
+              search={search}
+            />
+          </Box>
 
           <Box sx={{ width: "10px" }} />
 

@@ -101,10 +101,7 @@ const YellowHeader = ({
                 marginTop: matchesMobile ? "25px" : 0,
                 marginLeft: matchesMobile ? "10px" : "20px",
               }}
-              onClick={() => {
-                getAccountStatement();
-              }}
-              getAccountStatement={getAccountStatement}
+              onClick={getAccountStatement}
             />
           )}
         </Box>
@@ -126,7 +123,6 @@ const YellowHeader = ({
                 getAccountStatement(fromDate, toDate);
               }
             }}
-            getAccountStatement={getAccountStatement}
           />
         )}
       </Box>
