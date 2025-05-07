@@ -18,7 +18,7 @@ const RowComponent = ({ header, data }: RowComponentProps) => {
   };
   const getColor = () => {
     if (header) {
-      return "black";
+      return "#000";
     } else if (data?.betType === "BACK" || data?.betType == "YES") {
       return "#CEEBFF";
     } else if (data?.betType === "LAY" || data?.betType == "NO") {
@@ -31,7 +31,7 @@ const RowComponent = ({ header, data }: RowComponentProps) => {
       sx={{
         width: "100%",
         height: header ? "25px" : "40px",
-        background: "white",
+        background: "#fff",
         justifyContent: "space-between",
         alignItems: "center",
         display: "flex",
