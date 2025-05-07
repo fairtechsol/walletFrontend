@@ -31,11 +31,14 @@ const ChildUserList = ({
   const getChildUserList = async () => {
     try {
       setData([]);
-      const { data } = await service.get(
-        `/user/userwise/profitLoss?matchId=${matchId}${
-          id ? "&userId=" + id + "&roleName=" + roleName : ""
-        }${url ? "&url=" + url : ""}`
-      );
+      const { data } = await service.get("/user/userwise/profitLoss", {
+        params: {
+          matchId: matchId,
+          userId: id,
+          roleName: roleName,
+          url: url,
+        },
+      });
       if (data) {
         setData(data);
       }
