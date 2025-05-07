@@ -48,17 +48,26 @@ const AllUserListSeparate = ({
 
   const getBetDataForChildUser = async (props: any) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS_CARD}?runnerId=${props?.matchId}${
-          props.betId ? `&betId=${props.betId}` : ""
-        }&isSession=${false}${user.id ? `&id=${user.id}` : ""}${
-          props.url ? `&url=${props.url}` : ""
-        }${
-          props.userId
-            ? `&userId=${props.userId}&roleName=${props.roleName}`
-            : ""
-        }`
-      );
+      let params: any = {
+        runnerId: props?.matchId,
+        isSession: false,
+      };
+      if (props?.betId) {
+        params["betId"] = props?.betId;
+      }
+      if (user?.id) {
+        params["id"] = user.id;
+      }
+      if (props.url) {
+        params["url"] = props.url;
+      }
+      if (props.userId) {
+        params["userId"] = props.userId;
+        params["roleName"] = props.roleName;
+      }
+      const resp = await service.get(ApiConstants.MATCH.BET_PROFIT_LOSS_CARD, {
+        params,
+      });
       if (resp) {
         setBetData(resp?.data);
       }
@@ -68,15 +77,22 @@ const AllUserListSeparate = ({
   };
   const getSessionDataForChildUser = async (props: any) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${props.matchId}${
-          user.id ? `&id=${user.id}` : ""
-        }${
-          props.userId
-            ? `&userId=${props.userId}&roleName=${props.roleName}`
-            : ""
-        }${props.url ? `&url=${props.url}` : ""}`
-      );
+      let params: any = {
+        matchId: props?.matchId,
+      };
+      if (user?.id) {
+        params["id"] = user.id;
+      }
+      if (props.url) {
+        params["url"] = props.url;
+      }
+      if (props.userId) {
+        params["userId"] = props.userId;
+        params["roleName"] = props.roleName;
+      }
+      const resp = await service.get(ApiConstants.MATCH.SESSION_PROFIT_LOSS, {
+        params,
+      });
       if (resp) {
         setSessionData(resp?.data);
       }
@@ -174,8 +190,7 @@ const AllUserListSeparate = ({
               }}
             >
               {item?.userName}
-              {`
-              ${item?.url ? "(" + stripUrl(item?.url) + ")" : ""}`}
+              {`${item?.url ? "(" + stripUrl(item?.url) + ")" : ""}`}
             </Typography>
           </Box>
           {item?.roleName !== "user" && (
@@ -679,7 +694,6 @@ const AllUserListSeparate = ({
                         sx={{
                           width: { xs: "100%", lg: "100%" },
                           marginTop: { xs: ".25vh" },
-                          // marginLeft: { lg: "4%" },
                           display: "flex",
                           flexDirection: { lg: "row", xs: "column" },
                         }}
