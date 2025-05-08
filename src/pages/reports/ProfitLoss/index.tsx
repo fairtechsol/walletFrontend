@@ -17,12 +17,11 @@ const ProfitLossReport = () => {
   const defaultDate = new Date();
   defaultDate.setDate(defaultDate.getDate() - 10);
   const dispatch: AppDispatch = useDispatch();
-  const [pageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [event, setEvent] = useState("");
   const [search, setSearch] = useState<any>("");
   const [startDate, setStartDate] = useState<any>(defaultDate);
   const [endDate, setEndDate] = useState<any>();
-  const [show, setShow] = useState(false);
   const [userProfitLoss, setUserProfitLoss] = useState([]);
 
   const { totalProfitLossList, user } = useSelector(
@@ -35,7 +34,6 @@ const ProfitLossReport = () => {
 
   const handleClick = () => {
     try {
-      setShow(false);
       let filter = "";
       dispatch(updateUserSearchId({ search }));
       if (search?.id) {
@@ -68,11 +66,18 @@ const ProfitLossReport = () => {
   const getUserProfitLoss = async (matchId: string) => {
     try {
       setUserProfitLoss([]);
-      const { data } = await service.get(
-        `/user/userwise/profitLoss?matchId=${matchId}${
-          user?.id ? "&id=" + user?.id : ""
-        }${user?.domain ? "&url=" + user?.domain : ""}`
-      );
+      let params: any = {
+        matchId,
+      };
+      if (user?.id) {
+        params["id"] = user?.id;
+      }
+      if (user?.domain) {
+        params["url"] = user?.domain;
+      }
+      const { data } = await service.get("/user/userwise/profitLoss", {
+        params,
+      });
       if (data) {
         setUserProfitLoss(data);
       }
@@ -130,16 +135,15 @@ const ProfitLossReport = () => {
         Profit/Loss for Event Type
       </Typography>
       <ProfitLossTableComponent
-        show={show}
-        setShow={setShow}
         startDate={startDate}
         endDate={endDate}
         eventData={totalProfitLossList && totalProfitLossList}
         currentPage={currentPage}
-        pageCount={pageCount}
         setCurrentPage={setCurrentPage}
         userProfitLoss={userProfitLoss}
         getUserProfitLoss={getUserProfitLoss}
+        setEvent={setEvent}
+        event={event}
       />
     </>
   );

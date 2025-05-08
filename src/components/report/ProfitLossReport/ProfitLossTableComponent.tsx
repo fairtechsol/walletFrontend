@@ -1,34 +1,38 @@
 import { Typography } from "@mui/material";
 import { memo, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { Constants } from "../../../utils/Constants";
 import Pagination from "../../Common/Pagination";
 import RowHeaderMatches from "./RowHeaderMatches";
 
 interface ProfitLossTableComponentProps {
   eventData: any;
   currentPage: number;
-  pageCount: number;
   setCurrentPage: any;
   startDate: any;
   endDate: any;
-  setShow: (val: boolean) => void;
-  show: boolean;
   userProfitLoss: any;
   getUserProfitLoss: (val: string) => void;
+  setEvent: (val: string) => void;
+  event: string;
 }
 
 const ProfitLossTableComponent = ({
   eventData,
   currentPage,
-  pageCount,
   setCurrentPage,
   startDate,
   endDate,
-  setShow,
-  show,
   userProfitLoss,
   getUserProfitLoss,
+  setEvent,
+  event,
 }: ProfitLossTableComponentProps) => {
-  const [eventType, setEvent] = useState("");
+  const { domainProfitLossList } = useSelector(
+    (state: RootState) => state.report.reportList
+  );
+
   const [selectedId, setSelectedId] = useState({
     type: "",
     id: "",
@@ -37,8 +41,7 @@ const ProfitLossTableComponent = ({
   });
 
   const getHandleReport = (eventType: any) => {
-    setEvent(eventType);
-    if (show) {
+    if (event === eventType) {
       setSelectedId((prev) => ({
         ...prev,
         type: "",
@@ -47,7 +50,8 @@ const ProfitLossTableComponent = ({
         sessionBet: false,
       }));
     }
-    if (!show) {
+    if (event !== eventType) {
+      setCurrentPage(1);
       setSelectedId((prev) => ({
         ...prev,
         type: "",
@@ -55,8 +59,8 @@ const ProfitLossTableComponent = ({
         betId: "",
         sessionBet: false,
       }));
+      setEvent(eventType);
     }
-    setShow(!show);
   };
 
   const getBetReport = (value: any) => {
@@ -67,6 +71,14 @@ const ProfitLossTableComponent = ({
       sessionBet: value?.sessionBet,
     });
   };
+  const totalPages = Math.ceil(
+    domainProfitLossList?.length / Constants.pageLimit
+  );
+
+  const paginatedData = domainProfitLossList?.slice(
+    (currentPage - 1) * Constants.pageLimit,
+    currentPage * Constants.pageLimit
+  );
 
   return eventData?.length > 0 ? (
     <>
@@ -82,15 +94,17 @@ const ProfitLossTableComponent = ({
             getBetReport={getBetReport}
             userProfitLoss={userProfitLoss}
             getUserProfitLoss={getUserProfitLoss}
-            eventType={eventType}
+            eventType={event}
+            paginatedData={paginatedData}
+            currentPage={currentPage}
           />
         );
       })}
 
-      {eventType && (
+      {event && (
         <Pagination
           currentPage={currentPage}
-          pages={pageCount}
+          pages={totalPages}
           setCurrentPage={setCurrentPage}
         />
       )}

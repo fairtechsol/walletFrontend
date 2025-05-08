@@ -14,6 +14,7 @@ import AllRateSeperate from "./AllRateSeperate";
 import AllUserListSeparate from "./AllUserListSeparate";
 import SessionBetSeperate from "./SessionBetSeperate";
 import SessionComponentMatches from "./SessionComponentMatches";
+import { Constants } from "../../../utils/Constants";
 
 interface RowComponentMatchesProps {
   index: number;
@@ -22,6 +23,7 @@ interface RowComponentMatchesProps {
   getBetReport: (val: any) => void;
   userProfitLoss: any;
   getUserProfitLoss: (val: string) => void;
+  currentPage: number;
 }
 
 const RowComponentMatches = ({
@@ -31,6 +33,7 @@ const RowComponentMatches = ({
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
+  currentPage,
 }: RowComponentMatchesProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -161,7 +164,7 @@ const RowComponentMatches = ({
           <Typography
             sx={{ fontSize: "14px", color: "white", fontWeight: "600" }}
           >
-            {0 + index}
+            {0 + index + Constants.pageLimit * (currentPage - 1)}
           </Typography>
         </Box>
         <Box

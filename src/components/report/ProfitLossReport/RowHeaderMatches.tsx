@@ -25,6 +25,8 @@ interface RowHeaderMatchesProps {
   userProfitLoss: any;
   getUserProfitLoss: (val: string) => void;
   eventType: string;
+  paginatedData: any;
+  currentPage: number;
 }
 
 const RowHeaderMatches = ({
@@ -37,15 +39,14 @@ const RowHeaderMatches = ({
   userProfitLoss,
   getUserProfitLoss,
   eventType,
+  paginatedData,
+  currentPage
 }: RowHeaderMatchesProps) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const theme = useTheme();
   const [show, setShow] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
-  const { domainProfitLossList } = useSelector(
-    (state: RootState) => state.report.reportList
-  );
 
   const handleEventClick = () => {
     if (!show) {
@@ -237,7 +238,7 @@ const RowHeaderMatches = ({
       </Box>
       {show &&
         eventType === item?.eventType &&
-        domainProfitLossList?.map((item: any, index: number) => {
+        paginatedData?.map((item: any, index: number) => {
           return (
             <RowComponentMatches
               key={index}
@@ -247,6 +248,7 @@ const RowHeaderMatches = ({
               getBetReport={getBetReport}
               userProfitLoss={userProfitLoss}
               getUserProfitLoss={getUserProfitLoss}
+              currentPage={currentPage}
             />
           );
         })}
