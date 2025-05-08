@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { debounce } from "lodash";
 import moment from "moment";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProfitLossHeader from "../../../components/report/ProfitLossReport/ProfitLossHeader";
 import ProfitLossTableComponent from "../../../components/report/ProfitLossReport/ProfitLossTableComponent";
@@ -32,7 +32,7 @@ const ProfitLossReport = () => {
     (state: RootState) => state.user.userList
   );
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     try {
       let filter = "";
       dispatch(updateUserSearchId({ search }));
@@ -51,7 +51,7 @@ const ProfitLossReport = () => {
     } catch (error) {
       console.error("Error:", (error as Error)?.message);
     }
-  };
+  }, [search, startDate, endDate]);
 
   const debouncedInputValue = useMemo(() => {
     return debounce((value) => {
@@ -63,28 +63,31 @@ const ProfitLossReport = () => {
     }, 500);
   }, []);
 
-  const getUserProfitLoss = async (matchId: string) => {
-    try {
-      setUserProfitLoss([]);
-      let params: any = {
-        matchId,
-      };
-      if (user?.id) {
-        params["id"] = user?.id;
+  const getUserProfitLoss = useCallback(
+    async (matchId: string) => {
+      try {
+        setUserProfitLoss([]);
+        let params: any = {
+          matchId,
+        };
+        if (user?.id) {
+          params["id"] = user?.id;
+        }
+        if (user?.domain) {
+          params["url"] = user?.domain;
+        }
+        const { data } = await service.get("/user/userwise/profitLoss", {
+          params,
+        });
+        if (data) {
+          setUserProfitLoss(data);
+        }
+      } catch (e) {
+        console.log(e);
       }
-      if (user?.domain) {
-        params["url"] = user?.domain;
-      }
-      const { data } = await service.get("/user/userwise/profitLoss", {
-        params,
-      });
-      if (data) {
-        setUserProfitLoss(data);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    },
+    [user]
+  );
 
   useEffect(() => {
     try {
