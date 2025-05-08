@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../../../components/Common/Pagination";
 import Loader from "../../../components/Loader";
@@ -28,7 +28,7 @@ const AccountStatement = () => {
     (state: RootState) => state.user.reportList
   );
 
-  const headerClick = () => {
+  const headerClick = useCallback(() => {
     try {
       let filter = "";
       if (fromDate && toDate) {
@@ -54,7 +54,7 @@ const AccountStatement = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [profileDetail?.id, fromDate, toDate, pageLimit, searchValue]);
 
   useEffect(() => {
     if (profileDetail) {
