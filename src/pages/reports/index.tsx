@@ -59,7 +59,7 @@ const Reports = () => {
     dispatch(resetSearchUserList());
   };
 
-  const handleMenuItemClick = (x: any) => {
+  const handleMenuItemClick = (x: { title: string; link: string }) => {
     if (x?.link) {
       navigate(x.link);
     } else {
@@ -92,16 +92,18 @@ const Reports = () => {
             borderRadius: "5px",
           }}
         >
-          {menutItems1.map((x: any, index: number) => (
-            <MenuItem
-              key={index}
-              dense={true}
-              sx={classes.MenuItemsx}
-              onClick={() => handleMenuItemClick(x)}
-            >
-              {x.title}
-            </MenuItem>
-          ))}
+          {menutItems1.map(
+            (x: { title: string; link: string }, index: number) => (
+              <MenuItem
+                key={index}
+                dense={true}
+                sx={classes.MenuItemsx}
+                onClick={() => handleMenuItemClick(x)}
+              >
+                {x.title}
+              </MenuItem>
+            )
+          )}
         </Box>
       </Box>
       <Modal

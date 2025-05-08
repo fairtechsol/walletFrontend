@@ -9,7 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField
+  TextField,
 } from "@mui/material";
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,7 +48,7 @@ const DirectUserBlock = ({ setShow }: DirectUserBlockProps) => {
     );
   };
 
-  const handleToggle = async (userDetail: any, field: any) => {
+  const handleToggle = async (userDetail: any, field: string) => {
     try {
       if (transactionPassword) {
         const payload = {

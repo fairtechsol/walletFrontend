@@ -1,7 +1,12 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { memo } from "react";
 
-const AllBetsHeaderRow = ({ tag, mode }: any) => {
+interface AllBetsHeaderRowProps {
+  tag: boolean;
+  mode: any;
+}
+
+const AllBetsHeaderRow = ({ tag, mode }: AllBetsHeaderRowProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (

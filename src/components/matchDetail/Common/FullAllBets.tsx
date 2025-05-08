@@ -12,6 +12,16 @@ const ITEMS_PER_PAGE = 100;
 const BUFFER_SIZE = 30;
 const ROW_HEIGHT = 35;
 
+interface FullAllBetsProps {
+  tag: any;
+  mode?: any;
+  IObets: any;
+  selectedBetData?: any;
+  setSelectedBetData?: (val: any) => void;
+  role?: any;
+  deletePermanent?: () => void;
+}
+
 const FullAllBets = ({
   tag,
   mode,
@@ -20,7 +30,7 @@ const FullAllBets = ({
   setSelectedBetData,
   role,
   deletePermanent,
-}: any) => {
+}: FullAllBetsProps) => {
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -218,14 +228,14 @@ const FullAllBets = ({
         const updatedSelectedBetData = selectedBetData.filter(
           (item: any) => item?.id !== i?.values[0].id
         );
-        setSelectedBetData(updatedSelectedBetData);
+        setSelectedBetData?.(updatedSelectedBetData);
         const updatedX = x.filter((v: any) => v?.id !== i?.values[0]?.id);
         x = updatedX;
         setSelectedData(updatedX);
       } else {
         if (mode?.type == "edit") {
           if (i?.values[0].deleteReason) {
-            setSelectedBetData([
+            setSelectedBetData?.([
               ...selectedBetData,
               {
                 id: i?.values[0].id,
@@ -249,7 +259,7 @@ const FullAllBets = ({
           mode?.type === "deletePermanent"
         ) {
           if (!i?.values[0].deleteReason) {
-            setSelectedBetData([
+            setSelectedBetData?.([
               ...selectedBetData,
               {
                 id: i?.values[0].id,
@@ -374,7 +384,7 @@ const FullAllBets = ({
               marginRight: "2px",
             }}
             onDoubleClick={() => {
-              deletePermanent();
+              deletePermanent?.();
             }}
           >
             <Typography

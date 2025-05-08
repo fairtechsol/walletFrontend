@@ -105,9 +105,7 @@ const Input: React.FC<InputInterface> = ({
         {img && (
           <img
             src={showPass ? img : img1}
-            onClick={() => {
-              setShowPass(!showPass);
-            }}
+            onClick={() => setShowPass(!showPass)}
             alt="side input"
             style={{
               height: matches ? "0.5em" : "0.6rem",
