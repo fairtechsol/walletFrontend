@@ -89,7 +89,6 @@ const ProfitLossTableComponent = ({
 
       {eventType && (
         <Pagination
-          getListOfUser={() => {}}
           currentPage={currentPage}
           pages={pageCount}
           setCurrentPage={setCurrentPage}
