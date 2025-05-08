@@ -34,7 +34,6 @@ const AccountListRow = ({
   const navigate = useNavigate();
 
   const [showUserModal, setShowUserModal] = useState(false);
-  const [showModalMessage] = useState("No data found");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showCommissionReport, setShowCommissionReport] = useState({
     value: false,
@@ -591,7 +590,7 @@ const AccountListRow = ({
             {!element?.isUrl && !isUrl && (
               <Box
                 sx={{
-                  width: "100% ",
+                  width: "100%",
                   height: "100%",
                   padding: "10px",
                   display: { lg: "block", xs: "flex" },
@@ -838,7 +837,7 @@ const AccountListRow = ({
 
       {showSuccessModal && (
         <Modal
-          message={showModalMessage}
+          message={"No data found"}
           setShowSuccessModal={setShowSuccessModal}
           showSuccessModal={showSuccessModal}
           buttonMessage="OK"

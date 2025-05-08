@@ -3,7 +3,7 @@ import { handleNumber } from "../../helper";
 import StyledImage from "../Common/StyledImages";
 import { memo } from "react";
 
-const SubHeaderListRow = ({ data, color }: any) => {
+const SubHeaderListRow = ({ data }: { data: any }) => {
   return (
     <Box
       sx={{
@@ -41,10 +41,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(
-            parseFloat(data?.totalCreditReference || "0.00"),
-            color
-          )}
+          {handleNumber(parseFloat(data?.totalCreditReference || "0.00"), "")}
         </Typography>
       </Box>
       <Box
@@ -60,7 +57,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(data?.currBalance || 0), color)}
+          {handleNumber(parseFloat(data?.currBalance || 0), "")}
         </Typography>
       </Box>
       <Box
@@ -80,7 +77,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(data?.profitsum || 0), color)}
+          {handleNumber(parseFloat(data?.profitsum || 0), "")}
         </Typography>
         <StyledImage
           src={
@@ -113,7 +110,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(data?.percentprofitloss || 0), color)}
+          {handleNumber(parseFloat(data?.percentprofitloss || 0), "")}
         </Typography>
         <StyledImage
           src={
@@ -142,7 +139,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(data?.totalcommission || 0), color)}
+          {handleNumber(parseFloat(data?.totalcommission || 0), "")}
         </Typography>
       </Box>
       <Box
@@ -158,7 +155,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(data?.totalExposure || 0), color)}
+          {handleNumber(parseFloat(data?.totalExposure || 0), "")}
         </Typography>
       </Box>
       <Box
@@ -174,7 +171,7 @@ const SubHeaderListRow = ({ data, color }: any) => {
         <Typography
           sx={{ color: "white", fontSize: "10px", fontWeight: "600" }}
         >
-          {handleNumber(parseFloat(data?.availableBalance || 0), color)}
+          {handleNumber(parseFloat(data?.availableBalance || 0), "")}
         </Typography>
       </Box>
       <Box
