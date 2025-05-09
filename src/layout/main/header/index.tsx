@@ -146,6 +146,7 @@ const Header = () => {
             <Box sx={classes.BoxCont1sub1sub1}>
               <StyledImage
                 src={Draw}
+                alt="draw"
                 sx={{
                   ...classes.BoxCont1sub1sub1StyleImg,
                   cursor: "default",
@@ -153,6 +154,7 @@ const Header = () => {
               />
               <StyledImage
                 src={FgLogo}
+                alt="fgLogo"
                 sx={classes.RenderLogoCompStyleImg}
                 onClick={() => navigate("/wallet/list_of_clients")}
               />
