@@ -29,17 +29,25 @@ interface lockUnlockInterface {
   userDomain?: string;
 }
 
-const LockUnlockComponent = (props: any) => {
-  const {
-    setSelected,
-    element,
-    walletAccountDetail,
-    endpoint,
-    isWallet,
-    onChangeAmount,
-    currentPage,
-  } = props;
+interface LockUnlockComponentProps {
+  setSelected: (val?: any) => void;
+  element?: any;
+  walletAccountDetail?: any;
+  endpoint?: string;
+  isWallet?: boolean;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+}
 
+const LockUnlockComponent = ({
+  setSelected,
+  element,
+  walletAccountDetail,
+  endpoint,
+  isWallet,
+  onChangeAmount,
+  currentPage,
+}: LockUnlockComponentProps) => {
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,

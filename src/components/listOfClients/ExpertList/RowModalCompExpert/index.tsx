@@ -75,11 +75,9 @@ const RowModalComponents = ({
               endpoint={ApiConstants.EXPERT.CHANGE_PASSWORD}
               setShowUserModal={setShowUserModal}
               element={{ ...element, roleName: "expert" }}
-              selected={selected == 3}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
             />
           )}
           {selected == 4 && (

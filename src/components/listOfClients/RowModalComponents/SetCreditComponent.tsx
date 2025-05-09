@@ -26,17 +26,27 @@ const initialValues: any = {
   remark: "",
 };
 
-const SetCreditComponent = (props: any) => {
-  const {
-    isWallet,
-    handleKeyDown,
-    backgroundColor,
-    setSelected,
-    element,
-    endpoint,
-    onChangeAmount,
-    currentPage,
-  } = props;
+interface SetCreditComponentProps {
+  isWallet?: boolean;
+  handleKeyDown?: any;
+  backgroundColor?: any;
+  setSelected: (val?: boolean) => void;
+  element?: any;
+  endpoint?: any;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: any;
+}
+
+const SetCreditComponent = ({
+  isWallet,
+  handleKeyDown,
+  backgroundColor,
+  setSelected,
+  element,
+  endpoint,
+  onChangeAmount,
+  currentPage,
+}: SetCreditComponentProps) => {
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();

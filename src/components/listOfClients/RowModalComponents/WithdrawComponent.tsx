@@ -33,6 +33,19 @@ const initialValues: any = {
   transactionType: "withDraw",
 };
 
+interface WithdrawComponentProps {
+  endpoint?: string;
+  isWallet?: boolean;
+  walletAccountDetail: any;
+  element?: any;
+  backgroundColor?: any;
+  selected: boolean;
+  setSelected: (val?: any) => void;
+  titleBackgroundColor?: string;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+}
+
 const WithdrawComponent = ({
   endpoint,
   isWallet,
@@ -44,7 +57,7 @@ const WithdrawComponent = ({
   titleBackgroundColor,
   onChangeAmount,
   currentPage,
-}: any) => {
+}: WithdrawComponentProps) => {
   const [showPass, setShowPass] = useState(false);
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();

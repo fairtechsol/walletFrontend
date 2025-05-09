@@ -179,8 +179,6 @@ const ListItems = () => {
             {selected == 2 && (
               <SetCreditComponent
                 isWallet={true}
-                walletAccountDetail={profileDetail}
-                selected={selected == 2}
                 setSelected={() => {
                   setSelected(null);
                 }}
@@ -190,7 +188,6 @@ const ListItems = () => {
             {selected == 4 && (
               <LockUnlockComponent
                 isWallet={true}
-                selected={selected == 4}
                 setSelected={() => {
                   setSelected(null);
                 }}
@@ -201,8 +198,6 @@ const ListItems = () => {
             {selected == 5 && (
               <SetExposureLimit
                 isWallet={true}
-                walletAccountDetail={profileDetail}
-                selected={selected == 5}
                 setSelected={() => {
                   setSelected(null);
                 }}

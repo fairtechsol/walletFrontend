@@ -167,7 +167,6 @@ const RowModalComponents = ({
                   : ApiConstants.USER.CREDITREFERRENCE
               }
               element={element}
-              selected={selected == 2}
               setSelected={() => {
                 setSelected(null);
               }}
@@ -184,12 +183,9 @@ const RowModalComponents = ({
                   : ApiConstants.USER.CHANGEPASSWORD
               }
               element={element}
-              selected={selected == 3}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
-              currentPage={currentPage}
               setShowUserModal={() => {}}
             />
           )}
@@ -201,7 +197,6 @@ const RowModalComponents = ({
                   : ApiConstants.USER.EXPOSURELIMIT
               }
               element={element}
-              selected={selected == 5}
               setSelected={() => {
                 setSelected(null);
               }}
@@ -218,11 +213,9 @@ const RowModalComponents = ({
                   : ApiConstants.USER.LOCKUNLOCK
               }
               element={element}
-              selected={selected == 4}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
               onChangeAmount={handleAmountChange}
               currentPage={currentPage}
             />

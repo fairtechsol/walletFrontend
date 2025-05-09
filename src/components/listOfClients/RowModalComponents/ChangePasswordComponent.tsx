@@ -22,14 +22,21 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
-const ChangePasswordComponent = (props: any) => {
-  const {
-    setSelected,
-    element,
-    walletAccountDetail,
-    endpoint,
-    setShowUserModal,
-  } = props;
+interface ChangePasswordComponentProps {
+  setSelected: (val?: any) => void;
+  element: any;
+  walletAccountDetail?: any;
+  endpoint: string;
+  setShowUserModal: (val?: boolean) => void;
+}
+
+const ChangePasswordComponent = ({
+  setSelected,
+  element,
+  walletAccountDetail,
+  endpoint,
+  setShowUserModal,
+}: ChangePasswordComponentProps) => {
   const [showPass, setShowPass] = useState(false);
   const [showPassTransaction, setShowPassTransaction] = useState(false);
 

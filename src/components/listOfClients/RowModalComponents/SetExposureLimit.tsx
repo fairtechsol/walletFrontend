@@ -25,6 +25,16 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
+interface SetExposureLimitProps {
+  backgroundColor?: string;
+  setSelected: (val?: any) => void;
+  element?: any;
+  endpoint?: string;
+  isWallet?: boolean;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+}
+
 const SetExposureLimit = ({
   backgroundColor,
   setSelected,
@@ -33,7 +43,7 @@ const SetExposureLimit = ({
   isWallet,
   onChangeAmount,
   currentPage,
-}: any) => {
+}: SetExposureLimitProps) => {
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
