@@ -23,7 +23,7 @@ const initialValues: any = {
 };
 
 interface ChangePasswordComponentProps {
-  setSelected: (val?: any) => void;
+  setSelected: (val?: boolean) => void;
   element: any;
   walletAccountDetail?: any;
   endpoint: string;

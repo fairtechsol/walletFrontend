@@ -14,10 +14,19 @@ import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../../Common/StyledImages";
 import BoxButton from "../../RowModalComponents/BoxButton";
 
-const initialValues: any = {
+const initialValues: { userBlock: boolean; transactionPassword: string } = {
   userBlock: false,
   transactionPassword: "",
 };
+
+interface LockUnlockComponentProps {
+  setSelected: (val?: any) => void;
+  element: any;
+  endpoint: string;
+  onChangeAmount: (val: any, val2: string, type: string) => void;
+  currentPage: number;
+  setShowUserModal: (val: any) => void;
+}
 
 const LockUnlockComponent = ({
   setSelected,
@@ -26,7 +35,7 @@ const LockUnlockComponent = ({
   onChangeAmount,
   currentPage,
   setShowUserModal,
-}: any) => {
+}: LockUnlockComponentProps) => {
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,

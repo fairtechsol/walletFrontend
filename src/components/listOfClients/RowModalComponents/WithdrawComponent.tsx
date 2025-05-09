@@ -231,8 +231,6 @@ const WithdrawComponent = ({
               elementToUDM={element}
               userName={element?.userName}
               title={"Withdraw Amount"}
-              setSelected={setSelected}
-              selected={selected}
               value={formik.values}
               onChange={handleValueChange}
               setShowPass={setShowPass}
@@ -246,7 +244,6 @@ const WithdrawComponent = ({
               loading={loading}
               titleBackgroundColor={titleBackgroundColor}
               type="withdraw"
-              currentPage={currentPage}
             />
           </form>
         </ModalMUI>

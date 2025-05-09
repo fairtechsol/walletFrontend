@@ -67,7 +67,6 @@ const LockUnlockComponent = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
       const id = element?.id
         ? element?.id
@@ -189,7 +188,6 @@ const LockUnlockComponent = ({
               />
             </Box>
           </Box>
-          {/* </Box> */}
           <Box
             sx={{
               display: "flex",
@@ -204,7 +202,6 @@ const LockUnlockComponent = ({
             <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
-                // width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
               }}

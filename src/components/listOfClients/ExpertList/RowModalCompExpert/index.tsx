@@ -5,15 +5,23 @@ import BoxButton from "../../RowModalComponents/BoxButton";
 import ChangePasswordComponent from "../../RowModalComponents/ChangePasswordComponent";
 import LockUnlockComponent from "./LockUnlockComponent";
 
+interface RowModalComponentsProps {
+  element: any;
+  selected: any;
+  setSelected: (val?: any) => void;
+  onValueChange: any;
+  currentPage: any;
+  setShowUserModal: (val?: any) => void;
+}
+
 const RowModalComponents = ({
   element,
   selected,
   setSelected,
-  backgroundColor,
   onValueChange,
   currentPage,
   setShowUserModal,
-}: any) => {
+}: RowModalComponentsProps) => {
   const classes = {
     mainBox: {
       background: "#F8C851",
@@ -85,11 +93,9 @@ const RowModalComponents = ({
               endpoint={ApiConstants.EXPERT.LOCK_UNLOCK}
               setShowUserModal={setShowUserModal}
               element={{ ...element, roleName: "expert" }}
-              selected={selected == 4}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
               onChangeAmount={handleAmountChange}
               currentPage={currentPage}
             />

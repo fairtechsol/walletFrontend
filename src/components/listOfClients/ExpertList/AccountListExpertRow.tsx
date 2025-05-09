@@ -267,7 +267,6 @@ const AccountListExpertRow = ({
               element={element}
               setSelected={setSelected}
               setShowUserModal={setShowUserModal}
-              backgroundColor={containerStyle?.background}
               onValueChange={handleAmountChange}
               currentPage={currentPage}
             />

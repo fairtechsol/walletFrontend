@@ -225,7 +225,6 @@ const RowModalComponents = ({
       {selected === null && (
         <Box
           sx={{
-            // flex: 1,
             display: "flex",
             flexDirection: { xs: "row", lg: "row", md: "row" },
             gap: { xs: 0.5 },
@@ -375,7 +374,7 @@ const RowModalComponents = ({
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Are you sure want to settle this commission ?"}
+              Are you sure want to settle this commission ?
             </DialogTitle>
             <DialogActions>
               <Button onClick={() => setSettlementModal((prev) => !prev)}>
@@ -403,7 +402,7 @@ const RowModalComponents = ({
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Are you sure want to delete this user?"}
+              Are you sure want to delete this user?
             </DialogTitle>
             <DialogActions>
               <Button

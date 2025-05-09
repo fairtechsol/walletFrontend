@@ -231,8 +231,6 @@ const DepositComponent = ({
               elementToUDM={element}
               userName={element?.userName}
               title={"Deposit Amount"}
-              setSelected={setSelected}
-              selected={selected}
               value={formik.values}
               onChange={handleValueChange}
               setShowPass={setShowPass}
@@ -246,7 +244,6 @@ const DepositComponent = ({
               loading={loading}
               titleBackgroundColor={titleBackgroundColor}
               type="deposite"
-              currentPage={currentPage}
             />
           </form>
         </ModalMUI>

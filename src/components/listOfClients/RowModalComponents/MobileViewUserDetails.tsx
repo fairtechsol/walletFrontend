@@ -6,6 +6,22 @@ import { RootState } from "../../../store/store";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
+interface MobileViewUserDetailsProps {
+  value: any;
+  onChange: (val: any, val2: any) => void;
+  setShowPass: (val: boolean) => void;
+  showPass: any;
+  onCancel: () => void;
+  initialBalance: any;
+  backgroundColor: any;
+  loading: boolean;
+  title: string;
+  userName: string;
+  elementToUDM: any;
+  titleBackgroundColor: any;
+  type: string;
+}
+
 const MobileViewUserDetails = ({
   value,
   onChange,
@@ -20,7 +36,11 @@ const MobileViewUserDetails = ({
   elementToUDM,
   titleBackgroundColor,
   type,
-}: any) => {
+}: MobileViewUserDetailsProps) => {
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
+
   const formatIndianCurrency = (amount: number) => {
     const formatter = new Intl.NumberFormat("en-IN", {
       currency: "INR",
@@ -67,9 +87,6 @@ const MobileViewUserDetails = ({
     }
   };
 
-  const { profileDetail } = useSelector(
-    (state: RootState) => state.user.profile
-  );
   return (
     <Box
       sx={[
@@ -422,7 +439,6 @@ const MobileViewUserDetails = ({
                 alignItems: "center",
               }}
             >
-              {" "}
               {formatIndianCurrency(
                 parseFloat(elementToUDM?.userBal?.profitLoss || 0)
               )}
@@ -531,7 +547,6 @@ const MobileViewUserDetails = ({
                   color: "white",
                 },
               }}
-              // type={"Number"}
             />
           </Box>
         </Box>
@@ -550,7 +565,6 @@ const MobileViewUserDetails = ({
               alignItems: "center",
               width: "40%",
               flexDirection: "row",
-
               justifyContent: "space-between",
               position: "relative",
               marginTop: "0",
@@ -600,7 +614,6 @@ const MobileViewUserDetails = ({
                 style: {
                   fontSize: "13px",
                   minHeight: "45px",
-
                   fontWeight: "600",
                 },
               }}
@@ -631,7 +644,6 @@ const MobileViewUserDetails = ({
             <Typography
               sx={{
                 fontSize: "3vw",
-
                 width: "100%",
                 fontWeight: "600",
                 marginRight: 0,
@@ -643,7 +655,6 @@ const MobileViewUserDetails = ({
               Transaction
             </Typography>
           </Box>
-
           <Box
             sx={{
               width: "60%",
