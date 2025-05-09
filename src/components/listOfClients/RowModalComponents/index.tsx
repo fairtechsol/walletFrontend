@@ -364,7 +364,7 @@ const RowModalComponents = ({
               fontSize: { xs: "12px" },
             }}
             icon={
-              <StyledImage src={DeleteIcon} sx={classes.BoxButtonStyledImage} />
+              <StyledImage src={DeleteIcon} alt="delete" sx={classes.BoxButtonStyledImage} />
             }
           />
           <Dialog

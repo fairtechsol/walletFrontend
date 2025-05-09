@@ -102,6 +102,7 @@ const AccountListExpertRow = ({
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
               }
+              alt="down"
               style={{ cursor: "pointer", width: "16px", height: "12px" }}
             />
           )}
@@ -119,6 +120,7 @@ const AccountListExpertRow = ({
         >
           <StyledImage
             src={element?.allPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -135,6 +137,7 @@ const AccountListExpertRow = ({
         >
           <StyledImage
             src={element?.addMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -154,6 +157,7 @@ const AccountListExpertRow = ({
         >
           <StyledImage
             src={element?.betFairMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -170,6 +174,7 @@ const AccountListExpertRow = ({
         >
           <StyledImage
             src={element?.bookmakerMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -186,6 +191,7 @@ const AccountListExpertRow = ({
         >
           <StyledImage
             src={element?.sessionMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -210,6 +216,7 @@ const AccountListExpertRow = ({
                 ? UnLockIcon
                 : LockIcon
             }
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>

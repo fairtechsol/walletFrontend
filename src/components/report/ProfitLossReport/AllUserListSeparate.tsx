@@ -144,6 +144,7 @@ const AllUserListSeparate = ({
             >
               <StyledImage
                 src={ArrowDown}
+                alt="arrowDown"
                 sx={{
                   width: { lg: "20px", xs: "10px" },
                   height: { lg: "10px", xs: "6px" },
@@ -188,6 +189,7 @@ const AllUserListSeparate = ({
             </Typography>
             <StyledImage
               src={ARROW_UP}
+              alt="arrowUp"
               sx={{
                 width: { lg: "25px", xs: "15px" },
                 height: { lg: "12px", xs: "8px" },
@@ -240,6 +242,7 @@ const AllUserListSeparate = ({
             </Typography>
             <StyledImage
               src={ARROWDOWN}
+              alt="arrowDown"
               sx={{
                 width: { lg: "25px", xs: "15px" },
                 height: { lg: "12px", xs: "8px" },

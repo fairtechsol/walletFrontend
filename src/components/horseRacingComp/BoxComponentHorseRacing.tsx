@@ -166,6 +166,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
             >
               <StyledImage
                 src={LockSolid}
+                alt="lock"
                 sx={{ height: "20px", width: "20px" }}
               />
             </Box>
@@ -202,6 +203,7 @@ const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
             >
               <StyledImage
                 src={LockSolid}
+                alt="lock"
                 sx={{ height: "20px", width: "20px" }}
               />
             </Box>

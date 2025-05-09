@@ -276,6 +276,7 @@ const AccountListRow = ({
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
               }
+              alt="down"
               style={{ cursor: "pointer", width: "16px", height: "12px" }}
             />
           )}
@@ -358,6 +359,7 @@ const AccountListRow = ({
                 ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
                 : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
             }
+            alt="up-down icon"
             sx={{
               height: "15px",
               marginLeft: "5px",
@@ -389,6 +391,7 @@ const AccountListRow = ({
                 ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
                 : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
             }
+            alt="up-down icon"
             sx={{
               height: "15px",
               marginLeft: "5px",
@@ -487,6 +490,7 @@ const AccountListRow = ({
                 ? UnLockIcon
                 : LockIcon
             }
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -511,6 +515,7 @@ const AccountListRow = ({
                 ? UnLockIcon
                 : LockIcon
             }
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -707,6 +712,7 @@ const AccountListRow = ({
                           ? DownGIcon
                           : DownIcon
                       }
+                      alt="down"
                       sx={{
                         height: { lg: "10px", xs: "14px" },
                         cursor: "pointer",

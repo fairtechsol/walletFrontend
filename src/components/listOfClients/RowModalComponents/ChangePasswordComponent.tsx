@@ -183,6 +183,7 @@ const ChangePasswordComponent = ({
                   >
                     <StyledImage
                       src={showPass ? EyeIconWhite : EyeSlashWhite}
+                      alt="eye icon"
                       sx={{ height: "14px", width: "20px", fill: "white" }}
                     />
                   </Box>
@@ -301,6 +302,7 @@ const ChangePasswordComponent = ({
                   >
                     <StyledImage
                       src={showPassTransaction ? EyeIconWhite : EyeSlashWhite}
+                      alt="eye icon"
                       sx={{ height: "14px", width: "20px" }}
                     />
                   </Box>

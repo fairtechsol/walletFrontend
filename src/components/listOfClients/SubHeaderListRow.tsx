@@ -85,6 +85,7 @@ const SubHeaderListRow = ({ data }: { data: any }) => {
               ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
               : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
           }
+          alt="up/down icon"
           sx={{
             height: "15px",
             marginLeft: "5px",
@@ -118,6 +119,7 @@ const SubHeaderListRow = ({ data }: { data: any }) => {
               ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
               : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
           }
+          alt="up/down icon"
           sx={{
             height: "15px",
             marginLeft: "5px",

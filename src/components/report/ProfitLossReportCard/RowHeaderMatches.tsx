@@ -130,6 +130,7 @@ const RowHeaderMatches = ({
           </Typography>
           <StyledImage
             src={ArrowDown}
+            alt="arrowDown"
             sx={{
               width: { lg: "20px", xs: "10px" },
               transform: show ? "rotate(180deg)" : "rotate(0deg)",

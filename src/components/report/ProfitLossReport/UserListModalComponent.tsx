@@ -331,6 +331,7 @@ const UserListModalComponent = ({
                   </Typography>
                   <StyledImage
                     src={ArrowDown}
+                    alt="arrowDown"
                     sx={{
                       width: { lg: "20px", xs: "10px" },
                       height: { lg: "10px", xs: "6px" },
@@ -411,6 +412,7 @@ const UserListModalComponent = ({
                     </Typography>
                     <StyledImage
                       src={ArrowDown}
+                      alt="arrowDown"
                       sx={{
                         width: { lg: "20px", xs: "10px" },
                         height: { lg: "10px", xs: "6px" },

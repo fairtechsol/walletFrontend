@@ -53,6 +53,7 @@ const ListHeader = ({
             >
               <StyledImage
                 src={Excel}
+                alt="excel"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(
@@ -82,6 +83,7 @@ const ListHeader = ({
             >
               <StyledImage
                 src={Pdf}
+                alt="pdf"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(

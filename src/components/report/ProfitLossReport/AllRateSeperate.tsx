@@ -260,6 +260,7 @@ const AllRateSeperate = ({ allBetsData, count }: AllRateSeperateProps) => {
                                 height: { xs: "5px", lg: "7px" },
                               }}
                               src={i?.totalLoss > 0 ? ARROW_UP : ARROWDOWN}
+                              alt="up/down arrow"
                             />
                           )}
                         </Box>
@@ -283,6 +284,7 @@ const AllRateSeperate = ({ allBetsData, count }: AllRateSeperateProps) => {
                             height: { lg: "20px", xs: "14px" },
                             marginRight: "5px",
                           }}
+                          alt="delete"
                           src={DeleteIcon}
                         />
                         <Typography

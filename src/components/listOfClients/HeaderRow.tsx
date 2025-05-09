@@ -51,6 +51,7 @@ const HeaderRow = ({
             >
               <StyledImage
                 src={Excel}
+                alt="excel"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(
@@ -77,6 +78,7 @@ const HeaderRow = ({
             >
               <StyledImage
                 src={Pdf}
+                alt="pdf"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(

@@ -56,6 +56,7 @@ const StockBox = ({ team, value, up, mode, showFixed }: StockBoxProps) => {
                 ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
                 : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
             }
+            alt="up-down icon"
             sx={{
               height: { xs: "17px", lg: "25px" },
               marginLeft: "5px",

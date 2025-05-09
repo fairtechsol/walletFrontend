@@ -263,6 +263,7 @@ const SetCreditComponent = ({
               >
                 <StyledImage
                   src={showPass ? EyeIcon : EyeSlash}
+                  alt="eye"
                   sx={{ height: "14px", width: "20px" }}
                 />
               </Box>
