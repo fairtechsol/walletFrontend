@@ -96,27 +96,26 @@ const matchListSlice = createSlice({
       })
       .addCase(updateMatchRates.fulfilled, (state, action) => {
         const { apiSession, sessionBettings, tournament } = action.payload;
-        
-        const parsedSessionBettings =
-          state.matchDetail?.sessionBettings?.map(JSON.parse) || [];
-        const apiParsedSessionBettings = sessionBettings?.map(JSON.parse) || [];
-        apiParsedSessionBettings.forEach((apiItem: any) => {
-          const index = parsedSessionBettings.findIndex(
-            (parsedItem: any) => parsedItem.id === apiItem.id
+
+        const parsedSessionBettings = new Map(
+          (state.matchDetail?.sessionBettings || []).map((item: any) => {
+            const parsed = JSON.parse(item);
+            return [parsed.id, parsed];
+          })
+        );
+
+        (sessionBettings || []).forEach((item: any) => {
+          const parsed = JSON.parse(item);
+          const existing = parsedSessionBettings.get(parsed.id);
+          parsedSessionBettings.set(
+            parsed.id,
+            existing ? { ...existing, ...parsed } : parsed
           );
-          if (index !== -1) {
-            parsedSessionBettings[index] = {
-              ...parsedSessionBettings[index],
-              ...apiItem,
-            };
-          } else {
-            parsedSessionBettings.push(apiItem);
-          }
         });
 
-        const stringifiedSessionBetting = parsedSessionBettings.map(
-          JSON.stringify
-        );
+        const stringifiedSessionBetting = Array.from(
+          parsedSessionBettings.values()
+        ).map((item) => JSON.stringify(item));
 
         state.matchDetail = {
           ...state.matchDetail,
