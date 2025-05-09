@@ -32,6 +32,20 @@ const initialValues: any = {
   transactionType: "add",
 };
 
+interface DepositComponentProps {
+  endpoint?: any;
+  isWallet?: any;
+  walletAccountDetail: any;
+  element?: any;
+  backgroundColor?: any;
+  setSelected: (val?: any) => void;
+  selected: any;
+  titleBackgroundColor: string;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+  navigate?: any;
+}
+
 const DepositComponent = ({
   endpoint,
   isWallet,
@@ -43,7 +57,7 @@ const DepositComponent = ({
   titleBackgroundColor,
   onChangeAmount,
   currentPage,
-}: any) => {
+}: DepositComponentProps) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -316,7 +330,6 @@ const DepositComponent = ({
                     required={true}
                     id="amount"
                     name="amount"
-                    //  value={formik.values.amount}
                     value={numberWithCommas(formik.values.amount?.toString())}
                     variant="standard"
                     type="tel"
@@ -513,8 +526,6 @@ const DepositComponent = ({
                 flexDirection: "row-reverse",
               }}
             >
-              {/* Remark */}
-
               <Box
                 sx={{
                   borderRadius: "5px",

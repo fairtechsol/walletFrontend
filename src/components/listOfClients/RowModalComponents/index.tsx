@@ -257,7 +257,6 @@ const RowModalComponents = ({
             titleStyle={{
               fontSize: { xs: "12px" },
             }}
-            labelStyle={{}}
           />
           <BoxButton
             color={"#0B4F26"}
@@ -274,7 +273,6 @@ const RowModalComponents = ({
             }}
             isSelected={selected == 1}
             title={"Withdraw"}
-            labelStyle={{}}
           />
           {!element?.isUrl && (
             <BoxButton
@@ -292,7 +290,6 @@ const RowModalComponents = ({
               titleStyle={{
                 fontSize: { xs: "12px" },
               }}
-              labelStyle={{}}
             />
           )}
           <BoxButton
@@ -334,7 +331,6 @@ const RowModalComponents = ({
             }}
             title={"set Credit Reference"}
             isSelected={selected == 2}
-            labelStyle={{}}
             containerStyle={{
               marginLeft: { lg: "10px", xs: "0" },
               flex: 1,
@@ -358,7 +354,6 @@ const RowModalComponents = ({
               fontSize: { xs: "12px" },
             }}
             title={"Set Exposure Limit"}
-            labelStyle={{}}
             isSelected={selected == 5}
           />
           <BoxButton

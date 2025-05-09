@@ -1,6 +1,20 @@
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { memo } from "react";
 
+interface BoxButtonProps {
+  title: string;
+  containerStyle: any;
+  icon?: any;
+  onClick?: (val?: any) => void;
+  isSelected?: boolean;
+  deleteBtn?: any;
+  titleStyle?: any;
+  loading?: any;
+  type?: any;
+  color: string;
+  disabled?: any;
+}
+
 const BoxButton = ({
   title,
   containerStyle,
@@ -13,7 +27,7 @@ const BoxButton = ({
   type,
   color,
   disabled,
-}: any) => {
+}: BoxButtonProps) => {
   const classes = {
     mainBox: [
       {
