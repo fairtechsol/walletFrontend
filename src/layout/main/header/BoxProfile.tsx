@@ -30,7 +30,6 @@ const BoxProfile = (props: any) => {
           {
             backgroundColor: "primary.main",
             minWidth: { lg: "150px", xs: "100px" },
-            // marginLeft: "1vw",
             display: "flex",
             alignItems: "center",
             boxShadow: "0px 3px 10px #B7B7B726",
@@ -43,7 +42,7 @@ const BoxProfile = (props: any) => {
           containerStyle,
         ]}
       >
-        <Box style={{}}>
+        <Box>
           <Typography
             sx={{
               fontSize: { lg: "11px", xs: "9px" },
