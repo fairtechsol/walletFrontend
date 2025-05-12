@@ -780,13 +780,24 @@ const AccountListRow = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <EventWiseExposureModal
-          setShowUserWiseExposureModal={setShowUserWiseExposureModal}
-          userName={element?.userName}
-          userId={element?.id}
-          domain={domain ? domain : element?.domain ? element?.domain : ""}
-          setShowUserWiseMatchListModal={setShowUserWiseMatchListModal}
-        />
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <EventWiseExposureModal
+            setShowUserWiseExposureModal={setShowUserWiseExposureModal}
+            userName={element?.userName}
+            userId={element?.id}
+            domain={domain ? domain : element?.domain ? element?.domain : ""}
+            setShowUserWiseMatchListModal={setShowUserWiseMatchListModal}
+          />
+        </Box>
       </ModalMUI>
       <ModalMUI
         open={showUserWiseMatchListModal?.status}
@@ -800,15 +811,26 @@ const AccountListRow = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <EventWiseMatchListModal
-          setShowUserWiseMatchListModal={setShowUserWiseMatchListModal}
-          userName={element?.userName}
-          data={showUserWiseMatchListModal?.value}
-          userId={element?.id}
-          matchType={showUserWiseMatchListModal?.matchType}
-          domain={element?.domain || domain}
-          roleName={element?.roleName}
-        />
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <EventWiseMatchListModal
+            setShowUserWiseMatchListModal={setShowUserWiseMatchListModal}
+            userName={element?.userName}
+            data={showUserWiseMatchListModal?.value}
+            userId={element?.id}
+            matchType={showUserWiseMatchListModal?.matchType}
+            domain={element?.domain || domain}
+            roleName={element?.roleName}
+          />
+        </Box>
       </ModalMUI>
 
       <ModalMUI
