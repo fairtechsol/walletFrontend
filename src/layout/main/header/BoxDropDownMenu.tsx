@@ -10,8 +10,7 @@ import { AppDispatch } from "../../../store/store";
 const menutItems = [
   { title: "Change Password", link: `/wallet/change-password` },
 ];
-const BoxDropDownMenu = (props: any) => {
-  const { handleClose } = props;
+const BoxDropDownMenu = ({ handleClose }: { handleClose: () => void }) => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
