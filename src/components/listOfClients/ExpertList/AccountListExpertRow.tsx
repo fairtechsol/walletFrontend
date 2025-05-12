@@ -76,9 +76,8 @@ const AccountListExpertRow = ({
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate(`/wallet/edit_account`, {
+                navigate(`/wallet/add_account/${element?.id}`, {
                   state: {
-                    id: element?.id,
                     expertMatchDetail: element,
                   },
                 });

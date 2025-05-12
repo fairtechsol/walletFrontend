@@ -251,11 +251,7 @@ const AccountListRow = ({
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate(`/wallet/edit_account`, {
-                  state: {
-                    id: element?.id,
-                  },
-                });
+                navigate(`/wallet/add_account/${element?.id}`);
               }}
               sx={{
                 color:

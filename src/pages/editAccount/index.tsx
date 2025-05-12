@@ -10,7 +10,7 @@ import {
 import { useFormik } from "formik";
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
 import CustomErrorMessage from "../../components/Common/CustomErrorMessage";
 import CustomModal from "../../components/Common/CustomModal";
@@ -84,6 +84,7 @@ const defaultLockUnlockObj = {
 const EditAccount = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const { id } = useParams();
   const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -119,7 +120,7 @@ const EditAccount = () => {
     initialValues: formDataSchema,
     onSubmit: (values: any) => {
       const commonPayload = {
-        id: state?.id,
+        id: id,
         transactionPassword: values.adminTransPassword,
         fullName: values.fullName,
         phoneNumber: values.phoneNumber.toString(),
@@ -262,13 +263,13 @@ const EditAccount = () => {
 
   useEffect(() => {
     setTypeForAccountType();
-  }, [profileDetail, state?.id]);
+  }, [profileDetail, id]);
 
   useEffect(() => {
     try {
-      if (state?.id && !state?.expertMatchDetail) {
-        dispatch(getUsersDetail(state?.id));
-      } else if (state?.id && state?.expertMatchDetail) {
+      if (id && !state?.expertMatchDetail && profileDetail) {
+        dispatch(getUsersDetail(id));
+      } else if (id && state?.expertMatchDetail && profileDetail) {
         formik.setValues({
           ...formik.values,
           userName: state?.expertMatchDetail?.userName,
@@ -300,7 +301,7 @@ const EditAccount = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [state?.id]);
+  }, [id, profileDetail]);
 
   const handleUpline = (userDetail: any) => {
     try {
@@ -562,7 +563,7 @@ const EditAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                       backgroundColor: "#DEDEDE",
                     }}
-                    disabled={state?.id ? true : false}
+                    disabled={id ? true : false}
                     placeholder="Username (Required)"
                     title="Username*"
                     name="userName"
@@ -590,7 +591,7 @@ const EditAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                       backgroundColor: "#DEDEDE",
                     }}
-                    disabled={state?.id ? true : false}
+                    disabled={id ? true : false}
                     title="User Password*"
                     name="password"
                     id="password"
@@ -625,7 +626,7 @@ const EditAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                       backgroundColor: "#DEDEDE",
                     }}
-                    disabled={state?.id ? true : false}
+                    disabled={id ? true : false}
                     title="Confirm User Password*"
                     name="confirmPassword"
                     id="confirmPassword"
@@ -836,7 +837,7 @@ const EditAccount = () => {
                     onChange={(AccountTypes: any) => {
                       formik.setFieldValue("roleName", AccountTypes);
                     }}
-                    isDisabled={state?.id}
+                    isDisabled={id}
                     value={AccountTypes.find(
                       (option: any) =>
                         option.value === formik.values.roleName.value
@@ -917,7 +918,7 @@ const EditAccount = () => {
                       height: { lg: "45px", xs: "36px" },
                       backgroundColor: "#DEDEDE",
                     }}
-                    disabled={state?.id ? true : false}
+                    disabled={id ? true : false}
                     title="Credit Reference*"
                     name="creditRefrence"
                     id="creditRefrence"
@@ -973,7 +974,7 @@ const EditAccount = () => {
                             ? "none"
                             : "block",
                       }}
-                      disabled={state?.id ? true : false}
+                      disabled={id ? true : false}
                       titleStyle={titleStyles}
                       inputStyle={inputStyle}
                       title="My Partnership"
@@ -1163,7 +1164,7 @@ const EditAccount = () => {
                 }}
                 type="submit"
               >
-                {state?.id ? "Update" : "Create"}
+                {id ? "Update" : "Create"}
               </Button>
             </Box>
           </Box>
