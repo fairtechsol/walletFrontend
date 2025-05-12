@@ -118,7 +118,7 @@ const UserProfitLossListComp = ({ element, markets }: any) => {
                                 lineHeight: "13px",
                               }}
                             >
-                              {itemVal?.pl?.rate}
+                              {parseFloat(itemVal?.pl?.rate).toFixed(2)}
                             </Typography>
                             <Typography
                               sx={{
@@ -130,7 +130,7 @@ const UserProfitLossListComp = ({ element, markets }: any) => {
                                 lineHeight: "13px",
                               }}
                             >
-                              {itemVal?.pl?.percent}
+                              {parseFloat(itemVal?.pl?.percent).toFixed(2)}
                             </Typography>
                           </Box>
                         </Box>
