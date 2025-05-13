@@ -166,7 +166,7 @@ const ChangeDeleteCode = (props: any) => {
                     ...inputContainerStyle,
                     height: { lg: "45px", xs: "36px" },
                   }}
-                  title={"Verify Password*"}
+                  title={"Transaction Password*"}
                   fullWidth={true}
                   name={"code"}
                   id={"code"}
