@@ -10,7 +10,7 @@ import HeaderRow from "../HeaderRow";
 import AccountListExpertRow from "./AccountListExpertRow";
 import ListHeaderExpertRow from "./ListHeaderExpertRow";
 
-const AccountListExpert = (endpoint: any) => {
+const AccountListExpert = (endpoint: { endpoint: string }) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -50,58 +50,41 @@ const AccountListExpert = (endpoint: any) => {
               position: { xs: "relative", lg: "static" },
             }}
           >
-            <Box>
-              <ListHeaderExpertRow />
-              {userList?.list?.length === 0 && (
-                <Typography
-                  sx={{
-                    color: "#000",
-                    textAlign: "center",
-                    fontSize: { lg: "16px", xs: "10px" },
-                    fontWeight: "600",
-                    margin: "1rem",
-                  }}
-                >
-                  No Matching Records Found
-                </Typography>
-              )}
-              {userList?.list?.length > 0 &&
-                userList?.list?.map(
-                  (element: AccountListDataInterface, i: number) => {
-                    if (i % 2 === 0) {
-                      return (
-                        <AccountListExpertRow
-                          key={element?.id}
-                          showOptions={true}
-                          showUserDetails={true}
-                          showCReport={true}
-                          containerStyle={{ background: "#FFE094" }}
-                          profit={+element.profit_loss >= 0}
-                          fContainerStyle={{ background: "#0B4F26" }}
-                          fTextStyle={{ color: "white" }}
-                          element={element}
-                          currentPage={currentPage}
-                        />
-                      );
-                    } else {
-                      return (
-                        <AccountListExpertRow
-                          key={element?.id}
-                          showCReport={true}
-                          showUserDetails={true}
-                          showOptions={true}
-                          containerStyle={{ background: "#ECECEC" }}
-                          profit={+element.profit_loss >= 0}
-                          fContainerStyle={{ background: "#F8C851" }}
-                          fTextStyle={{ color: "#0B4F26" }}
-                          element={element}
-                          currentPage={currentPage}
-                        />
-                      );
-                    }
-                  }
-                )}
-            </Box>
+            <ListHeaderExpertRow />
+            {userList?.count === 0 ? (
+              <Typography
+                sx={{
+                  color: "#000",
+                  textAlign: "center",
+                  fontSize: { lg: "16px", xs: "10px" },
+                  fontWeight: "600",
+                  margin: "1rem",
+                }}
+              >
+                No Matching Records Found
+              </Typography>
+            ) : (
+              userList?.list?.map(
+                (element: AccountListDataInterface, i: number) => (
+                  <AccountListExpertRow
+                    key={element?.id}
+                    showOptions={true}
+                    showUserDetails={true}
+                    showCReport={true}
+                    containerStyle={{
+                      background: i % 2 === 0 ? "#FFE094" : "#ECECEC",
+                    }}
+                    profit={+element.profit_loss >= 0}
+                    fContainerStyle={{
+                      background: i % 2 === 0 ? "#0B4F26" : "#F8C851",
+                    }}
+                    fTextStyle={{ color: i % 2 === 0 ? "#fff" : "#0B4F26" }}
+                    element={element}
+                    currentPage={currentPage}
+                  />
+                )
+              )
+            )}
           </Box>
         </Box>
       </Box>

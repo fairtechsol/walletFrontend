@@ -127,7 +127,7 @@ const Inplay = () => {
   const classes = useStyles();
   return (
     <>
-      {matchListInplay && matchListInplay?.matches?.length > 0
+      {matchListInplay && matchListInplay?.count > 0
         ? matchListInplay?.matches?.map((match: any) => {
             return (
               <MatchComponent
@@ -158,7 +158,7 @@ const Inplay = () => {
               </TableBody>
             </Table>
           )}
-      {matchListInplay && matchListInplay?.matches?.length > 0 && (
+      {matchListInplay && matchListInplay?.count > 0 && (
         <Pagination
           page={currentPage}
           className={`${classes.whiteTextPagination} d-flex justify-content-center`}

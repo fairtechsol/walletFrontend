@@ -9,6 +9,15 @@ import ListHeader from "./ListHeader";
 import ListHeaderRow from "./ListHeaderRow";
 import SubHeaderListRow from "./SubHeaderListRow";
 
+interface AccountListTableProps {
+  endpoint: string;
+  id: string;
+  setShow: (val: any) => void;
+  title: string;
+  element: any;
+  domain: string;
+}
+
 const AccountListTable = ({
   endpoint,
   id,
@@ -16,7 +25,7 @@ const AccountListTable = ({
   title,
   element,
   domain,
-}: any) => {
+}: AccountListTableProps) => {
   const matchesBreakPoint = useMediaQuery("(max-width:1137px)");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [newData, setNewData] = useState([]);

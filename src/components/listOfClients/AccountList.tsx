@@ -60,7 +60,7 @@ const AccountList = (endpoint: { endpoint: string }) => {
           >
             <ListHeaderRow />
             <SubHeaderListRow data={totalBalance} />
-            {userList?.list?.length === 0 && (
+            {userList?.count === 0 ? (
               <Typography
                 sx={{
                   color: "#000",
@@ -72,8 +72,7 @@ const AccountList = (endpoint: { endpoint: string }) => {
               >
                 No Matching Records Found
               </Typography>
-            )}
-            {userList?.list?.length > 0 &&
+            ) : (
               userList?.list?.map(
                 (element: AccountListDataInterface, i: any) => (
                   <AccountListRow
@@ -97,7 +96,8 @@ const AccountList = (endpoint: { endpoint: string }) => {
                     currentPage={currentPage}
                   />
                 )
-              )}
+              )
+            )}
           </Box>
         </Box>
       </Box>

@@ -9,7 +9,6 @@ import { formatToINR } from "../../helper";
 import { AccountListRowInterface } from "../../interface/listOfClients";
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
-import Modal from "../Common/Modal";
 import StyledImage from "../Common/StyledImages";
 import CommissionReportTable from "../commisionReport/CommissionReportTable";
 import AccountListModal from "./AccountListModal";
@@ -34,7 +33,6 @@ const AccountListRow = ({
   const navigate = useNavigate();
 
   const [showUserModal, setShowUserModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showCommissionReport, setShowCommissionReport] = useState({
     value: false,
     id: "",
@@ -554,7 +552,7 @@ const AccountListRow = ({
                 ? "(url)"
                 : ""
               : ""
-          }`}</Typography>{" "}
+          }`}</Typography>
         </Box>
       </Box>
 
@@ -849,25 +847,13 @@ const AccountListRow = ({
           <AccountListModal
             endpoint={ApiConstants.USER.LIST}
             id={showSubUsers?.id}
-            show={showSubUsers?.value}
             setShow={setSubSusers}
             title={showSubUsers?.title}
             element={element}
             domain={domain ? domain : element?.domain ? element?.domain : ""}
-            currentPage={currentPage}
           />
         </Box>
       </ModalMUI>
-
-      {showSuccessModal && (
-        <Modal
-          message={"No data found"}
-          setShowSuccessModal={setShowSuccessModal}
-          showSuccessModal={showSuccessModal}
-          buttonMessage="OK"
-          navigateTo="list_of_clients"
-        />
-      )}
     </>
   );
 };

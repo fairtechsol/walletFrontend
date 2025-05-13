@@ -16,13 +16,25 @@ import {
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 
+interface EventWiseExposureModalProps {
+  setShowUserWiseExposureModal: (val: boolean) => void;
+  userName: string;
+  userId: string;
+  domain: string;
+  setShowUserWiseMatchListModal: (val: {
+    status: boolean;
+    value: any;
+    matchType: string;
+  }) => void;
+}
+
 const EventWiseExposureModal = ({
   setShowUserWiseExposureModal,
   userName,
   userId,
   domain,
   setShowUserWiseMatchListModal,
-}: any) => {
+}: EventWiseExposureModalProps) => {
   const dispatch: AppDispatch = useDispatch();
 
   const { userWiseExposureList, loading } = useSelector(
