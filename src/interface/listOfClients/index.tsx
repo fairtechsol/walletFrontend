@@ -31,20 +31,17 @@ export interface AccountListDataInterface {
 }
 
 export interface AccountListRowInterface {
-  key?: number;
-  callProfile?: boolean;
-  showOptions?: boolean;
-  showUserDetails?: boolean;
+  showOptions: boolean;
+  showUserDetails: boolean;
   showCReport?: boolean;
-  containerStyle?: any;
+  containerStyle: any;
   profit?: boolean;
-  fContainerStyle?: any;
-  fTextStyle?: any;
-  element?: any;
-  getListOfUser?: (value: any) => void;
+  fContainerStyle: any;
+  fTextStyle: any;
+  element: any;
   show?: boolean;
   domain?: any;
-  currentPage?: number;
+  currentPage: number;
   showDownIcon?: boolean;
 }
 

@@ -6,6 +6,7 @@ import {
   getSessionProLoss,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
+import { memo } from "react";
 
 const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   const dispatch: AppDispatch = useDispatch();
@@ -16,7 +17,6 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   );
   return (
     <Box
-      //   onClick={handleClick}
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -25,7 +25,6 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
       }}
     >
       <Box
-        // ref={innerRef}
         onClick={() => {
           if (marketAnalysis?.betType) {
             const currBetPL = [
@@ -133,4 +132,4 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   );
 };
 
-export default PlaceBetComponent;
+export default memo(PlaceBetComponent);

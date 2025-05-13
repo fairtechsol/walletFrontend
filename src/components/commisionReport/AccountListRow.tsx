@@ -1,38 +1,81 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { formatToINR } from "../../helper";
 
-const AccountListRow = ({
-  containerStyle,
-  fContainerStyle,
-  fTextStyle,
-  element,
-}: any) => {
-  const prevElement = {
+interface AccountListRowProps {
+  containerStyle?: React.CSSProperties;
+  fContainerStyle?: React.CSSProperties & { background?: string };
+  fTextStyle?: React.CSSProperties;
+  element?: {
+    matchName?: string;
+    commissionAmount?: number | string;
+    matchType?: "SESSION" | string;
+    betType?: string;
+    stake?: number | string;
+    odds?: number | string;
+    isActive?: boolean;
+    teamName?: string;
+    date?: string;
+    partnerShip?: number;
+    userName?: string;
+  };
+  showOptions?: boolean;
+  showChildModal?: boolean;
+  profit?: any;
+}
+
+interface FormattedElement {
+  name?: string;
+  commissionAmount?: string;
+  commissionType?: string;
+  betType?: string;
+  stack?: string;
+  odds?: string | number;
+  isActive?: boolean;
+  teamBet?: string;
+  createAt?: string;
+  myCommission?: string;
+  userName?: string;
+}
+
+// const AccountListRow = ({
+//   containerStyle,
+//   fContainerStyle,
+//   fTextStyle,
+//   element,
+// }: any) => {
+const AccountListRow: React.FC<AccountListRowProps> = ({
+  containerStyle = {},
+  fContainerStyle = {},
+  fTextStyle = {},
+  element = {},
+}) => {
+  const formatElement = (): FormattedElement => ({
     name: element?.matchName,
-    commissionAmount: formatToINR(element?.commissionAmount),
+    commissionAmount: formatToINR(Number(element?.commissionAmount) || 0),
     commissionType: element?.matchType === "SESSION" ? "Session" : "Match",
     betType: element?.betType,
-    stack: element?.stake && formatToINR(element?.stake),
+    stack: element?.stake ? formatToINR(Number(element.stake)) : undefined,
     odds: element?.odds,
     isActive: element?.isActive,
     teamBet: element?.teamName,
     createAt: element?.date,
-    myCommission:
-      formatToINR(
-        ((+element?.commissionAmount || 0) * element?.partnerShip) / 100
-      ) + `(${element?.partnerShip}%)`,
+    myCommission: element?.partnerShip
+      ? `${formatToINR(
+        ((Number(element.commissionAmount) || 0) * element.partnerShip) / 100
+      )}(${element.partnerShip}%)`
+      : undefined,
     userName: element?.userName,
-  };
-  const [elementToUDM, setElementToUDM] = useState(prevElement);
+  });
+  const [elementToUDM, setElementToUDM] = useState<FormattedElement>(
+    formatElement()
+  );
 
-  function checkIfElementUpdated(val: any) {
-    setElementToUDM(val);
-  }
+
   useEffect(() => {
-    checkIfElementUpdated(prevElement);
-  }, [element?.commissionType]);
+    setElementToUDM(formatElement());
+  }, [element?.matchType]);
 
   return (
     <>
@@ -40,7 +83,6 @@ const AccountListRow = ({
         <Box
           sx={{
             background: "rgba(0,0,0,0.5)",
-            //   width: { xs: "218%", lg: "100%", md: "100%" },
             height: "45px",
             position: "absolute",
             display: "flex",
@@ -86,8 +128,8 @@ const AccountListRow = ({
                 cursor: "pointer",
                 textTransform: "capitalize",
                 color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background) &&
-                  "white",
+                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") ?
+                    "white" : "white",
               },
               fTextStyle,
             ]}
@@ -117,8 +159,8 @@ const AccountListRow = ({
                 cursor: "pointer",
                 textTransform: "capitalize",
                 color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background) &&
-                  "white",
+                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") ?
+                    "white" : "white",
               },
               fTextStyle,
             ]}
@@ -126,37 +168,6 @@ const AccountListRow = ({
             {elementToUDM.commissionType}
           </Typography>
         </Box>
-        {/* <Box
-          sx={[
-            {
-              width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-              display: "flex",
-              paddingX: "10px",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "45px",
-              borderRight: "2px solid white",
-            },
-            fContainerStyle,
-          ]}
-        >
-          <Typography
-            sx={[
-              {
-                fontSize: { xs: "10px", lg: "12px", md: "10px" },
-                fontWeight: "600",
-                cursor: "pointer",
-                display: " -webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              },
-              fTextStyle,
-            ]}
-          >
-            {elementToUDM?.name}
-          </Typography>
-        </Box> */}
         <Box
           sx={{
             width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
@@ -173,7 +184,6 @@ const AccountListRow = ({
               fTextStyle,
             ]}
           >
-            {/* {elementToUDM.teamBet} */}
             {elementToUDM?.createAt ? (
               <>
                 {moment(elementToUDM?.createAt).format("L")} <br />
@@ -290,4 +300,4 @@ const AccountListRow = ({
   );
 };
 
-export default AccountListRow;
+export default memo(AccountListRow);

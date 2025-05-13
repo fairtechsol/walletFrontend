@@ -13,26 +13,7 @@ export const initialiseSocket = () => {
       token: `${sessionStorage.getItem("jwtWallet")}`,
     },
   });
-  // thirdParty = io(baseUrls.thirdParty, {
-  //   transports: [
-  //     // process.env.NODE_ENV === "production"
-  //     //   ? `${Constants.POLLING}`
-  //     //   :
-  //     `${Constants.WEBSOCKET}`,
-  //     `${Constants.POLLING}`,
-  //   ],
-  //   auth: {
-  //     token: `${sessionStorage.getItem("jwtWallet")}`,
-  //   },
-  // });
 };
-
-// export const socket = io(baseUrls.socket, {
-//   transports: ["websocket"],
-//   auth: {
-//     token: `${sessionStorage.getItem("jwtWallet")}`,
-//   },
-// });
 
 export const initialiseMatchSocket = (matchId: string[], roleName: string) => {
   thirdParty = io(baseUrls.thirdParty, {
@@ -46,7 +27,7 @@ export const initialiseMatchSocket = (matchId: string[], roleName: string) => {
     },
     query: {
       matchIdArray: matchId,
-      roleName: roleName
+      roleName: roleName,
     },
   });
 };
@@ -54,22 +35,14 @@ export const initialiseMatchSocket = (matchId: string[], roleName: string) => {
 export const socketService = {
   connect: () => {
     initialiseSocket();
-    // Connect to the socket server
     socket?.connect();
-    // thirdParty?.connect();
-    // expertSocket.connect();
   },
 
   disconnect: () => {
-    // Disconnect from the socket server
     socket?.disconnect();
-    // thirdParty?.disconnect();
-    // expertSocket.disconnect();
   },
   auth: { ...authSocketService },
   match: { ...matchSocketService },
-
-  // Add other socket-related methods as needed
 };
 
 export const matchService = {

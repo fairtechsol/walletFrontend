@@ -6,7 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { useState, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
@@ -22,8 +22,8 @@ import {
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
+import { depositAmountValidations } from "../../../utils/Validations";
 
 const initialValues: any = {
   userId: "",
@@ -33,20 +33,31 @@ const initialValues: any = {
   transactionType: "withDraw",
 };
 
-const WithdrawComponent = (props: any) => {
-  const {
-    endpoint,
-    isWallet,
-    walletAccountDetail,
-    element,
-    backgroundColor,
-    selected,
-    setSelected,
-    titleBackgroundColor,
-    onChangeAmount,
-    currentPage
-  } = props;
+interface WithdrawComponentProps {
+  endpoint?: string;
+  isWallet?: boolean;
+  walletAccountDetail: any;
+  element?: any;
+  backgroundColor?: any;
+  selected: boolean;
+  setSelected: (val?: any) => void;
+  titleBackgroundColor?: string;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+}
 
+const WithdrawComponent = ({
+  endpoint,
+  isWallet,
+  walletAccountDetail,
+  element,
+  backgroundColor,
+  selected,
+  setSelected,
+  titleBackgroundColor,
+  onChangeAmount,
+  currentPage,
+}: WithdrawComponentProps) => {
   const [showPass, setShowPass] = useState(false);
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
@@ -220,8 +231,6 @@ const WithdrawComponent = (props: any) => {
               elementToUDM={element}
               userName={element?.userName}
               title={"Withdraw Amount"}
-              setSelected={setSelected}
-              selected={selected}
               value={formik.values}
               onChange={handleValueChange}
               setShowPass={setShowPass}
@@ -235,7 +244,6 @@ const WithdrawComponent = (props: any) => {
               loading={loading}
               titleBackgroundColor={titleBackgroundColor}
               type="withdraw"
-              currentPage={currentPage}
             />
           </form>
         </ModalMUI>
@@ -497,6 +505,7 @@ const WithdrawComponent = (props: any) => {
                   >
                     <StyledImage
                       src={showPass ? EyeIcon : EyeSlash}
+                      alt="eye"
                       sx={{ height: "14px", width: "20px" }}
                     />
                   </Box>
@@ -659,4 +668,4 @@ const WithdrawComponent = (props: any) => {
   );
 };
 
-export default WithdrawComponent;
+export default memo(WithdrawComponent);

@@ -1,17 +1,29 @@
-import { memo } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import moment from "moment";
-import StyledImage from "../../Common/StyledImages";
+import { memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import SessionBetSeperate from "./SessionBetSeperate";
+import { handleNumber } from "../../../helper";
 import {
   getBetProfitLoss,
   getTotalBetProfitLossForModal,
 } from "../../../store/actions/reports";
-import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import {  handleNumber } from "../../../helper";
+import StyledImage from "../../Common/StyledImages";
+import SessionBetSeperate from "./SessionBetSeperate";
+
+interface SessionComponentMatchesProps {
+  item: any;
+  index: number;
+  showSessionBets: boolean;
+  setShowSessionBets: (val: any) => void;
+  matchId: string;
+  selectedId?: any;
+  getBetReport: (val: any) => void;
+  userDetail?: any;
+  selectedChildBetId?: string;
+  setSelectedChildBetId?: (val: string) => void;
+}
 
 const SessionComponentMatches = ({
   item,
@@ -24,8 +36,7 @@ const SessionComponentMatches = ({
   userDetail,
   selectedChildBetId,
   setSelectedChildBetId,
-  color
-}: any) => {
+}: SessionComponentMatchesProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
@@ -33,80 +44,83 @@ const SessionComponentMatches = ({
     (state: RootState) => state.report.reportList
   );
 
+  const handleSessionBetClick = () => {
+    if (
+      selectedId?.betId === item?.betId ||
+      selectedChildBetId === item?.betId
+    ) {
+      setShowSessionBets((prev: any) => !prev);
+      if (!showSessionBets) {
+        if (userDetail) {
+          dispatch(
+            getTotalBetProfitLossForModal({
+              matchId: matchId,
+              betId: item?.betId,
+              isSession: true,
+              url: item?.url || "",
+              id: user?.id,
+            })
+          );
+          setSelectedChildBetId?.(item?.betId);
+        } else {
+          dispatch(
+            getBetProfitLoss({
+              matchId: matchId,
+              betId: item?.betId,
+              isSession: true,
+              url: item?.url || "",
+              id: user?.id,
+            })
+          );
+        }
+      }
+    } else {
+      setShowSessionBets(true);
+      if (userDetail) {
+        dispatch(
+          getTotalBetProfitLossForModal({
+            matchId: matchId,
+            betId: item?.betId,
+            isSession: true,
+            url: item?.url || "",
+            id: user?.id,
+            userId: item?.userId,
+            roleName: item?.roleName,
+          })
+        );
+        setSelectedChildBetId?.(item?.betId);
+      } else {
+        dispatch(
+          getBetProfitLoss({
+            matchId: matchId,
+            betId: item?.betId,
+            isSession: true,
+            url: item?.url || "",
+            id: user?.id,
+          })
+        );
+        getBetReport({
+          eventType: item?.eventType,
+          matchId: matchId,
+          type: "session_bet",
+          betId: item?.betId,
+          sessionBet: true,
+        });
+      }
+    }
+  };
+
   return (
     <Box key={index} sx={{ width: "100%" }}>
       <Box
-        onClick={() => {
-          if (
-            selectedId?.betId === item?.betId ||
-            selectedChildBetId === item?.betId
-          ) {
-            setShowSessionBets((prev: any) => !prev);
-            if (!showSessionBets) {
-              if (userDetail) {
-                dispatch(
-                  getTotalBetProfitLossForModal({
-                    matchId: matchId,
-                    betId: item?.betId,
-                    isSession: true,
-                    url: item?.url || "",
-                    id: user?.id,
-                  })
-                );
-                setSelectedChildBetId(item?.betId);
-              } else {
-                dispatch(
-                  getBetProfitLoss({
-                    matchId: matchId,
-                    betId: item?.betId,
-                    isSession: true,
-                    url: item?.url || "",
-                    id: user?.id,
-                  })
-                );
-              }
-            }
-          } else {
-            setShowSessionBets(true);
-            if (userDetail) {
-              dispatch(
-                getTotalBetProfitLossForModal({
-                  matchId: matchId,
-                  betId: item?.betId,
-                  isSession: true,
-                  url: item?.url || "",
-                  id: user?.id,
-                  userId: item?.userId,
-                  roleName: item?.roleName,
-                })
-              );
-              setSelectedChildBetId(item?.betId);
-            } else {
-              dispatch(
-                getBetProfitLoss({
-                  matchId: matchId,
-                  betId: item?.betId,
-                  isSession: true,
-                  url: item?.url || "",
-                  id: user?.id,
-                })
-              );
-              getBetReport({
-                eventType: item?.eventType,
-                matchId: matchId,
-                type: "session_bet",
-                betId: item?.betId,
-                sessionBet: true,
-              });
-            }
-          }
-        }}
+        onClick={handleSessionBetClick}
         sx={{
           width: "100%",
           height: "45px",
           background: "white",
           display: "flex",
           padding: 0.1,
+          cursor: "pointer",
         }}
       >
         <Box
@@ -215,7 +229,7 @@ const SessionComponentMatches = ({
                 color: "white",
               }}
             >
-               {matchesMobile ? "P/L" : "Profit Loss"}
+              {matchesMobile ? "P/L" : "Profit Loss"}
             </Typography>
             <StyledImage
               src={item?.totalLoss > 0 ? ARROW_UP : ARROWDOWN}
@@ -235,10 +249,11 @@ const SessionComponentMatches = ({
             <Typography
               sx={{ fontSize: "15px", fontWeight: "700", color: "white" }}
             >
-              {handleNumber(parseFloat(item?.totalLoss), color)}
+              {handleNumber(parseFloat(item?.totalLoss), "")}
             </Typography>
             <StyledImage
               src={ArrowDown}
+              alt="arrowDown"
               sx={{
                 width: { lg: "20px", xs: "10px" },
                 height: { lg: "10px", xs: "6px" },
@@ -259,7 +274,6 @@ const SessionComponentMatches = ({
         showSessionBets && (
           <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
             <SessionBetSeperate
-              betHistory={false}
               allBetsData={
                 userDetail
                   ? totalBetProfitLossModal
@@ -269,8 +283,6 @@ const SessionComponentMatches = ({
                   ? betProfitLossList
                   : []
               }
-              profit
-              isArrow={true}
             />
           </Box>
         )}

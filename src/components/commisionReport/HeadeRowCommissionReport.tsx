@@ -1,5 +1,23 @@
 import { Box, Typography } from "@mui/material";
 
+const headerItems = [
+  { label: "User Name", width: { xs: "12.5%", lg: "12.5%", md: "12.5%" } },
+  {
+    label: "Commission Type",
+    width: { xs: "12.5%", lg: "12.5%", md: "12.5%" },
+  },
+  { label: "Date/Time", width: { xs: "12.5%", lg: "12.5%", md: "12.5%" } },
+  { label: "Team", width: { xs: "12.5%", lg: "24.5%", md: "12.5%" } },
+  { label: "Odds", width: { xs: "12.5%", lg: "12.5%", md: "12.5%" } },
+  { label: "Bet Type", width: { xs: "15%", lg: "15%", md: "15%" } },
+  { label: "Stake", width: { xs: "15%", lg: "15%", md: "15%" } },
+  {
+    label: "Commission Amount",
+    width: { xs: "12.5%", lg: "12.5%", md: "12.5%" },
+  },
+  { label: "My Commission", width: { xs: "12.5%", lg: "12.5%", md: "12.5%" } },
+];
+
 const HeaderRowCommissionReport = () => {
   return (
     <Box
@@ -13,218 +31,29 @@ const HeaderRowCommissionReport = () => {
         borderBottom: "2px solid white",
       }}
     >
-      <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
+      {headerItems.map((item) => (
+        <Box
+          key={item.label}
           sx={{
-            color: "white",
-            fontSize: {
-              xs: "10px",
-              lg: "12px",
-              md: "12px",
+            width: item.width,
+            display: "flex",
+            paddingLeft: "10px",
+            alignItems: "center",
+            height: "35px",
+            borderRight: "2px solid white",
+          }}
+        >
+          <Typography
+            sx={{
+              color: "white",
+              fontSize: { xs: "10px", lg: "12px", md: "12px" },
               lineHeight: 1,
-            },
-          }}
-        >
-          User Name
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: {
-              xs: "10px",
-              lg: "12px",
-              md: "12px",
-              lineHeight: 1,
-            },
-          }}
-        >
-          Commission Type
-        </Typography>
-      </Box>
-      {/* <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "10px", lg: "12px", md: "12px" },
-          }}
-        >
-          Name
-        </Typography>
-      </Box> */}
-
-      <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "10px", lg: "12px", md: "12px" },
-          }}
-        >
-          Date/Time
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "24.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "10px", lg: "12px", md: "12px" },
-          }}
-        >
-          Team
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "10px", lg: "12px", md: "12px" },
-          }}
-        >
-          Odds
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "15%", md: "15%", xs: "15%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "10px", lg: "12px", md: "12px" },
-          }}
-        >
-          Bet Type
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "15%", md: "15%", xs: "15%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "10px", lg: "12px", md: "12px" },
-          }}
-        >
-          Stake
-        </Typography>
-      </Box>
-
-      <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: {
-              xs: "10px",
-              lg: "12px",
-              md: "12px",
-              lineHeight: 1,
-            },
-          }}
-        >
-          Commission Amount
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
-          display: "flex",
-          paddingLeft: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: {
-              xs: "10px",
-              lg: "12px",
-              md: "12px",
-              lineHeight: 1,
-            },
-          }}
-        >
-          My Commission
-        </Typography>
-      </Box>
+            }}
+          >
+            {item.label}
+          </Typography>
+        </Box>
+      ))}
     </Box>
   );
 };

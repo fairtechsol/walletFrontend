@@ -1,29 +1,32 @@
-import { useDispatch } from "react-redux";
+import { Box } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { Excel, Pdf } from "../../assets";
+import { handleExport } from "../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../store/store";
+import { ApiConstants } from "../../utils/Constants";
 import SearchInput from "../Common/SearchInput";
 import StyledImage from "../Common/StyledImages";
-import { Box } from "@mui/material";
-import { AppDispatch, RootState } from "../../store/store";
-import { handleExport } from "../../store/actions/user/userAction";
-import { ApiConstants } from "../../utils/Constants";
-import { useSelector } from "react-redux";
+
+interface HeaderRowProps {
+  endpoint: string;
+  searchFor: string;
+  downloadPdfExcel: boolean;
+  setCurrentPage: (val: number) => void;
+}
 
 const HeaderRow = ({
-  getListOfUser,
   endpoint,
   searchFor,
   downloadPdfExcel,
-  pageLimit,
   setCurrentPage,
-  setSearchValue,
-}: any) => {
+}: HeaderRowProps) => {
   const dispatch: AppDispatch = useDispatch();
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
   return (
     <Box
-      display={"flex"}
+      display="flex"
       sx={{
         justifyContent: "space-between",
         px: "10px",
@@ -48,6 +51,7 @@ const HeaderRow = ({
             >
               <StyledImage
                 src={Excel}
+                alt="excel"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(
@@ -74,6 +78,7 @@ const HeaderRow = ({
             >
               <StyledImage
                 src={Pdf}
+                alt="pdf"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(
@@ -90,13 +95,10 @@ const HeaderRow = ({
         )}
       </Box>
       <SearchInput
-        placeholder={"Search User..."}
+        placeholder="Search User..."
         show={true}
         searchFor={searchFor}
         endpoint={ApiConstants.USER.LIST}
-        getListOfUser={getListOfUser}
-        pageLimit={pageLimit}
-        onChange={setSearchValue}
         setCurrentPage={setCurrentPage}
       />
     </Box>

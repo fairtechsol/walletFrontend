@@ -1,19 +1,13 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { UD } from "../../../assets";
 import { handleNumber } from "../../../helper";
 import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { AppDispatch } from "../../../store/store";
 
-const PlaceBetComponentWeb = ({
-  newData,
-  profitLoss,
-  color,
-  // sessionData,
-  index,
-}: any) => {
+const PlaceBetComponentWeb = ({ newData, profitLoss, color, index }: any) => {
   const dispatch: AppDispatch = useDispatch();
-  // const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
   return (
     <>
       <Box
@@ -42,29 +36,6 @@ const PlaceBetComponentWeb = ({
           position: "absolute",
         }}
       >
-        {/* <Box
-          sx={{
-            background: "#FDF21A",
-            borderRadius: "3px",
-            width: "45%",
-            height: "85%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          <Typography
-            sx={{ fontSize: ".5vw", fontWeight: "bold", color: "#FF4D4D" }}
-          >
-            Total Bet
-          </Typography>
-          <Typography
-            sx={{ fontSize: ".6vw", fontWeight: "bold", color: "#0B4F26" }}
-          >
-            {Math.floor(profitLoss?.totalBet) || 0}
-          </Typography>
-        </Box> */}
         <Box
           sx={{
             width: "100%",
@@ -100,4 +71,4 @@ const PlaceBetComponentWeb = ({
   );
 };
 
-export default PlaceBetComponentWeb;
+export default memo(PlaceBetComponentWeb);

@@ -1,7 +1,7 @@
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../assets";
 import {
@@ -362,4 +362,4 @@ const ChangeDeleteCode = (props: any) => {
   );
 };
 
-export default ChangeDeleteCode;
+export default memo(ChangeDeleteCode);

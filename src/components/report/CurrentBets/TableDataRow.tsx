@@ -1,18 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
+import { memo } from "react";
 import { formatToINR } from "../../../helper";
 import CommissionDot from "../../Common/CommissionDot";
 
-const TableDataRow = (props: any) => {
-  const {
-    containerStyle,
-    data,
-    fContainerStyle,
-    fTextStyle,
-    index,
-    currentPage,
-    pageLimit,
-  } = props;
+const TableDataRow = ({
+  containerStyle,
+  data,
+  fContainerStyle,
+  fTextStyle,
+  index,
+  currentPage,
+  pageLimit,
+}: any) => {
   let flag = index % 2 != 0;
   let no = (index + 1 + pageLimit * (currentPage - 1)).toString();
   return (
@@ -20,7 +20,6 @@ const TableDataRow = (props: any) => {
       sx={[
         {
           display: "flex",
-          // height: "45px",
           background: "#0B4F26",
           alignItems: "center",
           borderBottom: "1px solid white",
@@ -29,18 +28,16 @@ const TableDataRow = (props: any) => {
       ]}
     >
       <Box
-        sx={[
-          {
-            width: "5%",
-            minWidth: "70px",
-            justifyContent: "center",
-            display: "flex",
-            alignItems: "center",
-            height: "45px",
-            background: "black",
-            borderRight: "2px solid white",
-          },
-        ]}
+        sx={{
+          width: "5%",
+          minWidth: "70px",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          height: "45px",
+          background: "black",
+          borderRight: "2px solid white",
+        }}
       >
         <Typography
           sx={[
@@ -112,7 +109,6 @@ const TableDataRow = (props: any) => {
           width: "10%",
           minWidth: "100px",
           display: "flex",
-          // paddingLeft: "10px",
           background: flag ? "#ECECEC" : "#FFE094",
           alignItems: "center",
           justifyContent: "center",
@@ -362,4 +358,4 @@ const TableDataRow = (props: any) => {
   );
 };
 
-export default TableDataRow;
+export default memo(TableDataRow);

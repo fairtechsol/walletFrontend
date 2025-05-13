@@ -1,16 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import BoxButton from "./BoxButton";
-import ChangePasswordComponent from "./ChangePasswordComponent";
-import DepositComponent from "./DepositComponent";
-import LockUnlockComponent from "./LockUnlockComponent";
-import SetCreditComponent from "./SetCreditComponent";
-import SetExposureLimit from "./SetExposureLimit";
-import WithdrawComponent from "./WithdrawComponent";
-import { ApiConstants } from "../../../utils/Constants";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DeleteIcon } from "../../../assets";
 import {
   getTotalBalance,
   getUserList,
@@ -19,20 +10,36 @@ import {
   handleSettleCommission,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import { ApiConstants } from "../../../utils/Constants";
 import StyledImage from "../../Common/StyledImages";
-import { DeleteIcon } from "../../../assets";
+import BoxButton from "./BoxButton";
+import ChangePasswordComponent from "./ChangePasswordComponent";
+import DepositComponent from "./DepositComponent";
+import LockUnlockComponent from "./LockUnlockComponent";
+import SetCreditComponent from "./SetCreditComponent";
+import SetExposureLimit from "./SetExposureLimit";
+import WithdrawComponent from "./WithdrawComponent";
 
-const RowModalComponents = (props: any) => {
-  const {
-    element,
-    selected,
-    setSelected,
-    backgroundColor,
-    onValueChange,
-    currentPage,
-    setShowUserModal,
-  } = props;
+interface RowModalComponentsProps {
+  element: any;
+  selected: number | null;
+  setSelected: any;
+  backgroundColor: string;
+  onValueChange: (amount: string, id: string, type: string) => void;
+  currentPage: number | any;
+  setShowUserModal: (value: boolean) => void;
+}
 
+const RowModalComponents = ({
+  element,
+  selected,
+  setSelected,
+  backgroundColor,
+  onValueChange,
+  currentPage,
+  setShowUserModal,
+}: RowModalComponentsProps) => {
   const dispatch: AppDispatch = useDispatch();
 
   const [settlementModal, setSettlementModal] = useState(false);
@@ -44,7 +51,6 @@ const RowModalComponents = (props: any) => {
 
   const { success } = useSelector((state: RootState) => state.user.userList);
   const handleAmountChange = (amount: string, id: string, type: string) => {
-    // alert(amount)
     onValueChange(amount, id, type);
   };
   const classes = {
@@ -161,7 +167,6 @@ const RowModalComponents = (props: any) => {
                   : ApiConstants.USER.CREDITREFERRENCE
               }
               element={element}
-              selected={selected == 2}
               setSelected={() => {
                 setSelected(null);
               }}
@@ -178,12 +183,9 @@ const RowModalComponents = (props: any) => {
                   : ApiConstants.USER.CHANGEPASSWORD
               }
               element={element}
-              selected={selected == 3}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
-              currentPage={currentPage}
               setShowUserModal={() => {}}
             />
           )}
@@ -195,7 +197,6 @@ const RowModalComponents = (props: any) => {
                   : ApiConstants.USER.EXPOSURELIMIT
               }
               element={element}
-              selected={selected == 5}
               setSelected={() => {
                 setSelected(null);
               }}
@@ -212,11 +213,9 @@ const RowModalComponents = (props: any) => {
                   : ApiConstants.USER.LOCKUNLOCK
               }
               element={element}
-              selected={selected == 4}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
               onChangeAmount={handleAmountChange}
               currentPage={currentPage}
             />
@@ -226,7 +225,6 @@ const RowModalComponents = (props: any) => {
       {selected === null && (
         <Box
           sx={{
-            // flex: 1,
             display: "flex",
             flexDirection: { xs: "row", lg: "row", md: "row" },
             gap: { xs: 0.5 },
@@ -251,7 +249,6 @@ const RowModalComponents = (props: any) => {
             titleStyle={{
               fontSize: { xs: "12px" },
             }}
-            labelStyle={{}}
           />
           <BoxButton
             color={"#0B4F26"}
@@ -268,7 +265,6 @@ const RowModalComponents = (props: any) => {
             }}
             isSelected={selected == 1}
             title={"Withdraw"}
-            labelStyle={{}}
           />
           {!element?.isUrl && (
             <BoxButton
@@ -286,7 +282,6 @@ const RowModalComponents = (props: any) => {
               titleStyle={{
                 fontSize: { xs: "12px" },
               }}
-              labelStyle={{}}
             />
           )}
           <BoxButton
@@ -328,7 +323,6 @@ const RowModalComponents = (props: any) => {
             }}
             title={"set Credit Reference"}
             isSelected={selected == 2}
-            labelStyle={{}}
             containerStyle={{
               marginLeft: { lg: "10px", xs: "0" },
               flex: 1,
@@ -352,7 +346,6 @@ const RowModalComponents = (props: any) => {
               fontSize: { xs: "12px" },
             }}
             title={"Set Exposure Limit"}
-            labelStyle={{}}
             isSelected={selected == 5}
           />
           <BoxButton
@@ -371,9 +364,8 @@ const RowModalComponents = (props: any) => {
               fontSize: { xs: "12px" },
             }}
             icon={
-              <StyledImage src={DeleteIcon} sx={classes.BoxButtonStyledImage} />
+              <StyledImage src={DeleteIcon} alt="delete" sx={classes.BoxButtonStyledImage} />
             }
-            // containerStyle={classes.BoxButtonContStyle}
           />
           <Dialog
             open={settlementModal}
@@ -382,7 +374,7 @@ const RowModalComponents = (props: any) => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Are you sure want to settle this commission ?"}
+              Are you sure want to settle this commission ?
             </DialogTitle>
             <DialogActions>
               <Button onClick={() => setSettlementModal((prev) => !prev)}>
@@ -410,7 +402,7 @@ const RowModalComponents = (props: any) => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Are you sure want to delete this user?"}
+              Are you sure want to delete this user?
             </DialogTitle>
             <DialogActions>
               <Button
@@ -428,28 +420,10 @@ const RowModalComponents = (props: any) => {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* <Dialog
-            open={false}
-            onClose={() => {}}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {
-                "Your available balance is not zero. Are you sure want to delete this user?"
-              }
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={() => {}}>Cancel</Button>
-              <Button sx={{ color: "#E32A2A" }} onClick={() => {}}>
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog> */}
         </Box>
       )}
     </Box>
   );
 };
 
-export default RowModalComponents;
+export default memo(RowModalComponents);

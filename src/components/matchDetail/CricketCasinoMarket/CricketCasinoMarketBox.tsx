@@ -5,14 +5,20 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { Fragment, memo } from "react";
 import { BallStart } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import SeperateBox from "../MatchOdds/SeperateBox";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
-const CricketCasinoMarketBox = (props: any) => {
-  const { newData, setData, profitLossData, index, sessionData } = props;
+const CricketCasinoMarketBox = ({
+  newData,
+  setData,
+  profitLossData,
+  index,
+  sessionData,
+}: any) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
@@ -38,7 +44,7 @@ const CricketCasinoMarketBox = (props: any) => {
               background: "rgba(0,0,0,0.5)",
               zIndex: 2,
             }}
-          ></Box>
+          />
         )}
         <Box
           sx={{
@@ -49,7 +55,7 @@ const CricketCasinoMarketBox = (props: any) => {
             background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
           }}
         >
-          <Typography>
+          <Box>
             <Typography
               sx={{
                 color: "black",
@@ -71,7 +77,7 @@ const CricketCasinoMarketBox = (props: any) => {
             >
               max: {formatToINR(newData?.maxBet || newData?.max)}
             </Typography>
-          </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -108,11 +114,8 @@ const CricketCasinoMarketBox = (props: any) => {
             <Box
               sx={{
                 background: "rgba(0,0,0,1)",
-                // marginLeft: "-2px",
                 height: "38px",
-                // position: "absolute",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
-                // right: 0,
                 width: { lg: "36.5%", md: "60%", xs: "60.5%" },
                 justifyContent: { xs: "center", lg: "center" },
                 alignItems: "center",
@@ -144,11 +147,8 @@ const CricketCasinoMarketBox = (props: any) => {
           ) : (
             <>
               {newData?.odds?.map((item: any, index: number) => (
-                <>
+                <Fragment key={index}>
                   <SeperateBox
-                    key={index}
-                    session={true}
-                    back={true}
                     value={item?.odds ?? 0}
                     value2={item?.size ?? 0}
                     lock={
@@ -156,19 +156,14 @@ const CricketCasinoMarketBox = (props: any) => {
                         ? true
                         : false
                     }
-                    color={"#B3E0FF"}
+                    color="#B3E0FF"
                   />
-                  <Box
-                    sx={{ width: "3px", display: "flex", background: "pink" }}
-                  ></Box>
-                </>
+                </Fragment>
               ))}
             </>
           )}
 
-          <Box
-            sx={{ width: ".45%", display: "flex", background: "pink" }}
-          ></Box>
+          <Box sx={{ width: ".45%", display: "flex", background: "pink" }} />
         </Box>
       </Box>
       <Divider />
@@ -176,4 +171,4 @@ const CricketCasinoMarketBox = (props: any) => {
   );
 };
 
-export default CricketCasinoMarketBox;
+export default memo(CricketCasinoMarketBox);

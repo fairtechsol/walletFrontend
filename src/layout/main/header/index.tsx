@@ -1,6 +1,7 @@
 import { AppBar, Box, useMediaQuery, useTheme } from "@mui/material";
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Draw, FgLogo } from "../../../assets/index";
 import StyledImage from "../../../components/Common/StyledImages";
 import { profileReset } from "../../../store/actions/user/userAction";
@@ -9,7 +10,6 @@ import AdminEventListing from "./AdminEventListing";
 import BoxProfile from "./BoxProfile";
 import MobileSideBar from "./MobileSideBar";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const theme = useTheme();
@@ -22,17 +22,12 @@ const Header = () => {
     (state: RootState) => state.user.profile
   );
 
-  // const initialValues: any = {
-  //   value: "",
-  // };
-
   const currentSelected = 1;
 
   const classes = {
     AppBarVal: { zIndex: (theme: any) => theme.zIndex.drawer + 1 },
     BoxCont1: [
       {
-        // flex: "1",
         width: "100%",
         minHeight: { lg: 60, md: 60, xs: 60 },
         minWidth: { lg: 60, md: 60, xs: 60 },
@@ -143,6 +138,7 @@ const Header = () => {
         sx={{
           width: "100%",
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          padding: "0 !important",
         }}
       >
         <Box sx={classes.BoxCont1}>
@@ -150,7 +146,7 @@ const Header = () => {
             <Box sx={classes.BoxCont1sub1sub1}>
               <StyledImage
                 src={Draw}
-                //onClick={() => setMobileOpen((prev) => !prev)}
+                alt="draw"
                 sx={{
                   ...classes.BoxCont1sub1sub1StyleImg,
                   cursor: "default",
@@ -158,6 +154,7 @@ const Header = () => {
               />
               <StyledImage
                 src={FgLogo}
+                alt="fgLogo"
                 sx={classes.RenderLogoCompStyleImg}
                 onClick={() => navigate("/wallet/list_of_clients")}
               />
@@ -177,7 +174,6 @@ const Header = () => {
         <MobileSideBar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       </AppBar>
       <Box sx={classes.BoxEnd} />
-      {/* marquee start */}
       <Box
         sx={{
           height: "32px",
@@ -186,11 +182,11 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        <div className="marquee-container nav-marquee text-white">
-          <div className="marquee-content">
+        <Box className="marquee-container nav-marquee text-white">
+          <Box className="marquee-content">
             {marqueeNotification?.value ? marqueeNotification?.value : ""}
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Box>
 
       <Box

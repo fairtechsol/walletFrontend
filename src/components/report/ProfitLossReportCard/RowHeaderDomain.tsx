@@ -1,18 +1,18 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { useState } from "react";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import moment from "moment";
+import { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { formatToINR } from "../../../helper";
 import {
   getDomainProfitLossCard,
   resetBetProfitLossCard,
   resetDomainProfitLossCard,
   resetSessionProfitLossCard,
 } from "../../../store/actions/reports";
-import moment from "moment";
-import { formatToINR } from "../../../helper";
+import { AppDispatch, RootState } from "../../../store/store";
 import theme from "../../../theme";
+import StyledImage from "../../Common/StyledImages";
 
 const RowHeaderDomain = ({
   item,
@@ -130,6 +130,7 @@ const RowHeaderDomain = ({
         </Typography>
         <StyledImage
           src={ArrowDown}
+          alt="arrowDown"
           sx={{
             width: { lg: "20px", xs: "10px" },
             transform: showMatchList ? "rotate(180deg)" : "rotate(0deg)",
@@ -243,4 +244,4 @@ const RowHeaderDomain = ({
   );
 };
 
-export default RowHeaderDomain;
+export default memo(RowHeaderDomain);

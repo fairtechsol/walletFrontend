@@ -1,42 +1,87 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { handleNumber } from "../../../helper";
 import moment from "moment";
+import { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { handleNumber } from "../../../helper";
 import {
   getDomainProfitLoss,
   resetBetProfitLoss,
   resetDomainProfitLoss,
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
-import { useDispatch } from "react-redux";
-import RowComponentMatches from "./RowComponentMatches";
-import { useEffect, useState } from "react";
+import { AppDispatch, RootState } from "../../../store/store";
 import { gameConstants, gameIconConstants } from "../../../utils/Constants";
+import StyledImage from "../../Common/StyledImages";
+import RowComponentMatches from "./RowComponentMatches";
+
+interface RowHeaderMatchesProps {
+  item: any;
+  startDate: any;
+  endDate: any;
+  getHandleReport: (val: string) => void;
+  selectedId: any;
+  getBetReport: (val: any) => void;
+  userProfitLoss: any;
+  getUserProfitLoss: (val: string) => void;
+  eventType: string;
+  paginatedData: any;
+  currentPage: number;
+}
 
 const RowHeaderMatches = ({
   item,
   startDate,
   endDate,
   getHandleReport,
-  // show,
-  color,
   selectedId,
   getBetReport,
   userProfitLoss,
   getUserProfitLoss,
   eventType,
-}: any) => {
+  paginatedData,
+  currentPage
+}: RowHeaderMatchesProps) => {
   const { user } = useSelector((state: RootState) => state.report.reportList);
   const theme = useTheme();
   const [show, setShow] = useState(false);
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const dispatch: AppDispatch = useDispatch();
-  const { domainProfitLossList } = useSelector(
-    (state: RootState) => state.report.reportList
-  );
+
+  const handleEventClick = () => {
+    if (!show) {
+      let filter = "";
+      if (user?.id) {
+        filter += `&id=${user?.id}`;
+      }
+      if (startDate && endDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      } else if (startDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+      } else if (endDate) {
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      }
+      if (
+        item?.eventType === gameConstants.horseRacing ||
+        item?.eventType === gameConstants.greyHound
+      ) {
+        filter += `&isRacing=true`;
+      }
+      dispatch(
+        getDomainProfitLoss({
+          url: item?.domainUrl,
+          type: item?.eventType,
+          filter: filter,
+        })
+      );
+    }
+    dispatch(resetDomainProfitLoss());
+    dispatch(resetBetProfitLoss());
+    dispatch(resetSessionProfitLoss());
+    getHandleReport(item?.eventType);
+    setShow((prev: boolean) => !prev);
+  };
 
   useEffect(() => {
     if (item?.eventType !== eventType) {
@@ -47,46 +92,14 @@ const RowHeaderMatches = ({
   return (
     <>
       <Box
-        onClick={() => {
-          if (!show) {
-            let filter = "";
-            if (user?.id) {
-              filter += `&id=${user?.id}`;
-            }
-            if (startDate && endDate) {
-              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-            } else if (startDate) {
-              filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-            } else if (endDate) {
-              filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-            }
-            if (
-              item?.eventType === gameConstants.horseRacing ||
-              item?.eventType === gameConstants.greyHound
-            ) {
-              filter += `&isRacing=true`;
-            }
-            dispatch(
-              getDomainProfitLoss({
-                url: item?.domainUrl,
-                type: item?.eventType,
-                filter: filter,
-              })
-            );
-          }
-          dispatch(resetDomainProfitLoss());
-          dispatch(resetBetProfitLoss());
-          dispatch(resetSessionProfitLoss());
-          getHandleReport(item?.eventType);
-          setShow((prev: boolean) => !prev);
-        }}
+        onClick={handleEventClick}
         sx={{
           width: "100%",
           height: { lg: "60px", xs: "50px" },
           background: "white",
           display: "flex",
           padding: 0.1,
+          cursor: "pointer",
         }}
       >
         <Box
@@ -101,6 +114,7 @@ const RowHeaderMatches = ({
         >
           <StyledImage
             src={gameIconConstants[item?.eventType]}
+            alt="gameIcon"
             sx={{ width: { lg: "35px", sm: "35px", xs: "22px" } }}
           />
         </Box>
@@ -127,6 +141,7 @@ const RowHeaderMatches = ({
           </Typography>
           <StyledImage
             src={ArrowDown}
+            alt="arrowDown"
             sx={{
               width: { lg: "20px", xs: "10px" },
               transform: show ? "rotate(180deg)" : "rotate(0deg)",
@@ -181,11 +196,9 @@ const RowHeaderMatches = ({
                 lineHeight: "0.9",
               }}
             >
-              {handleNumber(parseFloat(item?.totalLoss || 0), color)}{" "}
+              {handleNumber(parseFloat(item?.totalLoss || 0), "")}
               {`${matchesMobile ? "TD(1%)" : "Total Deduction"} : `}
-              {handleNumber(parseFloat(item?.totalDeduction || 0), color)}{" "}
-              {/* {`(${matchesMobile ? "TD(1%)" : "Total Deduction"}: 
-                ${handleNumber(parseFloat(item?.totalDeduction || 0),color)})`} */}
+              {handleNumber(parseFloat(item?.totalDeduction || 0), "")}
             </Typography>
           </Box>
         </Box>
@@ -225,25 +238,24 @@ const RowHeaderMatches = ({
           </Box>
         </Box>
       </Box>
-      <Box>
-        {show &&
-          eventType === item?.eventType &&
-          domainProfitLossList?.map((item: any, index: number) => {
-            return (
-              <RowComponentMatches
-                key={index}
-                item={item}
-                index={index + 1}
-                selectedId={selectedId}
-                getBetReport={getBetReport}
-                userProfitLoss={userProfitLoss}
-                getUserProfitLoss={getUserProfitLoss}
-              />
-            );
-          })}
-      </Box>
+      {show &&
+        eventType === item?.eventType &&
+        paginatedData?.map((item: any, index: number) => {
+          return (
+            <RowComponentMatches
+              key={index}
+              item={item}
+              index={index + 1}
+              selectedId={selectedId}
+              getBetReport={getBetReport}
+              userProfitLoss={userProfitLoss}
+              getUserProfitLoss={getUserProfitLoss}
+              currentPage={currentPage}
+            />
+          );
+        })}
     </>
   );
 };
 
-export default RowHeaderMatches;
+export default memo(RowHeaderMatches);

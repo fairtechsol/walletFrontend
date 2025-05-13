@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getMatchDetailHorseRacing,
-  updateMatchRatesForHorseRacing,
-  updateTeamRatesForHorseRacing,
-  updateTeamRatesForHorseRacingOnDelete,
+    getMatchDetailHorseRacing,
+    updateMatchRatesForHorseRacing,
+    updateTeamRatesForHorseRacing,
+    updateTeamRatesForHorseRacingOnDelete,
 } from "../../actions/horseRacing/horseMatchDetailActions";
 
 interface InitialState {
@@ -38,7 +38,7 @@ const matchDetailSlice = createSlice({
       })
       .addCase(getMatchDetailHorseRacing.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(updateMatchRatesForHorseRacing.fulfilled, (state, action) => {
         const { matchOdd } = action.payload;

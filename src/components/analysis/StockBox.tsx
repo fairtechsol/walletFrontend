@@ -1,9 +1,17 @@
 import { Box, Typography } from "@mui/material";
-import StyledImage from "../Common/StyledImages";
+import { memo } from "react";
 import { handleNumber } from "../../helper";
+import StyledImage from "../Common/StyledImages";
 
-const StockBox = (props: any) => {
-  const { team, value, up, mode, color, showFixed } = props;
+interface StockBoxProps {
+  team: string;
+  value: string | number | any;
+  up?: boolean;
+  mode: string;
+  showFixed?: boolean;
+}
+
+const StockBox = ({ team, value, up, mode, showFixed }: StockBoxProps) => {
   return (
     <Box
       sx={{
@@ -48,6 +56,7 @@ const StockBox = (props: any) => {
                 ? "https://fontawesomeicons.com/images/svg/trending-up-sharp.svg"
                 : "https://fontawesomeicons.com/images/svg/trending-down-sharp.svg"
             }
+            alt="up-down icon"
             sx={{
               height: { xs: "17px", lg: "25px" },
               marginLeft: "5px",
@@ -67,12 +76,10 @@ const StockBox = (props: any) => {
           textAlign: { xs: "center", lg: "center" },
         }}
       >
-        {showFixed ? value : handleNumber(parseFloat(value), color)}
+        {showFixed ? value : handleNumber(parseFloat(value), "")}
       </Typography>
-
-      {/* {!team && <img style={{ width: "20px", height: "12px" }} src={ARROWUP} />} */}
     </Box>
   );
 };
 
-export default StockBox;
+export default memo(StockBox);

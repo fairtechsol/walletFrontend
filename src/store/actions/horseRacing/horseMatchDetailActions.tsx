@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants } from "../../../utils/Constants";
-import { AxiosError } from "axios";
 
 export const getMatchDetailHorseRacing = createAsyncThunk<any, string>(
   "horseRacing/matchDetail",
@@ -18,23 +18,6 @@ export const getMatchDetailHorseRacing = createAsyncThunk<any, string>(
             runners: resp.data.runners,
           },
         };
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
-  }
-);
-export const deleteHorseRacingBets = createAsyncThunk<any, any>(
-  "horseRacing/deleteBet",
-  async (requestData, thunkApi) => {
-    try {
-      const resp = await service.post(
-        `${ApiConstants.HORSERACING.MATCH.DELETE_BET}`,
-        { requestData }
-      );
-      if (resp?.data) {
-        return resp?.data;
       }
     } catch (error) {
       const err = error as AxiosError;

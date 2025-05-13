@@ -32,14 +32,14 @@ const userProfitLossRace = createSlice({
       .addCase(getUserProfitLossForRace.fulfilled, (state, action) => {
         state.success = true;
         state.loading = false;
-        state.userProfitLossData = action?.payload;
+        state.userProfitLossData = action.payload;
       })
       .addCase(getUserProfitLossForRace.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(resetUserProfitLossForRace, (state) => {
-        return { ...state, userProfitLossData: [] };
+        state.userProfitLossData = [];
       });
   },
 });

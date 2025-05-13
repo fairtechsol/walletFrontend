@@ -1,26 +1,38 @@
-import { Box, Typography } from "@mui/material";
-import RowHeaderMatches from "./RowHeaderMatches";
+import { Typography } from "@mui/material";
+import { memo, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { Constants } from "../../../utils/Constants";
 import Pagination from "../../Common/Pagination";
-import { useState } from "react";
-// import RowComponentMatches from "./RowComponentMatches";
-// import { RootState } from "../../../store/store";
-// import { useSelector } from "react-redux";
+import RowHeaderMatches from "./RowHeaderMatches";
 
-const ProfitLossTableComponent = (props: any) => {
-  const {
-    eventData,
-    currentPage,
-    pageCount,
-    setCurrentPage,
-    startDate,
-    endDate,
-    setShow,
-    show,
-    userProfitLoss,
-    getUserProfitLoss,
-  } = props;
+interface ProfitLossTableComponentProps {
+  eventData: any;
+  currentPage: number;
+  setCurrentPage: any;
+  startDate: any;
+  endDate: any;
+  userProfitLoss: any;
+  getUserProfitLoss: (val: string) => void;
+  setEvent: (val: string) => void;
+  event: string;
+}
 
-  const [eventType, setEvent] = useState("");
+const ProfitLossTableComponent = ({
+  eventData,
+  currentPage,
+  setCurrentPage,
+  startDate,
+  endDate,
+  userProfitLoss,
+  getUserProfitLoss,
+  setEvent,
+  event,
+}: ProfitLossTableComponentProps) => {
+  const { domainProfitLossList } = useSelector(
+    (state: RootState) => state.report.reportList
+  );
+
   const [selectedId, setSelectedId] = useState({
     type: "",
     id: "",
@@ -29,8 +41,7 @@ const ProfitLossTableComponent = (props: any) => {
   });
 
   const getHandleReport = (eventType: any) => {
-    setEvent(eventType);
-    if (show) {
+    if (event === eventType) {
       setSelectedId((prev) => ({
         ...prev,
         type: "",
@@ -39,7 +50,8 @@ const ProfitLossTableComponent = (props: any) => {
         sessionBet: false,
       }));
     }
-    if (!show) {
+    if (event !== eventType) {
+      setCurrentPage(1);
       setSelectedId((prev) => ({
         ...prev,
         type: "",
@@ -47,8 +59,8 @@ const ProfitLossTableComponent = (props: any) => {
         betId: "",
         sessionBet: false,
       }));
+      setEvent(eventType);
     }
-    setShow(!show);
   };
 
   const getBetReport = (value: any) => {
@@ -59,53 +71,57 @@ const ProfitLossTableComponent = (props: any) => {
       sessionBet: value?.sessionBet,
     });
   };
+  const totalPages = Math.ceil(
+    domainProfitLossList?.length / Constants.pageLimit
+  );
+
+  const paginatedData = domainProfitLossList?.slice(
+    (currentPage - 1) * Constants.pageLimit,
+    currentPage * Constants.pageLimit
+  );
 
   return eventData?.length > 0 ? (
-    <Box>
+    <>
       {eventData?.map((item: any, index: any) => {
         return (
-          <>
-            <RowHeaderMatches
-              key={index}
-              item={item}
-              show={show}
-              startDate={startDate}
-              endDate={endDate}
-              getHandleReport={getHandleReport}
-              selectedId={selectedId}
-              getBetReport={getBetReport}
-              userProfitLoss={userProfitLoss}
-              getUserProfitLoss={getUserProfitLoss}
-              eventType={eventType}
-            />
-          </>
+          <RowHeaderMatches
+            key={index}
+            item={item}
+            startDate={startDate}
+            endDate={endDate}
+            getHandleReport={getHandleReport}
+            selectedId={selectedId}
+            getBetReport={getBetReport}
+            userProfitLoss={userProfitLoss}
+            getUserProfitLoss={getUserProfitLoss}
+            eventType={event}
+            paginatedData={paginatedData}
+            currentPage={currentPage}
+          />
         );
       })}
 
-      {eventType && (
+      {event && (
         <Pagination
-          getListOfUser={() => {}}
           currentPage={currentPage}
-          pages={pageCount}
+          pages={totalPages}
           setCurrentPage={setCurrentPage}
         />
       )}
-    </Box>
+    </>
   ) : (
-    <Box>
-      <Typography
-        sx={{
-          color: "#fff",
-          textAlign: "center",
-          fontSize: { lg: "16px", xs: "10px" },
-          fontWeight: "600",
-          margin: "1rem",
-        }}
-      >
-        No Matching Records Found
-      </Typography>
-    </Box>
+    <Typography
+      sx={{
+        color: "#fff",
+        textAlign: "center",
+        fontSize: { lg: "16px", xs: "10px" },
+        fontWeight: "600",
+        margin: "1rem",
+      }}
+    >
+      No Matching Records Found
+    </Typography>
   );
 };
 
-export default ProfitLossTableComponent;
+export default memo(ProfitLossTableComponent);

@@ -1,9 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../login/Input";
 import { EyeIcon, EyeSlash } from "../../assets";
-import DailogModal from "./DailogModal";
+import Input from "../login/Input";
 import WalletModal from "./WalletModal";
 
 const DepositAndWithdrawBox = () => {
@@ -165,16 +164,9 @@ const DepositAndWithdrawBox = () => {
               >
                 New Balance
               </Typography>
-              <Typography sx={{ color: "#10DC61", fontWeight: "600" }}>
-                {/* {window.location.pathname.split("/")[2] === "credit_reference"
-                  ? Detail[2].val
-                  : isNaN(Detail[2].val)
-                  ? balance
-                  : window.location.pathname.split("/")[2] === "withdraw" &&
-                    (Detail[2].val !== 0 || isNaN(Detail[2].val))
-                  ? -Detail[2].val + balance
-                  : Detail[2].val + balance} */}
-              </Typography>
+              <Typography
+                sx={{ color: "#10DC61", fontWeight: "600" }}
+              ></Typography>
             </Box>{" "}
           </Box>
         </Box>
@@ -275,10 +267,6 @@ const DepositAndWithdrawBox = () => {
                         marginTop: 0,
                       }}
                       title={"Remark (Optional)"}
-                      //   setDetail={setDetail}
-                      //   Detail={Detail}
-                      //   setError={setError}
-                      //   error={error}
                       place={2}
                       type={"Number"}
                     />
@@ -366,10 +354,6 @@ const DepositAndWithdrawBox = () => {
                         marginTop: 0,
                       }}
                       title={"Admin Transaction Password"}
-                      //   setDetail={setDetail}
-                      //   Detail={Detail}
-                      //   setError={setError}
-                      //   error={error}
                       place={3}
                     />
                   </Box>
@@ -401,10 +385,6 @@ const DepositAndWithdrawBox = () => {
                     borderRadius: "5px",
                   }}
                   title={"Remark (Optional)"}
-                  //   setDetail={setDetail}
-                  //   Detail={Detail}
-                  //   setError={setError}
-                  //   error={error}
                   place={4}
                 />
               </Box>
@@ -424,7 +404,7 @@ const DepositAndWithdrawBox = () => {
                       `/${
                         window.location.pathname.split("/")[1]
                       }/walletSettings`
-                    ); //${window.location.pathname.split("/")[1]}/list_of_clients
+                    );
                   }}
                   title={"Cancel"}
                   color={"#E32A2A"}
@@ -439,8 +419,6 @@ const DepositAndWithdrawBox = () => {
           </>
         </form>
       </Box>
-
-      <DailogModal />
       {showSuccessModal && (
         <WalletModal
           message={showModalMessage}
@@ -454,4 +432,4 @@ const DepositAndWithdrawBox = () => {
   );
 };
 
-export default DepositAndWithdrawBox;
+export default memo(DepositAndWithdrawBox);

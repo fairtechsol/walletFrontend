@@ -1,14 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 import service from "../../../service";
 import { ApiConstants } from "../../../utils/Constants";
-import { AxiosError } from "axios";
 
 export const getRateMarketAnalysis = createAsyncThunk<any, any>(
   "rateMarketAnalysis/get",
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.HORSERACING.MATCH.GET_RATE_MARKETANALYSIS}?matchId=${requestData}`
+        ApiConstants.HORSERACING.MATCH.GET_RATE_MARKETANALYSIS,
+        {
+          params: {
+            matchId: requestData,
+          },
+        }
       );
       if (resp?.data) {
         return resp?.data;

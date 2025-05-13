@@ -6,9 +6,7 @@ import AccountListExpert from "../../components/listOfClients/ExpertList/Account
 import { RootState } from "../../store/store";
 import { ApiConstants } from "../../utils/Constants";
 
-function TabPanel(props: any) {
-  const { children, value, index, ...other } = props;
-
+function TabPanel({ children, value, index, ...other }: any) {
   return (
     <div
       className="p-0"
@@ -37,56 +35,52 @@ const ListOfClients = () => {
     setValue(newValue);
   };
   return (
-    <>
-      <Box sx={{ margin: " 1%" }}>
-        <Box
+    <Box sx={{ margin: " 1%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginY: "0.5%",
+        }}
+      >
+        <Typography
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginY: "0.5%",
+            color: "white",
+            fontSize: "16px",
+            fontWeight: "600",
+            marginLeft: { lg: "0.5%", xs: "0.5%" },
           }}
         >
-          <Typography
-            sx={{
-              color: "white",
-              fontSize: "16px",
-              fontWeight: "600",
-              marginLeft: { lg: "0.5%", xs: "0.5%" },
-            }}
-          >
-            Account List
-          </Typography>
-        </Box>
-
-        {profileDetail?.roleName === "fairGameAdmin" ? (
-          <>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-              aria-label="secondary tabs example"
-            >
-              <Tab sx={{ color: "white" }} value="one" label="Users" />
-              <Tab sx={{ color: "white" }} value="two" label="Expert" />
-            </Tabs>
-
-            <TabPanel value={value} index="one">
-              <AccountList endpoint={ApiConstants.USER.LIST} />
-            </TabPanel>
-            <TabPanel value={value} index="two">
-              <AccountListExpert endpoint={ApiConstants.USER.EXPERTLIST} />
-            </TabPanel>
-          </>
-        ) : (
-          <AccountList endpoint={ApiConstants.USER.LIST} />
-        )}
-
-        {/* <AccountList /> */}
+          Account List
+        </Typography>
       </Box>
-    </>
+
+      {profileDetail?.roleName === "fairGameAdmin" ? (
+        <>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            textColor="secondary"
+            indicatorColor="secondary"
+            aria-label="secondary tabs example"
+          >
+            <Tab sx={{ color: "white" }} value="one" label="Users" />
+            <Tab sx={{ color: "white" }} value="two" label="Expert" />
+          </Tabs>
+
+          <TabPanel value={value} index="one">
+            <AccountList endpoint={ApiConstants.USER.LIST} />
+          </TabPanel>
+          <TabPanel value={value} index="two">
+            <AccountListExpert endpoint={ApiConstants.USER.EXPERTLIST} />
+          </TabPanel>
+        </>
+      ) : (
+        <AccountList endpoint={ApiConstants.USER.LIST} />
+      )}
+    </Box>
   );
 };
 
-export default React.memo(ListOfClients);
+export default ListOfClients;

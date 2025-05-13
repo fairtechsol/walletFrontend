@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment, memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import { formatToINR } from "../../../helper";
@@ -7,22 +7,22 @@ import { RootState } from "../../../store/store";
 import CommissionDot from "../../Common/CommissionDot";
 import Divider from "../../Inplay/Divider";
 import SmallBox from "../MatchOdds/SmallBox";
+import BackLayBox from "./BackLayBox";
 import BoxComponent from "./BoxComponent";
 
-const TournamentOdds = (props: any) => {
-  const {
-    currentMatch,
-    minBet,
-    maxBet,
-    locked,
-    blockMatch,
-    selft,
-    showBox,
-    upcoming,
-    liveData,
-    title,
-    profitLossFromAnalysis,
-  } = props;
+const TournamentOdds = ({
+  currentMatch,
+  minBet,
+  maxBet,
+  locked,
+  blockMatch,
+  selft,
+  showBox,
+  upcoming,
+  liveData,
+  title,
+  profitLossFromAnalysis,
+}: any) => {
   const { marketAnalysis } = useSelector(
     (state: RootState) => state.match.matchList
   );
@@ -40,10 +40,6 @@ const TournamentOdds = (props: any) => {
     return teamBRates < 0 ? `-${formattedRatio}` : formattedRatio;
   };
 
-  const handleLock = (data: any) => {
-    return data?.ex?.availableToBack?.length > 0 ? false : true;
-  };
-
   return (
     <Box
       sx={{
@@ -53,8 +49,7 @@ const TournamentOdds = (props: any) => {
         padding: 0.2,
         flexDirection: "column",
         width: "100%",
-        marginTop: "3px",
-        marginBottom: "0",
+        marginBottom: "3px",
         alignSelf: {
           xs: "center",
           md: "center",
@@ -105,7 +100,7 @@ const TournamentOdds = (props: any) => {
             background: "#262626",
           }}
         >
-          <div className="slanted"></div>
+          <Box className="slanted" />
         </Box>
         <Box
           sx={{
@@ -113,8 +108,8 @@ const TournamentOdds = (props: any) => {
             background: "#262626",
             display: "flex",
             alignItems: "center",
-            justifyContent: { lg: "flex-end", xs: "flex-end" },
-            paddingRight: { lg: "0", xs: "0" },
+            justifyContent: "flex-end",
+            paddingRight: "0",
           }}
         >
           <SmallBox
@@ -235,7 +230,7 @@ const TournamentOdds = (props: any) => {
               background: "#319E5B",
               height: "25px",
               borderTop: "2px solid white",
-              width: "99.7%",
+              width: "100%",
               alignSelf: "center",
             }}
           >
@@ -258,56 +253,7 @@ const TournamentOdds = (props: any) => {
                 MIN:{formatToINR(minBet)} MAX: {formatToINR(maxBet)}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                background: "#319E5B",
-                height: "25px",
-                width: { lg: "60%", xs: "80%" },
-                justifyContent: { lg: "flex-end", xs: "flex-end" },
-              }}
-            >
-              <Box
-                sx={{
-                  background: "#00C0F9",
-                  border: "1px solid #2626264D",
-                  width: { lg: "5vw", xs: "30%" },
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "12px", color: "black", fontWeight: "600" }}
-                >
-                  Back
-                </Typography>
-              </Box>
-              <Box
-                sx={{ width: "3px", display: "flex", background: "white" }}
-              ></Box>
-              <Box
-                sx={{
-                  background: "#FF9292",
-                  border: "1px solid #2626264D",
-                  width: { lg: "5vw", xs: "30%" },
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "12px", color: "black", fontWeight: "600" }}
-                >
-                  Lay
-                </Typography>
-              </Box>
-              <Box
-                sx={{ width: ".7px", display: "flex", background: "white" }}
-              ></Box>
-            </Box>
+            <BackLayBox />
           </Box>
 
           <Box sx={{ position: "relative", width: "99.8%", background: "red" }}>
@@ -320,7 +266,6 @@ const TournamentOdds = (props: any) => {
                 sx={{
                   position: "absolute",
                   height: "100%",
-                  // top: "18%",
                   width: "100%",
                   display: "flex",
                   zIndex: "999",
@@ -403,7 +348,6 @@ const TournamentOdds = (props: any) => {
                       : "#319E5B"
                   }
                   data={runner}
-                  lock={handleLock(runner)}
                   marketDetails={liveData}
                 />
                 <Divider />
@@ -435,7 +379,6 @@ const TournamentOdds = (props: any) => {
                   }}
                 >
                   <img src={LOCKED} style={{ width: "35px", height: "40px" }} />
-
                   <Typography
                     sx={{
                       color: "white",
@@ -457,4 +400,4 @@ const TournamentOdds = (props: any) => {
   );
 };
 
-export default TournamentOdds;
+export default memo(TournamentOdds);

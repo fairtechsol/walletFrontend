@@ -1,65 +1,48 @@
 import { Box, Typography } from "@mui/material";
-import StyledImage from "../Common/StyledImages";
+import { memo } from "react";
 import { LockIcon, UnLockIcon } from "../../assets";
 import { formatToINR } from "../../helper";
+import StyledImage from "../Common/StyledImages";
 
-const ListBody = (props: any) => {
-  const { walletAccountDetail, fContainerStyle, fTextStyle } = props;
+const ListBody = ({ walletAccountDetail }: any) => {
   return (
     <Box
-      sx={[
-        {
-          width: { xs: "150%", lg: "100%", md: "100%" },
-          display: "flex",
-          height: "45px",
-          background: "#0B4F26",
-          alignItems: "center",
-          // overflow: "hidden",
-          borderBottom: "2px solid white",
-        },
-      ]}
+      sx={{
+        width: { xs: "150%", lg: "100%", md: "100%" },
+        display: "flex",
+        height: "45px",
+        background: "#0B4F26",
+        alignItems: "center",
+        borderBottom: "2px solid white",
+      }}
     >
       <Box
-        sx={[
-          {
-            width: {
-              lg: "11.5vw",
-              md: "20.5vw",
-              xs: "18.5vw",
-            },
-            display: "flex",
-            paddingX: "10px",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "45px",
-            borderRight: "2px solid white",
-          },
-          fContainerStyle,
-        ]}
+        sx={{
+          width: { lg: "12.1vw", md: "20.5vw", xs: "18.5vw" },
+          display: "flex",
+          paddingX: "10px",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "45px",
+          borderRight: "2px solid white",
+        }}
       >
         <Typography
-          sx={[
-            {
-              fontSize: "10px",
-              fontWeight: "600",
-              cursor: "pointer",
-              textTransform: "capitalize",
-              wordBreak: "break-all",
-              color: "white",
-            },
-            fTextStyle,
-          ]}
+          sx={{
+            fontSize: "10px",
+            fontWeight: "600",
+            cursor: "pointer",
+            textTransform: "capitalize",
+            wordBreak: "break-all",
+            color: "white",
+          }}
         >
           {walletAccountDetail?.userName}
         </Typography>
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "10.5vw",
-            md: "10.5vw",
-            xs: "26.5vw",
-          },
+          width: { lg: "11.1vw", md: "10.5vw", xs: "24.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -74,11 +57,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "10.5vw",
-            md: "9.5vw",
-            xs: "30.5vw",
-          },
+          width: { lg: "11vw", md: "9.5vw", xs: "30vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -93,11 +72,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "11.8vw",
-            md: "11.5vw",
-            xs: "35.5vw",
-          },
+          width: { lg: "12.8vw", md: "11.5vw", xs: "35.5vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "space-between",
@@ -131,11 +106,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "10.9vw",
-            md: "11.5vw",
-            xs: "27vw",
-          },
+          width: { lg: "11.5vw", md: "11.5vw", xs: "25vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "space-between",
@@ -169,11 +140,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "8.5vw",
-            md: "9.5vw",
-            xs: "18.5vw",
-          },
+          width: { lg: "9vw", md: "9.5vw", xs: "18vw" },
           display: "flex",
           justifyContent: "space-between",
           paddingX: "10px",
@@ -189,11 +156,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "9.3vw",
-            md: "9.5vw",
-            xs: "18.5vw",
-          },
+          width: { lg: "9.5vw", md: "9.5vw", xs: "18vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -208,11 +171,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: {
-            lg: "8.9vw",
-            md: "9.5vw",
-            xs: "30.5vw",
-          },
+          width: { lg: "9.6vw", md: "9.5vw", xs: "30.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -227,7 +186,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "4.8vw", md: "5vw", xs: "14vw" },
+          width: { lg: "5vw", md: "5vw", xs: "13vw" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -244,7 +203,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "4.8vw", md: "5vw", xs: "14vw" },
+          width: { lg: "5vw", md: "5vw", xs: "14vw" },
           display: "flex",
           paddingX: "10px",
           justifyContent: "center",
@@ -260,7 +219,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "7.3vw", md: "8vw", xs: "26.5vw" },
+          width: { lg: "7.5vw", md: "8vw", xs: "24.5vw" },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -276,7 +235,7 @@ const ListBody = (props: any) => {
       </Box>
       <Box
         sx={{
-          width: { lg: "8vw", md: "10vw", xs: "24.5vw" },
+          width: { lg: "8.5vw", md: "10vw", xs: "23.5vw" },
           display: "flex",
           paddingX: "10px",
           alignItems: "center",
@@ -287,10 +246,10 @@ const ListBody = (props: any) => {
       >
         <Typography sx={{ fontSize: "10px", fontWeight: "600" }}>
           {walletAccountDetail?.fullName}
-        </Typography>{" "}
+        </Typography>
       </Box>
     </Box>
   );
 };
 
-export default ListBody;
+export default memo(ListBody);

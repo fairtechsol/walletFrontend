@@ -1,19 +1,19 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { useState } from "react";
-import StyledImage from "../../Common/StyledImages";
-import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import moment from "moment";
+import { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
+import { ARROWDOWN, ARROW_UP, ArrowDown } from "../../../assets";
+import { formatToINR } from "../../../helper";
 import {
   getDomainProfitLoss,
   resetBetProfitLoss,
   resetDomainProfitLoss,
   resetSessionProfitLoss,
 } from "../../../store/actions/reports";
-import moment from "moment";
-import { formatToINR } from "../../../helper";
+import { AppDispatch, RootState } from "../../../store/store";
 import theme from "../../../theme";
 import { gameConstants } from "../../../utils/Constants";
+import StyledImage from "../../Common/StyledImages";
 
 const RowHeaderDomain = ({
   item,
@@ -100,7 +100,6 @@ const RowHeaderDomain = ({
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
-          // marginLeft: 0.1,
           justifyContent: "space-between",
           borderRight: "1px solid white",
         }}
@@ -123,7 +122,6 @@ const RowHeaderDomain = ({
           display: "flex",
           paddingX: "10px",
           background: "#F8C851",
-          // marginLeft: 0.1,
           justifyContent: "space-between",
         }}
       >
@@ -138,6 +136,7 @@ const RowHeaderDomain = ({
         </Typography>
         <StyledImage
           src={ArrowDown}
+          alt="arrowDown"
           sx={{
             width: { lg: "20px", xs: "10px" },
             transform: showMatchList ? "rotate(180deg)" : "rotate(0deg)",
@@ -177,6 +176,7 @@ const RowHeaderDomain = ({
           </Typography>
           <StyledImage
             src={item?.totalLoss > 0 ? ARROW_UP : ARROWDOWN}
+            alt="arrowup/dowm"
             sx={{
               width: { lg: "25px", xs: "15px" },
               height: { lg: "12px", xs: "8px" },
@@ -208,7 +208,7 @@ const RowHeaderDomain = ({
                     Number(item?.totalDeduction).toFixed(2) || 0
                   )})`}
               </>
-            )}{" "}
+            )}
           </Typography>
         </Box>
       </Box>
@@ -251,4 +251,4 @@ const RowHeaderDomain = ({
   );
 };
 
-export default RowHeaderDomain;
+export default memo(RowHeaderDomain);

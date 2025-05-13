@@ -1,13 +1,27 @@
 import { Box } from "@mui/material";
-import ChangePasswordComponent from "../../RowModalComponents/ChangePasswordComponent";
-import BoxButton from "../../RowModalComponents/BoxButton";
-import { ApiConstants } from "../../../../utils/Constants";
-import LockUnlockComponent from "./LockUnlockComponent";
 import { memo } from "react";
+import { ApiConstants } from "../../../../utils/Constants";
+import BoxButton from "../../RowModalComponents/BoxButton";
+import ChangePasswordComponent from "../../RowModalComponents/ChangePasswordComponent";
+import LockUnlockComponent from "./LockUnlockComponent";
 
-const RowModalComponents = (props: any) => {
-  const { element, selected, setSelected, backgroundColor, onValueChange, currentPage, setShowUserModal } =
-    props;
+interface RowModalComponentsProps {
+  element: any;
+  selected: any;
+  setSelected: (val?: any) => void;
+  onValueChange: any;
+  currentPage: any;
+  setShowUserModal: (val?: any) => void;
+}
+
+const RowModalComponents = ({
+  element,
+  selected,
+  setSelected,
+  onValueChange,
+  currentPage,
+  setShowUserModal,
+}: RowModalComponentsProps) => {
   const classes = {
     mainBox: {
       background: "#F8C851",
@@ -47,7 +61,6 @@ const RowModalComponents = (props: any) => {
     },
   };
   const handleAmountChange = (amount: string, id: string, type: string) => {
-    // alert(amount)
     onValueChange(amount, id, type);
   };
 
@@ -70,11 +83,9 @@ const RowModalComponents = (props: any) => {
               endpoint={ApiConstants.EXPERT.CHANGE_PASSWORD}
               setShowUserModal={setShowUserModal}
               element={{ ...element, roleName: "expert" }}
-              selected={selected == 3}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
             />
           )}
           {selected == 4 && (
@@ -82,11 +93,9 @@ const RowModalComponents = (props: any) => {
               endpoint={ApiConstants.EXPERT.LOCK_UNLOCK}
               setShowUserModal={setShowUserModal}
               element={{ ...element, roleName: "expert" }}
-              selected={selected == 4}
               setSelected={() => {
                 setSelected(null);
               }}
-              backgroundColor={backgroundColor}
               onChangeAmount={handleAmountChange}
               currentPage={currentPage}
             />
@@ -96,7 +105,6 @@ const RowModalComponents = (props: any) => {
       {selected === null && (
         <Box
           sx={{
-            // flex: 1,
             display: "flex",
             flexDirection: { xs: "row", lg: "row", md: "row" },
             gap: { xs: 0.5 },
@@ -107,7 +115,7 @@ const RowModalComponents = (props: any) => {
           }}
         >
           <BoxButton
-            color={"#0B4F26"}
+            color="#0B4F26"
             onClick={() => {
               setSelected(3);
             }}
@@ -123,11 +131,11 @@ const RowModalComponents = (props: any) => {
             }}
           />
           <BoxButton
-            color={"#0B4F26"}
+            color="#0B4F26"
             onClick={() => {
               setSelected(4);
             }}
-            title={"Lock/Unlock"}
+            title="Lock/Unlock"
             containerStyle={{
               marginLeft: { lg: "10px", xs: "0" },
               flex: 1,

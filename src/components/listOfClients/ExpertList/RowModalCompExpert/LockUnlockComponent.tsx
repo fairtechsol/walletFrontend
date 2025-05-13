@@ -1,34 +1,41 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect, memo } from "react";
 import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../store/store";
+import { EyeIcon, EyeSlash } from "../../../../assets";
 import {
   getUserList,
   setLockUnlockUserExpert,
   userListSuccessReset,
 } from "../../../../store/actions/user/userAction";
+import { AppDispatch, RootState } from "../../../../store/store";
+import { ApiConstants } from "../../../../utils/Constants";
 import BoxButtonWithSwitch from "../../../Common/BoxButtonWithSwitch";
 import StyledImage from "../../../Common/StyledImages";
-import { EyeIcon, EyeSlash } from "../../../../assets";
 import BoxButton from "../../RowModalComponents/BoxButton";
-import { ApiConstants } from "../../../../utils/Constants";
 
-const initialValues: any = {
+const initialValues: { userBlock: boolean; transactionPassword: string } = {
   userBlock: false,
   transactionPassword: "",
 };
 
-const LockUnlockComponent = (props: any) => {
-  const {
-    setSelected,
-    element,
-    endpoint,
-    onChangeAmount,
-    currentPage,
-    setShowUserModal,
-  } = props;
+interface LockUnlockComponentProps {
+  setSelected: (val?: any) => void;
+  element: any;
+  endpoint: string;
+  onChangeAmount: (val: any, val2: string, type: string) => void;
+  currentPage: number;
+  setShowUserModal: (val: any) => void;
+}
 
+const LockUnlockComponent = ({
+  setSelected,
+  element,
+  endpoint,
+  onChangeAmount,
+  currentPage,
+  setShowUserModal,
+}: LockUnlockComponentProps) => {
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,
@@ -90,10 +97,8 @@ const LockUnlockComponent = (props: any) => {
         sx={{
           display: "flex",
           borderRadius: "5px",
-          // paddingRight: { xs: "0", lg: "10px" },
           flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 2,
-          // width: { xs: "92vw", md: "80%", lg: "80%" },
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -116,7 +121,6 @@ const LockUnlockComponent = (props: any) => {
                 width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
-
                 visibility: "hidden",
                 display: { xs: "none", lg: "block" },
               }}
@@ -127,18 +131,15 @@ const LockUnlockComponent = (props: any) => {
               sx={{
                 width: { xs: "100%", lg: "65%", md: "65%" },
                 height: "45px",
-                // background: "white",
                 display: "flex",
                 alignItems: "center",
                 borderRadius: "5px",
-                // border: "2px solid #26262633",
-                // paddingX: "20px",
               }}
             >
               <Box sx={{ width: "48%", display: "flex", alignItems: "center" }}>
                 <BoxButtonWithSwitch
-                  title={"User"}
-                  name={"all_blocked"}
+                  title="User"
+                  name="all_blocked"
                   val={lockUnlockObj?.all_blocked}
                   showLockUnlock={true}
                   setLockUnlockObj={setLockUnlockObj}
@@ -207,6 +208,7 @@ const LockUnlockComponent = (props: any) => {
               >
                 <StyledImage
                   src={showPass ? EyeIcon : EyeSlash}
+                  alt="eye icon"
                   sx={{ height: "14px", width: "20px" }}
                 />
               </Box>
@@ -237,7 +239,7 @@ const LockUnlockComponent = (props: any) => {
             }}
           >
             <BoxButton
-              color={"#0B4F26"}
+              color="#0B4F26"
               loading={loading}
               disabled={isSubmitting}
               containerStyle={{
@@ -251,7 +253,7 @@ const LockUnlockComponent = (props: any) => {
               }}
               isSelected={true}
               type="submit"
-              title={"Submit"}
+              title="Submit"
             />
           </Box>
           <Box
@@ -262,7 +264,7 @@ const LockUnlockComponent = (props: any) => {
             }}
           >
             <BoxButton
-              color={"#E32A2A"}
+              color="#E32A2A"
               containerStyle={{
                 maxWidth: "100%!important",
                 height: "44px",
@@ -279,7 +281,7 @@ const LockUnlockComponent = (props: any) => {
                 setSelected();
                 onChangeAmount(elementLockUnlockObj1, element?.id, "lock");
               }}
-              title={"Cancel"}
+              title="Cancel"
             />
           </Box>
         </Box>

@@ -1,23 +1,42 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
+  Box,
+  Button,
+  Paper,
+  Radio,
+  styled,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
-  Paper,
-  styled,
-  Box,
-  Button,
-  Radio,
 } from "@mui/material";
 import moment from "moment";
+import React, { memo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { useDispatch } from "react-redux";
 import { getRateMarketAnalysis } from "../../store/actions/horseRacing/analysisActions";
+import { AppDispatch, RootState } from "../../store/store";
+
+interface RaceTime {
+  id: string;
+  startAt: string;
+  matchType?: string;
+}
+
+interface ProfitLossItem {
+  id: string;
+  name: string;
+  profitLoss?: number;
+}
+
+interface RacingListComponentAnalysisProps {
+  racingList: Record<string, RaceTime[]> | null;
+  matchType: string;
+  mode: string;
+  handleRadioButtonSelect: (item: { id: string; matchType?: string }) => void;
+  selected: string[];
+}
 
 const YellowButton = styled("button")(() => ({
   backgroundColor: "#F8C851",
@@ -36,17 +55,16 @@ const YellowButton = styled("button")(() => ({
   },
 }));
 
-const RacingListComponentAnalysis = ({
-  racingList,
-  matchType,
-  mode,
-  handleRadioButtonSelect,
-  selected,
-}: any) => {
+const RacingListComponentAnalysis: React.FC<
+  RacingListComponentAnalysisProps
+> = ({ racingList, matchType, mode, handleRadioButtonSelect, selected }) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
-  const [selectedRace, setSelectedRace] = useState<any>(null);
+  const [selectedRace, setSelectedRace] = useState<{
+    id: string;
+    matchName: string;
+  } | null>(null);
 
   const { raceMatchChilds } = useSelector(
     (state: RootState) => state.horseRacing.analysisRace
@@ -74,8 +92,8 @@ const RacingListComponentAnalysis = ({
                 <React.Fragment key={index}>
                   <TableRow sx={{ position: "relative" }}>
                     {mode === "1" && (
-                      <div
-                        style={{
+                      <Box
+                        sx={{
                           position: "absolute",
                           top: 0,
                           left: 0,
@@ -89,7 +107,7 @@ const RacingListComponentAnalysis = ({
                           zIndex: 1,
                           pointerEvents: "none",
                         }}
-                      ></div>
+                      />
                     )}
                     <TableCell
                       sx={{
@@ -124,8 +142,8 @@ const RacingListComponentAnalysis = ({
                           }}
                         >
                           {mode === "1" && (
-                            <div
-                              style={{
+                            <Box
+                              sx={{
                                 position: "absolute",
                                 top: 0,
                                 left: 0,
@@ -137,7 +155,7 @@ const RacingListComponentAnalysis = ({
                                 zIndex: 1,
                                 pointerEvents: "none",
                               }}
-                            ></div>
+                            />
                           )}
                           {moment(time.startAt).format("hh:mm")}
                           <ExpandMoreIcon
@@ -172,37 +190,45 @@ const RacingListComponentAnalysis = ({
                               alignItems: "center",
                             }}
                           >
-                            {raceMatchChilds?.profitLoss?.map((item: any) => (
-                              <Button
-                                key={item?.id}
-                                sx={{
-                                  backgroundColor:
-                                    item?.profitLoss >= 0 || !item?.profitLoss
-                                      ? "#27AC1E"
-                                      : "#E32A2A",
-                                  borderRadius: 0,
-                                  padding: "0.5rem",
-                                  border: "1px solid #000",
-                                  color: "#fff",
-                                  fontWeight: "700",
-                                  "&:hover": {
+                            {raceMatchChilds?.profitLoss?.map(
+                              (item: ProfitLossItem) => (
+                                <Button
+                                  key={item?.id}
+                                  sx={{
                                     backgroundColor:
-                                      item?.profitLoss >= 0 || !item?.profitLoss
+                                      item.profitLoss === undefined ||
+                                      item?.profitLoss >= 0 ||
+                                      !item?.profitLoss
                                         ? "#27AC1E"
                                         : "#E32A2A",
-                                  },
-                                }}
-                              >
-                                {item?.name} :{" "}
-                                <span
-                                  style={{
-                                    marginLeft: "5px",
+                                    borderRadius: 0,
+                                    padding: "0.5rem",
+                                    border: "1px solid #000",
+                                    color: "#fff",
+                                    fontWeight: "700",
+                                    "&:hover": {
+                                      backgroundColor:
+                                        item.profitLoss === undefined ||
+                                        item?.profitLoss >= 0 ||
+                                        !item?.profitLoss
+                                          ? "#27AC1E"
+                                          : "#E32A2A",
+                                    },
                                   }}
                                 >
-                                  {item?.profitLoss ? item?.profitLoss : "0.00"}
-                                </span>
-                              </Button>
-                            ))}
+                                  {item?.name} :{" "}
+                                  <span
+                                    style={{
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    {item?.profitLoss
+                                      ? item?.profitLoss
+                                      : "0.00"}
+                                  </span>
+                                </Button>
+                              )
+                            )}
                             <Button
                               sx={{
                                 backgroundColor: "#0B4F26",
@@ -232,4 +258,4 @@ const RacingListComponentAnalysis = ({
   );
 };
 
-export default RacingListComponentAnalysis;
+export default memo(RacingListComponentAnalysis);

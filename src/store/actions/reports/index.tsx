@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import service from "../../../service";
-import { ApiConstants } from "../../../utils/Constants";
 import { AxiosError } from "axios";
+import service from "../../../service";
+import { ApiConstants, Constants } from "../../../utils/Constants";
 
 interface AccountStatement {
   id: string;
@@ -43,13 +43,14 @@ export const getCurrentBets = createAsyncThunk<any, currentBets>(
   "currentBets/list",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.WALLET.REPORTS.CURRENT_BETS}?searchBy=${
-          requestData?.searchBy || ""
-        }&keyword=${requestData?.keyword || ""}&result=inArr${JSON.stringify([
-          "PENDING",
-        ])}&sort=betPlaced.createdAt:DESC`
-      );
+      const resp = await service.get(ApiConstants.WALLET.REPORTS.CURRENT_BETS, {
+        params: {
+          searchBy: requestData?.searchBy,
+          keyword: requestData?.keyword,
+          result: `inArr${JSON.stringify(["PENDING"])}`,
+          sort: "betPlaced.createdAt:DESC",
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -81,7 +82,12 @@ export const getDomainProfitLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?type=${requestData.type}${requestData.filter}`
+        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS}?${requestData.filter}`,
+        {
+          params: {
+            type: requestData.type,
+          },
+        }
       );
       if (resp) {
         return resp?.data;
@@ -96,13 +102,14 @@ export const getBetProfitLoss = createAsyncThunk<any, any>(
   "bet/list",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData.matchId}${
-          requestData.betId ? `&betId=${requestData.betId}` : ""
-        }&isSession=${requestData.isSession}${
-          requestData.id ? `&id=${requestData.id}` : ""
-        }`
-      );
+      const resp = await service.get(ApiConstants.MATCH.BET_PROFIT_LOSS, {
+        params: {
+          matchId: requestData.matchId,
+          betId: requestData.betId,
+          isSession: requestData.isSession,
+          id: requestData.id,
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -116,11 +123,12 @@ export const getSessionProfitLoss = createAsyncThunk<any, any>(
   "session/list",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.SESSION_PROFIT_LOSS}?matchId=${
-          requestData.matchId
-        }${requestData.id ? `&id=${requestData.id}` : ""}`
-      );
+      const resp = await service.get(ApiConstants.MATCH.SESSION_PROFIT_LOSS, {
+        params: {
+          matchId: requestData.matchId,
+          id: requestData.id,
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -135,17 +143,17 @@ export const getTotalBetProfitLossForModal = createAsyncThunk<any, any>(
   "totalbetProfitLoss/ForModal",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS}?matchId=${requestData?.matchId}${
-          requestData.betId ? `&betId=${requestData.betId}` : ""
-        }&isSession=${requestData.isSession}${
-          requestData.id ? `&id=${requestData.id}` : ""
-        }${requestData.url ? `&url=${requestData.url}` : ""}${
-          requestData.userId
-            ? `&userId=${requestData.userId}&roleName=${requestData.roleName}`
-            : ""
-        }`
-      );
+      const resp = await service.get(ApiConstants.MATCH.BET_PROFIT_LOSS, {
+        params: {
+          matchId: requestData?.matchId,
+          betId: requestData.betId,
+          isSession: requestData.isSession,
+          id: requestData.id,
+          url: requestData.url,
+          userId: requestData.userId,
+          roleName: requestData.roleName,
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -157,10 +165,16 @@ export const getTotalBetProfitLossForModal = createAsyncThunk<any, any>(
 );
 export const getCommissionMatch = createAsyncThunk<any, any>(
   "commissionMatch/list",
-  async (userId, thunkApi) => {
+  async ({ userId, currentPage }, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.COMMISSION_MATCH}/${userId}`
+        `${ApiConstants.USER.COMMISSION_MATCH}/${userId}`,
+        {
+          params: {
+            page: currentPage || 1,
+            limit: Constants.pageLimit,
+          },
+        }
       );
       if (resp) {
         return resp?.data;
@@ -176,7 +190,12 @@ export const getCommissionBetPlaced = createAsyncThunk<any, any>(
   async ({ userId, matchId }, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.COMMISSION_BET_PLACED}/${userId}?matchId=${matchId}`
+        `${ApiConstants.USER.COMMISSION_BET_PLACED}/${userId}`,
+        {
+          params: {
+            matchId,
+          },
+        }
       );
       if (resp) {
         return resp?.data;
@@ -209,7 +228,12 @@ export const getDomainProfitLossCard = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS_CARD}?matchId=${requestData.matchId}${requestData.filter}`
+        `${ApiConstants.MATCH.DOMAIN_PROFIT_LOSS_CARD}?${requestData.filter}`,
+        {
+          params: {
+            matchId: requestData.matchId,
+          },
+        }
       );
       if (resp) {
         return resp?.data;
@@ -224,13 +248,14 @@ export const getBetProfitLossCard = createAsyncThunk<any, any>(
   "betCard/list",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.MATCH.BET_PROFIT_LOSS_CARD}?runnerId=${
-          requestData.runnerId
-        }${requestData.betId ? `&betId=${requestData.betId}` : ""}&isSession=${
-          requestData.isSession
-        }${requestData.id ? `&id=${requestData.id}` : ""}`
-      );
+      const resp = await service.get(ApiConstants.MATCH.BET_PROFIT_LOSS_CARD, {
+        params: {
+          runnerId: requestData.runnerId,
+          betId: requestData.betId,
+          isSession: requestData.isSession,
+          id: requestData.id,
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -251,14 +276,10 @@ export const resetAccountStatement = createAction("statement/reset");
 export const resetSessionProfitLoss = createAction("sessionProfitLoss/reset");
 export const resetBetProfitLoss = createAction("betProfitLoss/reset");
 export const resetDomainProfitLoss = createAction("domainProfitLoss/reset");
-export const resetUpdateUserSearchId = createAction("updateUserSearchId/reset");
 export const resetSessionProfitLossCard = createAction(
   "sessionProfitLoss/resetCard"
 );
 export const resetBetProfitLossCard = createAction("betProfitLoss/resetCard");
 export const resetDomainProfitLossCard = createAction(
   "domainProfitLoss/resetCard"
-);
-export const resetUpdateUserSearchIdCard = createAction(
-  "updateUserSearchId/resetCard"
 );

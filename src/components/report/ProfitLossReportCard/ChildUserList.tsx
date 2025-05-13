@@ -1,9 +1,19 @@
-import { memo } from "react";
 import { Box } from "@mui/material";
-import { useState } from "react";
-import { useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import service from "../../../service";
 import AllUserListSeparate from "./AllUserListSeparate";
+
+interface ChildUserListProps {
+  id: string;
+  url: string | null;
+  matchId: string;
+  roleName: string;
+  eventType: string;
+  getBetReport: (val: any) => void;
+  sessionBetData: any;
+  sessionBets: any;
+  bet1Data: any;
+}
 
 const ChildUserList = ({
   id,
@@ -15,16 +25,20 @@ const ChildUserList = ({
   sessionBetData,
   sessionBets,
   bet1Data,
-}: any) => {
+}: ChildUserListProps) => {
   const [data1, setData] = useState([]);
 
   const getChildUserList = async () => {
     try {
-      const { data } = await service.get(
-        `/user/userwise/profitLoss?runnerId=${matchId}${
-          id ? "&userId=" + id + "&roleName=" + roleName : ""
-        }${url ? "&url=" + url : ""}`
-      );
+      setData([]);
+      const { data } = await service.get("/user/userwise/profitLoss", {
+        params: {
+          runnerId: matchId,
+          userId: id,
+          roleName,
+          url,
+        },
+      });
       if (data) {
         setData(data);
       }
@@ -41,7 +55,6 @@ const ChildUserList = ({
     <Box sx={{ width: "100%" }}>
       {data1?.map((profitLoss: any, index: number) => (
         <AllUserListSeparate
-          id={profitLoss?.userId}
           key={index}
           item={{ ...profitLoss, eventType }}
           index={index + 1}

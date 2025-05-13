@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import MatchComponent from "../../components/Inplay/MatchComponent";
@@ -31,7 +31,7 @@ const Inplay = () => {
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });
@@ -49,7 +49,7 @@ const Inplay = () => {
         dispatch(updateMatchRatesFromApiOnList(resp?.data));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -83,9 +83,6 @@ const Inplay = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
-        // matchListInplay?.matches?.map((item: any) => {
-        //   socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
-        // });
         socketService.match.matchResultDeclared(getMatchListService);
         socketService.match.matchResultUnDeclared(getMatchListService);
         socketService.match.declaredMatchResultAllUser(getMatchListService);
@@ -99,9 +96,6 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      // matchListInplay?.matches?.map((item: any) => {
-      //   socketService.match.leaveMatchRoom(item?.id);
-      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
@@ -157,7 +151,6 @@ const Inplay = () => {
                 top={true}
                 blur={false}
                 match={match}
-                // handleUpdateMatch={handleUpdateMatch}
               />
             );
           })
@@ -202,4 +195,4 @@ const Inplay = () => {
   );
 };
 
-export default Inplay;
+export default memo(Inplay);

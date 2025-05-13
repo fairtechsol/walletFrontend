@@ -1,26 +1,46 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import StyledImage from "../../Common/StyledImages";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import BoxButton from "./BoxButton";
+import { memo } from "react";
 import { useSelector } from "react-redux";
+import { EyeIcon, EyeSlash } from "../../../assets";
 import { RootState } from "../../../store/store";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
-const MobileViewUserDetails = (props: any) => {
-  const {
-    value,
-    onChange,
-    setShowPass,
-    showPass,
-    onCancel,
-    initialBalance,
-    backgroundColor,
-    loading,
-    title,
-    userName,
-    elementToUDM,
-    titleBackgroundColor,
-    type,
-  } = props;
+interface MobileViewUserDetailsProps {
+  value: any;
+  onChange: (val: any, val2: any) => void;
+  setShowPass: (val: boolean) => void;
+  showPass: any;
+  onCancel: () => void;
+  initialBalance: any;
+  backgroundColor: any;
+  loading: boolean;
+  title: string;
+  userName: string;
+  elementToUDM: any;
+  titleBackgroundColor: any;
+  type: string;
+}
+
+const MobileViewUserDetails = ({
+  value,
+  onChange,
+  setShowPass,
+  showPass,
+  onCancel,
+  initialBalance,
+  backgroundColor,
+  loading,
+  title,
+  userName,
+  elementToUDM,
+  titleBackgroundColor,
+  type,
+}: MobileViewUserDetailsProps) => {
+  const { profileDetail } = useSelector(
+    (state: RootState) => state.user.profile
+  );
+
   const formatIndianCurrency = (amount: number) => {
     const formatter = new Intl.NumberFormat("en-IN", {
       currency: "INR",
@@ -67,9 +87,6 @@ const MobileViewUserDetails = (props: any) => {
     }
   };
 
-  const { profileDetail } = useSelector(
-    (state: RootState) => state.user.profile
-  );
   return (
     <Box
       sx={[
@@ -422,7 +439,6 @@ const MobileViewUserDetails = (props: any) => {
                 alignItems: "center",
               }}
             >
-              {" "}
               {formatIndianCurrency(
                 parseFloat(elementToUDM?.userBal?.profitLoss || 0)
               )}
@@ -531,7 +547,6 @@ const MobileViewUserDetails = (props: any) => {
                   color: "white",
                 },
               }}
-              // type={"Number"}
             />
           </Box>
         </Box>
@@ -550,7 +565,6 @@ const MobileViewUserDetails = (props: any) => {
               alignItems: "center",
               width: "40%",
               flexDirection: "row",
-
               justifyContent: "space-between",
               position: "relative",
               marginTop: "0",
@@ -600,7 +614,6 @@ const MobileViewUserDetails = (props: any) => {
                 style: {
                   fontSize: "13px",
                   minHeight: "45px",
-
                   fontWeight: "600",
                 },
               }}
@@ -631,7 +644,6 @@ const MobileViewUserDetails = (props: any) => {
             <Typography
               sx={{
                 fontSize: "3vw",
-
                 width: "100%",
                 fontWeight: "600",
                 marginRight: 0,
@@ -643,7 +655,6 @@ const MobileViewUserDetails = (props: any) => {
               Transaction
             </Typography>
           </Box>
-
           <Box
             sx={{
               width: "60%",
@@ -684,6 +695,7 @@ const MobileViewUserDetails = (props: any) => {
             >
               <StyledImage
                 src={showPass ? EyeIcon : EyeSlash}
+                alt="eye"
                 sx={{ height: "14px", width: "20px" }}
               />
             </Box>
@@ -725,4 +737,4 @@ const MobileViewUserDetails = (props: any) => {
   );
 };
 
-export default MobileViewUserDetails;
+export default memo(MobileViewUserDetails);

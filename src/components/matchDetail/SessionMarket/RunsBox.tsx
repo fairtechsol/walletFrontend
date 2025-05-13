@@ -1,11 +1,10 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useEffect, useRef } from "react";
-import { memo } from "react";
-import StyledImage from "../../Common/StyledImages";
+import { memo, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { CANCEL } from "../../../assets";
 import { getSessionProfitLossMatchDetailFilter } from "../../../store/actions/match/matchAction";
-import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
+import StyledImage from "../../Common/StyledImages";
 
 const RunsBox = ({ item, currentOdd }: any) => {
   const theme = useTheme();
@@ -47,7 +46,7 @@ const RunsBox = ({ item, currentOdd }: any) => {
         borderRadius: "10px",
         backgroundColor: "white",
         display: "flex",
-        width: {lg:"19.5%", xs: "23.5%"},
+        width: { lg: "19.5%", xs: "23.5%" },
         marginX: "1px",
         border: "3px solid #0B4F26",
       }}
@@ -123,9 +122,16 @@ const RunsBox = ({ item, currentOdd }: any) => {
           </Typography>
         </Box>
       </Box>
-      <Box ref={containerRef} sx={{ height: "350px", overflowY: "scroll", "::-webkit-scrollbar": {
-              display: "none",
-            }, }}>
+      <Box
+        ref={containerRef}
+        sx={{
+          height: "350px",
+          overflowY: "scroll",
+          "::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         {JSON.parse(item?.proLoss)?.betPlaced?.length > 0 ? (
           JSON.parse(item?.proLoss)?.betPlaced?.map((v: any) => {
             const getColor = (value: any) => {
@@ -208,6 +214,7 @@ const RunsBox = ({ item, currentOdd }: any) => {
                   </Typography>
                   <StyledImage
                     src={getSVG(v?.profitLoss)}
+                    alt="proloss"
                     sx={{
                       height: "15px",
                       marginLeft: "5px",
@@ -221,16 +228,13 @@ const RunsBox = ({ item, currentOdd }: any) => {
             );
           })
         ) : (
-          <>
-            {" "}
-            <Box
-              sx={{
-                display: "flex",
-                height: "25px",
-                borderTop: "1px solid #306A47",
-              }}
-            ></Box>
-          </>
+          <Box
+            sx={{
+              display: "flex",
+              height: "25px",
+              borderTop: "1px solid #306A47",
+            }}
+          />
         )}
       </Box>
     </Box>

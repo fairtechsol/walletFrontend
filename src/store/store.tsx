@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./reducers/auth/authReducer";
-import { userReducer } from "./reducers/user";
+import { horseRacingReducer } from "./reducers/horseRacing";
 import { matchReducer } from "./reducers/match";
 import { reportReducer } from "./reducers/reports";
-import { horseRacingReducer } from "./reducers/horseRacing";
+import { userReducer } from "./reducers/user";
 
 const store = configureStore({
   reducer: {

@@ -1,24 +1,22 @@
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, Typography } from "@mui/material";
+import { memo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DownGIcon, DownIcon, LockIcon, UnLockIcon } from "../../../assets";
 import { AccountListRowInterface } from "../../../interface/listOfClients";
 import StyledImage from "../../Common/StyledImages";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { useNavigate } from "react-router-dom";
-import { memo, useState } from "react";
 import RowModalComponents from "./RowModalCompExpert";
 
-const AccountListExpertRow = (props: AccountListRowInterface) => {
-  const {
-    containerStyle,
-    fContainerStyle,
-    fTextStyle,
-    element,
-    showOptions,
-    show,
-    showUserDetails,
-    currentPage,
-  } = props;
-
+const AccountListExpertRow = ({
+  containerStyle,
+  fContainerStyle,
+  fTextStyle,
+  element,
+  showOptions,
+  show,
+  showUserDetails,
+  currentPage,
+}: AccountListRowInterface) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
@@ -78,9 +76,8 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
             <EditOutlinedIcon
               fontSize="medium"
               onClick={() => {
-                navigate(`/wallet/edit_account`, {
+                navigate(`/wallet/add_account/${element?.id}`, {
                   state: {
-                    id: element?.id,
                     expertMatchDetail: element,
                   },
                 });
@@ -104,6 +101,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
               src={
                 fContainerStyle.background == "#F8C851" ? DownGIcon : DownIcon
               }
+              alt="down"
               style={{ cursor: "pointer", width: "16px", height: "12px" }}
             />
           )}
@@ -121,6 +119,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <StyledImage
             src={element?.allPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -137,14 +136,13 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <StyledImage
             src={element?.addMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
-        <Box>
-          <Typography variant="h5" sx={{ color: "white" }}>
-            {element?.betFairMatchPrivilege}
-          </Typography>
-        </Box>
+        <Typography variant="h5" sx={{ color: "white" }}>
+          {element?.betFairMatchPrivilege}
+        </Typography>
         <Box
           sx={{
             width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
@@ -158,6 +156,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <StyledImage
             src={element?.betFairMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -174,6 +173,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <StyledImage
             src={element?.bookmakerMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -190,6 +190,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <StyledImage
             src={element?.sessionMatchPrivilege ? UnLockIcon : LockIcon}
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -214,6 +215,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
                 ? UnLockIcon
                 : LockIcon
             }
+            alt="lock/unlock"
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
@@ -241,18 +243,6 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
         >
           <Typography variant="h5">{element?.phoneNumber}</Typography>
         </Box>
-        {/* <Box
-          sx={{
-            width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
-            display: "flex",
-            paddingX: "10px",
-            alignItems: "center",
-            height: "45px",
-            borderRight: "2px solid white",
-          }}
-        >
-          <Typography variant="h5">{element?.roleName}</Typography>
-        </Box> */}
       </Box>
       {showUserModal && (
         <Box
@@ -282,12 +272,7 @@ const AccountListExpertRow = (props: AccountListRowInterface) => {
               selected={selected}
               element={element}
               setSelected={setSelected}
-              // getListOfUser={getListOfUser}
               setShowUserModal={setShowUserModal}
-              backgroundColor={containerStyle?.background}
-              // userModal={userModal}
-              // setShowSuccessModal={setShowSuccessModal}
-              // setShowModalMessage={setShowModalMessage}
               onValueChange={handleAmountChange}
               currentPage={currentPage}
             />

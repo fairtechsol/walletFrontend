@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Fragment, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -27,15 +27,14 @@ const Analysis = () => {
   const [mode, setMode] = useState("0");
   const [max, setMax] = useState("2");
   const [selected, setSelected] = useState<any>([]);
-  const [selectedMatchType, setSelectedMatchType] = useState<any>("");
+  const [selectedMatchType, setSelectedMatchType] = useState<string>("");
   const [matchIds, setMatchIds] = useState<any>([]);
-  // const [marketIds, setMarketIds] = useState([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });
@@ -50,35 +49,72 @@ const Analysis = () => {
   };
 
   const changeSelected = (match: any) => {
-    if (mode === "0") {
+    if (mode === "0" || !match?.id) return false;
+
+    const matchId = match.id;
+    const isAlreadySelected = selected.includes(matchId);
+    const isSameMatchType =
+      !selectedMatchType || selectedMatchType === match.matchType;
+
+    if (!isSameMatchType) {
+      toast.error("Please Select Match Of Same Category");
       return false;
     }
 
-    const updatedSelected = [...selected];
-    const matchId = match?.id;
-
-    if (selected?.length === 0 || selectedMatchType === match?.matchType) {
-      const isSelected = updatedSelected.includes(matchId);
-
-      if (isSelected) {
-        setMatchIds((prevIds: any) =>
-          prevIds.filter((matchId: any) => matchId !== matchId)
-        );
-        setSelected(updatedSelected.filter((id: any) => id !== matchId));
-      } else {
-        if (+max === selected?.length) {
-          toast.warn(`Only ${max} allowed`);
-          return;
-        }
-        setMatchIds((prevIds: any) => [...prevIds, matchId]);
-        setSelected([...updatedSelected, matchId]);
-        if (!isSelected) {
-          setSelectedMatchType(match?.matchType);
-        }
-      }
+    if (isAlreadySelected) {
+      const updatedSelected = selected.filter((id: any) => id !== matchId);
+      setSelected(updatedSelected);
+      setMatchIds(updatedSelected);
+      if (!updatedSelected.length) setSelectedMatchType("");
     } else {
-      toast.error("Please Select Match Of Same Category");
-      return;
+      if (selected.length >= +max) {
+        toast.warn(`Only ${max} allowed`);
+        return false;
+      }
+      setSelected([...selected, matchId]);
+      setMatchIds([...selected, matchId]);
+      if (!selectedMatchType) setSelectedMatchType(match.matchType);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (max == "2") {
+      if (selected.length != 2) {
+        toast.error("Select 2 matches");
+        return;
+      }
+    } else if (max == "3") {
+      if (selected.length != 3) {
+        toast.error("Select 3 matches");
+        return;
+      }
+    } else if (max == "4") {
+      if (selected.length != 4) {
+        toast.error("Select 4 matches");
+        return;
+      }
+    }
+    if (selected) {
+      setMode("0");
+      setSelected([]);
+      setMatchIds([]);
+    }
+    if (max == "3") {
+      navigate(`/wallet/market_analysis/multiple_Match`, {
+        state: {
+          match: Number(max),
+          matchIds: matchIds,
+          matchType: selectedMatchType,
+        },
+      });
+    } else {
+      navigate(`/wallet/market_analysis/multiple_Match`, {
+        state: {
+          match: Number(max),
+          matchIds: matchIds,
+          matchType: selectedMatchType,
+        },
+      });
     }
   };
 
@@ -119,174 +155,114 @@ const Analysis = () => {
   }, []);
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        flexDirection: "column",
+        margin: "0.5%",
+      }}
+    >
       <Box
         sx={{
-          display: "flex",
           width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexDirection: "column",
-          margin: "0.5%",
         }}
       >
         <Box
           sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginX: ".5%",
+            padding: { xs: "5px", lg: "0px 8px" },
+            flexDirection: { xs: "column", md: "row", lg: "row" },
             width: "100%",
+            marginY: { xs: "1%", md: "1%", lg: "0" },
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "16px",
+              color: "white",
+              width: "100%",
+              fontWeight: "700",
+              marginY: "0.5%",
+              marginLeft: "5px",
+              alignSelf: "start",
+            }}
+          >
+            MARKET ANALYSIS
+          </Typography>
+          {mode == "0" && (
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: {
+                  xs: "center",
+                  md: "flex-end",
+                  lg: "flex-end",
+                  marginRight: "0.5%",
+                },
+              }}
+            >
+              {["2", "3", "4"].map((value: string, index: number) => (
+                <Fragment key={value}>
+                  <CustomBox
+                    onClick={() => handleClick(value)}
+                    title={`${value} Match Screen`}
+                  />
+                  {index !== 2 && <Box sx={{ width: "10px" }} />}
+                </Fragment>
+              ))}
+            </Box>
+          )}
+          {mode == "1" && (
+            <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
+              <CustomBox
+                bg="#E32A2A"
+                onClick={() => {
+                  setMode("0");
+                  setSelected([]);
+                  setMatchIds([]);
+                }}
+                title="Cancel"
+              />
+              <CustomBox onClick={handleSubmit} title="Submit" />
+              <Box sx={{ width: "10px" }} />
+            </Box>
+          )}
+        </Box>
+      </Box>
+      {loading ? (
+        <Box
+          sx={{
+            height: "60vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "column",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginX: ".5%",
-              padding: { xs: "5px", lg: "0px 8px" },
-              flexDirection: { xs: "column", md: "row", lg: "row" },
-              width: "100%",
-              marginY: { xs: "1%", md: "1%", lg: "0" },
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "16px",
-                color: "white",
-                width: "100%",
-                fontWeight: "700",
-                marginY: "0.5%",
-                marginLeft: "5px",
-                alignSelf: "start",
-              }}
-            >
-              MARKET ANALYSIS
-            </Typography>
-            {mode == "0" && (
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  justifyContent: {
-                    xs: "center",
-                    md: "flex-end",
-                    lg: "flex-end",
-                    marginRight: "0.5%",
-                  },
-                }}
-              >
-                <CustomBox
-                  onClick={() => {
-                    handleClick("2");
-                  }}
-                  title={"2 Match Screen"}
-                />
-                <Box sx={{ width: "10px" }}></Box>
-                <CustomBox
-                  onClick={() => {
-                    handleClick("3");
-                  }}
-                  title={"3 Match Screen"}
-                />
-                <Box sx={{ width: "10px" }}></Box>
-                <CustomBox
-                  onClick={() => {
-                    handleClick("4");
-                  }}
-                  title={"4 Match Screen"}
-                />
-              </Box>
-            )}
-            {mode == "1" && (
-              <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
-                <CustomBox
-                  bg={"#E32A2A"}
-                  onClick={() => {
-                    setMode("0");
-                    setSelected([]);
-                    setMatchIds([]);
-                  }}
-                  title={"Cancel"}
-                />
-                <CustomBox
-                  onClick={() => {
-                    if (max == "2") {
-                      if (selected.length != 2) {
-                        toast.error("Select 2 matches");
-                        return;
-                      }
-                    } else if (max == "3") {
-                      if (selected.length != 3) {
-                        toast.error("Select 3 matches");
-                        return;
-                      }
-                    } else if (max == "4") {
-                      if (selected.length != 4) {
-                        toast.error("Select 4 matches");
-                        return;
-                      }
-                    }
-                    if (selected) {
-                      setMode("0");
-                      setSelected([]);
-                      setMatchIds([]);
-                    }
-                    if (max == "3") {
-                      navigate(`/wallet/market_analysis/multiple_Match`, {
-                        state: {
-                          match: Number(max),
-                          matchIds: matchIds,
-                          matchType: selectedMatchType,
-                          // marketIds: marketIds,
-                        },
-                      });
-                    } else {
-                      navigate(`/wallet/market_analysis/multiple_Match`, {
-                        state: {
-                          match: Number(max),
-                          matchIds: matchIds,
-                          matchType: selectedMatchType,
-                          // marketIds: marketIds,
-                        },
-                      });
-                    }
-                  }}
-                  title={"Submit"}
-                />
-                <Box sx={{ width: "10px" }}></Box>
-              </Box>
-            )}
-          </Box>
+          <Loader />
         </Box>
-        {loading ? (
-          <Box
-            sx={{
-              height: "60vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Loader />
-          </Box>
-        ) : analysisList?.matches?.length > 0 ? (
-          <>
-            {analysisList?.matches?.map((match: any) => {
-              return (
-                <div style={{marginTop:"15px"}}>
-                <MatchListComponent
-                  key={match?.id}
-                  data={match}
-                  setSelected={() => changeSelected(match)}
-                  mode={mode}
-                  selected={!selected.includes(match.id as never)}
-                  title={match?.title}
-                  team={match?.teamA}
-                  team2={match?.teamB}
-                />
-                </div>
-              );
-            })}
-            <div style={{marginTop:"15px"}}>
+      ) : analysisList?.matches?.length > 0 ? (
+        <>
+          {analysisList?.matches?.map((match: any) => (
+            <MatchListComponent
+              key={match?.id}
+              data={match}
+              setSelected={() => changeSelected(match)}
+              mode={mode}
+              selected={!selected.includes(match.id as never)}
+              title={match?.title}
+              team={match?.teamA}
+              team2={match?.teamB}
+            />
+          ))}
+          <Box sx={{ marginTop: "15px" }}>
             <Pagination
               page={currentPage}
               className={`${classes.whiteTextPagination} d-flex justify-content-center`}
@@ -299,22 +275,21 @@ const Analysis = () => {
                 setCurrentPage(value);
               }}
             />
-            </div>
-          </>
-        ) : (
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell style={{ color: "white", textAlign: "center" }}>
-                  No Record Found...
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        )}
-      </Box>
-    </>
+          </Box>
+        </>
+      ) : (
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell style={{ color: "white", textAlign: "center" }}>
+                No Record Found...
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
+    </Box>
   );
 };
 
-export default Analysis;
+export default memo(Analysis);

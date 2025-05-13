@@ -1,19 +1,19 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../../assets";
-import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
 import {
   getUserList,
   getUsersProfile,
+  setLockUnlockUser,
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
-import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
-import { setLockUnlockUser } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
+import BoxButtonWithSwitch from "../../Common/BoxButtonWithSwitch";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
 const initialValues: any = {
   betBlock: false,
@@ -29,17 +29,25 @@ interface lockUnlockInterface {
   userDomain?: string;
 }
 
-const LockUnlockComponent = (props: any) => {
-  const {
-    setSelected,
-    element,
-    walletAccountDetail,
-    endpoint,
-    isWallet,
-    onChangeAmount,
-    currentPage,
-  } = props;
+interface LockUnlockComponentProps {
+  setSelected: (val?: any) => void;
+  element?: any;
+  walletAccountDetail?: any;
+  endpoint?: string;
+  isWallet?: boolean;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+}
 
+const LockUnlockComponent = ({
+  setSelected,
+  element,
+  walletAccountDetail,
+  endpoint,
+  isWallet,
+  onChangeAmount,
+  currentPage,
+}: LockUnlockComponentProps) => {
   let elementLockUnlockObj1 = {
     all_blocked: element?.userBlock === true ? true : false,
     bet_blocked: element?.betBlock === true ? true : false,
@@ -59,7 +67,6 @@ const LockUnlockComponent = (props: any) => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: depositAmountValidations,
     onSubmit: (values: any) => {
       const id = element?.id
         ? element?.id
@@ -116,19 +123,14 @@ const LockUnlockComponent = (props: any) => {
     onChangeAmount(lockUnlockObj, element?.id, "lock");
   }, [lockUnlockObj, onChangeAmount]);
 
-  // const handleLockSubmit = (e: any) => {
-  //   e.preventDefault();
-  // };
   return (
     <form onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
           borderRadius: "5px",
-          // paddingRight: { xs: "0", lg: "10px" },
           flexDirection: { xs: "column", md: "row", lg: "row" },
           gap: 2,
-          // width: { xs: "92vw", md: "80%", lg: "80%" },
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -158,19 +160,6 @@ const LockUnlockComponent = (props: any) => {
             >
               Dummy
             </Typography>
-
-            {/* <Box
-              sx={{
-                width: { xs: "100%", lg: "63%", md: "65%" },
-                height: "45px",
-                // background: "white",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: "5px",
-                // border: "2px solid #26262633",
-                // paddingX: "20px",
-              }}
-            > */}
             <Box sx={{ width: "50%", display: "flex", alignItems: "center" }}>
               <BoxButtonWithSwitch
                 title={"User"}
@@ -199,7 +188,6 @@ const LockUnlockComponent = (props: any) => {
               />
             </Box>
           </Box>
-          {/* </Box> */}
           <Box
             sx={{
               display: "flex",
@@ -214,7 +202,6 @@ const LockUnlockComponent = (props: any) => {
             <Typography
               sx={{
                 fontSize: { xs: "3vw", lg: "1vw", md: "1vw" },
-                // width: { xs: "100%", lg: "35%", md: "35%" },
                 fontWeight: "600",
                 marginRight: { xs: 0, lg: "20px", md: "20px" },
               }}
@@ -260,6 +247,7 @@ const LockUnlockComponent = (props: any) => {
               >
                 <StyledImage
                   src={showPass ? EyeIcon : EyeSlash}
+                  alt="eye"
                   sx={{ height: "14px", width: "20px" }}
                 />
               </Box>
@@ -341,4 +329,4 @@ const LockUnlockComponent = (props: any) => {
   );
 };
 
-export default LockUnlockComponent;
+export default memo(LockUnlockComponent);

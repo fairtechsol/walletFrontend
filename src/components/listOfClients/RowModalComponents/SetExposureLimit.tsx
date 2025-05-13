@@ -1,11 +1,12 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { EyeIcon, EyeSlash } from "../../../assets";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import { formatToINR } from "../../../helper";
 import {
   getTotalBalance,
   getUserList,
@@ -14,9 +15,8 @@ import {
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
-import { formatToINR } from "../../../helper";
+import { depositAmountValidations } from "../../../utils/Validations";
 
 const initialValues: any = {
   userId: "",
@@ -25,16 +25,25 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
-const SetExposureLimit = (props: any) => {
-  const {
-    backgroundColor,
-    setSelected,
-    element,
-    endpoint,
-    isWallet,
-    onChangeAmount,
-    currentPage
-  } = props;
+interface SetExposureLimitProps {
+  backgroundColor?: string;
+  setSelected: (val?: any) => void;
+  element?: any;
+  endpoint?: string;
+  isWallet?: boolean;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+}
+
+const SetExposureLimit = ({
+  backgroundColor,
+  setSelected,
+  element,
+  endpoint,
+  isWallet,
+  onChangeAmount,
+  currentPage,
+}: SetExposureLimitProps) => {
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -86,8 +95,8 @@ const SetExposureLimit = (props: any) => {
             url: { endpoint: ApiConstants.USER.LIST },
           })
         );
+        dispatch(getTotalBalance());
       }
-      dispatch(getTotalBalance());
       setSubmitting(false);
       dispatch(userListSuccessReset());
     }
@@ -108,8 +117,6 @@ const SetExposureLimit = (props: any) => {
 
     formik.setFieldValue("amount", value);
     onChangeAmount(value, element?.id, "exposure");
-    // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
-    // setChexckValue(event.target.value);
   };
 
   return (
@@ -152,7 +159,6 @@ const SetExposureLimit = (props: any) => {
               }}
             >
               <TextField
-                // onKeyDown={handleKeyDown}
                 required={true}
                 id="amount"
                 name="amount"
@@ -237,6 +243,7 @@ const SetExposureLimit = (props: any) => {
               >
                 <StyledImage
                   src={showPass ? EyeIcon : EyeSlash}
+                  alt="eye"
                   sx={{ height: "14px", width: "20px" }}
                 />
               </Box>
@@ -331,4 +338,4 @@ const SetExposureLimit = (props: any) => {
   );
 };
 
-export default SetExposureLimit;
+export default memo(SetExposureLimit);

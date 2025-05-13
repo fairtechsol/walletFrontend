@@ -6,13 +6,10 @@ import {
   useTheme,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { useEffect, useState } from "react";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
-import MobileViewUserDetails from "./MobileViewUserDetails";
 import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { EyeIcon, EyeSlash } from "../../../assets";
 import {
   changeAmmountUser,
   getTotalBalance,
@@ -23,6 +20,9 @@ import {
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { depositAmountValidations } from "../../../utils/Validations";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
+import MobileViewUserDetails from "./MobileViewUserDetails";
 
 const initialValues: any = {
   userId: "",
@@ -32,25 +32,37 @@ const initialValues: any = {
   transactionType: "add",
 };
 
-const DepositComponent = (props: any) => {
-  const {
-    endpoint,
-    isWallet,
-    walletAccountDetail,
-    element,
-    backgroundColor,
-    setSelected,
-    selected,
-    titleBackgroundColor,
-    onChangeAmount,
-    currentPage
-  } = props;
+interface DepositComponentProps {
+  endpoint?: any;
+  isWallet?: any;
+  walletAccountDetail: any;
+  element?: any;
+  backgroundColor?: any;
+  setSelected: (val?: any) => void;
+  selected: any;
+  titleBackgroundColor: string;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: number;
+  navigate?: any;
+}
 
-  const [showPass, setShowPass] = useState(false);
+const DepositComponent = ({
+  endpoint,
+  isWallet,
+  walletAccountDetail,
+  element,
+  backgroundColor,
+  setSelected,
+  selected,
+  titleBackgroundColor,
+  onChangeAmount,
+  currentPage,
+}: DepositComponentProps) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const [showPass, setShowPass] = useState(false);
   const [initialBalance, setInitialBalance] = useState(
     walletAccountDetail?.userBal?.currentBalance
   );
@@ -219,8 +231,6 @@ const DepositComponent = (props: any) => {
               elementToUDM={element}
               userName={element?.userName}
               title={"Deposit Amount"}
-              setSelected={setSelected}
-              selected={selected}
               value={formik.values}
               onChange={handleValueChange}
               setShowPass={setShowPass}
@@ -234,7 +244,6 @@ const DepositComponent = (props: any) => {
               loading={loading}
               titleBackgroundColor={titleBackgroundColor}
               type="deposite"
-              currentPage={currentPage}
             />
           </form>
         </ModalMUI>
@@ -318,7 +327,6 @@ const DepositComponent = (props: any) => {
                     required={true}
                     id="amount"
                     name="amount"
-                    //  value={formik.values.amount}
                     value={numberWithCommas(formik.values.amount?.toString())}
                     variant="standard"
                     type="tel"
@@ -338,32 +346,7 @@ const DepositComponent = (props: any) => {
                     onChange={(e: any) => checkHandleChange(e)}
                   />
                 </Box>
-
-                {/* <NumericFormat
-                    value={formik.values.amount}
-                    onValueChange={(values) => {
-                      // const { value } = values;
-                      // formik.setFieldValue('amount', value);
-                      const formatter = new Intl.NumberFormat('en-IN', {
-                        style: 'currency',
-                        currency: 'INR'
-                      });
-                      formik.setFieldValue('amount', formatter.format(values));
-                    }}
-                    // onChange={formik.handleChange}
-                    customInput={TextField}
-                    type="text"
-                    style={{ textAlign: 'right' }}
-                    InputProps={{
-                      style: {
-                        color: 'white', 
-                        height: "45px"
-                      },
-                    }}
-                  /> */}
-                {/* </Box> */}
               </Box>
-
               <Box
                 sx={{
                   width: { xs: "41%", lg: "100%" },
@@ -511,6 +494,7 @@ const DepositComponent = (props: any) => {
                   >
                     <StyledImage
                       src={showPass ? EyeIcon : EyeSlash}
+                      alt="eye"
                       sx={{ height: "14px", width: "20px" }}
                     />
                   </Box>
@@ -540,8 +524,6 @@ const DepositComponent = (props: any) => {
                 flexDirection: "row-reverse",
               }}
             >
-              {/* Remark */}
-
               <Box
                 sx={{
                   borderRadius: "5px",
@@ -672,4 +654,4 @@ const DepositComponent = (props: any) => {
   );
 };
 
-export default DepositComponent;
+export default memo(DepositComponent);
