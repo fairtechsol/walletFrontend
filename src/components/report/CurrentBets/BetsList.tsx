@@ -61,7 +61,6 @@ const BetsList = ({ betHistory }: { betHistory: any }) => {
               data={item}
               index={index}
               containerStyle={{ background: "#FFE094" }}
-              profit={true}
               fContainerStyle={{ background: "#0B4F26" }}
               fTextStyle={{ color: "white" }}
               currentPage={currentPage}
