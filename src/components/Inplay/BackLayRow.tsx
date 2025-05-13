@@ -1,5 +1,29 @@
 import { Box, Typography } from "@mui/material";
 
+interface BackLayBoxProps {
+  color: string;
+  type: string;
+}
+
+const BackLayBox = ({ color, type }: BackLayBoxProps) => {
+  return (
+    <Box
+      sx={{
+        background: color,
+        width: { lg: "20%", xs: "25%" },
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography sx={{ fontSize: "12px", color: "#000", fontWeight: "600" }}>
+        {type}
+      </Typography>
+    </Box>
+  );
+};
+
 const BackLayRow = () => {
   return (
     <Box
@@ -29,39 +53,9 @@ const BackLayRow = () => {
           justifyContent: "flex-end",
         }}
       >
-        <Box
-          sx={{
-            background: "#00C0F9",
-            width: { lg: "20%", xs: "25%" },
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{ fontSize: "12px", color: "black", fontWeight: "600" }}
-          >
-            Back
-          </Typography>
-        </Box>
+        <BackLayBox color="#00C0F9" type="Back" />
         <Box sx={{ width: ".35%", display: "flex" }} />
-        <Box
-          sx={{
-            background: "#FF9292",
-            width: { lg: "20%", xs: "25%" },
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{ fontSize: "12px", color: "black", fontWeight: "600" }}
-          >
-            Lay
-          </Typography>
-        </Box>
+        <BackLayBox color="#FF9292" type="Lay" />
       </Box>
     </Box>
   );
