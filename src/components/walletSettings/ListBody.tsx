@@ -4,7 +4,11 @@ import { LockIcon, UnLockIcon } from "../../assets";
 import { formatToINR } from "../../helper";
 import StyledImage from "../Common/StyledImages";
 
-const ListBody = ({ walletAccountDetail }: any) => {
+interface ListBodyProps {
+  walletAccountDetail: any;
+}
+
+const ListBody = ({ walletAccountDetail }: ListBodyProps) => {
   return (
     <Box
       sx={{
