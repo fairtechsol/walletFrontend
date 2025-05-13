@@ -248,7 +248,7 @@ const Analysis = () => {
         >
           <Loader />
         </Box>
-      ) : analysisList?.matches?.length > 0 ? (
+      ) : analysisList?.count > 0 ? (
         <>
           {analysisList?.matches?.map((match: any) => (
             <MatchListComponent

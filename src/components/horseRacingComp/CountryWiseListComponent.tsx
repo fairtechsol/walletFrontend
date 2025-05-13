@@ -24,11 +24,17 @@ const CustomTabs = styled(Tabs)({
   },
 });
 
+interface CountryWiseListComponentProps {
+  countryWiseList: any;
+  setSelectedCountryCode: (val: string) => void;
+  matchType: string;
+}
+
 const CountryWiseListComponent = ({
   countryWiseList,
   setSelectedCountryCode,
   matchType,
-}: any) => {
+}: CountryWiseListComponentProps) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
