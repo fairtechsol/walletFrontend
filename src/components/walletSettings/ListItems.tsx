@@ -23,6 +23,44 @@ import WithdrawComponent from "../listOfClients/RowModalComponents/WithdrawCompo
 import ListBody from "./ListBody";
 import ListHeader from "./ListHeader";
 
+const classes = {
+  Menusx: {
+    margin: "1%",
+    fontFamily: "Poppins, sans-serif",
+    width: { xs: "105%", lg: "100%", md: "100%" },
+  },
+  MenuListProps: { "aria-labelledby": "basic-button" },
+  MenuPaperProps: {
+    sx: {
+      paddingY: "0px",
+      padding: "0px",
+      width: "100%",
+      left: "1px !important",
+      top: { lg: "191px !important", xs: "170px !important" },
+      minHeight: "220px",
+      background: "url(/static/media/back.00d2deda3616019e96ee.png)",
+      boxShadow: "none",
+    },
+  },
+  MenuItemsx: {
+    width: "100%",
+    fontSize: { lg: "16px", xs: "12px" },
+    fontWeight: "600",
+    marginX: "0px",
+    borderBottomWidth: 0,
+    borderColor: "#EAEFEC",
+    marginTop: "0px",
+    borderStyle: "solid",
+    minHeight: { xs: "30px", lg: "40px" },
+    lineHeight: "18px",
+    color: "black",
+    "&:hover": {
+      backgroundColor: "#e5b744",
+      border: 0,
+    },
+  },
+};
+
 const ListItems = () => {
   const navigate = useNavigate();
   const [isSliderVisible, setIsSliderVisible] = useState(false);
@@ -50,43 +88,6 @@ const ListItems = () => {
     };
   }, []);
 
-  const classes = {
-    Menusx: {
-      margin: "1%",
-      fontFamily: "Poppins, sans-serif",
-      width: { xs: "105%", lg: "100%", md: "100%" },
-    },
-    MenuListProps: { "aria-labelledby": "basic-button" },
-    MenuPaperProps: {
-      sx: {
-        paddingY: "0px",
-        padding: "0px",
-        width: "100%",
-        left: "1px !important",
-        top: { lg: "191px !important", xs: "170px !important" },
-        minHeight: "220px",
-        background: "url(/static/media/back.00d2deda3616019e96ee.png)",
-        boxShadow: "none",
-      },
-    },
-    MenuItemsx: {
-      width: "100%",
-      fontSize: { lg: "16px", xs: "12px" },
-      fontWeight: "600",
-      marginX: "0px",
-      borderBottomWidth: 0,
-      borderColor: "#EAEFEC",
-      marginTop: "0px",
-      borderStyle: "solid",
-      minHeight: { xs: "30px", lg: "40px" },
-      lineHeight: "18px",
-      color: "black",
-      "&:hover": {
-        backgroundColor: "#e5b744",
-        border: 0,
-      },
-    },
-  };
   const handleAmountChange = () => {};
 
   useEffect(() => {
@@ -95,6 +96,7 @@ const ListItems = () => {
       dispatch(userListSuccessReset());
     }
   }, [success]);
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={classes.Menusx}>
