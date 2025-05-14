@@ -27,7 +27,7 @@ const CustomTabs = styled(Tabs)({
 interface CountryWiseListComponentProps {
   countryWiseList: any;
   setSelectedCountryCode: (val: string) => void;
-  matchType: string;
+  matchType: string | any;
 }
 
 const CountryWiseListComponent = ({
