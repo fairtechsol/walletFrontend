@@ -383,7 +383,8 @@ const FullAllBets = ({
               flexDirection: "column",
               marginRight: "2px",
             }}
-            onDoubleClick={() => {
+            onDoubleClick={(e: any) => {
+              e.stopPropagation();
               deletePermanent?.();
             }}
           >
