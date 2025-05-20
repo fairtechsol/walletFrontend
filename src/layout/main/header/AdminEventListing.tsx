@@ -136,18 +136,16 @@ const AdminEventListing = () => {
 
   return (
     <Box
-      sx={[
-        {
-          width: { xs: "98%", lg: "100%" },
-          msOverflowStyle: "none",
-          overflowY: "hidden",
-          minHeight: { xs: 95, lg: 80 },
-          marginLeft: { xs: "0", lg: ".5vw" },
-          overflowX: "auto",
-          alignSelf: { xs: "center", lg: "flex-start" },
-          display: "flex",
-        },
-      ]}
+      sx={{
+        width: "100%",
+        msOverflowStyle: "none",
+        overflowY: "hidden",
+        minHeight: { xs: 95, lg: 80 },
+        marginLeft: { xs: "0", lg: ".5vw" },
+        overflowX: "auto",
+        alignSelf: { xs: "center", lg: "flex-start" },
+        display: "flex",
+      }}
     >
       {newData?.map((i: any, idx: any) => {
         return (
