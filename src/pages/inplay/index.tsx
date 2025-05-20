@@ -16,6 +16,7 @@ import Loader from "../../components/Loader";
 import { socket, socketService } from "../../socketManager";
 import {
   getMatchListInplay,
+  matchListInplaySuccessReset,
   updateMatchRatesFromApiOnList,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
@@ -24,9 +25,8 @@ const Inplay = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { loading, matchListInplay, success } = useSelector(
-    (state: RootState) => state.match.matchList
-  );
+  const { loading, matchListInplay, success, matchListInplaySuccess } =
+    useSelector((state: RootState) => state.match.matchList);
 
   const useStyles = makeStyles({
     whiteTextPagination: {
@@ -110,11 +110,6 @@ const Inplay = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      getMatchListMarket("cricket");
-      getMatchListMarket("tennis");
-      getMatchListMarket("football");
-    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket("cricket");
       getMatchListMarket("tennis");
@@ -123,6 +118,15 @@ const Inplay = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    if (matchListInplaySuccess) {
+      getMatchListMarket("cricket");
+      getMatchListMarket("tennis");
+      getMatchListMarket("football");
+      dispatch(matchListInplaySuccessReset());
+    }
+  }, [matchListInplaySuccess]);
 
   const classes = useStyles();
   return (

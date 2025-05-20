@@ -350,3 +350,6 @@ export const resetMarketAnalysys = createAction("marketAnalysis/reset");
 export const resetPermanentDeleteSuccess = createAction(
   "permanentDeleteSuccess/reset"
 );
+export const matchListInplaySuccessReset = createAction(
+  "matchListInplaySuccess/reset"
+);
