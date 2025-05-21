@@ -259,7 +259,7 @@ const DepositComponent = ({
           >
             <Box
               sx={{
-                width: { xs: "100%", lg: "100%", md: "100%" },
+                width: "100%",
                 gap: "1%",
                 display: { xs: "flex", lg: "block", md: "block" },
                 flexDirection: "row-reverse",
@@ -301,7 +301,7 @@ const DepositComponent = ({
                         lg: "16px",
                         md: "16px",
                       },
-                      width: { xs: "100%", lg: "100%", md: "100%" },
+                      width: "100%",
                       fontWeight: "600",
                       marginRight: {
                         xs: 0,
@@ -316,7 +316,7 @@ const DepositComponent = ({
                 <Box
                   sx={{
                     background: "#004A25",
-                    width: { xs: "43%", lg: "43%", md: "43%" },
+                    width: "43%",
                     height: "45px",
                     borderRadius: "5px",
                     paddingX: "20px",
@@ -441,7 +441,7 @@ const DepositComponent = ({
                         lg: "16px",
                         md: "16px",
                       },
-                      width: { xs: "100%", lg: "100%", md: "100%" },
+                      width: "100%",
                       fontWeight: "600",
                       marginRight: {
                         xs: 0,
