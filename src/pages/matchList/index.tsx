@@ -119,9 +119,6 @@ const Inplay = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    setTimeout(() => {
-      getMatchListMarket(type);
-    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket(type);
     }, 3000);
