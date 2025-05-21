@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@mui/material";
-import { memo } from "react";
 
 interface ListHeaderModalProps {
   title: string;
@@ -34,9 +33,7 @@ const ListHeaderModal = ({ title, setShow }: ListHeaderModalProps) => {
 
       <Button
         sx={{ color: "", fontSize: "30px", padding: 0 }}
-        onClick={() => {
-          setShow();
-        }}
+        onClick={setShow}
       >
         &times;
       </Button>
@@ -44,4 +41,4 @@ const ListHeaderModal = ({ title, setShow }: ListHeaderModalProps) => {
   );
 };
 
-export default memo(ListHeaderModal);
+export default ListHeaderModal;
