@@ -3,7 +3,12 @@ import { memo } from "react";
 import LargeBox from "./LargeBox";
 import SmallBox from "./SmallBox";
 
-const FullAllBetsRow = ({ values, index }: any) => {
+interface FullAllBetsRowProps {
+  values: any[];
+  index: number;
+}
+
+const FullAllBetsRow = ({ values, index }: FullAllBetsRowProps) => {
   return (
     <Box key={index} sx={{ width: "100%", display: "flex" }}>
       {values.map((item: any, k: any) => {

@@ -16,13 +16,21 @@ import { AppDispatch, RootState } from "../../../store/store";
 import Divider from "../../Inplay/Divider";
 import UserProfitLossListComp from "./UserProfitLossListComp";
 
+interface UserProfitLossProps {
+  title: string;
+  matchData?: any;
+  setShowUserProfitLoss?: (show: boolean) => void;
+  single: string;
+  matchDetail?: any;
+}
+
 const UserProfitLoss = ({
   title,
   matchData,
   setShowUserProfitLoss,
   single,
   matchDetail,
-}: any) => {
+}: UserProfitLossProps) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -129,7 +137,7 @@ const UserProfitLoss = ({
                 padding: "0px 8px",
               }}
               onClick={() => {
-                setShowUserProfitLoss(false);
+                setShowUserProfitLoss?.(false);
                 dispatch(resetUserProfitLoss());
               }}
             >

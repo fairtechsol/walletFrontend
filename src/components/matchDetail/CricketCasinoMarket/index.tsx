@@ -8,6 +8,21 @@ import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import BetsCountBox from "./BetsCountBox";
 import CricketCasinoMarketBox from "./CricketCasinoMarketBox";
 
+interface CricketCasinoMarketProps {
+  blockMatch?: boolean;
+  showUnlock?: boolean;
+  locked?: boolean;
+  handleShowLock?: (show: boolean, title: string) => void;
+  selft?: boolean;
+  title: string;
+  min: string | number;
+  sessionData: any;
+  allBetsData: any[];
+  currentMatch: any;
+  handleBlock?: (value: any, locked: boolean, type: string) => void;
+  handleHide?: () => void;
+}
+
 const CricketCasinoMarket = ({
   blockMatch,
   showUnlock,
@@ -21,13 +36,13 @@ const CricketCasinoMarket = ({
   currentMatch,
   handleBlock,
   handleHide,
-}: any) => {
+}: CricketCasinoMarketProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [visible, setVisible] = useState(true);
 
   const onSubmit = (value: any) => {
-    handleBlock(value, !locked, "SESSION");
+    handleBlock?.(value, !locked, "SESSION");
   };
 
   const { marketAnalysis } = useSelector(
@@ -86,7 +101,7 @@ const CricketCasinoMarket = ({
             <img
               onClick={() =>
                 selft || selft == undefined
-                  ? handleShowLock(true, `${title}`)
+                  ? handleShowLock?.(true, `${title}`)
                   : ""
               }
               src={locked ? LOCKED : LOCKOPEN}
@@ -237,8 +252,6 @@ const CricketCasinoMarket = ({
                   }}
                 >
                   MIN: {min}
-                  {/* MAX:
-                    {max} */}
                 </Typography>
               </Box>
               <Box
@@ -354,7 +367,6 @@ const CricketCasinoMarket = ({
                             )
                       }
                       index={index}
-                      sessionData={sessionData}
                     />
                     <Divider />
                   </Box>
