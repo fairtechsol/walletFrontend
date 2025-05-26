@@ -8,13 +8,19 @@ import SeperateBox from "../MatchOdds/SeperateBox";
 import PlaceBetComponent from "./PlaceBetComponent";
 import PlaceBetComponentWeb from "./PlaceBetComponentWeb";
 
+interface SeasonMarketBoxProps {
+  newData: any;
+  profitLossData: any;
+  index: number;
+  type: any;
+}
+
 const SeasonMarketBox = ({
   newData,
-  setData,
   profitLossData,
   index,
   type,
-}: any) => {
+}: SeasonMarketBoxProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (

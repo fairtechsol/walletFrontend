@@ -6,7 +6,12 @@ import { getSessionProfitLossMatchDetailFilter } from "../../../store/actions/ma
 import { AppDispatch } from "../../../store/store";
 import StyledImage from "../../Common/StyledImages";
 
-const RunsBox = ({ item, currentOdd }: any) => {
+interface RunsBoxProps {
+  item: any;
+  currentOdd: any;
+}
+
+const RunsBox = ({ item, currentOdd }: RunsBoxProps) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));

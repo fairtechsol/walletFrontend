@@ -135,7 +135,6 @@ const PlaceBetComponent = ({
               color: "white",
             }}
           >
-            {" "}
             {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
           </Typography>
         </Box>

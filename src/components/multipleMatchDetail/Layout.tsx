@@ -8,6 +8,18 @@ import SessionMarket from "../matchDetail/SessionMarket";
 import RunsBox from "../matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../matchDetail/TournamentOdds";
 
+interface LayoutProps {
+  item: any;
+  handleClicked: (data: any) => void;
+  QuicksessionData: any[];
+  sessionProLoss: any[];
+  currentOdd: any;
+  placedBets: any[];
+  setSelectedBetData: (data: any) => void;
+  selectedBetData: any;
+  showBets?: boolean;
+}
+
 const Layout = ({
   item,
   handleClicked,
@@ -18,7 +30,7 @@ const Layout = ({
   setSelectedBetData,
   selectedBetData,
   showBets,
-}: any) => {
+}: LayoutProps) => {
   return (
     <>
       <Typography

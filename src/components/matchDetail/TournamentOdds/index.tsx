@@ -10,6 +10,20 @@ import SmallBox from "../MatchOdds/SmallBox";
 import BackLayBox from "./BackLayBox";
 import BoxComponent from "./BoxComponent";
 
+interface TournamentOddsProps {
+  currentMatch: any;
+  minBet: number;
+  maxBet: number;
+  locked?: boolean;
+  blockMatch?: boolean;
+  selft?: boolean;
+  showBox?: boolean;
+  upcoming?: boolean;
+  liveData: any;
+  title: string;
+  profitLossFromAnalysis?: any;
+}
+
 const TournamentOdds = ({
   currentMatch,
   minBet,
@@ -22,7 +36,7 @@ const TournamentOdds = ({
   liveData,
   title,
   profitLossFromAnalysis,
-}: any) => {
+}: TournamentOddsProps) => {
   const { marketAnalysis } = useSelector(
     (state: RootState) => state.match.matchList
   );
