@@ -117,14 +117,9 @@ const FullAllBets = ({
           values: [
             {
               name: v?.user?.userName,
-              color: ["NO", "YES"].includes(v?.betType) ? "#FFF" : "black",
-              background: ["NO", "YES"].includes(v?.betType)
-                ? "#319E5B"
-                : v?.marketType === "completeMatch" ||
-                  v?.marketType === "tiedMatch2" ||
-                  v?.marketType === "tiedMatch1"
-                  ? "#faf11b"
-                  : "#F1C550",
+              color: v?.marketBetType === "SESSION" ? "#FFF" : "black",
+              background:
+                v?.marketBetType === "SESSION" ? "#319E5B" : "#F1C550",
               deleteReason: v?.deleteReason,
               id: v?.id,
               userId: v?.user?.id ?? v?.userId,
@@ -135,17 +130,12 @@ const FullAllBets = ({
             },
             {
               name:
-                v?.marketType !== "session"
+                v?.marketBetType !== "SESSION"
                   ? v?.bettingName ?? v?.marketType
                   : v?.marketType,
-              color: ["NO", "YES"].includes(v?.betType) ? "#FFF" : "black",
-              background: ["NO", "YES"].includes(v?.betType)
-                ? "#319E5B"
-                : v?.marketType === "completeMatch" ||
-                  v?.marketType === "tiedMatch2" ||
-                  v?.marketType === "tiedMatch1"
-                  ? "#faf11b"
-                  : "#F1C550",
+              color: v?.marketBetType === "SESSION" ? "#FFF" : "black",
+              background:
+                v?.marketBetType === "SESSION" ? "#319E5B" : "#F1C550",
               deleteReason: v?.deleteReason,
             },
             {
@@ -170,8 +160,8 @@ const FullAllBets = ({
               name:
                 v?.marketType === "oddEven"
                   ? v?.teamName
-                    ?.match(/[-_](odd|even)$/i)?.[1]
-                    ?.toUpperCase() || v?.betType
+                      ?.match(/[-_](odd|even)$/i)?.[1]
+                      ?.toUpperCase() || v?.betType
                   : v?.betType,
               color: "black",
               background: ["YES", "BACK"].includes(v?.betType)
