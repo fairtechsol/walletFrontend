@@ -103,7 +103,6 @@ const MatchDetail = () => {
   const { permanentDeleteSuccess } = useSelector(
     (state: RootState) => state.match.sideBarList
   );
-
   useEffect(() => {
     if (state) {
       matchService.connect([state?.matchId], profileDetail?.roleName);
@@ -221,17 +220,15 @@ const MatchDetail = () => {
           location.pathname.split("/")[2] === "live_market" ||
             location.pathname.split("/")[2] === "market_analysis"
             ? `/wallet/${location.pathname.split("/")[2]}`
-            : `/wallet/${location.pathname.split("/")[2]}/${
-                state.matchType || event?.gameType
-              }`
+            : `/wallet/${location.pathname.split("/")[2]}/${state.matchType || event?.gameType
+            }`
         );
       } else {
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
-              state.userId
-                ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                : ""
+            `eq${state?.matchId}${state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
             }${state.domain ? `&domain=${state.domain}` : ""}`
           )
         );
@@ -349,10 +346,9 @@ const MatchDetail = () => {
         dispatch(updateMaxLossForBetOnUndeclare(event));
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
-              state.userId
-                ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                : ""
+            `eq${state?.matchId}${state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
             }${state.domain ? `&domain=${state.domain}` : ""}`
           )
         );
@@ -373,10 +369,9 @@ const MatchDetail = () => {
         }
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
-              state.userId
-                ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                : ""
+            `eq${state?.matchId}${state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
             }${state.domain ? `&domain=${state.domain}` : ""}`
           )
         );
@@ -436,10 +431,9 @@ const MatchDetail = () => {
         dispatch(resetSessionProLoss());
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
-              state.userId
-                ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                : ""
+            `eq${state?.matchId}${state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
             }${state.domain ? `&domain=${state.domain}` : ""}`
           )
         );
@@ -519,10 +513,9 @@ const MatchDetail = () => {
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
-              state.userId
-                ? `&userId=${state.userId}&roleName=${state?.roleName}`
-                : ""
+            `eq${state?.matchId}${state.userId
+              ? `&userId=${state.userId}&roleName=${state?.roleName}`
+              : ""
             }${state.domain ? `&domain=${state.domain}` : ""}`
           )
         );
@@ -677,18 +670,18 @@ const MatchDetail = () => {
                 allBetsData={
                   matchDetail?.profitLossDataSession
                     ? Array.from(
-                        matchDetail?.profitLossDataSession?.reduce(
-                          (acc: any, obj: any) =>
-                            acc.has(obj.betId)
-                              ? acc
-                              : acc.add(obj.betId) && acc,
-                          new Set()
-                        ),
-                        (id) =>
-                          matchDetail?.profitLossDataSession?.find(
-                            (obj: any) => obj.betId === id
-                          )
-                      )
+                      matchDetail?.profitLossDataSession?.reduce(
+                        (acc: any, obj: any) =>
+                          acc.has(obj.betId)
+                            ? acc
+                            : acc.add(obj.betId) && acc,
+                        new Set()
+                      ),
+                      (id) =>
+                        matchDetail?.profitLossDataSession?.find(
+                          (obj: any) => obj.betId === id
+                        )
+                    )
                     : []
                 }
                 currentMatch={matchDetail}
@@ -716,18 +709,18 @@ const MatchDetail = () => {
                     allBetsData={
                       matchDetail?.profitLossDataSession
                         ? Array.from(
-                            matchDetail?.profitLossDataSession?.reduce(
-                              (acc: any, obj: any) =>
-                                acc.has(obj.betId)
-                                  ? acc
-                                  : acc.add(obj.betId) && acc,
-                              new Set()
-                            ),
-                            (id) =>
-                              matchDetail?.profitLossDataSession?.find(
-                                (obj: any) => obj.betId === id
-                              )
-                          )
+                          matchDetail?.profitLossDataSession?.reduce(
+                            (acc: any, obj: any) =>
+                              acc.has(obj.betId)
+                                ? acc
+                                : acc.add(obj.betId) && acc,
+                            new Set()
+                          ),
+                          (id) =>
+                            matchDetail?.profitLossDataSession?.find(
+                              (obj: any) => obj.betId === id
+                            )
+                        )
                         : []
                     }
                     currentMatch={matchDetail}
@@ -755,18 +748,18 @@ const MatchDetail = () => {
                     allBetsData={
                       matchDetail?.profitLossDataSession
                         ? Array.from(
-                            matchDetail?.profitLossDataSession?.reduce(
-                              (acc: any, obj: any) =>
-                                acc.has(obj.betId)
-                                  ? acc
-                                  : acc.add(obj.betId) && acc,
-                              new Set()
-                            ),
-                            (id) =>
-                              matchDetail?.profitLossDataSession?.find(
-                                (obj: any) => obj.betId === id
-                              )
-                          )
+                          matchDetail?.profitLossDataSession?.reduce(
+                            (acc: any, obj: any) =>
+                              acc.has(obj.betId)
+                                ? acc
+                                : acc.add(obj.betId) && acc,
+                            new Set()
+                          ),
+                          (id) =>
+                            matchDetail?.profitLossDataSession?.find(
+                              (obj: any) => obj.betId === id
+                            )
+                        )
                         : []
                     }
                     currentMatch={matchDetail}
@@ -834,40 +827,43 @@ const MatchDetail = () => {
               matchDetail={matchDetail}
             />
           )}
-
-          {!state?.userId && (
-            <DeleteEditComp
-              mode={mode}
-              setMode={setMode}
-              setPermanentDeletePopShow={setPermanentDeletePopShow}
-              setVisible={setVisible}
-              setVisibleEdit={setVisibleEdit}
-            />
-          )}
-          {placedBets?.length > 0 && (
-            <Box sx={{ mt: 0 }}>
-              <FullAllBets
-                IObets={
-                  placedBets.length > 0
-                    ? Array.from(
-                        placedBets.reduce(
-                          (acc: any, obj: any) =>
-                            acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
-                          new Set()
-                        ),
-                        (id) => placedBets.find((obj: any) => obj.id === id)
-                      )
-                    : []
-                }
-                mode={mode}
-                tag={false}
-                setSelectedBetData={setSelectedBetData}
-                selectedBetData={selectedBetData}
-                role={state.roleName}
-                deletePermanent={handleDeletePermanent}
-              />
-            </Box>
-          )}
+          {matchDetail?.manualSessionActive &&
+            <>
+              {!state?.userId && (
+                <DeleteEditComp
+                  mode={mode}
+                  setMode={setMode}
+                  setPermanentDeletePopShow={setPermanentDeletePopShow}
+                  setVisible={setVisible}
+                  setVisibleEdit={setVisibleEdit}
+                />
+              )}
+              {placedBets?.length > 0 && (
+                <Box sx={{ mt: 0 }}>
+                  <FullAllBets
+                    IObets={
+                      placedBets.length > 0
+                        ? Array.from(
+                          placedBets.reduce(
+                            (acc: any, obj: any) =>
+                              acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                            new Set()
+                          ),
+                          (id) => placedBets.find((obj: any) => obj.id === id)
+                        )
+                        : []
+                    }
+                    mode={mode}
+                    tag={false}
+                    setSelectedBetData={setSelectedBetData}
+                    selectedBetData={selectedBetData}
+                    role={state.roleName}
+                    deletePermanent={handleDeletePermanent}
+                  />
+                </Box>
+              )}
+            </>
+          }
         </Box>
         {!matchesMobile && <Box sx={{ width: "20px" }} />}
         {!matchesMobile && (
@@ -902,18 +898,18 @@ const MatchDetail = () => {
                   allBetsData={
                     matchDetail?.profitLossDataSession
                       ? Array.from(
-                          matchDetail?.profitLossDataSession?.reduce(
-                            (acc: any, obj: any) =>
-                              acc.has(obj.betId)
-                                ? acc
-                                : acc.add(obj.betId) && acc,
-                            new Set()
-                          ),
-                          (id) =>
-                            matchDetail?.profitLossDataSession?.find(
-                              (obj: any) => obj.betId === id
-                            )
-                        )
+                        matchDetail?.profitLossDataSession?.reduce(
+                          (acc: any, obj: any) =>
+                            acc.has(obj.betId)
+                              ? acc
+                              : acc.add(obj.betId) && acc,
+                          new Set()
+                        ),
+                        (id) =>
+                          matchDetail?.profitLossDataSession?.find(
+                            (obj: any) => obj.betId === id
+                          )
+                      )
                       : []
                   }
                   currentMatch={matchDetail}
@@ -956,6 +952,43 @@ const MatchDetail = () => {
               title="User Profit Loss"
               matchDetail={matchDetail}
             />
+            {!matchDetail?.manualSessionActive &&
+              <>
+                {!state?.userId && (
+                  <DeleteEditComp
+                    mode={mode}
+                    setMode={setMode}
+                    setPermanentDeletePopShow={setPermanentDeletePopShow}
+                    setVisible={setVisible}
+                    setVisibleEdit={setVisibleEdit}
+                  />
+                )}
+                {placedBets?.length > 0 && (
+                  <Box sx={{ mt: 0 }}>
+                    <FullAllBets
+                      IObets={
+                        placedBets.length > 0
+                          ? Array.from(
+                            placedBets.reduce(
+                              (acc: any, obj: any) =>
+                                acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                              new Set()
+                            ),
+                            (id) => placedBets.find((obj: any) => obj.id === id)
+                          )
+                          : []
+                      }
+                      mode={mode}
+                      tag={false}
+                      setSelectedBetData={setSelectedBetData}
+                      selectedBetData={selectedBetData}
+                      role={state.roleName}
+                      deletePermanent={handleDeletePermanent}
+                    />
+                  </Box>
+                )}
+              </>
+            }
           </Box>
         )}
       </Box>

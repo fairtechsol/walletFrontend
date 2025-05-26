@@ -123,8 +123,8 @@ const FullAllBets = ({
                 : v?.marketType === "completeMatch" ||
                   v?.marketType === "tiedMatch2" ||
                   v?.marketType === "tiedMatch1"
-                ? "#faf11b"
-                : "#F1C550",
+                  ? "#faf11b"
+                  : "#F1C550",
               deleteReason: v?.deleteReason,
               id: v?.id,
               userId: v?.user?.id ?? v?.userId,
@@ -144,8 +144,8 @@ const FullAllBets = ({
                 : v?.marketType === "completeMatch" ||
                   v?.marketType === "tiedMatch2" ||
                   v?.marketType === "tiedMatch1"
-                ? "#faf11b"
-                : "#F1C550",
+                  ? "#faf11b"
+                  : "#F1C550",
               deleteReason: v?.deleteReason,
             },
             {
@@ -170,8 +170,8 @@ const FullAllBets = ({
               name:
                 v?.marketType === "oddEven"
                   ? v?.teamName
-                      ?.match(/[-_](odd|even)$/i)?.[1]
-                      ?.toUpperCase() || v?.betType
+                    ?.match(/[-_](odd|even)$/i)?.[1]
+                    ?.toUpperCase() || v?.betType
                   : v?.betType,
               color: "black",
               background: ["YES", "BACK"].includes(v?.betType)
