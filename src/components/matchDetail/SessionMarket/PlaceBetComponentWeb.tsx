@@ -9,7 +9,19 @@ import {
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 
-const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
+interface PlaceBetComponentWebProps {
+  newData: any;
+  profitLoss: any;
+  color?: string;
+  type?: any;
+}
+
+const PlaceBetComponentWeb = ({
+  newData,
+  profitLoss,
+  color,
+  type,
+}: PlaceBetComponentWebProps) => {
   const dispatch: AppDispatch = useDispatch();
   const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
 

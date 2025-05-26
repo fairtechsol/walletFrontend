@@ -100,14 +100,12 @@ const SeasonMarketBox = ({
               type={type}
               newData={newData}
               profitLoss={profitLossData && profitLossData[0]}
-              setData={setData}
             />
           ) : (
             <PlaceBetComponentWeb
               type={type}
               newData={newData}
               profitLoss={profitLossData && profitLossData[0]}
-              setData={setData}
             />
           )}
           {(
