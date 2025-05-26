@@ -10,6 +10,22 @@ import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import BetsCountBox from "./BetsCountBox";
 import SeasonMarketBox from "./SeasonMarketBox";
 
+interface SessionMarketProps {
+  blockMatch?: any;
+  showUnlock?: any;
+  locked?: any;
+  handleShowLock?: any;
+  selft?: any;
+  title: string;
+  min: any;
+  sessionData: any;
+  allBetsData: any;
+  currentMatch: any;
+  handleBlock?: any;
+  handleHide?: any;
+  type?: any;
+}
+
 const SessionMarket = ({
   blockMatch,
   showUnlock,
@@ -24,7 +40,7 @@ const SessionMarket = ({
   handleBlock,
   handleHide,
   type,
-}: any) => {
+}: SessionMarketProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { marketAnalysis } = useSelector(
@@ -263,101 +279,97 @@ const SessionMarket = ({
               </Box>
             </Box>
           )}
-          {
+          <Box
+            sx={{
+              display: "flex",
+              background: "#319E5B",
+              height: "25px",
+              width: "99.7%",
+              alignSelf: "center",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                background: "'#319E5B'",
+                height: "25px",
+                width: "40%",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: { lg: "11px", xs: "9px" },
+                  marginLeft: "7px",
+                }}
+              >
+                MIN: {formatToINR(min)}
+              </Typography>
+            </Box>
             <Box
               sx={{
                 display: "flex",
                 background: "#319E5B",
                 height: "25px",
-                width: "99.7%",
-                alignSelf: "center",
+                width: { lg: "60%", xs: "81%" },
+                justifyContent: { lg: "flex-end", xs: "flex-end" },
               }}
             >
               <Box
                 sx={{
+                  background: "#FF9292",
+                  width: { lg: "5.02vw", xs: "30%" },
+                  height: "100%",
                   display: "flex",
-                  background: "'#319E5B'",
-                  height: "25px",
-                  width: "40%",
+                  justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <Typography
                   sx={{
-                    color: "white",
-                    fontSize: { lg: "11px", xs: "9px" },
-                    marginLeft: "7px",
+                    fontSize: "12px",
+                    color: "black",
+                    fontWeight: "600",
                   }}
                 >
-                  MIN: {formatToINR(min)}
-                  {/* MAX:
-                    {max} */}
+                  {sessionBettingType.oddEven == type
+                    ? "BACK"
+                    : sessionBettingType.fancy1 == type
+                    ? "LAY"
+                    : "NO"}
                 </Typography>
               </Box>
               <Box
+                sx={{ width: "3px", display: "flex", background: "white" }}
+              />
+              <Box
                 sx={{
+                  background: "#00C0F9",
+                  width: { lg: "5.05vw", xs: "30%" },
+                  height: "100%",
                   display: "flex",
-                  background: "#319E5B",
-                  height: "25px",
-                  width: { lg: "60%", xs: "81%" },
-                  justifyContent: { lg: "flex-end", xs: "flex-end" },
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <Box
+                <Typography
                   sx={{
-                    background: "#FF9292",
-                    width: { lg: "5.02vw", xs: "30%" },
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    fontSize: "12px",
+                    color: "black",
+                    fontWeight: "600",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "black",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {sessionBettingType.oddEven == type
-                      ? "BACK"
-                      : sessionBettingType.fancy1 == type
-                      ? "LAY"
-                      : "NO"}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{ width: "3px", display: "flex", background: "white" }}
-                />
-                <Box
-                  sx={{
-                    background: "#00C0F9",
-                    width: { lg: "5.05vw", xs: "30%" },
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "black",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {[
-                      sessionBettingType.oddEven,
-                      sessionBettingType.fancy1,
-                    ].includes(type)
-                      ? "BACK"
-                      : "YES"}
-                  </Typography>
-                </Box>
+                  {[
+                    sessionBettingType.oddEven,
+                    sessionBettingType.fancy1,
+                  ].includes(type)
+                    ? "BACK"
+                    : "YES"}
+                </Typography>
               </Box>
             </Box>
-          }
+          </Box>
 
           <Box
             sx={{

@@ -352,7 +352,6 @@ const LockMatchScreen = () => {
                 (item: any) => !JSON.parse(item).selectionId
               )}
               min={matchDetail?.betFairSessionMinBet || 0}
-              max={matchDetail?.betFairSessionMaxBet || 0}
               blockMatch={false}
               locked={
                 profileDetail?.roleName === "fairGameAdmin"
@@ -389,7 +388,6 @@ const LockMatchScreen = () => {
               currentMatch={matchDetail}
               sessionData={matchDetail?.apiSession}
               min={Math.floor(matchDetail?.betFairSessionMinBet)}
-              max={Math.floor(matchDetail?.betFairSessionMaxBet)}
               blockMatch={true}
               locked={
                 profileDetail?.roleName === "fairGameAdmin"

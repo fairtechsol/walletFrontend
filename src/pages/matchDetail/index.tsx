@@ -726,7 +726,6 @@ const MatchDetail = () => {
                     currentMatch={matchDetail}
                     sessionData={value?.section}
                     min={formatToINR(matchDetail?.betFairSessionMinBet) || 0}
-                    max={formatToINR(matchDetail?.betFairSessionMaxBet) || 0}
                     type={key || value?.gtype}
                   />
                 );
@@ -917,7 +916,6 @@ const MatchDetail = () => {
                     (item: any) => !JSON.parse(item).selectionId
                   )}
                   min={matchDetail?.betFairSessionMinBet || 0}
-                  max={matchDetail?.betFairSessionMaxBet || 0}
                   type="session"
                 />
               )}
