@@ -37,9 +37,12 @@ const initialValues: any = {
   code: "",
 };
 
-const ChangeDeleteCode = (props: any) => {
-  const { open, setOpen } = props;
+interface ChangeDeleteCodeProps {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}
 
+const ChangeDeleteCode = ({ open, setOpen }: ChangeDeleteCodeProps) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
