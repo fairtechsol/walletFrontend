@@ -1,7 +1,11 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { memo } from "react";
 
-const BetsCountBox = ({ total }: any) => {
+interface BetsCountBoxProps {
+  total: number;
+}
+
+const BetsCountBox = ({ total }: BetsCountBoxProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (

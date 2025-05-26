@@ -3,13 +3,21 @@ import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 import { DeleteIcon } from "../../../assets";
 
+interface DeleteEditCompProps {
+  mode: { type: string; value: boolean };
+  setMode: (val: any) => void;
+  setPermanentDeletePopShow: (val: boolean) => void;
+  setVisible: (val: boolean) => void;
+  setVisibleEdit: (val: boolean) => void;
+}
+
 const DeleteEditComp = ({
   mode,
   setMode,
   setPermanentDeletePopShow,
   setVisible,
   setVisibleEdit,
-}: any) => {
+}: DeleteEditCompProps) => {
   return (
     <Box
       sx={{

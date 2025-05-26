@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleNumber } from "../../../helper";
 import {
@@ -6,9 +7,20 @@ import {
   getSessionProLoss,
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { memo } from "react";
 
-const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
+interface PlaceBetComponentProps {
+  newData: any;
+  profitLoss: any;
+  color?: string;
+  type?: any;
+}
+
+const PlaceBetComponent = ({
+  newData,
+  profitLoss,
+  color,
+  type,
+}: PlaceBetComponentProps) => {
   const dispatch: AppDispatch = useDispatch();
   const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
 

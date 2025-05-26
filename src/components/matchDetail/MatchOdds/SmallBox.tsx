@@ -2,7 +2,13 @@ import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 import { handleNumber } from "../../../helper";
 
-const SmallBox = ({ valueA, valueB, color }: any) => {
+interface SmallBoxProps {
+  valueA: any;
+  valueB: any;
+  color?: string;
+}
+
+const SmallBox = ({ valueA, valueB, color }: SmallBoxProps) => {
   return (
     <Box
       sx={{
