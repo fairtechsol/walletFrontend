@@ -3,6 +3,7 @@ import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
 import { RootState } from "../../../store/store";
+import CommissionDot from "../../Common/CommissionDot";
 import Divider from "../../Inplay/Divider";
 import UnlockComponent from "../../lockMatchDetailComponents/UnlockComponent";
 import BetsCountBox from "./BetsCountBox";
@@ -97,6 +98,7 @@ const CricketCasinoMarket = ({
           >
             {title}
           </Typography>
+          {sessionData?.isCommissionActive && <CommissionDot />}
           {blockMatch && (
             <img
               onClick={() =>
