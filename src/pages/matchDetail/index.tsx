@@ -870,7 +870,7 @@ const MatchDetail = () => {
 
             </>
           )}
-          {matchDetail?.manualSessionActive &&
+          {!matchesMobile && matchDetail?.manualSessionActive &&
             matchDetail?.sessionBettings?.filter(
               (item: any) =>
                 !JSON.parse(item).selectionId &&
