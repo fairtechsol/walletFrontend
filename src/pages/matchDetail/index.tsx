@@ -828,11 +828,47 @@ const MatchDetail = () => {
             </Box>
           )}
           {matchesMobile && (
-            <UserProfitLoss
-              single="single"
-              title="User Profit Loss"
-              matchDetail={matchDetail}
-            />
+            <>
+              <UserProfitLoss
+                single="single"
+                title="User Profit Loss"
+                matchDetail={matchDetail}
+              />
+              {!state?.userId && (
+                <DeleteEditComp
+                  mode={mode}
+                  setMode={setMode}
+                  setPermanentDeletePopShow={setPermanentDeletePopShow}
+                  setVisible={setVisible}
+                  setVisibleEdit={setVisibleEdit}
+                />
+              )}
+              {placedBets?.length > 0 && (
+                <Box sx={{ mt: 0 }}>
+                  <FullAllBets
+                    IObets={
+                      placedBets.length > 0
+                        ? Array.from(
+                          placedBets.reduce(
+                            (acc: any, obj: any) =>
+                              acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                            new Set()
+                          ),
+                          (id) => placedBets.find((obj: any) => obj.id === id)
+                        )
+                        : []
+                    }
+                    mode={mode}
+                    tag={false}
+                    setSelectedBetData={setSelectedBetData}
+                    selectedBetData={selectedBetData}
+                    role={state.roleName}
+                    deletePermanent={handleDeletePermanent}
+                  />
+                </Box>
+              )}
+
+            </>
           )}
           {matchDetail?.manualSessionActive &&
             matchDetail?.sessionBettings?.filter(
