@@ -55,9 +55,9 @@ const TeamDetailRow = ({
             (runnerNumber == 0
               ? match?.back1 || match?.section?.[0]?.odds?.[0]?.odds
               : runnerNumber == 1
-              ? match?.back11 || match?.section?.[0]?.odds?.[0]?.odds || 0
+              ? match?.back11 || match?.section?.[1]?.odds?.[0]?.odds || 0
               : runnerNumber == 2
-              ? match?.back12 || match?.section?.[0]?.odds?.[0]?.odds || 0
+              ? match?.back12 || match?.section?.[2]?.odds?.[0]?.odds || 0
               : 0) ?? 0
           }
           color="#A7DCFF"
@@ -68,9 +68,9 @@ const TeamDetailRow = ({
             (runnerNumber == 0
               ? match?.lay1 || match?.section?.[0]?.odds?.[1]?.odds || 0
               : runnerNumber == 1
-              ? match?.lay11 || match?.section?.[0]?.odds?.[1]?.odds || 0
+              ? match?.lay11 || match?.section?.[1]?.odds?.[1]?.odds || 0
               : runnerNumber == 2
-              ? match?.lay12 || match?.section?.[0]?.odds?.[1]?.odds || 0
+              ? match?.lay12 || match?.section?.[2]?.odds?.[1]?.odds || 0
               : 0) ?? 0
           }
           color="#FFB5B5"
