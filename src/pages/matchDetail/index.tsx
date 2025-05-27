@@ -105,7 +105,7 @@ const MatchDetail = () => {
   );
 
   console.log("MatchDetail mounted", JSON.stringify(matchDetail?.sessionBettings));
-
+  console.log("matchDetail?.manualSessionActive", matchDetail?.manualSessionActive);
   console.log("length", matchDetail?.sessionBettings?.filter(
     (item: any) =>
       !JSON.parse(item).selectionId &&
@@ -963,12 +963,12 @@ const MatchDetail = () => {
               title="User Profit Loss"
               matchDetail={matchDetail}
             />
-            {!matchDetail?.manualSessionActive &&
+            {(!matchDetail?.manualSessionActive ||
               matchDetail?.sessionBettings?.filter(
                 (item: any) =>
                   !JSON.parse(item).selectionId &&
                   JSON.parse(item)?.activeStatus === "live"
-              )?.length > 0 && (
+              )?.length === 0) && (
                 <>
                   {!state?.userId && (
                     <DeleteEditComp
