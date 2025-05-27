@@ -103,6 +103,16 @@ const MatchDetail = () => {
   const { permanentDeleteSuccess } = useSelector(
     (state: RootState) => state.match.sideBarList
   );
+
+  console.log("MatchDetail mounted", JSON.stringify(matchDetail?.sessionBettings));
+  console.log("matchDetail?.manualSessionActive", matchDetail?.manualSessionActive);
+  console.log("length", matchDetail?.sessionBettings?.filter(
+    (item: any) =>
+      !JSON.parse(item).selectionId &&
+      JSON.parse(item)?.activeStatus === "live"
+  )?.length);
+
+
   useEffect(() => {
     if (state) {
       matchService.connect([state?.matchId], profileDetail?.roleName);
@@ -818,14 +828,12 @@ const MatchDetail = () => {
             </Box>
           )}
           {matchesMobile && (
-            <UserProfitLoss
-              single="single"
-              title="User Profit Loss"
-              matchDetail={matchDetail}
-            />
-          )}
-          {matchDetail?.manualSessionActive &&
             <>
+              <UserProfitLoss
+                single="single"
+                title="User Profit Loss"
+                matchDetail={matchDetail}
+              />
               {!state?.userId && (
                 <DeleteEditComp
                   mode={mode}
@@ -859,7 +867,50 @@ const MatchDetail = () => {
                   />
                 </Box>
               )}
+
             </>
+          )}
+          {!matchesMobile && matchDetail?.manualSessionActive &&
+            matchDetail?.sessionBettings?.filter(
+              (item: any) =>
+                !JSON.parse(item).selectionId &&
+                JSON.parse(item)?.activeStatus === "live"
+            )?.length > 0 && (
+              <>
+                {!state?.userId && (
+                  <DeleteEditComp
+                    mode={mode}
+                    setMode={setMode}
+                    setPermanentDeletePopShow={setPermanentDeletePopShow}
+                    setVisible={setVisible}
+                    setVisibleEdit={setVisibleEdit}
+                  />
+                )}
+                {placedBets?.length > 0 && (
+                  <Box sx={{ mt: 0 }}>
+                    <FullAllBets
+                      IObets={
+                        placedBets.length > 0
+                          ? Array.from(
+                            placedBets.reduce(
+                              (acc: any, obj: any) =>
+                                acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                              new Set()
+                            ),
+                            (id) => placedBets.find((obj: any) => obj.id === id)
+                          )
+                          : []
+                      }
+                      mode={mode}
+                      tag={false}
+                      setSelectedBetData={setSelectedBetData}
+                      selectedBetData={selectedBetData}
+                      role={state.roleName}
+                      deletePermanent={handleDeletePermanent}
+                    />
+                  </Box>
+                )}
+              </>)
           }
         </Box>
         {!matchesMobile && <Box sx={{ width: "20px" }} />}
@@ -948,43 +999,48 @@ const MatchDetail = () => {
               title="User Profit Loss"
               matchDetail={matchDetail}
             />
-            {!matchDetail?.manualSessionActive &&
-              <>
-                {!state?.userId && (
-                  <DeleteEditComp
-                    mode={mode}
-                    setMode={setMode}
-                    setPermanentDeletePopShow={setPermanentDeletePopShow}
-                    setVisible={setVisible}
-                    setVisibleEdit={setVisibleEdit}
-                  />
-                )}
-                {placedBets?.length > 0 && (
-                  <Box sx={{ mt: 0 }}>
-                    <FullAllBets
-                      IObets={
-                        placedBets.length > 0
-                          ? Array.from(
-                            placedBets.reduce(
-                              (acc: any, obj: any) =>
-                                acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
-                              new Set()
-                            ),
-                            (id) => placedBets.find((obj: any) => obj.id === id)
-                          )
-                          : []
-                      }
+            {(!matchDetail?.manualSessionActive ||
+              matchDetail?.sessionBettings?.filter(
+                (item: any) =>
+                  !JSON.parse(item).selectionId &&
+                  JSON.parse(item)?.activeStatus === "live"
+              )?.length === 0) && (
+                <>
+                  {!state?.userId && (
+                    <DeleteEditComp
                       mode={mode}
-                      tag={false}
-                      setSelectedBetData={setSelectedBetData}
-                      selectedBetData={selectedBetData}
-                      role={state.roleName}
-                      deletePermanent={handleDeletePermanent}
+                      setMode={setMode}
+                      setPermanentDeletePopShow={setPermanentDeletePopShow}
+                      setVisible={setVisible}
+                      setVisibleEdit={setVisibleEdit}
                     />
-                  </Box>
-                )}
-              </>
-            }
+                  )}
+                  {placedBets?.length > 0 && (
+                    <Box sx={{ mt: 0 }}>
+                      <FullAllBets
+                        IObets={
+                          placedBets.length > 0
+                            ? Array.from(
+                              placedBets.reduce(
+                                (acc: any, obj: any) =>
+                                  acc.has(obj.id) ? acc : acc.add(obj.id) && acc,
+                                new Set()
+                              ),
+                              (id) => placedBets.find((obj: any) => obj.id === id)
+                            )
+                            : []
+                        }
+                        mode={mode}
+                        tag={false}
+                        setSelectedBetData={setSelectedBetData}
+                        selectedBetData={selectedBetData}
+                        role={state.roleName}
+                        deletePermanent={handleDeletePermanent}
+                      />
+                    </Box>
+                  )}
+                </>
+              )}
           </Box>
         )}
       </Box>
