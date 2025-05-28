@@ -353,3 +353,6 @@ export const resetPermanentDeleteSuccess = createAction(
 export const matchListInplaySuccessReset = createAction(
   "matchListInplaySuccess/reset"
 );
+export const resetPlacedBets = createAction(
+  "placedBets/reset"
+);
