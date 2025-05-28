@@ -125,7 +125,7 @@ const ProfitLossHeader = ({
               <CustomButtonAdmin
                 onClick={onClick}
                 btnStyle={{
-                  width: { xs: "100%", lg: "100%" },
+                  width: "100%",
                 }}
               />
             </Box>
