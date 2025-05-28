@@ -70,23 +70,17 @@ const betsSlice = createSlice({
       })
       .addCase(updateProfitLoss.fulfilled, (state, action) => {
         const { jobData, profitLoss } = action.payload;
-        const betId = _.get(jobData, "betPlaceObject.betPlacedData.betId");
-
-        if (betId) {
-          state.sessionProLoss = _.map(
-            _.get(state, "sessionProLoss", []),
-            (item: any) => {
-              if (_.get(item, "id") !== betId) return item;
-
-              return _.assign({}, item, {
-                proLoss: _.flow([
-                  (arr) => arr || [],
-                  (arr) => [JSON.stringify(profitLoss), ..._.tail(arr)],
-                  (arr) => _.take(arr, arr.length),
-                ])(item.proLoss),
-              });
-            }
+        if (jobData?.betPlaceObject?.betPlacedData?.betId) {
+          const updatedSessionProLoss = state?.sessionProLoss?.map(
+            (item: any) =>
+              item?.id === jobData?.betPlaceObject?.betPlacedData?.betId
+                ? {
+                    ...item,
+                    proLoss: profitLoss,
+                  }
+                : item
           );
+          state.sessionProLoss = updatedSessionProLoss;
         }
       })
       .addCase(updateBetDataOnDeclare.fulfilled, (state, action) => {
