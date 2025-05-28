@@ -116,7 +116,7 @@ const SeasonMarketBox = ({
           )}
           {(
             !newData?.isManual
-              ? !["ACTIVE", "active", "", undefined, null, ""].includes(
+              ? !["ACTIVE", "active", "", undefined, null].includes(
                   newData?.GameStatus
                 ) ||
                 (!newData.ex?.availableToBack?.length &&
@@ -129,7 +129,7 @@ const SeasonMarketBox = ({
                 height: "38px",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 width: { lg: "38%", md: "60.2%", xs: "60.9%" },
-                justifyContent: { xs: "center", lg: "center" },
+                justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
                 zIndex: 1,
@@ -286,7 +286,7 @@ const SeasonMarketBox = ({
               alignItems: "center",
             }}
           >
-            {!["ACTIVE", "active", "", undefined, null, ""].includes(
+            {!["ACTIVE", "active", "", undefined, null].includes(
               newData?.GameStatus
             ) ||
             (!newData.ex?.availableToBack?.length &&

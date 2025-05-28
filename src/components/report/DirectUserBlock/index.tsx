@@ -95,7 +95,7 @@ const DirectUserBlock = ({ setShow }: DirectUserBlockProps) => {
   return (
     <Box
       sx={{
-        width: { xs: "70%", lg: "70%", md: "70%" },
+        width: "70%",
         minHeight: "200px",
         display: "flex",
         flexDirection: "column",
@@ -113,7 +113,7 @@ const DirectUserBlock = ({ setShow }: DirectUserBlockProps) => {
       <Box
         sx={{
           overflowX: "auto",
-          width: { xs: "100%", lg: "100%", md: "100%" },
+          width: "100%",
         }}
       >
         <Box display="flex" alignItems="center" gap={2} m={2}>

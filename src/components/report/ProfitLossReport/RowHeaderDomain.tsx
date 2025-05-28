@@ -75,7 +75,7 @@ const RowHeaderDomain = ({
     >
       <Box
         sx={{
-          width: { xs: "5%", sm: "5%", lg: "5%" },
+          width: "5%",
           height: "100%",
           alignItems: "center",
           display: "flex",
@@ -148,7 +148,7 @@ const RowHeaderDomain = ({
         sx={{
           background: item?.totalLoss > 0 ? "#27AC1E" : "#E32A2A",
           paddingX: "2px",
-          width: { xs: "25%", sm: "25%", lg: "25%" },
+          width: "25%",
           height: "100%",
           marginLeft: 0.1,
           justifyContent: "center",
