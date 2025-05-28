@@ -136,7 +136,7 @@ const SessionMarket = ({
                   ? (marketAnalysis?.betType?.session || [])
                       ?.filter((item: any) => item.type == type)
                       ?.reduce((prev: number, session: any) => {
-                        prev += session?.profitLoss?.totalBet || 0;
+                        prev += +session?.profitLoss?.totalBet || 0;
                         return prev;
                       }, 0) ?? 0
                   : allBetsData
@@ -150,7 +150,7 @@ const SessionMarket = ({
                           )?.type == type
                       )
                       ?.reduce((acc: number, bet: any) => {
-                        return acc + (bet?.totalBet || 0);
+                        return acc + (+bet?.totalBet || 0);
                       }, 0)
               }
             />
