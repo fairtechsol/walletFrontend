@@ -213,8 +213,8 @@ const MatchList = ({
                     background: ["BACK", "YES"].includes(element?.betType)
                       ? "#B3E0FF"
                       : ["LAY", "NO"].includes(element?.betType)
-                        ? "#FF9292"
-                        : "#FFE094",
+                      ? "#FF9292"
+                      : "#FFE094",
                   }}
                   profit={element.profitLoss >= 0}
                   fContainerStyle={{
@@ -226,10 +226,7 @@ const MatchList = ({
                   }}
                   fTextStyle={{
                     filter: element?.settled && "grayscale(0.5)",
-                    color:
-                      ["commission setteled"].includes(
-                        element?.commissionType
-                      ) ? "white" : "white",
+                    color: "#000",
                   }}
                   element={element}
                 />
