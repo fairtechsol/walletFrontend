@@ -135,7 +135,7 @@ const CricketCasinoMarket = ({
                   ? marketAnalysis?.betType?.session
                       ?.filter((item: any) => sessionData?.id == item?.betId)
                       ?.reduce((prev: number, session: any) => {
-                        prev += session?.profitLoss?.totalBet || 0;
+                        prev += +session?.profitLoss?.totalBet || 0;
                         return prev;
                       }, 0)
                   : allBetsData
