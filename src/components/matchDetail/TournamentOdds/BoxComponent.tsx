@@ -42,7 +42,7 @@ const BoxComponent = ({
           background: "white",
           position: "relative",
           height: "40px",
-          width: { xs: "40%", lg: "40%" },
+          width: "40%",
           alignItems: "center",
         }}
       >

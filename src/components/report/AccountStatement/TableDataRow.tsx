@@ -132,7 +132,7 @@ const TableDataRow = ({
       </Box>
       <Box
         sx={{
-          width: { xs: "36%", lg: "36%", md: "36%" },
+          width: "36%",
           display: "flex",
           paddingLeft: "10px",
           justifyContent: "center",
