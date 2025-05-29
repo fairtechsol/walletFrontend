@@ -58,7 +58,7 @@ const SingleBox = ({
           height: "40px",
           flexDirection: "column",
           background: color,
-          marginX: { xs: "1px", lg: "1px" },
+          marginX: "1px",
           display: "flex",
           justifyContent: "center",
         }}
@@ -156,7 +156,7 @@ const SingleBox = ({
         width: "100%",
         height: "25px",
         background: "#319E5B",
-        marginX: { xs: "0px", lg: "0px" },
+        marginX: "0px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

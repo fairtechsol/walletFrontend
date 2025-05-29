@@ -17,7 +17,7 @@ const SessionBetSeperate = ({ allBetsData }: SessionBetSeperateProps) => {
   return (
     <Box
       sx={{
-        width: { md: "100%", xs: "100%", lg: "100%" },
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         marginX: { lg: "0vw", xs: "0px", md: "0px" },
@@ -166,7 +166,7 @@ const SessionBetSeperate = ({ allBetsData }: SessionBetSeperateProps) => {
                   <Box
                     sx={{
                       height: "40px",
-                      marginBottom: { xs: "1px", lg: "1px" },
+                      marginBottom: "1px",
                       width: "30px",
                       display: "flex",
                       background: "black",
@@ -244,7 +244,7 @@ const SessionBetSeperate = ({ allBetsData }: SessionBetSeperateProps) => {
                       sx={{
                         height: "40px",
                         width: "30%",
-                        margin: { xs: "1px", lg: "1px" },
+                        margin: "1px",
                         display: "flex",
                         background: "black",
                         justifyContent: "center",

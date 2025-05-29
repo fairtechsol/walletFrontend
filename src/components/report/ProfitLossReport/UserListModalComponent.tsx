@@ -430,7 +430,7 @@ const UserListModalComponent = ({
                 <>
                   <Box
                     sx={{
-                      width: { xs: "100%", lg: "100%" },
+                      width: "100%",
                       marginTop: { xs: ".25vh" },
                       display: "flex",
                       flexDirection: { lg: "row", xs: "column" },
@@ -447,7 +447,7 @@ const UserListModalComponent = ({
               {showSessions && (
                 <Box
                   sx={{
-                    width: { xs: "100%", lg: "100%" },
+                    width: "100%",
                     marginTop: { xs: ".25vh" },
                     display: "flex",
                     flexDirection: { lg: "row", xs: "column" },

@@ -19,7 +19,7 @@ const AllRateSeperate = ({ allBetsData, count }: AllRateSeperateProps) => {
     <>
       <Box
         sx={{
-          width: { md: "100%", xs: "100%", lg: "100%" },
+          width: "100%",
           display: "flex",
           flexDirection: "column",
           alignSelf: "center",
@@ -360,7 +360,7 @@ const RowComponent = ({ header, data }: { header: boolean; data: any }) => {
         alignItems: "center",
         display: "flex",
         gap: "1px",
-        marginBottom: { xs: "1px", lg: "1px" },
+        marginBottom: "1px",
       }}
     >
       {!header && (

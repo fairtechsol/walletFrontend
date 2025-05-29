@@ -68,16 +68,26 @@ const SeasonMarketBox = ({
             >
               {newData?.name ?? newData?.RunnerName}
             </Typography>
-            <Typography
+            <Box
               sx={{
-                color: "black",
-                fontSize: { lg: "11px", md: "10px", xs: "9px" },
-                marginLeft: "7px",
-                fontWeight: "500",
+                display: "flex",
+                alignItems: "center",
+                textAlign: "start",
+                gap: 1,
               }}
             >
-              max: {formatToINR(newData?.maxBet || newData?.max)}
-            </Typography>
+              <Typography
+                sx={{
+                  color: "black",
+                  fontSize: { lg: "11px", md: "10px", xs: "9px" },
+                  marginLeft: "7px",
+                  fontWeight: "500",
+                }}
+              >
+                max: {formatToINR(newData?.maxBet || newData?.max)}
+              </Typography>
+              {newData?.isCommissionActive && <CommissionDot />}
+            </Box>
           </Box>
         </Box>
         <Box
@@ -91,7 +101,7 @@ const SeasonMarketBox = ({
             background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
           }}
         >
-          {newData?.isCommissionActive && (
+          {/* {newData?.isCommissionActive && (
             <Box
               sx={{
                 position: "absolute",
@@ -100,7 +110,7 @@ const SeasonMarketBox = ({
             >
               <CommissionDot />
             </Box>
-          )}
+          )} */}
           {matchesMobile ? (
             <PlaceBetComponent
               type={type}
