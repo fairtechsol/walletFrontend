@@ -189,11 +189,7 @@ const DepositAndWithdrawBox = () => {
                   lg: "row",
                 },
                 alignItems: "center",
-                justifyContent: {
-                  xs: "flex-start",
-                  md: "flex-start",
-                  lg: "flex-start",
-                },
+                justifyContent: "flex-start",
               }}
             >
               <Box sx={{ width: "50%" }}>
