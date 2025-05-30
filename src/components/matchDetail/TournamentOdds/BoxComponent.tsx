@@ -105,7 +105,7 @@ const BoxComponent = ({
                 height: "40px",
                 display: "flex",
                 width: {
-                  xs: "38vw",
+                  xs: "39vw",
                   lg: "10.17vw",
                   desktop: "10.17vw",
                   desktop2XL: "10.12vw",
