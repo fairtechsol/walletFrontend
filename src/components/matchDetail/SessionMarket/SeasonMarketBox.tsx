@@ -60,7 +60,7 @@ const SeasonMarketBox = ({
             <Typography
               sx={{
                 color: "black",
-                fontSize: { lg: "12px", md: "11px", xs: "10px" },
+                fontSize: { lg: "12px", md: "11px", xs: "9px" },
                 marginLeft: "7px",
                 fontWeight: "600",
                 lineHeight: "10px",
@@ -79,7 +79,7 @@ const SeasonMarketBox = ({
               <Typography
                 sx={{
                   color: "black",
-                  fontSize: { lg: "11px", md: "10px", xs: "9px" },
+                  fontSize: { lg: "11px", md: "10px", xs: "8px" },
                   marginLeft: "7px",
                   fontWeight: "500",
                 }}
