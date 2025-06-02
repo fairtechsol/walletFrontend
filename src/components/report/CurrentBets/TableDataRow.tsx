@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import { memo } from "react";
-import { formatToINR } from "../../../helper";
+import { formatToINR, stripUrl } from "../../../helper";
 import CommissionDot from "../../Common/CommissionDot";
 
 interface TableDataRowProps {
@@ -148,7 +148,7 @@ const TableDataRow = ({
             paddingX: "5px",
           }}
         >
-          {data?.domain?.replace(/https?:\/\//, "")}
+          {stripUrl(data?.domain)}
         </Typography>
       </Box>
       <Box
