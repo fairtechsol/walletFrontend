@@ -43,6 +43,10 @@ export const handleNumber = (num: any, color: any) => {
   let amount = parseFloat(num)?.toFixed(2);
   let value;
 
+  if (amount === "-0.00") {
+    amount = "0.00";
+  }
+
   if (amount && amount?.includes(".")) {
     value = amount?.split(".");
   } else {
