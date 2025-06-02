@@ -850,7 +850,7 @@ const MatchDetail = () => {
                 title="User Profit Loss"
                 matchDetail={matchDetail}
               />
-              {!state?.userId && (
+              {placedBets?.length > 0 && !state?.userId && (
                 <DeleteEditComp
                   mode={mode}
                   setMode={setMode}
@@ -893,7 +893,7 @@ const MatchDetail = () => {
                 JSON.parse(item)?.activeStatus === "live"
             )?.length > 0 && (
               <>
-                {!state?.userId && (
+                {placedBets?.length > 0 && !state?.userId && (
                   <DeleteEditComp
                     mode={mode}
                     setMode={setMode}
@@ -1025,7 +1025,7 @@ const MatchDetail = () => {
                   JSON.parse(item)?.activeStatus === "live"
               )?.length === 0) && (
               <>
-                {!state?.userId && (
+                {placedBets?.length > 0 && !state?.userId && (
                   <DeleteEditComp
                     mode={mode}
                     setMode={setMode}
