@@ -195,7 +195,7 @@ const LockMatchScreen = () => {
     try {
       if (event?.matchId === state?.matchId) {
         dispatch(updateMaxLossForBetOnUndeclare(event));
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`matchId=eq${state?.matchId}`));
       }
     } catch (error) {
       console.log(error);
@@ -213,7 +213,7 @@ const LockMatchScreen = () => {
         );
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`matchId=eq${state?.matchId}`));
       }
     } catch (e) {
       console.log(e);
@@ -278,7 +278,7 @@ const LockMatchScreen = () => {
             })
           );
           dispatch(getUserProfitLoss(state?.matchId));
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`matchId=eq${state?.matchId}`));
         }
       } else if (document.visibilityState === "hidden") {
         socketService.match.getMatchRatesOff(state?.matchId);

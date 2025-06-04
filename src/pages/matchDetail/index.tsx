@@ -104,7 +104,7 @@ const MatchDetail = () => {
   const { permanentDeleteSuccess } = useSelector(
     (state: RootState) => state.match.sideBarList
   );
-  
+
   useEffect(() => {
     if (state) {
       matchService.connect([state?.matchId], profileDetail?.roleName);
@@ -229,7 +229,7 @@ const MatchDetail = () => {
       } else {
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -350,7 +350,7 @@ const MatchDetail = () => {
         dispatch(updateMaxLossForBetOnUndeclare(event));
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -374,7 +374,7 @@ const MatchDetail = () => {
         }
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -437,7 +437,7 @@ const MatchDetail = () => {
         dispatch(resetSessionProLoss());
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -521,7 +521,7 @@ const MatchDetail = () => {
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
