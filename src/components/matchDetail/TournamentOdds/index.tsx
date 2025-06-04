@@ -54,6 +54,9 @@ const TournamentOdds = ({
     return teamBRates < 0 ? `-${formattedRatio}` : formattedRatio;
   };
 
+  let key =
+    (liveData?.parentBetId || liveData?.id) + "_profitLoss_" + currentMatch?.id;
+
   return (
     <Box
       sx={{
@@ -133,16 +136,10 @@ const TournamentOdds = ({
                   ? profitLossFromAnalysis?.profitLoss?.a
                   : 0
                 : currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    (liveData?.parentBetId || liveData?.id) +
-                      "_profitLoss_" +
-                      currentMatch?.id
-                  ]
-                  ? (currentMatch?.profitLossDataMatch[
-                      (liveData?.parentBetId || liveData?.id) +
-                        "_profitLoss_" +
-                        currentMatch?.id
-                    ] || {})?.[
+                ? currentMatch?.profitLossDataMatch[key]
+                  ? JSON.parse(
+                      currentMatch?.profitLossDataMatch[key] || "{}"
+                    )?.[
                       liveData?.runners?.[0]?.parentRunnerId ||
                         liveData?.runners?.[0]?.id
                     ]
@@ -153,16 +150,10 @@ const TournamentOdds = ({
                   ? profitLossFromAnalysis?.profitLoss?.b
                   : 0
                 : currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    (liveData?.parentBetId || liveData?.id) +
-                      "_profitLoss_" +
-                      currentMatch?.id
-                  ]
-                  ? (currentMatch?.profitLossDataMatch[
-                      (liveData?.parentBetId || liveData?.id) +
-                        "_profitLoss_" +
-                        currentMatch?.id
-                    ] || {})?.[
+                ? currentMatch?.profitLossDataMatch[key]
+                  ? JSON.parse(
+                      currentMatch?.profitLossDataMatch[key] || "{}"
+                    )?.[
                       liveData?.runners?.[1]?.parentRunnerId ||
                         liveData?.runners?.[1]?.id
                     ]
@@ -175,16 +166,10 @@ const TournamentOdds = ({
                   ? profitLossFromAnalysis?.profitLoss?.a
                   : 0
                 : currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    (liveData?.parentBetId || liveData?.id) +
-                      "_profitLoss_" +
-                      currentMatch?.id
-                  ]
-                  ? (currentMatch?.profitLossDataMatch[
-                      (liveData?.parentBetId || liveData?.id) +
-                        "_profitLoss_" +
-                        currentMatch?.id
-                    ] || {})?.[
+                ? currentMatch?.profitLossDataMatch[key]
+                  ? JSON.parse(
+                      currentMatch?.profitLossDataMatch[key] || "{}"
+                    )?.[
                       liveData?.runners?.[0]?.parentRunnerId ||
                         liveData?.runners?.[0]?.id
                     ]
@@ -195,16 +180,10 @@ const TournamentOdds = ({
                   ? profitLossFromAnalysis?.profitLoss?.b
                   : 0
                 : currentMatch?.profitLossDataMatch
-                ? currentMatch?.profitLossDataMatch[
-                    (liveData?.parentBetId || liveData?.id) +
-                      "_profitLoss_" +
-                      currentMatch?.id
-                  ]
-                  ? (currentMatch?.profitLossDataMatch[
-                      (liveData?.parentBetId || liveData?.id) +
-                        "_profitLoss_" +
-                        currentMatch?.id
-                    ] || {})?.[
+                ? currentMatch?.profitLossDataMatch[key]
+                  ? JSON.parse(
+                      currentMatch?.profitLossDataMatch[key] || "{}"
+                    )?.[
                       liveData?.runners?.[1]?.parentRunnerId ||
                         liveData?.runners?.[1]?.id
                     ]
@@ -308,18 +287,10 @@ const TournamentOdds = ({
                             String.fromCharCode(97 + index)
                           ]
                         : 0
-                      : currentMatch?.profitLossDataMatch?.[
-                          (liveData?.parentBetId || liveData?.id) +
-                            "_" +
-                            "profitLoss" +
-                            "_" +
-                            currentMatch?.id
-                        ]
-                      ? currentMatch?.profitLossDataMatch?.[
-                          (liveData?.parentBetId || liveData?.id) +
-                            "_profitLoss_" +
-                            currentMatch?.id
-                        ]?.[runner?.parentRunnerId || runner?.id]
+                      : currentMatch?.profitLossDataMatch?.[key]
+                      ? JSON.parse(
+                          currentMatch?.profitLossDataMatch?.[key] || "{}"
+                        )?.[runner?.parentRunnerId || runner?.id]
                       : 0
                   }
                   color={
@@ -329,19 +300,11 @@ const TournamentOdds = ({
                         ] < 0
                         ? "#FF4D4D"
                         : "#319E5B"
-                      : currentMatch?.profitLossDataMatch?.[
-                          (liveData?.parentBetId || liveData?.id) +
-                            "_" +
-                            "profitLoss" +
-                            "_" +
-                            currentMatch?.id
-                        ]
+                      : currentMatch?.profitLossDataMatch?.[key]
                       ? +parseFloat(
-                          currentMatch?.profitLossDataMatch?.[
-                            (liveData?.parentBetId || liveData?.id) +
-                              "_profitLoss_" +
-                              currentMatch?.id
-                          ]?.[runner?.parentRunnerId || runner?.id]
+                          JSON.parse(
+                            currentMatch?.profitLossDataMatch?.[key] || "{}"
+                          )?.[runner?.parentRunnerId || runner?.id]
                         ).toFixed(2) < 0
                         ? "#FF4D4D"
                         : "#319E5B"

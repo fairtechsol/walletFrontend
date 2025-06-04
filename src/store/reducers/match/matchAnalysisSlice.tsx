@@ -153,7 +153,8 @@ const analysisListSlice = createSlice({
               ...match,
               profitLossDataMatch: {
                 ...match.profitLossDataMatch,
-                [jobData?.betId + "_profitLoss_" + match?.id]: userRedisObj,
+                [jobData?.betId + "_profitLoss_" + match?.id]:
+                  JSON.stringify(userRedisObj),
               },
             };
           }
@@ -222,7 +223,8 @@ const analysisListSlice = createSlice({
                 ...match,
                 profitLossDataMatch: {
                   ...match?.profitLossDataMatch,
-                  [betId + "_profitLoss_" + match?.id]: teamRate,
+                  [betId + "_profitLoss_" + match?.id]:
+                    JSON.stringify(teamRate),
                 },
               };
             }
@@ -279,7 +281,8 @@ const analysisListSlice = createSlice({
                 ...match,
                 profitLossDataMatch: {
                   ...match?.profitLossDataMatch,
-                  [betId + "_profitLoss_" + match?.id]: profitLossData,
+                  [betId + "_profitLoss_" + match?.id]:
+                    JSON.stringify(profitLossData),
                 },
               };
             }

@@ -104,24 +104,7 @@ const MatchDetail = () => {
   const { permanentDeleteSuccess } = useSelector(
     (state: RootState) => state.match.sideBarList
   );
-
-  console.log(
-    "MatchDetail mounted",
-    JSON.stringify(matchDetail?.sessionBettings)
-  );
-  console.log(
-    "matchDetail?.manualSessionActive",
-    matchDetail?.manualSessionActive
-  );
-  console.log(
-    "length",
-    matchDetail?.sessionBettings?.filter(
-      (item: any) =>
-        !JSON.parse(item).selectionId &&
-        JSON.parse(item)?.activeStatus === "live"
-    )?.length
-  );
-
+  
   useEffect(() => {
     if (state) {
       matchService.connect([state?.matchId], profileDetail?.roleName);
