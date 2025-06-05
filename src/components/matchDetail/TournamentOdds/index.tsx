@@ -137,9 +137,7 @@ const TournamentOdds = ({
                   : 0
                 : currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[key]
-                  ? JSON.parse(
-                      currentMatch?.profitLossDataMatch[key] || "{}"
-                    )?.[
+                  ? (currentMatch?.profitLossDataMatch[key] || {})?.[
                       liveData?.runners?.[0]?.parentRunnerId ||
                         liveData?.runners?.[0]?.id
                     ]
@@ -151,9 +149,7 @@ const TournamentOdds = ({
                   : 0
                 : currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[key]
-                  ? JSON.parse(
-                      currentMatch?.profitLossDataMatch[key] || "{}"
-                    )?.[
+                  ? (currentMatch?.profitLossDataMatch[key] || {})?.[
                       liveData?.runners?.[1]?.parentRunnerId ||
                         liveData?.runners?.[1]?.id
                     ]
@@ -167,9 +163,7 @@ const TournamentOdds = ({
                   : 0
                 : currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[key]
-                  ? JSON.parse(
-                      currentMatch?.profitLossDataMatch[key] || "{}"
-                    )?.[
+                  ? (currentMatch?.profitLossDataMatch[key] || {})?.[
                       liveData?.runners?.[0]?.parentRunnerId ||
                         liveData?.runners?.[0]?.id
                     ]
@@ -181,9 +175,7 @@ const TournamentOdds = ({
                   : 0
                 : currentMatch?.profitLossDataMatch
                 ? currentMatch?.profitLossDataMatch[key]
-                  ? JSON.parse(
-                      currentMatch?.profitLossDataMatch[key] || "{}"
-                    )?.[
+                  ? (currentMatch?.profitLossDataMatch[key] || {})?.[
                       liveData?.runners?.[1]?.parentRunnerId ||
                         liveData?.runners?.[1]?.id
                     ]
@@ -288,9 +280,9 @@ const TournamentOdds = ({
                           ]
                         : 0
                       : currentMatch?.profitLossDataMatch?.[key]
-                      ? JSON.parse(
-                          currentMatch?.profitLossDataMatch?.[key] || "{}"
-                        )?.[runner?.parentRunnerId || runner?.id]
+                      ? (currentMatch?.profitLossDataMatch?.[key] || {})?.[
+                          runner?.parentRunnerId || runner?.id
+                        ]
                       : 0
                   }
                   color={
@@ -302,9 +294,9 @@ const TournamentOdds = ({
                         : "#319E5B"
                       : currentMatch?.profitLossDataMatch?.[key]
                       ? +parseFloat(
-                          JSON.parse(
-                            currentMatch?.profitLossDataMatch?.[key] || "{}"
-                          )?.[runner?.parentRunnerId || runner?.id]
+                          (currentMatch?.profitLossDataMatch?.[key] || {})?.[
+                            runner?.parentRunnerId || runner?.id
+                          ]
                         ).toFixed(2) < 0
                         ? "#FF4D4D"
                         : "#319E5B"
