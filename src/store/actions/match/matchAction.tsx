@@ -69,13 +69,15 @@ export const getPlacedBets = createAsyncThunk<any, any>(
   "get/placedBets",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(ApiConstants.MATCH.GET_BETS, {
-        params: {
-          matchId: requestData,
-          result: `inArr${JSON.stringify(["PENDING", "UNDECLARE"])}`,
-          sort: "betPlaced.createdAt:DESC",
-        },
-      });
+      const resp = await service.get(
+        ApiConstants.MATCH.GET_BETS + `?${requestData}`,
+        {
+          params: {
+            result: `inArr${JSON.stringify(["PENDING", "UNDECLARE"])}`,
+            sort: "betPlaced.createdAt:DESC",
+          },
+        }
+      );
       if (resp?.data) {
         return resp?.data;
       }
@@ -92,7 +94,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
       const resp = await service.get(
         `${ApiConstants.USER.RUN_AMOUNT}/${requestData?.id}?matchId=${requestData?.matchId}`
       );
-      if (resp?.data && resp?.data?.profitLoss) {
+      if (resp?.data && resp?.data?.profitLoss[0]) {
         return {
           matchId: requestData?.matchId,
           id: requestData?.id,
@@ -106,7 +108,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
           id: requestData?.id,
           name: requestData?.name,
           type: requestData?.type,
-          proLoss: [{ betPlaced: [] }],
+          proLoss: [JSON.stringify({ betPlaced: [] })],
         };
       }
     } catch (error) {
@@ -353,6 +355,4 @@ export const resetPermanentDeleteSuccess = createAction(
 export const matchListInplaySuccessReset = createAction(
   "matchListInplaySuccess/reset"
 );
-export const resetPlacedBets = createAction(
-  "placedBets/reset"
-);
+export const resetPlacedBets = createAction("placedBets/reset");

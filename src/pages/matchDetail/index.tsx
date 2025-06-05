@@ -105,23 +105,6 @@ const MatchDetail = () => {
     (state: RootState) => state.match.sideBarList
   );
 
-  console.log(
-    "MatchDetail mounted",
-    JSON.stringify(matchDetail?.sessionBettings)
-  );
-  console.log(
-    "matchDetail?.manualSessionActive",
-    matchDetail?.manualSessionActive
-  );
-  console.log(
-    "length",
-    matchDetail?.sessionBettings?.filter(
-      (item: any) =>
-        !JSON.parse(item).selectionId &&
-        JSON.parse(item)?.activeStatus === "live"
-    )?.length
-  );
-
   useEffect(() => {
     if (state) {
       matchService.connect([state?.matchId], profileDetail?.roleName);
@@ -246,7 +229,7 @@ const MatchDetail = () => {
       } else {
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -367,7 +350,7 @@ const MatchDetail = () => {
         dispatch(updateMaxLossForBetOnUndeclare(event));
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -391,7 +374,7 @@ const MatchDetail = () => {
         }
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -454,7 +437,7 @@ const MatchDetail = () => {
         dispatch(resetSessionProLoss());
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""
@@ -538,7 +521,7 @@ const MatchDetail = () => {
         dispatch(getUserProfitLoss(state?.matchId));
         dispatch(
           getPlacedBets(
-            `eq${state?.matchId}${
+            `matchId=eq${state?.matchId}${
               state.userId
                 ? `&userId=${state.userId}&roleName=${state?.roleName}`
                 : ""

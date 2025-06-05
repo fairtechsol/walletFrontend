@@ -143,7 +143,7 @@ const MultipleMatchHorseRacing = () => {
             matchType: state.matchType,
           })
         );
-        dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
       }
     } catch (e) {
       console.log(e);
@@ -204,7 +204,7 @@ const MultipleMatchHorseRacing = () => {
               matchType: state.matchType,
             })
           );
-          dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+          dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
         }
       } else if (document.visibilityState === "hidden") {
         state?.matchIds?.map((item: any) => {

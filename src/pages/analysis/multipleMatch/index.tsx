@@ -127,7 +127,7 @@ const MultipleMatch = () => {
         if (event?.isMatchDeclare) {
           navigate(`/wallet/market_analysis`);
         } else {
-          dispatch(getPlacedBets(`eq${state?.matchId}`));
+          dispatch(getPlacedBets(`matchId=eq${state?.matchId}`));
         }
       }
     } catch (error) {
@@ -145,7 +145,7 @@ const MultipleMatch = () => {
           })
         );
         dispatch(removeRunAmount(event));
-        dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
       }
     } catch (error) {
       console.log(error);
@@ -156,7 +156,7 @@ const MultipleMatch = () => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
         dispatch(updateMaxLossForBetOnUndeclareForMultipleMatch(event));
-        dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
       }
     } catch (error) {
       console.log(error);
@@ -179,7 +179,7 @@ const MultipleMatch = () => {
   const handleMatchResultUndeclared = (event: any) => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
-        dispatch(getPlacedBets(`eq${state?.matchId}`));
+        dispatch(getPlacedBets(`matchId=eq${state?.matchId}`));
         dispatch(updateMatchRatesOnMarketUndeclareForMulti(event));
       }
     } catch (error) {
@@ -233,7 +233,7 @@ const MultipleMatch = () => {
           })
         );
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
       }
     } catch (e) {
       console.log(e);
@@ -311,7 +311,7 @@ const MultipleMatch = () => {
             })
           );
           dispatch(resetSessionProLoss());
-          dispatch(getPlacedBets(`inArr${JSON.stringify(state?.matchIds)}`));
+          dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
         }
       } else if (document.visibilityState === "hidden") {
         state?.matchIds?.map((item: any) => {

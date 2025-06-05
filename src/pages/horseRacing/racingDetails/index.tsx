@@ -240,7 +240,7 @@ const RacingDetails = () => {
         dispatch(getMatchDetailHorseRacing(id));
         dispatch(getUserProfitLossForRace(id));
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`eq${id}`));
+        dispatch(getPlacedBets(`matchId=eq${id}`));
       }
     } catch (e) {
       console.log(e);
@@ -287,7 +287,7 @@ const RacingDetails = () => {
         if (id) {
           dispatch(getMatchDetailHorseRacing(id));
           dispatch(getUserProfitLossForRace(id));
-          dispatch(getPlacedBets(`eq${id}`));
+          dispatch(getPlacedBets(`matchId=eq${id}`));
         }
       } else if (document.visibilityState === "hidden") {
         socketService.match.leaveMatchRoom(id);
@@ -306,7 +306,7 @@ const RacingDetails = () => {
       const intervalId = setInterval(() => {
         dispatch(getMatchDetailHorseRacing(id));
         dispatch(getUserProfitLossForRace(id));
-        dispatch(getPlacedBets(`eq${id}`));
+        dispatch(getPlacedBets(`matchId=eq${id}`));
       }, 14100 * 1000);
 
       return () => {
