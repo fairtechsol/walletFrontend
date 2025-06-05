@@ -173,10 +173,7 @@ const betsSlice = createSlice({
             session.id === betId
               ? {
                   ...session,
-                  proLoss: [
-                    JSON.stringify(profitLoss),
-                    ...session.proLoss.slice(1),
-                  ],
+                  proLoss: profitLoss,
                 }
               : session
           );
