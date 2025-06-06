@@ -44,12 +44,12 @@ const PlaceBetComponentWeb = ({
               dispatch(
                 addRunAmount({
                   id: newData?.id,
-                  name: newData?.name,
+                  name: newData?.name || newData?.RunnerName,
                   type: !newData?.isManual
                     ? "Session Market"
                     : "Quick Session Market",
                   matchId: newData?.matchId,
-                  proLoss: JSON.stringify(currBetPL?.profitLoss),
+                  proLoss: currBetPL?.profitLoss,
                 })
               );
             }
