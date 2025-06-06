@@ -117,7 +117,7 @@ const UserProfitLossListComp = ({
                         >
                           <Typography
                             sx={{
-                              fontSize: { lg: "13px", xs: "11px" },
+                              fontSize: { lg: "12px", xs: "11px" },
                               color: "black",
                               fontWeight: "700",
                               textAlign: "center",
@@ -128,7 +128,7 @@ const UserProfitLossListComp = ({
                           </Typography>
                           <Typography
                             sx={{
-                              fontSize: { lg: "10px", xs: "8px" },
+                              fontSize: { lg: "9px", xs: "8px" },
                               marginTop: -0.4,
                               color: "black",
                               textAlign: "center",
