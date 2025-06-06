@@ -65,6 +65,7 @@ const UserProfitLossListComp = ({
                 display: "flex",
                 flexDirection: "column",
                 width: { lg: "30%", xs: "40%" },
+                minWidth: "8rem",
                 height: "100%",
               }}
               key={item?.betId}
@@ -80,7 +81,6 @@ const UserProfitLossListComp = ({
                         flexDirection: "row",
                         width: "100%",
                         height: "100%",
-                        minWidth: "100px",
                       }}
                       key={index}
                     >
@@ -88,6 +88,7 @@ const UserProfitLossListComp = ({
                         sx={{
                           border: "1px solid #2626264D",
                           width: "100%",
+                          minWidth: "4rem",
                           height: "32px",
                           fontWeight: "500",
                           fontSize: "0.65em",
@@ -106,6 +107,7 @@ const UserProfitLossListComp = ({
                           alignItems: "center",
                           flexDirection: "column",
                           width: "100%",
+                          minWidth: "4rem",
                           height: "32px",
                         }}
                       >
