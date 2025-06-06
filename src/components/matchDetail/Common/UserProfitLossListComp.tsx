@@ -64,7 +64,8 @@ const UserProfitLossListComp = ({
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: { lg: "30%", xs: "30.06%" },
+                width: { lg: "30%", xs: "40%" },
+                minWidth: "8rem",
                 height: "100%",
               }}
               key={item?.betId}
@@ -80,7 +81,6 @@ const UserProfitLossListComp = ({
                         flexDirection: "row",
                         width: "100%",
                         height: "100%",
-                        minWidth: "100px",
                       }}
                       key={index}
                     >
@@ -88,11 +88,11 @@ const UserProfitLossListComp = ({
                         sx={{
                           border: "1px solid #2626264D",
                           width: "100%",
+                          minWidth: "4rem",
                           height: "32px",
                           fontWeight: "500",
                           fontSize: "0.65em",
                           alignItems: "center",
-                          // display: "flex",
                           pl: 0.5,
                         }}
                         className="wrapContent"
@@ -107,6 +107,7 @@ const UserProfitLossListComp = ({
                           alignItems: "center",
                           flexDirection: "column",
                           width: "100%",
+                          minWidth: "4rem",
                           height: "32px",
                         }}
                       >
@@ -118,7 +119,7 @@ const UserProfitLossListComp = ({
                         >
                           <Typography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: { lg: "12px", xs: "11px" },
                               color: "black",
                               fontWeight: "700",
                               textAlign: "center",
@@ -129,7 +130,7 @@ const UserProfitLossListComp = ({
                           </Typography>
                           <Typography
                             sx={{
-                              fontSize: { lg: "10px", xs: "9px" },
+                              fontSize: { lg: "9px", xs: "8px" },
                               marginTop: -0.4,
                               color: "black",
                               textAlign: "center",

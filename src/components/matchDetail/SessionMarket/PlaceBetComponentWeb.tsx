@@ -40,16 +40,16 @@ const PlaceBetComponentWeb = ({
               ...(marketAnalysis?.betType?.overByover || []),
               ...(marketAnalysis?.betType?.ballByBall || []),
             ]?.find((item: any) => item.betId === newData?.id);
-            if (currBetPL) {
+            if (currBetPL && type !== "fancy1" && type !== "oddEven") {
               dispatch(
                 addRunAmount({
                   id: newData?.id,
-                  name: newData?.name,
+                  name: newData?.name || newData?.RunnerName,
                   type: !newData?.isManual
                     ? "Session Market"
                     : "Quick Session Market",
                   matchId: newData?.matchId,
-                  proLoss: JSON.stringify(currBetPL?.profitLoss),
+                  proLoss: currBetPL?.profitLoss,
                 })
               );
             }
