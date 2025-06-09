@@ -50,7 +50,7 @@ const PlaceBetComponent = ({
               dispatch(
                 addRunAmount({
                   id: newData?.id,
-                  name: newData?.name,
+                  name: newData?.name || newData?.RunnerName,
                   type: !newData?.isManual
                     ? "Session Market"
                     : "Quick Session Market",
