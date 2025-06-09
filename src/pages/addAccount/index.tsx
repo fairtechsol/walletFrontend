@@ -31,8 +31,8 @@ import {
   updateReset,
 } from "../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { addUserValidation } from "../../utils/Validations";
 import { accountTypeMap } from "../../utils/Constants";
+import { addUserValidation } from "../../utils/Validations";
 
 const MatchCommissionTypes = [
   { value: "0.00", label: "0.00" },
@@ -1073,80 +1073,76 @@ const AddAccount = () => {
 
               {formik?.values?.roleName?.value !== "expert" &&
                 formik?.values?.roleName?.value !== "superAdmin" && (
-                  <>
-                    <Box
-                      sx={{
-                        display: {
-                          lg: "block",
-                          md: "grid",
-                          xs: "block",
-                        },
-                        gridTemplateColumns: "50% 47%",
-                        gridColumnGap: "10px",
+                  <Box
+                    sx={{
+                      display: {
+                        lg: "block",
+                        md: "grid",
+                        xs: "block",
+                      },
+                      gridTemplateColumns: "50% 47%",
+                      gridColumnGap: "10px",
+                    }}
+                  >
+                    <SelectField
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
+                      id="matchCommissionType"
+                      name="matchCommissionType"
+                      label="Match Commission Type"
+                      options={MatchCommissionTypes}
+                      onChange={(MatchCommissionTypes: any) => {
+                        formik.setFieldValue(
+                          "matchCommissionType",
+                          MatchCommissionTypes
+                        );
                       }}
-                    >
+                      onBlur={formik.handleBlur}
+                      value={formik.values.matchCommissionType}
+                      touched={touched.matchCommissionType}
+                      error={
+                        touched.matchCommissionType &&
+                        Boolean(errors.matchCommissionType)
+                      }
+                    />
+                    {!["", null, "0.00"].includes(
+                      formik.values.matchCommissionType.value
+                    ) && (
                       <SelectField
                         containerStyle={containerStyles}
                         titleStyle={titleStyles}
-                        id="matchCommissionType"
-                        name="matchCommissionType"
-                        label="Match Commission Type"
-                        options={MatchCommissionTypes}
-                        onChange={(MatchCommissionTypes: any) => {
+                        id="matchCommission"
+                        name="matchCommission"
+                        label="Match Commission (%)*"
+                        options={matchComissionArray}
+                        value={formik.values.matchCommission}
+                        onChange={(matchComissionArray: any) => {
                           formik.setFieldValue(
-                            "matchCommissionType",
-                            MatchCommissionTypes
+                            "matchCommission",
+                            matchComissionArray
                           );
                         }}
                         onBlur={formik.handleBlur}
-                        value={formik.values.matchCommissionType}
-                        touched={touched.matchCommissionType}
-                        error={
-                          touched.matchCommissionType &&
-                          Boolean(errors.matchCommissionType)
-                        }
                       />
-                      {!["", null, "0.00"].includes(
-                        formik.values.matchCommissionType.value
-                      ) && (
-                        <>
-                          <SelectField
-                            containerStyle={containerStyles}
-                            titleStyle={titleStyles}
-                            id="matchCommission"
-                            name="matchCommission"
-                            label="Match Commission (%)*"
-                            options={matchComissionArray}
-                            value={formik.values.matchCommission}
-                            onChange={(matchComissionArray: any) => {
-                              formik.setFieldValue(
-                                "matchCommission",
-                                matchComissionArray
-                              );
-                            }}
-                            onBlur={formik.handleBlur}
-                          />
-                        </>
-                      )}
+                    )}
 
-                      <SelectField
-                        containerStyle={containerStyles}
-                        titleStyle={titleStyles}
-                        id="sessionCommission"
-                        name="sessionCommission"
-                        label="Session Commission (%)*"
-                        options={sessionComissionArray}
-                        value={formik.values.sessionCommission}
-                        onChange={(sessionComissionArray: any) => {
-                          formik.setFieldValue(
-                            "sessionCommission",
-                            sessionComissionArray
-                          );
-                        }}
-                        onBlur={formik.handleBlur}
-                      />
-                    </Box>
-                  </>
+                    <SelectField
+                      containerStyle={containerStyles}
+                      titleStyle={titleStyles}
+                      id="sessionCommission"
+                      name="sessionCommission"
+                      label="Session Commission (%)*"
+                      options={sessionComissionArray}
+                      value={formik.values.sessionCommission}
+                      onChange={(sessionComissionArray: any) => {
+                        formik.setFieldValue(
+                          "sessionCommission",
+                          sessionComissionArray
+                        );
+                      }}
+                      onBlur={formik.handleBlur}
+                    />
+                  </Box>
                 )}
             </Box>
             <Box sx={{ flex: 2 }} className="addAccountRemark">
@@ -1177,33 +1173,31 @@ const AddAccount = () => {
                   value={formik.values.remarks}
                   onChange={formik.handleChange}
                 />
-                <>
-                  <Input
-                    containerStyle={{ ...containerStyles, width: "100%" }}
-                    img={EyeIcon}
-                    img1={EyeSlash}
-                    titleStyle={titleStyles}
-                    inputStyle={inputStyle}
-                    inputContainerStyle={{ ...inputContainerStyle }}
-                    title="Admin Transaction Password*"
-                    name="adminTransPassword"
-                    id="adminTransPassword"
-                    type="password"
-                    placeholder="Ex : 12345"
-                    required={true}
-                    value={formik.values.adminTransPassword}
-                    error={
-                      touched.adminTransPassword &&
-                      Boolean(errors.adminTransPassword)
-                    }
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
-                  <CustomErrorMessage
-                    touched={touched.adminTransPassword}
-                    errors={errors.adminTransPassword}
-                  />
-                </>
+                <Input
+                  containerStyle={{ ...containerStyles, width: "100%" }}
+                  img={EyeIcon}
+                  img1={EyeSlash}
+                  titleStyle={titleStyles}
+                  inputStyle={inputStyle}
+                  inputContainerStyle={{ ...inputContainerStyle }}
+                  title="Admin Transaction Password*"
+                  name="adminTransPassword"
+                  id="adminTransPassword"
+                  type="password"
+                  placeholder="Ex : 12345"
+                  required={true}
+                  value={formik.values.adminTransPassword}
+                  error={
+                    touched.adminTransPassword &&
+                    Boolean(errors.adminTransPassword)
+                  }
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                />
+                <CustomErrorMessage
+                  touched={touched.adminTransPassword}
+                  errors={errors.adminTransPassword}
+                />
               </Box>
               <Button
                 className="cursor-pointer"
