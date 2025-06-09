@@ -1,48 +1,18 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlash } from "../../assets";
 import Input from "../login/Input";
+import CustomButton from "./CustomButton";
 import WalletModal from "./WalletModal";
 
 const DepositAndWithdrawBox = () => {
   const navigate = useNavigate();
-  const [showModalMessage] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const handleChangeShowModalSuccess = (val: any) => {
     setShowSuccessModal(val);
   };
-  const CustomButton = ({ color, title, onClick, type }: any) => {
-    return (
-      <Button
-        type={type}
-        onClick={onClick}
-        sx={{
-          width: "45%",
-          height: "45px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: color,
-          borderRadius: "5px",
-          marginTop: "16px",
-          "&:hover": {
-            background: color,
-          },
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "14px",
-            fontWeight: "600",
-          }}
-        >
-          {title}
-        </Typography>
-      </Button>
-    );
-  };
+
   return (
     <>
       <Typography
@@ -397,21 +367,17 @@ const DepositAndWithdrawBox = () => {
                     `/${window.location.pathname.split("/")[1]}/walletSettings`
                   );
                 }}
-                title={"Cancel"}
-                color={"#E32A2A"}
+                title="Cancel"
+                color="#E32A2A"
               />
-              <CustomButton
-                type={"submit"}
-                title={"Submit"}
-                color={"#0B4F26"}
-              />
+              <CustomButton type="submit" title="Submit" color="#0B4F26" />
             </Box>
           </Box>
         </form>
       </Box>
       {showSuccessModal && (
         <WalletModal
-          message={showModalMessage}
+          message=""
           setShowSuccessModal={handleChangeShowModalSuccess}
           showSuccessModal={showSuccessModal}
           buttonMessage={"OK"}
