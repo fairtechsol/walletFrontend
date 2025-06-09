@@ -863,6 +863,7 @@ const MatchDetail = () => {
                     selectedBetData={selectedBetData}
                     role={state.roleName}
                     deletePermanent={handleDeletePermanent}
+                    userId={state?.userId}
                   />
                 </Box>
               )}
@@ -909,6 +910,7 @@ const MatchDetail = () => {
                       selectedBetData={selectedBetData}
                       role={state.roleName}
                       deletePermanent={handleDeletePermanent}
+                      userId={state?.userId}
                     />
                   </Box>
                 )}
@@ -1041,6 +1043,7 @@ const MatchDetail = () => {
                       selectedBetData={selectedBetData}
                       role={state.roleName}
                       deletePermanent={handleDeletePermanent}
+                      userId={state?.userId}
                     />
                   </Box>
                 )}
