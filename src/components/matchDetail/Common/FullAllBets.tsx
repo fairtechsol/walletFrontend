@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { ARROWUP, CHECK } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import { RootState } from "../../../store/store";
@@ -42,7 +43,8 @@ const FullAllBets = ({
     start: 0,
     end: ITEMS_PER_PAGE,
   });
-
+  const location = useLocation();
+  console.log("state :", location)
   const renderCheckBox = (isSelected: any) =>
     isSelected ? (
       <img src={CHECK} style={{ width: "20px", height: "20px" }} />
@@ -160,8 +162,8 @@ const FullAllBets = ({
               name:
                 v?.marketType === "oddEven"
                   ? v?.teamName
-                      ?.match(/[-_](odd|even)$/i)?.[1]
-                      ?.toUpperCase() || v?.betType
+                    ?.match(/[-_](odd|even)$/i)?.[1]
+                    ?.toUpperCase() || v?.betType
                   : v?.betType,
               color: "black",
               background: ["YES", "BACK"].includes(v?.betType)
@@ -375,6 +377,9 @@ const FullAllBets = ({
             }}
             onDoubleClick={(e: any) => {
               e.stopPropagation();
+              if (location.pathname === '/wallet/market_analysis/matches') {
+                return;
+              }
               deletePermanent?.();
             }}
           >
