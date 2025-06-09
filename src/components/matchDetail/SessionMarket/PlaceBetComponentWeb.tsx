@@ -40,7 +40,7 @@ const PlaceBetComponentWeb = ({
               ...(marketAnalysis?.betType?.overByover || []),
               ...(marketAnalysis?.betType?.ballByBall || []),
             ]?.find((item: any) => item.betId === newData?.id);
-            if (currBetPL) {
+            if (currBetPL && type !== "fancy1" && type !== "oddEven") {
               dispatch(
                 addRunAmount({
                   id: newData?.id,
