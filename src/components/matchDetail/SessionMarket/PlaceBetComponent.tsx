@@ -55,7 +55,7 @@ const PlaceBetComponent = ({
                     ? "Session Market"
                     : "Quick Session Market",
                   matchId: newData?.matchId,
-                  proLoss: currBetPL?.profitLoss,
+                  proLoss: JSON.stringify(currBetPL?.profitLoss),
                 })
               );
             }
