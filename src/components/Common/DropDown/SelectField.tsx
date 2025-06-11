@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 import Select from "react-select";
 
+const topIds = ["sessionCommission", "matchCommission", "matchCommissionType"];
+
 const SelectField = ({
   id,
   label,
@@ -12,11 +14,6 @@ const SelectField = ({
   ...props
 }: any) => {
   const getMenuPlacement = (id: any) => {
-    const topIds = [
-      "sessionCommission",
-      "matchCommission",
-      "matchCommissionType",
-    ];
     return topIds.includes(id) ? "top" : "bottom";
   };
 
