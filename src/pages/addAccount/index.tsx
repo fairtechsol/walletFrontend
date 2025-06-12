@@ -549,7 +549,7 @@ const AddAccount = () => {
                     error={touched.password && Boolean(errors.password)}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                  />{" "}
+                  />
                   <CustomErrorMessage
                     touched={touched.password}
                     errors={errors.password}

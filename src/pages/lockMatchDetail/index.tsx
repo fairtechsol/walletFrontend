@@ -309,7 +309,7 @@ const LockMatchScreen = () => {
             alignSelf: "start",
           }}
         >
-          {matchDetail?.teamA} V/S {matchDetail?.teamB}
+          {matchDetail?.title}
         </Typography>
       </Box>
       <Box

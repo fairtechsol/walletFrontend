@@ -480,14 +480,6 @@ const EditAccount = () => {
     ) {
       formik.setValues({
         ...formik.values,
-        // matchCommission: {
-        //   label: "0.00",
-        //   value: "0.00",
-        // },
-        // sessionCommission: {
-        //   label: "0.00",
-        //   value: "0.00",
-        // },
         matchCommission: {
           label:
             userDetail?.matchComissionType ==

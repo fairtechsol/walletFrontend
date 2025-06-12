@@ -27,36 +27,38 @@ const RowHeaderDomain = ({
   const [visible, setVisible] = useState(false);
   const dispatch: AppDispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.report.reportList);
+
+  const handleClick = () => {
+    if (!visible) {
+      let filter = "";
+      if (user?.id) {
+        filter += `id=${user?.id}`;
+      }
+      if (startDate && endDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      } else if (startDate) {
+        filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
+      } else if (endDate) {
+        filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
+      }
+      setCurrentPage(1);
+      dispatch(
+        getDomainProfitLossCard({
+          matchId: item?.matchId,
+          filter: filter,
+        })
+      );
+    }
+    dispatch(resetDomainProfitLossCard());
+    dispatch(resetBetProfitLossCard());
+    dispatch(resetSessionProfitLossCard());
+    setShowMatchList((prev: boolean) => !prev);
+    setVisible((prev) => !prev);
+  };
   return (
     <Box
-      onClick={() => {
-        if (!visible) {
-          let filter = "";
-          if (user?.id) {
-            filter += `id=${user?.id}`;
-          }
-          if (startDate && endDate) {
-            filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-            filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-          } else if (startDate) {
-            filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
-          } else if (endDate) {
-            filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
-          }
-          setCurrentPage(1);
-          dispatch(
-            getDomainProfitLossCard({
-              matchId: item?.matchId,
-              filter: filter,
-            })
-          );
-        }
-        dispatch(resetDomainProfitLossCard());
-        dispatch(resetBetProfitLossCard());
-        dispatch(resetSessionProfitLossCard());
-        setShowMatchList((prev: boolean) => !prev);
-        setVisible((prev) => !prev);
-      }}
+      onClick={handleClick}
       sx={{
         width: "100%",
         height: { lg: "60px", xs: "50px" },
@@ -201,7 +203,7 @@ const RowHeaderDomain = ({
                     Number(item?.totalDeduction).toFixed(2) || 0
                   )})`}
               </>
-            )}{" "}
+            )}
           </Typography>
         </Box>
       </Box>
