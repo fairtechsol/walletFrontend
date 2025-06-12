@@ -2,15 +2,21 @@ import { Box, Button, Typography } from "@mui/material";
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface WalletModalProps {
+  message: string;
+  buttonMessage: string;
+  navigateTo: string;
+  setShowSuccessModal: (val: any) => void;
+  showSuccessModal: boolean;
+}
+
 const WalletModal = ({
   message,
   buttonMessage,
   navigateTo,
   setShowSuccessModal,
   showSuccessModal,
-  userPG,
-  activeTab,
-}: any) => {
+}: WalletModalProps) => {
   const navigate = useNavigate();
   return (
     <Box
@@ -54,8 +60,6 @@ const WalletModal = ({
             sx={{
               maxHeight: "300px",
               maxWidth: "500px",
-              // width: "250px",
-              // height: "100px",
               minHeight: "100px",
               minwidth: "150px",
               background: "#F8C851",
@@ -79,10 +83,8 @@ const WalletModal = ({
                 setShowSuccessModal(!showSuccessModal);
                 navigateTo &&
                   navigate(
-                    `/${window.location.pathname.split("/")[1]}/${navigateTo}`,
-                    { state: { activeTab: activeTab } }
+                    `/${window.location.pathname.split("/")[1]}/${navigateTo}`
                   );
-                userPG && navigate(`/${navigateTo}`);
               }}
             >
               {buttonMessage}

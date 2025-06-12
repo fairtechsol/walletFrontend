@@ -366,7 +366,7 @@ const RowComponent = ({ header, data }: { header: boolean; data: any }) => {
       {!header && (
         <>
           <SingleBox
-            color={getColor}
+            color={getColor()}
             data={data?.bettingName ?? data?.marketType}
             first={true}
             header={header}
@@ -410,7 +410,7 @@ const RowComponent = ({ header, data }: { header: boolean; data: any }) => {
       {header && (
         <>
           <SingleBox
-            color={getColor}
+            color={getColor()}
             data={data[0]}
             header={header}
             boxWidth="100%"
