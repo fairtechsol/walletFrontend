@@ -1,5 +1,4 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { memo } from "react";
 
 interface AllBetsHeaderRowProps {
   tag: boolean;
@@ -207,4 +206,4 @@ const AllBetsHeaderRow = ({ tag, mode }: AllBetsHeaderRowProps) => {
     </Box>
   );
 };
-export default memo(AllBetsHeaderRow);
+export default AllBetsHeaderRow;
