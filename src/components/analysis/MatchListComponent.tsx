@@ -61,6 +61,20 @@ const MatchListComponent = ({
       console.log(e);
     }
   }
+
+  const handleClick = () => {
+    if (mode == "0") {
+      navigate(`/wallet/market_analysis/matches`, {
+        state: {
+          submit: true,
+          matchId: data?.id,
+          matchType: data?.matchType,
+        },
+      });
+    }
+    setSelected();
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
@@ -154,18 +168,7 @@ const MatchListComponent = ({
         `}
       </style>
       <Box
-        onClick={() => {
-          if (mode == "0") {
-            navigate(`/wallet/market_analysis/matches`, {
-              state: {
-                submit: true,
-                matchId: data?.id,
-                matchType: data?.matchType,
-              },
-            });
-          }
-          setSelected();
-        }}
+        onClick={handleClick}
         sx={{
           cursor: "pointer",
           width: "99%",

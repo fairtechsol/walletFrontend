@@ -65,6 +65,16 @@ const Inplay = () => {
     }
   };
 
+  const handleClick = (match: any) => {
+    navigate(`/wallet/matchList/${match?.matchType}/${match?.id}`, {
+      state: {
+        submit: true,
+        matchId: match?.id,
+        matchType: match?.matchType,
+      },
+    });
+  };
+
   useEffect(() => {
     try {
       dispatch(
@@ -141,18 +151,7 @@ const Inplay = () => {
             return (
               <MatchComponent
                 key={match.id}
-                onClick={() => {
-                  navigate(
-                    `/wallet/matchList/${match?.matchType}/${match?.id}`,
-                    {
-                      state: {
-                        submit: true,
-                        matchId: match?.id,
-                        matchType: match?.matchType,
-                      },
-                    }
-                  );
-                }}
+                onClick={() => handleClick(match)}
                 top={true}
                 blur={false}
                 match={match}
