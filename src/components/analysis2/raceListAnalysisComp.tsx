@@ -82,6 +82,17 @@ const RacingListComponentAnalysis: React.FC<
     }
   };
 
+  const handleClick = (time: any) => {
+    if (mode === "1") {
+      handleRadioButtonSelect({
+        id: time?.id,
+        matchType: time?.matchType,
+      });
+    } else {
+      navigate(`/wallet/race_list/${matchType}/${time.id}`);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="time table" sx={{ borderCollapse: "collapse" }}>
@@ -128,18 +139,7 @@ const RacingListComponentAnalysis: React.FC<
                       {item?.map((time: any) => (
                         <YellowButton
                           key={time?.id}
-                          onClick={() => {
-                            if (mode === "1") {
-                              handleRadioButtonSelect({
-                                id: time?.id,
-                                matchType: time?.matchType,
-                              });
-                            } else {
-                              navigate(
-                                `/wallet/race_list/${matchType}/${time.id}`
-                              );
-                            }
-                          }}
+                          onClick={() => handleClick(time)}
                         >
                           {mode === "1" && (
                             <Box

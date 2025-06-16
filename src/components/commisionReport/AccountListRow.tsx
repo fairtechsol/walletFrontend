@@ -39,12 +39,6 @@ interface FormattedElement {
   userName?: string;
 }
 
-// const AccountListRow = ({
-//   containerStyle,
-//   fContainerStyle,
-//   fTextStyle,
-//   element,
-// }: any) => {
 const AccountListRow: React.FC<AccountListRowProps> = ({
   containerStyle = {},
   fContainerStyle = {},
@@ -63,15 +57,14 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
     createAt: element?.date,
     myCommission: element?.partnerShip
       ? `${formatToINR(
-        ((Number(element.commissionAmount) || 0) * element.partnerShip) / 100
-      )}(${element.partnerShip}%)`
+          ((Number(element.commissionAmount) || 0) * element.partnerShip) / 100
+        )}(${element.partnerShip}%)`
       : undefined,
     userName: element?.userName,
   });
   const [elementToUDM, setElementToUDM] = useState<FormattedElement>(
     formatElement()
   );
-
 
   useEffect(() => {
     setElementToUDM(formatElement());
@@ -127,9 +120,11 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
                 fontWeight: "600",
                 cursor: "pointer",
                 textTransform: "capitalize",
-                color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") ?
-                    "white" : "white",
+                color: ["#319E5B", "#303030"].includes(
+                  fContainerStyle.background || ""
+                )
+                  ? "white"
+                  : "white",
               },
               fTextStyle,
             ]}
@@ -158,9 +153,11 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
                 fontWeight: "600",
                 cursor: "pointer",
                 textTransform: "capitalize",
-                color:
-                  ["#319E5B", "#303030"].includes(fContainerStyle.background || "") ?
-                    "white" : "white",
+                color: ["#319E5B", "#303030"].includes(
+                  fContainerStyle.background || ""
+                )
+                  ? "white"
+                  : "white",
               },
               fTextStyle,
             ]}

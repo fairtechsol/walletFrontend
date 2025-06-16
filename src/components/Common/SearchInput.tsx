@@ -126,78 +126,80 @@ const SearchInput = ({
   }, 500);
 
   return (
-    <>
-      <Box
-        sx={[
-          {
-            backgroundColor: {
-              xs: show ? "white" : "transparent",
-              lg: "white",
-            },
-            minWidth: {
-              lg: "17vw",
-              xs: "10vw",
-            },
-            width: {
-              xs: width ? width : "100%",
-              lg: "17vw",
-              md: "17vw",
-            },
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            boxShadow: "0px 3px 10px #B7B7B726",
-            height: { lg: "35px", xs: "35px" },
-            overflow: "hidden",
-            paddingX: "5px",
-            borderRadius: "35px",
+    <Box
+      sx={[
+        {
+          backgroundColor: {
+            xs: show ? "white" : "transparent",
+            lg: "white",
           },
-          inputContainerStyle,
-        ]}
-      >
-        {(!matchesMobile || show) && (
-          <TextField
-            variant="standard"
-            name={`search_${Math.random().toString(36).substring(7)}`}
-            placeholder={placeholder}
-            onChange={handleInputChange}
-            InputProps={{
-              disableUnderline: true,
-              autoComplete: "new-password",
-              style: {
-                fontSize: "12px",
-                fontWeight: "600",
-                fontStyle: "italic",
-                color: "black",
-              },
-            }}
-            sx={{
-              borderColor: "white",
-              display: "flex",
-              flex: 1,
-              marginLeft: "5px",
-              fontSize: { lg: "10px", xs: "8px" },
-            }}
-          />
-        )}
-        <Box
-          sx={{
-            height: "30px",
-            width: "30px",
-            borderRadius: "20px",
-            border: "1px solid white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "primary.main",
-            marginRight: -0.3,
-            cursor: "pointer",
+          minWidth: {
+            lg: "17vw",
+            xs: "10vw",
+          },
+          width: {
+            xs: width ? width : "100%",
+            lg: "17vw",
+            md: "17vw",
+          },
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          boxShadow: "0px 3px 10px #B7B7B726",
+          height: { lg: "35px", xs: "35px" },
+          overflow: "hidden",
+          paddingX: "5px",
+          borderRadius: "35px",
+        },
+        inputContainerStyle,
+      ]}
+    >
+      {(!matchesMobile || show) && (
+        <TextField
+          variant="standard"
+          name={`search_${Math.random().toString(36).substring(7)}`}
+          placeholder={placeholder}
+          onChange={handleInputChange}
+          InputProps={{
+            disableUnderline: true,
+            autoComplete: "new-password",
+            style: {
+              fontSize: "12px",
+              fontWeight: "600",
+              fontStyle: "italic",
+              color: "black",
+            },
           }}
-        >
-          <StyledImage src={Search} sx={{ height: "40%", width: "auto" }} alt="search"/>
-        </Box>
+          sx={{
+            borderColor: "white",
+            display: "flex",
+            flex: 1,
+            marginLeft: "5px",
+            fontSize: { lg: "10px", xs: "8px" },
+          }}
+        />
+      )}
+      <Box
+        sx={{
+          height: "30px",
+          width: "30px",
+          borderRadius: "20px",
+          border: "1px solid white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "primary.main",
+          marginRight: -0.3,
+          cursor: "pointer",
+        }}
+      >
+        <StyledImage
+          src={Search}
+          sx={{ height: "40%", width: "auto" }}
+          alt="search"
+        />
       </Box>
-    </>
+    </Box>
   );
 };
 
