@@ -18,6 +18,43 @@ const DeleteEditComp = ({
   setVisible,
   setVisibleEdit,
 }: DeleteEditCompProps) => {
+  const handleClose = () => {
+    setMode((prev: any) => {
+      return {
+        ...prev,
+        type: "",
+        value: !mode.value,
+      };
+    });
+  };
+  const handleDelete = () => {
+    if (mode.value && mode?.type === "delete") {
+      setVisible(true);
+    } else {
+      setMode((prev: any) => {
+        return {
+          ...prev,
+          type: "delete",
+          value: !mode.value,
+        };
+      });
+    }
+  };
+
+  const handleEdit = () => {
+    if (mode.value && mode?.type === "edit") {
+      setVisibleEdit(true);
+    } else {
+      setMode((prev: any) => {
+        return {
+          ...prev,
+          type: "edit",
+          value: !mode.value,
+        };
+      });
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -28,15 +65,7 @@ const DeleteEditComp = ({
     >
       {mode.value && (
         <Box
-          onClick={() => {
-            setMode((prev: any) => {
-              return {
-                ...prev,
-                type: "",
-                value: !mode.value,
-              };
-            });
-          }}
+          onClick={handleClose}
           sx={{
             width: "150px",
             marginY: ".75%",
@@ -102,19 +131,7 @@ const DeleteEditComp = ({
         <>
           <Box sx={{ width: "2%" }} />
           <Box
-            onClick={() => {
-              if (mode.value && mode?.type === "delete") {
-                setVisible(true);
-              } else {
-                setMode((prev: any) => {
-                  return {
-                    ...prev,
-                    type: "delete",
-                    value: !mode.value,
-                  };
-                });
-              }
-            }}
+            onClick={handleDelete}
             sx={{
               width: "150px",
               marginY: ".75%",
@@ -147,19 +164,7 @@ const DeleteEditComp = ({
         <>
           <Box sx={{ width: "2%" }} />
           <Box
-            onClick={() => {
-              if (mode.value && mode?.type === "edit") {
-                setVisibleEdit(true);
-              } else {
-                setMode((prev: any) => {
-                  return {
-                    ...prev,
-                    type: "edit",
-                    value: !mode.value,
-                  };
-                });
-              }
-            }}
+            onClick={handleEdit}
             sx={{
               width: "150px",
               marginY: ".75%",
