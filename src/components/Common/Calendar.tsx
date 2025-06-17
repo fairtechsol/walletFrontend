@@ -38,7 +38,7 @@ const Calendar = ({ title, startDate, setStartDate, limit }: CalendarProps) => {
           onChange={(date: any) => {
             setStartDate(date);
           }}
-          customInput={<Box sx={[{ width: "10vw" }]} />}
+          customInput={<Box sx={{ width: "10vw" }} />}
           minDate={limit ?? limit}
         />
       </Box>

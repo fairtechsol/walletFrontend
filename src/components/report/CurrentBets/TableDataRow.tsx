@@ -50,14 +50,12 @@ const TableDataRow = ({
         }}
       >
         <Typography
-          sx={[
-            {
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "white",
-              textAlign: "center",
-            },
-          ]}
+          sx={{
+            fontSize: "12px",
+            fontWeight: "600",
+            color: "white",
+            textAlign: "center",
+          }}
         >
           {(+no > 9 ? "" : "0") + no}
         </Typography>
