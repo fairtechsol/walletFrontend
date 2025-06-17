@@ -7,7 +7,19 @@ import StyledImage from "../Common/StyledImages";
 import MoneyBox from "../matchDetail/MatchOdds/MoneyBox";
 import SeperateBox from "../matchDetail/MatchOdds/SeperateBox";
 
-const BoxComponentHorseRacing = ({ name, color, rates, data }: any) => {
+interface BoxComponentHorseRacingProps {
+  name: string;
+  color: string;
+  rates: any;
+  data: any;
+}
+
+const BoxComponentHorseRacing = ({
+  name,
+  color,
+  rates,
+  data,
+}: BoxComponentHorseRacingProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { ex, status, adjustmentFactor, removalDate } = data ?? {};
