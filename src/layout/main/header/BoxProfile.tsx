@@ -5,8 +5,13 @@ import StyledImage from "../../../components/Common/StyledImages";
 import { handleNumber } from "../../../helper";
 import BoxDropDownMenu from "./BoxDropDownMenu";
 
-const BoxProfile = (props: any) => {
-  const { value, containerStyle, balance, color } = props;
+interface BoxProfileProps {
+  value: string;
+  containerStyle: any;
+  balance: any;
+}
+
+const BoxProfile = ({ value, containerStyle, balance }: BoxProfileProps) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -59,7 +64,7 @@ const BoxProfile = (props: any) => {
               fontWeight: "700",
             }}
           >
-            {handleNumber(parseFloat(balance || 0.0), color)}
+            {handleNumber(parseFloat(balance || 0.0), "")}
           </Typography>
         </Box>
         <StyledImage

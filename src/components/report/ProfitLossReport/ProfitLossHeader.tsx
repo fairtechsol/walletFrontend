@@ -6,13 +6,13 @@ import SearchInputWallet from "./SearchInputWallet";
 
 interface ProfitLossHeaderProps {
   clientData: any;
-  setSearch: any;
+  setSearch: (val: any) => void;
   search: any;
   startDate: any;
-  setEndDate: any;
-  setStartDate: any;
+  setEndDate: (val: any) => void;
+  setStartDate: (val: any) => void;
   endDate: any;
-  onClick: any;
+  onClick: () => void;
   title: string;
 }
 

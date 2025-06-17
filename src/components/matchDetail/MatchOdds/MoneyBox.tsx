@@ -4,7 +4,7 @@ import { handleNumber } from "../../../helper";
 
 interface MoneyBoxProps {
   color: string;
-  rates: string;
+  rates: any;
 }
 
 const MoneyBox = ({ color, rates }: MoneyBoxProps) => {
