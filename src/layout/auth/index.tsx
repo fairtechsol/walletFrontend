@@ -32,17 +32,15 @@ const AuthLayout = () => {
         }}
       >
         <Box
-          sx={[
-            {
-              display: "flex",
-              flexDirection: "column",
-              py: "20px",
-              width: "18%",
-              minWidth: "250px",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-          ]}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            py: "20px",
+            width: "18%",
+            minWidth: "250px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <StyledImage
             src={FgLogo}
