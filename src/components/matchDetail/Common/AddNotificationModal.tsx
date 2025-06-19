@@ -154,16 +154,7 @@ const AddNotificationModal = ({
                 alignItems: "center",
               }}
             >
-              <DeleteBetButton
-                type="submit"
-                loading={loadingDeleteBet}
-                buttonStyle={{
-                  backgroundColor: "#0B4F26",
-                  color: "white",
-                  "&:hover": { backgroundColor: "#0B4F26" },
-                }}
-                title={buttonText}
-              />
+              <DeleteBetButton type="submit" title={buttonText} />
             </Box>
           </Box>
         </form>
