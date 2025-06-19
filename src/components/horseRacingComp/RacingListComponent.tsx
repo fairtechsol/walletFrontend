@@ -25,7 +25,7 @@ const YellowButton = styled("button")(() => ({
   },
 }));
 
-const RacingListComponent = ({ racingList }: any) => {
+const RacingListComponent = ({ racingList }: { racingList: any }) => {
   const navigate = useNavigate();
   const { matchType } = useParams();
   return (

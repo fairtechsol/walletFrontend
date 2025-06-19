@@ -305,7 +305,6 @@ const SetCreditComponent = ({
             />
           </Box>
         </Box>
-
         <Box
           sx={{
             display: "flex",
@@ -342,7 +341,6 @@ const SetCreditComponent = ({
               title={"Cancel"}
             />
           </Box>
-
           <Box sx={{ display: "flex", width: "150px" }}>
             <BoxButton
               color={"#0B4F26"}

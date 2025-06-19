@@ -1,11 +1,8 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { memo, useEffect, useState } from "react";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
-
 import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { EyeIcon, EyeSlash } from "../../../assets";
 import { formatToINR } from "../../../helper";
 import {
   getTotalBalance,
@@ -17,6 +14,8 @@ import {
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { depositAmountValidations } from "../../../utils/Validations";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
 const initialValues: any = {
   userId: "",
@@ -57,14 +56,12 @@ const SetExposureLimit = ({
         payload = {
           amount: values.amount,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
       } else {
         payload = {
           userId: element?.id,
           amount: values.amount,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
       }
       dispatch(

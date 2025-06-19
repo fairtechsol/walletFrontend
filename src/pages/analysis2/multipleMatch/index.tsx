@@ -324,7 +324,6 @@ const MultipleMatchHorseRacing = () => {
                                 }
                                 minBet={Math.floor(item?.matchOdd?.minBet)}
                                 maxBet={Math.floor(item?.matchOdd?.maxBet)}
-                                liveData={item?.matchOdd}
                                 data={
                                   item?.matchOdd?.runners?.length > 0
                                     ? item?.matchOdd?.runners
@@ -442,7 +441,6 @@ const MultipleMatchHorseRacing = () => {
                               showBox={item?.matchOdd?.activeStatus === "save"}
                               minBet={Math.floor(item?.matchOdd?.minBet)}
                               maxBet={Math.floor(item?.matchOdd?.maxBet)}
-                              liveData={item?.matchOdd}
                               data={
                                 item?.matchOdd?.runners?.length > 0
                                   ? item?.matchOdd?.runners
@@ -593,7 +591,6 @@ const MultipleMatchHorseRacing = () => {
                           showBox={item?.matchOdd?.activeStatus === "save"}
                           minBet={Math.floor(item?.matchOdd?.minBet)}
                           maxBet={Math.floor(item?.matchOdd?.maxBet)}
-                          liveData={item?.matchOdd}
                           data={
                             item?.matchOdd?.runners?.length > 0
                               ? item?.matchOdd?.runners
