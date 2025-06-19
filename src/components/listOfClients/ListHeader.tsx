@@ -6,6 +6,15 @@ import { handleExport } from "../../store/actions/user/userAction";
 import { AppDispatch } from "../../store/store";
 import StyledImage from "../Common/StyledImages";
 
+interface ListHeaderProps {
+  id: string;
+  title: string;
+  downloadPdfExcel: boolean;
+  domain: string;
+  roleName: string;
+  endpoint: string;
+}
+
 const ListHeader = ({
   id,
   title,
@@ -13,7 +22,7 @@ const ListHeader = ({
   domain,
   roleName,
   endpoint,
-}: any) => {
+}: ListHeaderProps) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box

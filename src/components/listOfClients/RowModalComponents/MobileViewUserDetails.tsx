@@ -288,7 +288,6 @@ const MobileViewUserDetails = ({
                 alignItems: "center",
                 width: "40%",
                 flexDirection: "row",
-
                 justifyContent: "space-between",
                 position: "relative",
                 marginTop: "0",
@@ -395,7 +394,6 @@ const MobileViewUserDetails = ({
               alignItems: "center",
               width: "40%",
               flexDirection: "row",
-
               justifyContent: "space-between",
               position: "relative",
               marginTop: "0",
@@ -505,7 +503,6 @@ const MobileViewUserDetails = ({
             <Typography
               sx={{
                 fontSize: "3.2vw",
-
                 width: "100%",
                 fontWeight: "600",
                 marginRight: 0,
@@ -573,7 +570,6 @@ const MobileViewUserDetails = ({
             <Typography
               sx={{
                 fontSize: "3.2vw",
-
                 width: "100%",
                 fontWeight: "600",
                 marginRight: 0,
@@ -585,7 +581,6 @@ const MobileViewUserDetails = ({
               Remarks
             </Typography>
           </Box>
-
           <Box
             sx={{
               borderRadius: "5px",
@@ -635,7 +630,6 @@ const MobileViewUserDetails = ({
               alignItems: "center",
               width: "40%",
               flexDirection: "row",
-
               justifyContent: "space-between",
               position: "relative",
               marginTop: "0",

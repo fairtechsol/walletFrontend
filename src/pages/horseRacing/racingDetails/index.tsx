@@ -430,7 +430,6 @@ const RacingDetails = () => {
             showBox={matchDetail?.matchOdd?.activeStatus === "save"}
             minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
             maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
-            liveData={matchDetail?.matchOdd}
             data={
               matchDetail?.matchOdd?.runners?.length > 0
                 ? matchDetail?.matchOdd?.runners

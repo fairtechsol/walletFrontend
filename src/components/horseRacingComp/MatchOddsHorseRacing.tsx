@@ -6,6 +6,23 @@ import Divider from "../Inplay/Divider";
 import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import BoxComponentHorseRacing from "./BoxComponentHorseRacing";
 
+interface MatchOddsHorseRacingProps {
+  currentMatch: any;
+  data: any;
+  minBet: number | string;
+  maxBet: number | string;
+  typeOfBet: any;
+  locked?: boolean;
+  blockMatch?: any;
+  handleShowLock?: any;
+  selft?: any;
+  showBox: boolean;
+  upcoming?: boolean;
+  showUnlock?: any;
+  handleBlock?: any;
+  handleHide?: any;
+}
+
 const MatchOddsHorseRacing = ({
   currentMatch,
   data,
@@ -21,7 +38,7 @@ const MatchOddsHorseRacing = ({
   showUnlock,
   handleBlock,
   handleHide,
-}: any) => {
+}: MatchOddsHorseRacingProps) => {
   const [visible, setVisible] = useState(true);
 
   const onSubmit = (value: any) => {

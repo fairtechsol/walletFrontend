@@ -6,14 +6,10 @@ import {
   useTheme,
 } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
-import { memo, useEffect, useState } from "react";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
-import MobileViewUserDetails from "./MobileViewUserDetails";
-
 import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { EyeIcon, EyeSlash } from "../../../assets";
 import {
   changeAmmountUser,
   getTotalBalance,
@@ -24,6 +20,9 @@ import {
 import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { depositAmountValidations } from "../../../utils/Validations";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
+import MobileViewUserDetails from "./MobileViewUserDetails";
 
 const initialValues: any = {
   userId: "",
@@ -326,12 +325,10 @@ const WithdrawComponent = ({
                     paddingX: "20px",
                   }}
                 >
-                  {/* replace(/[^\w\s]/gi, '') */}
                   <TextField
                     required={true}
                     id="amount"
                     name="amount"
-                    // value={formik.values.amount}
                     value={numberWithCommas(formik.values.amount?.toString())}
                     variant="standard"
                     InputProps={{
@@ -349,13 +346,10 @@ const WithdrawComponent = ({
                       },
                     }}
                     type="text"
-                    // onChange={formik.handleChange}
                     onChange={(e: any) => checkHandleChange(e)}
                   />
                 </Box>
               </Box>
-
-              {/* wallet */}
               <Box
                 sx={{
                   width: { xs: "41%", lg: "100%" },
@@ -385,7 +379,6 @@ const WithdrawComponent = ({
                   sx={{
                     width: { xs: "100%", lg: "43%", md: "43%" },
                     height: "45px",
-                    // background: "#FFECBC",
                     background: "#ECECEC",
                     display: "flex",
                     alignItems: "center",
@@ -535,8 +528,6 @@ const WithdrawComponent = ({
                 flexDirection: "row-reverse",
               }}
             >
-              {/* Remark */}
-
               <Box
                 sx={{
                   flex: 1,
@@ -573,7 +564,6 @@ const WithdrawComponent = ({
                   }}
                 />
               </Box>
-
               <Box
                 sx={{
                   display: "flex",
@@ -613,7 +603,6 @@ const WithdrawComponent = ({
                 />
               </Box>
             </Box>
-
             <Box
               sx={{
                 display: "flex",
