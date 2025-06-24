@@ -25,8 +25,12 @@ const Inplay = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { loading, matchListInplay, success, matchListInplaySuccess } =
-    useSelector((state: RootState) => state.match.matchList);
+  const {
+    loading,
+    matchListInplay,
+    success,
+    matchListInplaySuccess,
+  } = useSelector((state: RootState) => state.match.matchList);
 
   const useStyles = makeStyles({
     whiteTextPagination: {
@@ -64,6 +68,18 @@ const Inplay = () => {
     }
   };
 
+  const getMatchListServiceOnDeclare = (event: any) => {
+    try {
+      if (!event?.betId) {
+        setTimeout(() => {
+          dispatch(getMatchListInplay({ currentPage: currentPage }));
+        }, 1000);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName && socket) {
@@ -75,10 +91,14 @@ const Inplay = () => {
         matchListInplay?.matches?.map((item: any) => {
           socketService.match.joinMatchRoom(item?.id);
         });
-        socketService.match.matchResultDeclared(getMatchListService);
-        socketService.match.matchResultUnDeclared(getMatchListService);
-        socketService.match.declaredMatchResultAllUser(getMatchListService);
-        socketService.match.unDeclaredMatchResultAllUser(getMatchListService);
+        socketService.match.matchResultDeclared(getMatchListServiceOnDeclare);
+        socketService.match.matchResultUnDeclared(getMatchListServiceOnDeclare);
+        socketService.match.declaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
+        socketService.match.unDeclaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
         socketService.match.matchAdded(getMatchListService);
       }
     } catch (e) {

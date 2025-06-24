@@ -26,8 +26,12 @@ const Inplay = () => {
   const { type } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { loading, matchListInplay, success, matchListInplaySuccess } =
-    useSelector((state: RootState) => state.match.matchList);
+  const {
+    loading,
+    matchListInplay,
+    success,
+    matchListInplaySuccess,
+  } = useSelector((state: RootState) => state.match.matchList);
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
@@ -35,7 +39,6 @@ const Inplay = () => {
       },
     },
   });
-
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -62,6 +65,20 @@ const Inplay = () => {
       }, 500);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getMatchListServiceOnDeclare = (event: any) => {
+    try {
+      if (event?.gameType == type && !event?.betId) {
+        setTimeout(() => {
+           dispatch(
+          getMatchListInplay({ currentPage: currentPage, matchType: type })
+        );
+        }, 500);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -93,10 +110,14 @@ const Inplay = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
-        socketService.match.matchResultDeclared(getMatchListService);
-        socketService.match.matchResultUnDeclared(getMatchListService);
-        socketService.match.declaredMatchResultAllUser(getMatchListService);
-        socketService.match.unDeclaredMatchResultAllUser(getMatchListService);
+        socketService.match.matchResultDeclared(getMatchListServiceOnDeclare);
+        socketService.match.matchResultUnDeclared(getMatchListServiceOnDeclare);
+        socketService.match.declaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
+        socketService.match.unDeclaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
         socketService.match.matchAdded(getMatchListService);
       }
     } catch (e) {
