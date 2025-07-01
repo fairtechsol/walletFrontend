@@ -45,8 +45,9 @@ const PlaceBetComponent = ({ profitLoss, index }: PlaceBetComponentProps) => {
               ? "Profit/Loss"
               : handleNumber(
                   parseFloat(
-                    profitLoss?.betPlaced?.[index] ||
-                      profitLoss?.betPlaced?.[index]?.profitLoss ||
+                    (isNaN(profitLoss?.betPlaced?.[index])
+                      ? profitLoss?.betPlaced?.[index]?.profitLoss
+                      : profitLoss?.betPlaced?.[index]) ||
                       profitLoss?.profitLoss?.[index]
                   ).toFixed(2),
                   ""
