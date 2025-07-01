@@ -36,6 +36,8 @@ const MatchList = ({
 
   const handleClick = () => {
     try {
+      if (element?.matchName?.toLowerCase() !== "settled") return;
+
       if (
         showCommisionReport &&
         selectedId?.matchId == element?.matchId &&
@@ -72,9 +74,7 @@ const MatchList = ({
   return (
     <Box sx={{ width: "100%" }}>
       <Box
-        onClick={() => {
-          element?.matchName?.toLowerCase() !== "settled" && handleClick();
-        }}
+        onClick={handleClick}
         sx={{
           width: "100%",
           height: "50px",
