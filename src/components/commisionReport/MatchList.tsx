@@ -143,7 +143,7 @@ const MatchList = ({
                 fontWeight: "500",
               }}
             >
-              ({moment(element?.matchStartDate).format("DD-MM-YYYY")})
+              ({moment(element?.matchStartDate).format("DD-MM-YYYY HH:mm:ss")})
             </Typography>
           </Box>
           <Box
