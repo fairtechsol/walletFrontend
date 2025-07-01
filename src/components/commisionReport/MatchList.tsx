@@ -35,7 +35,6 @@ const MatchList = ({
   );
 
   const handleClick = () => {
-    debugger
     try {
       if (element?.matchName?.toLowerCase() === "settled") return;
 
