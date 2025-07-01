@@ -115,3 +115,7 @@ export const customSortBySessionMarketName = (
   const orderB = order[nameB] || Infinity;
   return orderA - orderB;
 };
+
+export const roundToTwoDecimals = (value: any) => {
+  return Math.round(value * 100) / 100;
+};

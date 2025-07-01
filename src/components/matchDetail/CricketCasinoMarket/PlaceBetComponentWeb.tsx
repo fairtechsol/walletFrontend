@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { UD } from "../../../assets";
-import { handleNumber } from "../../../helper";
+import { handleNumber, roundToTwoDecimals } from "../../../helper";
 import { getSessionProLoss } from "../../../store/actions/match/matchAction";
 import { AppDispatch } from "../../../store/store";
 
@@ -63,12 +63,12 @@ const PlaceBetComponentWeb = ({
           {!profitLoss?.profitLoss && !profitLoss?.betPlaced
             ? "Profit/Loss"
             : handleNumber(
-                parseFloat(
+                roundToTwoDecimals(
                   (isNaN(profitLoss?.betPlaced?.[index])
                     ? profitLoss?.betPlaced?.[index]?.profitLoss
                     : profitLoss?.betPlaced?.[index]) ||
                     profitLoss?.profitLoss?.[index]
-                ).toFixed(2),
+                ),
                 ""
               )}
         </Typography>
