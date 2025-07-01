@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { memo } from "react";
-import { handleNumber } from "../../../helper";
+import { handleNumber, roundToTwoDecimals } from "../../../helper";
 
 interface PlaceBetComponentProps {
   profitLoss: any;
@@ -44,12 +44,12 @@ const PlaceBetComponent = ({ profitLoss, index }: PlaceBetComponentProps) => {
             {!profitLoss?.profitLoss && !profitLoss?.betPlaced
               ? "Profit/Loss"
               : handleNumber(
-                  parseFloat(
+                  roundToTwoDecimals(
                     (isNaN(profitLoss?.betPlaced?.[index])
                       ? profitLoss?.betPlaced?.[index]?.profitLoss
                       : profitLoss?.betPlaced?.[index]) ||
                       profitLoss?.profitLoss?.[index]
-                  ).toFixed(2),
+                  ),
                   ""
                 )}
           </Typography>
