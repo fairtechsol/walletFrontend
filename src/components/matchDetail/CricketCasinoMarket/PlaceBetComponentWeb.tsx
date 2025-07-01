@@ -64,7 +64,8 @@ const PlaceBetComponentWeb = ({
             ? "Profit/Loss"
             : handleNumber(
                 parseFloat(
-                  profitLoss?.betPlaced?.[index] ??
+                  profitLoss?.betPlaced?.[index] ||
+                    profitLoss?.betPlaced?.[index]?.profitLoss ||
                     profitLoss?.profitLoss?.[index]
                 ).toFixed(2),
                 ""
