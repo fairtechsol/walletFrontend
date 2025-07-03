@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import _ from "lodash";
 import {
   addRunAmount,
   getPlacedBets,
   getSessionProLoss,
   getSessionProfitLossMatchDetailFilter,
   removeRunAmount,
+  resetPlacedBets,
   resetSessionProLoss,
   updateBetDataOnDeclare,
   updateBetsPlaced,
@@ -46,62 +48,63 @@ const betsSlice = createSlice({
       })
       .addCase(getPlacedBets.fulfilled, (state, action) => {
         state.success = true;
-        state.placedBets = action?.payload;
+        state.placedBets = action.payload;
         state.loading = false;
       })
       .addCase(getPlacedBets.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
+      })
+      .addCase(resetPlacedBets, (state) => {
+        state.placedBets = [];
       })
       .addCase(updateBetsPlaced.fulfilled, (state, action) => {
-        const { newBet, myStake, userName } = action?.payload;
-        const betId = action?.payload?.betId;
-        const user = {
-          userName: userName,
-        };
-        if (!state.placedBets?.some((item: any) => item?.id === betId)) {
-          newBet.myStake = myStake;
-          newBet.user = user;
-          state.placedBets = [newBet, ...state.placedBets];
+        const { newBet, myStake, userName, betId } = action.payload;
+        const currentPlacedBets = _.get(state, "placedBets", []);
+
+        if (!_.some(currentPlacedBets, { id: betId })) {
+          state.placedBets = [
+            _.assign({}, newBet, {
+              myStake,
+              user: { userName },
+            }),
+            ...currentPlacedBets,
+          ];
         }
       })
       .addCase(updateProfitLoss.fulfilled, (state, action) => {
-        const { jobData, profitLoss } = action?.payload;
+        const { jobData, profitLoss } = action.payload;
         if (jobData?.betPlaceObject?.betPlacedData?.betId) {
           const updatedSessionProLoss = state?.sessionProLoss?.map(
             (item: any) =>
               item?.id === jobData?.betPlaceObject?.betPlacedData?.betId
                 ? {
                     ...item,
-                    proLoss: [
-                      JSON.stringify(profitLoss),
-                      ...item.proLoss.slice(1),
-                    ],
+                    proLoss: profitLoss,
                   }
                 : item
           );
-
           state.sessionProLoss = updatedSessionProLoss;
         }
       })
       .addCase(updateBetDataOnDeclare.fulfilled, (state, action) => {
-        const { betId } = action?.payload;
+        const { betId } = action.payload;
         state.placedBets = state.placedBets?.filter(
           (items: any) => items?.betId != betId
         );
       })
       .addCase(addRunAmount.fulfilled, (state, action) => {
-        const data = action?.payload;
-        let idToAdd = data.id;
+        const { id } = action.payload;
+
         if (
-          idToAdd &&
-          !state?.sessionProLoss?.find((item: any) => item?.id === idToAdd)
+          id &&
+          !_.some(state.sessionProLoss, (item: any) => item.id === id)
         ) {
-          state?.sessionProLoss?.push(action?.payload);
+          state.sessionProLoss?.push(action.payload);
         }
       })
       .addCase(removeRunAmount.fulfilled, (state, action) => {
-        const { betId } = action?.payload;
+        const { betId } = action.payload;
         state.sessionProLoss = state?.sessionProLoss?.filter(
           (item: any) => item?.id !== betId
         );
@@ -114,82 +117,78 @@ const betsSlice = createSlice({
       .addCase(getSessionProLoss.fulfilled, (state, action) => {
         state.loadingProLoss = false;
         state.successProLoss = true;
-        const idToAdd = action?.payload?.id;
+        const { id } = action.payload;
 
         if (
-          idToAdd &&
-          !state?.sessionProLoss?.some((item: any) => item?.id === idToAdd)
+          id &&
+          !state?.sessionProLoss?.some((item: any) => item?.id === id)
         ) {
-          state?.sessionProLoss?.push(action?.payload);
+          state?.sessionProLoss?.push(action.payload);
         }
       })
       .addCase(getSessionProLoss.rejected, (state, action) => {
         state.loadingProLoss = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(resetSessionProLoss, (state) => {
-        return { ...state, successProLoss: false, sessionProLoss: [] };
+        state.successProLoss = false;
+        state.sessionProLoss = [];
       })
       .addCase(
         getSessionProfitLossMatchDetailFilter.fulfilled,
         (state, action) => {
-          const idToRemove = action?.payload;
-          state.sessionProLoss = state?.sessionProLoss?.filter(
-            (item: any) => item?.id !== idToRemove
+          const idToRemove = action.payload;
+
+          if (!idToRemove || !Array.isArray(state.sessionProLoss)) return;
+
+          state.sessionProLoss = _.filter(
+            state.sessionProLoss,
+            (item: any) => item.id !== idToRemove
           );
         }
       )
       .addCase(updatePlacedbets.fulfilled, (state, action) => {
         const {
-          betPlacedId,
+          betPlacedId = [],
           deleteReason,
           profitLoss,
           betId,
           isPermanentDelete,
-        } = action?.payload;
-        const updateDeleteReason = (bet: any) => {
-          if (betPlacedId?.includes(bet?.id)) {
-            bet.deleteReason = deleteReason;
-          }
-          return bet;
-        };
+        } = action.payload;
+
+        if (!Array.isArray(betPlacedId) || betPlacedId.length === 0) return;
+
         if (isPermanentDelete) {
-          const updatedBetPlaced = state?.placedBets?.filter(
-            (item: any) => !betPlacedId?.includes(item?.id)
+          state.placedBets = state.placedBets?.filter(
+            (bet: any) => !betPlacedId.includes(bet.id)
           );
-          state.placedBets = Array.from(new Set(updatedBetPlaced));
         } else {
-          const updatedBetPlaced = state?.placedBets?.map(updateDeleteReason);
-          state.placedBets = Array.from(new Set(updatedBetPlaced));
+          state.placedBets = state.placedBets?.map((bet: any) =>
+            betPlacedId.includes(bet.id) ? { ...bet, deleteReason } : bet
+          );
         }
 
-        if (betPlacedId) {
-          const updatedSessionProLoss = state?.sessionProLoss?.map(
-            (item: any) =>
-              betId === item?.id
-                ? {
-                    ...item,
-
-                    proLoss: [
-                      JSON.stringify(profitLoss),
-                      ...item.proLoss.slice(1),
-                    ],
-                  }
-                : item
+        if (state.sessionProLoss && betId && profitLoss) {
+          state.sessionProLoss = state.sessionProLoss.map((session: any) =>
+            session.id === betId
+              ? {
+                  ...session,
+                  proLoss: profitLoss,
+                }
+              : session
           );
-          state.sessionProLoss = updatedSessionProLoss;
         }
       })
+
       .addCase(updatePlacedbetsDeleteReason.fulfilled, (state, action) => {
-        const { betIds, deleteReason } = action?.payload;
-        const updateDeleteReason = (bet: any) => {
-          if (betIds?.includes(bet?.id)) {
-            bet.deleteReason = deleteReason;
-          }
-          return bet;
-        };
-        const updatedBetPlaced = state?.placedBets?.map(updateDeleteReason);
-        state.placedBets = Array.from(new Set(updatedBetPlaced));
+        const { betIds, deleteReason } = action.payload;
+
+        state.placedBets = _.uniqBy(
+          _.map(state.placedBets, (bet: any) =>
+            _.includes(betIds, bet?.id) ? { ...bet, deleteReason } : bet
+          ),
+          "id"
+        );
       });
   },
 });

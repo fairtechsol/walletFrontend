@@ -38,34 +38,32 @@ const multipleMatchDetailSlice = createSlice({
       })
       .addCase(getMultipleMatchDetailHorseRacing.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(
         updateMultiMatchRatesForHorseRacing.fulfilled,
         (state, action) => {
-          const { matchOdd } = action.payload;
+          const { matchOdd, id } = action.payload;
 
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === action?.payload?.id) {
-                return {
-                  ...match,
-                  matchOdd: {
-                    ...match.matchOdd,
-                    ...matchOdd,
-                    runners: match?.matchOdd?.runners?.map((item: any) => {
-                      const runnersData = matchOdd?.runners?.find(
-                        (items: any) => items?.selectionId == item?.selectionId
-                      );
-                      return {
-                        ...item,
-                        ...runnersData,
-                      };
-                    }),
-                  },
-                };
-              }
-              return match;
+              if (match?.id !== id) return match;
+              return {
+                ...match,
+                matchOdd: {
+                  ...match.matchOdd,
+                  ...matchOdd,
+                  runners: match?.matchOdd?.runners?.map((item: any) => {
+                    const runnersData = matchOdd?.runners?.find(
+                      (items: any) => items?.selectionId == item?.selectionId
+                    );
+                    return {
+                      ...item,
+                      ...runnersData,
+                    };
+                  }),
+                },
+              };
             }
           );
         }
@@ -76,13 +74,11 @@ const multipleMatchDetailSlice = createSlice({
           const { userRedisObj, jobData } = action.payload;
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === jobData?.newBet?.matchId) {
-                return {
-                  ...match,
-                  profitLossDataMatch: userRedisObj,
-                };
-              }
-              return match;
+              if (match?.id !== jobData?.newBet?.matchId) return match;
+              return {
+                ...match,
+                profitLossDataMatch: userRedisObj,
+              };
             }
           );
         }
@@ -90,16 +86,14 @@ const multipleMatchDetailSlice = createSlice({
       .addCase(
         updateTeamRatesOnDeleteForMultiMatchRace.fulfilled,
         (state, action) => {
-          const { teamRate } = action.payload;
+          const { teamRate, matchId } = action.payload;
           state.multipleMatchDetail = state.multipleMatchDetail.map(
             (match: any) => {
-              if (match?.id === action.payload?.matchId) {
-                return {
-                  ...match,
-                  profitLossDataMatch: teamRate,
-                };
-              }
-              return match;
+              if (match?.id !== matchId) return match;
+              return {
+                ...match,
+                profitLossDataMatch: teamRate,
+              };
             }
           );
         }

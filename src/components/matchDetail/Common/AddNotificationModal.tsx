@@ -1,8 +1,16 @@
-import { memo } from "react";
-import { useState } from "react";
 import { Box, Modal, TextField, Typography } from "@mui/material";
-import DeleteBetButton from "../../Common/DeleteBetButton";
+import { memo, useState } from "react";
 import { CancelDark } from "../../../assets";
+import DeleteBetButton from "../../Common/DeleteBetButton";
+
+interface AddNotificationModalProps {
+  visible: boolean;
+  setVisible: (value: boolean) => void;
+  title: string;
+  onDone: (value: any) => void;
+  loadingDeleteBet: boolean;
+  buttonText: string;
+}
 
 const AddNotificationModal = ({
   visible,
@@ -11,7 +19,7 @@ const AddNotificationModal = ({
   onDone,
   loadingDeleteBet,
   buttonText,
-}: any) => {
+}: AddNotificationModalProps) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
@@ -120,7 +128,6 @@ const AddNotificationModal = ({
                 }}
                 style={{
                   width: "96%",
-                  // marginX: "2%",
                   height: "100px",
                   marginTop: "10px",
                 }}
@@ -133,7 +140,7 @@ const AddNotificationModal = ({
             >
               {error && (
                 <Typography sx={{ fontSize: "12px", color: "#ff0000" }}>
-                  Field Required !
+                  Field Required!
                 </Typography>
               )}
             </Box>
@@ -147,16 +154,7 @@ const AddNotificationModal = ({
                 alignItems: "center",
               }}
             >
-              <DeleteBetButton
-                type="submit"
-                loading={loadingDeleteBet}
-                buttonStyle={{
-                  backgroundColor: "#0B4F26",
-                  color: "white",
-                  "&:hover": { backgroundColor: "#0B4F26" },
-                }}
-                title={buttonText}
-              />
+              <DeleteBetButton type="submit" title={buttonText} />
             </Box>
           </Box>
         </form>

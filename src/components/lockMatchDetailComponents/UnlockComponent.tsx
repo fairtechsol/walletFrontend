@@ -1,14 +1,28 @@
 import { TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
-import { CANCEL, LockIcon, UnLockIcon, eye,eyeLock } from "../../assets";
-const UnlockComponent = ({ onSubmit, title, unlock, handleHide }: any) => {
-  const [password, setPassword] = useState('');
+import { memo, useState } from "react";
+import { CANCEL, LockIcon, UnLockIcon, eye, eyeLock } from "../../assets";
+
+interface UnlockComponentProps {
+  onSubmit: (val: any) => void;
+  title: string;
+  unlock: any;
+  handleHide: any;
+}
+
+const UnlockComponent = ({
+  onSubmit,
+  title,
+  unlock,
+  handleHide,
+}: UnlockComponentProps) => {
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <Box
       sx={{
@@ -88,7 +102,7 @@ const UnlockComponent = ({ onSubmit, title, unlock, handleHide }: any) => {
             }}
           />
           <img
-            src={showPassword?eye:eyeLock}
+            src={showPassword ? eye : eyeLock}
             onClick={togglePasswordVisibility}
             style={{
               width: "12px",
@@ -115,7 +129,7 @@ const UnlockComponent = ({ onSubmit, title, unlock, handleHide }: any) => {
               borderRadius: "5px",
               height: "35px",
               background: "#0B4F26",
-              cursor:"pointer"
+              cursor: "pointer",
             }}
           >
             <Typography sx={{ color: "white", fontSize: "14px" }}>
@@ -127,4 +141,4 @@ const UnlockComponent = ({ onSubmit, title, unlock, handleHide }: any) => {
     </Box>
   );
 };
-export default UnlockComponent;
+export default memo(UnlockComponent);

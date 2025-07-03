@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeleteIcon } from "../../../assets";
@@ -19,7 +19,7 @@ import UserProfitLossRace from "../../../components/horseRacingComp/userProfitLo
 import AddNotificationModal from "../../../components/matchDetail/Common/AddNotificationModal";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import { getTimeLeft } from "../../../helper";
-import { socket, socketService, matchService } from "../../../socketManager";
+import { matchService, socket, socketService } from "../../../socketManager";
 import {
   getMatchDetailHorseRacing,
   getUserProfitLossForRace,
@@ -54,7 +54,6 @@ const RacingDetails = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedBetData, setSelectedBetData] = useState([]);
   const [permanentDeletePopShow, setPermanentDeletePopShow] = useState(false);
-  // const { state } = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const { success, matchDetail } = useSelector(
     (state: RootState) => state.horseRacing.matchDetail
@@ -72,11 +71,11 @@ const RacingDetails = () => {
   });
 
   useEffect(() => {
-    if(id){
+    if (id) {
       matchService.connect([id], profileDetail?.roleName);
     }
     return () => {
-      matchService.disconnect(); 
+      matchService.disconnect();
     };
   }, [id]);
 
@@ -241,7 +240,7 @@ const RacingDetails = () => {
         dispatch(getMatchDetailHorseRacing(id));
         dispatch(getUserProfitLossForRace(id));
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`eq${id}`));
+        dispatch(getPlacedBets(`matchId=eq${id}`));
       }
     } catch (e) {
       console.log(e);
@@ -288,7 +287,7 @@ const RacingDetails = () => {
         if (id) {
           dispatch(getMatchDetailHorseRacing(id));
           dispatch(getUserProfitLossForRace(id));
-          dispatch(getPlacedBets(`eq${id}`));
+          dispatch(getPlacedBets(`matchId=eq${id}`));
         }
       } else if (document.visibilityState === "hidden") {
         socketService.match.leaveMatchRoom(id);
@@ -307,7 +306,7 @@ const RacingDetails = () => {
       const intervalId = setInterval(() => {
         dispatch(getMatchDetailHorseRacing(id));
         dispatch(getUserProfitLossForRace(id));
-        dispatch(getPlacedBets(`eq${id}`));
+        dispatch(getPlacedBets(`matchId=eq${id}`));
       }, 14100 * 1000);
 
       return () => {
@@ -335,40 +334,24 @@ const RacingDetails = () => {
   return (
     <>
       {visible && selectedBetData.length > 0 && (
-        <>
-          <AddNotificationModal
-            value={""}
-            title={"Add Remark"}
-            visible={visible}
-            loadingDeleteBet={loading}
-            setVisible={setVisible}
-            onDone={handleDeleteBet}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              setVisible(false);
-              setMode({ type: "", value: false });
-            }}
-            buttonText="Delete"
-          />
-        </>
+        <AddNotificationModal
+          title="Add Remark"
+          visible={visible}
+          loadingDeleteBet={loading}
+          setVisible={setVisible}
+          onDone={handleDeleteBet}
+          buttonText="Delete"
+        />
       )}
       {visibleEdit && selectedBetData.length > 0 && (
-        <>
-          <AddNotificationModal
-            value={""}
-            title={"Edit Remark"}
-            visible={visibleEdit}
-            loadingDeleteBet={loading}
-            setVisible={setVisibleEdit}
-            onDone={handleEditDeleteBetReason}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              setVisibleEdit(false);
-              setMode({ type: "", value: false });
-            }}
-            buttonText="Edit"
-          />
-        </>
+        <AddNotificationModal
+          title="Edit Remark"
+          visible={visibleEdit}
+          loadingDeleteBet={loading}
+          setVisible={setVisibleEdit}
+          onDone={handleEditDeleteBetReason}
+          buttonText="Edit"
+        />
       )}
       <Dialog
         open={selectedBetData.length > 0 && permanentDeletePopShow}
@@ -443,11 +426,10 @@ const RacingDetails = () => {
           </Typography>
           <MatchOddsHorseRacing
             currentMatch={matchDetail}
-            typeOfBet={"Match Odds"}
+            typeOfBet="Match Odds"
             showBox={matchDetail?.matchOdd?.activeStatus === "save"}
             minBet={Math.floor(matchDetail?.matchOdd?.minBet)}
             maxBet={Math.floor(matchDetail?.matchOdd?.maxBet)}
-            liveData={matchDetail?.matchOdd}
             data={
               matchDetail?.matchOdd?.runners?.length > 0
                 ? matchDetail?.matchOdd?.runners
@@ -456,9 +438,8 @@ const RacingDetails = () => {
           />
           {matchesMobile && (
             <UserProfitLossRace
-              single={"single"}
-              title={"User Profit Loss"}
-              // matchId={matchId}
+              single="single"
+              title="User Profit Loss"
               matchDetail={matchDetail}
             />
           )}
@@ -503,13 +484,13 @@ const RacingDetails = () => {
                     marginRight: "10px",
                   }}
                 >
-                  {"Cancel"}
+                  Cancel
                 </Typography>
               </Box>
             )}
-           {!["edit", "delete"].includes(mode?.type) && mode.value && (
+            {!["edit", "delete"].includes(mode?.type) && mode.value && (
               <>
-                <Box sx={{ width: "2%" }}></Box>
+                <Box sx={{ width: "2%" }} />
                 <Box
                   onClick={() => {
                     setPermanentDeletePopShow(true);
@@ -536,7 +517,7 @@ const RacingDetails = () => {
                       marginRight: "10px",
                     }}
                   >
-                    {"Delete"}
+                    Delete
                   </Typography>
                   <img
                     src={DeleteIcon}
@@ -547,7 +528,7 @@ const RacingDetails = () => {
             )}
             {!["edit", "deletePermanent"].includes(mode?.type) && (
               <>
-                <Box sx={{ width: "2%" }}></Box>
+                <Box sx={{ width: "2%" }} />
                 <Box
                   onClick={() => {
                     if (mode.value && mode?.type === "delete") {
@@ -595,7 +576,7 @@ const RacingDetails = () => {
             )}
             {!["delete", "deletePermanent"].includes(mode?.type) && (
               <>
-                <Box sx={{ width: "2%" }}></Box>
+                <Box sx={{ width: "2%" }} />
                 <Box
                   onClick={() => {
                     if (mode.value && mode?.type === "edit") {
@@ -695,15 +676,12 @@ const RacingDetails = () => {
                 width: "100%",
               }}
             >
-              <Box sx={{ width: "2%" }}></Box>
-              <Box
-                sx={{ width: "150px", marginY: ".75%", height: "15px" }}
-              ></Box>
+              <Box sx={{ width: "2%" }} />
+              <Box sx={{ width: "150px", marginY: ".75%", height: "15px" }} />
             </Box>
-
             <UserProfitLossRace
-              single={"single"}
-              title={"User Profit Loss"}
+              single="single"
+              title="User Profit Loss"
               matchDetail={matchDetail}
             />
           </Box>
@@ -713,4 +691,4 @@ const RacingDetails = () => {
   );
 };
 
-export default RacingDetails;
+export default memo(RacingDetails);

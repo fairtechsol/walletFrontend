@@ -33,10 +33,7 @@ export interface LoaderInterface {
 }
 
 export interface PaginationInterface {
-  getListOfUser?: (value: any) => void;
-  currentLimit?: any;
   currentPage: number;
   pages: string | number;
   setCurrentPage: (value: any) => void;
-  className?: any;
 }

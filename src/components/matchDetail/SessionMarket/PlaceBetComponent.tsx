@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleNumber } from "../../../helper";
 import {
@@ -7,7 +8,19 @@ import {
 } from "../../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../../store/store";
 
-const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
+interface PlaceBetComponentProps {
+  newData: any;
+  profitLoss: any;
+  color?: string;
+  type?: any;
+}
+
+const PlaceBetComponent = ({
+  newData,
+  profitLoss,
+  color,
+  type,
+}: PlaceBetComponentProps) => {
   const dispatch: AppDispatch = useDispatch();
   const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
 
@@ -16,7 +29,6 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   );
   return (
     <Box
-      //   onClick={handleClick}
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -25,7 +37,6 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
       }}
     >
       <Box
-        // ref={innerRef}
         onClick={() => {
           if (marketAnalysis?.betType) {
             const currBetPL = [
@@ -39,12 +50,12 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
               dispatch(
                 addRunAmount({
                   id: newData?.id,
-                  name: newData?.name,
+                  name: newData?.name || newData?.RunnerName,
                   type: !newData?.isManual
                     ? "Session Market"
                     : "Quick Session Market",
                   matchId: newData?.matchId,
-                  proLoss: JSON.stringify(currBetPL?.profitLoss),
+                  proLoss: currBetPL?.profitLoss,
                 })
               );
             }
@@ -115,16 +126,11 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
           <Typography
             sx={{
               marginTop: "2px",
-              fontSize: {
-                lg: !profitLoss?.maxLoss ? "8px" : "8px",
-                md: "8px",
-                xs: "8px",
-              },
-              fontWeight: !profitLoss?.maxLoss ? "500" : "500",
+              fontSize: "8px",
+              fontWeight: "500",
               color: "white",
             }}
           >
-            {" "}
             {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
           </Typography>
         </Box>
@@ -133,4 +139,4 @@ const PlaceBetComponent = ({ newData, profitLoss, color, type }: any) => {
   );
 };
 
-export default PlaceBetComponent;
+export default memo(PlaceBetComponent);

@@ -1,10 +1,10 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import { EyeIcon, EyeSlash } from "../../../assets";
-import StyledImage from "../../Common/StyledImages";
-import BoxButton from "./BoxButton";
 import { useFormik } from "formik";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { EyeIcon, EyeSlash } from "../../../assets";
+import { formatToINR } from "../../../helper";
 import {
   getTotalBalance,
   getUserList,
@@ -13,10 +13,10 @@ import {
   userListSuccessReset,
 } from "../../../store/actions/user/userAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { depositAmountValidations } from "../../../utils/Validations";
 import { ApiConstants } from "../../../utils/Constants";
-import { formatToINR } from "../../../helper";
-import { toast } from "react-toastify";
+import { depositAmountValidations } from "../../../utils/Validations";
+import StyledImage from "../../Common/StyledImages";
+import BoxButton from "./BoxButton";
 
 const initialValues: any = {
   userId: "",
@@ -26,17 +26,27 @@ const initialValues: any = {
   remark: "",
 };
 
-const SetCreditComponent = (props: any) => {
-  const {
-    isWallet,
-    handleKeyDown,
-    backgroundColor,
-    setSelected,
-    element,
-    endpoint,
-    onChangeAmount,
-    currentPage,
-  } = props;
+interface SetCreditComponentProps {
+  isWallet?: boolean;
+  handleKeyDown?: any;
+  backgroundColor?: any;
+  setSelected: (val?: boolean) => void;
+  element?: any;
+  endpoint?: any;
+  onChangeAmount: (val: any, val2: any, val3: any) => void;
+  currentPage?: any;
+}
+
+const SetCreditComponent = ({
+  isWallet,
+  handleKeyDown,
+  backgroundColor,
+  setSelected,
+  element,
+  endpoint,
+  onChangeAmount,
+  currentPage,
+}: SetCreditComponentProps) => {
   const [showPass, setShowPass] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -49,8 +59,6 @@ const SetCreditComponent = (props: any) => {
 
     formik.setFieldValue("amount", value);
     onChangeAmount(value, element?.id, "credit");
-    // console.log(event)    // onChangeAmount(formik.values.amount, element?.id, "deposite");
-    // setChexckValue(event.target.value);
   };
 
   const formik = useFormik({
@@ -115,8 +123,9 @@ const SetCreditComponent = (props: any) => {
             url: { endpoint: ApiConstants.USER.LIST },
           })
         );
+        dispatch(getTotalBalance());
+        dispatch(getUsersProfile());
       }
-      dispatch(getTotalBalance());
       setSubmitting(false);
       dispatch(userListSuccessReset());
     }
@@ -172,8 +181,6 @@ const SetCreditComponent = (props: any) => {
                 required={true}
                 name={"amount"}
                 id={"amount"}
-                // value={formik.values.amount}
-                // onChange={formik.handleChange}
                 value={formatToINR(
                   parseFloat(formik.values.amount?.toString())
                 )}
@@ -256,6 +263,7 @@ const SetCreditComponent = (props: any) => {
               >
                 <StyledImage
                   src={showPass ? EyeIcon : EyeSlash}
+                  alt="eye"
                   sx={{ height: "14px", width: "20px" }}
                 />
               </Box>
@@ -297,7 +305,6 @@ const SetCreditComponent = (props: any) => {
             />
           </Box>
         </Box>
-
         <Box
           sx={{
             display: "flex",
@@ -334,7 +341,6 @@ const SetCreditComponent = (props: any) => {
               title={"Cancel"}
             />
           </Box>
-
           <Box sx={{ display: "flex", width: "150px" }}>
             <BoxButton
               color={"#0B4F26"}
@@ -352,4 +358,4 @@ const SetCreditComponent = (props: any) => {
   );
 };
 
-export default SetCreditComponent;
+export default memo(SetCreditComponent);

@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import MatchComponent from "../../components/Inplay/MatchComponent";
@@ -16,6 +16,7 @@ import Loader from "../../components/Loader";
 import { socketService } from "../../socketManager";
 import {
   getMatchListInplay,
+  matchListInplaySuccessReset,
   updateMatchRatesFromApiOnList,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
@@ -25,17 +26,19 @@ const Inplay = () => {
   const { type } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { loading, matchListInplay, success } = useSelector(
-    (state: RootState) => state.match.matchList
-  );
+  const {
+    loading,
+    matchListInplay,
+    success,
+    matchListInplaySuccess,
+  } = useSelector((state: RootState) => state.match.matchList);
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });
-
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
@@ -49,7 +52,7 @@ const Inplay = () => {
         dispatch(updateMatchRatesFromApiOnList(resp?.data));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -63,6 +66,30 @@ const Inplay = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getMatchListServiceOnDeclare = (event: any) => {
+    try {
+      if (event?.gameType == type && !event?.betId) {
+        setTimeout(() => {
+           dispatch(
+          getMatchListInplay({ currentPage: currentPage, matchType: type })
+        );
+        }, 500);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClick = (match: any) => {
+    navigate(`/wallet/matchList/${match?.matchType}/${match?.id}`, {
+      state: {
+        submit: true,
+        matchId: match?.id,
+        matchType: match?.matchType,
+      },
+    });
   };
 
   useEffect(() => {
@@ -83,13 +110,14 @@ const Inplay = () => {
         socketService.match.declaredMatchResultAllUserOff();
         socketService.match.unDeclaredMatchResultAllUserOff();
         socketService.match.matchAddedOff();
-        // matchListInplay?.matches?.map((item: any) => {
-        //   socketService.match.joinMatchRoom(item?.id, profileDetail?.roleName);
-        // });
-        socketService.match.matchResultDeclared(getMatchListService);
-        socketService.match.matchResultUnDeclared(getMatchListService);
-        socketService.match.declaredMatchResultAllUser(getMatchListService);
-        socketService.match.unDeclaredMatchResultAllUser(getMatchListService);
+        socketService.match.matchResultDeclared(getMatchListServiceOnDeclare);
+        socketService.match.matchResultUnDeclared(getMatchListServiceOnDeclare);
+        socketService.match.declaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
+        socketService.match.unDeclaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
         socketService.match.matchAdded(getMatchListService);
       }
     } catch (e) {
@@ -99,9 +127,6 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      // matchListInplay?.matches?.map((item: any) => {
-      //   socketService.match.leaveMatchRoom(item?.id);
-      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
@@ -125,15 +150,20 @@ const Inplay = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    setTimeout(() => {
-      getMatchListMarket(type);
-    }, 1500);
+    setCurrentPage(1);
     const intervalId = setInterval(() => {
       getMatchListMarket(type);
     }, 3000);
 
     return () => clearInterval(intervalId);
   }, [type]);
+
+  useEffect(() => {
+    if (matchListInplaySuccess) {
+      getMatchListMarket(type);
+      dispatch(matchListInplaySuccessReset());
+    }
+  }, [matchListInplaySuccess]);
 
   return (
     <>
@@ -142,22 +172,10 @@ const Inplay = () => {
             return (
               <MatchComponent
                 key={match.id}
-                onClick={() => {
-                  navigate(
-                    `/wallet/matchList/${match?.matchType}/${match?.id}`,
-                    {
-                      state: {
-                        submit: true,
-                        matchId: match?.id,
-                        matchType: match?.matchType,
-                      },
-                    }
-                  );
-                }}
+                onClick={() => handleClick(match)}
                 top={true}
                 blur={false}
                 match={match}
-                // handleUpdateMatch={handleUpdateMatch}
               />
             );
           })
@@ -202,4 +220,4 @@ const Inplay = () => {
   );
 };
 
-export default Inplay;
+export default memo(Inplay);

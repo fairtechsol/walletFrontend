@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Pagination,
@@ -7,48 +8,40 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import Loader from "../../components/Loader";
-import MatchComponent from "../../components/Inplay/MatchComponent";
+import { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import MatchComponent from "../../components/Inplay/MatchComponent";
+import Loader from "../../components/Loader";
+import { socket, socketService } from "../../socketManager";
 import {
   getMatchListInplay,
+  matchListInplaySuccessReset,
   updateMatchRatesFromApiOnList,
 } from "../../store/actions/match/matchAction";
 import { AppDispatch, RootState } from "../../store/store";
-import { useSelector } from "react-redux";
 import { Constants, marketApiConst } from "../../utils/Constants";
-import { socket, socketService } from "../../socketManager";
-import { makeStyles } from "@material-ui/core/styles";
 const Inplay = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { loading, matchListInplay, success } = useSelector(
-    (state: RootState) => state.match.matchList
-  );
+  const {
+    loading,
+    matchListInplay,
+    success,
+    matchListInplaySuccess,
+  } = useSelector((state: RootState) => state.match.matchList);
+
   const useStyles = makeStyles({
     whiteTextPagination: {
       "& .MuiPaginationItem-root": {
-        color: "white", // Change text color to white
+        color: "white",
       },
     },
   });
   const { profileDetail } = useSelector(
     (state: RootState) => state.user.profile
   );
-
-  // useEffect(() => {
-  //   const matchIds = matchListInplay?.matches?.map((item: any) => item?.id) || [];
-
-  //   if (matchIds.length > 0) {
-  //     matchService.connect(matchIds, profileDetail?.roleName);
-  //   }
-  //   return () => {
-  //     matchService.disconnect();
-  //   };
-  // }, [matchListInplay]);
 
   const getMatchListService = () => {
     dispatch(getMatchListInplay({ currentPage: currentPage }));
@@ -71,7 +64,19 @@ const Inplay = () => {
         dispatch(updateMatchRatesFromApiOnList(resp?.data));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  };
+
+  const getMatchListServiceOnDeclare = (event: any) => {
+    try {
+      if (!event?.betId) {
+        setTimeout(() => {
+          dispatch(getMatchListInplay({ currentPage: currentPage }));
+        }, 1000);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -86,10 +91,14 @@ const Inplay = () => {
         matchListInplay?.matches?.map((item: any) => {
           socketService.match.joinMatchRoom(item?.id);
         });
-        socketService.match.matchResultDeclared(getMatchListService);
-        socketService.match.matchResultUnDeclared(getMatchListService);
-        socketService.match.declaredMatchResultAllUser(getMatchListService);
-        socketService.match.unDeclaredMatchResultAllUser(getMatchListService);
+        socketService.match.matchResultDeclared(getMatchListServiceOnDeclare);
+        socketService.match.matchResultUnDeclared(getMatchListServiceOnDeclare);
+        socketService.match.declaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
+        socketService.match.unDeclaredMatchResultAllUser(
+          getMatchListServiceOnDeclare
+        );
         socketService.match.matchAdded(getMatchListService);
       }
     } catch (e) {
@@ -99,9 +108,6 @@ const Inplay = () => {
 
   useEffect(() => {
     return () => {
-      // matchListInplay?.matches?.map((item: any) => {
-      //   socketService.match.leaveMatchRoom(item?.id);
-      // });
       socketService.match.matchResultDeclaredOff();
       socketService.match.matchResultUnDeclaredOff();
       socketService.match.declaredMatchResultAllUserOff();
@@ -124,11 +130,6 @@ const Inplay = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      getMatchListMarket("cricket");
-      getMatchListMarket("tennis");
-      getMatchListMarket("football");
-    }, 1500);
     const intervalId = setInterval(() => {
       getMatchListMarket("cricket");
       getMatchListMarket("tennis");
@@ -138,16 +139,25 @@ const Inplay = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    if (matchListInplaySuccess) {
+      getMatchListMarket("cricket");
+      getMatchListMarket("tennis");
+      getMatchListMarket("football");
+      dispatch(matchListInplaySuccessReset());
+    }
+  }, [matchListInplaySuccess]);
+
   const classes = useStyles();
   return (
     <>
-      {matchListInplay && matchListInplay?.matches?.length > 0
+      {matchListInplay && matchListInplay?.count > 0
         ? matchListInplay?.matches?.map((match: any) => {
             return (
               <MatchComponent
                 key={match.id}
                 onClick={() => {
-                  navigate(`/wallet/live_market/matches`, {
+                  navigate("/wallet/live_market/matches", {
                     state: {
                       submit: true,
                       matchId: match?.id,
@@ -158,7 +168,6 @@ const Inplay = () => {
                 top={true}
                 blur={false}
                 match={match}
-                // handleUpdateMatch={handleUpdateMatch}
               />
             );
           })
@@ -173,7 +182,7 @@ const Inplay = () => {
               </TableBody>
             </Table>
           )}
-      {matchListInplay && matchListInplay?.matches?.length > 0 && (
+      {matchListInplay && matchListInplay?.count > 0 && (
         <Pagination
           page={currentPage}
           className={`${classes.whiteTextPagination} d-flex justify-content-center`}
@@ -203,4 +212,4 @@ const Inplay = () => {
   );
 };
 
-export default Inplay;
+export default memo(Inplay);

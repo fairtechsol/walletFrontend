@@ -1,34 +1,45 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { Fragment, memo, useState } from "react";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../assets";
 import { formatToINR } from "../../helper";
-import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import Divider from "../Inplay/Divider";
+import UnlockComponent from "../lockMatchDetailComponents/UnlockComponent";
 import BoxComponentHorseRacing from "./BoxComponentHorseRacing";
 
-const MatchOddsHorseRacing = (props: any) => {
-  const {
-    currentMatch,
-    data,
-    minBet,
-    maxBet,
-    typeOfBet,
-    locked,
-    blockMatch,
-    handleShowLock,
-    selft,
-    showBox,
-    upcoming,
-    showUnlock,
-    handleBlock,
-    handleHide,
-  } = props;
+interface MatchOddsHorseRacingProps {
+  currentMatch: any;
+  data: any;
+  minBet: number | string;
+  maxBet: number | string;
+  typeOfBet: any;
+  locked?: boolean;
+  blockMatch?: any;
+  handleShowLock?: any;
+  selft?: any;
+  showBox: boolean;
+  upcoming?: boolean;
+  showUnlock?: any;
+  handleBlock?: any;
+  handleHide?: any;
+}
 
+const MatchOddsHorseRacing = ({
+  currentMatch,
+  data,
+  minBet,
+  maxBet,
+  typeOfBet,
+  locked,
+  blockMatch,
+  handleShowLock,
+  selft,
+  showBox,
+  upcoming,
+  showUnlock,
+  handleBlock,
+  handleHide,
+}: MatchOddsHorseRacingProps) => {
   const [visible, setVisible] = useState(true);
-
-  const handleLock = (data: any) => {
-    return data?.ex?.availableToBack?.length > 0 ? false : true;
-  };
 
   const onSubmit = (value: any) => {
     handleBlock(value, !locked, typeOfBet);
@@ -99,7 +110,7 @@ const MatchOddsHorseRacing = (props: any) => {
             background: "#262626",
           }}
         >
-          <div className="slanted"></div>
+          <Box className="slanted" />
         </Box>
         <Box
           sx={{
@@ -186,7 +197,7 @@ const MatchOddsHorseRacing = (props: any) => {
               </Box>
               <Box
                 sx={{ width: "3px", display: "flex", background: "white" }}
-              ></Box>
+              />
               <Box
                 sx={{
                   background: "#FF9292",
@@ -206,7 +217,7 @@ const MatchOddsHorseRacing = (props: any) => {
               </Box>
               <Box
                 sx={{ width: ".7px", display: "flex", background: "white" }}
-              ></Box>
+              />
             </Box>
           </Box>
 
@@ -224,11 +235,11 @@ const MatchOddsHorseRacing = (props: any) => {
                   alignItems: "center",
                   background: "rgba(0, 0, 0, .5)",
                 }}
-              ></Box>
+              />
             )}
 
-            {data?.map((runner: any) => (
-              <>
+            {data?.map((runner: any, index: number) => (
+              <Fragment key={index}>
                 <BoxComponentHorseRacing
                   color={
                     currentMatch?.profitLossDataMatch
@@ -248,11 +259,9 @@ const MatchOddsHorseRacing = (props: any) => {
                       : 0
                   }
                   data={runner}
-                  lock={handleLock(runner)}
-                  // align="end"
                 />
                 <Divider />
-              </>
+              </Fragment>
             ))}
           </Box>
         </>
@@ -302,4 +311,4 @@ const MatchOddsHorseRacing = (props: any) => {
   );
 };
 
-export default MatchOddsHorseRacing;
+export default memo(MatchOddsHorseRacing);

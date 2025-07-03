@@ -1,23 +1,27 @@
 import { Box, Typography } from "@mui/material";
-import { UD } from "../../../assets";
-// import { useState } from "react";
-// import DropdownMenu from "./DropDownMenu";
-import { AppDispatch, RootState } from "../../../store/store";
-// import { useSelector } from "react-redux";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { UD } from "../../../assets";
 import { handleNumber } from "../../../helper";
 import {
   addRunAmount,
   getSessionProLoss,
 } from "../../../store/actions/match/matchAction";
+import { AppDispatch, RootState } from "../../../store/store";
 
-const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
-  // const { runAmount } = useSelector((state: RootState) => state.match.bets);
-  // const [show, setShow] = useState(false);
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+interface PlaceBetComponentWebProps {
+  newData: any;
+  profitLoss: any;
+  color?: string;
+  type?: any;
+}
+
+const PlaceBetComponentWeb = ({
+  newData,
+  profitLoss,
+  color,
+  type,
+}: PlaceBetComponentWebProps) => {
   const dispatch: AppDispatch = useDispatch();
   const profitloss = handleNumber(parseFloat(profitLoss?.maxLoss), color);
 
@@ -36,16 +40,16 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
               ...(marketAnalysis?.betType?.overByover || []),
               ...(marketAnalysis?.betType?.ballByBall || []),
             ]?.find((item: any) => item.betId === newData?.id);
-            if (currBetPL) {
+            if (currBetPL && type !== "fancy1" && type !== "oddEven") {
               dispatch(
                 addRunAmount({
                   id: newData?.id,
-                  name: newData?.name,
+                  name: newData?.name || newData?.RunnerName,
                   type: !newData?.isManual
                     ? "Session Market"
                     : "Quick Session Market",
                   matchId: newData?.matchId,
-                  proLoss: JSON.stringify(currBetPL?.profitLoss),
+                  proLoss: currBetPL?.profitLoss,
                 })
               );
             }
@@ -124,7 +128,6 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
               color: "white",
             }}
           >
-            {" "}
             {!profitLoss?.maxLoss ? "Profit/Loss" : profitloss}
           </Typography>
           <img
@@ -132,18 +135,9 @@ const PlaceBetComponentWeb = ({ newData, profitLoss, color, type }: any) => {
             style={{ width: "12px", height: "12px", marginLeft: "5px" }}
           />
         </Box>
-        {/* {show && (
-          <DropdownMenu
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            list={runAmount && runAmount}
-            // list={profitLoss?.betData}
-            handleClose={handleClose}
-          />
-        )} */}
       </Box>
     </>
   );
 };
 
-export default PlaceBetComponentWeb;
+export default memo(PlaceBetComponentWeb);

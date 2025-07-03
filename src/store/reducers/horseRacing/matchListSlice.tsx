@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getHorseRacingCountryWiseList,
-  getHorseRacingMatchList,
+    getHorseRacingCountryWiseList,
+    getHorseRacingMatchList,
 } from "../../actions/horseRacing/horseMatchListAction";
 
 interface InitialState {
@@ -32,12 +32,11 @@ const matchListSlice = createSlice({
       })
       .addCase(getHorseRacingCountryWiseList.fulfilled, (state, action) => {
         state.loading = false;
-        // state.success = true;
         state.countryWiseList = action.payload;
       })
       .addCase(getHorseRacingCountryWiseList.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(getHorseRacingMatchList.pending, (state) => {
         state.loading = true;
@@ -51,7 +50,7 @@ const matchListSlice = createSlice({
       })
       .addCase(getHorseRacingMatchList.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       });
   },
 });

@@ -22,10 +22,6 @@ export interface AddAccountInterface {
     label: string;
     value: string;
   };
-  // sessionCommission?: {
-  //   label: string;
-  //   value: string;
-  // };
   remarks?: string;
   adminTransPassword?: string;
   allPrivilege?: boolean;
@@ -47,7 +43,6 @@ export interface DropdownInterface {
   dropDownTextStyle?: any;
   Detail?: any;
   place?: any;
-  type?: any;
   matchesSelect?: any;
   disable?: boolean;
   setSelected?: (value: any) => void;

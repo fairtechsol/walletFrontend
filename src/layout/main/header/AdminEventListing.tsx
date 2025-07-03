@@ -1,24 +1,24 @@
 import { Box } from "@mui/system";
+import { memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {
   ADDACCOUNT,
   CHECKLIST,
   Cricket,
   Football,
+  GreyHound,
+  HorseRacing,
   MYACCOUNT,
   Play,
+  Politics,
   TEAM,
   TREND,
   Tennis,
   WALLET,
-  HorseRacing,
-  GreyHound,
-  Politics,
 } from "../../../assets";
-import AdminEventComponent from "./AdminEventComponent";
-import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import AdminEventComponent from "./AdminEventComponent";
 
 const data = [
   { id: 1, title: "INPLAY", image: Play, url: "live_market", alt: "Inplay" },
@@ -136,18 +136,16 @@ const AdminEventListing = () => {
 
   return (
     <Box
-      sx={[
-        {
-          width: { xs: "98%", lg: "100%" },
-          msOverflowStyle: "none",
-          overflowY: "hidden",
-          minHeight: { xs: 95, lg: 80 },
-          marginLeft: { xs: "0", lg: ".5vw" },
-          overflowX: "auto",
-          alignSelf: { xs: "center", lg: "flex-start" },
-          display: "flex",
-        },
-      ]}
+      sx={{
+        width: "100%",
+        msOverflowStyle: "none",
+        overflowY: "hidden",
+        minHeight: { xs: 95, lg: 80 },
+        marginLeft: { xs: "0", lg: ".5vw" },
+        overflowX: "auto",
+        alignSelf: { xs: "center", lg: "flex-start" },
+        display: "flex",
+      }}
     >
       {newData?.map((i: any, idx: any) => {
         return (
@@ -167,4 +165,4 @@ const AdminEventListing = () => {
   );
 };
 
-export default AdminEventListing;
+export default memo(AdminEventListing);

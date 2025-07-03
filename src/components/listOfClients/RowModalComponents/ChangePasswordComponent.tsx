@@ -1,5 +1,5 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import StyledImage from "../../Common/StyledImages";
 import BoxButton from "./BoxButton";
 
@@ -13,12 +13,7 @@ import { AppDispatch, RootState } from "../../../store/store";
 import { ApiConstants } from "../../../utils/Constants";
 import { userChangePasswordValidations } from "../../../utils/Validations";
 
-import {
-  // EyeIcon,
-  EyeIconWhite,
-  // EyeSlash,
-  EyeSlashWhite,
-} from "../../../assets";
+import { EyeIconWhite, EyeSlashWhite } from "../../../assets";
 import CustomErrorMessage from "../../Common/CustomErrorMessage";
 
 const initialValues: any = {
@@ -27,8 +22,21 @@ const initialValues: any = {
   transactionPassword: "",
 };
 
-const ChangePasswordComponent = (props: any) => {
-  const { setSelected, element, walletAccountDetail, endpoint, setShowUserModal } = props;
+interface ChangePasswordComponentProps {
+  setSelected: (val?: boolean) => void;
+  element: any;
+  walletAccountDetail?: any;
+  endpoint: string;
+  setShowUserModal: (val?: boolean) => void;
+}
+
+const ChangePasswordComponent = ({
+  setSelected,
+  element,
+  walletAccountDetail,
+  endpoint,
+  setShowUserModal,
+}: ChangePasswordComponentProps) => {
   const [showPass, setShowPass] = useState(false);
   const [showPassTransaction, setShowPassTransaction] = useState(false);
 
@@ -43,33 +51,18 @@ const ChangePasswordComponent = (props: any) => {
         payload = {
           newPassword: values.newPassword,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
-      }
-      // else if (
-      //   element.roleName === "superAdmin" ||
-      //   element.roleName === "fairGameAdmin"
-      // ) {
-      //   payload = {
-      //     userId: element?.id,
-      //     newPassword: values.newPassword,
-      //     transactionPassword: values.transactionPassword,
-      //     // remark: values.remark,
-      //   };
-      // }
-      else if (element.roleName === "expert") {
+      } else if (element.roleName === "expert") {
         payload = {
           id: element?.id,
           password: values.newPassword,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
       } else {
         payload = {
           userId: element?.id,
           newPassword: values.newPassword,
           transactionPassword: values.transactionPassword,
-          // remark: values.remark,
         };
       }
       dispatch(
@@ -166,7 +159,6 @@ const ChangePasswordComponent = (props: any) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={touched.newPassword && Boolean(errors.newPassword)}
-                    // helperText={touched.newPassword && errors.newPassword}
                     sx={{ width: "100%", height: "45px", color: "white" }}
                     variant="standard"
                     InputProps={{
@@ -191,6 +183,7 @@ const ChangePasswordComponent = (props: any) => {
                   >
                     <StyledImage
                       src={showPass ? EyeIconWhite : EyeSlashWhite}
+                      alt="eye icon"
                       sx={{ height: "14px", width: "20px", fill: "white" }}
                     />
                   </Box>
@@ -309,6 +302,7 @@ const ChangePasswordComponent = (props: any) => {
                   >
                     <StyledImage
                       src={showPassTransaction ? EyeIconWhite : EyeSlashWhite}
+                      alt="eye icon"
                       sx={{ height: "14px", width: "20px" }}
                     />
                   </Box>
@@ -379,4 +373,4 @@ const ChangePasswordComponent = (props: any) => {
   );
 };
 
-export default ChangePasswordComponent;
+export default memo(ChangePasswordComponent);

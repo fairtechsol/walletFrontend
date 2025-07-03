@@ -1,18 +1,28 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
-import { formatToINR } from "../../../helper";
+import { memo } from "react";
+import { formatToINR, stripUrl } from "../../../helper";
 import CommissionDot from "../../Common/CommissionDot";
 
-const TableDataRow = (props: any) => {
-  const {
-    containerStyle,
-    data,
-    fContainerStyle,
-    fTextStyle,
-    index,
-    currentPage,
-    pageLimit,
-  } = props;
+interface TableDataRowProps {
+  containerStyle: any;
+  data: any;
+  fContainerStyle: any;
+  fTextStyle: any;
+  index: number;
+  currentPage: number;
+  pageLimit: number;
+}
+
+const TableDataRow = ({
+  containerStyle,
+  data,
+  fContainerStyle,
+  fTextStyle,
+  index,
+  currentPage,
+  pageLimit,
+}: TableDataRowProps) => {
   let flag = index % 2 != 0;
   let no = (index + 1 + pageLimit * (currentPage - 1)).toString();
   return (
@@ -20,7 +30,6 @@ const TableDataRow = (props: any) => {
       sx={[
         {
           display: "flex",
-          // height: "45px",
           background: "#0B4F26",
           alignItems: "center",
           borderBottom: "1px solid white",
@@ -29,30 +38,26 @@ const TableDataRow = (props: any) => {
       ]}
     >
       <Box
-        sx={[
-          {
-            width: "5%",
-            minWidth: "70px",
-            justifyContent: "center",
-            display: "flex",
-            alignItems: "center",
-            height: "45px",
-            background: "black",
-            borderRight: "2px solid white",
-          },
-        ]}
+        sx={{
+          width: "5%",
+          minWidth: "70px",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          height: "45px",
+          background: "black",
+          borderRight: "2px solid white",
+        }}
       >
         <Typography
-          sx={[
-            {
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "white",
-              textAlign: "center",
-            },
-          ]}
+          sx={{
+            fontSize: "12px",
+            fontWeight: "600",
+            color: "white",
+            textAlign: "center",
+          }}
         >
-          {(no > 9 ? "" : "0") + no}
+          {(+no > 9 ? "" : "0") + no}
         </Typography>
       </Box>
       <Box
@@ -112,7 +117,6 @@ const TableDataRow = (props: any) => {
           width: "10%",
           minWidth: "100px",
           display: "flex",
-          // paddingLeft: "10px",
           background: flag ? "#ECECEC" : "#FFE094",
           alignItems: "center",
           justifyContent: "center",
@@ -142,7 +146,7 @@ const TableDataRow = (props: any) => {
             paddingX: "5px",
           }}
         >
-          {data?.domain?.replace(/https?:\/\//, "")}
+          {stripUrl(data?.domain)}
         </Typography>
       </Box>
       <Box
@@ -362,4 +366,4 @@ const TableDataRow = (props: any) => {
   );
 };
 
-export default TableDataRow;
+export default memo(TableDataRow);

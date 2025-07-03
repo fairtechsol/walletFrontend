@@ -1,21 +1,20 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import service from "../../../service";
-import { ApiConstants, baseUrls, Constants } from "../../../utils/Constants";
+import { ApiConstants, Constants } from "../../../utils/Constants";
 
 export const getMatchListInplay = createAsyncThunk<any, any>(
   "matchList/inplay",
   async (requestData, thunkApi) => {
     try {
-      const resp = await service.get(
-        `${ApiConstants.INPLAY.MATCHLIST}?${
-          requestData?.matchType
-            ? `match.matchType=${requestData?.matchType}&`
-            : ""
-        }page=${requestData?.currentPage}&limit=${
-          Constants.pageLimit
-        }&sort=match.startAt:ASC`
-      );
+      const resp = await service.get(ApiConstants.INPLAY.MATCHLIST, {
+        params: {
+          "match.matchType": requestData?.matchType,
+          page: requestData?.currentPage,
+          limit: Constants.pageLimit,
+          sort: "match.startAt:ASC",
+        },
+      });
       if (resp) {
         return resp?.data;
       }
@@ -31,15 +30,7 @@ export const getMatchDetail = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.MATCH.GET}${
-          !["cricket", "politics"].includes(requestData?.matchType)
-            ? `/other`
-            : ""
-        }/${requestData?.matchId}${
-          !["cricket", "politics"].includes(requestData?.matchType)
-            ? `?matchType=${requestData?.matchType}`
-            : ""
-        }`
+        `${ApiConstants.MATCH.GET}/${requestData?.matchId}`
       );
       if (resp) {
         return resp?.data;
@@ -55,11 +46,14 @@ export const getMatchDetailMarketAnalysis = createAsyncThunk<any, any>(
   async ({ matchId, userId, domain }, thunkApi) => {
     try {
       const resp = await service.get(
-        `${
-          ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS
-        }?matchId=${matchId}&userId=${userId}${
-          domain ? `&domain=${domain}` : ""
-        }`
+        ApiConstants.MATCH.GET_MATCH_MARKET_ANALYSIS,
+        {
+          params: {
+            matchId,
+            userId,
+            domain,
+          },
+        }
       );
       if (resp) {
         return resp?.data?.[0];
@@ -76,12 +70,13 @@ export const getPlacedBets = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${
-          ApiConstants.MATCH.GET_BETS
-        }?matchId=${requestData}&result=inArr${JSON.stringify([
-          "PENDING",
-          "UNDECLARE",
-        ])}&sort=betPlaced.createdAt:DESC`
+        ApiConstants.MATCH.GET_BETS + `?${requestData}`,
+        {
+          params: {
+            result: `inArr${JSON.stringify(["PENDING", "UNDECLARE"])}`,
+            sort: "betPlaced.createdAt:DESC",
+          },
+        }
       );
       if (resp?.data) {
         return resp?.data;
@@ -97,9 +92,9 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
   async (requestData, thunkApi) => {
     try {
       const resp = await service.get(
-        `${ApiConstants.USER.RUN_AMOUNT}/${requestData?.id}`
+        `${ApiConstants.USER.RUN_AMOUNT}/${requestData?.id}?matchId=${requestData?.matchId}`
       );
-      if (resp?.data && resp?.data?.profitLoss[0]) {
+      if (resp?.data && resp?.data?.profitLoss) {
         return {
           matchId: requestData?.matchId,
           id: requestData?.id,
@@ -113,7 +108,7 @@ export const getSessionProLoss = createAsyncThunk<any, any>(
           id: requestData?.id,
           name: requestData?.name,
           type: requestData?.type,
-          proLoss: [JSON.stringify({ betPlaced: [] })],
+          proLoss: [{ betPlaced: [] }],
         };
       }
     } catch (error) {
@@ -235,34 +230,10 @@ export const editBetDeleteReason = createAsyncThunk<any, any>(
     }
   }
 );
-
-export const updateMatchListRates = createAsyncThunk<any, any>(
-  "/matchList/rates",
-  async (matchList) => {
-    return matchList;
-  }
-);
 export const updateMatchRates = createAsyncThunk<any, any>(
   "/match/rates",
   async (matchDetails) => {
     return matchDetails;
-  }
-);
-
-export const getMatchRates = createAsyncThunk<any, any>(
-  "/third/match/rates",
-  async (matchId,thunkApi) => {
-    try {
-      const resp = await axios.get(
-        `${baseUrls.thirdParty}${ApiConstants.MATCH.RATES}${matchId}`
-      );
-      if (resp) {
-        return resp?.data;
-      }
-    } catch (error: any) {
-      const err = error as AxiosError;
-      return thunkApi.rejectWithValue(err.response?.status);
-    }
   }
 );
 export const updateBetsPlaced = createAsyncThunk<any, any>(
@@ -288,19 +259,6 @@ export const removeRunAmount = createAsyncThunk<any, any>(
   "/remove/runAmount",
   async (profitLoss) => {
     return profitLoss;
-  }
-);
-export const updateBalance = createAsyncThunk<any, any>(
-  "/user/balance",
-  async (balance) => {
-    return balance;
-  }
-);
-
-export const betDataFromSocket = createAsyncThunk<any, any>(
-  "/betData/update",
-  async (data) => {
-    return data;
   }
 );
 export const updateMaxLossForBet = createAsyncThunk<any, any>(
@@ -385,7 +343,6 @@ export const updateMatchRatesFromApiOnList = createAsyncThunk<any, any>(
   }
 );
 
-export const matchListReset = createAction("matchList/reset");
 export const resetSessionProLoss = createAction("sessionProloss/reset");
 export const resetcompetitionList = createAction("competitionList/reset");
 export const resetCompetitionDates = createAction("competitionDates/reset");
@@ -395,3 +352,7 @@ export const resetMarketAnalysys = createAction("marketAnalysis/reset");
 export const resetPermanentDeleteSuccess = createAction(
   "permanentDeleteSuccess/reset"
 );
+export const matchListInplaySuccessReset = createAction(
+  "matchListInplaySuccess/reset"
+);
+export const resetPlacedBets = createAction("placedBets/reset");

@@ -1,19 +1,33 @@
 import { Button, CircularProgress, Typography } from "@mui/material";
+import { memo } from "react";
 
-const BoxButton = (props: any) => {
-  const {
-    title,
-    containerStyle,
-    icon,
-    onClick,
-    isSelected,
-    deleteBtn,
-    titleStyle,
-    loading,
-    type,
-    color,
-    disabled,
-  } = props;
+interface BoxButtonProps {
+  title: string;
+  containerStyle: any;
+  icon?: any;
+  onClick?: (val?: any) => void;
+  isSelected?: boolean;
+  deleteBtn?: any;
+  titleStyle?: any;
+  loading?: any;
+  type?: any;
+  color: string;
+  disabled?: any;
+}
+
+const BoxButton = ({
+  title,
+  containerStyle,
+  icon,
+  onClick,
+  isSelected,
+  deleteBtn,
+  titleStyle,
+  loading,
+  type,
+  color,
+  disabled,
+}: BoxButtonProps) => {
   const classes = {
     mainBox: [
       {
@@ -39,7 +53,6 @@ const BoxButton = (props: any) => {
     mainBoxTypography: [
       {
         fontSize: {
-          // xs: "3.5vw",
           lg: "11px",
           md: "0.9vw",
           desktop2XL: "12px",
@@ -77,4 +90,4 @@ const BoxButton = (props: any) => {
   );
 };
 
-export default BoxButton;
+export default memo(BoxButton);

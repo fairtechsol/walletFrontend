@@ -1,21 +1,26 @@
-import { Button, Box, useTheme, CircularProgress } from "@mui/material";
-import { mail, eye, eyeLock } from "../../../assets";
-import { useEffect } from "react";
-import Input from "../../../components/login/Input";
+import { Box, Button, CircularProgress, useTheme } from "@mui/material";
+import { useFormik } from "formik";
+import { memo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { eye, eyeLock, mail } from "../../../assets";
+import Input from "../../../components/login/Input";
 import { authReset, login } from "../../../store/actions/auth/authAction";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
 import { loginValidationSchema } from "../../../utils/Validations";
+
+interface InitialValues {
+  userName: string;
+  password: string;
+  loginType: string;
+}
 
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
-  const initialValues: any = {
+  const initialValues: InitialValues = {
     userName: "",
     password: "",
     loginType: "wallet",
@@ -33,7 +38,7 @@ const Login = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: loginValidationSchema,
-    onSubmit: (values: any) => {
+    onSubmit: (values: InitialValues) => {
       if (loading) {
         return;
       }
@@ -73,9 +78,9 @@ const Login = () => {
     >
       <Box sx={{ width: "100%", opacity: 1 }}>
         <Input
-          id={"userName"}
-          placeholder={"Enter Username"}
-          title={"Username"}
+          id="userName"
+          placeholder="Enter Username"
+          title="Username"
           type="text"
           name="userName"
           img={mail}
@@ -89,8 +94,8 @@ const Login = () => {
           </p>
         )}
         <Input
-          id={"password"}
-          title={"Password"}
+          id="password"
+          title="Password"
           type="password"
           placeholder={"Enter Password"}
           containerStyle={{ marginTop: "10px" }}
@@ -118,7 +123,6 @@ const Login = () => {
           type="submit"
           variant="contained"
           color="secondary"
-          // disabled={isSubmitting}
           sx={{
             width: "62%",
             cursor: "pointer",
@@ -148,4 +152,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

@@ -1,11 +1,23 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { memo } from "react";
 import Calendar from "../../Common/Calendar";
 import CustomButtonAdmin from "../../Common/CustomButtonAdmin";
 
-const YellowHeader = (props: any) => {
-  const { getAccountStatement, fromDate, toDate, setFromDate, setToDate } =
-    props;
+interface YellowHeaderProps {
+  getAccountStatement: (val?: any, val2?: any) => void;
+  fromDate: any;
+  toDate: any;
+  setFromDate: (val: any) => void;
+  setToDate: (val: any) => void;
+}
 
+const YellowHeader = ({
+  getAccountStatement,
+  fromDate,
+  toDate,
+  setFromDate,
+  setToDate,
+}: YellowHeaderProps) => {
   const theme = useTheme();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const tab = useMediaQuery(theme.breakpoints.between("xs", "lg"));
@@ -29,7 +41,6 @@ const YellowHeader = (props: any) => {
           marginLeft: "10px",
           fontWeight: "600",
           marginY: "2vh",
-
           alignSelf: "start",
         }}
       >
@@ -40,7 +51,6 @@ const YellowHeader = (props: any) => {
           borderRadius: "5px",
           width: "100%",
           p: "10px",
-
           minHeight: { xs: "0", lg: "80px" },
           background: "#F8C851",
           display: "flex",
@@ -67,23 +77,20 @@ const YellowHeader = (props: any) => {
             }}
           >
             <Calendar
-              sx={{ width: "50%" }}
-              title={"From"}
+              title="From"
               startDate={fromDate}
               setStartDate={setFromDate}
             />
-            <Box sx={{ width: "10px" }}></Box>
-
+            <Box sx={{ width: "10px" }} />
             <Calendar
-              sx={{ width: "50%" }}
-              title={"To"}
+              title="To"
               startDate={toDate}
               setStartDate={setToDate}
               limit={fromDate}
             />
           </Box>
 
-          <Box sx={{ width: "10px" }}></Box>
+          <Box sx={{ width: "10px" }} />
           {!matchesMobile && (
             <CustomButtonAdmin
               btnStyle={{
@@ -93,12 +100,8 @@ const YellowHeader = (props: any) => {
                 marginRight: "0px",
                 marginTop: matchesMobile ? "25px" : 0,
                 marginLeft: matchesMobile ? "10px" : "20px",
-                // marginBottom: matchesMobile ? "15px" : tab ? "28px" : "15px",
               }}
-              onClick={() => {
-                getAccountStatement();
-              }}
-              getAccountStatement={getAccountStatement}
+              onClick={getAccountStatement}
             />
           )}
         </Box>
@@ -115,13 +118,11 @@ const YellowHeader = (props: any) => {
             }}
             onClick={() => {
               if (fromDate === "" && toDate === "") {
-                // toast.warn("Please select From and To date");
                 return false;
               } else {
                 getAccountStatement(fromDate, toDate);
               }
             }}
-            getAccountStatement={getAccountStatement}
           />
         )}
       </Box>
@@ -129,4 +130,4 @@ const YellowHeader = (props: any) => {
   );
 };
 
-export default YellowHeader;
+export default memo(YellowHeader);

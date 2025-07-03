@@ -1,6 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 
-const ListHeaderModal = ({ title, setShow }: any) => {
+interface ListHeaderModalProps {
+  title: string;
+  setShow: () => void;
+}
+
+const ListHeaderModal = ({ title, setShow }: ListHeaderModalProps) => {
   return (
     <Box
       display={"flex"}
@@ -28,9 +33,7 @@ const ListHeaderModal = ({ title, setShow }: any) => {
 
       <Button
         sx={{ color: "", fontSize: "30px", padding: 0 }}
-        onClick={() => {
-          setShow();
-        }}
+        onClick={setShow}
       >
         &times;
       </Button>

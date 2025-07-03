@@ -1,18 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
-import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { Typography } from "@mui/material";
+import { debounce } from "lodash";
+import moment from "moment";
+import { memo, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ProfitLossHeader from "../../../components/report/ProfitLossReportCard/ProfitLossHeader";
+import ProfitLossTableComponent from "../../../components/report/ProfitLossReportCard/ProfitLossTableComponent";
+import service from "../../../service";
 import {
   getTotalProfitLossCard,
   updateUserSearchId,
 } from "../../../store/actions/reports";
-import moment from "moment";
-import { debounce } from "lodash";
 import { getSearchClientList } from "../../../store/actions/user/userAction";
-import service from "../../../service";
-import ProfitLossHeader from "../../../components/report/ProfitLossReportCard/ProfitLossHeader";
-import { Box, Typography } from "@mui/material";
-import ProfitLossTableComponent from "../../../components/report/ProfitLossReportCard/ProfitLossTableComponent";
+import { AppDispatch, RootState } from "../../../store/store";
 
 const ProfitLossReportCards = () => {
   const defaultDate = new Date();
@@ -69,11 +68,14 @@ const ProfitLossReportCards = () => {
 
   const getUserProfitLoss = async (matchId: string) => {
     try {
-      const { data } = await service.get(
-        `/user/userwise/profitLoss?runnerId=${matchId}${
-          user?.id ? "&id=" + user?.id : ""
-        }${user?.domain ? "&url=" + user?.domain : ""}`
-      );
+      setUserProfitLoss([]);
+      const { data } = await service.get("/user/userwise/profitLoss", {
+        params: {
+          runnerId: matchId,
+          id: user?.id,
+          url: user?.domain,
+        },
+      });
       if (data) {
         setUserProfitLoss(data);
       }
@@ -94,10 +96,6 @@ const ProfitLossReportCards = () => {
 
   useEffect(() => {
     let filter = "";
-    dispatch(updateUserSearchId({ search }));
-    if (search?.id) {
-      filter += `&id=${search?.id}`;
-    }
     if (startDate && endDate) {
       filter += `&startDate=${moment(startDate)?.format("YYYY-MM-DD")}`;
       filter += `&endDate=${moment(endDate)?.format("YYYY-MM-DD")}`;
@@ -110,7 +108,7 @@ const ProfitLossReportCards = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <ProfitLossHeader
         title="Profit/Loss Cards"
         onClick={handleClick}
@@ -134,23 +132,20 @@ const ProfitLossReportCards = () => {
       >
         Profit/Loss for Event Type
       </Typography>
-
-      <Box>
-        <ProfitLossTableComponent
-          show={show}
-          setShow={setShow}
-          startDate={startDate}
-          endDate={endDate}
-          eventData={totalProfitLossListCard && totalProfitLossListCard}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          setCurrentPage={setCurrentPage}
-          userProfitLoss={userProfitLoss}
-          getUserProfitLoss={getUserProfitLoss}
-        />
-      </Box>
-    </div>
+      <ProfitLossTableComponent
+        show={show}
+        setShow={setShow}
+        startDate={startDate}
+        endDate={endDate}
+        eventData={totalProfitLossListCard && totalProfitLossListCard}
+        currentPage={currentPage}
+        pageCount={pageCount}
+        setCurrentPage={setCurrentPage}
+        userProfitLoss={userProfitLoss}
+        getUserProfitLoss={getUserProfitLoss}
+      />
+    </>
   );
 };
 
-export default ProfitLossReportCards;
+export default memo(ProfitLossReportCards);

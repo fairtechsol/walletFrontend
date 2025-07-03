@@ -1,26 +1,21 @@
 import { Box, MenuItem } from "@mui/material";
+import { memo } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Logout } from "../../../assets";
 import StyledImage from "../../../components/Common/StyledImages";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { logout } from "../../../store/actions/auth/authAction";
 import { AppDispatch } from "../../../store/store";
 
 const menutItems = [
-  // { title: "Secure Auth Verification" },
   { title: "Change Password", link: `/wallet/change-password` },
 ];
-const BoxDropDownMenu = (props: any) => {
-  const { handleClose } = props;
+const BoxDropDownMenu = ({ handleClose }: { handleClose: () => void }) => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
-  // const innerRef = useOuterClick((ev: any) => {
-  //   handleClose();
-  // });
   return (
     <Box
-      // ref={innerRef}
       sx={{
         position: "absolute",
         background: "white",
@@ -86,4 +81,4 @@ const BoxDropDownMenu = (props: any) => {
   );
 };
 
-export default BoxDropDownMenu;
+export default memo(BoxDropDownMenu);

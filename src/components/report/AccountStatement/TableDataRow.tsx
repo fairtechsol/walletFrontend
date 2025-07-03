@@ -1,33 +1,35 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
+import { memo } from "react";
 import { handleNumber } from "../../../helper";
 
-const TableDataRow = (props: any) => {
-  const {
-    containerStyle,
-    fContainerStyle,
-    fTextStyle,
-    index,
-    date,
-    closing,
-    description,
-    touserName,
-    fromuserName,
-    transType,
-    amount,
-    color
-  } = props;
+interface TableDataRowProps {
+  containerStyle: any;
+  fContainerStyle: any;
+  fTextStyle: any;
+  index: number;
+  date: any;
+  closing: string;
+  description: string;
+  touserName: string;
+  fromuserName: string;
+  transType: string;
+  amount: number;
+}
 
-  // const dateString = date;
-  // const dateObj = new Date(dateString);
-  // const formattedDate = dateObj.toLocaleDateString("en-US", {
-  //   year: "numeric",
-  //   month: "2-digit",
-  //   day: "2-digit",
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  // });
-  // console.log(transType);
+const TableDataRow = ({
+  containerStyle,
+  fContainerStyle,
+  fTextStyle,
+  index,
+  date,
+  closing,
+  description,
+  touserName,
+  fromuserName,
+  transType,
+  amount,
+}: TableDataRowProps) => {
   return (
     <Box
       sx={[
@@ -69,7 +71,7 @@ const TableDataRow = (props: any) => {
             fTextStyle,
           ]}
         >
-          {moment.utc(date).utcOffset('+05:30').format("DD-MM-YYYY HH:mm:ss")}
+          {moment.utc(date).utcOffset("+05:30").format("DD-MM-YYYY HH:mm:ss")}
         </Typography>
       </Box>
       <Box
@@ -87,7 +89,6 @@ const TableDataRow = (props: any) => {
         <Typography
           sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
         >
-          {/* {amount > 0 ? amount : ""} */}
           {["win", "add"].includes(transType)
             ? new Intl.NumberFormat("en-IN", { currency: "INR" }).format(amount)
             : ""}
@@ -108,7 +109,6 @@ const TableDataRow = (props: any) => {
         <Typography
           sx={{ fontSize: "12px", fontWeight: "600", color: "white" }}
         >
-          {/* {amount < 0 ? amount : ""} */}
           {["withDraw", "loss", "creditReference"].includes(transType)
             ? new Intl.NumberFormat("en-IN", { currency: "INR" }).format(amount)
             : ""}
@@ -127,17 +127,12 @@ const TableDataRow = (props: any) => {
         }}
       >
         <Typography sx={{ fontSize: "12px", fontWeight: "600" }}>
-          {/* {closing} */}
-          {closing !== null
-            ? handleNumber(
-               parseFloat( closing), color
-              )
-            : ""}
+          {closing !== null ? handleNumber(parseFloat(closing), "") : ""}
         </Typography>
       </Box>
       <Box
         sx={{
-          width: { xs: "36%", lg: "36%", md: "36%" },
+          width: "36%",
           display: "flex",
           paddingLeft: "10px",
           justifyContent: "center",
@@ -196,4 +191,4 @@ const TableDataRow = (props: any) => {
   );
 };
 
-export default TableDataRow;
+export default memo(TableDataRow);

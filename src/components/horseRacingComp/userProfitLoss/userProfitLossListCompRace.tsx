@@ -1,19 +1,25 @@
 import { Box, Typography } from "@mui/material";
-import Divider from "../../Inplay/Divider";
+import { memo } from "react";
 import { handleNumber } from "../../../helper";
+import Divider from "../../Inplay/Divider";
 import SeperateBox from "../../matchDetail/MatchOdds/SeperateBox";
 
-const UserProfitLossListCompRace = (props: any) => {
-  const { element, color, matchDetail } = props;
+interface UserProfitLossListCompRaceProps {
+  element: any;
+  matchDetail: any;
+}
+
+const UserProfitLossListCompRace = ({
+  element,
+  matchDetail,
+}: UserProfitLossListCompRaceProps) => {
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <Box
           sx={{
             display: "flex",
-            // height: "38px",
             alignItems: "center",
-            // width:"100%"
           }}
         >
           <Typography
@@ -25,27 +31,27 @@ const UserProfitLossListCompRace = (props: any) => {
               fontWeight: "600",
               textOverflow: "ellipsis",
               lineHeight: "0.9",
-              width: "4rem"
+              width: "4rem",
             }}
           >
             {element?.userName}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", width: "100%"}}>
+        <Box sx={{ display: "flex", width: "100%" }}>
           {matchDetail?.matchOdd?.runners?.map((runner: any) => (
             <>
               <SeperateBox
                 value2={
-                  handleNumber(parseFloat(element[runner?.id] || 0), color) ??
+                  handleNumber(parseFloat(element[runner?.id] || 0), "") ??
                   "N/A"
                 }
                 value={
                   handleNumber(
                     parseFloat(element[runner?.id + "_percent"] || 0),
-                    color
+                    ""
                   ) ?? "N/A"
                 }
-                color={"#ffffff"}
+                color="#ffffff"
                 width={10}
               />
               <Box
@@ -54,7 +60,7 @@ const UserProfitLossListCompRace = (props: any) => {
                   display: "flex",
                   background: "#ffffff",
                 }}
-              ></Box>
+              />
             </>
           ))}
         </Box>
@@ -64,4 +70,4 @@ const UserProfitLossListCompRace = (props: any) => {
   );
 };
 
-export default UserProfitLossListCompRace;
+export default memo(UserProfitLossListCompRace);

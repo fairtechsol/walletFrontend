@@ -1,4 +1,24 @@
 import { Box, Typography } from "@mui/material";
+import { memo } from "react";
+
+const columns = [
+  { label: "User Details" },
+  { label: "All Privilege" },
+  { label: "Add Match Privilege" },
+  { label: "BetFair Match Privilege" },
+  { label: "Bookmaker Match Privilege" },
+  { label: "Session Match Privilege" },
+  {
+    label: "User Lock",
+    width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
+    fontSize: { lg: "11.5px", xs: "9px" },
+  },
+  { label: "City", width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" } },
+  { label: "Phone Number", width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" } },
+];
+
+const defaultBoxWidth = { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" };
+const defaultFontSize = { lg: "12px", xs: "9px" };
 
 const ListHeaderExpertRow = () => {
   return (
@@ -13,302 +33,33 @@ const ListHeaderExpertRow = () => {
         borderBottom: "2px solid white",
       }}
     >
-      <Box
-        sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{ color: "white", fontSize: { lg: "12px", xs: "9px" } }}
-        >
-          {"User Details"}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
+      {columns.map((col, idx) => (
+        <Box
+          key={idx}
           sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
+            width: col.width || defaultBoxWidth,
+            display: "flex",
+            paddingX: "10px",
+            alignItems: "center",
+            justifyContent: col.label === "User Lock" ? "center" : "flex-start",
+            height: "35px",
+            borderRight: "2px solid white",
             lineHeight: "1.1",
           }}
         >
-          All Privilege
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Add Match Privilege
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          BetFair Match Privilege
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Bookmaker Match Privilege
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "11.5vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Session Match Privilege
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "11.5px", xs: "9px" },
-            lineHeight: "1",
-          }}
-        >
-          User Lock
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          City
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Phone Number
-        </Typography>
-      </Box>
-      {/* <Box
-        sx={{
-          width: { lg: "15vw", md: "20.5vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Rolename
-        </Typography>
-      </Box> */}
-
-      {/* <Box
-        sx={{
-          width: { lg: "5vw", md: "5vw", xs: "14vw" },
-          display: "flex",
-          paddingX: "10px",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Bet Lock
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "5vw", md: "5vw", xs: "14vw" },
-          display: "flex",
-          paddingX: "10px",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "11.5px", xs: "9px" },
-            lineHeight: "1",
-          }}
-        >
-          User Lock
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Exposure Limit
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: { lg: "10vw", md: "10vw", xs: "26.5vw" },
-          display: "flex",
-          paddingX: "10px",
-          alignItems: "center",
-          height: "35px",
-          borderRight: "2px solid white",
-          lineHeight: "1.1",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { lg: "12px", xs: "9px" },
-            lineHeight: "1.1",
-          }}
-        >
-          Account Type
-        </Typography>
-      </Box> */}
+          <Typography
+            sx={{
+              color: "white",
+              fontSize: col.fontSize || defaultFontSize,
+              lineHeight: "1.1",
+            }}
+          >
+            {col.label}
+          </Typography>
+        </Box>
+      ))}
     </Box>
   );
 };
 
-export default ListHeaderExpertRow;
+export default memo(ListHeaderExpertRow);

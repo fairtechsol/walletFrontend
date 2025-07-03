@@ -1,9 +1,19 @@
+import { Box, Typography } from "@mui/material";
+import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { Excel, Pdf } from "../../assets";
-import StyledImage from "../Common/StyledImages";
-import { Box, Typography } from "@mui/material";
-import { AppDispatch } from "../../store/store";
 import { handleExport } from "../../store/actions/user/userAction";
+import { AppDispatch } from "../../store/store";
+import StyledImage from "../Common/StyledImages";
+
+interface ListHeaderProps {
+  id: string;
+  title: string;
+  downloadPdfExcel: boolean;
+  domain: string;
+  roleName: string;
+  endpoint: string;
+}
 
 const ListHeader = ({
   id,
@@ -12,7 +22,7 @@ const ListHeader = ({
   domain,
   roleName,
   endpoint,
-}: any) => {
+}: ListHeaderProps) => {
   const dispatch: AppDispatch = useDispatch();
   return (
     <Box
@@ -52,6 +62,7 @@ const ListHeader = ({
             >
               <StyledImage
                 src={Excel}
+                alt="excel"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(
@@ -81,6 +92,7 @@ const ListHeader = ({
             >
               <StyledImage
                 src={Pdf}
+                alt="pdf"
                 sx={{ height: "25px" }}
                 onClick={() =>
                   dispatch(
@@ -103,4 +115,4 @@ const ListHeader = ({
   );
 };
 
-export default ListHeader;
+export default memo(ListHeader);

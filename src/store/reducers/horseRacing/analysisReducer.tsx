@@ -32,7 +32,7 @@ const analysisRace = createSlice({
       })
       .addCase(getRateMarketAnalysis.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       });
   },
 });

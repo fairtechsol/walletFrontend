@@ -16,6 +16,7 @@ import {
   HorseRacing,
   InstantWorli,
   Lucky7A,
+  MAC88,
   Poker,
   Politics,
   Race2020,
@@ -102,12 +103,9 @@ export const ApiConstants = {
   MATCH: {
     RATES: "/getUserRateDetails/",
     GET: "match",
-    GET_OTHER: "match/other",
     BETDELETE: "/bet/deleteMultipleBet",
-    BETDELETEOTHER: "/bet/deleteMultipleBetForOther",
     BETDELETERACE: "/bet/deleteMultipleBetForRace",
     BET_DELETE_PERMANENT: "/bet/deleteMultipleBet/permanent",
-    BET_DELETE_OTHER_PERMANENT: "/bet/deleteMultipleBetForOther/permanent",
     BET_DELETE_RACE_PERMANENT: "/bet/deleteMultipleBetForRace/permanent",
     GET_BETS: "/superadmin/bets",
     TOTAL_PROFIT_LOSS: "/user/total/profitLoss",
@@ -153,7 +151,7 @@ export const Constants = {
     liveMarket: "live_market",
     liveMarketMatches: "live_market/matches",
     addAccount: "add_account",
-    editAccount: "edit_account",
+    editAccount: "add_account/:id",
     marketAnalysis: "market_analysis",
     marketAnalysis2: "market_analysis2/:raceType",
     marketAnalysisMatches: "market_analysis/matches",
@@ -180,20 +178,14 @@ export const Constants = {
     profitLossCards: "/wallet/reports/profit_loss_cards",
     accountStatement: "/wallet/reports/account_statement",
     currentBet: "/wallet/reports/current_bet",
-    generalReport: "/wallet/reports/general_report",
   },
   pageCount: 10,
   listOfClientCountLimit: 15,
 
-  // customPageLimit: 10,
-  // customTimeOut: 300000,// 5 mint in mili seconds user ideal 5 mint after that logout
-  // customTimer: 30000,// 30 sec in mili seconds remainint timer start and show message  Your session will expire in 30 second
-  // sessionExpireTime: 30 // 30 sec,
-
   customPageLimit: 15,
-  customTimeOut: 1000 * 60 * 60, // 5 mint in mili seconds user ideal 5 mint after that logout
-  customTimer: 1000 * 60 * 5, // 30 sec in mili seconds remainint timer start and show message  Your session will expire in 30 second
-  sessionExpireTime: 60 * 5, // 30 sec
+  customTimeOut: 1000 * 60 * 60,
+  customTimer: 1000 * 60 * 5,
+  sessionExpireTime: 60 * 5,
   apiBasePath: "https://devwalletapi.fairgame.club",
   thirdParty: "https://devserviceapi.fairgame.club",
   expertPath: "https://devexpertapi.fairgame.club",
@@ -211,37 +203,40 @@ export const Constants = {
   privateNumber: `U2FsdGVkX19PB0k7pc6tsaolSzWPHY2kgJvHhevrMQ7JuPxXzoTJ/RVKBD6yBUt3xnPx4Nu+beP2YSbQ5GvSxw0ZJRzPMDNp1UOtOPzl5afvOf2wbvZLzhHSkW/qUmERYHLa7b24YLZDY0nIjS6PRLxc22qlRavxSa0/LCRGN0tWmTneiwD6aCgYPkD6YyzpL7qhBPCPSzCJ4CG05wknMfhg6kZSfNEYssJy3moQdlNTjr/6H923TMHCyE5GNfXeLgEYFdA2xxfbRiDJNvm9oJeDyhOiKOqM5kw7GceZQ4pHbtd4snOkfrMjVCY+ogpkXGpauvyTO+dJrqb2rDJ2OZlfHgXhCbWXlyq6CPFmmwqly5ZtJMDyOLhUZ/yJ2z4e/vLJYFuEcOFk4BQrpmnsAiVsCZyV9WGZER5mR11Wri0kWBw0Nya/mbGljAYWJzB8PcpUvZcwa3/Zoh6WgYzoSeAKWP8ftQvcHOQIa7XrFUWWYGH9DpHFJ4f2TnLb+azIMeFkdLXRTO0wETkf3G1H8uSND7B95tHn4L77wcXe5lHTguj4vFHs3dy+o+sqRKqilB6et/ehikfinAh6aBg2isbVnnp5BFzvfwwPKEMb1bKfMpFB3xg9ip8qsVKN6t3Igx5ur8E6ZQ/GpQ4IBUqFc/gkj3cA4v+inA/x/J4Al3RB2kw5V3Jm0Nq9cDf7pUY9AGOoTWZz+TOGKXCrctWBRolCLBmJRKMBGcPCZd7WgCTU3dMzqb4MB8e86QBVNQO8rAr1Nb4IQIcohAthGaFScD0VmWv1/omL0GxIvFY+tNl0IT9OK0rF9pAM+LjuCzP56MeMpEQx+K5LR8sUQtN9QXcHaQfmkBv8ThPmQGkyRKM7t6Pimf9j1niiUp3HArtIFCKFTzYpPEXHc0LeAYLr7TQ06zlLuQLsOcHsIim/0aNAjyXVUFcVvNX673sKA6wvaAMLdJOAzea54U+MVOgeP1t2WTJGjr7TiUKm8SWxVy0OhxRKyjFtJPGktUCYA/4h0oNtVb1atSBBGfcbtt6RubdtQzGfYGjjJHSc329dS17AgoCdlyu1FllcJ3MqGya6LySxBN29Jh9qM9N5Qw3cnvvkkhG/f0yj44Vcna3MjxS4gobAFa5jZacxQ8w0xGRkjETfN/22Kt7qUZnKwQ5f21iMeTDXDtNwN/Pld866Z9GVBQKekM6J9AhR0kWVZJQJ`,
 };
 
-export const matchBettingType = {
-  matchOdd: "matchOdd",
-  bookmaker: "bookmaker",
-  bookmaker2: "bookmaker2",
-  quickbookmaker1: "quickbookmaker1",
-  quickbookmaker2: "quickbookmaker2",
-  quickbookmaker3: "quickbookmaker3",
-  tiedMatch1: "tiedMatch1",
-  tiedMatch2: "tiedMatch2",
-  tiedMatch3: "tiedMatch3",
-  completeMatch: "completeMatch",
-  completeMatch1: "completeMatch1",
-  completeManual: "completeManual",
-  setWinner1: "setWinner1",
-  setWinner2: "setWinner2",
-  other: "other",
-  ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
-    (prev, curr) => {
-      prev[`overUnder${curr}.5`] = `overUnder${curr}.5`;
-      return prev;
-    },
-    {}
-  ),
-  ...Array.from({ length: 20 }, (_, index: any) => index).reduce(
-    (prev, curr) => {
-      prev[`firstHalfGoal${curr}.5`] = `firstHalfGoal${curr}.5`;
-      return prev;
-    },
-    {}
-  ),
-  halfTime: "halfTime",
+export const accountTypeMap: any = {
+  fairGameWallet: [
+    { value: "fairGameAdmin", label: "Fairgame Admin" },
+    { value: "oldSuperAdmin", label: "Super Admin" },
+    { value: "admin", label: "Admin" },
+    { value: "superMaster", label: "Super Master" },
+    { value: "master", label: "Master" },
+    { value: "user", label: "User" },
+  ],
+  fairGameAdmin: [
+    { value: "superAdmin", label: "URL Super Admin" },
+    { value: "oldSuperAdmin", label: "Super Admin" },
+    { value: "admin", label: "Admin" },
+    { value: "superMaster", label: "Super Master" },
+    { value: "master", label: "Master" },
+    { value: "expert", label: "Expert" },
+    { value: "user", label: "User" },
+  ],
+  superAdmin: [
+    { value: "admin", label: "Admin" },
+    { value: "superMaster", label: "Super Master" },
+    { value: "master", label: "Master" },
+    { value: "user", label: "User" },
+  ],
+  admin: [
+    { value: "superMaster", label: "Super Master" },
+    { value: "master", label: "Master" },
+    { value: "user", label: "User" },
+  ],
+  superMaster: [
+    { value: "master", label: "Master" },
+    { value: "user", label: "User" },
+  ],
+  master: [{ value: "user", label: "User" }],
 };
 
 export const gameConstants = {
@@ -286,6 +281,7 @@ export const cardGamesTypeConstants: any = {
   cmeter: "cmeter",
   queen: "queen",
   worli: "worli",
+  mac88: "MAC88",
 };
 
 export const gameIconConstants = {
@@ -327,6 +323,7 @@ export const gameIconConstants = {
   [cardGamesTypeConstants.cmeter]: CasinoMeter,
   [cardGamesTypeConstants.queen]: CasinoQueen,
   [cardGamesTypeConstants.worli]: WorliMatka,
+  [cardGamesTypeConstants.mac88]: MAC88,
 };
 
 export const sessionBettingType = {
@@ -336,105 +333,6 @@ export const sessionBettingType = {
   ballByBall: "ballByBall",
   oddEven: "oddEven",
   cricketCasino: "cricketCasino",
-};
-
-export const profitLossDataForMatchConstants = {
-  [matchBettingType.matchOdd]: {
-    A: "teamARate",
-    B: "teamBRate",
-    C: "teamCRate",
-  },
-  [matchBettingType.bookmaker]: {
-    A: "teamARate",
-    B: "teamBRate",
-    C: "teamCRate",
-  },
-  [matchBettingType.bookmaker2]: {
-    A: "teamARate",
-    B: "teamBRate",
-    C: "teamCRate",
-  },
-  [matchBettingType.quickbookmaker1]: {
-    A: "teamARate",
-    B: "teamBRate",
-    C: "teamCRate",
-  },
-  [matchBettingType.quickbookmaker2]: {
-    A: "teamARate",
-    B: "teamBRate",
-    C: "teamCRate",
-  },
-  [matchBettingType.quickbookmaker3]: {
-    A: "teamARate",
-    B: "teamBRate",
-    C: "teamCRate",
-  },
-  [matchBettingType.tiedMatch1]: {
-    A: "yesRateTie",
-    B: "noRateTie",
-  },
-  [matchBettingType.tiedMatch2]: {
-    A: "yesRateTie",
-    B: "noRateTie",
-  },
-  [matchBettingType.tiedMatch3]: {
-    A: "yesRateTie",
-    B: "noRateTie",
-  },
-  [matchBettingType.completeMatch]: {
-    A: "yesRateComplete",
-    B: "noRateComplete",
-  },
-  [matchBettingType.completeMatch1]: {
-    A: "yesRateComplete",
-    B: "noRateComplete",
-  },
-  [matchBettingType.completeManual]: {
-    A: "yesRateComplete",
-    B: "noRateComplete",
-  },
-  [matchBettingType.other]: {
-    A: "userTeamARateOther",
-    B: "userTeamBRateOther",
-    C: "userTeamCRateOther",
-  },
-  ...Array.from({ length: 20 }, (_, index) => index).reduce(
-    (prev: any, curr) => {
-      prev[`overUnder${curr}.5`] = {
-        A: `yesRateUnderOver${curr}.5`,
-        B: `noRateUnderOver${curr}.5`,
-      };
-      return prev;
-    },
-    {}
-  ),
-  ...Array.from({ length: 20 }, (_, index) => index).reduce(
-    (prev: any, curr) => {
-      prev[`firstHalfGoal${curr}.5`] = {
-        A: `yesRateFirstHalfGoal${curr}.5`,
-        B: `noRateFirstHalfGoal${curr}.5`,
-      };
-      return prev;
-    },
-    {}
-  ),
-  [matchBettingType.halfTime]: {
-    A: "userTeamARateHalfTime",
-    B: "userTeamBRateHalfTime",
-    C: "userTeamCRateHalfTime",
-  },
-
-  ...Array.from({ length: 20 }, (_, index) => index).reduce(
-    (prev: any, curr) => {
-      prev[`setWinner${curr}`] = {
-        A: `userTeamARateSetWinner${curr}`,
-        B: `userTeamBRateSetWinner${curr}`,
-        C: `userTeamCRateSetWinner${curr}`,
-      };
-      return prev;
-    },
-    {}
-  ),
 };
 
 // use below baseUrl for testing build

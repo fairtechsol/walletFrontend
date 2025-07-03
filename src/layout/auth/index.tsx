@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { FgLogo } from "../../assets";
 import StyledImage from "../../components/Common/StyledImages";
@@ -32,17 +32,15 @@ const AuthLayout = () => {
         }}
       >
         <Box
-          sx={[
-            {
-              display: "flex",
-              flexDirection: "column",
-              py: "20px",
-              width: "18%",
-              minWidth: "250px",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-          ]}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            py: "20px",
+            width: "18%",
+            minWidth: "250px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <StyledImage
             src={FgLogo}
@@ -56,4 +54,4 @@ const AuthLayout = () => {
   );
 };
 
-export default AuthLayout;
+export default memo(AuthLayout);

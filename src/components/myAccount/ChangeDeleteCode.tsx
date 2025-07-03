@@ -1,7 +1,7 @@
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import ModalMUI from "@mui/material/Modal";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EyeIcon, EyeSlash } from "../../assets";
 import {
@@ -37,9 +37,12 @@ const initialValues: any = {
   code: "",
 };
 
-const ChangeDeleteCode = (props: any) => {
-  const { open, setOpen } = props;
+interface ChangeDeleteCodeProps {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}
 
+const ChangeDeleteCode = ({ open, setOpen }: ChangeDeleteCodeProps) => {
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -255,7 +258,7 @@ const ChangeDeleteCode = (props: any) => {
                 error={touched.password && Boolean(errors.password)}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-              />{" "}
+              />
               <CustomErrorMessage
                 touched={touched.password}
                 errors={errors.password}
@@ -362,4 +365,4 @@ const ChangeDeleteCode = (props: any) => {
   );
 };
 
-export default ChangeDeleteCode;
+export default memo(ChangeDeleteCode);

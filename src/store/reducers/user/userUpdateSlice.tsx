@@ -46,7 +46,7 @@ const userUpdateSlice = createSlice({
       })
       .addCase(addUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(addExpert.pending, (state) => {
         state.loading = true;
@@ -58,7 +58,7 @@ const userUpdateSlice = createSlice({
       })
       .addCase(addExpert.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(addUrlAdmin.pending, (state) => {
         state.loading = true;
@@ -70,7 +70,7 @@ const userUpdateSlice = createSlice({
       })
       .addCase(addUrlAdmin.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(updateUrlAdmin.pending, (state) => {
         state.loading = true;
@@ -82,7 +82,7 @@ const userUpdateSlice = createSlice({
       })
       .addCase(updateUrlAdmin.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
@@ -94,7 +94,7 @@ const userUpdateSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(updateExpert.pending, (state) => {
         state.loading = true;
@@ -106,7 +106,7 @@ const userUpdateSlice = createSlice({
       })
       .addCase(updateExpert.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(getUsersDetail.pending, (state) => {
         state.loading = true;
@@ -116,26 +116,23 @@ const userUpdateSlice = createSlice({
       .addCase(getUsersDetail.fulfilled, (state, action) => {
         state.success = true;
         state.loading = false;
-        state.userDetail = action?.payload;
+        state.userDetail = action.payload;
       })
       .addCase(getUsersDetail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message;
+        state.error = action.error?.message;
       })
       .addCase(updateReset, (state) => {
-        return {
-          ...state,
-          userDetail: null,
-          loading: false,
-          success: false,
-          error: null,
-        };
+        state.userDetail = null;
+        state.loading = false;
+        state.success = false;
+        state.error = null;
       })
       .addCase(addReset, (state) => {
-        return { ...state, addSuccess: false };
+        state.addSuccess = false;
       })
       .addCase(updateUserReset, (state) => {
-        return { ...state, editSuccess: false };
+        state.editSuccess = false;
       });
   },
 });

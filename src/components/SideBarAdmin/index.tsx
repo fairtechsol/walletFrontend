@@ -17,20 +17,20 @@ const datas = [
     title: "Tennis",
     value: "tennis",
   },
-  // {
-  //   title: "Hockey",
-  //   value: "hockey",
-  // },
 ];
-const SideBarAdmin = (props: any) => {
-  const { handleDrawerToggle } = props;
+
+interface SideBarAdminProps {
+  handleDrawerToggle: () => void;
+}
+
+const SideBarAdmin = ({ handleDrawerToggle }: SideBarAdminProps) => {
   const [selected, setSelected] = useState({
     value: false,
     matchType: "",
   });
 
   return (
-    <Box>
+    <>
       <Box
         sx={[
           {
@@ -59,7 +59,7 @@ const SideBarAdmin = (props: any) => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", flex: 0.1 }}></Box>
+          <Box sx={{ display: "flex", flex: 0.1 }} />
           <Box
             sx={{
               display: "flex",
@@ -98,7 +98,7 @@ const SideBarAdmin = (props: any) => {
           </Box>
         </Box>
       </Box>
-      {datas?.map((games, index) => {
+      {datas.map((games, index) => {
         return (
           <RenderGames
             key={index}
@@ -110,7 +110,7 @@ const SideBarAdmin = (props: any) => {
           />
         );
       })}
-    </Box>
+    </>
   );
 };
 export default SideBarAdmin;

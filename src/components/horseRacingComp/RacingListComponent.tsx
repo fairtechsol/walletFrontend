@@ -1,13 +1,14 @@
 import {
+  Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
-  Paper,
-  styled,
 } from "@mui/material";
 import moment from "moment";
+import { memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const YellowButton = styled("button")(() => ({
@@ -24,7 +25,7 @@ const YellowButton = styled("button")(() => ({
   },
 }));
 
-const RacingListComponent = ({ racingList }: any) => {
+const RacingListComponent = ({ racingList }: { racingList: any }) => {
   const navigate = useNavigate();
   const { matchType } = useParams();
   return (
@@ -66,4 +67,4 @@ const RacingListComponent = ({ racingList }: any) => {
   );
 };
 
-export default RacingListComponent;
+export default memo(RacingListComponent);
