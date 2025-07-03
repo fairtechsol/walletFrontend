@@ -186,7 +186,6 @@ const MobileViewUserDetails = ({
                 alignItems: "center",
                 width: "40%",
                 flexDirection: "row",
-
                 justifyContent: "space-between",
                 position: "relative",
                 marginTop: "0",
@@ -264,7 +263,7 @@ const MobileViewUserDetails = ({
               />
             </Box>
           </Box>
-        </Box>{" "}
+        </Box>
         <Box
           sx={{
             width: "100%",

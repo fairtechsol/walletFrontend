@@ -445,7 +445,7 @@ const WithdrawComponent = ({
                         lg: "16px",
                         md: "16px",
                       },
-                      width: { xs: "100%", lg: "100%", md: "100%" },
+                      width: "100%",
                       fontWeight: "600",
                       marginRight: {
                         xs: 0,
@@ -517,7 +517,6 @@ const WithdrawComponent = ({
                 </p>
               )}
             </Box>
-
             <Box
               sx={{
                 overflow: "hidden",
