@@ -116,7 +116,7 @@ const CricketCasinoMarketBox = ({
                 height: "38px",
                 marginLeft: { lg: "20%", md: "0%", xs: "0%" },
                 width: { lg: "36.5%", md: "60%", xs: "60.5%" },
-                justifyContent: { xs: "center", lg: "center" },
+                justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
                 zIndex: 1,

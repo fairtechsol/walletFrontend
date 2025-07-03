@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
@@ -41,8 +41,6 @@ const SessionMarket = ({
   handleHide,
   type,
 }: SessionMarketProps) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { marketAnalysis } = useSelector(
     (state: RootState) => state.match.matchList
   );
@@ -92,7 +90,7 @@ const SessionMarket = ({
               fontSize: {
                 lg: "13px",
                 md: "12px",
-                xs: matchesMobile ? "12px" : "12px",
+                xs: "12px",
               },
               fontWeight: "bold",
               marginLeft: "7px",
@@ -154,12 +152,10 @@ const SessionMarket = ({
                       }, 0)
               }
             />
-            {/* static code */}
             <Box
               sx={{
                 width: { lg: "72px", xs: "50px" },
                 flexDirection: "column",
-                // position: "absolute",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -170,7 +166,7 @@ const SessionMarket = ({
             >
               <Typography
                 sx={{
-                  fontSize: { xs: "8px", lg: "8px" },
+                  fontSize: "8px",
                   fontWeight: "bold",
                   color: "#FF4D4D",
                 }}
@@ -179,7 +175,7 @@ const SessionMarket = ({
               </Typography>
               <Typography
                 sx={{
-                  fontSize: { xs: "14px", lg: "14px" },
+                  fontSize: "14px",
                   fontWeight: "bold",
                   color: "#0B4F26",
                   lineHeight: 1,
@@ -313,7 +309,7 @@ const SessionMarket = ({
                 background: "#319E5B",
                 height: "25px",
                 width: { lg: "60%", xs: "81%" },
-                justifyContent: { lg: "flex-end", xs: "flex-end" },
+                justifyContent: "flex-end",
               }}
             >
               <Box

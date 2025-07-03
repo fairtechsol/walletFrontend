@@ -295,7 +295,7 @@ const AllUserListSeparate = ({
           <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
             <Box
               sx={{
-                width: { xs: "100%", lg: "100%", md: "100%" },
+                width: "100%",
                 overflow: "hidden",
                 marginY: { xs: ".2vh", lg: "1vh" },
                 padding: 0.2,

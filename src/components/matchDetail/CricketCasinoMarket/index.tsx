@@ -145,12 +145,10 @@ const CricketCasinoMarket = ({
                       }, 0)
               }
             />
-            {/* static code */}
             <Box
               sx={{
                 width: { lg: "72px", xs: "50px" },
                 flexDirection: "column",
-                // position: "absolute",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -161,7 +159,7 @@ const CricketCasinoMarket = ({
             >
               <Typography
                 sx={{
-                  fontSize: { xs: "8px", lg: "8px" },
+                  fontSize: "8px",
                   fontWeight: "bold",
                   color: "#FF4D4D",
                 }}
@@ -170,7 +168,7 @@ const CricketCasinoMarket = ({
               </Typography>
               <Typography
                 sx={{
-                  fontSize: { xs: "14px", lg: "14px" },
+                  fontSize: "14px",
                   fontWeight: "bold",
                   color: "#0B4F26",
                   lineHeight: 1,
@@ -261,7 +259,7 @@ const CricketCasinoMarket = ({
                 background: "#319E5B",
                 height: "25px",
                 width: { lg: "60%", xs: "81%" },
-                justifyContent: { lg: "flex-end", xs: "flex-end" },
+                justifyContent: "flex-end",
               }}
             >
               <Box

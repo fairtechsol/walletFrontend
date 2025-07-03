@@ -1,6 +1,6 @@
+import { Box } from "@mui/material";
 import moment from "moment";
 import { formatNumber, formatToINR } from "../../../helper";
-import { Box } from "@mui/material";
 import SingleBox from "./SingleBox";
 
 const RowComponent = ({ header, data }: any) => {
@@ -13,7 +13,7 @@ const RowComponent = ({ header, data }: any) => {
   };
   const getColor = () => {
     if (header) {
-      return "black";
+      return "#000000";
     } else if (data?.betType === "BACK" || data?.betType == "YES") {
       return "#CEEBFF";
     } else if (data?.betType === "LAY" || data?.betType == "NO") {
