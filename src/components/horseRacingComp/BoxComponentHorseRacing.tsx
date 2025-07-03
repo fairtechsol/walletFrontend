@@ -67,7 +67,6 @@ const BoxComponentHorseRacing = ({
           </Typography>
         </Box>
       </Box>
-
       {!["ACTIVE", undefined, null].includes(status) ? (
         <Box
           sx={{

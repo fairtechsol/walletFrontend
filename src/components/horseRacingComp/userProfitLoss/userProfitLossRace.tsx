@@ -5,9 +5,7 @@ import {
   TableBody,
   TableContainer,
   TableHead,
-  Typography,
-  useMediaQuery,
-  useTheme,
+  Typography
 } from "@mui/material";
 import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,9 +33,7 @@ const UserProfitLossRace = ({
   single,
   matchDetail,
 }: UserProfitLossRaceProps) => {
-  const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { userProfitLossData } = useSelector(
     (state: RootState) => state.horseRacing.userProfitLoss
   );
@@ -90,7 +86,7 @@ const UserProfitLossRace = ({
               fontSize: {
                 lg: "13px",
                 md: "12px",
-                xs: matchesMobile ? "12px" : "12px",
+                xs: "12px",
               },
               fontWeight: "bold",
               marginLeft: "7px",

@@ -424,11 +424,7 @@ const DepositComponent = ({
                     display: "flex",
                     alignItems: "center",
                     width: "60%",
-                    flexDirection: {
-                      xs: "row",
-                      md: "row",
-                      lg: "row",
-                    },
+                    flexDirection: "row",
                     justifyContent: "space-between",
                     position: { xs: "relative", lg: "static" },
                     marginTop: { xs: "0", lg: "0" },
