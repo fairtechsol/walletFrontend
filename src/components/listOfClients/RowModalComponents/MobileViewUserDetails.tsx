@@ -150,7 +150,6 @@ const MobileViewUserDetails = ({
           &times;
         </Button>
       </Box>
-
       <Box
         sx={{
           borderBottom: "2px solid white",
@@ -176,7 +175,6 @@ const MobileViewUserDetails = ({
               gap: 1,
               alignItems: "center",
               width: "100%",
-
               justifyContent: "flex-end",
             }}
           >
@@ -231,7 +229,6 @@ const MobileViewUserDetails = ({
                 {formatIndianCurrency(parseFloat(elementToUDM?.balance || 0))}
               </Typography>
             </Box>
-
             <Box
               sx={{
                 width: "30%",
@@ -256,7 +253,6 @@ const MobileViewUserDetails = ({
                   style: {
                     fontSize: "13px",
                     height: "45px",
-
                     fontWeight: "600",
                   },
                 }}
@@ -401,7 +397,6 @@ const MobileViewUserDetails = ({
             <Typography
               sx={{
                 fontSize: "3.2vw",
-
                 width: "100%",
                 fontWeight: "600",
                 marginRight: 0,
