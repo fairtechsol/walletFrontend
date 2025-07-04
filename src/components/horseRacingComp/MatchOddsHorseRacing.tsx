@@ -118,7 +118,7 @@ const MatchOddsHorseRacing = ({
             background: "#262626",
             display: "flex",
             alignItems: "center",
-            justifyContent: { lg: "flex-end", xs: "flex-end" },
+            justifyContent: "flex-end",
             paddingRight: { lg: "0", xs: "0" },
           }}
         >
@@ -175,7 +175,7 @@ const MatchOddsHorseRacing = ({
                 background: "#319E5B",
                 height: "25px",
                 width: { lg: "60%", xs: "80%" },
-                justifyContent: { lg: "flex-end", xs: "flex-end" },
+                justifyContent: "flex-end",
               }}
             >
               <Box
@@ -227,7 +227,6 @@ const MatchOddsHorseRacing = ({
                 sx={{
                   position: "absolute",
                   height: "100%",
-                  // top: "18%",
                   width: "100%",
                   display: "flex",
                   zIndex: "999",

@@ -41,7 +41,7 @@ const SmallBox = ({ valueA, valueB, color }: SmallBoxProps) => {
             fontSize: "13px",
             lineHeight: 1,
             fontWeight: "bold",
-            color: valueA < 0 ? `#FF4D4D` : `#319E5B`,
+            color: valueA < 0 ? "#FF4D4D" : "#319E5B",
           }}
         >
           {handleNumber(parseFloat(valueA || 0.0), color)}
@@ -73,7 +73,7 @@ const SmallBox = ({ valueA, valueB, color }: SmallBoxProps) => {
             fontSize: "13px",
             lineHeight: 1,
             fontWeight: "bold",
-            color: valueB < 0 ? `#FF4D4D` : `#319E5B`,
+            color: valueB < 0 ? "#FF4D4D" : "#319E5B",
           }}
         >
           {handleNumber(parseFloat(valueB || 0.0), color)}

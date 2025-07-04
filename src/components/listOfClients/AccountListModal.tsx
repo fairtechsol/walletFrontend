@@ -169,7 +169,6 @@ const AccountListTable = ({
           </Button>
         </Box>
       </Box>
-
       <Box sx={{ overflowX: "auto", maxHeight: "60vh" }}>
         <Box sx={{ display: matchesBreakPoint ? "inline-block" : "block" }}>
           <ListHeaderRow />

@@ -143,7 +143,9 @@ const MultipleMatchHorseRacing = () => {
             matchType: state.matchType,
           })
         );
-        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(
+          getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`)
+        );
       }
     } catch (e) {
       console.log(e);
@@ -204,7 +206,9 @@ const MultipleMatchHorseRacing = () => {
               matchType: state.matchType,
             })
           );
-          dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
+          dispatch(
+            getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`)
+          );
         }
       } else if (document.visibilityState === "hidden") {
         state?.matchIds?.map((item: any) => {
@@ -411,7 +415,7 @@ const MultipleMatchHorseRacing = () => {
                                   color: "black",
                                   fontWeight: "700",
                                   float: "right",
-                                  border: " 1px solid white",
+                                  border: "1px solid white",
                                   marginBottom: "2px",
                                   alignSelf: "start",
                                   "&:hover": { backgroundColor: "#F8C851" },

@@ -71,7 +71,7 @@ const CommissionReportTable = ({
           <Box
             sx={{
               overflowX: "auto",
-              width: { xs: "100%", lg: "100%", md: "100%" },
+              width: "100%",
             }}
           >
             {commissionMatchList?.rows?.map((element: any, index: number) => (

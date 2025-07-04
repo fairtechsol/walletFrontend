@@ -41,11 +41,7 @@ const DepositAndWithdrawBox = () => {
           justifyContent: "center",
           display: "flex",
           gap: 1,
-          flexDirection: {
-            xs: "column",
-            md: "column",
-            lg: "column",
-          },
+          flexDirection: "column",
           background: "#F8C851",
           minHeight: "200px",
         }}
@@ -54,7 +50,7 @@ const DepositAndWithdrawBox = () => {
           sx={{
             display: "flex",
             width: "100%",
-            flexDirection: { xs: "row", md: "row", lg: "row" },
+            flexDirection: "row",
           }}
         >
           <Box sx={{ flex: 1 }}>

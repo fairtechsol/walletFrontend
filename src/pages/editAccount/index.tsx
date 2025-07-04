@@ -998,7 +998,6 @@ const EditAccount = () => {
                     id="downlinePartnership"
                     type="Number"
                     value={formik.values.downlinePartnership}
-                    // onChange={formik.handleChange}
                   />
                 </>
               )}
@@ -1058,7 +1057,6 @@ const EditAccount = () => {
                         />
                       </>
                     )}
-
                     <SelectField
                       containerStyle={containerStyles}
                       titleStyle={titleStyles}

@@ -50,15 +50,17 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
     commissionAmount: formatToINR(Number(element?.commissionAmount) || 0),
     commissionType: element?.matchType === "SESSION" ? "Session" : "Match",
     betType: element?.betType,
-    stack: element?.stake ? formatToINR(Math.abs(Number(element.stake))) : undefined,
+    stack: element?.stake
+      ? formatToINR(Math.abs(Number(element.stake)))
+      : undefined,
     odds: element?.odds,
     isActive: element?.isActive,
     teamBet: element?.teamName,
     createAt: element?.date,
     myCommission: element?.partnerShip
       ? `${formatToINR(
-        ((Number(element.commissionAmount) || 0) * element.partnerShip) / 100
-      )}(${element.partnerShip}%)`
+          ((Number(element.commissionAmount) || 0) * element.partnerShip) / 100
+        )}(${element.partnerShip}%)`
       : undefined,
     userName: element?.userName,
   });
@@ -84,7 +86,6 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
           }}
         />
       )}
-
       <Box
         sx={[
           {
@@ -167,7 +168,7 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
         </Box>
         <Box
           sx={{
-            width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+            width: "12.5%",
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",
@@ -212,7 +213,7 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
         </Box>
         <Box
           sx={{
-            width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+            width: "12.5%",
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",
@@ -228,7 +229,7 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
         </Box>
         <Box
           sx={{
-            width: { lg: "15%", md: "15%", xs: "15%" },
+            width: "15%",
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",
@@ -245,7 +246,7 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
         </Box>
         <Box
           sx={{
-            width: { lg: "15%", md: "15%", xs: "15%" },
+            width: "15%",
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",
@@ -262,7 +263,7 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
 
         <Box
           sx={{
-            width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+            width: "12.5%",
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",
@@ -278,7 +279,7 @@ const AccountListRow: React.FC<AccountListRowProps> = ({
         </Box>
         <Box
           sx={{
-            width: { lg: "12.5%", md: "12.5%", xs: "12.5%" },
+            width: "12.5%",
             display: "flex",
             paddingLeft: "10px",
             alignItems: "center",

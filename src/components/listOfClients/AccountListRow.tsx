@@ -513,7 +513,6 @@ const AccountListRow = ({
             sx={{ height: "20px", width: "20px", fill: "#27AC1E" }}
           />
         </Box>
-
         <Box
           sx={{
             width: { lg: "8vw", md: "8vw", xs: "26.5vw" },
@@ -555,7 +554,6 @@ const AccountListRow = ({
           }`}</Typography>
         </Box>
       </Box>
-
       {showUserModal && element?.roleName !== "expert" && (
         <Box
           sx={[
@@ -718,7 +716,6 @@ const AccountListRow = ({
               </Box>
             )}
           </Box>
-
           <Box
             sx={{
               width: "100%",
@@ -740,7 +737,6 @@ const AccountListRow = ({
           </Box>
         </Box>
       )}
-
       <ModalMUI
         open={showCommissionReport?.value}
         onClose={() => {
@@ -826,7 +822,6 @@ const AccountListRow = ({
           />
         </Box>
       </ModalMUI>
-
       <ModalMUI
         open={showSubUsers?.value}
         onClose={() => {
