@@ -358,7 +358,7 @@ const FullAllBets = ({
             background: "#262626",
             display: "flex",
             alignItems: "center",
-            justifyContent: { lg: "flex-end", xs: "flex-end" },
+            justifyContent: "flex-end",
             padding: { lg: "0", xs: "0" },
           }}
         >

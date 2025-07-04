@@ -101,16 +101,6 @@ const SeasonMarketBox = ({
             background: index % 2 === 0 ? "#FFE094" : "#ECECEC",
           }}
         >
-          {/* {newData?.isCommissionActive && (
-            <Box
-              sx={{
-                position: "absolute",
-                right: { xs: "60vw", sm: "53vw", lg: "22vw", md: "50vw" },
-              }}
-            >
-              <CommissionDot />
-            </Box>
-          )} */}
           {matchesMobile ? (
             <PlaceBetComponent
               type={type}

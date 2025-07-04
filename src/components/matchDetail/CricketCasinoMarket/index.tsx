@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { ARROWUP, LOCKED, LOCKOPEN } from "../../../assets";
@@ -38,8 +38,6 @@ const CricketCasinoMarket = ({
   handleBlock,
   handleHide,
 }: CricketCasinoMarketProps) => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [visible, setVisible] = useState(true);
 
   const onSubmit = (value: any) => {
@@ -90,7 +88,7 @@ const CricketCasinoMarket = ({
               fontSize: {
                 lg: "13px",
                 md: "12px",
-                xs: matchesMobile ? "12px" : "12px",
+                xs: "12px",
               },
               fontWeight: "bold",
               marginLeft: "7px",

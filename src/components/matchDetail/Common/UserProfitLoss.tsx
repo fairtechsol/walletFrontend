@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Refresh } from "../../../assets";
@@ -31,9 +25,7 @@ const UserProfitLoss = ({
   single,
   matchDetail,
 }: UserProfitLossProps) => {
-  const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const { userProfitLossData } = useSelector(
     (state: RootState) => state.match.userProfitLoss
@@ -86,7 +78,7 @@ const UserProfitLoss = ({
               fontSize: {
                 lg: "13px",
                 md: "12px",
-                xs: matchesMobile ? "12px" : "12px",
+                xs: "12px",
               },
               fontWeight: "bold",
               marginLeft: "7px",
@@ -207,7 +199,7 @@ const UserProfitLoss = ({
               display: "flex",
               background: "#319E5B",
               height: "25px",
-              width: { lg: "90%", xs: "90%" },
+              width: "90%",
             }}
           >
             {userProfitLossData?.markets?.map((item: any, index: number) => {
@@ -231,7 +223,7 @@ const UserProfitLoss = ({
                       fontSize: {
                         lg: "13px",
                         md: "12px",
-                        xs: matchesMobile ? "8px" : "8px",
+                        xs: "8px",
                       },
                       color: "black",
                       fontWeight: "600",

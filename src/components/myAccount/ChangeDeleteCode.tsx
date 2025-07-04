@@ -197,7 +197,6 @@ const ChangeDeleteCode = ({ open, setOpen }: ChangeDeleteCodeProps) => {
                 >
                   <BoxButton
                     color={"#0B4F26"}
-                    //   loading={loading}
                     containerStyle={{ height: "35px", width: "100%" }}
                     isSelected={true}
                     type="submit"
