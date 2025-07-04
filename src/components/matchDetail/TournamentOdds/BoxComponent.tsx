@@ -180,7 +180,6 @@ const BoxComponent = ({
               />
             </Box>
           )}
-
           <Box sx={{ width: "3px", display: "flex", background: "pink" }} />
           {ex?.availableToLay?.length > 0 &&
           ![0, "0"].includes(ex?.availableToLay[0]?.price) ? (

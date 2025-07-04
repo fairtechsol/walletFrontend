@@ -65,7 +65,6 @@ const DataShow = ({
               ? "(0%)"
               : null}
           </Typography>
-
           {valueProfitLoss ? (
             <Typography
               sx={{

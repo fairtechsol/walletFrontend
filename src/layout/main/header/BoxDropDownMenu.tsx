@@ -35,7 +35,7 @@ const BoxDropDownMenu = ({ handleClose }: { handleClose: () => void }) => {
             fontSize: { lg: "12px", xs: "10px" },
             fontWeight: "500",
             marginX: "5px",
-            width: { lg: "200px", xs: "200px" },
+            width: "200px",
             borderBottomWidth: 1,
             color: "black",
             borderColor: "#EAEFEC",

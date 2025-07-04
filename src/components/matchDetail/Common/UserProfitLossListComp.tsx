@@ -53,7 +53,7 @@ const UserProfitLossListComp = ({
           display: "flex",
           position: "relative",
           background: "white",
-          width: { lg: "90%", xs: "90%" },
+          width: "90%",
           alignItems: "center",
           height: "100%",
         }}
