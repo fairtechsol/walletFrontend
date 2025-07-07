@@ -14,8 +14,9 @@ export const login = createAsyncThunk<any, LoginData>(
   async (requestData, thunkApi) => {
     try {
       const { data } = await service.post(ApiConstants.AUTH.LOGIN, requestData);
-      const { token } = data;
+      const { token, userId } = data;
       sessionStorage.setItem("jwtWallet", token);
+      sessionStorage.setItem("key", userId);
       return data;
     } catch (error) {
       const err = error as AxiosError;

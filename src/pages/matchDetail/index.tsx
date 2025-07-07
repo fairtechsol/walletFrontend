@@ -23,7 +23,8 @@ import SessionMarket from "../../components/matchDetail/SessionMarket";
 import RunsBox from "../../components/matchDetail/SessionMarket/RunsBox";
 import TournamentOdds from "../../components/matchDetail/TournamentOdds";
 import { customSortBySessionMarketName, formatToINR } from "../../helper";
-import { matchService, socket, socketService } from "../../socketManager";
+import { usePhoenixChannel } from "../../phoenixManager";
+import { socket, socketService } from "../../socketManager";
 import {
   AllBetDelete,
   AllBetDeletePermanent,
@@ -105,14 +106,20 @@ const MatchDetail = () => {
     (state: RootState) => state.match.sideBarList
   );
 
-  useEffect(() => {
-    if (state) {
-      matchService.connect([state?.matchId], profileDetail?.roleName);
-    }
-    return () => {
-      matchService.disconnect();
-    };
-  }, [state]);
+  const { data } = usePhoenixChannel({
+    role: sessionStorage.getItem("userRole") || profileDetail?.roleName,
+    matchId: state?.matchId,
+    userId: sessionStorage.getItem("key") || profileDetail?.id,
+  });
+
+  // useEffect(() => {
+  //   if (state) {
+  //     matchService.connect([state?.matchId], profileDetail?.roleName);
+  //   }
+  //   return () => {
+  //     matchService.disconnect();
+  //   };
+  // }, [state]);
 
   const handleDeleteBet = (value: any) => {
     try {
@@ -214,6 +221,10 @@ const MatchDetail = () => {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    updateMatchDetailToRedux(data);
+  }, [data]);
 
   const matchResultDeclared = (event: any) => {
     try {
@@ -465,11 +476,11 @@ const MatchDetail = () => {
         socketService.match.sessionResultUnDeclareOff();
         socketService.match.matchResultUnDeclaredOff();
         socketService.match.updateDeleteReasonOff();
-        socketService.match.joinMatchRoom(state?.matchId);
-        socketService.match.getMatchRates(
-          state?.matchId,
-          updateMatchDetailToRedux
-        );
+        // socketService.match.joinMatchRoom(state?.matchId);
+        // socketService.match.getMatchRates(
+        //   state?.matchId,
+        //   updateMatchDetailToRedux
+        // );
         if (!state?.userId) {
           socketService.match.userSessionBetPlaced(setSessionBetsPlaced);
           socketService.match.userMatchBetPlaced(setMatchBetsPlaced);
@@ -494,8 +505,8 @@ const MatchDetail = () => {
 
   useEffect(() => {
     return () => {
-      socketService.match.leaveMatchRoom(state?.matchId);
-      socketService.match.getMatchRatesOff(state?.matchId);
+      // socketService.match.leaveMatchRoom(state?.matchId);
+      // socketService.match.getMatchRatesOff(state?.matchId);
       socketService.match.userSessionBetPlacedOff();
       socketService.match.userMatchBetPlacedOff();
       socketService.match.matchResultDeclaredOff();

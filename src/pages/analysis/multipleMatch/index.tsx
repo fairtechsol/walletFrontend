@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FullAllBets from "../../../components/matchDetail/Common/FullAllBets";
 import UserProfitLoss from "../../../components/matchDetail/Common/UserProfitLoss";
 import Layout from "../../../components/multipleMatchDetail/Layout";
-import { matchService, socket, socketService } from "../../../socketManager";
+import { usePhoenixChannel } from "../../../phoenixManager";
+import { socket, socketService } from "../../../socketManager";
 import {
   getPlacedBets,
   removeRunAmount,
@@ -59,18 +60,28 @@ const MultipleMatch = () => {
     (state: RootState) => state.match.bets
   );
 
-  useEffect(() => {
-    if (state) {
-      matchService.connect(state?.matchIds, profileDetail?.roleName);
-    }
-    return () => {
-      matchService.disconnect();
-    };
-  }, [state]);
+  const { data } = usePhoenixChannel({
+    role: sessionStorage.getItem("userRole") || profileDetail?.roleName,
+    matchId: state?.matchIds.join(","),
+    userId: sessionStorage.getItem("key") || profileDetail?.id,
+  });
+
+  // useEffect(() => {
+  //   if (state) {
+  //     matchService.connect(state?.matchIds, profileDetail?.roleName);
+  //   }
+  //   return () => {
+  //     matchService.disconnect();
+  //   };
+  // }, [state]);
 
   const updateMatchDetailToRedux = (event: any) => {
     dispatch(updateMultipleMatchDetail(event));
   };
+
+  useEffect(() => {
+    updateMatchDetailToRedux(data);
+  }, [data]);
 
   const setMultiSessionBetsPlaced = (event: any) => {
     try {
@@ -145,7 +156,9 @@ const MultipleMatch = () => {
           })
         );
         dispatch(removeRunAmount(event));
-        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(
+          getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`)
+        );
       }
     } catch (error) {
       console.log(error);
@@ -156,7 +169,9 @@ const MultipleMatch = () => {
     try {
       if (state?.matchIds.includes(event?.matchId)) {
         dispatch(updateMaxLossForBetOnUndeclareForMultipleMatch(event));
-        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(
+          getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`)
+        );
       }
     } catch (error) {
       console.log(error);
@@ -233,7 +248,9 @@ const MultipleMatch = () => {
           })
         );
         dispatch(resetSessionProLoss());
-        dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
+        dispatch(
+          getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`)
+        );
       }
     } catch (e) {
       console.log(e);
@@ -243,9 +260,9 @@ const MultipleMatch = () => {
   useEffect(() => {
     try {
       if (success && profileDetail?.roleName && socket) {
-        state?.matchIds?.map((item: any) => {
-          socketService.match.getMatchRatesOff(item);
-        });
+        // state?.matchIds?.map((item: any) => {
+        //   socketService.match.getMatchRatesOff(item);
+        // });
         socketService.match.userSessionBetPlacedOff();
         socketService.match.userMatchBetPlacedOff();
         socketService.match.matchResultDeclaredOff();
@@ -255,12 +272,12 @@ const MultipleMatch = () => {
         socketService.match.sessionResultOff();
         socketService.match.sessionResultUnDeclareOff();
         socketService.match.updateDeleteReasonOff();
-        state?.matchIds?.map((item: any) => {
-          socketService.match.joinMatchRoom(item);
-        });
-        state?.matchIds?.map((item: any) => {
-          socketService.match.getMatchRates(item, updateMatchDetailToRedux);
-        });
+        // state?.matchIds?.map((item: any) => {
+        //   socketService.match.joinMatchRoom(item);
+        // });
+        // state?.matchIds?.map((item: any) => {
+        //   socketService.match.getMatchRates(item, updateMatchDetailToRedux);
+        // });
         socketService.match.userSessionBetPlaced(setMultiSessionBetsPlaced);
         socketService.match.userMatchBetPlaced(setMultiMatchBetsPlaced);
         socketService.match.matchResultDeclared(matchMultiResultDeclared);
@@ -283,10 +300,10 @@ const MultipleMatch = () => {
 
   useEffect(() => {
     return () => {
-      state?.matchIds?.map((item: any) => {
-        socketService.match.leaveMatchRoom(item);
-        socketService.match.getMatchRatesOff(item);
-      });
+      // state?.matchIds?.map((item: any) => {
+      //   socketService.match.leaveMatchRoom(item);
+      //   socketService.match.getMatchRatesOff(item);
+      // });
       socketService.match.userSessionBetPlacedOff();
       socketService.match.userMatchBetPlacedOff();
       socketService.match.matchResultDeclaredOff();
@@ -311,7 +328,9 @@ const MultipleMatch = () => {
             })
           );
           dispatch(resetSessionProLoss());
-          dispatch(getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`));
+          dispatch(
+            getPlacedBets(`matchId=inArr${JSON.stringify(state?.matchIds)}`)
+          );
         }
       } else if (document.visibilityState === "hidden") {
         state?.matchIds?.map((item: any) => {
