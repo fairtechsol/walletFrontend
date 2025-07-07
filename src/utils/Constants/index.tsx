@@ -343,6 +343,7 @@ export const baseUrls = {
   socket: import.meta.env.VITE_BASE_URL,
   thirdParty: import.meta.env.VITE_THIRD_PARTY_BASE_URL,
   expertSocket: import.meta.env.VITE_EXPERT_BASE_URL,
+  phoenixApi: import.meta.env.VITE_PHOENIX_API,
 };
 
 export const marketApiConst: { [key: string]: string } = {
