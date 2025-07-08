@@ -351,9 +351,7 @@ const RowModalComponents = ({
           <BoxButton
             color={"#E32A2A"}
             deleteBtn={true}
-            onClick={() => {
-              setShowDeleteModal((prev: boolean) => !prev);
-            }}
+            onClick={() => setShowDeleteModal((prev: boolean) => !prev)}
             containerStyle={{
               marginLeft: { lg: "10px", xs: "0" },
               flex: 1,

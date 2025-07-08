@@ -85,9 +85,6 @@ const Header = () => {
       marginLeft: "2%",
       justifyContent: "center",
     },
-    BoxCont1sub1ButtonHeadtitleStylefn: (currentSelected: any, num: any) => {
-      return { color: currentSelected == num ? "green" : "white" };
-    },
     BoxCont1sub1ButtonHead3boxStyle: {
       backgroundColor: "transparent",
       borderRadius: "3px",
